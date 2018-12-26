@@ -44,7 +44,7 @@
     },
     "instructions":{
         "start":"WordPress is an online, open source website creation tool written in PHP. But in non-geek speak, it’s probably.....",
-        "end":"Wordpress is deployed and available as $$cap_appname$$-wordpress",
+        "end":"Wordpress is deployed and available as $$cap_appname$$-wordpress"
     },
     "variables": [
     {
