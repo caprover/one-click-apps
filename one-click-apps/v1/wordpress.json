@@ -51,7 +51,7 @@
         "id": "$$cap_db_user",
         "label": "Database user",
         "defaultValue": "wordpressuser",
-        "testRegex": "/^[a-z0-9\\-]+$/"
+        "testRegex": "/\\n/g"
     },
     {
         "id": "$$cap_db_pass",
