@@ -10,7 +10,7 @@
             {
                 "image": "mysql:$$cap_mysql_version",
                 "volumes": [
-                    "db_data:/var/lib/mysql"
+                    "$$cap_appname-db-data:/var/lib/mysql"
                 ],
                 "restart": "always",
                 "environment":
@@ -27,6 +27,9 @@
                     "$$cap_appname-db"
                 ],
                 "image": "wordpress:$$cap_wp_version",
+                "volumes": [
+                    "$$cap_appname-wp-data:/var/www/html"
+                ],
                 "restart": "always",
                 "environment":
                 {
