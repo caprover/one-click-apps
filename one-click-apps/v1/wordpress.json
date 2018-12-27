@@ -44,32 +44,34 @@
     },
     "instructions":{
         "start":"WordPress is an online, open source website creation tool written in PHP. But in non-geek speak, it’s probably the easiest and most powerful blogging and website content management system (or CMS) in existence today.\n\n Enter your WordPress Configuration parameters and click on next. A MySQL (database) and a WordPress container will be created for you.  The process will take about a minute for the process to finish.",
-        "end":"Wordpress is deployed and available as $$cap_appname$$-wordpress"
+        "end":"Wordpress is deployed and available as $$cap_appname$$-wordpress . \n\n IMPORTANT: It will take up to 2 minutes for wordpress to be ready. Before that, you might see 502 error page.\n"
     },
     "variables": [
     {
         "id": "$$cap_db_user",
         "label": "Database user",
         "defaultValue": "wordpressuser",
-        "validRegex": "/\\n/g"
+        "validRegex": "/^([a-zA-Z0-9])+$/"
     },
     {
         "id": "$$cap_db_pass",
         "label": "Database password",
         "description": "",
-        "validRegex": ".{22,}"
+        "validRegex": "/.{1,}/"
     },
     {
         "id": "$$cap_wp_version",
         "label": "WordPress Version",
         "defaultValue": "latest",
-        "description": "Checkout their docker page for the valid tags"
+        "description": "Checkout their docker page for the valid tags (https://hub.docker.com/r/library/wordpress/tags/). Enter latest to get the latest version",
+        "validRegex": "/.{1,}/"
     },
     {
         "id": "$$cap_mysql_version",
         "label": "MySQL Version",
         "defaultValue": "latest",
-        "description": "Checkout their docker page for the valid tags"
+        "description": "Checkout their docker page for the valid tags (https://hub.docker.com/r/library/mysql/tags/). Enter latest to get the latest version",
+        "validRegex": "/.{1,}/"
     }]
 
 }
