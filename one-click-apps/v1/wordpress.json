@@ -6,7 +6,7 @@
         "version": "3.3",
         "services":
         {
-            "db":
+            "$$cap_appname-db":
             {
                 "image": "mysql:$$cap_mysql_version",
                 "volumes": [
@@ -21,7 +21,7 @@
                     "MYSQL_PASSWORD": "$$cap_db_pass"
                 }
             },
-            "wordpress":
+            "$$cap_appname-wordpress":
             {
                 "depends_on": [
                     "$$cap_appname-db"
