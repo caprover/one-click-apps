@@ -1,0 +1,51 @@
+{
+    "captainVersion": "1",
+    "documentation": "Taken from https://hub.docker.com/r/mongo/",
+    "dockerCompose":
+    {
+        "version": "3.3",
+        "services":
+        {
+            "$$cap_appname":
+            {
+                "image": "mongo:$$cap_mongo_version",
+                "volumes": [
+                    "$$cap_appname-db-data:/data/db",
+                    "$$cap_appname-db-config:/data/configdb"
+                ],
+                "restart": "always",
+                "environment":
+                {
+                    "MONGO_INITDB_ROOT_USERNAME": "$$cap_mongo_username",
+                    "MONGO_INITDB_ROOT_PASSWORD": "$$cap_mongo_password"
+                }
+            }
+        }
+    },
+    "instructions":{
+        "start":"Parse Server is an open source version of the Parse backend that can be deployed to any infrastructure that can run Node.js. For more information on Parse platform see http://parseplatform.org\n\n Enter your Parse Configuration parameters and click on next. A MongoDB (database) and a Parse container will be created for you.  The process will take about a minute for the process to finish.",
+        "end":"Parse is deployed and available as $$cap_appname-parse."
+    },
+    "variables": [
+    {
+        "id": "$$cap_mongo_version",
+        "label": "MongoDB Version",
+        "defaultValue": "4",
+        "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/library/mongo/tags/",
+        "validRegex": "/^([a-zA-Z0-9])+$/"
+    },
+    {
+        "id": "$$cap_mongo_username",
+        "label": "MongoDB RootUsername",
+        "defaultValue": "root",
+        "description": "Only use alphanumeric chars.",
+        "validRegex": "/^([a-zA-Z0-9])+$/"
+    },
+    {
+        "id": "$$cap_mongo_password",
+        "label": "MongoDB password",
+        "description": "Only use alphanumeric chars.",
+        "validRegex": "/^([a-zA-Z0-9])+$/"
+    }]
+
+}
