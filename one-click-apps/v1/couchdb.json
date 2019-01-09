@@ -1,0 +1,45 @@
+{
+    "captainVersion": "1",
+    "documentation": "Taken from https://hub.docker.com/_/couchdb/",
+    "dockerCompose":
+    {
+        "version": "3.3",
+        "services":
+        {
+            "$$cap_appname":
+            {
+                "image": "couchdb:$$cap_couchdb_version",
+                "restart": "always",
+                "environment":
+                {
+                    "ADMINER_PLUGINS": "$$cap_couchdb_user",
+                    "ADMINER_DESIGN": "$$cap_couchdb_password"
+                }
+            }
+    },
+    "instructions":{
+        "start":"CouchDB is a database that uses JSON for documents, an HTTP API, & JavaScript/declarative indexing.\n\n After installation on CaptainDuckDuck, it will be available as srv-captain--YOUR_CONTAINER_NAME at port 5984 to other CaptainDuckDuck apps.\n\nEnter your CouchDB Configuration parameters and click on next. It will take about a minute for the process to finish.",
+        "end":"CouchDB is deployed and available as $$cap_appname at port 5984 to other apps"
+    },
+    "variables": [
+    {
+        "id": "$$cap_couchdb_version",
+        "label": "CouchDB Version Tag",
+        "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/library/couchdb/tags/",
+        "defaultValue": "2",
+        "validRegex": "/^([a-zA-Z0-9-.])+$/"
+    },
+    {
+        "id": "$$cap_couchdb_user",
+        "label": "CouchDB Username",
+        "defaultValue": "mainuser",
+        "validRegex": "/^([a-zA-Z0-9_])+$/"
+    },
+    {
+        "id": "$$cap_couchdb_password",
+        "label": "CouchDB Password",
+        "defaultValue": "",
+        "validRegex": "/.{1,}/"
+    }]
+
+}
