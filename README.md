@@ -10,3 +10,4 @@ Process:
 - Varibles can be anywhere in the JSON and they will be replaced by what user enters
 - Each variable must have `id`, `label`. It may also have `defaultValue`, `validRegex`, `description`.
 - Other than `image`, `environment`, `ports`, `volumes`, `depends_on`, other parameters are ignored. Make sure they are not important.
+- Instead of image in a service, you can use `dockerfileLines` which is an array of strings.
