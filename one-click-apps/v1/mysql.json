@@ -15,7 +15,7 @@
                 "restart": "always",
                 "environment":
                 {
-                    "MYSQL_ROOT_PASSWORD": "$$cap_mysql_version"
+                    "MYSQL_ROOT_PASSWORD": "$$cap_db_pass"
                 }
             }
         }
