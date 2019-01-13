@@ -54,7 +54,7 @@
     },
     "instructions":{
         "start":"API creation made simple, secure and fast. The most advanced open-source Content Management Framework to build powerful API with no effort. Read more here: https://strapi.io ",
-        "end":"Strapi is deployed and available as $$cap_appname"
+        "end":"Strapi is deployed and available as $$cap_appname \n IMPORTANT!! It takes up to 2 minutes for Strapi to boot up. You will see 502 Error until the startup is finished."
     },
     "variables": [
     {
