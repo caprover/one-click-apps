@@ -11,6 +11,7 @@
                 "depends_on": [
                     "$$cap_appname-mongo"
                 ],
+                "containerHttpPort": "1337",
                 "image": "strapi/strapi:$$cap_strapi_version",
                 "volumes": [
                     "$$cap_appname-data:/usr/src/api/strapi-app"
@@ -18,7 +19,6 @@
                 "restart": "always",
                 "environment":
                 {
-                    "PORT": "80",
                     "APP_NAME": "$$cap_appname",
                     "DATABASE_CLIENT": "mongo",
                     "DATABASE_HOST": "srv-captain--$$cap_appname-mongo",
@@ -27,7 +27,7 @@
                     "DATABASE_USERNAME": "root",
                     "DATABASE_PASSWORD": "$$cap_mongo_password",
                     "HOST": "localhost",
-                    "DATABASE_AUTHENTICATION_DATABASE": "strapi"
+                    "DATABASE_AUTHENTICATION_DATABASE": "admin"
                 }
             },
             "$$cap_appname-mongo":

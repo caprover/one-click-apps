@@ -8,12 +8,8 @@
         {
             "$$cap_appname":
             {
-                "dockerfileLines": [
-                        "FROM adminer:$$cap_adminer_version",
-                        "USER root",
-                        "EXPOSE 80",
-                        "CMD ['php', '-S', '[::]:80', '-t', '/var/www/html' ]"
-                ],
+                "image": "adminer:$$cap_adminer_version",
+                "containerHttpPort": "8080",
                 "restart": "always",
                 "environment":
                 {

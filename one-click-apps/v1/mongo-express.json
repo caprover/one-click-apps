@@ -8,11 +8,8 @@
         {
             "$$cap_appname":
             {
-                "dockerfileLines": [
-                        "FROM mongo-express:$$cap_mongoexpress_version",
-                        "ENV VCAP_APP_PORT=80",
-                        "EXPOSE 80"
-                ],
+                "image": "mongo-express:$$cap_mongoexpress_version",
+                "containerHttpPort": "8081",
                 "restart": "always",
                 "environment":
                 {
