@@ -1,0 +1,23 @@
+{
+  "name": "testing-v1-one-click-apps",
+  "version": "1.0.0",
+  "description": "Process: - Find/create a docker-compose file for the one click app - Convert yaml file to json - Copy the content into the structure as [wordpress.json](https://github.com/githubsaturn/testing-v1-one-click-apps/blob/master/one-click-apps/v1/wordpress.json)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/githubsaturn/testing-v1-one-click-apps.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/githubsaturn/testing-v1-one-click-apps/issues"
+  },
+  "homepage": "https://github.com/githubsaturn/testing-v1-one-click-apps#readme",
+  "dependencies": {
+    "fs-extra": "^7.0.1",
+    "gh-pages": "^2.0.1"
+  }
+}
