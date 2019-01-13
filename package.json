@@ -2,7 +2,7 @@
   "name": "CapRover-one-click-apps",
   "version": "1.0.0",
   "description": "One Click App Repository for CapRover",
-  "main": "index.js",
+  "main": "build_and_publish_to_github_pages.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
