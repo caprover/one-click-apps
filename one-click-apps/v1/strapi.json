@@ -18,6 +18,7 @@
                 "restart": "always",
                 "environment":
                 {
+                    "PORT": "80",
                     "APP_NAME": "$$cap_appname",
                     "DATABASE_CLIENT": "mongo",
                     "DATABASE_HOST": "srv-captain--$$cap_appname-mongo",
