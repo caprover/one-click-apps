@@ -1,6 +1,6 @@
 {
     "captainVersion": "1",
-    "documentation": "Taken from https://hub.docker.com/_/adminer except it is manually adjusted for port 80",
+    "documentation": "Taken from https://hub.docker.com/_/adminer ",
     "dockerCompose":
     {
         "version": "3.3",
@@ -35,13 +35,13 @@
         "id": "$$cap_adminer_design",
         "label": "OPTIONAL: Adminer Design",
         "description": "List of designs: https://github.com/vrana/adminer/tree/master/designs",
-        "validRegex": "/^([a-zA-Z0-9-.])+$/"
+        "validRegex": "/^([a-zA-Z0-9-.])*$/"
     },
     {
         "id": "$$cap_adminer_plugins",
         "label": "OPTIONAL: Adminer plugins (space separated)",
         "defaultValue": "",
-        "validRegex": "/^([a-zA-Z0-9-.\\s])+$/"
+        "validRegex": "/^([a-zA-Z0-9-.\\s])*$/"
     }]
 
 }
