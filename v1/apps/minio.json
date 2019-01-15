@@ -20,7 +20,7 @@
                 "environment":
                 {
                     "MINIO_ACCESS_KEY": "$$cap_access_key",
-                    "MINIO_SECRET_KEY": "$$cap_secret_key",
+                    "MINIO_SECRET_KEY": "$$cap_secret_key"
                 }
             }
         }
@@ -41,14 +41,14 @@
         "id": "$$cap_access_key",
         "label": "Minio Access Key",
         "defaultValue": "latest",
-        "description": "Username to acess minio server",
+        "description": "Username to access minio server",
         "validRegex": "/.{5,}/"
     },
     {
         "id": "$$cap_secret_key",
         "label": "Minio Secret Key",
         "defaultValue": "latest",
-        "description": "Password to acess minio server",
+        "description": "Password to access minio server",
         "validRegex": "/.{8,}/"
     }]
 
