@@ -10,7 +10,7 @@
             {
                 "dockerfileLines": [
                         "FROM minio/minio:$$cap_minio_version",
-                        "CMD minio server /data"
+                        "CMD [\"minio\", \"server\", \"/data\"]"
                 ],
                 "volumes": [
                     "$$cap_appname-db-data:/data",
