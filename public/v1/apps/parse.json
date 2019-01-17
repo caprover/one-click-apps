@@ -26,10 +26,11 @@
                     "$$cap_appname-mongodb"
                 ],
                 "image": "parseplatform/parse-server:$$cap_parse_version",
+                "containerHttpPort": "8080",
                 "restart": "always",
                 "environment":
                 {
-                    "PORT": "80",
+                    "PORT": "8080",
                     "PARSE_SERVER_APPLICATION_ID": "$$cap_app_id",
                     "PARSE_SERVER_MASTER_KEY": "$$cap_master_key",
                     "PARSE_SERVER_DATABASE_URI": "mongodb://root:$$cap_mongo_password@srv-captain--$$cap_appname-mongodb:27017/parse?authSource=admin"
