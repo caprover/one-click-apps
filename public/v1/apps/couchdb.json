@@ -6,6 +6,7 @@
         "services": {
             "$$cap_appname": {
                 "image": "couchdb:$$cap_couchdb_version",
+                "containerHttpPort": "5984",
                 "volumes": [
                     "$$cap_appname-db-data:/opt/couchdb/data",
                     "$$cap_appname-db-etc:/opt/couchdb/etc"
