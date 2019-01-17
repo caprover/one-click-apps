@@ -1,13 +1,10 @@
 {
     "captainVersion": "1",
     "documentation": "Taken from https://github.com/strapi/strapi-docker/blob/master/docker-compose.yml",
-    "dockerCompose":
-    {
+    "dockerCompose": {
         "version": "3.3",
-        "services":
-        {
-            "$$cap_appname-core":
-            {
+        "services": {
+            "$$cap_appname-core": {
                 "depends_on": [
                     "$$cap_appname-mongo"
                 ],
@@ -17,8 +14,7 @@
                     "$$cap_appname-data:/usr/src/api/strapi-app"
                 ],
                 "restart": "always",
-                "environment":
-                {
+                "environment": {
                     "APP_NAME": "$$cap_appname",
                     "DATABASE_CLIENT": "mongo",
                     "DATABASE_HOST": "srv-captain--$$cap_appname-mongo",
@@ -30,52 +26,48 @@
                     "DATABASE_AUTHENTICATION_DATABASE": "admin"
                 }
             },
-            "$$cap_appname-mongo":
-            {
+            "$$cap_appname-mongo": {
                 "image": "mongo:$$cap_mongo_version",
                 "volumes": [
                     "$$cap_appname-mongo-data:/data/db",
                     "$$cap_appname-mongo-config:/data/configdb"
                 ],
                 "restart": "always",
-                "environment":
-                {
+                "environment": {
                     "MONGO_INITDB_DATABASE": "strapi",
                     "MONGO_INITDB_ROOT_USERNAME": "root",
                     "MONGO_INITDB_ROOT_PASSWORD": "$$cap_mongo_password"
                 }
             }
         },
-        "volumes":
-        {
-            "db_data":
-            {}
+        "volumes": {
+            "db_data": {}
         }
     },
-    "instructions":{
-        "start":"API creation made simple, secure and fast. The most advanced open-source Content Management Framework to build powerful API with no effort. Read more here: https://strapi.io ",
-        "end":"Strapi is deployed and available as $$cap_appname-core \n IMPORTANT!! It takes up to 2 minutes for Strapi to boot up. You will see 502 Error until the startup is finished."
+    "instructions": {
+        "start": "API creation made simple, secure and fast. The most advanced open-source Content Management Framework to build powerful API with no effort. Read more here: https://strapi.io ",
+        "end": "Strapi is deployed and available as $$cap_appname-core \n IMPORTANT!! It takes up to 2 minutes for Strapi to boot up. You will see 502 Error until the startup is finished."
     },
-    "variables": [
-    {
-        "id": "$$cap_strapi_version",
-        "label": "Strapi Version",
-        "defaultValue": "v3.0.0-alpha.14.5",
-        "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/strapi/strapi/tags/",
-        "validRegex": "/.{1,}/"
-    },
-    {
-        "id": "$$cap_mongo_version",
-        "label": "MongoDB Version",
-        "defaultValue": "4",
-        "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/library/mongo/tags/",
-        "validRegex": "/^([a-zA-Z0-9])+$/"
-    },
-    {
-        "id": "$$cap_mongo_password",
-        "label": "MongoDB password",
-        "description": "Only use alphanumeric chars.",
-        "validRegex": "/^([a-zA-Z0-9])+$/"
-    }]
+    "variables": [{
+            "id": "$$cap_strapi_version",
+            "label": "Strapi Version",
+            "defaultValue": "v3.0.0-alpha.14.5",
+            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/strapi/strapi/tags/",
+            "validRegex": "/.{1,}/"
+        },
+        {
+            "id": "$$cap_mongo_version",
+            "label": "MongoDB Version",
+            "defaultValue": "4",
+            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/library/mongo/tags/",
+            "validRegex": "/^([a-zA-Z0-9])+$/"
+        },
+        {
+            "id": "$$cap_mongo_password",
+            "label": "MongoDB password",
+            "description": "Only use alphanumeric chars.",
+            "validRegex": "/^([a-zA-Z0-9])+$/"
+        }
+    ]
 
 }
