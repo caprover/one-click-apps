@@ -9,6 +9,7 @@
                     "FROM redis:$$cap_redis_version",
                     "CMD exec redis-server --requirepass \"$$cap_redis_password\""
                 ],
+                "notExposeAsWebApp": "true",
                 "volumes": [
                     "$$cap_appname-redis-data:/data"
                 ],

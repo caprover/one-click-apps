@@ -6,6 +6,7 @@
         "services": {
             "$$cap_appname": {
                 "image": "mongo:$$cap_mongo_version",
+                "notExposeAsWebApp": "true",
                 "volumes": [
                     "$$cap_appname-db-data:/data/db",
                     "$$cap_appname-db-config:/data/configdb"
