@@ -28,6 +28,7 @@
             },
             "$$cap_appname-mongo": {
                 "image": "mongo:$$cap_mongo_version",
+                "notExposeAsWebApp": "true",
                 "volumes": [
                     "$$cap_appname-mongo-data:/data/db",
                     "$$cap_appname-mongo-config:/data/configdb"
