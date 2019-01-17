@@ -6,6 +6,7 @@
         "services": {
             "$$cap_appname-db": {
                 "image": "mysql:$$cap_mysql_version",
+                "notExposeAsWebApp": "true",
                 "volumes": [
                     "$$cap_appname-db-data:/var/lib/mysql"
                 ],
