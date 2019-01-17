@@ -1,30 +1,24 @@
 {
     "captainVersion": "1",
     "documentation": "Taken from https://hub.docker.com/_/nextcloud",
-    "dockerCompose":
-    {
+    "dockerCompose": {
         "version": "3.3",
-        "services":
-        {
-            "$$cap_appname":
-            {
+        "services": {
+            "$$cap_appname": {
                 "image": "nextcloud:$$cap_nextcloud_version",
                 "volumes": [
                     "$$cap_appname-data:/var/www/html"
                 ],
                 "restart": "always",
-                "environment":
-                {
-                }
+                "environment": {}
             }
         }
     },
-    "instructions":{
-        "start":"A safe home for all your data. Access & share your files, calendars, contacts, mail & more from any device, on your terms. http://Nextcloud.com",
-        "end":"'NextCloud is deployed and available as $$cap_appname"
+    "instructions": {
+        "start": "A safe home for all your data. Access & share your files, calendars, contacts, mail & more from any device, on your terms. http://Nextcloud.com",
+        "end": "'NextCloud is deployed and available as $$cap_appname"
     },
-    "variables": [
-    {
+    "variables": [{
         "id": "$$cap_nextcloud_version",
         "label": "NextCloud Version",
         "defaultValue": "15",
