@@ -28,7 +28,7 @@
             "label": "MongoDB Version",
             "defaultValue": "4",
             "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/library/mongo/tags/",
-            "validRegex": "/^(\d+\.)?(\d+\.)?(\*|\d+)$"
+            "validRegex": "/^([^\\s^\\/])+$/"
         },
         {
             "id": "$$cap_mongo_username",
@@ -40,8 +40,8 @@
         {
             "id": "$$cap_mongo_password",
             "label": "MongoDB password",
-            "description": "Must contain at least 1 lowercase alphabetical character,  at least 1 uppercase alphabetical character, at least 1 numeric character, contain at least one special character,the string must be eight characters or longer",
-            "validRegex": "/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})"
+            "description": "Only use alphanumeric chars.",
+            "validRegex": "/^([a-zA-Z0-9])+$/"
         }
     ]
 
