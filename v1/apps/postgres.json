@@ -29,7 +29,7 @@
             "label": "Postgres Version",
             "defaultValue": "9.6",
             "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/",
-            "validRegex": "/.{1,}/"
+            "validRegex": "/^([^\\s^\\/])+$/"
         },
         {
             "id": "$$cap_pg_user",
