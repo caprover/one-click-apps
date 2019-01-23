@@ -42,7 +42,7 @@
             "label": "MongoDB Version",
             "defaultValue": "4",
             "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/library/mongo/tags/",
-            "validRegex": "/^([a-zA-Z0-9])+$/"
+            "validRegex": "/^([^\\s^\\/])+$/"
         },
         {
             "id": "$$cap_mongo_password",
@@ -55,7 +55,7 @@
             "label": "Parse Version",
             "defaultValue": "3.1.3",
             "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/parseplatform/parse-server/tags",
-            "validRegex": "/^([a-zA-Z0-9\\.])+$/"
+            "validRegex": "/^([^\\s^\\/])+$/"
         },
         {
             "id": "$$cap_app_id",

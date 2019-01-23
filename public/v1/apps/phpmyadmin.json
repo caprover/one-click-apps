@@ -22,7 +22,7 @@
         "label": "PHP My Admin Version Tag",
         "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/phpmyadmin/phpmyadmin/tags/",
         "defaultValue": "4.8",
-        "validRegex": "/^([a-zA-Z0-9-.])+$/"
+        "validRegex": "/^([^\\s^\\/])+$/"
     }]
 
 }

@@ -23,7 +23,7 @@
         "label": "NextCloud Version",
         "defaultValue": "15",
         "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/library/nextcloud/tags/",
-        "validRegex": "/.{1,}/"
+        "validRegex": "/^([^\\s^\\/])+$/"
     }]
 
 }

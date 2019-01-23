@@ -31,7 +31,7 @@
             "label": "Minio Version",
             "defaultValue": "latest",
             "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/minio/minio/tags/",
-            "validRegex": "/.{1,}/"
+            "validRegex": "/^([^\\s^\\/])+$/"
         },
         {
             "id": "$$cap_access_key",
