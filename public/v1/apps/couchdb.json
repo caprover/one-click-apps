@@ -13,8 +13,8 @@
                 ],
                 "restart": "always",
                 "environment": {
-                    "ADMINER_PLUGINS": "$$cap_couchdb_user",
-                    "ADMINER_DESIGN": "$$cap_couchdb_password"
+                    "COUCHDB_USER": "$$cap_couchdb_user",
+                    "COUCHDB_PASSWORD": "$$cap_couchdb_password"
                 }
             }
         }
