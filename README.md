@@ -11,3 +11,12 @@ Process:
 - Other than `image`, `environment`, `ports`, `volumes`, `depends_on`, other parameters are ignored. Make sure they are not important.
 - Instead of image in a service, you can use `dockerfileLines` which is an array of strings.
 - Some webapps, use a non-standard HTTP port. For example, Adminer's Docker image uses port 8080. In this case, add `containerHttpPort` to the service. See [adminer.json](https://github.com/caprover/one-click-apps/blob/master/v1/apps/adminer.json) for example.
+
+
+## Test your One Click Apps
+After creating your One-Click app json, you need to test it before creating a Pull Request. Here is how you test it:
+- Login to your CapRover dashboard
+- Go to apps and click on Create One Click App
+- Select the last option from the dropdown list "TEMPLATE"
+- Copy and paste your JSON there, and click NEXT.
+- Enter values and make sure it's working as expected.
