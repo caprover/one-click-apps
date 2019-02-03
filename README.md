@@ -14,7 +14,7 @@ Process:
 
 
 ## Test your One Click Apps
-After creating your One-Click app json, you need to test it before creating a Pull Request. Here is how you test it:
+After creating your One-Click app json, like [this](https://github.com/caprover/one-click-apps/blob/master/public/v1/apps/adminer.json), you need to test it before creating a Pull Request. Here is how you test it:
 - Login to your CapRover dashboard
 - Go to apps and click on Create One Click App
 - Select the last option from the dropdown list "TEMPLATE"
