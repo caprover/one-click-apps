@@ -4,7 +4,7 @@
   "description": "One Click App Repository for CapRover",
   "main": "build_and_publish_to_github_pages.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "publish": "node ./npm_run_puplish.js"
   },
   "repository": {
     "type": "git",
