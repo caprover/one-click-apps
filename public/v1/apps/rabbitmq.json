@@ -13,7 +13,8 @@
                 "restart": "always",
                 "environment": {
                     "RABBITMQ_DEFAULT_USER": "$$cap_rabbitmq_user",
-                    "RABBITMQ_DEFAULT_PASS": "$$cap_rabbitmq_password"
+                    "RABBITMQ_DEFAULT_PASS": "$$cap_rabbitmq_password",
+                    "RABBITMQ_NODENAME": "$$cap_rabbitmq_nodename"
                 }
             }
         }
@@ -40,7 +41,13 @@
             "label": "RabbitMQ Default Password",
             "description": "",
             "validRegex": "/.{1,}/"
+        },
+        {
+            "id": "$$cap_rabbitmq_nodename",
+            "label": "RabbitMQ Nodename",
+            "description": "Nodename is appended to the end of the database directory.",
+            "defaultValue": "rabbit@localhost",
+            "validRegex": "/.{1,}/"
         }
     ]
-
 }
