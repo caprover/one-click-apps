@@ -20,7 +20,7 @@
         }
     },
     "instructions": {
-        "start": "MongoDB is a cross-platform document-oriented database. Classified as a NoSQL database program, MongoDB uses JSON-like documents with schemas. \n\n After installation on CaptainDuckDuck, it will be available as srv-captain--YOUR_CONTAINER_NAME at port 27017 to other CaptainDuckDuck apps.\n\n Enter your MongoDB Configuration parameters and click on next. It will take about a minute for the process to finish.",
+        "start": "MongoDB is a cross-platform document-oriented database. Classified as a NoSQL database program, MongoDB uses JSON-like documents with schemas. \n\n After installation on CapRover, it will be available as srv-captain--YOUR_CONTAINER_NAME at port 27017 to other CaptainDuckDuck apps.\n\n Enter your MongoDB Configuration parameters and click on next. It will take about a minute for the process to finish.",
         "end": "MongoDB is deployed and available as srv-captain--$$cap_appname:27017 to other apps. For example with NodeJS: mongoose.connect('mongodb://srv-captain--$$cap_appname/mydatabase', {userMongoClient: true});"
     },
     "variables": [{
