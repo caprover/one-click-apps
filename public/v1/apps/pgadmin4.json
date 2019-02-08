@@ -1,0 +1,29 @@
+{
+    "captainVersion": "1",
+    "documentation": "Taken from https://hub.docker.com/r/thajeztah/pgadmin4 ",
+    "dockerCompose": {
+        "version": "3.3",
+        "services": {
+            "$$cap_appname": {
+                "image": "thajeztah/pgadmin4:$$cap_pgadmin4_version",
+                "containerHttpPort": "5050",
+                "restart": "always",
+                "volumes": [
+                    "$$cap_appname-data:/pgadmin"
+                ]
+            }
+        }
+    },
+    "instructions": {
+        "start": "pgAdmin is the most popular and feature rich Open Source administration and development platform for PostgreSQL, the most advanced Open Source database in the world.\n\n  Enter your Configuration parameters and click on next. It will take about a minute for the process to finish.",
+        "end": "pgAdmin is deployed and available as $$cap_appname"
+    },
+    "variables": [{
+            "id": "$$cap_pgadmin4_version",
+            "label": "Version Tag",
+            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/thajeztah/pgadmin4/tags/",
+            "defaultValue": "3.6",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        }
+    ]
+}
