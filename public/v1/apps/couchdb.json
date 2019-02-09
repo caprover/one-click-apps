@@ -20,7 +20,7 @@
         }
     },
     "instructions": {
-        "start": "CouchDB is a database that uses JSON for documents, an HTTP API, & JavaScript/declarative indexing.\n\n After installation on CaptainDuckDuck, it will be available as srv-captain--YOUR_CONTAINER_NAME at port 5984 to other CaptainDuckDuck apps.\n\nEnter your CouchDB Configuration parameters and click on next. It will take about a minute for the process to finish.",
+        "start": "CouchDB is a database that uses JSON for documents, an HTTP API, & JavaScript/declarative indexing.\n\n After installation on CapRover, it will be available as srv-captain--YOUR_CONTAINER_NAME at port 5984 to other CapRover apps.\n\nEnter your CouchDB Configuration parameters and click on next. It will take about a minute for the process to finish.",
         "end": "CouchDB is deployed and available as $$cap_appname at port 5984 to other apps"
     },
     "variables": [{
