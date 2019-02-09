@@ -35,7 +35,7 @@
         {
             "id": "$$cap_me_server_address",
             "label": "MongoDB Server Address",
-            "description": "If MongoDB is created by CaptainDuckDuck, use srv-captain--REPLACE_THIS_WITH_CONTAINER_NAME",
+            "description": "If MongoDB is created by CapRover, use srv-captain--REPLACE_THIS_WITH_CONTAINER_NAME",
             "validRegex": "/.{1,}/"
         },
         {
