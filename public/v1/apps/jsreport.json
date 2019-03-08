@@ -11,7 +11,7 @@
                     "$$cap_appname-db-config:/data/configdb"
                 ],
                 "restart": "always",
-				"containerHttpPort": "8080",
+				"containerHttpPort": "5488",
                 "environment": {
                     "extensions_authentication_admin_username": "$$cap_jsreport_adminusername",
                     "extensions_authentication_admin_password": "$$cap_jsreport_password",
@@ -22,7 +22,7 @@
     },
     "instructions": {
         "start": "Reporting tools for creating PDF, HTMLS, Excel by converting your HTML + CSS + Javascript knowledge.",
-        "end": "You need to set the port 5488 on container http port so you can use it outside."
+        "end": "Congratulations! You have the new jsReport instance running. Happy reporting!"
     },
     "variables": [{
             "id": "$$cap_jsreport_version",
