@@ -40,7 +40,7 @@
         },
         {
             "id": "$$cap_jsreport_password",
-            "label": "Admin password password",
+            "label": "Admin password",
             "validRegex": "/^\\s*\\S.*$/"
         },
 		 {
