@@ -27,7 +27,7 @@
     "variables": [{
             "id": "$$cap_jsreport_version",
             "label": "version",
-            "defaultValue": "latest-full",
+            "defaultValue": "2.4.0-full",
             "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/jsreport/jsreport/tags",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
