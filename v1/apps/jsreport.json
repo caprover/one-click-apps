@@ -5,17 +5,16 @@
         "version": "3.3",
         "services": {
             "$$cap_appname": {
-                "image": "jsreport/jsreport:$$cap_jsreport_version",                
+                "image": "jsreport/jsreport:$$cap_jsreport_version",
                 "volumes": [
-                    "$$cap_appname-db-data:/data/db",
-                    "$$cap_appname-db-config:/data/configdb"
+                    "$$cap_appname-data:/jsreport"
                 ],
                 "restart": "always",
-				"containerHttpPort": "5488",
+                "containerHttpPort": "5488",
                 "environment": {
                     "extensions_authentication_admin_username": "$$cap_jsreport_adminusername",
                     "extensions_authentication_admin_password": "$$cap_jsreport_password",
-					          "extensions_authentication_cookieSession_secret": "$$cap_jsreport_secret"
+                    "extensions_authentication_cookieSession_secret": "$$cap_jsreport_secret"
                 }
             }
         }
@@ -43,10 +42,10 @@
             "label": "Admin password",
             "validRegex": "/^\\s*\\S.*$/"
         },
-		 {
+        {
             "id": "$$cap_jsreport_secret",
             "label": "Session secret",
-			"defaultValue": "long-secret",
+            "defaultValue": "long-secret",
             "validRegex": "/^\\s*\\S.*$/"
         }
     ]
