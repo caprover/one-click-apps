@@ -1,0 +1,79 @@
+{
+    "captainVersion": "1",
+    "documentation": "Built from scract (https://github.com/nightscout/cgm-remote-monitor)",
+    "dockerCompose": {
+        "version": "3.3",
+        "services": {
+            "$$cap_appname-mongodb": {
+                "image": "mongo:$$cap_mongo_version",
+                "notExposeAsWebApp": "true",
+                "volumes": [
+                    "$$cap_appname-db-data:/data/db",
+                    "$$cap_appname-db-config:/data/configdb"
+                ],
+                "restart": "always",
+                "environment": {
+                    "MONGO_INITDB_ROOT_USERNAME": "root",
+                    "MONGO_INITDB_ROOT_PASSWORD": "$$cap_mongo_password"
+                }
+            },
+            "$$cap_appname-nightscout": {
+                "depends_on": [
+                    "$$cap_appname-mongodb"
+                ],
+                "dockerfileLines": [
+                    "FROM node:10",
+                    "RUN mkdir -p /opt/app",
+                    "WORKDIR /opt/app",
+                    "RUN git clone git://github.com/nightscout/cgm-remote-monitor.git /opt/app",
+                    "RUN cd /opt/app &&  git checkout $$cap_nighscout_version && rm -rf .git",
+                    "RUN cd /opt/app && npm install && npm run postinstall && npm run env",
+                    "EXPOSE 1337",
+                    "CMD [\"node\", \"server.js\"]"
+                ],
+                "containerHttpPort": "1337",
+                "restart": "always",
+                "environment": {
+                    "PORT": "1337",
+                    "INSECURE_USE_HTTP": "true",
+                    "MONGO_CONNECTION": "mongodb://root:$$cap_mongo_password@srv-captain--$$cap_appname-mongodb:27017/nightscout?authSource=admin",
+                    "API_SECRET": "$$cap_api_secret",
+                    "BASE_URL": "https://replace.me.in.settings.of.website.com",
+                    "DISPLAY_UNITS": "mg/dl"
+                }
+            }
+        }
+    },
+    "instructions": {
+        "start": "Nightscout acts as a web-based CGM (Continuous Glucose Monitor) to allow multiple caregivers to remotely view a patient's glucose data in real time.",
+        "end": "Nightscout is deployed and available as $$cap_appname-nightscout."
+    },
+    "variables": [{
+            "id": "$$cap_mongo_version",
+            "label": "MongoDB Version",
+            "defaultValue": "4",
+            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/library/mongo/tags/",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        },
+        {
+            "id": "$$cap_mongo_password",
+            "label": "MongoDB password",
+            "description": "Only use alphanumeric chars.",
+            "validRegex": "/^([a-zA-Z0-9])+$/"
+        },
+        {
+            "id": "$$cap_nighscout_version",
+            "label": "Nighscout Version",
+            "defaultValue": "0.11.1",
+            "description": "Checkout their page for the valid tags https://github.com/nightscout/cgm-remote-monitor/releases",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        },
+        {
+            "id": "$$cap_api_secret",
+            "label": "API key",
+            "description": "Use a random string (alphanumberic) - minimum 12 characters. See documentation for more details.",
+            "validRegex": "/^([a-zA-Z0-9]){12,}$/"
+        }
+    ]
+
+}
