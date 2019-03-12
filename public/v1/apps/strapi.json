@@ -20,7 +20,7 @@
                     "CMD [\"./strapi.sh\"]"
                 ],
                 "volumes": [
-                    "$$cap_appname-data:/usr/src/api/strapi-app"
+                    "$$cap_appname-data:/usr/src/api/$$cap_appname"
                 ],
                 "restart": "always",
                 "environment": {
