@@ -9,7 +9,16 @@
                     "$$cap_appname-mongo"
                 ],
                 "containerHttpPort": "1337",
-                "image": "strapi/strapi:$$cap_strapi_version",
+                "dockerfileLines": [
+                    "FROM node:11.1.0-alpine",
+                    "WORKDIR /usr/src/api",
+                    "RUN echo \"unsafe-perm = true\" >> ~/.npmrc",
+                    "RUN npm install -g strapi@$$cap_strapi_version",
+                    "ADD https://raw.githubusercontent.com/strapi/strapi-docker/b0b3cab55b993c00690b249a89e09b3db7073fca/strapi.sh ./strapi.sh",
+                    "RUN chmod +x ./strapi.sh",
+                    "EXPOSE 1337",
+                    "CMD [\"./strapi.sh\"]"
+                ],
                 "volumes": [
                     "$$cap_appname-data:/usr/src/api/strapi-app"
                 ],
@@ -52,8 +61,8 @@
     "variables": [{
             "id": "$$cap_strapi_version",
             "label": "Strapi Version",
-            "defaultValue": "v3.0.0-alpha.14.5",
-            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/strapi/strapi/tags/",
+            "defaultValue": "3.0.0-alpha.24.1",
+            "description": "Checkout their github page for the valid versions https://github.com/strapi/strapi/releases",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
         {
