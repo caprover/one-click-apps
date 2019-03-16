@@ -1,11 +1,11 @@
 {
     "captainVersion": "1",
-    "documentation": "Taken from https://hub.docker.com/r/apsl/thumbor/tags/",
+    "documentation": "Taken from https://hub.docker.com/r/minimalcompact/thumbor/tags/",
     "dockerCompose": {
         "version": "3.3",
         "services": {
             "$$cap_appname-db": {
-                "image": "apsl/thumbor:$$cap_thumbor_version",
+                "image": "minimalcompact/thumbor:$$cap_thumbor_version",
                 "volumes": [
                     "$$cap_appname-thumbor:/data"
                 ],
@@ -23,8 +23,8 @@
     "variables": [{
         "id": "$$cap_thumbor_version",
         "label": "Thumbor Version",
-        "defaultValue": "6.4.2",
-        "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/apsl/thumbor/tags/",
+        "defaultValue": "6.7.0",
+        "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/minimalcompact/thumbor/tags/",
         "validRegex": "/^([^\\s^\\/])+$/"
     }]
 
