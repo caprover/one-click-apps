@@ -98,14 +98,14 @@
          "validRegex":"/^(?=.*\\d).{10,}$/"
       },
       {
-         "defaultValue":"example.com/blog",
+         "defaultValue":"blog.example.com",
          "description":"Enter the URL that is used to access your publication",
          "id":"$$cap_ghost_host",
          "label":"Ghost Host",
          "validRegex":"/^([^\\s^\\/])+$/"
       },
       {
-         "defaultValue":"https",
+         "defaultValue":"http",
          "description":"Protocol that you will be using",
          "id":"$$cap_ghost_protocol",
          "label":"Ghost Protocol",
