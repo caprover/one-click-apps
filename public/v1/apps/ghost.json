@@ -13,6 +13,7 @@
                "GHOST_HOST":"$$cap_ghost_host",
                "GHOST_PASSWORD":"$$cap_ghost_password",
                "GHOST_PROTOCOL":"$$cap_ghost_protocol",
+               "GHOST_PORT_NUMBER": "80",
                "MARIADB_HOST":"srv-captain--$$cap_appname-db",
                "MARIADB_PORT_NUMBER":"3306",
                "SMTP_FROM_ADDRESS":"$$cap_ghost_smtp_from",
@@ -59,7 +60,7 @@
    },
    "variables":[
       {
-         "defaultValue":"latest",
+         "defaultValue":"2.16.4",
          "description":"Checkout their docker page for the valid tags https://hub.docker.com/r/bitnami/ghost/tags",
          "id":"$$cap_ghost_version",
          "label":"Ghost Version",
@@ -98,14 +99,14 @@
          "validRegex":"/^(?=.*\\d).{10,}$/"
       },
       {
-         "defaultValue":"example.com/blog",
+         "defaultValue":"blog.example.com",
          "description":"Enter the URL that is used to access your publication",
          "id":"$$cap_ghost_host",
          "label":"Ghost Host",
          "validRegex":"/^([^\\s^\\/])+$/"
       },
       {
-         "defaultValue":"https",
+         "defaultValue":"http",
          "description":"Protocol that you will be using",
          "id":"$$cap_ghost_protocol",
          "label":"Ghost Protocol",
