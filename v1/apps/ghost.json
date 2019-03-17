@@ -4,7 +4,6 @@
    "dockerCompose":{
       "services":{
          "$$cap_appname":{
-            "containerHttpPort":"2368",
             "environment":{
                "GHOST_DATABASE_NAME":"ghost",
                "GHOST_DATABASE_PASSWORD":"$$cap_db_ghost_password",
@@ -13,6 +12,7 @@
                "GHOST_HOST":"$$cap_ghost_host",
                "GHOST_PASSWORD":"$$cap_ghost_password",
                "GHOST_PROTOCOL":"$$cap_ghost_protocol",
+               "GHOST_PORT_NUMBER": "80",
                "MARIADB_HOST":"srv-captain--$$cap_appname-db",
                "MARIADB_PORT_NUMBER":"3306",
                "SMTP_FROM_ADDRESS":"$$cap_ghost_smtp_from",
