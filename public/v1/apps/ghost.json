@@ -36,7 +36,7 @@
                "MARIADB_ROOT_USER":"$$cap_db_user",
                "MARIADB_USER":"ghost"
             },
-            "image":"bitnami/mariadb:latest",
+            "image":"bitnami/mariadb:10.1",
             "restart":"always",
             "volumes":[
                "$$cap_appname-mariadb-data:/bitnami"
