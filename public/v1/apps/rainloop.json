@@ -26,7 +26,7 @@
             "id": "$$cap_rainloop_version",
             "label": "Rainloop Version",
             "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/hardware/rainloop/tags",
-            "defaultValue": "latest",
+            "defaultValue": "1.12.0",
             "validRegex": "/^([^\\s^\\/])+$/"
         }
     ]
