@@ -1,0 +1,39 @@
+{
+    "captainVersion": "1",
+    "documentation": "ArangoDB",
+    "dockerCompose": {
+        "version": "3.3",
+        "services": {
+            "$$cap_appname-db": {
+                "image": "arangodb:$$cap_arango_version",
+                "containerHttpPort": "8529",
+                "volumes": [
+                    "$$cap_appname-db-data:/var/lib/arangodb3",
+                    "$$cap_appname-db-apps-data:/var/lib/arangodb3-apps"
+                ],
+                "restart": "always",
+                "environment": {
+                    "ARANGO_ROOT_PASSWORD": "$$cap_db_pass"
+                }
+            }
+        }
+    },
+    "instructions": {
+        "start": "ArangoDB is a multi-model, open-source database with flexible data models for documents, graphs, and key-values. Build high performance applications using a convenient SQL-like query language or JavaScript extensions. Use ACID transactions if you require them. Scale horizontally and vertically with a few mouse clicks.",
+        "end": "'ArangoDB' is deployed and available as srv-captain--$$cap_appname-db:8529 to other apps."
+    },
+    "variables": [{
+            "id": "$$cap_arango_version",
+            "label": "ArangoDB Version",
+            "defaultValue": "3.4",
+            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/library/arangodb/tags/",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        },
+        {
+            "id": "$$cap_db_pass",
+            "label": "ArangoDB Root password",
+            "description": "",
+            "validRegex": "/.{1,}/"
+        }
+    ]
+}
