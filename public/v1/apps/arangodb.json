@@ -2,7 +2,7 @@
     "captainVersion": "1",
     "documentation": "ArangoDB",
     "dockerCompose": {
-        "version": "3.4",
+        "version": "3.3",
         "services": {
             "$$cap_appname-db": {
                 "image": "arangodb:$$cap_arango_version",
