@@ -39,7 +39,7 @@
     },
     "instructions": {
         "start": "Drone is a self-service Continuous Delivery platform for busy development teams.\n\n Enter your Drone for Gitea configuration parameters and click on next. The process will take about a minute to finish.",
-        "end": "Drone is deployed and available as $$cap_appname-server.\n\n  IMPORTANT: It will take up to 2 minutes for Gitea to be ready. Before that, you might see 502 error page.\n"
+        "end": "Drone is deployed and available as $$cap_appname-server.\n\n  IMPORTANT: It will take up to 2 minutes for Drone for Gitea to be ready. Before that, you might see 502 error page.\n"
     },
     "variables": [
         {
@@ -94,8 +94,8 @@
         {
             "id": "$$cap_drone_secret",
             "label": "secret for linking drone and agent",
-            "description": "some random secret here",
-            "defaultValue": "awhefhawluhfaergluihaehrgaerh",
+            "description": "some random secret here (min 10 characters)",
+            "defaultValue": "",
             "validRegex": "/.{10,}/"
         }
     ]
