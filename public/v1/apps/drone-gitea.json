@@ -1,6 +1,6 @@
 {
     "captainVersion": "1",
-    "documentation": "Taken from https://hub.docker.com/r/drone/drone/",
+    "documentation": "Taken from https://docs.drone.io/intro/gitea/single-machine/",
     "dockerCompose": {
         "version": "2",
         "services": {
@@ -38,7 +38,7 @@
         }
     },
     "instructions": {
-        "start": "Drone is a self-service Continuous Delivery platform for busy development teams.\n\n Enter your Drone for Gitea configuration parameters and click on next. The process will take about a minute to finish.",
+        "start": "Drone is a self-service Continuous Delivery platform for busy development teams. It can be used with different GIT servers like gogs, gitea as well as services like gitlab and github. This installer is gitea focused and requires a running gitea instances (which you can install via one-click-apps in caprover).\n\n Enter your Drone for Gitea configuration parameters and click on next. The process will take about a minute to finish.",
         "end": "Drone is deployed and available as $$cap_appname-server.\n\n  IMPORTANT: It will take up to 2 minutes for Drone for Gitea to be ready. Before that, you might see 502 error page.\n"
     },
     "variables": [
