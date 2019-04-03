@@ -36,7 +36,7 @@
     },
     "instructions": {
         "end": "Prisma is deployed and available as $$cap_appname.",
-        "start": "Prisma - Database tools for modern application development. This Docker Compose setup runs Prisma along with a MySQL Database."
+        "start": "Prisma - Database tools for modern application development. This setup runs Prisma along with a MySQL Database."
     },
     "variables": [
         {
