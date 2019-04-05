@@ -26,7 +26,7 @@
                     "$$cap_appname-db"
                 ],
                 "environment": {
-                    "PRISMA_CONFIG": "port: 4466\ndatabases:\n  default:\n    connector: mysql\n    host: srv-captain--$$cap_appname-db\n    port: 3306\n    user: root\n    password: $$cap_db_pass\n    migrations: true\n"
+                    "PRISMA_CONFIG": "managementApiSecret: $$cap_management_secret\nport: 4466\ndatabases:\n  default:\n    connector: mysql\n    host: srv-captain--$$cap_appname-db\n    port: 3306\n    user: root\n    password: $$cap_db_pass\n    migrations: true\n"
                 }
             }
         },
@@ -40,10 +40,10 @@
     },
     "variables": [
         {
-            "defaultValue": "1.29",
-            "description": "Checkout their github page for their latest version https://github.com/prisma/prisma",
             "id": "$$cap_prisma_version",
             "label": "Prisma Version",
+            "defaultValue": "1.29",
+            "description": "Checkout their github page for their latest version https://github.com/prisma/prisma",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
         {
@@ -60,9 +60,9 @@
             "validRegex": "/.{1,}/"
         },
         {
-            "description": "To ensure only entitled users are able to perform actions through the Management API",
             "id": "$$cap_management_secret",
             "label": "Prisma Management API secret",
+            "description": "To ensure only entitled users are able to perform actions through the Management API. Minimum 10 characters, at least one letter and one number.",
             "validRegex": "/^(?=.*\\d).{10,}$/"
         }
     ]
