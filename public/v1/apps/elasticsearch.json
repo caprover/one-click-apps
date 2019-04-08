@@ -27,7 +27,7 @@
         }
     },
     "instructions": {
-        "start": "Elasticsearch search engine. Be sure to extend the virtual memory on your host nodes! (increase \"echo 'vm.max_map_count=262144' >> /etc/sysctl.conf\" and restart \"sysctl -p\")",
+        "start": "Elasticsearch search engine. Be sure to extend the virtual memory on all your hosts! (increase \"echo 'vm.max_map_count=262144' >> /etc/sysctl.conf\" and restart \"sysctl -p\")",
         "end": "Elasticsearch is deployed as $$cap_appname. Goto %%cap_host_port/_cat/health to check the health of your cluster."
     },
     "variables": [{
