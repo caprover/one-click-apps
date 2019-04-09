@@ -1,12 +1,11 @@
 {
     "captainVersion": 1,
-    "documentation": "Elasticsearch (Single and Cluster). Taken from docker.elastic.co/elasticsearch/elasticsearch",
+    "documentation": "Elasticsearch is a distributed, RESTful search and analytics engine. This image can be used for single nodes and cluster setups. Look at https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html for further assistance using Elasticsearch with docker.",
     "dockerCompose": {
         "version": "3.3",
         "services": {
             "$$cap_appname": {
                 "image" : "docker.elastic.co/elasticsearch/elasticsearch:$$cap_elasticsearch_version",
-                "notExposeAsWebApp": "true",
                 "volumes": [
                     "$$cap_appname-elasticsearch-data:/usr/share/elasticsearch/data"
                 ],
@@ -20,15 +19,13 @@
                     "discovery.zen.minimum_master_nodes": "$$cap_elasticsearch_minimum_master_nodes",
                     "discovery.zen.ping.unicast.hosts": "$$cap_elasticsearch_unicast_hosts"
                 },
-                "ports": [
-                    "$$cap_host_port:$$cap_container_port"
-                ]
+                "containerHttpPort": "$$cap_container_port"
             }
         }
     },
     "instructions": {
-        "start": "Elasticsearch search engine. Be sure to extend the virtual memory on all your hosts! (increase \"echo 'vm.max_map_count=262144' >> /etc/sysctl.conf\" and restart \"sysctl -p\")",
-        "end": "Elasticsearch is deployed as $$cap_appname. Goto %%cap_host_port/_cat/health to check the health of your cluster."
+        "start": "Elasticsearch startearch engine. Be sure to extend the virtual memory on all your hosts! (increase \"echo 'vm.max_map_count=262144' >> /etc/sysctl.conf\" and restart \"sysctl -p\")",
+        "end": "Deployment of Elasticsearch is finished. You might see 502 errors for the next 2 minutes. Goto <YOUR-APP-URL>/_cat/health to check the health of your cluster."
     },
     "variables": [{
             "id": "$$cap_elasticsearch_version",
@@ -67,16 +64,10 @@
             "defaultValue": "1",
             "validRegex": "/^([0-9])+$/"
         },{
-            "id": "$$cap_host_port",
-            "label": "Host Port",
-            "defaultValue": "9200",
-            "description": "External port of Elasticsearch exposed by the host.",
-            "validRegex": "/^([0-9])+$/"
-        },{
             "id": "$$cap_container_port",
             "label": "Container TCP Port",
             "defaultValue": "9200",
-            "description": "Internal port for Elasticsearch the container listens to.",
+            "description": "Port of of Elasticsearch to be exposed by the container.",
             "validRegex": "/^([0-9])+$/"
         }
     ]
