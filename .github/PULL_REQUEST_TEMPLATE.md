@@ -7,3 +7,4 @@ First of all, thank you for your contribution! 😄
 - [ ] I have ensured that I put as much default values as possible (except passwords) to ensure minimum effort required for end users to get started.
 - [ ] I have ensured that I am not using the "latest" tag as this tag is dynamically changing and might break the one-click app. Use a fixed version.
 - [ ] I have made sure that instructions.start and instructions.end are clear and self-explanatory.
+- [ ] Documentation field contains a link to a page with proper explanations on environmental variables, volumes or the docker compose file.
