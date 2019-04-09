@@ -67,7 +67,7 @@
             "id": "$$cap_container_port",
             "label": "Container TCP Port",
             "defaultValue": "9200",
-            "description": "Port of of Elasticsearch to be exposed by the container.",
+            "description": "Internal port for Elasticsearch the container listens to.",
             "validRegex": "/^([0-9])+$/"
         }
     ]
