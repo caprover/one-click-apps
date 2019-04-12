@@ -1,0 +1,28 @@
+{
+    "captainVersion": "1",
+    "documentation": "Taken from https://github.com/caprover/nginx-reverse-proxy",
+    "dockerCompose": {
+        "version": "3.3",
+        "services": {
+            "$$cap_appname": {
+                "image": "caprover/nginx-reverse-proxy:latest",
+                "restart": "always",
+                "environment": {
+                    "UPSTREAM_HTTP_ADDRESS": "$$UPSTREAM_HTTP_ADDRESS"
+                }
+            }
+        }
+    },
+    "instructions": {
+        "start": "This is a very simply reverse proxy image. It forwards all HTTP requests to the HTTP address that you define.",
+        "end": "Reverse Proxy is deployed and available as $$cap_appname"
+    },
+    "variables": [{
+        "id": "$$UPSTREAM_HTTP_ADDRESS",
+        "label": "Upstream address",
+        "description": "For example use https://caprover.com to forward all request to CapRover. If you're forwarding http requests to a CapRover internal app use http://srv-captain--yourappnamehere",
+        "defaultValue": "",
+        "validRegex": "/^(http:\\/\\/|https:\\/\\/)\\S*$/"
+    }]
+
+}
