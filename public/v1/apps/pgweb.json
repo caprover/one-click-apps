@@ -1,6 +1,6 @@
 {
     "captainVersion": "1",
-    "documentation": "pgweb",
+    "documentation": "See https://hub.docker.com/r/sosedoff/pgweb for details",
     "dockerCompose": {
         "version": "3.3",
         "services": {
