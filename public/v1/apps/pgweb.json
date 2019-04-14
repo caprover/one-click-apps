@@ -1,0 +1,26 @@
+{
+    "captainVersion": "1",
+    "documentation": "pgweb",
+    "dockerCompose": {
+        "version": "3.3",
+        "services": {
+            "$$cap_appname": {
+                "image": "sosedoff/pgweb:$$cap_pgweb_version",
+                "containerHttpPort": "8081",
+                "restart": "always"
+            }
+        }
+    },
+    "instructions": {
+        "start": "pgweb is a web-based database browser for PostgreSQL, written in Go.",
+        "end": "'pgweb' is deployed."
+    },
+    "variables": [{
+            "id": "$$cap_pgweb_version",
+            "label": "pgweb Version",
+            "defaultValue": "0.11.2",
+            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/sosedoff/pgweb/tags",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        }
+    ]
+}
