@@ -24,7 +24,7 @@
             "id": "$$cap_vsts_version",
             "label": "VSTS Version Tag",
             "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/microsoft/vsts-agent/tags/",
-            "defaultValue": "ubuntu-16.04",
+            "defaultValue": "ubuntu-16.04-standard",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
         {
