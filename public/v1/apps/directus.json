@@ -14,10 +14,10 @@
                 "MYSQL_DATABASE": "$$cap_mysql_database_name",
                 "MYSQL_ROOT_PASSWORD": "$$cap_mysql_root_passwd",
                 "MYSQL_USER": "$$cap_mysql_user",
-                "MYSQL_PASSWORD": "$$cap_mysql_user_passwd"
+                "MYSQL_PASSWORD": "$$cap_mysql_passwd"
               },
               "healthcheck": {
-                "test": "mysql -u$$cap_mysql_user -p$$cap_mysql_user_passwd -e \"SHOW DATABASES;\"",
+                "test": "mysql -u$$cap_mysql_user -p$$cap_mysql_passwd -e \"SHOW DATABASES;\"",
                 "interval": "10s",
                 "timeout": "6s",
                 "retries": "10"
@@ -37,7 +37,7 @@
               "DATABASE_HOST": "srv-captain--$$cap_appname-db",
               "DATABASE_NAME": "$$cap_mysql_database_name",
               "DATABASE_USERNAME": "$$cap_mysql_user",
-              "DATABASE_PASSWORD":"$$cap_mysql_user_passwd",
+              "DATABASE_PASSWORD":"$$cap_mysql_passwd",
               "ADMIN_EMAIL":"$$cap_directus_admin_username",
               "ADMIN_PASSWORD":"$$cap_directus_admin_passwd"
               }
@@ -87,7 +87,7 @@
       {
         "description":"User password for the Directus backing database instance.",
         "defaultValue" : "s3curep@ssword",
-        "id":"$$cap_mysql_user_passwd",
+        "id":"$$cap_mysql_passwd",
         "label":"mySQL User Password",
         "validRegex":"/^(?=.*\\d).{10,}$/"
       },         
