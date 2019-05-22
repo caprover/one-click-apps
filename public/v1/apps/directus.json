@@ -106,7 +106,7 @@
         "validRegex":"/^(?=.*\\d).{10,}$/"
       },
       {
-        "description":"A URL in the format of http://appname-api.rootdomain.com/_/. \n The admin web app will connect to the endpoint using this URL.",
+        "description":"A URL in the format of http://appname-api.rootdomain.com. \n The admin web app will connect to the endpoint using this URL.",
         "id":"$$cap_api_endpoint",
         "label":"Directus API Endpoint URL",
         "validRegex": "/.{1,}/"
