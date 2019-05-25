@@ -1,0 +1,30 @@
+{
+    "captainVersion": "1",
+    "documentation": "Taken from https://docs.gitlab.com/runner/install/docker.html and https://docs.gitlab.com/runner/register/",
+    "dockerCompose": {
+        "version": "3",
+        "services": {
+          "$$cap_appname": {
+            "image": "gitlab/gitlab-runner:$$cap_gitlab-runner_version",
+            "notExposeAsWebApp": "true",
+            "volumes": [
+              "$$cap_appname-data:/etc/gitlab-runner",
+              "/var/run/docker.sock:/var/run/docker.sock"
+            ],
+            "restart": "always"
+          }
+        }
+    },
+    "instructions": {
+       "start": "GitLab CI/CD is a tool built into GitLab for software development through the continuous methodologies. With this runner, you take your pipelines into your own hand and get unlimited pipeline runtime.",
+        "end": "Head over to https://docs.gitlab.com/runner/register/ to register your newly installed runner. You can run 'docker exec -ti <runner-image-name> /bin/sh' to connect to the newly created container and follow the tutorial."
+    },
+    "variables": [{
+            "id": "$$cap_gitlab-runner_version",
+            "label": "GitLab-Runner Version",
+            "defaultValue": "v11.11.0",
+            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/gitlab/gitlab-runner/tags",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        }
+    ]
+}
