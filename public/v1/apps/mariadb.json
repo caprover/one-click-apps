@@ -23,7 +23,7 @@
     {
       "id": "$$cap_mysql_version",
       "label": "MariaDB Version",
-      "defaultValue": "latest",
+      "defaultValue": "10.4",
       "description": "Check out their docker page for the valid tags https://hub.docker.com/_/mariadb?tab=tags",
       "validRegex": "/^([^\\s^\\/])+$/"
     },
