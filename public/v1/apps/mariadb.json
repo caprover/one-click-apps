@@ -5,7 +5,10 @@
     "version": "3.1",
     "services": {
       "$$cap_appname-db": {
-        "image": "mariadb:$$cap_mysql_version",
+        "dockerfileLines": [
+          "FROM mariadb:$$cap_mysql_version",
+          "CMD [\"--character-set-server=$$cap_charset\", \"--collation-server=$$cap_collation\", \"--skip-character-set-client-handshake\"]"
+        ],
         "notExposeAsWebApp": "true",
         "volumes": ["$$cap_appname-db-data:/var/lib/mariadb"],
         "restart": "always",
@@ -32,6 +35,18 @@
       "label": "MariaDB Root password",
       "description": "",
       "validRegex": "/.{1,}/"
+    },
+    {
+      "id": "$$cap_charset",
+      "label": "Default server character set",
+      "description": "See the MariaDB website for supported character sets (https://mariadb.com/kb/en/library/supported-character-sets-and-collations/#character-sets)",
+      "defaultValue": "utf8mb4"
+    },
+    {
+      "id": "$$cap_collation",
+      "label": "Default server collation",
+      "description": "See the MariaDB website for supported collations (https://mariadb.com/kb/en/library/supported-character-sets-and-collations/#collations)",
+      "defaultValue": "utf8mb4_unicode_ci"
     }
   ]
 }
