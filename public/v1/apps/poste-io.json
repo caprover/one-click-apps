@@ -1,10 +1,11 @@
 {
   "captainVersion": "1",
+  "documentation": "Read the poste.io documentation @ https://poste.io/doc",
   "dockerCompose": {
     "version": "3.7",
     "services": {
       "$$cap_appname": {
-        "image": "analogic/poste.io",
+        "image": "analogic/poste.io:$$cap_poste_version",
         "ports": [
           "25:25",
           "110:110",
@@ -34,6 +35,12 @@
     "end": "Poste is deployed and available as $$cap_appname. \n\n IMPORTANT: It will take up to 2 minutes for Poste to be ready. Before that, you might see 502 error page.\n"
   },
   "variables": [
+    {
+        "id": "$$cap_poste_version",
+        "label": "Poste.io version tag",
+        "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/analogic/poste.io/tags",
+        "defaultValue": "2"
+    },
     {
       "id": "$$cap_email",
       "label": "Email Address",
