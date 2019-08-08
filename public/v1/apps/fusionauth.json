@@ -8,7 +8,6 @@
         "image": "postgres:$$cap_postgres_version",
         "notExposeAsWebApp": "true",
         "environment": {
-          "PGDATA": "/var/lib/postgresql/data/pgdata",
           "POSTGRES_USER": "$$cap_db_user",
           "POSTGRES_PASSWORD": "$$cap_db_pass",
           "POSTGRES_DB": "fusionauth"
