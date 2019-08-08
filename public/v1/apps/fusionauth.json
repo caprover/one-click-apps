@@ -92,7 +92,7 @@
     {
       "id": "$$cap_fusionauth_version",
       "label": "FusionAuth Version",
-      "defaultValue": "latest",
+      "defaultValue": "1.7.2",
       "description": "See tags at: https://hub.docker.com/r/fusionauth/fusionauth-app/tags",
       "validRegex": "/^([^\\s^\\/])+$/"
     },
@@ -106,7 +106,7 @@
     {
       "id": "$$cap_postgres_version",
       "label": "Postgres Version",
-      "defaultValue": "latest",
+      "defaultValue": "9.6",
       "description": "",
       "validRegex": "/^([^\\s^\\/])+$/"
     },
