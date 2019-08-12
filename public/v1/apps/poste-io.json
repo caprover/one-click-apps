@@ -32,7 +32,7 @@
   },
   "instructions": {
     "start": "SMTP + IMAP + POP3 + Antispam + Antivirus\nWeb administration + Web email\n...on your server in ~5 minutes\n\nRecommended: Use\"mail\" as the App Name.",
-    "end": "Poste is deployed and available as $$cap_appname. \n\n IMPORTANT: It will take up to 2 minutes for Poste to be ready. Before that, you might see 502 error page.\n"
+    "end": "Poste is deployed and available as $$cap_appname. \n\n IMPORTANT: It will take up to 2 minutes for Poste to be ready. Before that, you might see 502 error page.\nThe trick to not getting marked as spam is to properly set up the reverse DNS for your server, DKIM, and SPF records."
   },
   "variables": [
     {
