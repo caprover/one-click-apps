@@ -10,7 +10,7 @@
           "CMD [\"--character-set-server=$$cap_charset\", \"--collation-server=$$cap_collation\", \"--skip-character-set-client-handshake\"]"
         ],
         "notExposeAsWebApp": "true",
-        "volumes": ["$$cap_appname-db-data:/var/lib/mariadb"],
+        "volumes": ["$$cap_appname-db-data:/var/lib/mysql"],
         "restart": "always",
         "environment": {
           "MYSQL_ROOT_PASSWORD": "$$cap_db_pass"
