@@ -1,0 +1,55 @@
+{
+  "captainVersion": "2",
+  "documentation": "Read the poste.io documentation @ https://poste.io/doc",
+  "dockerCompose": {
+    "version": "3.7",
+    "services": {
+      "$$cap_appname": {
+        "image": "analogic/poste.io:$$cap_poste_version",
+        "ports": [
+          "25:25",
+          "110:110",
+          "143:143",
+          "465:465",
+          "587:587",
+          "993:993",
+          "995:995",
+          "4190:4190"
+        ],
+        "volumes": [
+          "/etc/localtime:/etc/localtime:ro",
+          "$$cap_appname-data:/data"
+        ],
+        "restart": "always",
+        "environment": {
+          "HTTPS": "OFF",
+          "LETSENCRYPT_EMAIL": "$$cap_email",
+          "LETSENCRYPT_HOST": "$$cap_host",
+          "VIRTUAL_HOST": "$$cap_host"
+        }
+      }
+    }
+  },
+  "instructions": {
+    "start": "SMTP + IMAP + POP3 + Antispam + Antivirus\nWeb administration + Web email\n...on your server in ~5 minutes\n\nRecommended: Use\"mail\" as the App Name.",
+    "end": "Poste is deployed and available as $$cap_appname. \n\n IMPORTANT: It will take up to 2 minutes for Poste to be ready. Before that, you might see 502 error page.\nThe trick to not getting marked as spam is to properly set up the reverse DNS for your server, DKIM, and SPF records."
+  },
+  "variables": [
+    {
+        "id": "$$cap_poste_version",
+        "label": "Poste.io version tag",
+        "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/analogic/poste.io/tags",
+        "defaultValue": "2"
+    },
+    {
+      "id": "$$cap_email",
+      "label": "Email Address",
+      "description": "The email address used for Lets Encrpt certificates."
+    },
+    {
+      "id": "$$cap_host",
+      "label": "Hostname",
+      "description": "The full hostname for this captain app. (usually mail.mydomain.com)"
+    }
+  ]
+}
