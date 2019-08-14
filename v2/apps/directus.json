@@ -1,0 +1,116 @@
+{
+  "captainVersion": "2",
+  "documentation": "Taken from https://github.com/directus/docker.",
+  "dockerCompose": {
+      "version": "7",
+      "services": {
+          "$$cap_appname-db": {
+              "image": "mysql:5.7",
+              "notExposeAsWebApp": "true",
+              "volumes": [
+                  "$$cap_appname-db-data:/var/lib/mysql/"
+              ],
+              "environment": {
+                "MYSQL_DATABASE": "$$cap_mysql_database_name",
+                "MYSQL_ROOT_PASSWORD": "$$cap_mysql_root_passwd",
+                "MYSQL_USER": "$$cap_mysql_user",
+                "MYSQL_PASSWORD": "$$cap_mysql_passwd"
+              },
+              "healthcheck": {
+                "test": "mysql -u$$cap_mysql_user -p$$cap_mysql_passwd -e \"SHOW DATABASES;\"",
+                "interval": "10s",
+                "timeout": "6s",
+                "retries": "10"
+              },
+              "restart": "always"
+          },
+          "$$cap_appname-api": {
+              "depends_on": {
+                "$$cap_appname-db": {
+                  "condition" : "service_healthy"
+                }
+              },
+              "image": "directus/api:2.0.18",
+              "containerHttpPort":"80",
+              "restart": "always",
+              "environment": {
+              "DATABASE_HOST": "srv-captain--$$cap_appname-db",
+              "DATABASE_NAME": "$$cap_mysql_database_name",
+              "DATABASE_USERNAME": "$$cap_mysql_user",
+              "DATABASE_PASSWORD":"$$cap_mysql_passwd",
+              "ADMIN_EMAIL":"$$cap_directus_admin_username",
+              "ADMIN_PASSWORD":"$$cap_directus_admin_passwd"
+              }
+          },
+          "$$cap_appname-app": {
+            "depends_on": {
+              "$$cap_appname-db": {
+                "condition" : "service_healthy"
+              },
+              "$$cap_appname-api" : {}
+            },
+            "image": "directus/app:7.0.18",
+            "containerHttpPort":"80",
+            "restart": "always",
+            "environment": {
+              "API_ENDPOINT": "API; $$cap_api_endpoint/_/"
+            }
+        }
+      }
+  },
+  "instructions":{
+      "end":"Directus is deployed and available as $$cap_appname-app. \n\n It may take a few minutes for Directus to initialize.\n",
+      "start":"Directus is a free and open souce content management system and API wrapper for SQL databases. The API instance provides a realtime REST API for interacting with your database, while the App instance provides a web based CMS for managaging the database. \n For more information and available options, see https://github.com/directus/docker."
+   },
+   "variables":[
+      {
+         "description":"Name of the Directus backing database instance.",
+         "defaultValue" : "directus",
+         "id":"$$cap_mysql_database_name",
+         "label":"mySQL Database Name",
+         "validRegex": "/.{1,}/"
+      },
+      {
+        "description":"Master password for the Directus backing database instance.",
+        "defaultValue" : "ultr@s3curep@ssword",
+        "id":"$$cap_mysql_root_passwd",
+        "label":"mySQL Root Password",
+        "validRegex":"/^(?=.*\\d).{10,}$/"
+      },
+      {
+        "description":"User for the Directus backing database instance.",
+        "defaultValue" : "directus",
+        "id":"$$cap_mysql_user",
+        "label":"mySQL User",
+        "validRegex": "/.{1,}/"
+      },        
+      {
+        "description":"User password for the Directus backing database instance.",
+        "defaultValue" : "s3curep@ssword",
+        "id":"$$cap_mysql_passwd",
+        "label":"mySQL User Password",
+        "validRegex":"/^(?=.*\\d).{10,}$/"
+      },         
+      {
+        "description":"Admin login email for the Directus app.",
+        "defaultValue" : "admin@example.com",
+        "id":"$$cap_directus_admin_username",
+        "label":"Directus App Admin Email",
+        "validRegex": "/.{1,}/"
+      },        
+      {
+        "description":"Admin login password for the Directus app.",
+        "defaultValue" : "s3curep@ssword",
+        "id":"$$cap_directus_admin_passwd",
+        "label":"Directus App Admin Password",
+        "validRegex":"/^(?=.*\\d).{10,}$/"
+      },
+      {
+        "description":"A URL in the format of http://appname-api.rootdomain.com. \n The admin web app will connect to the endpoint using this URL.",
+        "id":"$$cap_api_endpoint",
+        "label":"Directus API Endpoint URL",
+        "validRegex": "/.{1,}/"
+      }
+   ]
+
+}
