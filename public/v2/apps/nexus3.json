@@ -1,0 +1,31 @@
+{
+    "captainVersion": "2",
+    "documentation": "Taken from https://hub.docker.com/r/sonatype/nexus3/",
+    "dockerCompose": {
+        "version": "3.3",
+        "services": {
+            "$$cap_appname": {
+                "image": "sonatype/nexus3:$$cap__version",
+                "containerHttpPort": "8081",
+                "volumes": [
+                    "$$cap_appname-data:/nexus-data"
+                ],
+                "restart": "always",
+                "environment": {
+                }
+            }
+        }
+    },
+    "instructions": {
+        "start": "Nexus is the world's first and only universal repository solution that's FREE to use. It supports Bower, Docker, Git LFS, Maven, npm, NuGet, PyPI, Ruby Gems, Yum, Apt, Conan, R, CPAN, Raw (Universal),P2 ,Helm and ELPA.\n\nEnter your Nexus Configuration parameters and click on next. \n\n Notes:\n\nDefault credentials are: admin / admin123\n\nIt can take some time (2-3 minutes) for the service to launch in a new container. Check the \"Deployment\" tab logs to determine once Nexus is ready.",
+        "end": "'Nexus is deployed and available as srv-captain--$$cap_appname:8081 to other apps."
+    },
+    "variables": [
+        {
+            "id": "$$cap__version",
+            "label": "Version",
+            "defaultValue": "3.15.2",
+            "description": "Additional tags can be found here: https://hub.docker.com/r/sonatype/nexus3/tags"
+        }
+    ]
+}
