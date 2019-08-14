@@ -1,5 +1,5 @@
  /*jshint esversion: 6 */
- const ghpages = require('gh-pages');
+ const ghPages = require('gh-pages');
  const path = require('path');
  const fs = require('fs-extra')
 
@@ -47,13 +47,12 @@
          return copyVersion(2)
      })
      .then(function () {
-
-         // ghpages.publish('public', function (err) {
-         //     if (err)
-         //         console.log(err);
-         //     else
-         //         console.log('Built and deployed successfully');
-         // });
+         ghPages.publish('public', function (err) {
+             if (err)
+                 console.log(err);
+             else
+                 console.log('Built and deployed successfully');
+         });
      })
      .catch(function (err) {
          console.error(err)
