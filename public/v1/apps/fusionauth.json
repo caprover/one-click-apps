@@ -72,7 +72,7 @@
     }
   },
   "instructions": {
-    "start": "FusionAuth is a modern platform for Customer Identity and Access Management (CIAM). FusionAuth provides APIs and a responsive web user interface to support login, registration, localized email, multi-factor authentication, reporting and much more. See: https://fusionauth.io/docs/v1/tech/getting-started/ and https://github.com/FusionAuth/fusionauth-containers",
+    "start": "Requires 4GB of RAM minimum. FusionAuth is a modern platform for Customer Identity and Access Management (CIAM). FusionAuth provides APIs and a responsive web user interface to support login, registration, localized email, multi-factor authentication, reporting and much more. See: https://fusionauth.io/docs/v1/tech/getting-started/ and https://github.com/FusionAuth/fusionauth-containers",
     "end": "FusionAuth is deployed and available as srv-captain--$$cap_appname-fusionauth:9011 to other apps"
   },
 
