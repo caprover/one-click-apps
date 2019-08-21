@@ -44,7 +44,7 @@
     {
       "id": "$$cap_email",
       "label": "Email Address",
-      "description": "The email address used for Lets Encrpt certificates."
+      "description": "The email address used for Lets Encrypt certificates."
     },
     {
       "id": "$$cap_host",
