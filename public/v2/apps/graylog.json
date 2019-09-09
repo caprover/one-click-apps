@@ -41,7 +41,7 @@
                 "environment": {
                   "GRAYLOG_MONGODB_URI": "mongodb://srv-captain--$$cap_appname-mongodb/graylog",
                   "GRAYLOG_ELASTICSEARCH_HOSTS": "http://srv-captain--$$cap_appname-elasticsearch:$$cap_container_port",
-                  "GRAYLOG_HTTP_EXTERNAL_URI": "http://$$cap_appname.$$cap_root_domain/",
+                  "GRAYLOG_HTTP_EXTERNAL_URI": "//$$cap_appname.$$cap_root_domain/",
                   "GRAYLOG_ROOT_PASSWORD_SHA2": "$$cap_graylog_password"
                 }
             }
