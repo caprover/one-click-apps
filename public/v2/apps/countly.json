@@ -15,7 +15,7 @@
         }
     },
     "instructions": {
-        "start": "Countly. Product Analytics for Mobile, Web, Desktop and IoT | https://count.ly",
+        "start": "Countly. This will only work over HTTPS, so enable plz :) | Product Analytics for Mobile, Web, Desktop and IoT | https://count.ly",
         "end": "Countly is deployed and available as $$cap_appname"
     },
     "variables": [{
