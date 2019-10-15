@@ -1,0 +1,21 @@
+{
+    "captainVersion": "2",
+    "documentation": "Taken from https://hub.docker.com/r/countly/countly-server",
+    "dockerCompose": {
+        "version": "3.3",
+        "services": {
+            "$$cap_appname": {
+                "image": "countly/countly-server",
+                "volumes": [
+                    "$$cap_appname-data:/var/lib/mongodb"
+                ],
+                "restart": "always",
+                "environment": {}
+            }
+        }
+    },
+    "instructions": {
+        "start": "Countly. Product Analytics for Mobile, Web, Desktop and IoT | https://count.ly",
+        "end": "Countly is deployed and available as $$cap_appname"
+    }
+}
