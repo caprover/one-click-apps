@@ -1,0 +1,23 @@
+{
+    "captainVersion": "2",
+    "documentation": "https://hub.docker.com/r/pierrezemb/gostatic",
+    "dockerCompose": {
+        "version": "3.3",
+        "services": {
+            "$$cap_appname": {
+                "image": "pierrezemb/gostatic:latest",
+                "volumes": [
+                    "$$cap_appname-data:/srv/http"
+                ],
+                "restart": "always",
+                "environment": {}
+            }
+        }
+    },
+    "instructions": {
+        "start": "A really small and simple one-click static web server app",
+        "end": "gostatic is deployed and available as $$cap_appname"
+    },
+    "variables": []
+
+}
