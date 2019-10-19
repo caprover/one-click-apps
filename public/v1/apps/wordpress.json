@@ -58,14 +58,14 @@
             "id": "$$cap_wp_version",
             "label": "WordPress Version",
             "defaultValue": "4.9",
-            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/library/wordpress/tags/",
+            "description": "Checkout their Docker page for the valid tags https://hub.docker.com/r/library/wordpress/tags/",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
         {
             "id": "$$cap_mysql_version",
             "label": "MySQL Version",
             "defaultValue": "5.7",
-            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/library/mysql/tags/",
+            "description": "Checkout their Docker page for the valid tags https://hub.docker.com/r/library/mysql/tags/",
             "validRegex": "/^([^\\s^\\/])+$/"
         }
     ]

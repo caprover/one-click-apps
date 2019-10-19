@@ -27,7 +27,7 @@
     "variables": [{
             "id": "$$cap_redis_version",
             "label": "Redis Version Tag",
-            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/library/redis/tags/",
+            "description": "Checkout their Docker page for the valid tags https://hub.docker.com/r/library/redis/tags/",
             "defaultValue": "4",
             "validRegex": "/^([^\\s^\\/])+$/"
         },

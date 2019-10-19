@@ -38,7 +38,7 @@
     {
         "id": "$$cap_poste_version",
         "label": "Poste.io version tag",
-        "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/analogic/poste.io/tags",
+        "description": "Checkout their Docker page for the valid tags https://hub.docker.com/r/analogic/poste.io/tags",
         "defaultValue": "2"
     },
     {
