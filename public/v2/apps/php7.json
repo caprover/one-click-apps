@@ -1,0 +1,23 @@
+{
+    "captainVersion": "2",
+    "documentation": "https://hub.docker.com/r/trafex/alpine-nginx-php7",
+    "dockerCompose": {
+        "version": "3.3",
+        "services": {
+            "$$cap_appname": {
+                "image": "trafex/alpine-nginx-php7:latest",
+                "volumes": [
+                    "$$cap_appname-data:/var/www/html"
+                ],
+                "restart": "always",
+                "environment": {}
+            }
+        }
+    },
+    "instructions": {
+        "start": "A one-click PHP-FPM 7.3 web server",
+        "end": "Web server is deployed and available as $$cap_appname"
+    },
+    "variables": []
+
+}
