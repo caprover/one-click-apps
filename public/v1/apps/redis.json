@@ -1,6 +1,6 @@
 {
     "captainVersion": "1",
-    "documentation": "Taken from https://hub.docker.com/_/adminer except it is manually adjusted for port 80",
+    "documentation": "Taken from https://hub.docker.com/_/redis",
     "dockerCompose": {
         "version": "3.3",
         "services": {
