@@ -26,7 +26,7 @@
     "variables": [{
             "id": "$$cap_gitlab_version",
             "label": "Gitlab-CE Version Tag",
-            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/gitlab/gitlab-ce/tags",
+            "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/gitlab/gitlab-ce/tags",
             "defaultValue": "11.9.8-ce.0",
             "validRegex": "/^([^\\s^\\/])+$/"
         },

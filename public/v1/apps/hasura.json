@@ -41,7 +41,7 @@
         },
         {
           "defaultValue":"11",
-          "description":"mdillon/postgis provides a Docker container running Postgres with PostGIS installed. Checkout their docker page for their available tags https://hub.docker.com/r/mdillon/postgis/tags",
+          "description":"mdillon/postgis provides a Docker container running Postgres with PostGIS installed. Checkout their Docker page for their available tags https://hub.docker.com/r/mdillon/postgis/tags",
           "id":"$$cap_mdillon_postgis_version",
           "label":"mdillon/postgis Version",
           "validRegex":"/^([^\\s^\\/])+$/"

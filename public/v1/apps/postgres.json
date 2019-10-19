@@ -28,7 +28,7 @@
             "id": "$$cap_postgres_version",
             "label": "Postgres Version",
             "defaultValue": "9.6",
-            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/",
+            "description": "Checkout their Docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
         {

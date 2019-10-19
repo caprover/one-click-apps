@@ -34,14 +34,14 @@
      "variables":[
         {
            "defaultValue":"v1.0.0-beta.2",
-           "description":"Checkout their github page for their latest version https://github.com/hasura/graphql-engine",
+           "description":"Check out their GitHub page for their latest version https://github.com/hasura/graphql-engine",
            "id":"$$cap_hasura_version",
            "label":"Hasura Version",
            "validRegex":"/^([^\\s^\\/])+$/"
         },
         {
           "defaultValue":"11",
-          "description":"mdillon/postgis provides a Docker container running Postgres with PostGIS installed. Checkout their docker page for their available tags https://hub.docker.com/r/mdillon/postgis/tags",
+          "description":"mdillon/postgis provides a Docker container running Postgres with PostGIS installed. Check out their Docker page for their available tags https://hub.docker.com/r/mdillon/postgis/tags",
           "id":"$$cap_mdillon_postgis_version",
           "label":"mdillon/postgis Version",
           "validRegex":"/^([^\\s^\\/])+$/"

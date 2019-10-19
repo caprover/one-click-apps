@@ -48,14 +48,14 @@
             "id": "$$cap_postgres_version",
             "label": "Postgres Version",
             "defaultValue": "9.6",
-            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/",
+            "description": "Checkout their Docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
         {
             "id": "$$cap_sonar_version",
             "label": "Sonarqube Version",
             "defaultValue": "7.7-community",
-            "description": "Checkout their docker page for the valid tags https://hub.docker.com/_/sonarqube?tab=tags/",
+            "description": "Checkout their Docker page for the valid tags https://hub.docker.com/_/sonarqube?tab=tags/",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
         {
