@@ -16,13 +16,13 @@
     },
     "instructions": {
         "start": "A safe home for all your data. Access & share your files, calendars, contacts, mail & more from any device, on your terms. http://Nextcloud.com",
-        "end": "'NextCloud is deployed and available as $$cap_appname"
+        "end": "NextCloud is deployed and available as $$cap_appname"
     },
     "variables": [{
         "id": "$$cap_nextcloud_version",
         "label": "NextCloud Version",
         "defaultValue": "15",
-        "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/library/nextcloud/tags/",
+        "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/library/nextcloud/tags/",
         "validRegex": "/^([^\\s^\\/])+$/"
     }]
 

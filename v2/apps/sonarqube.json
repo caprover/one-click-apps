@@ -1,6 +1,6 @@
 {
     "captainVersion": "2",
-    "documentation": "Taken from https://hub.docker.com/_/sonarqube?tab=description",
+    "documentation": "Taken from https://hub.docker.com/_/sonarqube",
     "dockerCompose": {
         "version": "3.3",
         "services": {
@@ -48,14 +48,14 @@
             "id": "$$cap_postgres_version",
             "label": "Postgres Version",
             "defaultValue": "9.6",
-            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/",
+            "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
         {
             "id": "$$cap_sonar_version",
             "label": "Sonarqube Version",
             "defaultValue": "7.7-community",
-            "description": "Checkout their docker page for the valid tags https://hub.docker.com/_/sonarqube?tab=tags/",
+            "description": "Check out their Docker page for the valid tags https://hub.docker.com/_/sonarqube?tab=tags/",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
         {

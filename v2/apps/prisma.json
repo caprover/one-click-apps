@@ -43,14 +43,14 @@
             "id": "$$cap_prisma_version",
             "label": "Prisma Version",
             "defaultValue": "1.29",
-            "description": "Checkout their github page for their latest version https://github.com/prisma/prisma",
+            "description": "Check out their GitHub page for their latest version https://github.com/prisma/prisma",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
         {
             "id": "$$cap_mysql_version",
             "label": "MySQL Version",
             "defaultValue": "5.7",
-            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/library/mysql/tags/",
+            "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/library/mysql/tags/",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
         {

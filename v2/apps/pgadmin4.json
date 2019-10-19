@@ -21,7 +21,7 @@
     "variables": [{
             "id": "$$cap_pgadmin4_version",
             "label": "Version Tag",
-            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/thajeztah/pgadmin4/tags/",
+            "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/thajeztah/pgadmin4/tags/",
             "defaultValue": "3.6",
             "validRegex": "/^([^\\s^\\/])+$/"
         }
