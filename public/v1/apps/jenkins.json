@@ -23,7 +23,7 @@
             "id": "$$cap_jenkins_version",
             "label": "Jenkins Version",
             "defaultValue": "lts-jdk11",
-            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/jenkins/jenkins/tags",
+            "description": "Checkout their Docker page for the valid tags https://hub.docker.com/r/jenkins/jenkins/tags",
             "validRegex": "/^([^\\s^\\/])+$/"
         }
     ]

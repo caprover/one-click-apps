@@ -23,7 +23,7 @@
             "id": "$$cap_gitlab-runner_version",
             "label": "GitLab-Runner Version",
             "defaultValue": "v11.11.0",
-            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/gitlab/gitlab-runner/tags",
+            "description": "Checkout their Docker page for the valid tags https://hub.docker.com/r/gitlab/gitlab-runner/tags",
             "validRegex": "/^([^\\s^\\/])+$/"
         }
     ]

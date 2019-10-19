@@ -24,7 +24,7 @@
             "id": "$$cap_portainer_version",
             "label": "Portainer Version",
             "defaultValue": "1.20.2",
-            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/portainer/portainer/tags",
+            "description": "Checkout their Docker page for the valid tags https://hub.docker.com/r/portainer/portainer/tags",
             "validRegex": "/^([^\\s^\\/])+$/"
         }
     ]

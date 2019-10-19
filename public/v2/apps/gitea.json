@@ -52,14 +52,14 @@
             "id": "$$cap_gitea_version",
             "label": "Gitea Version",
             "defaultValue": "1.7",
-            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/gitea/gitea/tags",
+            "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/gitea/gitea/tags",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
         {
             "id": "$$cap_mysql_version",
             "label": "MySQL Version",
             "defaultValue": "5.7",
-            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/library/mysql/tags/",
+            "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/library/mysql/tags/",
             "validRegex": "/^([^\\s^\\/])+$/"
         }
     ]

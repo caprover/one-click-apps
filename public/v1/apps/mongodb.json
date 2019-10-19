@@ -27,7 +27,7 @@
             "id": "$$cap_mongo_version",
             "label": "MongoDB Version",
             "defaultValue": "4",
-            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/library/mongo/tags/",
+            "description": "Checkout their Docker page for the valid tags https://hub.docker.com/r/library/mongo/tags/",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
         {

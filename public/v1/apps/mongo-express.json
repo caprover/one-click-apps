@@ -28,7 +28,7 @@
     "variables": [{
             "id": "$$cap_mongoexpress_version",
             "label": "Mongo Express Version Tag",
-            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/library/mongo-express/tags/",
+            "description": "Checkout their Docker page for the valid tags https://hub.docker.com/r/library/mongo-express/tags/",
             "defaultValue": "0.49",
             "validRegex": "/^([^\\s^\\/])+$/"
         },

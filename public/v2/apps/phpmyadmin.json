@@ -20,7 +20,7 @@
     "variables": [{
         "id": "$$cap_pma_version",
         "label": "PHP My Admin Version Tag",
-        "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/phpmyadmin/phpmyadmin/tags/",
+        "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/phpmyadmin/phpmyadmin/tags/",
         "defaultValue": "4.8",
         "validRegex": "/^([^\\s^\\/])+$/"
     }]

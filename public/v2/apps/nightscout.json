@@ -52,7 +52,7 @@
             "id": "$$cap_mongo_version",
             "label": "MongoDB Version",
             "defaultValue": "4",
-            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/library/mongo/tags/",
+            "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/library/mongo/tags/",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
         {
@@ -65,7 +65,7 @@
             "id": "$$cap_nighscout_version",
             "label": "Nighscout Version",
             "defaultValue": "0.11.1",
-            "description": "Checkout their page for the valid tags https://github.com/nightscout/cgm-remote-monitor/releases",
+            "description": "Check out their page for the valid tags https://github.com/nightscout/cgm-remote-monitor/releases",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
         {

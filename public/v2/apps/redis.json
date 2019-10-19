@@ -1,6 +1,6 @@
 {
     "captainVersion": "2",
-    "documentation": "Taken from https://hub.docker.com/_/adminer except it is manually adjusted for port 80",
+    "documentation": "Taken from https://hub.docker.com/_/redis",
     "dockerCompose": {
         "version": "3.3",
         "services": {
@@ -27,7 +27,7 @@
     "variables": [{
             "id": "$$cap_redis_version",
             "label": "Redis Version Tag",
-            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/library/redis/tags/",
+            "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/_/redis/tags/",
             "defaultValue": "4",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
