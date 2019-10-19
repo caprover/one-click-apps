@@ -1,6 +1,6 @@
 {
   "captainVersion": "2",
-  "documentation": "Read the poste.io documentation @ https://github.com/silverwind/droppy",
+  "documentation": "Read the documentation @ https://github.com/silverwind/droppy",
   "dockerCompose": {
     "version": "3.7",
     "services": {
