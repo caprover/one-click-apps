@@ -24,7 +24,7 @@
             "id": "$$cap_container_version",
             "label": "Version",
             "defaultValue": "3.2.2",
-            "description": "Additional tags can be found here: https://hub.docker.com/r/sourcegraph/server/tags",
+            "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/sourcegraph/server/tags",
             "validRegex":"/^([^\\s^\\/])+$/"
         }
     ]
