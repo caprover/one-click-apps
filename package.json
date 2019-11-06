@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/caprover/one-click-apps",
   "dependencies": {
-    "fs-extra": "^7.0.1",
-    "gh-pages": "^2.0.1"
+    "fs-extra": "^8.1.0",
+    "gh-pages": "^2.1.1"
   }
 }

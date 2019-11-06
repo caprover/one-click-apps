@@ -1,0 +1,75 @@
+{
+    "captainVersion": "2",
+    "documentation": "Taken from https://hub.docker.com/_/mongo-express/ except it is manually adjusted for port 80",
+    "dockerCompose": {
+        "version": "3.3",
+        "services": {
+            "$$cap_appname": {
+                "image": "mongo-express:$$cap_mongoexpress_version",
+                "containerHttpPort": "8081",
+                "restart": "always",
+                "environment": {
+                    "ME_CONFIG_MONGODB_SERVER": "$$cap_me_server_address",
+                    "ME_CONFIG_MONGODB_ADMINUSERNAME": "$$cap_me_server_admin_username",
+                    "ME_CONFIG_MONGODB_ADMINPASSWORD": "$$cap_me_server_admin_password",
+                    "ME_CONFIG_MONGODB_PORT": "$$cap_me_server_port",
+                    "ME_CONFIG_BASICAUTH_USERNAME": "$$cap_me_dashboard_username",
+                    "ME_CONFIG_BASICAUTH_PASSWORD": "$$cap_me_dashboard_password",
+                    "ME_CONFIG_SITE_COOKIESECRET": "$$cap_appname$$cap_mongoexpress_version",
+                    "ME_CONFIG_SITE_SESSIONSECRET": "$$cap_appname$$cap_mongoexpress_version"
+                }
+            }
+        }
+    },
+    "instructions": {
+        "start": "MongoExpress is a Web-based MongoDB admin interface, written with Node.js and express.  See MongoExpress page for more details: https://github.com/mongo-express/mongo-express\n\n Enter your MongoExpress Configuration parameters and click on next. It will take about a minute for the process to finish.",
+        "end": "MongoExpress is deployed and available as $$cap_appname"
+    },
+    "variables": [{
+            "id": "$$cap_mongoexpress_version",
+            "label": "Mongo Express Version Tag",
+            "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/library/mongo-express/tags/",
+            "defaultValue": "0.49",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        },
+        {
+            "id": "$$cap_me_server_address",
+            "label": "MongoDB Server Address",
+            "description": "If MongoDB is created by CapRover, use srv-captain--REPLACE_THIS_WITH_CONTAINER_NAME",
+            "validRegex": "/.{1,}/"
+        },
+        {
+            "id": "$$cap_me_server_port",
+            "label": "MongoDB Server Port (default is 27017)",
+            "defaultValue": "27017",
+            "validRegex": "/^([0-9])+$/"
+        },
+        {
+            "id": "$$cap_me_server_admin_username",
+            "label": "MongoDB Admin Username",
+            "defaultValue": "",
+            "validRegex": "/.{1,}/"
+        },
+        {
+            "id": "$$cap_me_server_admin_password",
+            "label": "MongoDB Admin Password",
+            "defaultValue": "",
+            "validRegex": "/.{1,}/"
+        },
+        {
+            "id": "$$cap_me_dashboard_username",
+            "label": "Choose a Mongo-Express Dashboard Username",
+            "defaultValue": "admin",
+            "description": "Restrict access to your Mongo Express dashboard by choosing username/pass",
+            "validRegex": "/^([a-zA-Z0-9])+$/"
+        },
+        {
+            "id": "$$cap_me_dashboard_password",
+            "label": "Mongo-Express Dashboard Password",
+            "defaultValue": "",
+            "description": "Restrict access to your Mongo Express dashboard by choosing username/pass",
+            "validRegex": "/^([a-zA-Z0-9])+$/"
+        }
+    ]
+
+}

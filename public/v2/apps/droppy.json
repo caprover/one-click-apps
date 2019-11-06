@@ -1,0 +1,30 @@
+{
+  "captainVersion": "2",
+  "documentation": "Read the documentation @ https://github.com/silverwind/droppy",
+  "dockerCompose": {
+    "version": "3.7",
+    "services": {
+      "$$cap_appname": {
+        "image": "silverwind/droppy:$$cap_droppy_version",
+        "containerHttpPort": "8989",
+        "volumes": [
+          "$$cap_appname-config:/config",
+          "$$cap_appname-files:/files"
+        ],
+        "restart": "always"
+      }
+    }
+  },
+  "instructions": {
+    "start": "droppy is a self-hosted file storage server with a web interface.",
+    "end": "droppy is deployed and available as $$cap_appname. \n\n IMPORTANT: It will take up to 2 minutes for droppy to be ready. Before that, you might see 502 error page."
+  },
+  "variables": [
+    {
+        "id": "$$cap_droppy_version",
+        "label": "droppy version tag",
+        "description": "Checkout their docker page for the valid tags @ https://hub.docker.com/r/silverwind/droppy/tags",
+        "defaultValue": "11.1.0"
+    }
+  ]
+}

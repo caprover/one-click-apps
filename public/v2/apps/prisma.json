@@ -1,0 +1,69 @@
+{
+    "captainVersion": "2",
+    "documentation": "Taken from https://hub.docker.com/r/prismagraphql/prisma/",
+    "dockerCompose": {
+        "version": "3",
+        "services": {
+            "$$cap_appname-db": {
+                "image": "mysql:$$cap_mysql_version",
+                "notExposeAsWebApp": "true",
+                "restart": "always",
+                "environment": {
+                    "MYSQL_ROOT_PASSWORD": "$$cap_db_pass"
+                },
+                "volumes": [
+                    "$$cap_appname-db-data:/var/lib/mysql"
+                ]
+            },
+            "$$cap_appname": {
+                "image": "prismagraphql/prisma:$$cap_prisma_version",
+                "restart": "always",
+                "ports": [
+                    "4466:4466"
+                ],
+                "containerHttpPort": "4466",
+                "depends_on": [
+                    "$$cap_appname-db"
+                ],
+                "environment": {
+                    "PRISMA_CONFIG": "managementApiSecret: $$cap_management_secret\nport: 4466\ndatabases:\n  default:\n    connector: mysql\n    host: srv-captain--$$cap_appname-db\n    port: 3306\n    user: root\n    password: $$cap_db_pass\n    migrations: true\n"
+                }
+            }
+        },
+        "volumes": {
+            "mysql": null
+        }
+    },
+    "instructions": {
+        "end": "Prisma is deployed and available as $$cap_appname.",
+        "start": "Prisma - Database tools for modern application development. This setup runs Prisma along with a MySQL Database."
+    },
+    "variables": [
+        {
+            "id": "$$cap_prisma_version",
+            "label": "Prisma Version",
+            "defaultValue": "1.29",
+            "description": "Check out their GitHub page for their latest version https://github.com/prisma/prisma",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        },
+        {
+            "id": "$$cap_mysql_version",
+            "label": "MySQL Version",
+            "defaultValue": "5.7",
+            "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/library/mysql/tags/",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        },
+        {
+            "id": "$$cap_db_pass",
+            "label": "Database password",
+            "description": "",
+            "validRegex": "/.{1,}/"
+        },
+        {
+            "id": "$$cap_management_secret",
+            "label": "Prisma Management API secret",
+            "description": "To ensure only entitled users are able to perform actions through the Management API. Minimum 10 characters, at least one letter and one number.",
+            "validRegex": "/^(?=.*\\d).{10,}$/"
+        }
+    ]
+}
