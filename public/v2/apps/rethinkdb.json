@@ -1,0 +1,23 @@
+{
+  "captainVersion": "2",
+  "documentation": "Taken from https://hub.docker.com/_/rethinkdb.",
+  "dockerCompose": {
+      "version": "7",
+      "services": {
+          "$$cap_appname": {
+              "image": "rethinkdb:2.3.6",
+              "containerHttpPort":"8080",
+              "volumes": [
+                  "$$cap_appname-data:/data/rethinkdb_data/"
+              ]
+          }
+        }
+      }
+  ,
+  "instructions":{
+      "end":"RethinkDB is deployed and available as http://$$cap_appname.$$cap_root_domain/.\n\n It may take a few minutes for RethinkDB to initialize.\n",
+      "start":"RethinkDB is an open-source, distributed database built to store JSON documents and effortlessly scale to multiple machines."
+   },
+   "variables":[
+   ]
+}

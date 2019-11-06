@@ -1,0 +1,74 @@
+{
+    "captainVersion": "2",
+    "documentation": "Taken from https://hub.docker.com/r/parseplatform/parse-server/",
+    "dockerCompose": {
+        "version": "3.3",
+        "services": {
+            "$$cap_appname-mongodb": {
+                "image": "mongo:$$cap_mongo_version",
+                "notExposeAsWebApp": "true",
+                "volumes": [
+                    "$$cap_appname-db-data:/data/db",
+                    "$$cap_appname-db-config:/data/configdb"
+                ],
+                "restart": "always",
+                "environment": {
+                    "MONGO_INITDB_ROOT_USERNAME": "root",
+                    "MONGO_INITDB_ROOT_PASSWORD": "$$cap_mongo_password"
+                }
+            },
+            "$$cap_appname-parse": {
+                "depends_on": [
+                    "$$cap_appname-mongodb"
+                ],
+                "image": "parseplatform/parse-server:$$cap_parse_version",
+                "containerHttpPort": "8080",
+                "restart": "always",
+                "environment": {
+                    "PORT": "8080",
+                    "PARSE_SERVER_APPLICATION_ID": "$$cap_app_id",
+                    "PARSE_SERVER_MASTER_KEY": "$$cap_master_key",
+                    "PARSE_SERVER_DATABASE_URI": "mongodb://root:$$cap_mongo_password@srv-captain--$$cap_appname-mongodb:27017/parse?authSource=admin"
+                }
+            }
+        }
+    },
+    "instructions": {
+        "start": "Parse Server is an open source version of the Parse backend that can be deployed to any infrastructure that can run Node.js. For more information on Parse platform see http://parseplatform.org\n\n Enter your Parse Configuration parameters and click on next. A MongoDB (database) and a Parse container will be created for you.  The process will take about a minute for the process to finish.",
+        "end": "Parse is deployed and available as $$cap_appname-parse."
+    },
+    "variables": [{
+            "id": "$$cap_mongo_version",
+            "label": "MongoDB Version",
+            "defaultValue": "4",
+            "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/library/mongo/tags/",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        },
+        {
+            "id": "$$cap_mongo_password",
+            "label": "MongoDB password",
+            "description": "Only use alphanumeric chars.",
+            "validRegex": "/^([a-zA-Z0-9])+$/"
+        },
+        {
+            "id": "$$cap_parse_version",
+            "label": "Parse Version",
+            "defaultValue": "3.1.3",
+            "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/parseplatform/parse-server/tags",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        },
+        {
+            "id": "$$cap_app_id",
+            "label": "Application ID",
+            "description": "Use a random string. See Parse documentation for more details.",
+            "validRegex": "/^([a-zA-Z0-9])+$/"
+        },
+        {
+            "id": "$$cap_master_key",
+            "label": "Master Key",
+            "description": "Use a random string. See Parse documentation for more details.",
+            "validRegex": "/^([a-zA-Z0-9])+$/"
+        }
+    ]
+
+}
