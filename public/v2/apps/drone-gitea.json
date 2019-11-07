@@ -8,6 +8,9 @@
                 "image": "drone/agent:$$cap_drone_version",
                 "notExposeAsWebApp": "true",
                 "restart": "always",
+                "volumes": [
+                    "/var/run/docker.sock:/var/run/docker.sock"
+                ],
                 "environment": {
                     "DRONE_SERVER": "srv-captain--$$cap_appname-server:9000",
                     "DRONE_SECRET": "$$cap_drone_secret"
@@ -45,7 +48,7 @@
         {
             "id": "$$cap_drone_version",
             "label": "drone Version",
-            "defaultValue": "1.0.0-rc.6",
+            "defaultValue": "1.6.1",
             "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/drone/drone/tags",
             "validRegex": ""
         },
