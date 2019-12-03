@@ -40,7 +40,7 @@
                              name: apps[i],
                              displayName: content.displayName,
                              description: content.description,
-                             imageUrl: content.hasLogo ? (apps[i] + '.png') : 'https://caprover.com/img/logo.png',
+                             logoUrl: content.hasLogo ? (apps[i] + '.png') : 'https://caprover.com/img/logo.png',
                          }
                  }
 
