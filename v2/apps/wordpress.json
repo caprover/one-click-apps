@@ -1,6 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://docs.docker.com/compose/wordpress/. Port mapping removed from WP as it is no longer needed",
+    "description": "",
     "dockerCompose": {
         "version": "3.3",
         "services": {

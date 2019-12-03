@@ -1,6 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "Built from scract (https://github.com/nightscout/cgm-remote-monitor)",
+    "description": "",
     "dockerCompose": {
         "version": "3.3",
         "services": {

@@ -1,6 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://hub.docker.com/r/prismagraphql/prisma/",
+    "description": "",
     "dockerCompose": {
         "version": "3",
         "services": {

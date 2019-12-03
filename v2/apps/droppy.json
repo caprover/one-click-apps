@@ -1,6 +1,7 @@
 {
   "captainVersion": "2",
   "documentation": "Read the documentation @ https://github.com/silverwind/droppy",
+  "description": "",
   "dockerCompose": {
     "version": "3.7",
     "services": {

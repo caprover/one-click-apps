@@ -1,6 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://hub.docker.com/r/hardware/rainloop",
+    "description": "",
     "dockerCompose": {
         "version": "2",
         "services": {

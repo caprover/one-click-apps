@@ -1,6 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://github.com/jboss-dockerfiles/keycloak/blob/master/server/README.md",
+    "description": "",
     "dockerCompose": {
         "version": "3.3",
         "services": {

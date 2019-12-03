@@ -1,6 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "Hasura GraphQL Engine",
+    "description": "",
     "dockerCompose": {
         "version": "3.6",
         "services": {

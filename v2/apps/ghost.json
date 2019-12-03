@@ -1,6 +1,7 @@
 {
    "captainVersion": "2",
    "documentation":"Taken from https://docs.ghost.org/",
+   "description": "",
    "dockerCompose":{
       "services":{
          "$$cap_appname":{

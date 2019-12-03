@@ -1,6 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://docs.gitlab.com/runner/install/docker.html and https://docs.gitlab.com/runner/register/",
+    "description": "",
     "dockerCompose": {
         "version": "3",
         "services": {
