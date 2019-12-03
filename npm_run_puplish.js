@@ -28,8 +28,6 @@
                  if (captainVersion === "1") {
                      if (contentString.includes("$$cap_root_domain"))
                          throw new Error('V1 should not have root domain')
-                 } else {
-
                  }
 
                  apps[i] = apps[i].replace('.json', '');
