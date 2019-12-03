@@ -35,7 +35,6 @@
                  if (captainVersion + '' === '2') {
                      if (!content.displayName) content.displayName = apps[i]
                      if (!content.description) content.description = ''
-                     if (!content.imageUrl) content.imageUrl =
 
                          appDetails[i] = {
                              name: apps[i],
