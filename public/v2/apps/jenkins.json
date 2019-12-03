@@ -1,6 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://hub.docker.com/r/jenkins/jenkins/ ",
+    "description": "",
     "dockerCompose": {
         "version": "3.3",
         "services": {

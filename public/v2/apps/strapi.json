@@ -1,6 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://github.com/strapi/strapi-docker/blob/master/docker-compose.yml",
+    "description": "",
     "dockerCompose": {
         "version": "3.3",
         "services": {

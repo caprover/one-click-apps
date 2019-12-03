@@ -1,6 +1,7 @@
 {
   "captainVersion": "2",
   "documentation": "Taken from https://hub.docker.com/_/matomo?tab=description",
+  "description": "",
   "dockerCompose": {
     "version": "3.1",
     "services": {

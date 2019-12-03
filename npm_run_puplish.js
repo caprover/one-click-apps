@@ -35,14 +35,14 @@
                  if (captainVersion + '' === '2') {
                      if (!content.displayName) content.displayName = apps[i]
                      if (!content.description) content.description = ''
-                     if (!content.imageUrl) content.imageUrl = 'https://caprover.com/img/logo.png'
+                     if (!content.imageUrl) content.imageUrl =
 
-                     appDetails[i] = {
-                         name: apps[i],
-                         displayName: content.displayName,
-                         description: content.description,
-                         imageUrl: content.imageUrl,
-                     }
+                         appDetails[i] = {
+                             name: apps[i],
+                             displayName: content.displayName,
+                             description: content.description,
+                             imageUrl: content.hasLogo ? (apps[i] + '.png') : 'https://caprover.com/img/logo.png',
+                         }
                  }
 
              }

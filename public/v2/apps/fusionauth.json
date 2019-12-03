@@ -1,6 +1,7 @@
 {
   "captainVersion": "2",
   "documentation": "Adapted from: https://github.com/FusionAuth/fusionauth-containers",
+  "description": "",
   "dockerCompose": {
     "version": "3.3",
     "services": {
