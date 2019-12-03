@@ -1,6 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://hub.docker.com/_/couchdb/",
+    "description": "Apache CouchDB is an open-source document-oriented NoSQL database, implemented in Erlang",
     "dockerCompose": {
         "version": "3.3",
         "services": {
