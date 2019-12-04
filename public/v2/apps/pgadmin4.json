@@ -1,7 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://hub.docker.com/r/thajeztah/pgadmin4 ",
-    "description": "",
+    "description": "pgAdmin 4 is a complete rewrite of pgAdmin, built using Python and Javascript/jQuery",
     "dockerCompose": {
         "version": "3.3",
         "services": {

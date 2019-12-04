@@ -1,7 +1,7 @@
 {
    "captainVersion": "2",
    "documentation":"Taken from https://docs.ghost.org/",
-   "description": "",
+   "description": "Ghost is a free and open source blogging platform written in JavaScript and distributed under the MIT License",
    "dockerCompose":{
       "services":{
          "$$cap_appname":{

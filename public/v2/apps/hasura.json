@@ -1,7 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "Hasura GraphQL Engine",
-    "description": "",
+    "description": "Instant realtime GraphQL APIs on any Postgres application, existing or new",
     "dockerCompose": {
         "version": "3.6",
         "services": {
