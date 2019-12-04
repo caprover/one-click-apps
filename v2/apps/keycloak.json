@@ -1,7 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://github.com/jboss-dockerfiles/keycloak/blob/master/server/README.md",
-    "description": "",
+    "description": "Keycloak is an open source identity and access management solution",
     "dockerCompose": {
         "version": "3.3",
         "services": {

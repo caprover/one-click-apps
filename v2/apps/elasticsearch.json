@@ -1,7 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "Elasticsearch is a distributed, RESTful search and analytics engine. This image can be used for single nodes and cluster setups. Look at https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html for further assistance using Elasticsearch with docker.",
-    "description": "",
+    "description": "Elasticsearch is a search engine based on the Lucene library",
     "dockerCompose": {
         "version": "3.3",
         "services": {
