@@ -1,7 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://hub.docker.com/r/phpmyadmin/phpmyadmin/",
-    "description": "",
+    "description": "phpMyAdmin is a free software tool written in PHP, intended to handle the administration of MySQL over the Web",
     "dockerCompose": {
         "version": "3.3",
         "services": {

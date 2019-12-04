@@ -1,7 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://hub.docker.com/r/hardware/rainloop",
-    "description": "",
+    "description": "RainLoop Webmail - Simple, modern & fast web-based email client",
     "dockerCompose": {
         "version": "2",
         "services": {
