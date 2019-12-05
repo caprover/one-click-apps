@@ -1,6 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://docs.gitlab.com/runner/install/docker.html and https://docs.gitlab.com/runner/register/",
+    "displayName": "Gitlab (runner)",
     "description": "Runner version of GitLab for CI/CD pipeline",
     "dockerCompose": {
         "version": "3",

@@ -1,6 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://hub.docker.com/r/gitea/gitea/",
+    "displayName": "",
     "description": "Gitea is a software package for hosting software development using Git as well as bug tracking, wikis and code review",
     "dockerCompose": {
         "version": "2",

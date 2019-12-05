@@ -1,6 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://docs.drone.io/intro/gitea/single-machine/",
+    "displayName": "",
     "description": "Drone is a self-service Continuous Delivery platform for busy development teams",
     "dockerCompose": {
         "version": "2",

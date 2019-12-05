@@ -1,6 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://hub.docker.com/r/graylog/graylog",
+    "displayName": "",
     "description": "Graylog is used for log management of both structured and unstructured data along with debugging applications.",
     "dockerCompose": {
         "version": "3.3",
