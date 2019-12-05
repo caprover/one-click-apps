@@ -2,7 +2,7 @@
     "captainVersion": "2",
     "documentation": "ArangoDB",
     "description": "ArangoDB is native multi-model database for using and combining graph, document and key/value models",
-    "displayName": "",
+    "displayName": "ArangoDB",
     "dockerCompose": {
         "version": "3.3",
         "services": {
