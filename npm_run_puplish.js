@@ -33,15 +33,18 @@
                  apps[i] = apps[i].replace('.json', '');
 
                  if (captainVersion + '' === '2') {
-                     if (!content.displayName) content.displayName = apps[i]
+                     if (!content.displayName) {
+                         content.displayName = apps[i]
+                         content.displayName = content.displayName.substr(0, 1).toUpperCase() + content.displayName.substring(1, content.displayName.length)
+                     }
                      if (!content.description) content.description = ''
 
-                         appDetails[i] = {
-                             name: apps[i],
-                             displayName: content.displayName,
-                             description: content.description,
-                             logoUrl: apps[i] + '.png'
-                         }
+                     appDetails[i] = {
+                         name: apps[i],
+                         displayName: content.displayName,
+                         description: content.description,
+                         logoUrl: apps[i] + '.png'
+                     }
                  }
 
              }
