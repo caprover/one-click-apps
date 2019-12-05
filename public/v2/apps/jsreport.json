@@ -1,6 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://hub.docker.com/r/jsreport/jsreport/",
+    "displayName": "",
     "description": "jsreport is an open source reporting platform where reports are designed using popular javascript templating engines",
     "dockerCompose": {
         "version": "3.3",

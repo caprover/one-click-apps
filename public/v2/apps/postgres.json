@@ -1,6 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://hub.docker.com/_/postgres",
+    "displayName": "",
     "description": "The PostgreSQL object-relational database system provides reliability and data integrity",
     "dockerCompose": {
         "version": "3.3",

@@ -1,6 +1,7 @@
 {
   "captainVersion": "2",
   "documentation": "Read the documentation @ https://github.com/silverwind/droppy",
+  "displayName": "",
   "description": "droppy is a self-hosted file storage server with a web interface",
   "dockerCompose": {
     "version": "3.7",

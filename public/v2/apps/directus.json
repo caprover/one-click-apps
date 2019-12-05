@@ -1,6 +1,7 @@
 {
   "captainVersion": "2",
   "documentation": "Taken from https://github.com/directus/docker.",
+  "displayName": "",
   "description": "Directus is an open-source tool for managing content across all your omni-channel digital experiences",
   "dockerCompose": {
       "version": "7",
