@@ -1,6 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://github.com/strapi/strapi-docker/blob/master/docker-compose.yml",
+    "displayName": "",
     "description": "The Open source Headless CMS Front-End Developers love. Manage your content. Distribute it anywhere",
     "dockerCompose": {
         "version": "3.3",
