@@ -1,7 +1,7 @@
 {
   "captainVersion": "2",
   "documentation": "Read the poste.io documentation @ https://poste.io/doc",
-  "displayName": "",
+  "displayName": "Poste.io",
   "description": "Poste.io - complete mailserver built in one container",
   "dockerCompose": {
     "version": "3.7",
