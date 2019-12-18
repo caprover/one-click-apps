@@ -1,6 +1,8 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://hub.docker.com/_/sentry/ and https://docs.sentry.io/server/",
+    "displayName": "",
+    "description": "Open-source error tracking with full stacktraces & asynchronous context",
     "dockerCompose": {
         "version": "3.3",
         "services": {

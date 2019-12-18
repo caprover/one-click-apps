@@ -1,6 +1,8 @@
 {
     "captainVersion": "2",
-    "documentation": "Taken from https://docs.docker.com/compose/mysql/ port mapping removed from WP as it's not needed",
+    "documentation": "Taken from https://hub.docker.com/_/postgres",
+    "displayName": "PostgreSQL",
+    "description": "The PostgreSQL object-relational database system provides reliability and data integrity",
     "dockerCompose": {
         "version": "3.3",
         "services": {

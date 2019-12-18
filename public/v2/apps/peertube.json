@@ -1,6 +1,8 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://github.com/Chocobozzz/PeerTube/blob/develop/support/docker/production/docker-compose.yml",
+    "displayName": "",
+    "description": "PeerTube is a decentralized video hosting network, based on free/libre software",
     "dockerCompose": {
         "version": "1",
         "services": {

@@ -1,6 +1,8 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://hub.docker.com/r/microsoft/vsts-agent/",
+    "displayName": "VSTS",
+    "description": "VSTS is an integrated development environment (IDE) developed as a software product by Microsoft Corp",
     "dockerCompose": {
         "version": "3.3",
         "services": {

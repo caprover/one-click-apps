@@ -1,6 +1,8 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://hub.docker.com/r/jenkins/jenkins/ ",
+    "displayName": "",
+    "description": "Jenkins helps to automate the non-human part of the software development process, with continuous integration and facilitating technical aspects of continuous delivery",
     "dockerCompose": {
         "version": "3.3",
         "services": {

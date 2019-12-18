@@ -1,6 +1,8 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://hub.docker.com/r/countly/countly-server",
+    "displayName": "",
+    "description": "Countly helps you get insights from your application",
     "dockerCompose": {
         "version": "3.3",
         "services": {

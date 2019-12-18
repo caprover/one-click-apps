@@ -1,6 +1,8 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://hub.docker.com/r/minimalcompact/thumbor/tags/",
+    "displayName": "",
+    "description": "Thumbor is a smart imaging service. It enables on-demand crop, resizing and flipping of images",
     "dockerCompose": {
         "version": "3.3",
         "services": {

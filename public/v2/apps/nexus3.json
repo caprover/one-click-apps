@@ -1,6 +1,8 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://hub.docker.com/r/sonatype/nexus3/",
+    "displayName": "Nexus3",
+    "description": "Nexus is a repository manager. It allows you to proxy, collect, and manage your dependencies",
     "dockerCompose": {
         "version": "3.3",
         "services": {

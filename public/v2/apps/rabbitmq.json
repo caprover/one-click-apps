@@ -1,6 +1,8 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://hub.docker.com/_/rabbitmq",
+    "displayName": "RabbitMQ",
+    "description": "RabbitMQ is an open-source message-broker software that originally implemented the Advanced Message Queuing Protocol",
     "dockerCompose": {
         "version": "3.3",
         "services": {
