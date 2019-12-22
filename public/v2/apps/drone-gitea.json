@@ -47,7 +47,7 @@
         {
             "id": "$$cap_drone_version",
             "label": "drone Version",
-            "defaultValue": "1.0.0-rc.6",
+            "defaultValue": "1.0.0-rc.5",
             "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/drone/drone/tags",
             "validRegex": ""
         },
