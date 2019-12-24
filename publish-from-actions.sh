@@ -56,9 +56,7 @@ if [[ "$REPONAME" == "$GHIO" ]]; then
 else
   REMOTE_BRANCH="gh-pages"
 fi 
-echo "######### CLONING REMOTE_BRANCH: $REMOTE_BRANCH" 
-REMOTE_BRANCH="test-publish-pages"
-sleep 2s
+sleep 1s
 echo "#############################################" 
 echo "######### CLONING REMOTE_BRANCH: $REMOTE_BRANCH" 
 echo "#############################################" 
@@ -66,19 +64,19 @@ echo "#############################################"
 
 cp -r $BUILD_DIR $SOURCE_DIRECTORY_DEPLOY_GH/
 git clone --single-branch --branch=$REMOTE_BRANCH $REMOTE_REPO $CLONED_DIRECTORY_DEPLOY_GH
-sleep 2s
+sleep 1s
 echo "#############################################" 
 echo "######### Removing old files" 
 echo "#############################################" 
 cd $CLONED_DIRECTORY_DEPLOY_GH && git rm -rf . && git clean -fdx 
-sleep 2s
+sleep 1s
 echo "#############################################" 
 echo "######### Copying files" 
 echo "#############################################" 
 cp -r $SOURCE_DIRECTORY_DEPLOY_GH/$BUILD_DIR $CLONED_DIRECTORY_DEPLOY_GH/$BUILD_DIR 
 mv $CLONED_DIRECTORY_DEPLOY_GH/.git $CLONED_DIRECTORY_DEPLOY_GH/$BUILD_DIR/ 
 cd $CLONED_DIRECTORY_DEPLOY_GH/$BUILD_DIR/ 
-sleep 2s
+sleep 1s
 echo "#############################################" 
 echo "######### Content pre-commit ###" 
 echo "#############################################" 
@@ -86,7 +84,7 @@ ls -la
 echo "#############################################" 
 echo "######### Commit and push ###" 
 echo "#############################################" 
-sleep 2s
+sleep 1s
 git config user.name "${GITHUB_ACTOR}"
 git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 echo `date` >> forcebuild.date
