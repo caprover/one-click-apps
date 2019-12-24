@@ -26,6 +26,9 @@
 
 set -e
 
+# Make sure build_dir content doesn't have leading/trailing slashes. Correct format:
+# export BUILD_DIR="public"
+
 source ./build_dir
 SOURCE_DIRECTORY_DEPLOY_GH=~/temp-gh-deploy-src
 CLONED_DIRECTORY_DEPLOY_GH=~/temp-gh-deploy-cloned
@@ -53,6 +56,7 @@ if [[ "$REPONAME" == "$GHIO" ]]; then
 else
   REMOTE_BRANCH="gh-pages"
 fi 
+echo "######### CLONING REMOTE_BRANCH: $REMOTE_BRANCH" 
 REMOTE_BRANCH="test-publish-pages"
 sleep 2s
 echo "#############################################" 
