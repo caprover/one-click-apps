@@ -53,6 +53,8 @@
                      throw new Error(`Cannot find logo for ${apps[i]} ${printablePath}`);
                  }
 
+                 console.log(`Validated ${apps[i]}`)
+
              }
 
          })
