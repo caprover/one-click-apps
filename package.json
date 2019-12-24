@@ -4,7 +4,8 @@
   "description": "One Click App Repository for CapRover",
   "main": "build_and_publish_to_github_pages.js",
   "scripts": {
-    "publish": "node ./npm_run_puplish.js"
+    "build": "node ./build_one_click_apps.js",
+    "publish": "npm run build && ./publish-from-actions.sh"
   },
   "repository": {
     "type": "git",
