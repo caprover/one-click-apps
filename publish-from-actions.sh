@@ -31,20 +31,16 @@ SOURCE_DIRECTORY_DEPLOY_GH=~/temp-gh-deploy-src
 CLONED_DIRECTORY_DEPLOY_GH=~/temp-gh-deploy-cloned
 
 echo "#############################################" 
-echo "#############################################" 
 echo "######### making directories" 
 echo "######### $SOURCE_DIRECTORY_DEPLOY_GH" 
 echo "######### $CLONED_DIRECTORY_DEPLOY_GH" 
-echo "#############################################" 
 echo "#############################################" 
 
 mkdir -p $SOURCE_DIRECTORY_DEPLOY_GH
 mkdir -p $CLONED_DIRECTORY_DEPLOY_GH
 
 echo "#############################################" 
-echo "#############################################" 
 echo "######### Setting env vars" 
-echo "#############################################" 
 echo "#############################################" 
 
 REMOTE_REPO="https://${GITHUB_PERSONAL_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
@@ -58,30 +54,35 @@ else
   REMOTE_BRANCH="gh-pages"
 fi 
 REMOTE_BRANCH="test-publish-pages"
+sleep 2s
 echo "#############################################" 
-echo "#############################################" 
-echo "######### REMOTE_BRANCH: $REMOTE_BRANCH" 
-echo "#############################################" 
+echo "######### CLONING REMOTE_BRANCH: $REMOTE_BRANCH" 
 echo "#############################################" 
 
 
 cp -r $BUILD_DIR $SOURCE_DIRECTORY_DEPLOY_GH/
 git clone --single-branch --branch=$REMOTE_BRANCH $REMOTE_REPO $CLONED_DIRECTORY_DEPLOY_GH
+sleep 2s
+echo "#############################################" 
+echo "######### Removing old files" 
+echo "#############################################" 
 cd $CLONED_DIRECTORY_DEPLOY_GH && git rm -rf . && git clean -fdx 
+sleep 2s
+echo "#############################################" 
+echo "######### Copying files" 
+echo "#############################################" 
 cp -r $SOURCE_DIRECTORY_DEPLOY_GH/$BUILD_DIR $CLONED_DIRECTORY_DEPLOY_GH/$BUILD_DIR 
 mv $CLONED_DIRECTORY_DEPLOY_GH/.git $CLONED_DIRECTORY_DEPLOY_GH/$BUILD_DIR/ 
 cd $CLONED_DIRECTORY_DEPLOY_GH/$BUILD_DIR/ 
-echo "#############################################" 
+sleep 2s
 echo "#############################################" 
 echo "######### Content pre-commit ###" 
 echo "#############################################" 
-echo "#############################################" 
 ls -la
-echo "#############################################" 
 echo "#############################################" 
 echo "######### Commit and push ###" 
 echo "#############################################" 
-echo "#############################################" 
+sleep 2s
 git config user.name "${GITHUB_ACTOR}"
 git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 git add -A 
