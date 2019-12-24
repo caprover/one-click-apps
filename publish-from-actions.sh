@@ -30,9 +30,22 @@ source ./build_dir
 SOURCE_DIRECTORY_DEPLOY_GH=~/temp-gh-deploy-src
 CLONED_DIRECTORY_DEPLOY_GH=~/temp-gh-deploy-cloned
 
+echo "#############################################" 
+echo "#############################################" 
+echo "######### making directories" 
+echo "######### $SOURCE_DIRECTORY_DEPLOY_GH" 
+echo "######### $CLONED_DIRECTORY_DEPLOY_GH" 
+echo "#############################################" 
+echo "#############################################" 
+
 mkdir -p $SOURCE_DIRECTORY_DEPLOY_GH
 mkdir -p $CLONED_DIRECTORY_DEPLOY_GH
 
+echo "#############################################" 
+echo "#############################################" 
+echo "######### Setting env vars" 
+echo "#############################################" 
+echo "#############################################" 
 
 REMOTE_REPO="https://${GITHUB_PERSONAL_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 REPONAME="$(echo $GITHUB_REPOSITORY| cut -d'/' -f 2)"
@@ -45,10 +58,11 @@ else
   REMOTE_BRANCH="gh-pages"
 fi 
 REMOTE_BRANCH="test-publish-pages"
-echo "REMOTE_BRANCH: $REMOTE_BRANCH" 
-
-git config user.name "${GITHUB_ACTOR}"
-git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+echo "#############################################" 
+echo "#############################################" 
+echo "######### REMOTE_BRANCH: $REMOTE_BRANCH" 
+echo "#############################################" 
+echo "#############################################" 
 
 
 cp -r $BUILD_DIR $SOURCE_DIRECTORY_DEPLOY_GH/
@@ -57,9 +71,19 @@ cd $CLONED_DIRECTORY_DEPLOY_GH && git rm -rf . && git clean -fdx
 cp -r $SOURCE_DIRECTORY_DEPLOY_GH/$BUILD_DIR $CLONED_DIRECTORY_DEPLOY_GH/$BUILD_DIR 
 mv $CLONED_DIRECTORY_DEPLOY_GH/.git $CLONED_DIRECTORY_DEPLOY_GH/$BUILD_DIR/ 
 cd $CLONED_DIRECTORY_DEPLOY_GH/$BUILD_DIR/ 
-echo "### Content pre-commit ###" 
+echo "#############################################" 
+echo "#############################################" 
+echo "######### Content pre-commit ###" 
+echo "#############################################" 
+echo "#############################################" 
 ls -la
-echo "### Commit and push ###" 
+echo "#############################################" 
+echo "#############################################" 
+echo "######### Commit and push ###" 
+echo "#############################################" 
+echo "#############################################" 
+git config user.name "${GITHUB_ACTOR}"
+git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 git add -A 
 git commit -m 'Deploy to GitHub Pages' 
 git push --force $REMOTE_REPO master:$REMOTE_BRANCH 
