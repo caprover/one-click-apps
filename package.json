@@ -5,7 +5,7 @@
   "main": "build_and_publish_to_github_pages.js",
   "scripts": {
     "build": "node ./build_one_click_apps.js",
-    "validate_json": "node./validate_json.js",
+    "validate_json": "node ./validate_json.js",
     "publish": "npm run build && ./publish-from-actions.sh"
   },
   "repository": {

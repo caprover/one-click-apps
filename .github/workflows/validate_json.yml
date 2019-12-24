@@ -1,4 +1,4 @@
-name: Publish One Click Apps
+name: Validate One Click Apps
 
 on:
   push:
