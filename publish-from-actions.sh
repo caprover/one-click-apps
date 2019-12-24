@@ -27,36 +27,39 @@
 set -e
 
 source ./build_dir
-# git rm -rf .
-# git clean -fxd
+SOURCE_DIRECTORY_DEPLOY_GH=~/temp-gh-deploy-src
+CLONED_DIRECTORY_DEPLOY_GH=~/temp-gh-deploy-cloned
 
-echo "#################################################"
-echo "Changing directory to 'BUILD_DIR' $BUILD_DIR ..."
-cd $BUILD_DIR
+mkdir -p $SOURCE_DIRECTORY_DEPLOY_GH
+mkdir -p $CLONED_DIRECTORY_DEPLOY_GH
 
-echo "#################################################"
-echo "Now deploying to GitHub Pages..."
-REMOTE_REPO="https://${GITHUB_PERSONAL_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" && \
-REPONAME="$(echo $GITHUB_REPOSITORY| cut -d'/' -f 2)" && \
-OWNER="$(echo $GITHUB_REPOSITORY| cut -d'/' -f 1)" && \
-GHIO="${OWNER}.github.io" && \
+
+REMOTE_REPO="https://${GITHUB_PERSONAL_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+REPONAME="$(echo $GITHUB_REPOSITORY| cut -d'/' -f 2)"
+
+OWNER="$(echo $GITHUB_REPOSITORY| cut -d'/' -f 1)" 
+GHIO="${OWNER}.github.io"
 if [[ "$REPONAME" == "$GHIO" ]]; then
   REMOTE_BRANCH="master"
 else
   REMOTE_BRANCH="gh-pages"
-fi && \
-REMOTE_BRANCH="test-publish-pages" && \
-git init && \
-git config user.name "${GITHUB_ACTOR}" && \
-git config user.email "${GITHUB_ACTOR}@users.noreply.github.com" && \
-if [ -z "$(git status --porcelain)" ]; then
-    echo "Nothing to commit" && \
-    exit 0
-fi && \
-git add . && \
-git commit -m 'Deploy to GitHub Pages' && \
-echo "REMOTE_BRANCH: $REMOTE_BRANCH" && \
-git push --force $REMOTE_REPO master:$REMOTE_BRANCH && \
-rm -fr .git && \
-cd $GITHUB_WORKSPACE && \
-echo "Content of $BUILD_DIR has been deployed to GitHub Pages."
+fi 
+REMOTE_BRANCH="test-publish-pages"
+echo "REMOTE_BRANCH: $REMOTE_BRANCH" 
+
+git config user.name "${GITHUB_ACTOR}"
+git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+
+
+cp -r $BUILD_DIR $SOURCE_DIRECTORY_DEPLOY_GH/
+git clone --single-branch --branch=$REMOTE_BRANCH $REMOTE_REPO $CLONED_DIRECTORY_DEPLOY_GH
+cd $CLONED_DIRECTORY_DEPLOY_GH && git rm -rf . && git clean -fdx 
+cp -r $SOURCE_DIRECTORY_DEPLOY_GH/$BUILD_DIR $CLONED_DIRECTORY_DEPLOY_GH/$BUILD_DIR 
+mv $CLONED_DIRECTORY_DEPLOY_GH/.git $CLONED_DIRECTORY_DEPLOY_GH/$BUILD_DIR/ 
+cd $CLONED_DIRECTORY_DEPLOY_GH/$BUILD_DIR/ 
+echo "### Content pre-commit ###" 
+ls -la
+echo "### Commit and push ###" 
+git add -A 
+git commit -m 'Deploy to GitHub Pages' 
+git push --force $REMOTE_REPO master:$REMOTE_BRANCH 
