@@ -27,6 +27,8 @@
 set -e
 
 source ./build_dir
+# git rm -rf .
+# git clean -fxd
 
 echo "#################################################"
 echo "Changing directory to 'BUILD_DIR' $BUILD_DIR ..."
@@ -43,7 +45,7 @@ if [[ "$REPONAME" == "$GHIO" ]]; then
 else
   REMOTE_BRANCH="gh-pages"
 fi && \
-REMOTE_BRANCH="test-publish-pages"
+REMOTE_BRANCH="test-publish-pages" && \
 git init && \
 git config user.name "${GITHUB_ACTOR}" && \
 git config user.email "${GITHUB_ACTOR}@users.noreply.github.com" && \
