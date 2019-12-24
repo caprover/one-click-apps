@@ -2,7 +2,11 @@ name: Publish One Click Apps
 
 on:
   push:
-    branches: [something]
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build:
