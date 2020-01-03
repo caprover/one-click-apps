@@ -1,0 +1,40 @@
+{
+    "captainVersion": "2",
+    "documentation": "Taken from https://filebrowser.xyz/installation#docker except moved the database to a directory to be able to associate with a volume",
+    "displayName": "",
+    "description": "filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files. It allows the creation of multiple users and each user can have its own directory.",
+    "dockerCompose": {
+        "version": "3.3",
+        "services": {
+            "$$cap_appname": {
+                "dockerfileLines": [
+                    "FROM alpine:latest as helper",
+                    "# Similar to the original file, except, /database.db is inside a directory now so that we can assign a volume to it.",
+                    "RUN echo \"{'port':80,'baseURL':'','address':'','log':'stdout','database':'/database/database.db','root':'/srv'}\" | sed \"s/\\'/\\\"/g\" >/.edited.json",
+                    "FROM filebrowser/filebrowser:$$cap_filebrowser_version",
+                    "COPY --from=helper /.edited.json /.filebrowser.json"
+                ],
+                "volumes": [
+                    "$$cap_appname-database:/database",
+                    "$$cap_appname-files:/srv"
+                ],
+                "restart": "always",
+                "environment": {
+                }
+            }
+        }
+    },
+    "instructions": {
+        "start": "filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files. It allows the creation of multiple users and each user can have its own directory.\n\n\nIMPORTANT:\nThe default image maps an empty volume to FileBrowser in order to avoid exposing your files, but after you finished installation and changed the password you can mount the root directory of host. i.e. / to /srv in the app.",
+        "end": "username and password are both \"admin\".\n\nRemember that currently, $$cap_appname-files, an empty directory, is mapped to your file browser /srv, the directory you see when you use file browser. You can, however, change this to map / from the host to /srv in order to view all your files on your server.\n\n"
+    },
+    "variables": [
+        {
+            "id": "$$cap_filebrowser_version",
+            "label": "File Browser Version Tag",
+            "description": "Check out their Docker page for the valid tags: https://hub.docker.com/r/filebrowser/filebrowser/tags",
+            "defaultValue": "v2.0.16",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        }
+    ]
+}
