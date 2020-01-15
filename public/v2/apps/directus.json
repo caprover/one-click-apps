@@ -33,6 +33,9 @@
                 }
               },
               "image": "directus/api:2.0.18",
+              "volumes": [
+                "$$cap_appname-db-uploads:/var/www/html/public/uploads"
+              ],
               "containerHttpPort":"80",
               "restart": "always",
               "environment": {
