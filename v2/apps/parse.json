@@ -46,7 +46,7 @@
                 "restart": "always",
                 "environment": {
                     "PORT": "4040",
-                    "PARSE_DASHBOARD_SERVER_URL": "http://srv-captain--$$cap_appname-parse:8080/parse",
+                    "PARSE_DASHBOARD_SERVER_URL": "https://$$cap_appname-parse.$$cap_root_domain/parse",
                     "PARSE_DASHBOARD_MASTER_KEY": "$$cap_master_key",
                     "PARSE_DASHBOARD_APP_ID": "$$cap_app_id",
                     "PARSE_DASHBOARD_APP_NAME": "$$cap_appname-parse",
