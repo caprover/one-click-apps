@@ -51,6 +51,7 @@
                     "PARSE_DASHBOARD_APP_ID": "$$cap_app_id",
                     "PARSE_DASHBOARD_APP_NAME": "$$cap_appname-parse",
                     "PARSE_DASHBOARD_USER_ID": "caprover",
+                    "PARSE_DASHBOARD_ALLOW_INSECURE_HTTP": "true",
                     "PARSE_DASHBOARD_USER_PASSWORD": "$$cap_parse_dashboard_password"
                 }
             }
