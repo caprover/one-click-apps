@@ -33,7 +33,7 @@
                     "DATABASE_NAME": "strapi",
                     "DATABASE_USERNAME": "root",
                     "DATABASE_PASSWORD": "$$cap_mongo_password",
-                    "HOST": "localhost",
+                    "HOST": "$$cap_appname.$$cap_root_domain",
                     "DATABASE_AUTHENTICATION_DATABASE": "admin"
                 }
             },
