@@ -13,8 +13,7 @@
                 "containerHttpPort": "1337",
                 "dockerfileLines": [
                     "FROM strapi/strapi:$$cap_strapi_version",
-                    "RUN mkdir -p /srv/app/config/environments/production/",
-                    "RUN echo \"{\"proxy\":{\"enabled\":true,\"ssl\":false,\"host\":\"$$cap_appname.$$cap_root_domain\",\"port\":80}}\" > /srv/app/config/environments/production/server.json "
+                    "RUN mkdir -p /srv/app/config/environments/production/"
                 ],
                 "volumes": [
                     "$$cap_appname-data:/srv/app"
