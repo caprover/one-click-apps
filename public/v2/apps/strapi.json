@@ -11,7 +11,11 @@
                     "$$cap_appname-mongo"
                 ],
                 "containerHttpPort": "1337",
-                "image": "strapi/strapi:$$cap_strapi_version",
+                "dockerfileLines": [
+                    "FROM strapi/strapi:$$cap_strapi_version",
+                    "mkdir -p /srv/app/config/environments/production/",
+                    "echo \"{\"proxy\":{\"enabled\":true,\"ssl\":false,\"host\":\"$$cap_appname.$$cap_root_domain\",\"port\":80}}\" > /srv/app/config/environments/production/server.json "
+                ],
                 "volumes": [
                     "$$cap_appname-data:/srv/app"
                 ],
