@@ -19,7 +19,7 @@
             "image":"requarks/wiki:$$cap_version",
             "restart":"always",
             "volumes":[
-               "$$cap_appname-data:/data/data"
+               "$$cap_appname-data:/wiki"
             ]
          }
       },
