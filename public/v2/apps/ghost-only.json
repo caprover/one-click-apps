@@ -1,8 +1,8 @@
 {
    "captainVersion": "2",
    "documentation":"Taken from https://docs.ghost.org/",
-   "displayName": "Ghost Only",
-   "description": "This will create a Ghost blog without a database. Ghost is a free and open source blogging platform written in JavaScript and distributed under the MIT License. After installation you will need to change config.production.json, theres a bug where the port number is in the url.",
+   "displayName": "Ghost - No Database",
+   "description": "This will create a Ghost blog without a database. After installation you will need to change config.production.json, theres a bug where the port number is in the url.",
    "dockerCompose":{
       "services":{
          "$$cap_appname":{
