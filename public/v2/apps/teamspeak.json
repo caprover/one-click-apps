@@ -9,8 +9,8 @@
             "notExposeAsWebApp": "true",
             "ports": [
                 "$$cap_port_voice:9987",
-                "$$cap_port_files:10011",
-                "$$cap_port_query:30033"
+                "$$cap_port_files:30033",
+                "$$cap_port_query:10011"
             ],
             "environment": {
                 "TS3SERVER_LICENSE": "accept"
