@@ -1,0 +1,33 @@
+{
+    "captainVersion": "2",
+    "documentation": "Taken from https://hub.docker.com/r/tomsquest/docker-radicale",
+    "displayName": "",
+    "description": "Radicale lightweight CalDAV and CardDAV Server",
+    "dockerCompose": {
+        "version": "3.3",
+        "services": {
+            "$$cap_appname": {
+				"containerHttpPort": "5232",
+                "image": "tomsquest/docker-radicale:$$cap_image_tag",
+                "volumes": [
+                    "$$cap_appname-data:/data",
+					"/etc/radicale/config:/config"
+                ],
+                "restart": "always",
+                "environment": {}
+            }
+        }
+    },
+    "instructions": {
+        "start": "Starting radicale",
+        "end": "Radicale is deployed and available as $$cap_appname. Place your config in /etc/radicale/config/ and redeploy."
+    },
+    "variables": [{
+            "id": "$$cap_image_tag",
+            "label": "What version/tag do you want?",
+            "description": "Go here to see all versions https://hub.docker.com/r/tomsquest/docker-radicale/tags",
+            "defaultValue": "latest",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        }
+    ]
+}
