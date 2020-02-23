@@ -31,6 +31,7 @@
           "http.port": "$$cap_container_search_port",
           "node.master": "$$cap_elasticsearch_node_master",
           "node.data": "$$cap_elasticsearch_node_data",
+          "discovery.type": "single-node",
           "discovery.zen.minimum_master_nodes": "$$cap_elasticsearch_minimum_master_nodes",
           "discovery.zen.ping.unicast.hosts": "$$cap_elasticsearch_unicast_hosts"
         },
