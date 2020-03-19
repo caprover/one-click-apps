@@ -34,18 +34,20 @@
         },
         {
             "id": "$$cap_SUPER_USER",
-            "label": "etesync super user",
+            "label": "user name",
+             "description": "etesync super user name",
             "defaultValue": "root"
         },
         {
             "id": "$$cap_SUPER_EMAIL",
-            "label": "etesync super user email",
+            "label": "email",
+            "description": "etesync super user email",
             "defaultValue": "x@x.com"
         },
         {
             "id": "$$cap_SUPER_PASS",
-            "label": "etesync super user password",
-            "description": "pwd",
+            "label": "password",
+            "description": "etesync super user password",
             "validRegex": "/^([a-zA-Z0-9])+$/"
         }
     ]
