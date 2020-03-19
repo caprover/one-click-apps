@@ -22,8 +22,8 @@
         }
     },
     "instructions": {
-        "start": "start",
-        "end": "end"
+        "start": "ETESync is a open source and privacy focuse sync service",
+        "end": "Deployment of ETEsync is finished. You might see 502 errors for the next 2 minutes. Goto <YOUR-APP-URL>/admin to manage your users for ETEsync."
     },
     "variables": [
         {
