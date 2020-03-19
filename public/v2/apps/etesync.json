@@ -1,0 +1,52 @@
+{
+  "captainVersion": "2",
+  "documentation": "Read the documentation @ https://github.com/GRBurst/docker-etesync-server",
+  "displayName": "ETESync",
+  "description": "ETESync one click app for caprover",
+  "dockerCompose": {
+    "version": "3.7",
+    "services": {
+      "$$cap_appname": {
+        "image": "grburst/etesync:$$cap_version",
+        "containerHttpPort": "3735",
+        "volumes": [
+          "$$cap_appname-data:/data"
+        ],
+        "restart": "always",
+		"environment": {
+							"SUPER_USER": "$$cap_SUPER_USER",
+							"SUPER_EMAIL": "$$cap_SUPER_EMAIL",
+							"SUPER_PASS": "$$cap_SUPER_PASS"
+		             
+		                }
+      }
+    }
+  },
+  "instructions": {
+    "start": "start",
+    "end": "end"
+  },
+  "variables": [
+    {
+        "id": "$$cap_version",
+        "label": "version tag",
+        "description": "Checkout their docker page for the valid tags @ https://hub.docker.com/r/grburst/etesync",
+        "defaultValue": "alpine"
+		},{
+    "id": "$$cap_SUPER_USER",
+    "label": "Database user",
+    "defaultValue": "wordpressuser",
+    "validRegex": "/^([a-zA-Z0-9])+$/"
+},{
+    "id": "$$cap_SUPER_EMAIL",
+    "label": "Database user",
+    "defaultValue": "x@x.com"
+},
+{
+    "id": "$$cap_SUPER_PASS",
+    "label": "Database password",
+    "description": "pwd",
+    "validRegex": "/^([a-zA-Z0-9])+$/"
+}
+  ]
+}
