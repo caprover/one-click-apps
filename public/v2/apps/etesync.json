@@ -2,7 +2,7 @@
     "captainVersion": "2",
     "documentation": "Read the documentation @ https://github.com/GRBurst/docker-etesync-server",
     "displayName": "ETESync",
-    "description": "ETESync one click app for caprover",
+    "description": "ETESync is a self hosted syning solution, it is secure, end-to-end encrypted, and privacy respecting sync for your contacts, calendars and tasks.",
     "dockerCompose": {
         "version": "3.7",
         "services": {
