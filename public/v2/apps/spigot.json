@@ -11,7 +11,8 @@
                "25565:25565"
             ],
             "environment": {
-               "EULA": "$$cap_eula"
+               "EULA": "$$cap_eula",
+               "SPIGOT_VER": "$$cap_version"
             },
             "image": "nimmis/spigot:latest",
             "restart": "always",
@@ -38,9 +39,15 @@
       },
       {
          "label": "EULA",
-         "description": "Read the EULA at https://account.mojang.com/documents/minecraft_eula and set this field to true if you agree.",
+         "description": "IMPORTANT: Read the EULA at https://account.mojang.com/documents/minecraft_eula and set this field to true if you agree. This is a prerequisite to use this software.",
          "defaultValue": "",
          "id": "$$cap_eula"
+      },
+      {
+         "label": "Spigot Version",
+         "description": "Versions as available on https://www.spigotmc.org/wiki/buildtools/#versions (e.g. 1.15.2 or latest)",
+         "defaultValue": "latest",
+         "id": "$$cap_version"
       }
    ]
 }
