@@ -1,0 +1,40 @@
+{
+   "captainVersion": "2",
+   "documentation": "https://github.com/nimmis/docker-spigot",
+   "displayName": "Spigot",
+   "description": "Spigot is a performance optimized server for Minecraft with plugin support.",
+   "dockerCompose": {
+      "services": {
+         "$$cap_appname": {
+            "notExposeAsWebApp": "true",
+            "ports": [
+               "$$cap_port_server:25565"
+            ],
+            "environment": {
+               "EULA": "true"
+            },
+            "image": "nimmis/spigot:latest",
+            "restart": "always",
+            "volumes": [
+               "$$cap_appname-data:/minecraft"
+            ]
+         }
+      },
+      "version": "2",
+      "volumes": {
+         "$$cap_appname-data": {}
+      }
+   },
+   "instructions": {
+      "end": "The container will now download and build the Spigot Minecraft server, so you will need a few minutes before you can access it. Check the status in the logs.",
+      "start": "You have to agree to the Minecraft EULA to be able to use this software. https://www.minecraft.net/en-us/eula/"
+   },
+   "variables": [
+      {
+         "label": "Game Server Port (TCP)",
+         "description": "Game Server Port (TCP)",
+         "defaultValue": "25565",
+         "id": "$$cap_port_server"
+      }
+   ]
+}
