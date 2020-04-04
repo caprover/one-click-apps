@@ -12,7 +12,10 @@
             ],
             "environment": {
                "EULA": "$$cap_eula",
-               "SPIGOT_VER": "$$cap_version"
+               "SPIGOT_VER": "$$cap_version",
+               "MC_MAXMEM": "$$cap_maxmem",
+               "MC_MINMEM": "$$cap_minmem",
+               "SPIGOT_AUTORESTART": "$$cap_autorestart"
             },
             "image": "nimmis/spigot:latest",
             "restart": "always",
@@ -48,6 +51,24 @@
          "description": "Versions as available on https://www.spigotmc.org/wiki/buildtools/#versions (e.g. 1.15.2 or latest)",
          "defaultValue": "latest",
          "id": "$$cap_version"
+      },
+      {
+         "label": "Maximum Memory",
+         "description": "Define maximum memory to be used by the server (e.g. 512m or 2g)",
+         "defaultValue": "1g",
+         "id": "$$cap_maxmem"
+      },
+      {
+         "label": "Initial Memory",
+         "description": "Define initial memory reservation to be used by the server (e.g. 512m or 2g)",
+         "defaultValue": "512m",
+         "id": "$$cap_minmem"
+      },
+      {
+         "label": "Autorestart",
+         "description": "Define if container should automatically restart after issuing a stop command within the server (yes or no)",
+         "defaultValue": "yes",
+         "id": "$$cap_autorestart"
       }
    ]
 }
