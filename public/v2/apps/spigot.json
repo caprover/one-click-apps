@@ -27,11 +27,11 @@
    },
    "instructions": {
       "end": "The container will now download and build the Spigot Minecraft server, so you will need a few minutes before you can access it. Check the status in the logs.",
-      "start": "You have to agree to the Minecraft EULA to be able to use this software: https://www.minecraft.net/en-us/eula/"
+      "start": "You have to agree to the Minecraft EULA to be able to use this software: https://account.mojang.com/documents/minecraft_eula"
    },
    "variables": [
       {
-         "label": "Game Server Port (TCP)",
+         "label": "Game Server Port (TCP/UDP)",
          "description": "This is the port the server will expose for players to join.",
          "defaultValue": "25565",
          "id": "$$cap_port_server"
