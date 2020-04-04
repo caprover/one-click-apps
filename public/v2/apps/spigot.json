@@ -8,10 +8,10 @@
          "$$cap_appname": {
             "notExposeAsWebApp": "true",
             "ports": [
-               "$$cap_port_server:25565"
+               "25565:25565"
             ],
             "environment": {
-               "EULA": "true"
+               "EULA": "$$cap_eula"
             },
             "image": "nimmis/spigot:latest",
             "restart": "always",
@@ -27,14 +27,20 @@
    },
    "instructions": {
       "end": "The container will now download and build the Spigot Minecraft server, so you will need a few minutes before you can access it. Check the status in the logs.",
-      "start": "You have to agree to the Minecraft EULA to be able to use this software. https://www.minecraft.net/en-us/eula/"
+      "start": "You have to agree to the Minecraft EULA to be able to use this software: https://www.minecraft.net/en-us/eula/"
    },
    "variables": [
       {
          "label": "Game Server Port (TCP)",
-         "description": "Game Server Port (TCP)",
+         "description": "This is the port the server will expose for players to join.",
          "defaultValue": "25565",
          "id": "$$cap_port_server"
+      },
+      {
+         "label": "EULA",
+         "description": "Read the EULA at https://account.mojang.com/documents/minecraft_eula and set this field to true if you agree.",
+         "defaultValue": "",
+         "id": "$$cap_eula"
       }
    ]
 }
