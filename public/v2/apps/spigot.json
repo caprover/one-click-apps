@@ -8,7 +8,7 @@
          "$$cap_appname": {
             "notExposeAsWebApp": "true",
             "ports": [
-               "25565:25565"
+               "$$cap_port:25565"
             ],
             "environment": {
                "EULA": "$$cap_eula",
@@ -38,7 +38,7 @@
          "label": "Game Server Port (TCP/UDP)",
          "description": "This is the port the server will expose for players to join.",
          "defaultValue": "25565",
-         "id": "$$cap_port_server"
+         "id": "$$cap_port"
       },
       {
          "label": "EULA",
