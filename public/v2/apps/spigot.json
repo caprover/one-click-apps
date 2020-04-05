@@ -17,7 +17,7 @@
                "MC_MINMEM": "$$cap_minmem",
                "SPIGOT_AUTORESTART": "$$cap_autorestart"
             },
-            "image": "nimmis/spigot:latest",
+            "image": "nimmis/spigot:$$cap_version",
             "restart": "always",
             "volumes": [
                "$$cap_appname-data:/minecraft"
@@ -31,7 +31,7 @@
    },
    "instructions": {
       "end": "The container will now download and build the Spigot Minecraft server, so you will need a few minutes before you can access it. Check the status in the logs.",
-      "start": "You have to agree to the Minecraft EULA to be able to use this software: https://account.mojang.com/documents/minecraft_eula"
+      "start": "This one click app is based on a community created docker image, nimmis/spigot. You have to agree to the Minecraft EULA to be able to use this software: https://account.mojang.com/documents/minecraft_eula"
    },
    "variables": [
       {
@@ -45,6 +45,12 @@
          "description": "IMPORTANT: Read the EULA at https://account.mojang.com/documents/minecraft_eula and set this field to true if you agree. This is a prerequisite to use this software.",
          "defaultValue": "",
          "id": "$$cap_eula"
+      },
+      {
+         "label": "Docker Image Version",
+         "description": "The Docker image used does not offer version tags. Since the use of the latest tag is not recommended, refer to the image version by SHA tag.",
+         "defaultValue": "sha256:b968685fadb79e6dacca8efc030ee53f695441b8d6dfde4b86e027ba1f6796db",
+         "id": "$$cap_version"
       },
       {
          "label": "Spigot Version",
