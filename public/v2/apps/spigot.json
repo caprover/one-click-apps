@@ -17,7 +17,7 @@
                "MC_MINMEM": "$$cap_minmem",
                "SPIGOT_AUTORESTART": "$$cap_autorestart"
             },
-            "image": "nimmis/spigot:$$cap_version",
+            "image": "nimmis/spigot@$$cap_version",
             "restart": "always",
             "volumes": [
                "$$cap_appname-data:/minecraft"
