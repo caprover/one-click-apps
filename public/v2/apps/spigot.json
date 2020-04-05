@@ -12,7 +12,7 @@
             ],
             "environment": {
                "EULA": "$$cap_eula",
-               "SPIGOT_VER": "$$cap_version",
+               "SPIGOT_VER": "$$cap_spigot_version",
                "MC_MAXMEM": "$$cap_maxmem",
                "MC_MINMEM": "$$cap_minmem",
                "SPIGOT_AUTORESTART": "$$cap_autorestart"
@@ -35,12 +35,6 @@
    },
    "variables": [
       {
-         "label": "Game Server Port (TCP/UDP)",
-         "description": "This is the port the server will expose for players to join.",
-         "defaultValue": "25565",
-         "id": "$$cap_port"
-      },
-      {
          "label": "EULA",
          "description": "IMPORTANT: Read the EULA at https://account.mojang.com/documents/minecraft_eula and set this field to true if you agree. This is a prerequisite to use this software.",
          "defaultValue": "",
@@ -53,10 +47,16 @@
          "id": "$$cap_version"
       },
       {
+         "label": "Game Server Port (TCP/UDP)",
+         "description": "This is the port the server will expose for players to join.",
+         "defaultValue": "25565",
+         "id": "$$cap_port"
+      },
+      {
          "label": "Spigot Version",
          "description": "Versions as available on https://www.spigotmc.org/wiki/buildtools/#versions (e.g. 1.15.2 or latest)",
          "defaultValue": "latest",
-         "id": "$$cap_version"
+         "id": "$$cap_spigot_version"
       },
       {
          "label": "Maximum Memory",
