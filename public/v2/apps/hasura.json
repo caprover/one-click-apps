@@ -12,7 +12,13 @@
                 "volumes": [
                     "$$cap_appname-db-data:/var/lib/postgresql/data"
                 ],
-                "restart": "always"
+                "restart": "always",
+                 "environment": {
+                    "POSTGRES_USER": "$$cap_pg_user",
+                    "POSTGRES_PASSWORD": "$$cap_pg_pass",
+                    "POSTGRES_DB": "$$cap_pg_db",
+                    "POSTGRES_INITDB_ARGS": "$$cap_pg_initdb_args"
+                }
             },
             "$$cap_appname": {
                 "image": "hasura/graphql-engine:$$cap_hasura_version",
@@ -22,9 +28,9 @@
                 ],
                 "restart": "always",
                 "environment": {
-                "HASURA_GRAPHQL_DATABASE_URL": "postgres://postgres:@srv-captain--$$cap_appname-db:5432/postgres",
-                "HASURA_GRAPHQL_ENABLE_CONSOLE": "true",
-                "HASURA_GRAPHQL_ADMIN_SECRET":"$$cap_admin_secret"
+                "   HASURA_GRAPHQL_DATABASE_URL": "postgres://$$cap_pg_user:$$cap_pg_pass@srv-captain--$$cap_appname-db:5432/$$cap_pg_db",
+                    "HASURA_GRAPHQL_ENABLE_CONSOLE": "true",
+                    "HASURA_GRAPHQL_ADMIN_SECRET":"$$cap_admin_secret"
                 }
             }
         }
@@ -35,7 +41,7 @@
      },
      "variables":[
         {
-           "defaultValue":"v1.0.0-beta.2",
+           "defaultValue":"v1.1.1",
            "description":"Check out their GitHub page for their latest version https://github.com/hasura/graphql-engine",
            "id":"$$cap_hasura_version",
            "label":"Hasura Version",
@@ -53,6 +59,30 @@
            "id":"$$cap_admin_secret",
            "label":"Hasura admin secret(password)",
            "validRegex":"/^(?=.*\\d).{10,}$/"
+        },
+          {
+            "id": "$$cap_pg_user",
+            "label": "Postgres Username",
+            "description": "",
+            "validRegex": "/.{1,}/"
+        },
+        {
+            "id": "$$cap_pg_pass",
+            "label": "Postgres Password",
+            "description": "",
+            "validRegex": "/.{1,}/"
+        },
+        {
+            "id": "$$cap_pg_db",
+            "label": "Postgres Default Database",
+            "description": "",
+            "validRegex": "/.{1,}/"
+        },
+        {
+            "id": "$$cap_pg_initdb_args",
+            "label": "OPTIONAL: Arguments for 'postgres initdb'",
+            "description": "For example, --data-checksums",
+            "validRegex": "/.{0,}/"
         }
      ]
 
