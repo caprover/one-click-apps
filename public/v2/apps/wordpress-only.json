@@ -2,7 +2,7 @@
   "captainVersion": "2",
   "documentation": "Taken from https://docs.docker.com/compose/wordpress/. Port mapping removed from WP as it is no longer needed",
   "displayName": "WordPress",
-  "description": "WordPress is a content management system based on PHP and MySQL that is usually used with the MySQL or MariaDB database",
+  "description": "This will create a WordPress only. You'll need to enter the database information and allow you to have a central DB for all your WP's.",
   "dockerCompose": {
     "version": "3.3",
     "services": {
@@ -20,18 +20,18 @@
     }
   },
   "instructions": {
-    "start": "WordPress is an online, open source website creation tool written in PHP. But in non-geek speak, it’s probably the easiest and most powerful blogging and website content management system (or CMS) in existence today.\n\n Enter your WordPress Configuration parameters and click on next. A MySQL (database) and a WordPress container will be created for you.  The process will take about a minute for the process to finish.",
+    "start": "WordPress is an online, open source website creation tool written in PHP. But in non-geek speak, it’s probably the easiest and most powerful blogging and website content management system (or CMS) in existence today.\n\n Enter your WordPress Configuration parameters and click on next. A WordPress container will be created for you. The process will take about a minute for the process to finish. \n\nNote: This app is intended for advanced users who'd like to have a central DB in a single container for multiple WP's.",
     "end": "Wordpress is deployed and available as $$cap_appname-wordpress . \n\n IMPORTANT: It will take up to 2 minutes for WordPress to be ready. Before that, you might see a 502 error page.\n"
   },
   "variables": [
     {
-      "description": "DB Host",
+      "description": "Database host",
       "defaultValue": "srv-captain--xxx",
       "id": "$$cap_db_host",
-      "label": "DB Host"
+      "label": "Database Host"
     },
     {
-      "description": "DB Name",
+      "description": "Database name",
       "defaultValue": "wordpress",
       "id": "$$cap_db_name",
       "label": "DB Name"
@@ -39,8 +39,7 @@
     {
       "id": "$$cap_db_user",
       "label": "Database user",
-      "defaultValue": "wordpressuser",
-      "validRegex": "/^([a-zA-Z0-9])+$/"
+      "defaultValue": "wordpressuser"
     },
     {
       "id": "$$cap_db_pass",
@@ -51,7 +50,7 @@
     {
       "id": "$$cap_wp_version",
       "label": "WordPress Version",
-      "defaultValue": "4.9",
+      "defaultValue": "latest",
       "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/library/wordpress/tags/",
       "validRegex": "/^([^\\s^\\/])+$/"
     }
