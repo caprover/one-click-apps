@@ -10,7 +10,8 @@
                 "image": "phpmyadmin/phpmyadmin:$$cap_pma_version",
                 "restart": "always",
                 "environment": {
-                    "PMA_ARBITRARY": "1"
+                    "PMA_ARBITRARY": "1",
+                    "UPLOAD_LIMIT": "$$cap_upload_limit"
                 }
             }
         }
@@ -19,12 +20,21 @@
         "start": "PhpMyAdmin is the most popular web interface for MySQL & MariaDB. Simply install PhpMyAdmin and then select what database you want to connect to.\n\n Enter your PhpMyAdmin Configuration parameters and click on next. It will take about a minute for the process to finish.",
         "end": "PhpMyAdmin is deployed and available as $$cap_appname"
     },
-    "variables": [{
-        "id": "$$cap_pma_version",
-        "label": "PHP My Admin Version Tag",
-        "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/phpmyadmin/phpmyadmin/tags/",
-        "defaultValue": "4.8",
-        "validRegex": "/^([^\\s^\\/])+$/"
-    }]
+    "variables": [
+        {
+            "id": "$$cap_upload_limit",
+            "label": "Upload limit size",
+            "description": "It will override the default value for apache and php-fpm. Default size is 2M",
+            "defaultValue": "2M",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        },
+        {
+            "id": "$$cap_pma_version",
+            "label": "PHP My Admin Version Tag",
+            "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/phpmyadmin/phpmyadmin/tags/",
+            "defaultValue": "4.8",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        }
+    ]
 
 }
