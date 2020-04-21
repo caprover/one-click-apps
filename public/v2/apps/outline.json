@@ -47,7 +47,7 @@
                     "AWS_S3_UPLOAD_BUCKET_NAME": "bucket_name_here",
                     "AWS_S3_UPLOAD_MAX_SIZE": "26214400",
                     "AWS_S3_ACL": "private",
-                    
+
                     "SLACK_KEY": "$$cap_slack_key",
                     "SLACK_SECRET": "$$cap_slack_secret",
                     "GOOGLE_CLIENT_ID": "$$cap_google_client_id",
@@ -73,7 +73,7 @@
     },
     "instructions": {
         "start": "Outline is an open, extensible, wiki for your team built using React and Node.js.",
-        "end": "IMPORTANT: before you start using Outline, you need to \n\n 1) Enable HTTPS \n 2) Force HTTPS \n 3) Enable Websocket in $$cap_appname-outline.  \n\nYou can customize more settings by environmental variables described here: https://github.com/outline/outline/blob/0deecfac446c37545e0787b3d32062e608a950ab/.env.sample \n\n IMPORTANT: It will take up to 2 minutes for it to be ready. Before that, you might see a 502 error page.\n"
+        "end": "IMPORTANT: before you start using Outline, you need to \n\n 1) Enable HTTPS \n 2) Force HTTPS \n 3) Enable Websocket in $$cap_appname-outline. \n 4) Run database migration `npm run sequelize:migrate` within the $$cap_appname-outline docker container.  \n\nYou can customize more settings by environmental variables described here: https://github.com/outline/outline/blob/0deecfac446c37545e0787b3d32062e608a950ab/.env.sample \n\n IMPORTANT: It will take up to 2 minutes for it to be ready. Before that, you might see a 502 error page.\n"
     },
     "variables": [{
             "id": "$$cap_db_user",
