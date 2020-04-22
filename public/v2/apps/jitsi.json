@@ -38,9 +38,9 @@
             "JVB_BREWERY_MUC": "jvbbrewery",
             "JVB_AUTH_USER": "jvb",
             "JVB_STUN_SERVERS": "meet-jit-si-turnrelay.jitsi.net:443",
-            "JVB_PORT": "10000",
+            "JVB_PORT": "$$cap_jvb_udp",
             "JVB_TCP_HARVESTER_DISABLED": "true",
-            "JVB_TCP_PORT": "4443",
+            "JVB_TCP_PORT": "$$cap_jvb_tcp",
             "JICOFO_AUTH_USER": "focus",
             "JIGASI_XMPP_USER": "jigasi",
             "JIGASI_BREWERY_MUC": "jigasibrewery",
@@ -85,9 +85,9 @@
             "JVB_BREWERY_MUC": "jvbbrewery",
             "JVB_AUTH_USER": "jvb",
             "JVB_STUN_SERVERS": "meet-jit-si-turnrelay.jitsi.net:443",
-            "JVB_PORT": "10000",
+            "JVB_PORT": "$$cap_jvb_udp",
             "JVB_TCP_HARVESTER_DISABLED": "true",
-            "JVB_TCP_PORT": "4443",
+            "JVB_TCP_PORT": "$$cap_jvb_tcp",
             "JICOFO_AUTH_USER": "focus",
             "JIGASI_XMPP_USER": "jigasi",
             "JIGASI_BREWERY_MUC": "jigasibrewery",
@@ -131,9 +131,9 @@
             "JVB_BREWERY_MUC": "jvbbrewery",
             "JVB_AUTH_USER": "jvb",
             "JVB_STUN_SERVERS": "meet-jit-si-turnrelay.jitsi.net:443",
-            "JVB_PORT": "10000",
+            "JVB_PORT": "$$cap_jvb_udp",
             "JVB_TCP_HARVESTER_DISABLED": "true",
-            "JVB_TCP_PORT": "4443",
+            "JVB_TCP_PORT": "$$cap_jvb_tcp",
             "JICOFO_AUTH_USER": "focus",
             "JIGASI_XMPP_USER": "jigasi",
             "JIGASI_BREWERY_MUC": "jigasibrewery",
@@ -154,7 +154,7 @@
         "$$cap_appname-jvb": {
           "image": "jitsi/jvb:latest",
           "restart": "unless-stopped",
-          "ports": ["10000:10000", "4443:4443"],
+          "ports": ["$$cap_jvb_udp:$$cap_jvb_udp", "$$cap_jvb_tcp:$$cap_jvb_tcp"],
           "volumes": ["$$cap_appname-jvb:/config"],
           "environment": {
             "JICOFO_COMPONENT_SECRET": "$$cap_password",
@@ -179,9 +179,9 @@
             "JVB_BREWERY_MUC": "jvbbrewery",
             "JVB_AUTH_USER": "jvb",
             "JVB_STUN_SERVERS": "meet-jit-si-turnrelay.jitsi.net:443",
-            "JVB_PORT": "10000",
+            "JVB_PORT": "$$cap_jvb_udp",
             "JVB_TCP_HARVESTER_DISABLED": "true",
-            "JVB_TCP_PORT": "4443",
+            "JVB_TCP_PORT": "$$cap_jvb_tcp",
             "JICOFO_AUTH_USER": "focus",
             "JIGASI_XMPP_USER": "jigasi",
             "JIGASI_BREWERY_MUC": "jigasibrewery",
@@ -202,20 +202,20 @@
       }
     },
     "instructions": {
-      "end": "Containers were created successfully.",
+      "end": "Containers were created successfully. You should wait for a few minutes before enter to Jitsi Web.",
       "start": "This one click app is based on Jitsi docker image."
     },
     "variables": [
           {
         "label": "HTTP Port",
         "description": "This is the HTTP port to access Jitsi",
-        "defaultValue": "80",
+        "defaultValue": "8000",
         "id": "$$cap_http_port"
       },
       {
         "label": "HTTPS Port",
         "description": "This is the HTTPS port to access Jitsi",
-        "defaultValue": "443",
+        "defaultValue": "8443",
         "id": "$$cap_https_port"
       },
       {
@@ -223,6 +223,18 @@
         "description": "This is the timezone for Jitsi",
         "defaultValue": "Europe/Amsterdam",
         "id": "$$cap_timezone"
+      },
+      {
+        "label": "JVB TCP Port",
+        "description": "TCP Port for JVB",
+        "defaultValue": "4443",
+        "id": "$$cap_jvb_tcp"
+      },
+      {
+        "label": "JVB UDP Port",
+        "description": "UDP Port for JVB",
+        "defaultValue": "10000",
+        "id": "$$cap_jvb_udp"
       },
       {
         "label": "Password",
