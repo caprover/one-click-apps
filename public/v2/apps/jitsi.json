@@ -7,12 +7,11 @@
       "version": "3",
       "services": {
         "$$cap_appname-web": {
-          "image": "jitsi/web:latest",
+          "image": "jitsi/web:$$cap_tag_version",
           "restart": "unless-stopped",
           "ports": ["$$cap_https_port:443", "$$cap_http_port:80"],
           "volumes": [
             "$$cap_appname-web:/config",
-            "$$cap_appname-web-letsencrypt:/etc/letsencrypt",
             "$$cap_appname-web-transcripts:/usr/share/jitsi-meet/transcripts"
           ],
           "environment": {
@@ -58,7 +57,8 @@
           }
         },
         "$$cap_appname-prosody": {
-          "image": "jitsi/prosody:latest",
+          "image": "jitsi/prosody:$$cap_tag_version",
+          "notExposeAsWebApp": "true",
           "restart": "unless-stopped",
           "expose": ["5222", "5347","5280"],
           "volumes": ["$$cap_appname-prosody:/config"],
@@ -105,7 +105,8 @@
           }
         },
         "$$cap_appname-jicofo": {
-          "image": "jitsi/jicofo:latest",
+          "image": "jitsi/jicofo:$$cap_tag_version",
+          "notExposeAsWebApp": "true",
           "restart": "unless-stopped",
           "volumes": ["$$cap_appname-jicofo:/config"],
           "environment": {
@@ -152,7 +153,8 @@
           "depends_on": ["$$cap_appname-prosody"]
         },
         "$$cap_appname-jvb": {
-          "image": "jitsi/jvb:latest",
+          "image": "jitsi/jvb:$$cap_tag_version",
+          "notExposeAsWebApp": "true",
           "restart": "unless-stopped",
           "ports": ["$$cap_jvb_udp:$$cap_jvb_udp", "$$cap_jvb_tcp:$$cap_jvb_tcp"],
           "volumes": ["$$cap_appname-jvb:/config"],
@@ -206,6 +208,12 @@
       "start": "This one click app is based on Jitsi docker image."
     },
     "variables": [
+        {
+            "label": "Docker tag version",
+            "description": "You can check the version in Docker Hub: https://hub.docker.com/r/jitsi/web/tags",
+            "defaultValue": "4416",
+            "id": "$$cap_tag_version"
+          },
           {
         "label": "HTTP Port",
         "description": "This is the HTTP port to access Jitsi",
@@ -226,13 +234,13 @@
       },
       {
         "label": "JVB TCP Port",
-        "description": "TCP Port for JVB",
+        "description": "TCP Port for JVB service",
         "defaultValue": "4443",
         "id": "$$cap_jvb_tcp"
       },
       {
         "label": "JVB UDP Port",
-        "description": "UDP Port for JVB",
+        "description": "UDP Port for JVB service",
         "defaultValue": "10000",
         "id": "$$cap_jvb_udp"
       },
