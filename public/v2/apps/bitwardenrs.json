@@ -1,0 +1,33 @@
+{
+    "captainVersion": "2",
+    "documentation": "Taken from https://hub.docker.com/r/bitwardenrs/server",
+    "displayName": "Bitwarden_rs",
+    "description": "Lightweight fully featured Rust implementation of Bitwarden.",
+    "dockerCompose": {
+        "version": "3.3",
+        "services": {
+            "$$cap_appname": {
+                "dockerfileLines": [
+                    "FROM bitwardenrs/server:$$cap_bitwardenrs_version"
+                ],
+                "containerHttpPort": "80",
+                "volumes": [
+                    "$$cap_appname-data:/data"
+                ],
+                "restart": "always"
+            }
+        }
+    },
+    "instructions": {
+        "start": "This is a Bitwarden server API implementation written in Rust compatible with upstream Bitwarden clients, perfect for self-hosted deployment where running the official resource-heavy service might not be ideal.",
+        "end": "Bitwarden_rs is deployed and available as $$cap_appname. Please give it a few minutes to boot, otherwise you will see a 502 error."
+    },
+    "variables": [{
+            "id": "$$cap_bitwardenrs_version",
+            "label": "Bitwarden_rs Version",
+            "defaultValue": "1.14.2",
+            "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/bitwardenrs/server/tags",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        }
+    ]
+}
