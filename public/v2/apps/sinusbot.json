@@ -6,7 +6,6 @@
    "dockerCompose": {
       "services": {
          "$$cap_appname": {
-            "notExposeAsWebApp": "false",
             "containerHttpPort": "8087",
             "environment": {
                "OVERRIDE_PASSWORD": "$$cap_password"
