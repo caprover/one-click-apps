@@ -8,7 +8,9 @@
          "$$cap_appname": {
             "containerHttpPort": "8087",
             "environment": {
-               "OVERRIDE_PASSWORD": "$$cap_password"
+               "OVERRIDE_PASSWORD": "$$cap_password",
+               "UID": "$$cap_uid",
+               "GID": "$$cap_gid"
             },
             "image": "sinusbot/docker:$$cap_version",
             "restart": "always",
@@ -40,6 +42,18 @@
          "description": "Password to access the web interface",
          "defaultValue": "",
          "id": "$$cap_password"
+      },
+      {
+         "label": "UID",
+         "description": "User ID to run the service as (using root is not recommended), see https://github.com/SinusBot/docker#unprivileged-user",
+         "defaultValue": "1000",
+         "id": "$$cap_uid"
+      },
+      {
+         "label": "GID",
+         "description": "Group ID to run the service as (using root is not recommended), see https://github.com/SinusBot/docker#unprivileged-user",
+         "defaultValue": "1000",
+         "id": "$$cap_gid"
       }
    ]
 }
