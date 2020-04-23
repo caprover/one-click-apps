@@ -7,9 +7,7 @@
         "version": "3.3",
         "services": {
             "$$cap_appname": {
-                "dockerfileLines": [
-                    "FROM bitwardenrs/server:$$cap_bitwardenrs_version"
-                ],
+                "image": "bitwardenrs/server:$$cap_bitwardenrs_version",
                 "containerHttpPort": "80",
                 "volumes": [
                     "$$cap_appname-data:/data"
