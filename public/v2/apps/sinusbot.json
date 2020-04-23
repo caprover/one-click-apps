@@ -8,7 +8,6 @@
          "$$cap_appname": {
             "containerHttpPort": "8087",
             "environment": {
-               "OVERRIDE_PASSWORD": "$$cap_password",
                "UID": "$$cap_uid",
                "GID": "$$cap_gid"
             },
@@ -27,7 +26,7 @@
       }
    },
    "instructions": {
-      "end": "Your instance of SinusBot is now starting up. Please open the web interface to finish setup.",
+      "end": "Your instance of SinusBot is now starting up and should be ready within five minutes. Check the deployment logs for the initial password and open the web interface to set up your media library and bot connection.",
       "start": "You have to read and agree to the terms in the disclaimer: https://github.com/SinusBot/docker#disclaimer"
    },
    "variables": [
@@ -36,12 +35,6 @@
          "defaultValue": "1.0.0-beta.10-202ee4d",
          "description": "It's highly recommended that you don't use the latest tag but instead the major version you need.",
          "id": "$$cap_version"
-      },
-      {
-         "label": "Password",
-         "description": "Password to access the web interface",
-         "defaultValue": "",
-         "id": "$$cap_password"
       },
       {
          "label": "UID",
