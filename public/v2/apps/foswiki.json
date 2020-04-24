@@ -1,6 +1,6 @@
 {
    "captainVersion": "2",
-   "documentation": "Taken from https://hub.docker.com/r/timlegge/docker-foswiki.",
+   "documentation": "Taken from https://hub.docker.com/r/timlegge/docker-foswiki. \n More documentation found at https://blog.foswiki.org/Blog/DockerFoswikiAndSolr and https://github.com/timlegge/docker-foswiki.",
    "displayName": "Foswiki",
    "description": "Foswiki is an open, programmable collaboration platform",
    "dockerCompose": {
