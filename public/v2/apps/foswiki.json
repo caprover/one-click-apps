@@ -1,0 +1,63 @@
+{
+   "captainVersion": "2",
+   "documentation": "Taken from https://hub.docker.com/r/timlegge/docker-foswiki.",
+   "displayName": "Foswiki",
+   "description": "Foswiki is an open, programmable collaboration platform",
+   "dockerCompose": {
+      "version": "3.3",
+      "services": {
+         "$$cap_appname-solr": {
+            "image": "solr:$$cap_solr_version",
+            "notExposeAsWebApp": "true",
+            "volumes": [
+               "$$cap_appname-solr-logs:/opt/solr/server/logs",
+               "$$cap_appname-solr-configsets:/opt/solr/server/solr/configsets",
+               "$$cap_appname-solr-foswiki:/opt/solr/server/solr/solr_foswiki",
+               "$$cap_appname-foswiki-www:/var/www/foswiki"
+            ],
+            "restart": "always",
+            "environment": {
+               "GC_LOG_OPTS":{},
+               "SOLR_LOG_LEVEL":"WARN"
+            } 
+         },
+         "$$cap_appname": {
+            "depends_on": [
+               "$$cap_appname-solr"
+            ],
+            "image": "timlegge/docker-foswiki:$$cap_foswiki_version",
+            "volumes": [
+               "$$cap_appname-solr-logs:/opt/solr/server/logs",
+               "$$cap_appname-solr-configsets:/opt/solr/server/solr/configsets",
+               "$$cap_appname-solr-foswiki:/opt/solr/server/solr/solr_foswiki",
+               "$$cap_appname-foswiki-www:/var/www/foswiki"
+            ],
+            "containerHttpPort": "80",
+            "restart": "always"
+         }
+      }
+   },
+      "volumes": {
+         "solr-logs": {},
+         "solr-configsets": {},
+         "solr-foswiki": {},
+         "foswiki-www": {}
+      },
+      "instructions": {
+         "start": "The Free Enterprise Collaboration Platform",
+         "end": "Foswiki + Solr is deployed and available as $$cap_appname-foswiki . \n\n IMPORTANT: It will take up to 2 minutes for Foswi to be ready. Before that, you might see a 502 error page.\n Please reset the admin Password.\n Read the README-CAPROVER.md File at https://github.com/timlegge/docker-foswiki for final setup."
+   },
+   "variables": [{
+            "id": "$$cap_solr_version",
+            "label": "Solr Version",
+            "defaultValue": "5",
+            "description":"Check out their Docker page for the valid tags https://hub.docker.com/_/solr/?tab=tags"
+         },
+         {
+            "id": "$$cap_foswiki_version",
+            "label": "Foswiki Version",
+            "defaultValue": "latest",
+            "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/timlegge/docker-foswiki/tags"
+         }
+      ]
+}
