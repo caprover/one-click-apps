@@ -1,0 +1,31 @@
+{
+    "captainVersion": "2",
+    "documentation": "Taken from https://hub.docker.com/r/photoprism/photoprism",
+    "displayName": "Photoprism",
+    "description": "An app for browsing, organizing and sharing your personal photo collection.",
+    "dockerCompose": {
+        "version": "3.3",
+        "services": {
+            "$$cap_appname": {
+                "image": "photoprism/photoprism:$$cap_photoprism_version",
+                "containerHttpPort": "2342",
+                "volumes": [
+                    "$$cap_appname-data:/photoprism/originals/"
+                ],
+                "restart": "always"
+            }
+        }
+    },
+    "instructions": {
+        "start": "PhotoPrism is a server-based application for browsing, organizing and sharing your personal photo collection. It makes use of the latest technologies to automatically tag and find pictures without getting in your way.",
+        "end": "Photoprism is deployed and available as $$cap_appname. Please also enable Websockets in the Caprover UI. When you log in the default password is 'photoprism'"
+    },
+    "variables": [{
+            "id": "$$cap_photoprism_version",
+            "label": "Photoprism Version",
+            "defaultValue": "20200427",
+            "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/photoprism/photoprism/tags",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        }
+    ]
+}
