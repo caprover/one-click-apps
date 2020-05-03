@@ -18,7 +18,6 @@
             },
             "$$cap_appname-pb": {
                 "image": "passbolt/passbolt:2.12.1-debian",
-                "tty": true,
                 "depends_on": ["$$cap_appname-db"],
                 "environment": {
                     "DATASOURCES_DEFAULT_HOST": "srv-captain--$$cap_appname-db:3306",
@@ -36,15 +35,6 @@
                 "volumes": [
                     "$$cap_appname-gpg:/var/www/passbolt/config/gpg",
                     "$$cap_appname-images:/var/www/passbolt/webroot/img/public"
-                ],
-                "tmpfs": ["/run"],
-                "command": [
-                    "/usr/bin/wait-for.sh",
-                    "-t",
-                    "0",
-                    "srv-captain--$$cap_appname-db:3306",
-                    "--",
-                    "/docker-entrypoint.sh"
                 ]
             }
         },
