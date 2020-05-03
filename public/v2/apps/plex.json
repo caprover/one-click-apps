@@ -36,7 +36,7 @@
   },
   "instructions": {
     "start": "Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices.\n\nIMPORTANT: Plex uses ports 32400, 3005, 8324, 32469, 1900, 32410, 32412, 32412, 32413, and 32414. If any of these ports are in use, your installation will malfunction.",
-    "end": "Plex has been successfully deployed. Please wait a minute before accessing your Plex dashboard. Enjoy!"
+    "end": "Plex has been successfully deployed. Please wait a minute before accessing your Plex dashboard. \n\nIf you're installing behind a NAT, make sure to forward port 32400."
   },
   "variables": [
     {
