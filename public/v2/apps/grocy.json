@@ -21,7 +21,7 @@
   },
   "instructions": {
     "start": "Grocy is an ERP system for your kitchen and groceries! Cut down on food waste, and manage your chores with this brilliant utulity. Keep track of your purchaes, how much food you are wasting, what chores need doing and what batteries need charging with this proudly Open Source tool.",
-    "end": "Grocy has been successfully deployed. Please wait about 2-5 minutes before accessing Grocy."
+    "end": "Grocy has been successfully deployed. Please wait about 2-5 minutes before accessing Grocy.\n\n\nUsername and password are both admin."
   },
   "variables": [
     {
