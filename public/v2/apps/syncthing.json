@@ -7,6 +7,9 @@
       "services": {
          "$$cap_appname": {
             "containerHttpPort": "8384",
+            "ports": [
+               "$$cap_port_sync:9987"
+            ],
             "image": "syncthing/syncthing:$$cap_version",
             "restart": "always",
             "volumes": [
@@ -29,6 +32,12 @@
          "defaultValue": "1.5.0",
          "description": "It's highly recommended that you don't use the latest tag but instead the major version you need.",
          "id": "$$cap_version"
+      },
+      {          
+         "label":"Sync Protocol Listening Port",
+         "description":"Port that Syncthing listens on for data synchronization (TCP).",
+         "defaultValue":"22000",
+         "id":"$$cap_port_sync"
       }
    ]
 }
