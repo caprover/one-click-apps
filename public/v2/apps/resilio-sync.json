@@ -23,7 +23,7 @@
       }
    },
    "instructions": {
-      "end": "Your instance of Resilio Sync is now starting up.",
+      "end": "Your instance of Resilio Sync is now starting up.\n\nNote that all sync folders will have to be created under /mnt/sync/folders/ from within the app.",
       "start": "Set up Resilio Sync to synchronize or share files without having to store your data in the cloud."
    },
    "variables": [
