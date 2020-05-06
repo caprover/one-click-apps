@@ -23,8 +23,8 @@
       }
    },
    "instructions": {
-      "end": "Your instance of Resilio Sync is now starting up.\n\nNote that all sync folders will have to be created under /mnt/sync/folders/ from within the app.",
-      "start": "Set up Resilio Sync to synchronize or share files without having to store your data in the cloud."
+      "end": "Your instance of Sync is now starting up.\n\nNote that all sync folders will have to be created under /mnt/sync/folders/ from within the app.",
+      "start": "Set up Sync to synchronize or share files without having to store your data in the cloud."
    },
    "variables": [
       {
@@ -35,7 +35,7 @@
       },
       {          
          "label":"Listening port for Sync traffic",
-         "description":"Port that Resilio Sync listens on for data synchronization (TCP & UDP).",
+         "description":"Port that Sync listens on for data synchronization (TCP & UDP).",
          "defaultValue":"55555",
          "id":"$$cap_port_sync"
       }
