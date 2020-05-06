@@ -8,7 +8,7 @@
          "$$cap_appname": {
             "containerHttpPort": "8384",
             "ports": [
-               "$$cap_port_sync:9987"
+               "$$cap_port_sync:22000"
             ],
             "image": "syncthing/syncthing:$$cap_version",
             "restart": "always",
