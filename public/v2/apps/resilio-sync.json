@@ -1,0 +1,43 @@
+{
+   "captainVersion": "2",
+   "documentation": "https://hub.docker.com/r/resilio/sync",
+   "displayName": "Resilio Sync",
+   "description": "File synchronization and sharing solution based on BitTorrent technology.",
+   "dockerCompose": {
+      "services": {
+         "$$cap_appname": {
+            "containerHttpPort": "8888",
+            "ports": [
+               "$$cap_port_sync:55555"
+            ],
+            "image": "resilio/sync:$$cap_version",
+            "restart": "always",
+            "volumes": [
+               "$$cap_appname-data:/mnt/sync"
+            ]
+         }
+      },
+      "version": "2",
+      "volumes": {
+         "$$cap_appname-data": {}
+      }
+   },
+   "instructions": {
+      "end": "Your instance of Resilio Sync is now starting up.\n\nIMPORTANT: Make sure to enable HTTP Basic Auth in CapRover's HTTP Settings for this app, otherwise your data is at risk of public exposure!",
+      "start": "Set up Resilio Sync to synchronize or share files without having to store your data in the cloud."
+   },
+   "variables": [
+      {
+         "label": "Resilio Sync Docker Version",
+         "defaultValue": "2.6.4",
+         "description": "It's highly recommended that you don't use the latest tag but instead the major version you need.",
+         "id": "$$cap_version"
+      },
+      {          
+         "label":"Listening port for Sync traffic",
+         "description":"Port that Resilio Sync listens on for data synchronization (TCP & UDP).",
+         "defaultValue":"55555",
+         "id":"$$cap_port_sync"
+      }
+   ]
+}
