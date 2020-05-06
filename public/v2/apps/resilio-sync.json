@@ -23,7 +23,7 @@
       }
    },
    "instructions": {
-      "end": "Your instance of Resilio Sync is now starting up.\n\nIMPORTANT: Make sure to enable HTTP Basic Auth in CapRover's HTTP Settings for this app, otherwise your data is at risk of public exposure!",
+      "end": "Your instance of Resilio Sync is now starting up.",
       "start": "Set up Resilio Sync to synchronize or share files without having to store your data in the cloud."
    },
    "variables": [
