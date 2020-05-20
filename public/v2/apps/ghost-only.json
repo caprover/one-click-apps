@@ -30,7 +30,7 @@
     },
     "variables":[
        {
-          "defaultValue":"latest",
+          "defaultValue":"3.16.0",
           "description":"Check out their Docker page for the valid tags https://hub.docker.com/r/bitnami/ghost/tags",
           "id":"$$cap_ghost_version",
           "label":"Ghost Version",
