@@ -51,7 +51,7 @@
   },
   "instructions": {
     "start": "n8n is a free and open node based Workflow Automation Tool.\nThe process will deploy a database and the App.\nThe process will take about a minute for the process to finish.",
-    "end": "n8n is deployed and available as $$cap_appname.\n\nPlease activate Websocket Support in the app then wait few seconds before use it.\n\nImportant information, it will not work without websocket support nor with https enabled.\nPlease do not activate https nor basic auth (it is setted by the docker and use the caprover one would make your webhook failed)"
+    "end": "n8n is deployed and available as $$cap_appname.\n\nPlease activate Websocket Support in the app then wait few seconds before use it.\n\nImportant information, it will not work without websocket support nor with https enabled.\nPlease do not activate https nor basic auth (it is setted by the docker and use the caprover one would make your webhook failed).\n\nSee https://github.com/n8n-io/n8n/issues/593 for more details."
   },
   "variables": [
     {
