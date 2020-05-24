@@ -12,9 +12,6 @@
         "volumes": [
           "$$cap_appname-db-data:/var/lib/mysql"
         ],
-        "ports": [
-          "3306:3306"
-        ],
         "restart": "always",
         "environment": {
           "MYSQL_ROOT_PASSWORD": "$$cap_db_pass",
@@ -63,7 +60,7 @@
       "id": "$$cap_mautic_version",
       "label": "Mautic Version",
       "defaultValue": "v3.0.0-beta",
-      "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/mautic/mautic/tags",
+      "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/mautic/mautic/tags. Please be aware, this is a beta version.",
       "validRegex": "/^([^\\s^\\/])+$/"
     },
     {
