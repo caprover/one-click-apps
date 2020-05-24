@@ -1,0 +1,100 @@
+{
+  "captainVersion": "2",
+  "displayName": "n8n.io",
+  "description": "n8n is a free and open node based Workflow Automation Tool.",
+  "dockerCompose": {
+    "version": "2",
+    "services": {
+      "$$cap_appname-db": {
+        "documentation": "Taken from https://hub.docker.com/_/postgres",
+        "image": "postgres:$$cap_postgres_version",
+        "notExposeAsWebApp": "true",
+        "volumes": [
+          "$$cap_appname-db-data:/var/lib/postgresql/data"
+        ],
+        "restart": "always",
+        "environment": {
+          "POSTGRES_PASSWORD": "$$cap_db_pass",
+          "POSTGRES_DB": "n8n",
+          "POSTGRES_USER": "$$cap_db_user"
+        }
+      },
+      "$$cap_appname": {
+        "documentation": "Taken from https://hub.docker.com/r/n8nio/n8n",
+        "depends_on": [
+          "$$cap_appname-db"
+        ],
+        "containerHttpPort": "5678",
+        "image": "n8nio/n8n:$$cap_n8n_version",
+        "volumes": [
+          "$$cap_appname-data:/root/.n8n"
+        ],
+        "environment": {
+          "POSTGRES_DATABASE":"n8n",
+          "POSTGRES_HOST":"srv-captain--$$cap_appname-db",
+          "POSTGRES_PASSWORD":"$$cap_db_pass",
+          "POSTGRES_PORT":"5432",
+          "POSTGRES_USER":"$$cap_db_user",
+          "GENERIC_TIMEZONE":"$$cap_timezone",
+          "TZ":"$$cap_timezone",
+          "N8N_PROTOCOL": "http",
+          "WEBHOOK_TUNNEL_URL": "http://$$cap_appname.$$cap_root_domain/",
+          "VUE_APP_URL_BASE_API": "http://$$cap_appname.$$cap_root_domain/",
+          "N8N_HOST": "http://$$cap_appname.$$cap_root_domain/",
+          "N8N_BASIC_AUTH_ACTIVE": "true",
+          "N8N_BASIC_AUTH_USER": "$$cap_user",
+          "N8N_BASIC_AUTH_PASSWORD": "$$cap_pass"
+        },
+        "restart": "always"
+      }
+    }
+  },
+  "instructions": {
+    "start": "n8n is a free and open node based Workflow Automation Tool.\nThe process will deploy a database and the App.\nThe process will take about a minute for the process to finish.",
+    "end": "n8n is deployed and available as $$cap_appname.\n\nPlease activate Websocket Support in the app then wait few seconds before use it.\n\nImportant information, it will not work without websocket support nor with https enabled.\nPlease do not activate https nor basic auth (it is setted by the docker and use the caprover one would make your webhook failed).\n\nSee https://github.com/n8n-io/n8n/issues/593 for more details."
+  },
+  "variables": [
+    {
+      "id": "$$cap_n8n_version",
+      "label": "n8n.io Version",
+      "defaultValue": "0.67.3",
+      "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/n8nio/n8n/tags",
+      "validRegex": "/^([^\\s^\\/])+$/"
+    },
+    {
+      "id": "$$cap_postgres_version",
+      "label": "Postgres (database) version",
+      "defaultValue": "12",
+      "description": "Check out their Docker page for the valid tags https://hub.docker.com/_/mariadb?tab=tags",
+      "validRegex": "/^([^\\s^\\/])+$/"
+    },{
+      "id": "$$cap_db_pass",
+      "label": "database password",
+      "description": "Password for the database user and root using mysql.",
+      "validRegex": "/.{1,}/"
+    },{
+      "id": "$$cap_db_user",
+      "label": "database user",
+      "defaultValue": "n8n",
+      "description": "Username for the database using postgres.",
+      "validRegex": "/^([a-z0-9])+$/i"
+    },{
+      "id": "$$cap_timezone",
+      "label": "timezone",
+      "defaultValue": "Europe/Paris",
+      "description": "Timezone used by the server. Please check out this page https://en.wikipedia.org/wiki/List_of_tz_database_time_zones for valid time",
+      "validRegex": "/^([a-z_\\+-0-9]+\\/?[a-z_\\+-0-9]*)$/i"
+    },{
+      "id": "$$cap_user",
+      "label": "user",
+      "defaultValue": "root",
+      "description": "user you need to use to login into the web interface",
+      "validRegex": "/^([a-z0-9])+$/i"
+    },{
+      "id": "$$cap_pass",
+      "label": "password",
+      "description": "password you need to use to login into the web interface",
+      "validRegex": "/.{1,}/"
+    }
+  ]
+}
