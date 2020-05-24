@@ -48,6 +48,7 @@
     "id": "$$cap_db_user",
     "label": "Database user",
     "defaultValue": "mauticuser",
+    "description": "",
     "validRegex": "/^([a-zA-Z0-9])+$/"
   },
     {
