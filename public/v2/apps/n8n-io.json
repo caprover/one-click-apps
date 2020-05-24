@@ -82,8 +82,8 @@
       "id": "$$cap_timezone",
       "label": "timezone",
       "defaultValue": "Europe/Paris",
-      "description": "Timezone used by the server. Please check out this page for valid time",
-      "validRegex": "/^([a-z]+\\/[a-z]+)$/i"
+      "description": "Timezone used by the server. Please check out this page https://en.wikipedia.org/wiki/List_of_tz_database_time_zones for valid time",
+      "validRegex": "/^([a-z_\\+-0-9]+\\/?[a-z_\\+-0-9]*)$/i"
     },{
       "id": "$$cap_user",
       "label": "user",
