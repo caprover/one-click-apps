@@ -49,21 +49,28 @@
       "id": "$$cap_mariadb_version",
       "label": "MariaDB (database) version",
       "defaultValue": "10.5.3",
-      "description": "Check out their Docker page for the valid tags https://hub.docker.com/_/mariadb?tab=tags"
-    },{
+      "description": "Check out their Docker page for the valid tags https://hub.docker.com/_/mariadb?tab=tags",
+      "validRegex": "/^([^\\s^\\/])+$/"
+    },
+    {
       "id": "$$cap_db_pass",
       "label": "database password",
-      "description": "Password for the database user and root using mysql."
-    },{
+      "description": "Password for the database user and root using mysql.",
+      "validRegex": "/.{1,}/"
+    },
+    {
       "id": "$$cap_db_name",
       "label": "database name",
       "defaultValue": "limesurvey",
-      "description": "name for the database."
-    },{
+      "description": "name for the database.",
+      "validRegex": "/^([a-zA-Z0-9])+$/"
+    },
+    {
       "id": "$$cap_db_user",
       "label": "database user",
       "defaultValue": "limesurvey",
-      "description": "Username for the database using mysql."
+      "description": "Username for the database using mysql.",
+      "validRegex": "/^([a-zA-Z0-9])+$/"
     }
     ]
 }
