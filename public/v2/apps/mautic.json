@@ -42,7 +42,7 @@
   },
   "instructions": {
     "start": "Mautic is an online,marketing automation tool.\nThe process will deploy a database and the App.\nThe process will take about a minute for the process to finish.",
-    "end": "Mautic is deployed and available as $$cap_appname .\nIf you dont have any SMTP server, I recommend you to install 'poste.io' one click app version."
+    "end": "Mautic is deployed and available as $$cap_appname.\n\nIMPORTANT: It will take up to 1-2 minutes for Mautic to be ready. Before that, you might see 502 error page.\nIf you dont have any SMTP server, I recommend you to install 'poste.io' one click app version."
   },
   "variables": [{
     "id": "$$cap_db_user",
