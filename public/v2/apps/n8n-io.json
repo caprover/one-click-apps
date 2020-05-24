@@ -65,30 +65,36 @@
       "id": "$$cap_postgres_version",
       "label": "Postgres (database) version",
       "defaultValue": "12",
-      "description": "Check out their Docker page for the valid tags https://hub.docker.com/_/mariadb?tab=tags"
+      "description": "Check out their Docker page for the valid tags https://hub.docker.com/_/mariadb?tab=tags",
+      "validRegex": "/^([^\\s^\\/])+$/"
     },{
       "id": "$$cap_db_pass",
       "label": "database password",
-      "description": "Password for the database user and root using mysql."
+      "description": "Password for the database user and root using mysql.",
+      "validRegex": "/.{1,}/"
     },{
       "id": "$$cap_db_user",
       "label": "database user",
       "defaultValue": "n8n",
-      "description": "Username for the database using postgres."
+      "description": "Username for the database using postgres.",
+      "validRegex": "/^([a-z0-9])+$/i"
     },{
       "id": "$$cap_timezone",
       "label": "timezone",
       "defaultValue": "Europe/Paris",
-      "description": "Timezone used by the server. Please check out this page for valid time"
+      "description": "Timezone used by the server. Please check out this page for valid time",
+      "validRegex": "/^([a-z]+\\/[a-z]+)$/i"
     },{
       "id": "$$cap_user",
       "label": "user",
       "defaultValue": "root",
-      "description": "user you need to use to login into the web interface"
+      "description": "user you need to use to login into the web interface",
+      "validRegex": "/^([a-z0-9])+$/i"
     },{
       "id": "$$cap_pass",
       "label": "password",
-      "description": "password you need to use to login into the web interface"
+      "description": "password you need to use to login into the web interface",
+      "validRegex": "/.{1,}/"
     }
   ]
 }
