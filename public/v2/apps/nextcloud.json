@@ -32,6 +32,7 @@
                 ],
                 "restart": "always",
                 "environment": {
+                    "OVERWRITEPROTOCOL": "$$cap_http_https_cors",
                     "MYSQL_DATABASE": "nextcloud",
                     "MYSQL_USER": "$$cap_db_user",
                     "MYSQL_PASSWORD": "$$cap_db_pass",
@@ -45,13 +46,13 @@
     },
     "instructions": {
         "start": "A safe home for all your data. Access & share your files, calendars, contacts, mail & more from any device, on your terms. http://Nextcloud.com",
-        "end": "NextCloud is deployed and will be available on few minutes as $$cap_appname"
+        "end": "NextCloud is deployed and will be available on few minutes as $$cap_appname.\nIf you set the cors sections to https, please enable https on your app. If you do not activate it you will have an error."
     },
     "variables": [{
         "id": "$$cap_nextcloud_version",
         "label": "NextCloud Version",
-        "defaultValue": "18.0.4",
-        "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/library/nextcloud/tags/\n\n do not use fpm versions.",
+        "defaultValue": "19.0.0",
+        "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/library/nextcloud/tags/\n\ndo not use fpm versions.",
         "validRegex": "/^([^\\s^\\/])+$/"
     },{
         "id": "$$cap_mariadb_version",
@@ -81,5 +82,10 @@
         "label": "admin password",
         "description": "Password for the Nextcloud admin user.",
         "validRegex": "/.{1,}/"
+    },{
+        "id": "$$cap_http_https_cors",
+        "label": "will you force https ?",
+        "description": "cors configuration to login are set by the docker image, if you want to use https, please set as https, if not just set as http",
+        "validRegex": "/^http[s]?$/"
     }]
 }
