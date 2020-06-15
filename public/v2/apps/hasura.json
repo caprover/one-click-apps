@@ -7,7 +7,7 @@
         "version": "3.6",
         "services": {
             "$$cap_appname-db": {
-                "image": "mdillon/postgis:$$cap_mdillon_postgis_version",
+                "image": "postgres:$$cap_postgres_version",
                 "notExposeAsWebApp": "true",
                 "volumes": [
                     "$$cap_appname-db-data:/var/lib/postgresql/data"
@@ -28,9 +28,10 @@
                 ],
                 "restart": "always",
                 "environment": {
-                "   HASURA_GRAPHQL_DATABASE_URL": "postgres://$$cap_pg_user:$$cap_pg_pass@srv-captain--$$cap_appname-db:5432/$$cap_pg_db",
+                    "HASURA_GRAPHQL_DATABASE_URL": "postgres://$$cap_pg_user:$$cap_pg_pass@srv-captain--$$cap_appname-db:5432/$$cap_pg_db",
                     "HASURA_GRAPHQL_ENABLE_CONSOLE": "true",
-                    "HASURA_GRAPHQL_ADMIN_SECRET":"$$cap_admin_secret"
+                    "HASURA_GRAPHQL_ADMIN_SECRET":"$$cap_admin_secret",
+                    "HASURA_GRAPHQL_ENABLED_LOG_TYPES": "startup, http-log, webhook-log, websocket-log, query-log"
                 }
             }
         }
@@ -41,17 +42,16 @@
      },
      "variables":[
         {
-           "defaultValue":"v1.1.1",
+           "defaultValue":"v1.2.2",
            "description":"Check out their GitHub page for their latest version https://github.com/hasura/graphql-engine",
            "id":"$$cap_hasura_version",
            "label":"Hasura Version",
            "validRegex":"/^([^\\s^\\/])+$/"
         },
         {
-          "defaultValue":"11",
-          "description":"mdillon/postgis provides a Docker container running Postgres with PostGIS installed. Check out their Docker page for their available tags https://hub.docker.com/r/mdillon/postgis/tags",
-          "id":"$$cap_mdillon_postgis_version",
-          "label":"mdillon/postgis Version",
+          "defaultValue":"12",
+          "id":"$$cap_postgres_version",
+          "label":"Postgres Version",
           "validRegex":"/^([^\\s^\\/])+$/"
        },
         {
