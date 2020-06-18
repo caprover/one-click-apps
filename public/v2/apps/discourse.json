@@ -6,7 +6,7 @@
     "dockerCompose": {
         "version": "2",
         "services": {
-          "postgresql": {
+          "$$cap_appname-postgresql": {
             "documentation": "Taken from https://hub.docker.com/r/bitnami/postgresql",
             "image": "docker.io/bitnami/postgresql:$$cap_postgresql_version",
             "notExposeAsWebApp": "true",
@@ -18,7 +18,7 @@
               "postgresql-data:/bitnami/postgresql"
             ]
           },
-          "redis": {
+          "$$cap_appname-redis": {
             "documentation": "Taken from https://hub.docker.com/r/bitnami/redis",
             "image": "docker.io/bitnami/redis:$$cap_redis_version",
             "notExposeAsWebApp": "true",
@@ -30,7 +30,7 @@
               "redis-data:/bitnami"
             ]
           },
-          "discourse": {
+          "$$cap_appname-discourse": {
             "documentation":"Taken from https://hub.docker.com/r/bitnami/discourse",
             "image": "docker.io/bitnami/discourse:$$cap_disource_version",
             "notExposeAsWebApp": "true",
@@ -54,7 +54,7 @@
               "DISCOURSE_HOSTNAME=$$cap_appname.$$cap_root_domain"
             ]
           },
-          "sidekiq": {
+          "$$cap_appname-sidekiq": {
             "documentaion": "Taken from https://hub.docker.com/r/bitnami/discourse",
             "image": "docker.io/bitnami/discourse:$$cap_discourse_version",
             "notExposeAsWebApp": "true",
