@@ -7,7 +7,10 @@
         "version": "2",
         "services": {
           "postgresql": {
-            "image": "docker.io/bitnami/postgresql:11-debian-10",
+            "documentation": "Taken from",
+            "image": "docker.io/bitnami/postgresql:$$cap_postgresql_version",
+            "notExposeAsWebApp": "true",
+            "restart": "always",
             "environment": [
               "ALLOW_EMPTY_PASSWORD=yes"
             ],
@@ -16,7 +19,10 @@
             ]
           },
           "redis": {
-            "image": "docker.io/bitnami/redis:5.0-debian-10",
+            "documentation": "Taken from",
+            "image": "docker.io/bitnami/redis:$$cap_redis_version",
+            "notExposeAsWebApp": "true",
+            "restart": "always",
             "environment": [
               "ALLOW_EMPTY_PASSWORD=yes"
             ],
@@ -25,7 +31,7 @@
             ]
           },
           "discourse": {
-            "image": "docker.io/bitnami/discourse:2-debian-10",
+            "image": "docker.io/bitnami/discourse:$$cap_disource_version",
             "ports": [
               "80:3000"
             ],
@@ -45,11 +51,11 @@
               "DISCOURSE_POSTGRESQL_NAME=bitnami_application",
               "DISCOURSE_POSTGRESQL_USERNAME=bn_discourse",
               "DISCOURSE_POSTGRESQL_PASSWORD=bitnami1",
-              "DISCOURSE_HOSTNAME=www.example.com"
+              "DISCOURSE_HOSTNAME=$$cap_appname.$$cap_root_domain"
             ]
           },
           "sidekiq": {
-            "image": "docker.io/bitnami/discourse:2-debian-10",
+            "image": "docker.io/bitnami/discourse:$$cap_sidekiq_version",
             "depends_on": [
               "discourse"
             ],
@@ -63,7 +69,7 @@
               "DISCOURSE_POSTGRESQL_PASSWORD=bitnami1",
               "DISCOURSE_HOST=discourse",
               "DISCOURSE_PORT=3000",
-              "DISCOURSE_HOSTNAME=www.example.com"
+              "DISCOURSE_HOSTNAME=$$cap_appname.$$cap_root_domain"
             ]
           }
         },
@@ -86,26 +92,37 @@
       "variables": [{
           "id": "$$cap_discourse_version",
           "label": "Discourse Version",
-          "defaultValue": "TODO",
+          "defaultValue": "2-debian-10",
           "description": "TODO",
           "validRegex": "/^([^\\s^\\/])+$/"
       },{
           "id": "$$cap_postgresql_version",
           "label": "Postgresql (database) version",
-          "defaultValue": "TODO",
+          "defaultValue": "11-debian-10",
           "description": "TODO",
           "validRegex": "/^([^\\s^\\/])+$/"
       },{
           "id": "$$cap_redis_version",
           "label": "Redis version",
-          "defaultValue": "TODO",
+          "defaultValue": "5.0-debian-10",
           "description": "TODO",
           "validRegex": "/^([^\\s^\\/])+$/"
       },{
           "id": "$$cap_sidekiq_version",
           "label": "Sidekiq version",
-          "defaultValue": "TODO",
+          "defaultValue": "2-debian-10",
           "description": "TODO",
+          "validRegex": "/^([^\\s^\\/])+$/"
+      },{
+          "id": "$$cap_db_pass",
+          "label": "database password",
+          "description": "Password for the database user and root using postgresql",
+          "validRegex": "/.{1,}/"
+      },{
+          "id": "$$cap_db_user",
+          "label": "database user",
+          "defaultValue": "discourse",
+          "description": "Username for the database using postgresql",
           "validRegex": "/^([^\\s^\\/])+$/"
       }]
 }
