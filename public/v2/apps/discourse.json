@@ -33,7 +33,6 @@
           "$$cap_appname-discourse": {
             "documentation":"Taken from https://hub.docker.com/r/bitnami/discourse",
             "image": "docker.io/bitnami/discourse:$$cap_disource_version",
-            "notExposeAsWebApp": "true",
             "containerHttpPort": "3000",
             "depends_on": [
               "$$cap_appname-postgresql",
@@ -76,13 +75,13 @@
           }
         },
         "volumes": {
-          "postgresql_data": {
+          "postgresql-data": {
             "driver": "local"
           },
-          "redis_data": {
+          "redis-data": {
             "driver": "local"
           },
-          "discourse_data": {
+          "discourse-data": {
             "driver": "local"
           }
         }
