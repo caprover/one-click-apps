@@ -36,8 +36,8 @@
             "notExposeAsWebApp": "true",
             "containerHttpPort": "3000",
             "depends_on": [
-              "postgresql",
-              "redis"
+              "$$cap_appname-postgresql",
+              "$$cap_appname-redis"
             ],
             "volumes": [
               "discourse-data:/bitnami"
@@ -59,7 +59,7 @@
             "image": "docker.io/bitnami/discourse:$$cap_discourse_version",
             "notExposeAsWebApp": "true",
             "depends_on": [
-              "discourse"
+              "$$cap_appname-discourse"
             ],
             "volumes": [
               "discourse-data:/bitnami"
