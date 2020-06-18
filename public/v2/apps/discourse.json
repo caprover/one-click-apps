@@ -7,7 +7,7 @@
         "version": "2",
         "services": {
           "postgresql": {
-            "documentation": "Taken from",
+            "documentation": "Taken from https://hub.docker.com/r/bitnami/postgresql",
             "image": "docker.io/bitnami/postgresql:$$cap_postgresql_version",
             "notExposeAsWebApp": "true",
             "restart": "always",
@@ -19,7 +19,7 @@
             ]
           },
           "redis": {
-            "documentation": "Taken from",
+            "documentation": "Taken from https://hub.docker.com/r/bitnami/redis",
             "image": "docker.io/bitnami/redis:$$cap_redis_version",
             "notExposeAsWebApp": "true",
             "restart": "always",
@@ -31,7 +31,9 @@
             ]
           },
           "discourse": {
+            "documentation":"Taken from https://hub.docker.com/r/bitnami/discourse",
             "image": "docker.io/bitnami/discourse:$$cap_disource_version",
+            "notExposeAsWebApp": "true",
             "ports": [
               "80:3000"
             ],
@@ -55,7 +57,9 @@
             ]
           },
           "sidekiq": {
-            "image": "docker.io/bitnami/discourse:$$cap_sidekiq_version",
+            "documentaion": "Taken from https://hub.docker.com/r/bitnami/discourse",
+            "image": "docker.io/bitnami/discourse:$$cap_discourse_version",
+            "notExposeAsWebApp": "true",
             "depends_on": [
               "discourse"
             ],
@@ -105,12 +109,6 @@
           "id": "$$cap_redis_version",
           "label": "Redis version",
           "defaultValue": "5.0-debian-10",
-          "description": "TODO",
-          "validRegex": "/^([^\\s^\\/])+$/"
-      },{
-          "id": "$$cap_sidekiq_version",
-          "label": "Sidekiq version",
-          "defaultValue": "2-debian-10",
           "description": "TODO",
           "validRegex": "/^([^\\s^\\/])+$/"
       },{
