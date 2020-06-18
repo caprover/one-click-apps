@@ -15,7 +15,7 @@
               "ALLOW_EMPTY_PASSWORD=yes"
             ],
             "volumes": [
-              "postgresql_data:/bitnami/postgresql"
+              "postgresql-data:/bitnami/postgresql"
             ]
           },
           "redis": {
@@ -27,7 +27,7 @@
               "ALLOW_EMPTY_PASSWORD=yes"
             ],
             "volumes": [
-              "redis_data:/bitnami"
+              "redis-data:/bitnami"
             ]
           },
           "discourse": {
@@ -40,7 +40,7 @@
               "redis"
             ],
             "volumes": [
-              "discourse_data:/bitnami"
+              "discourse-data:/bitnami"
             ],
             "environment": [
               "POSTGRESQL_HOST=postgresql",
@@ -60,7 +60,7 @@
               "discourse"
             ],
             "volumes": [
-              "discourse_data:/bitnami"
+              "discourse-data:/bitnami"
             ],
             "command": "nami start --foreground discourse-sidekiq",
             "environment": [
