@@ -63,7 +63,10 @@
             "volumes": [
               "discourse-data:/bitnami"
             ],
-            "command": "nami start --foreground discourse-sidekiq",
+            "dockerfileLines": [
+              "FROM docker.io/bitnami/discourse:$$cap_discourse_version",
+              "CMD [\"nami\" , \"start\" , \"--foreground discourse-sidekiq\"]"
+            ],
             "environment": [
               "DISCOURSE_POSTGRESQL_NAME=bitnami_application",
               "DISCOURSE_POSTGRESQL_USERNAME=bn_discourse",
