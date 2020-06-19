@@ -1,7 +1,7 @@
 {
   "captainVersion": "2",
   "documentation": "Read the documentation @ https://github.com/agentejo/cockpit-docker",
-  "displayName": "",
+  "displayName": "Cockpit",
   "description": "Cockpit is Simple Content Platform to manage any structured content. A self-hosted headless and api-driven CMS.",
   "dockerCompose": {
     "version": "3.7",
