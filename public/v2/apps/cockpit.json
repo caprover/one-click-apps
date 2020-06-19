@@ -10,7 +10,7 @@
         "image": "agentejo/cockpit:$$cap_cockpit_version",
         "containerHttpPort": "80",
         "volumes": [
-          "$$cap_appname-storage:/data/storage"
+          "$$cap_appname-storage:/var/www/html/storage"
         ],
         "restart": "always"
       }
