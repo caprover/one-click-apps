@@ -2,7 +2,7 @@
     "captainVersion": "2",
     "documentation": "Read more at: https://jupyter-docker-stacks.readthedocs.io/",
     "displayName": "JupyterLab",
-    "description": "JupyterLab is the next-generation user interface for Project Jupyter. It offers all the familiar building blocks of the classic Jupyter Notebook (notebook, terminal, text editor, file browser, rich outputs, etc.) in a flexible and powerful user interface.",
+    "description": "JupyterLab is the next-generation user interface for Project Jupyter. It offers all the familiar building blocks of the classic Jupyter Notebook in a flexible and powerful user interface.",
     "dockerCompose": {
         "version": "3.3",
         "services": {
