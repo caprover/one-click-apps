@@ -30,9 +30,9 @@
               "redis-data:/bitnami"
             ]
           },
-          "$$cap_appname-discourse": {
+          "$$cap_appname": {
             "documentation":"Taken from https://hub.docker.com/r/bitnami/discourse",
-            "image": "docker.io/bitnami/discourse:$$cap_disource_version",
+            "image": "docker.io/bitnami/discourse:$$cap_discourse_version",
             "containerHttpPort": "3000",
             "depends_on": [
               "$$cap_appname-postgresql",
