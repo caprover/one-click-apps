@@ -1,0 +1,176 @@
+{
+    "captainVersion": "2",
+    "documentation": "Taken from https://github.com/searx/searx-docker",
+    "displayName": "Searx",
+    "description": "Create a searx instance, battery included (use Docker)",
+    "dockerCompose": {
+        "version": "3.7",
+        "services": {
+            "$$cap_appname-caddy": {
+                "image": "abiosoft/caddy:1.0.3-no-stats",
+                "ports": [
+                    "80:80",
+                    "443:443"
+                ],
+                "network_mode": "host",
+                "command": "-email $$cap_caddy_LETSENCRYPT_EMAIL -agree=$$cap_caddy_LETSENCRYPT_AGREE -log stdout -host $$cap_caddy_SEARX_HOSTNAME -conf /etc/Caddyfile",
+                "volumes": [
+                    "$$cap_appname-caddy-caddyfile:/etc/Caddyfile:rw",
+                    "$$cap_appname-caddy-caddy:/root/.caddy:rw",
+                    "$$cap_appname-caddy-srv:/srv:rw",
+                    "$$cap_appname-caddy-searx-checker:/srv/searx-checker:rw"
+                ],
+                "environment": {
+                  "SEARX_HOSTNAME": "$$cap_SEARX_HOSTNAME",
+                  "FILTRON_USER": "$$cap_FILTRON_USER",
+                  "FILTRON_PASSWORD": "$$cap_FILTRON_PASSWORD"
+                },
+                "restart": "always",
+                "cap_drop": [
+                    "ALL"
+                ],
+                "cap_add": [
+                    "NET_BIND_SERVICE",
+                    "DAC_OVERRIDE"
+                ]
+            },
+
+            "$$cap_appname-filtron": {
+                "image": "dalf/filtron",
+                 "ports": [
+                    "4040:4040",
+                    "4041:4041"
+                ],
+                "networks": [
+                    "searx"
+                ],
+                "command": "-listen 0.0.0.0:4040 -api 0.0.0.0:4041 -target searx:8080",
+                "volumes": [
+                    "./rules.json:/etc/filtron/rules.json:rw"
+                ],
+                "restart": "always",
+                "read_only": "true",
+                "cap_drop": [
+                    "ALL"
+                ]
+            },
+
+            "$$cap_appname": {
+                "image": "searx/searx:latest",
+                "networks": [
+                    "searx"
+                ],
+                "command": "$$cap_SEARX_COMMAND",
+                "environment": {
+                    "BIND_ADDRESS": "0.0.0.0:8080",
+                    "BASE_URL": "https://$$cap_SEARX_HOSTNAME/",
+                    "MORTY_URL": "https://$$cap_SEARX_HOSTNAME/morty/",
+                    "MORTY_KEY": "$$cap_MORTY_KEY"
+                  },
+                "cap_drop": [
+                    "ALL"
+                ],
+                "cap_add": [
+                    "CHOWN",
+                    "SETGID",
+                    "SETUID",
+                    "DAC_OVERRIDE"
+                ]
+            },
+
+            "$$cap_appname-marty": {
+                "image": "dalf/morty",
+                "restart": "always",
+                "ports": [
+                    "3000:3000"
+                ],
+                "networks": [
+                    "searx"
+                ],
+                "command": "-listen 0.0.0.0:3000 -timeout 6 -ipv6",
+                "environment": {
+                    "MORTY_KEY": "$$cap_MORTY_KEY"
+                },
+                "logging": {
+                    "driver": "none"
+                },
+                "read_only": "true",
+                "cap_drop": [
+                    "ALL"
+                ]
+            },
+
+            "$$cap_appname-searx-checker": {
+                "image": "searx/searx-checker",
+                "restart": "always",
+                "networks": [
+                    "searx"
+                ],
+                "command": "-cron -o html/data/status.json http://searx:8080",
+                "volumes": [
+                    "searx-checker:/usr/local/searx-checker/html/data:rw"
+                ]
+            }
+        }
+    },
+    "instructions": {
+        "start": "This is a Bitwarden server API implementation written in Rust compatible with upstream Bitwarden clients, perfect for self-hosted deployment where running the official resource-heavy service might not be ideal.",
+        "end": "Bitwarden_rs is deployed and available as $$cap_appname. Please give it a few minutes to boot, otherwise you will see a 502 error."
+    },
+    "variables": [
+        {          
+         "label":"Caddy Port http",
+         "description":"Caddy Port http",
+         "defaultValue":"80",
+         "id":"$$cap_caddy_port_http"
+        },
+         {          
+         "label":"Caddy Port https",
+         "description":"Caddy Port https",
+         "defaultValue":"443",
+         "id":"$$cap_caddy_port_https"
+        },
+        {          
+         "label":"LetsEncrypt email",
+         "description":"Lets encrypt contact informations",
+         "defaultValue":"email@example.com",
+         "id":"$$cap_caddy_LETSENCRYPT_EMAIL"
+        },
+        {          
+         "label":"LetsEncrypt TOS",
+         "description":"Do you agree Let's Encrypt TOS https://letsencrypt.org/repository/",
+         "defaultValue":"false",
+         "id":"$$cap_caddy_LETSENCRYPT_AGREE"
+        },
+        {          
+         "label":"SEARX hostname",
+         "description":"",
+         "defaultValue":"localhost",
+         "id":"$$cap_SEARX_HOSTNAME"
+        },
+        {          
+        "label":"SEARX Command",
+        "description":"automatically update settings to the new version. comment this line if you made / will make some modifications to the settings",
+        "defaultValue":"-f",
+        "id":"$$cap_SEARX_COMMAND"
+        },
+        {          
+        "label":"Morty Secret Key",
+        "description":"use openssl rand -base64 33",
+        "defaultValue":"RemplaceWithARealKey!",
+        "id":"$$cap_MORTY_KEY"
+        },
+        {          
+        "label":"filtron ( /filtron/rules )",
+        "description":"for example tr -cd '[:alnum:]' < /dev/urandom | fold -w12 | head -n1",
+        "defaultValue":"FILTRON_USER",
+        "id":"$$cap_FILTRON_USER"
+        },
+        {          
+        "label":"filtron password",
+        "description":"SetARealPassword",
+        "defaultValue":"FILTRON_PASSWORD",
+        "id":"$$cap_FILTRON_PASSWORD"
+        }
+    ]
+}
