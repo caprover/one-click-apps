@@ -56,7 +56,7 @@
             },
 
             "$$cap_appname": {
-                "image": "searx/searx:latest",
+                "image": "searx/searx",
                 "networks": [
                     "searx"
                 ],
