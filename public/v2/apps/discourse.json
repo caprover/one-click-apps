@@ -112,15 +112,15 @@
           "description": "TODO",
           "validRegex": "/^([^\\s^\\/])+$/"
       },{
-          "id": "$$cap_db_pass",
-          "label": "database password",
-          "description": "Password for the database user and root using postgresql",
-          "validRegex": "/.{1,}/"
-      },{
           "id": "$$cap_db_user",
           "label": "database user",
           "defaultValue": "discourse",
           "description": "Username for the database using postgresql",
           "validRegex": "/^([^\\s^\\/])+$/"
+      },{
+          "id": "$$cap_db_pass",
+          "label": "database password",
+          "description": "Password for the database user and root using postgresql",
+          "validRegex": "/.{1,}/"
       }]
 }
