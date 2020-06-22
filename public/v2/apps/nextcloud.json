@@ -46,7 +46,7 @@
     },
     "instructions": {
         "start": "A safe home for all your data. Access & share your files, calendars, contacts, mail & more from any device, on your terms. http://Nextcloud.com",
-        "end": "NextCloud is deployed and will be available on few minutes as $$cap_appname.\nIf you set the cors sections to https, please enable https on your app. If you do not activate it you will have an error."
+        "end": "NextCloud is deployed and will be available on few minutes as $$cap_appname.\nIf you set the cors sections to https, please enable https on your app. If you do not activate it you will have an error.\n\nFor better performances and compliance, you can add \"add_header Strict-Transport-Security \"max-age=15552000; includeSubDomains\" always;\" below \"proxy_set_header X-Forwarded-Proto $scheme;\" into the nginx configuration."
     },
     "variables": [{
         "id": "$$cap_nextcloud_version",
@@ -85,6 +85,7 @@
     },{
         "id": "$$cap_http_https_cors",
         "label": "will you force https ?",
+        "defaultValue": "https",
         "description": "cors configuration to login are set by the docker image, if you want to use https, please set as https, if not just set as http",
         "validRegex": "/^http[s]?$/"
     }]
