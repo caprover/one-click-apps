@@ -84,9 +84,9 @@
         "validRegex": "/.{1,}/"
     },{
         "id": "$$cap_http_https_cors",
-        "label": "will you force https ?",
+        "label": "Protocol of proxy",
         "defaultValue": "https",
-        "description": "cors configuration to login are set by the docker image, if you want to use https, please set as https, if not just set as http",
+        "description": "Choose either http or https. cors configuration to login are set by the docker image, if you do not set this same as your proxy configuration, login will fail",
         "validRegex": "/^http[s]?$/"
     }]
 }
