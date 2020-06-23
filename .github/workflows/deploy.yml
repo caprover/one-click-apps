@@ -12,6 +12,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 10
-      - run: npm ci && npm run build && ./publish-from-actions.sh
+      - run: npm ci && npm run publish
         env:
           GITHUB_PERSONAL_TOKEN: ${{secrets.GITHUB_PERSONAL_TOKEN}}
