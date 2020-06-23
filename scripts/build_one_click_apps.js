@@ -72,7 +72,7 @@ function buildDist() {
             fs.outputJsonSync(path.join(pathOfDistV3, 'list'), v3List);
         })
         .then(function () {
-            return fs.copySync(path.join(pathOfPublic, 'CNAME'), path.join(pathOfDist, 'CNAME'))
+            return fs.copySync(path.join(pathOfPublic, 'CNAME'), path.join(pathOfDist, 'CNAME'));
         });
 }
 
