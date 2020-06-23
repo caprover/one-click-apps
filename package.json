@@ -1,12 +1,11 @@
 {
-  "name": "CapRover-one-click-apps",
+  "name": "caprover-one-click-apps",
   "version": "1.0.0",
   "description": "One Click App Repository for CapRover",
-  "main": "build_and_publish_to_github_pages.js",
   "scripts": {
-    "build": "node ./build_one_click_apps.js",
-    "validate_json": "node ./validate_json.js",
-    "publish": "npm run build && ./publish-from-actions.sh"
+    "build": "node ./scripts/build_one_click_apps.js",
+    "validate_json": "node ./scripts/validate_json.js",
+    "publish": "npm run build && ./scripts/publish-from-actions.sh"
   },
   "repository": {
     "type": "git",
