@@ -1,0 +1,80 @@
+{
+    "captainVersion": "2",
+    "documentation": "Taken from https://github.com/jboss-dockerfiles/keycloak/blob/master/server/README.md",
+    "displayName": "",
+    "description": "Keycloak is an open source identity and access management solution",
+    "dockerCompose": {
+        "version": "3.3",
+        "services": {
+            "$$cap_appname-db": {
+                "image": "postgres:$$cap_postgres_version",
+                "notExposeAsWebApp": "true",
+                "volumes": [
+                    "$$cap_appname-db-data:/var/lib/postgresql/data"
+                ],
+                "restart": "always",
+                "environment": {
+                    "POSTGRES_USER": "keycloak",
+                    "POSTGRES_PASSWORD": "$$cap_pg_pass",
+                    "POSTGRES_DB": "keycloak"
+                }
+            },
+            "$$cap_appname": {
+                "image": "jboss/keycloak:$$cap_keycloak_version",
+                "depends_on": [
+                    "$$cap_appname-db"
+                ],
+                "restart": "always",
+                "containerHttpPort": "8080",
+                "environment": {
+                    "DB_VENDOR": "postgres",
+                    "DB_ADDR": "srv-captain--$$cap_appname-db",
+                    "POSTGRES_DB": "keycloak",
+                    "DB_USER": "keycloak",
+                    "DB_PASSWORD": "$$cap_pg_pass",
+                    "KEYCLOAK_USER": "$$cap_keycloak_user",
+                    "KEYCLOAK_PASSWORD": "$$cap_keycloak_password",
+                    "PROXY_ADDRESS_FORWARDING": "true"
+                }
+            }
+        }
+    },
+    "instructions": {
+        "start": "Keycloak is an Open Source Identity and Access Management solution for modern Applications and Services. It makes it easy to secure applications and services with little to no code.\n\n For documentation, see: https://www.keycloak.org/documentation.html\n\nFor source code, see: https://github.com/keycloak/keycloak\n\nFor docker image, see: https://hub.docker.com/r/jboss/keycloak\n\n  Enter your Keycloak Configuration parameters and click on next. It will take about a minute for the process to finish.",
+        "end": "Keycloak is deployed and available as srv-captain--$$cap_appname:8080 to other apps"
+    },
+    "variables": [
+        {
+            "id": "$$cap_postgres_version",
+            "label": "Postgres Version",
+            "defaultValue": "9.6",
+            "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        },
+        {
+            "id": "$$cap_keycloak_version",
+            "label": "Keycloak Version",
+            "defaultValue": "6.0.1",
+            "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/jboss/keycloak/tags",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        },
+        {
+            "id": "$$cap_pg_pass",
+            "label": "Postgres Password",
+            "description": "Password strength requeriments: Should contain at least one digit, one lower case, one upper case and at least 12 from the mentioned characters.",
+            "validRegex": "/^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{12,}$/"
+        },
+        {
+            "id": "$$cap_keycloak_user",
+            "label": "Keycloak user",
+            "description": "",
+            "validRegex": "/.{1,}/"
+        },
+        {
+            "id": "$$cap_keycloak_password",
+            "label": "Keycloak password",
+            "description": "Password strength requeriments: Should contain at least one digit, one lower case, one upper case and at least 12 from the mentioned characters.",
+            "validRegex": "/^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{12,}$/"
+        }
+    ]
+}
