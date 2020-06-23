@@ -6,7 +6,6 @@
  const pathOfPublic = path.join(__dirname, PUBLIC);
  const VERSION = 2
 
-
  // validating version 2
  async function validate() {
      const pathOfVersion = path.join(pathOfPublic, 'v' + VERSION);
@@ -14,7 +13,7 @@
      const versionString = (VERSION + '');
 
      const items = await fs.readdir(pathOfApps)
-     const apps = items.filter(v => v.includes('.json'));
+     const apps = items.filter(fileName => fileName.includes('.json'));
      const appDetails = [];
 
      for (var i = 0; i < apps.length; i++) {
