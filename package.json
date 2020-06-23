@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "One Click App Repository for CapRover",
   "scripts": {
-    "build": "node ./scripts/build_one_click_apps.js",
+    "build": "rm -rf ./dist/ && mkdir -p dist && node ./scripts/build_one_click_apps.js",
     "validate_json": "node ./scripts/validate_json.js",
     "publish": "npm run build && ./scripts/publish-from-actions.sh"
   },

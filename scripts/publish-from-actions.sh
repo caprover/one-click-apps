@@ -26,7 +26,7 @@
 
 set -e
 
-BUILD_DIR=public
+BUILD_DIR=dist
 SOURCE_DIRECTORY_DEPLOY_GH=~/temp-gh-deploy-src
 CLONED_DIRECTORY_DEPLOY_GH=~/temp-gh-deploy-cloned
 
