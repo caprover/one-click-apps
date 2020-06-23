@@ -26,10 +26,7 @@
 
 set -e
 
-# Make sure build_dir content doesn't have leading/trailing slashes. Correct format:
-# export BUILD_DIR="public"
-
-source ./build_dir
+BUILD_DIR=public
 SOURCE_DIRECTORY_DEPLOY_GH=~/temp-gh-deploy-src
 CLONED_DIRECTORY_DEPLOY_GH=~/temp-gh-deploy-cloned
 
