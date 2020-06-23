@@ -5,7 +5,8 @@ const fs = require('fs-extra')
 const PUBLIC = 'public'
 const pathOfPublic = path.join(__dirname, PUBLIC);
 const VERSION = 2
-
+const LOGO_EXTENSION = '.png'
+const ONE_APP_EXTENSION = '.json'
 function isLogoValid({ existsSync, statSync }, logoFullPath) {
   return existsSync(logoFullPath) && statSync(logoFullPath).isFile()
 }
@@ -21,17 +22,17 @@ function isVersionValid(applicationVersion, capVersion) {
      const versionString = (VERSION + '');
 
      const items = await fs.readdir(pathOfApps)
-     const apps = items.filter(fileName => fileName.includes('.json'));
+     const apps = items.filter(fileName => fileName.includes(ONE_APP_EXTENSION));
      const applicationsDetails = apps.map(filename => {
        const contentString = fs.readFileSync(path.join(pathOfApps, filename));
        const content = JSON.parse(contentString)
        const { captainVersion, displayName, description } = content
        if (!isVersionValid(versionString, captainVersion))
          throw new Error(`unmatched versions   ${versionString}  ${captainVersion} for ${filename}`)
-        const appName = filename.replace('.json', '');
+        const appName = filename.replace(ONE_APP_EXTENSION, '');
        const realDisplayName = displayName || appName.charAt(0).toUpperCase() + appName.slice(1)
        const realDescription = description || ''
-       const logoFileName = appName + '.png';
+       const logoFileName = appName + LOGO_EXTENSION;
        const logoFullPath = path.join(pathOfVersion, 'logos', logoFileName);
 
        if (!isLogoValid(fs, logoFullPath)) {
