@@ -16,6 +16,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-      - run: npm ci && npm run validate_json
+      - run: npm ci && npm run validate_json && npm run formatter
         env:
           GITHUB_PERSONAL_TOKEN: ${{secrets.GITHUB_PERSONAL_TOKEN}}
