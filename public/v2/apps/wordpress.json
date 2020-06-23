@@ -9,9 +9,7 @@
             "$$cap_appname-db": {
                 "image": "mysql:$$cap_mysql_version",
                 "notExposeAsWebApp": "true",
-                "volumes": [
-                    "$$cap_appname-db-data:/var/lib/mysql"
-                ],
+                "volumes": ["$$cap_appname-db-data:/var/lib/mysql"],
                 "restart": "always",
                 "environment": {
                     "MYSQL_ROOT_PASSWORD": "$$cap_db_pass",
@@ -21,13 +19,9 @@
                 }
             },
             "$$cap_appname-wordpress": {
-                "depends_on": [
-                    "$$cap_appname-db"
-                ],
+                "depends_on": ["$$cap_appname-db"],
                 "image": "wordpress:$$cap_wp_version",
-                "volumes": [
-                    "$$cap_appname-wp-data:/var/www/html"
-                ],
+                "volumes": ["$$cap_appname-wp-data:/var/www/html"],
                 "restart": "always",
                 "environment": {
                     "WORDPRESS_DB_HOST": "srv-captain--$$cap_appname-db:3306",
@@ -44,7 +38,8 @@
         "start": "WordPress is an online, open source website creation tool written in PHP. But in non-geek speak, it’s probably the easiest and most powerful blogging and website content management system (or CMS) in existence today.\n\n Enter your WordPress Configuration parameters and click on next. A MySQL (database) and a WordPress container will be created for you.  The process will take about a minute for the process to finish.",
         "end": "Wordpress is deployed and available as $$cap_appname-wordpress . \n\n IMPORTANT: It will take up to 2 minutes for WordPress to be ready. Before that, you might see a 502 error page.\n"
     },
-    "variables": [{
+    "variables": [
+        {
             "id": "$$cap_db_user",
             "label": "Database user",
             "defaultValue": "wordpressuser",
@@ -71,5 +66,4 @@
             "validRegex": "/^([^\\s^\\/])+$/"
         }
     ]
-
 }

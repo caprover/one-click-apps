@@ -10,13 +10,13 @@
                 "image": "postgres:11.6",
                 "notExposeAsWebApp": "true",
                 "volumes": [
-                  "$$cap_appname-postgres-data:/var/lib/postgresql/data"
+                    "$$cap_appname-postgres-data:/var/lib/postgresql/data"
                 ],
                 "restart": "always",
                 "environment": {
-                  "POSTGRES_USER": "chatwoot",
-                  "POSTGRES_PASSWORD": "$$cap_chatwoot_postgres_password",
-                  "POSTGRES_DB": "chatwoot"
+                    "POSTGRES_USER": "chatwoot",
+                    "POSTGRES_PASSWORD": "$$cap_chatwoot_postgres_password",
+                    "POSTGRES_DB": "chatwoot"
                 }
             },
             "$$cap_appname-redis": {
@@ -25,9 +25,7 @@
                     "CMD exec redis-server --requirepass \"$$cap_chatwoot_redis_password\""
                 ],
                 "notExposeAsWebApp": "true",
-                "volumes": [
-                    "$$cap_appname-redis-data:/data"
-                ],
+                "volumes": ["$$cap_appname-redis-data:/data"],
                 "restart": "always",
                 "environment": {
                     "REDIS_PASSWORD": "$$cap_chatwoot_redis_password"
@@ -96,16 +94,16 @@
             "validRegex": "/^[^\\@]{26,}$/"
         },
         {
-          "id": "$$cap_chatwoot_postgres_password",
-          "label": "Postgres Password",
-          "description": "Password must be at least 12 characters.  Please use a random string.",
-          "validRegex": "/^[^\\@]{12,}$/"
+            "id": "$$cap_chatwoot_postgres_password",
+            "label": "Postgres Password",
+            "description": "Password must be at least 12 characters.  Please use a random string.",
+            "validRegex": "/^[^\\@]{12,}$/"
         },
         {
-          "id": "$$cap_chatwoot_redis_password",
-          "label": "Redis Password",
-          "description": "Password must be at least 12 characters. Please use a random string.",
-          "validRegex": "/^[^\\@]{12,}$/"
+            "id": "$$cap_chatwoot_redis_password",
+            "label": "Redis Password",
+            "description": "Password must be at least 12 characters. Please use a random string.",
+            "validRegex": "/^[^\\@]{12,}$/"
         }
     ]
 }

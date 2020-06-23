@@ -25,7 +25,8 @@
         "start": "GitLab is a single application for the entire software development lifecycle. From project planning and source code management to CI/CD, monitoring, and security. \n\n More about this container:\n https://hub.docker.com/r/gitlab/gitlab-ce/ \n\n Hardware and Software requeriments can be found here:\n https://docs.gitlab.com/ce/install/requirements.html\n\n For security reasons, no port mapping is created, those can be created after deploying the app.\n More information about Caprover's Firewall & Port Forwarding and configuration can be found here:\nhttps://caprover.com/docs/firewall.html \n\nMore information about gitlab's docker configuration can be found here:\n https://docs.gitlab.com/omnibus/docker/#configure-gitlab\n\n It can take some time (2-3 minutes) for the service to launch in a new container. Check the \"Deployment\" tab logs to determine once GitLab is ready.",
         "end": "Gitlab-CE is deployed and available as srv-captain--$$cap_appname:80 to other apps."
     },
-    "variables": [{
+    "variables": [
+        {
             "id": "$$cap_gitlab_version",
             "label": "Gitlab-CE Version Tag",
             "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/gitlab/gitlab-ce/tags",

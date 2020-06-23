@@ -10,9 +10,7 @@
                 "image": "nicolaw/tiddlywiki",
                 "containerHttpPort": "8080",
                 "restart": "always",
-                "volumes": [
-                    "$$cap_appname-data:/var/lib/tiddlywiki"
-                ],
+                "volumes": ["$$cap_appname-data:/var/lib/tiddlywiki"],
                 "environment": {
                     "TW_USERNAME": "$$cap_wikusername",
                     "TW_PASSWORD": "$$cap_wikipassword",

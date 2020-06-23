@@ -9,9 +9,7 @@
             "$$cap_appname": {
                 "image": "grburst/etesync:$$cap_version",
                 "containerHttpPort": "3735",
-                "volumes": [
-                    "$$cap_appname-data:/data"
-                ],
+                "volumes": ["$$cap_appname-data:/data"],
                 "restart": "always",
                 "environment": {
                     "SUPER_USER": "$$cap_SUPER_USER",
@@ -35,7 +33,7 @@
         {
             "id": "$$cap_SUPER_USER",
             "label": "user name",
-             "description": "etesync super user name",
+            "description": "etesync super user name",
             "defaultValue": "root"
         },
         {

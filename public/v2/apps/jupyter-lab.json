@@ -19,9 +19,7 @@
                 "environment": {
                     "JUPYTER_ENABLE_LAB": "yes"
                 },
-                "volumes":[
-                   "$$cap_appname:/home/jovyan/"
-                ]
+                "volumes": ["$$cap_appname:/home/jovyan/"]
             }
         }
     },
