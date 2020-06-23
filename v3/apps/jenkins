@@ -10,9 +10,7 @@
                 "image": "jenkins/jenkins:$$cap_jenkins_version",
                 "containerHttpPort": "8080",
                 "restart": "always",
-                "volumes": [
-                    "$$cap_appname-jenkins-home:/var/jenkins_home"
-                ]
+                "volumes": ["$$cap_appname-jenkins-home:/var/jenkins_home"]
             }
         }
     },

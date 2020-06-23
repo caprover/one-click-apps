@@ -21,9 +21,7 @@
                     "CMD [\"/usr/sbin/sshd\", \"-D\"]"
                 ],
                 "ports": ["$$cap_sshd_port:22"],
-                "volumes": [
-                    "$$cap_appname-data:/data"
-                ],
+                "volumes": ["$$cap_appname-data:/data"],
                 "restart": "always",
                 "environment": {}
             }

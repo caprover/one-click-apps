@@ -12,9 +12,7 @@
                     "CMD exec redis-server --requirepass \"$$cap_redis_password\""
                 ],
                 "notExposeAsWebApp": "true",
-                "volumes": [
-                    "$$cap_appname-redis-data:/data"
-                ],
+                "volumes": ["$$cap_appname-redis-data:/data"],
                 "restart": "always",
                 "environment": {
                     "REDIS_PASSWORD": "$$cap_redis_password"

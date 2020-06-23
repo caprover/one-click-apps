@@ -9,12 +9,9 @@
             "$$cap_appname": {
                 "image": "sonatype/nexus3:$$cap__version",
                 "containerHttpPort": "8081",
-                "volumes": [
-                    "$$cap_appname-data:/nexus-data"
-                ],
+                "volumes": ["$$cap_appname-data:/nexus-data"],
                 "restart": "always",
-                "environment": {
-                }
+                "environment": {}
             }
         }
     },

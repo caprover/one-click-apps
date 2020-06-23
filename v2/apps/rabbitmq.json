@@ -9,9 +9,7 @@
             "$$cap_appname": {
                 "image": "rabbitmq:$$cap_rabbitmq_version",
                 "notExposeAsWebApp": "true",
-                "volumes": [
-                    "$$cap_appname-rabbitmq-data:/var/lib/rabbitmq"
-                ],
+                "volumes": ["$$cap_appname-rabbitmq-data:/var/lib/rabbitmq"],
                 "restart": "always",
                 "environment": {
                     "RABBITMQ_DEFAULT_USER": "$$cap_rabbitmq_user",
@@ -25,7 +23,8 @@
         "start": "RabbitMQ is open source message broker software (sometimes called message-oriented middleware) that implements the Advanced Message Queuing Protocol (AMQP). The RabbitMQ server is written in the Erlang programming language and is built on the Open Telecom Platform framework for clustering and failover. Client libraries to interface with the broker are available for all major programming languages.\n\n Enter your RabbitMQ Configuration parameters and click on next. It will take about a minute for the process to finish.",
         "end": "RabbitMQ is deployed and available as srv-captain--$$cap_appname:5672 to other apps."
     },
-    "variables": [{
+    "variables": [
+        {
             "id": "$$cap_rabbitmq_version",
             "label": "RabbitMQ Version Tag",
             "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/library/rabbitmq/tags/",

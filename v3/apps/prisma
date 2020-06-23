@@ -13,20 +13,14 @@
                 "environment": {
                     "MYSQL_ROOT_PASSWORD": "$$cap_db_pass"
                 },
-                "volumes": [
-                    "$$cap_appname-db-data:/var/lib/mysql"
-                ]
+                "volumes": ["$$cap_appname-db-data:/var/lib/mysql"]
             },
             "$$cap_appname": {
                 "image": "prismagraphql/prisma:$$cap_prisma_version",
                 "restart": "always",
-                "ports": [
-                    "4466:4466"
-                ],
+                "ports": ["4466:4466"],
                 "containerHttpPort": "4466",
-                "depends_on": [
-                    "$$cap_appname-db"
-                ],
+                "depends_on": ["$$cap_appname-db"],
                 "environment": {
                     "PRISMA_CONFIG": "managementApiSecret: $$cap_management_secret\nport: 4466\ndatabases:\n  default:\n    connector: mysql\n    host: srv-captain--$$cap_appname-db\n    port: 3306\n    user: root\n    password: $$cap_db_pass\n    migrations: true\n"
                 }

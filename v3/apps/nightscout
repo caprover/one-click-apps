@@ -20,9 +20,7 @@
                 }
             },
             "$$cap_appname-nightscout": {
-                "depends_on": [
-                    "$$cap_appname-mongodb"
-                ],
+                "depends_on": ["$$cap_appname-mongodb"],
                 "dockerfileLines": [
                     "FROM node:10",
                     "RUN mkdir -p /opt/app",
@@ -50,7 +48,8 @@
         "start": "Nightscout acts as a web-based CGM (Continuous Glucose Monitor) to allow multiple caregivers to remotely view a patient's glucose data in real time.",
         "end": "Nightscout is deployed and available as $$cap_appname-nightscout."
     },
-    "variables": [{
+    "variables": [
+        {
             "id": "$$cap_mongo_version",
             "label": "MongoDB Version",
             "defaultValue": "4",
@@ -77,5 +76,4 @@
             "validRegex": "/^([a-zA-Z0-9]){12,}$/"
         }
     ]
-
 }

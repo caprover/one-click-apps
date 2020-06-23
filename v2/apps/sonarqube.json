@@ -9,9 +9,7 @@
             "$$cap_appname-db": {
                 "image": "postgres:$$cap_postgres_version",
                 "notExposeAsWebApp": "true",
-                "volumes": [
-                    "$$cap_appname-db-data:/var/lib/postgresql/data"
-                ],
+                "volumes": ["$$cap_appname-db-data:/var/lib/postgresql/data"],
                 "restart": "always",
                 "environment": {
                     "POSTGRES_USER": "sonarqube",
@@ -23,9 +21,7 @@
             "$$cap_appname": {
                 "image": "sonarqube:$$cap_sonar_version",
                 "containerHttpPort": "9000",
-                "depends_on": [
-                    "$$cap_appname-db"
-                ],
+                "depends_on": ["$$cap_appname-db"],
                 "volumes": [
                     "$$cap_appname-conf:/opt/sonarqube/conf",
                     "$$cap_appname-data:/opt/sonarqube/data",

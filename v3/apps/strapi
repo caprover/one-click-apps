@@ -7,14 +7,10 @@
         "version": "3.3",
         "services": {
             "$$cap_appname-core": {
-                "depends_on": [
-                    "$$cap_appname-mongo"
-                ],
+                "depends_on": ["$$cap_appname-mongo"],
                 "containerHttpPort": "1337",
                 "image": "strapi/strapi:$$cap_strapi_version",
-                "volumes": [
-                    "$$cap_appname-data:/srv/app"
-                ],
+                "volumes": ["$$cap_appname-data:/srv/app"],
                 "restart": "always",
                 "environment": {
                     "DATABASE_CLIENT": "mongo",
@@ -49,7 +45,8 @@
         "start": "API creation made simple, secure and fast. The most advanced open-source Content Management Framework to build powerful API with no effort. Read more here: https://strapi.io \n\nNOTE: Hardware requirements: \n2GB minimum RAM required\n1Ghz minimum CPU clock speed",
         "end": "Strapi is deployed and available as $$cap_appname-core \n IMPORTANT!! It takes up to 2-5 minutes for Strapi to boot up. You will see a 502 Error until the startup is finished.\n\nIMPORTANT: You need to add a config file manually to support the correct domain name. See this issue for more details: https://github.com/strapi/strapi-docker/issues/173"
     },
-    "variables": [{
+    "variables": [
+        {
             "id": "$$cap_strapi_version",
             "label": "Strapi Version",
             "defaultValue": "3.0.0-beta.18.6",
@@ -70,5 +67,4 @@
             "validRegex": "/^([a-zA-Z0-9])+$/"
         }
     ]
-
 }

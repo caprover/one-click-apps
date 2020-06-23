@@ -25,15 +25,11 @@
                     "CMD exec redis-server"
                 ],
                 "notExposeAsWebApp": "true",
-                "volumes": [
-                    "$$cap_appname-redis-data:/data"
-                ],
+                "volumes": ["$$cap_appname-redis-data:/data"],
                 "restart": "always"
             },
             "$$cap_appname-cron": {
-                "depends_on": [
-                    "$$cap_appname"
-                ],
+                "depends_on": ["$$cap_appname"],
                 "dockerfileLines": [
                     "FROM sentry:$$cap_sentry_version",
                     "RUN groupadd -r $$cap_appname-cron && useradd -r -g $$cap_appname-cron $$cap_appname-cron",
@@ -48,9 +44,7 @@
                 }
             },
             "$$cap_appname-worker": {
-                "depends_on": [
-                    "$$cap_appname-cron"
-                ],
+                "depends_on": ["$$cap_appname-cron"],
                 "dockerfileLines": [
                     "FROM sentry:$$cap_sentry_version",
                     "RUN groupadd -r $$cap_appname-worker && useradd -r -g $$cap_appname-worker $$cap_appname-worker",
@@ -99,13 +93,8 @@
                     "CMD [\"./init.sh\"]"
                 ],
                 "containerHttpPort": "9000",
-                "depends_on": [
-                    "$$cap_appname-postgres",
-                    "$$cap_appname-redis"
-                ],
-                "volumes": [
-                    "$$cap_appname-data:/var/lib/sentry/files"
-                ],
+                "depends_on": ["$$cap_appname-postgres", "$$cap_appname-redis"],
+                "volumes": ["$$cap_appname-data:/var/lib/sentry/files"],
                 "restart": "always",
                 "environment": {
                     "CAP_SENTRY_VERSION": "$$cap_sentry_version",
@@ -159,13 +148,13 @@
             "id": "$$cap_pg_pass",
             "label": "Postgres Password",
             "description": "Password strength minimal requeriments: Should contain at least one digit, one lower case, one upper case, one special character and at least 12 from the mentioned characters.",
-            "validRegex": "/^(?=.*[A-Z])(?=.*[\/!?@±#§$€%^&*()\\\\-_=+{}~+´ºª`^\"';:,<.>\\|\\]\\[])(?=.*[0-9])(?=.*[a-z]).{12,}$/"
+            "validRegex": "/^(?=.*[A-Z])(?=.*[/!?@±#§$€%^&*()\\\\-_=+{}~+´ºª`^\"';:,<.>\\|\\]\\[])(?=.*[0-9])(?=.*[a-z]).{12,}$/"
         },
         {
             "id": "$$cap_sentry_secret",
             "label": "Sentry Secret",
             "description": "A secret key used for cryptographic functions within Sentry. This key should be unique and consistent across all running instances. Password strength minimal requeriments: Should contain at least one digit, one lower case, one special character and at least 50 from the mentioned characters. You can generate a new secret key doing something like: docker run --rm sentry config generate-secret-key",
-            "validRegex": "/^(?=.*[\/!?@±#§$€%^&*()\\\\-_=+{}~+´ºª`^\"';:,<.>\\|\\]\\[])(?=.*[0-9])(?=.*[a-z]).{50,}$/"
+            "validRegex": "/^(?=.*[/!?@±#§$€%^&*()\\\\-_=+{}~+´ºª`^\"';:,<.>\\|\\]\\[])(?=.*[0-9])(?=.*[a-z]).{50,}$/"
         },
         {
             "id": "$$cap_sentry_superuser_email",
@@ -176,7 +165,7 @@
             "id": "$$cap_sentry_superuser_password",
             "label": "Sentry Superuser Password",
             "description": "Password strength minimal requeriments: Should contain at least one digit, one lower case, one upper case, one special character and at least 12 from the mentioned characters.",
-            "validRegex": "/^(?=.*[A-Z])(?=.*[\/!?@±#§$€%^&*()\\\\-_=+{}~+´ºª`^\"';:,<.>\\|\\]\\[])(?=.*[0-9])(?=.*[a-z]).{12,}$/"
+            "validRegex": "/^(?=.*[A-Z])(?=.*[/!?@±#§$€%^&*()\\\\-_=+{}~+´ºª`^\"';:,<.>\\|\\]\\[])(?=.*[0-9])(?=.*[a-z]).{12,}$/"
         },
         {
             "id": "$$cap_sentry_server_mail",
