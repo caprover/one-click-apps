@@ -2,7 +2,8 @@
  const path = require('path');
  const fs = require('fs-extra')
 
- const pathOfPublic = path.join(__dirname, 'public');
+ const PUBLIC = `public`
+ const pathOfPublic = path.join(__dirname, '..', PUBLIC);
 
 
  function copyVersion(version) {
