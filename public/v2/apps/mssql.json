@@ -9,9 +9,7 @@
             "$$cap_appname-db": {
                 "image": "mcr.microsoft.com/mssql/server:$$cap_server_version",
                 "notExposeAsWebApp": "true",
-                "volumes": [
-                    "$$cap_appname-db-data:/var/opt/mssql"
-                ],
+                "volumes": ["$$cap_appname-db-data:/var/opt/mssql"],
                 "restart": "always",
                 "environment": {
                     "ACCEPT_EULA": "$$cap_accept_eula",
@@ -19,9 +17,7 @@
                     "MSSQL_SA_PASSWORD": "$$cap_sa_pass",
                     "MSSQL_TCP_PORT": "$$cap_container_port"
                 },
-                "ports": [
-                    "$$cap_host_port:$$cap_container_port"
-                ]
+                "ports": ["$$cap_host_port:$$cap_container_port"]
             }
         }
     },

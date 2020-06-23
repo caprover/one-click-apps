@@ -8,9 +8,7 @@
         "services": {
             "$$cap_appname": {
                 "image": "jsreport/jsreport:$$cap_jsreport_version",
-                "volumes": [
-                    "$$cap_appname-data:/jsreport"
-                ],
+                "volumes": ["$$cap_appname-data:/jsreport"],
                 "restart": "always",
                 "containerHttpPort": "5488",
                 "environment": {
@@ -25,7 +23,8 @@
         "start": "Reporting tools for creating PDF, HTMLS, Excel by converting your HTML + CSS + Javascript knowledge.",
         "end": "Congratulations! You have the new jsReport instance running. Happy reporting!"
     },
-    "variables": [{
+    "variables": [
+        {
             "id": "$$cap_jsreport_version",
             "label": "version",
             "defaultValue": "2.4.0-full",
@@ -51,5 +50,4 @@
             "validRegex": "/^\\s*\\S.*$/"
         }
     ]
-
 }

@@ -22,7 +22,8 @@
         "start": "Official image for the Visual Studio Team Services (VSTS) agent.",
         "end": "VSTS Agent is deployed and available as $$cap_appname"
     },
-    "variables": [{
+    "variables": [
+        {
             "id": "$$cap_vsts_version",
             "label": "VSTS Version Tag",
             "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/microsoft/vsts-agent/tags/",
@@ -52,5 +53,4 @@
             "validRegex": "/.{1,}/"
         }
     ]
-
 }

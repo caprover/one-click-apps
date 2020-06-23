@@ -1,87 +1,83 @@
 {
-   "captainVersion": "2",
-   "documentation":"https://docs.requarks.io/",
-   "displayName": "wiki.js",
-   "description": "The most powerful and extensible open source Wiki software",
-   "dockerCompose":{
-      "services":{
-         "$$cap_appname":{
-            "containerHttpPort":"3000",
-            "environment":{
-               "DB_TYPE":"$$cap_DB_TYPE",
-               "DB_HOST":"$$cap_DB_HOST",
-               "DB_PORT":"$$cap_DB_PORT",
-               "DB_USER":"$$cap_DB_USER",
-               "DB_PASS":"$$cap_DB_PASS",
-               "DB_NAME":"$$cap_DB_NAME",
-               "DB_SSL": "$$cap_DB_SSL"
-            },
-            "image":"requarks/wiki:$$cap_version",
-            "restart":"always",
-            "volumes":[
-               "$$cap_appname-data:/wiki"
-            ]
-         }
-      },
-      "version":"2",
-      "volumes":{
-         "$$cap_appname-data":{
-
-         }
-      }
-   },
-   "instructions":{
-      "end":"Wiki.js is deployed and available as $$cap_appname. \n\n IMPORTANT: It will take up to 2 minutes for Wiki.js to be ready. Before that, you might see 502 error page.\n",
-      "start":"Wiki.js is a fully open source, adaptable platform for building and running a Wiki."
-   },
-   "variables":[
-      {
-         "label":"Wiki.js Version",
-         "defaultValue":"2",
-         "description":"It's highly recommended that you don't use the latest tag but instead the major version you need, e.g. requarks/wiki:2",
-         "id":"$$cap_version"
-      },
-      {          
-        "label":"DB_TYPE",
-        "description":"Type of database (mysql, postgres, mariadb, mssql or sqlite)",
-        "defaultValue":"mariadb",
-        "id":"$$cap_DB_TYPE"
-     },
-     {          
-        "label":"DB_HOST",
-        "description":"Hostname or IP of the database",
-        "defaultValue":"localhost",
-        "id":"$$cap_DB_HOST"
-     },
-     {          
-        "label":"DB_PORT",
-        "description":"Port of the database",
-        "defaultValue":"3306",
-        "id":"$$cap_DB_PORT"
-     },
-     {          
-        "label":"DB_USER",
-        "description":"Username to connect to the database",
-        "defaultValue":"wiki-user",
-        "id":"$$cap_DB_USER"
-     },
-     {          
-        "label":"DB_PASS",
-        "description":"Password to connect to the database",
-        "defaultValue":"wiki-password",
-        "id":"$$cap_DB_PASS"
-     },
-     {          
-        "label":"DB_NAME",
-        "description":"Database name",
-        "defaultValue":"wiki",
-        "id":"$$cap_DB_NAME"
-     },
-     {          
-        "label":"DB_SSL",
-        "description":"Set to either 1 or true to enable. (optional, off if omitted)",
-        "defaultValue":"false",
-        "id":"$$cap_DB_SSL"
-     }
-   ]
+    "captainVersion": "2",
+    "documentation": "https://docs.requarks.io/",
+    "displayName": "wiki.js",
+    "description": "The most powerful and extensible open source Wiki software",
+    "dockerCompose": {
+        "services": {
+            "$$cap_appname": {
+                "containerHttpPort": "3000",
+                "environment": {
+                    "DB_TYPE": "$$cap_DB_TYPE",
+                    "DB_HOST": "$$cap_DB_HOST",
+                    "DB_PORT": "$$cap_DB_PORT",
+                    "DB_USER": "$$cap_DB_USER",
+                    "DB_PASS": "$$cap_DB_PASS",
+                    "DB_NAME": "$$cap_DB_NAME",
+                    "DB_SSL": "$$cap_DB_SSL"
+                },
+                "image": "requarks/wiki:$$cap_version",
+                "restart": "always",
+                "volumes": ["$$cap_appname-data:/wiki"]
+            }
+        },
+        "version": "2",
+        "volumes": {
+            "$$cap_appname-data": {}
+        }
+    },
+    "instructions": {
+        "end": "Wiki.js is deployed and available as $$cap_appname. \n\n IMPORTANT: It will take up to 2 minutes for Wiki.js to be ready. Before that, you might see 502 error page.\n",
+        "start": "Wiki.js is a fully open source, adaptable platform for building and running a Wiki."
+    },
+    "variables": [
+        {
+            "label": "Wiki.js Version",
+            "defaultValue": "2",
+            "description": "It's highly recommended that you don't use the latest tag but instead the major version you need, e.g. requarks/wiki:2",
+            "id": "$$cap_version"
+        },
+        {
+            "label": "DB_TYPE",
+            "description": "Type of database (mysql, postgres, mariadb, mssql or sqlite)",
+            "defaultValue": "mariadb",
+            "id": "$$cap_DB_TYPE"
+        },
+        {
+            "label": "DB_HOST",
+            "description": "Hostname or IP of the database",
+            "defaultValue": "localhost",
+            "id": "$$cap_DB_HOST"
+        },
+        {
+            "label": "DB_PORT",
+            "description": "Port of the database",
+            "defaultValue": "3306",
+            "id": "$$cap_DB_PORT"
+        },
+        {
+            "label": "DB_USER",
+            "description": "Username to connect to the database",
+            "defaultValue": "wiki-user",
+            "id": "$$cap_DB_USER"
+        },
+        {
+            "label": "DB_PASS",
+            "description": "Password to connect to the database",
+            "defaultValue": "wiki-password",
+            "id": "$$cap_DB_PASS"
+        },
+        {
+            "label": "DB_NAME",
+            "description": "Database name",
+            "defaultValue": "wiki",
+            "id": "$$cap_DB_NAME"
+        },
+        {
+            "label": "DB_SSL",
+            "description": "Set to either 1 or true to enable. (optional, off if omitted)",
+            "defaultValue": "false",
+            "id": "$$cap_DB_SSL"
+        }
+    ]
 }

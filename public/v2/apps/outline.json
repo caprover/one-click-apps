@@ -11,17 +11,13 @@
             },
             "$$cap_appname-fakes3": {
                 "image": "lphoward/fake-s3",
-                "volumes": [
-                    "$$cap_appname-fakes3:/fakes3_root"
-                ],
+                "volumes": ["$$cap_appname-fakes3:/fakes3_root"],
                 "notExposeAsWebApp": "true"
             },
             "$$cap_appname-db": {
                 "image": "postgres:12.2",
                 "notExposeAsWebApp": "true",
-                "volumes": [
-                    "$$cap_appname-db-data:/var/lib/postgresql/data"
-                ],
+                "volumes": ["$$cap_appname-db-data:/var/lib/postgresql/data"],
                 "restart": "always",
                 "environment": {
                     "POSTGRES_USER": "$$cap_db_user",
@@ -75,7 +71,8 @@
         "start": "Outline is an open, extensible, wiki for your team built using React and Node.js.",
         "end": "IMPORTANT: before you start using Outline, you need to \n\n 1) Enable HTTPS \n 2) Force HTTPS \n 3) Enable Websocket in $$cap_appname-outline. \n 4) Run database migration `npm run sequelize:migrate` within the $$cap_appname-outline docker container.  \n\nYou can customize more settings by environmental variables described here: https://github.com/outline/outline/blob/0deecfac446c37545e0787b3d32062e608a950ab/.env.sample \n\n IMPORTANT: It will take up to 2 minutes for it to be ready. Before that, you might see a 502 error page.\n"
     },
-    "variables": [{
+    "variables": [
+        {
             "id": "$$cap_db_user",
             "label": "Database user",
             "defaultValue": "outlineuser",
@@ -130,5 +127,4 @@
             "validRegex": "/^([^\\s^\\/])+$/"
         }
     ]
-
 }
