@@ -16,20 +16,22 @@
      const apps = items.filter(fileName => fileName.includes('.json'));
      const appDetails = [];
 
-     for (var i = 0; i < apps.length; i++) {
+     for (let i = 0; i < apps.length; i++) {
          const contentString = fs.readFileSync(path.join(pathOfApps, apps[i]));
          const content = JSON.parse(contentString)
-         const captainVersion = (content.captainVersion + '');
+         const { captainVersion, displayName, description } = content
          if (versionString !== captainVersion)
              throw new Error(`unmatched versions   ${versionString}  ${captainVersion} for ${apps[i]}`)
 
          apps[i] = apps[i].replace('.json', '');
 
-         if (!content.displayName) {
+         if (!displayName) {
+           //DEVNOTE: mutation should be avoid
              content.displayName = apps[i];
              content.displayName = content.displayName.substr(0, 1).toUpperCase() + content.displayName.substring(1, content.displayName.length);
          }
-         if (!content.description) content.description = '';
+       //DEVNOTE: mutation should be avoid
+       if (!description) content.description = '';
 
          const logoFileName = apps[i] + '.png';
 
