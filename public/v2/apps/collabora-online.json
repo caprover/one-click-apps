@@ -47,8 +47,7 @@
     },
     {
       "id": "$$cap_wopihost_domain",
-      "label": "WOPI host domain",
-      "defaultValue": "yournextcloud\\.$$cap_root_domain",
+      "label": "WOPI host domain - yournextcloud.your.rootdomain.com",
       "description": "Your Nextcloud host domain.\nCaution ! you must add a backslash before each dot of the url",
       "validRegex": "/^([^\\s^\\/])+$/"
     }
