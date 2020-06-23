@@ -4,60 +4,53 @@
 
  const PUBLIC = `public`
  const pathOfPublic = path.join(__dirname, PUBLIC);
+ const VERSION = 2
 
 
  // validating version 2
- function validate() {
-
-     const version = '2'
-     const pathOfVersion = path.join(pathOfPublic, 'v' + version);
+ async function validate() {
+     const pathOfVersion = path.join(pathOfPublic, 'v' + VERSION);
      const pathOfApps = path.join(pathOfVersion, 'apps');
+     const versionString = (VERSION + '');
 
-     return fs.readdir(pathOfApps)
-         .then(function (items) {
+     const items = await fs.readdir(pathOfApps)
+     const apps = items.filter(v => v.includes('.json'));
+     const appDetails = [];
 
-             const apps = items.filter(v => v.includes('.json'));
-             const appDetails = [];
+     for (var i = 0; i < apps.length; i++) {
+         const contentString = fs.readFileSync(path.join(pathOfApps, apps[i]));
+         const content = JSON.parse(contentString)
+         const captainVersion = (content.captainVersion + '');
+         if (versionString !== captainVersion)
+             throw new Error(`unmatched versions   ${versionString}  ${captainVersion} for ${apps[i]}`)
 
-             for (var i = 0; i < apps.length; i++) {
-                 const contentString = fs.readFileSync(path.join(pathOfApps, apps[i]));
-                 const content = JSON.parse(contentString)
-                 const captainVersion = (content.captainVersion + '');
-                 const versionString = (version + '');
-                 if (versionString !== captainVersion)
-                     throw new Error(`unmatched versions   ${versionString}  ${captainVersion} for ${apps[i]}`)
+         apps[i] = apps[i].replace('.json', '');
 
-                 apps[i] = apps[i].replace('.json', '');
+         if (!content.displayName) {
+             content.displayName = apps[i];
+             content.displayName = content.displayName.substr(0, 1).toUpperCase() + content.displayName.substring(1, content.displayName.length);
+         }
+         if (!content.description) content.description = '';
 
-                 if (!content.displayName) {
-                     content.displayName = apps[i];
-                     content.displayName = content.displayName.substr(0, 1).toUpperCase() + content.displayName.substring(1, content.displayName.length);
-                 }
-                 if (!content.description) content.description = '';
+         const logoFileName = apps[i] + '.png';
 
-                 const logoFileName = apps[i] + '.png';
+         appDetails[i] = {
+             name: apps[i],
+             displayName: content.displayName,
+             description: content.description,
+             logoUrl: logoFileName
+         }
 
-                 appDetails[i] = {
-                     name: apps[i],
-                     displayName: content.displayName,
-                     description: content.description,
-                     logoUrl: logoFileName
-                 }
+         const logoFullPath = path.join(pathOfVersion, 'logos', logoFileName);
 
-                 const logoFullPath = path.join(pathOfVersion, 'logos', logoFileName);
-
-                 if (!fs.existsSync(logoFullPath) ||
-                     !fs.statSync(logoFullPath).isFile()) {
-                     let printablePath = logoFullPath;
-                     printablePath = printablePath.substr(printablePath.indexOf(`/${PUBLIC}`))
-                     throw new Error(`Cannot find logo for ${apps[i]} ${printablePath}`);
-                 }
-
-                 console.log(`Validated ${apps[i]}`)
-
-             }
-
-         })
+         if (!fs.existsSync(logoFullPath) ||
+             !fs.statSync(logoFullPath).isFile()) {
+             let printablePath = logoFullPath;
+             printablePath = printablePath.substr(printablePath.indexOf(`/${PUBLIC}`))
+             throw new Error(`Cannot find logo for ${apps[i]} ${printablePath}`);
+         }
+         console.log(`Validated ${apps[i]}`)
+     }
  }
 
 
