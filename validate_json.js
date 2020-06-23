@@ -6,6 +6,10 @@
  const pathOfPublic = path.join(__dirname, PUBLIC);
  const VERSION = 2
 
+ function isLogoValid({ existsSync, statSync }, logoFullPath) {
+   return (existsSync(logoFullPath) && statSync(logoFullPath).isFile())
+ }
+
  // validating version 2
  async function validate() {
      const pathOfVersion = path.join(pathOfPublic, 'v' + VERSION);
@@ -44,10 +48,8 @@
 
          const logoFullPath = path.join(pathOfVersion, 'logos', logoFileName);
 
-         if (!fs.existsSync(logoFullPath) ||
-             !fs.statSync(logoFullPath).isFile()) {
-             let printablePath = logoFullPath;
-             printablePath = printablePath.substr(printablePath.indexOf(`/${PUBLIC}`))
+         if (!isLogoValid(fs, logoFullPath)) {
+             const printablePath = logoFullPath.substr(logoFullPath.indexOf(`/${PUBLIC}`))
              throw new Error(`Cannot find logo for ${apps[i]} ${printablePath}`);
          }
          console.log(`Validated ${apps[i]}`)
