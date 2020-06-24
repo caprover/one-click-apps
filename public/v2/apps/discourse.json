@@ -1,8 +1,8 @@
 {
     "captainVersion": "2",
-    "documentation": "Taken from",
+    "documentation": "Taken from https://hub.docker.com/r/bitnami/discourse",
     "displayName": "Discourse",
-    "description": "",
+    "description": "Discourse is the 100% open source discussion platform built for the next decade of the Internet. Use it as a mailing list, discussion forum, long-form chat room, and more!",
     "dockerCompose": {
         "version": "2",
         "services": {
@@ -102,9 +102,15 @@
             "validRegex": "/^([^\\s^\\/])+$/"
         },
         {
+            "id": "$$cap_db_name",
+            "label": "database name",
+            "description": "Name for the database using postgresql",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        },
+        {
             "id": "$$cap_db_user",
             "label": "database user",
-            "defaultValue": "discourse",
+            "defaultValue": "discourse_db",
             "description": "Username for the database using postgresql",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
