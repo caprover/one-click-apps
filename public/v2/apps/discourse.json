@@ -1,7 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from",
-    "displayName": "discourse",
+    "displayName": "Discourse",
     "description": "",
     "dockerCompose": {
         "version": "2",
@@ -58,7 +58,7 @@
             "image": "docker.io/bitnami/discourse:$$cap_discourse_version",
             "notExposeAsWebApp": "true",
             "depends_on": [
-              "$$cap_appname-discourse"
+              "$$cap_appname"
             ],
             "volumes": [
               "discourse-data:/bitnami"
