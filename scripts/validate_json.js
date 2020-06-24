@@ -3,7 +3,7 @@
  const fs = require('fs-extra')
 
  const PUBLIC = `public`
- const pathOfPublic = path.join(__dirname, PUBLIC);
+ const pathOfPublic = path.join(__dirname, '..', PUBLIC);
 
 
  // validating version 2

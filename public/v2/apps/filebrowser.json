@@ -19,8 +19,7 @@
                     "$$cap_appname-files:/srv"
                 ],
                 "restart": "always",
-                "environment": {
-                }
+                "environment": {}
             }
         }
     },

@@ -9,9 +9,7 @@
             "$$cap_appname-db": {
                 "image": "mysql:$$cap_mysql_version",
                 "notExposeAsWebApp": "true",
-                "volumes": [
-                    "$$cap_appname-db-data:/var/lib/mysql"
-                ],
+                "volumes": ["$$cap_appname-db-data:/var/lib/mysql"],
                 "restart": "always",
                 "environment": {
                     "MYSQL_ROOT_PASSWORD": "$$cap_db_pass"
@@ -23,7 +21,8 @@
         "start": "MySQL is the world's most popular open source database. With its proven performance, reliability and ease-of-use, MySQL has become the leading database choice for web-based applications, covering the entire range from personal projects and websites, via e-commerce and information services, all the way to high profile web properties including Facebook, Twitter, YouTube, Yahoo! and many more.\n\n After installation on CapRover, it will be available as srv-captain--YOUR_CONTAINER_NAME at port 3306 to other CapRover apps.\n\nEnter your MySQL Configuration parameters and click on next. It will take about a minute for the process to finish.",
         "end": "MySQL is deployed and available as srv-captain--$$cap_appname-db:3306 to other apps. For example with NodeJS, you do 'var con = mysql.createConnection({ host: 'srv-captain--$$cap_appname-db', user: 'root', password: '*********' });'"
     },
-    "variables": [{
+    "variables": [
+        {
             "id": "$$cap_mysql_version",
             "label": "MySQL Version",
             "defaultValue": "5.7",
@@ -37,5 +36,4 @@
             "validRegex": "/.{1,}/"
         }
     ]
-
 }

@@ -7,7 +7,7 @@
         "version": "3.3",
         "services": {
             "$$cap_appname": {
-                "containerHttpPort":"7080",
+                "containerHttpPort": "7080",
                 "image": "sourcegraph/server:$$cap_container_version",
                 "volumes": [
                     "$$cap_appname-config:/etc/sourcegraph",
@@ -27,7 +27,7 @@
             "label": "Version",
             "defaultValue": "3.2.2",
             "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/sourcegraph/server/tags",
-            "validRegex":"/^([^\\s^\\/])+$/"
+            "validRegex": "/^([^\\s^\\/])+$/"
         }
     ]
 }

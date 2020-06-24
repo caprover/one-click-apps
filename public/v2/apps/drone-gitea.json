@@ -16,15 +16,12 @@
                 }
             },
             "$$cap_appname-server": {
-                "depends_on": [
-                    "$$cap_appname-agent"
-                ],
+                "depends_on": ["$$cap_appname-agent"],
                 "image": "drone/drone:$$cap_drone_version",
                 "containerHttpPort": "80",
                 "volumes": [
                     "/var/run/docker.sock:/var/run/docker.sock",
                     "$$cap_appname-server:/data"
-
                 ],
                 "restart": "always",
                 "environment": {

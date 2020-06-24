@@ -9,9 +9,7 @@
             "$$cap_appname": {
                 "image": "photoprism/photoprism:$$cap_photoprism_version",
                 "containerHttpPort": "2342",
-                "volumes": [
-                    "$$cap_appname-data:/photoprism/originals/"
-                ],
+                "volumes": ["$$cap_appname-data:/photoprism/originals/"],
                 "restart": "always"
             }
         }
@@ -20,7 +18,8 @@
         "start": "PhotoPrism is a server-based application for browsing, organizing and sharing your personal photo collection. It makes use of the latest technologies to automatically tag and find pictures without getting in your way.",
         "end": "Photoprism is deployed and available as $$cap_appname. Please also enable Websockets in the Caprover UI. When you log in the default password is 'photoprism'"
     },
-    "variables": [{
+    "variables": [
+        {
             "id": "$$cap_photoprism_version",
             "label": "Photoprism Version",
             "defaultValue": "20200427",

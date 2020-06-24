@@ -9,9 +9,7 @@
             "$$cap_appname-db": {
                 "image": "mysql:5.7",
                 "notExposeAsWebApp": "true",
-                "volumes": [
-                    "$$cap_appname-db-data:/var/lib/mysql"
-                ],
+                "volumes": ["$$cap_appname-db-data:/var/lib/mysql"],
                 "restart": "always",
                 "environment": {
                     "MYSQL_ROOT_PASSWORD": "$$cap_db_pass",
@@ -21,9 +19,7 @@
                 }
             },
             "$$cap_appname-shopware": {
-                "depends_on": [
-                    "$$cap_appname-db"
-                ],
+                "depends_on": ["$$cap_appname-db"],
                 "image": "shyim/shopware:$$cap_sw_version",
                 "restart": "always",
                 "environment": {
