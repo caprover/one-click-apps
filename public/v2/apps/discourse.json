@@ -32,7 +32,7 @@
                 ],
                 "volumes": ["discourse-data:/bitnami"],
                 "environment": [
-                    "POSTGRESQL_HOST=postgresql",
+                    "POSTGRESQL_HOST=$$cap_appname-postgresql",
                     "POSTGRESQL_ROOT_USER=postgres",
                     "POSTGRESQL_CLIENT_CREATE_DATABASE_NAME=$$cap_db_name",
                     "POSTGRESQL_CLIENT_CREATE_DATABASE_USERNAME=$$cap_db_user",
@@ -73,21 +73,21 @@
             "id": "$$cap_discourse_version",
             "label": "Discourse Version",
             "defaultValue": "2-debian-10",
-            "description": "TODO",
+            "description": "Version of Discourse",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
         {
             "id": "$$cap_postgresql_version",
             "label": "Postgresql (database) version",
             "defaultValue": "11-debian-10",
-            "description": "TODO",
+            "description": "Version of Postgresql",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
         {
             "id": "$$cap_redis_version",
             "label": "Redis version",
             "defaultValue": "5.0-debian-10",
-            "description": "TODO",
+            "description": "Version of Redis",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
         {
