@@ -1,7 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://hub.docker.com/r/tomsquest/docker-radicale",
-    "displayName": "",
+    "displayName": "Radicale",
     "description": "Radicale lightweight CalDAV and CardDAV Server",
     "dockerCompose": {
         "version": "3.3",
@@ -26,7 +26,7 @@
             "id": "$$cap_image_tag",
             "label": "What version/tag do you want?",
             "description": "Go here to see all versions https://hub.docker.com/r/tomsquest/docker-radicale/tags",
-            "defaultValue": "latest",
+            "defaultValue": "2.1.12.1",
             "validRegex": "/^([^\\s^\\/])+$/"
         }
     ]
