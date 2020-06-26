@@ -7,11 +7,11 @@
         "version": "3.3",
         "services": {
             "$$cap_appname": {
-				"containerHttpPort": "5232",
+		"containerHttpPort": "5232",
                 "image": "tomsquest/docker-radicale:$$cap_image_tag",
                 "volumes": [
                     "$$cap_appname-data:/data",
-					"/etc/radicale/config:/config"
+		    "/etc/radicale/config:/config"
                 ],
                 "restart": "always",
                 "environment": {}
@@ -19,8 +19,8 @@
         }
     },
     "instructions": {
-        "start": "Starting radicale",
-        "end": "Radicale is deployed and available as $$cap_appname. Place your config in /etc/radicale/config/ and redeploy."
+        "start": "Radicale is a small but powerful CalDAV (calendars, to-do lists) and CardDAV (contacts) server. Please create your config at /etc/radicale/config/ following the Authentication chapter of the 5-min setup at https://radicale.org/3.0.html#tutorials/basic-configuration and deploy.",
+        "end": "Radicale is deployed and available as $$cap_appname. "
     },
     "variables": [{
             "id": "$$cap_image_tag",
