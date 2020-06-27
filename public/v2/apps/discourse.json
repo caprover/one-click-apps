@@ -11,7 +11,7 @@
                 "image": "docker.io/bitnami/postgresql:$$cap_postgresql_version",
                 "notExposeAsWebApp": "true",
                 "restart": "always",
-                "environment": ["ALLOW_EMPTY_PASSWORD=yes"],
+                "environment": ["ALLOW_EMPTY_PASSWORD=no"],
                 "volumes": ["$$cap_appname-postgresql-data:/bitnami/postgresql"]
             },
             "$$cap_appname-redis": {
@@ -19,7 +19,7 @@
                 "image": "docker.io/bitnami/redis:$$cap_redis_version",
                 "notExposeAsWebApp": "true",
                 "restart": "always",
-                "environment": ["ALLOW_EMPTY_PASSWORD=yes"],
+                "environment": ["ALLOW_EMPTY_PASSWORD=no"],
                 "volumes": ["$$cap_appname-redis-data:/bitnami"]
             },
             "$$cap_appname": {
