@@ -32,8 +32,8 @@
                 ],
                 "volumes": ["$$cap_appname-data:/bitnami"],
                 "environment": [
-                    "POSTGRESQL_HOST=$$cap_appname-postgresql",
-                    "POSTGRESQL_ROOT_USER=$$cap_root_user",
+                    "POSTGRESQL_HOST=srv-captain--$$cap_appname-postgresql",
+                    "POSTGRESQL_ROOT_USER=postgres",
                     "POSTGRESQL_CLIENT_CREATE_DATABASE_NAME=$$cap_db_name",
                     "POSTGRESQL_CLIENT_CREATE_DATABASE_USERNAME=$$cap_db_user",
                     "POSTGRESQL_CLIENT_CREATE_DATABASE_PASSWORD=$$cap_db_pass",
@@ -88,13 +88,6 @@
             "label": "Redis version",
             "defaultValue": "5.0-debian-10",
             "description": "Version of Redis",
-            "validRegex": "/^([^\\s^\\/])+$/"
-        },
-        {
-            "id": "$$cap_root_user",
-            "label": "Root user",
-            "defaultValue": "postgres",
-            "description": "Root name of the database",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
         {
