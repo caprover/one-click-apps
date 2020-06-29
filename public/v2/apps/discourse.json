@@ -44,6 +44,7 @@
                     "DISCOURSE_POSTGRESQL_NAME": "$$cap_db_name",
                     "DISCOURSE_POSTGRESQL_USERNAME": "$$cap_db_user",
                     "DISCOURSE_POSTGRESQL_PASSWORD": "$$cap_db_pass",
+                    "DISCOURSE_HOST": "3000",
                     "DISCOURSE_HOSTNAME": "$$cap_appname.$$cap_root_domain"
                 }
             },
@@ -63,7 +64,8 @@
                     "DISCOURSE_POSTGRESQL_PASSWORD": "$$cap_db_pass",
                     "DISCOURSE_HOST": "srv-captain--$$cap_appname",
                     "DISCOURSE_PORT": "3000",
-                    "DISCOURSE_HOSTNAME": "$$cap_appname.$$cap_root_domain"
+                    "DISCOURSE_HOSTNAME": "$$cap_appname.$$cap_root_domain",
+                    "POSTGRESQL_HOST": "srv-captain--$$cap_appname-postgresql"
                 }
             }
         }
