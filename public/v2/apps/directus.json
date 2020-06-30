@@ -1,118 +1,119 @@
 {
-    "captainVersion": "2",
-    "documentation": "Taken from https://github.com/directus/docker.",
-    "displayName": "",
-    "description": "Directus is an open-source tool for managing content across all your omni-channel digital experiences",
-    "dockerCompose": {
-        "version": "7",
-        "services": {
-            "$$cap_appname-db": {
-                "image": "mysql:5.7",
-                "notExposeAsWebApp": "true",
-                "volumes": ["$$cap_appname-db-data:/var/lib/mysql/"],
-                "environment": {
-                    "MYSQL_DATABASE": "$$cap_mysql_database_name",
-                    "MYSQL_ROOT_PASSWORD": "$$cap_mysql_root_passwd",
-                    "MYSQL_USER": "$$cap_mysql_user",
-                    "MYSQL_PASSWORD": "$$cap_mysql_passwd"
-                },
-                "healthcheck": {
-                    "test": "mysql -u$$cap_mysql_user -p$$cap_mysql_passwd -e \"SHOW DATABASES;\"",
-                    "interval": "10s",
-                    "timeout": "6s",
-                    "retries": "10"
-                },
-                "restart": "always"
-            },
-            "$$cap_appname-api": {
-                "depends_on": {
-                    "$$cap_appname-db": {
-                        "condition": "service_healthy"
-                    }
-                },
-                "image": "directus/api:2.0.18",
-                "volumes": [
-                    "$$cap_appname-db-uploads:/var/www/html/public/uploads"
-                ],
-                "containerHttpPort": "80",
-                "restart": "always",
-                "environment": {
-                    "DATABASE_HOST": "srv-captain--$$cap_appname-db",
-                    "DATABASE_NAME": "$$cap_mysql_database_name",
-                    "DATABASE_USERNAME": "$$cap_mysql_user",
-                    "DATABASE_PASSWORD": "$$cap_mysql_passwd",
-                    "ADMIN_EMAIL": "$$cap_directus_admin_username",
-                    "ADMIN_PASSWORD": "$$cap_directus_admin_passwd"
-                }
-            },
-            "$$cap_appname-app": {
-                "depends_on": {
-                    "$$cap_appname-db": {
-                        "condition": "service_healthy"
-                    },
-                    "$$cap_appname-api": {}
-                },
-                "image": "directus/app:7.0.18",
-                "containerHttpPort": "80",
-                "restart": "always",
-                "environment": {
-                    "API_ENDPOINT": "API; $$cap_api_endpoint/_/"
-                }
-            }
+  "captainVersion": "2",
+  "documentation": "Taken from https://github.com/directus/docker.",
+  "displayName": "",
+  "description": "Directus is an open-source tool for managing content across all your omni-channel digital experiences",
+  "dockerCompose": {
+    "version": "7",
+    "services": {
+      "$$cap_appname-db": {
+        "image": "mysql:5.7",
+        "notExposeAsWebApp": "true",
+        "volumes": ["$$cap_appname-db-data:/var/lib/mysql/"],
+        "environment": {
+          "MYSQL_DATABASE": "$$cap_mysql_database_name",
+          "MYSQL_ROOT_PASSWORD": "$$cap_mysql_root_passwd",
+          "MYSQL_USER": "$$cap_mysql_user",
+          "MYSQL_PASSWORD": "$$cap_mysql_passwd"
+        },
+        "healthcheck": {
+          "test": "mysql -u$$cap_mysql_user -p$$cap_mysql_passwd -e \"SHOW DATABASES;\"",
+          "interval": "10s",
+          "timeout": "6s",
+          "retries": "10"
+        },
+        "restart": "always"
+      },
+      "$$cap_appname-directus": {
+        "depends_on": {
+          "$$cap_appname-db": {
+            "condition": "service_healthy"
+          }
+        },
+        "image": "directus/directus:$$cap_directus_tag",
+        "volumes": [
+          "$$cap_appname-directus-uploads:/var/directus/public/uploads"
+        ],
+        "containerHttpPort": "80",
+        "restart": "always",
+        "environment": {
+          "DIRECTUS_DATABASE_HOST": "srv-captain--$$cap_appname-db",
+          "DIRECTUS_DATABASE_NAME": "$$cap_mysql_database_name",
+          "DIRECTUS_DATABASE_USERNAME": "$$cap_mysql_user",
+          "DIRECTUS_DATABASE_PASSWORD": "$$cap_mysql_passwd",
+          "DIRECTUS_AUTH_SECRETKEY": "$$cap_directus_auth_secret_key",
+          "DIRECTUS_AUTH_PUBLICKEY": "$$cap_directus_auth_public_key"
         }
+      }
+    }
+  },
+  "instructions": {
+    "end": "THE INSTALLATION PROCESS IS NOT FINISHED !!!\n\nAs said in the documentation (https://docs.directus.io/installation/docker.html#step-4-initialize-the-database-and-an-admin-user), currently (30/06/2020), Directus does not support automatic database setup so you need to do it yourself the first time you launch directus.\n\n But since Caprover does not use standard docker-compose file, you need to run a slightly uglier command than the one shown in the documentation.\n\n Run the following command on your server (using SSH for example, you might need to be root):\n\ndocker run -e DIRECTUS_DATABASE_HOST=srv-captain--$$cap_appname-db -e DIRECTUS_DATABASE_NAME=$$cap_mysql_database_name -e DIRECTUS_DATABASE_USERNAME=$$cap_mysql_user -e DIRECTUS_DATABASE_PASSWORD=$$cap_mysql_passwd -e DIRECTUS_AUTH_SECRETKEY=$$cap_directus_auth_secret_key -e DIRECTUS_AUTH_PUBLICKEY=$$cap_directus_auth_public_key --network $(docker network ls | grep \"captain-overlay-network\" | awk '{print $1}') --rm directus/directus:$$cap_directus_tag install --email $$cap_directus_install_email --password $$cap_directus_install_password\n\nOnce this is done, Directus is deployed and available as $$cap_appname-directus.\n\n It may take a few minutes for Directus to initialize.\n",
+    "start": "Directus is an open-source suite of software that wraps custom SQL databases with a dynamic API and intuitive Admin App.\n For more information and available options, see https://github.com/directus/docker or the official documentation at https://docs.directus.io"
+  },
+  "variables": [
+    {
+      "description": "Tag of Directus image on https://hub.docker.com/r/directus/directus/tags",
+      "defaultValue": "v8.8.0-apache",
+      "id": "$$cap_directus_tag",
+      "label": "Directus image tag",
+      "validRegex": "/.{1,}/"
     },
-    "instructions": {
-        "end": "Directus is deployed and available as $$cap_appname-app. \n\n It may take a few minutes for Directus to initialize.\n",
-        "start": "Directus is a free and open souce content management system and API wrapper for SQL databases. The API instance provides a realtime REST API for interacting with your database, while the App instance provides a web based CMS for managaging the database. \n For more information and available options, see https://github.com/directus/docker."
+    {
+      "description": "Name of the Directus backing database instance.",
+      "defaultValue": "directus",
+      "id": "$$cap_mysql_database_name",
+      "label": "mySQL Database Name",
+      "validRegex": "/.{1,}/"
     },
-    "variables": [
-        {
-            "description": "Name of the Directus backing database instance.",
-            "defaultValue": "directus",
-            "id": "$$cap_mysql_database_name",
-            "label": "mySQL Database Name",
-            "validRegex": "/.{1,}/"
-        },
-        {
-            "description": "Master password for the Directus backing database instance.",
-            "defaultValue": "ultr@s3curep@ssword",
-            "id": "$$cap_mysql_root_passwd",
-            "label": "mySQL Root Password",
-            "validRegex": "/^(?=.*\\d).{10,}$/"
-        },
-        {
-            "description": "User for the Directus backing database instance.",
-            "defaultValue": "directus",
-            "id": "$$cap_mysql_user",
-            "label": "mySQL User",
-            "validRegex": "/.{1,}/"
-        },
-        {
-            "description": "User password for the Directus backing database instance.",
-            "defaultValue": "s3curep@ssword",
-            "id": "$$cap_mysql_passwd",
-            "label": "mySQL User Password",
-            "validRegex": "/^(?=.*\\d).{10,}$/"
-        },
-        {
-            "description": "Admin login email for the Directus app.",
-            "defaultValue": "admin@example.com",
-            "id": "$$cap_directus_admin_username",
-            "label": "Directus App Admin Email",
-            "validRegex": "/.{1,}/"
-        },
-        {
-            "description": "Admin login password for the Directus app.",
-            "defaultValue": "s3curep@ssword",
-            "id": "$$cap_directus_admin_passwd",
-            "label": "Directus App Admin Password",
-            "validRegex": "/^(?=.*\\d).{10,}$/"
-        },
-        {
-            "description": "A URL in the format of http://appname-api.rootdomain.com. \n The admin web app will connect to the endpoint using this URL.",
-            "id": "$$cap_api_endpoint",
-            "label": "Directus API Endpoint URL",
-            "validRegex": "/.{1,}/"
-        }
-    ]
+    {
+      "description": "Master password for the Directus backing database instance.",
+      "defaultValue": "L4fCizKUZtX4Htwi",
+      "id": "$$cap_mysql_root_passwd",
+      "label": "mySQL Root Password",
+      "validRegex": "/^(?=.*\\d).{10,}$/"
+    },
+    {
+      "description": "User for the Directus backing database instance.",
+      "defaultValue": "directus",
+      "id": "$$cap_mysql_user",
+      "label": "mySQL User",
+      "validRegex": "/.{1,}/"
+    },
+    {
+      "description": "User password for the Directus backing database instance.",
+      "defaultValue": "N2cQ4J9VzsfvXwzM",
+      "id": "$$cap_mysql_passwd",
+      "label": "mySQL User Password",
+      "validRegex": "/^(?=.*\\d).{10,}$/"
+    },
+    {
+      "description": "Directus Auth Secret Key (must not be the same as Directus Auth Public Key)",
+      "defaultValue": "nsQocnfPjh3Udjyw",
+      "id": "$$cap_directus_auth_secret_key",
+      "label": "Directus Auth Secret Key",
+      "validRegex": "/^(?=.*\\d).{10,}$/"
+    },
+    {
+      "description": "Directus Auth Public Key (must not be the same as Directus Auth Secret Key)",
+      "defaultValue": "8QQc2mv6PXuEcsfw",
+      "id": "$$cap_directus_auth_public_key",
+      "label": "Directus Auth Public Key",
+      "validRegex": "/^(?=.*\\d).{10,}$/"
+    },
+    {
+      "description": "Directus admin user email",
+      "defaultValue": "admin@example.com",
+      "id": "$$cap_directus_install_email",
+      "label": "Directus admin user email",
+      "validRegex": "/.{1,}/"
+    },
+    {
+      "description": "Directus admin user password",
+      "defaultValue": "yM7iT3ijt95pyeJP",
+      "id": "$$cap_directus_install_password",
+      "label": "Directus admin user password",
+      "validRegex": "/^(?=.*\\d).{10,}$/"
+    }
+  ]
 }
