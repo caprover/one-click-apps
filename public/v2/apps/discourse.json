@@ -53,10 +53,15 @@
                 "notExposeAsWebApp": "true",
                 "depends_on": ["$$cap_appname"],
                 "volumes": ["$$cap_appname-data:/bitnami"],
+                "image": "docker.io/bitnami/discourse:$$cap_discourse_version",
                 "dockerfileLines": [
                     "FROM docker.io/bitnami/discourse:$$cap_discourse_version",
                     "CMD [\"nami\" , \"start\" , \"--foreground discourse-sidekiq\"]"
                 ],
+                "notExposeAsWebApp": "true",
+                "depends_on": ["$$cap_appname"],
+                "volumes": ["$$cap_appname-data:/bitnami"],
+                "restart": "always",
                 "environment": {
                     "DISCOURSE_POSTGRESQL_NAME": "$$cap_db_name",
                     "DISCOURSE_POSTGRESQL_USERNAME": "$$cap_db_user",
