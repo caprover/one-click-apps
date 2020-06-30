@@ -37,9 +37,9 @@
                     "POSTGRESQL_CLIENT_CREATE_DATABASE_NAME": "$$cap_db_name",
                     "POSTGRESQL_CLIENT_CREATE_DATABASE_USERNAME": "$$cap_db_user",
                     "POSTGRESQL_CLIENT_CREATE_DATABASE_PASSWORD": "$$cap_db_pass",
-                    "DISCOURSE_USERNAME": "testusername1234",
-                    "DISCOURSE_PASSWORD": "testpassword1234",
-                    "DISCOURSE_EMAIL": "testemail@gmail.com",
+                    "DISCOURSE_USERNAME": "$$cap_admin_user",
+                    "DISCOURSE_PASSWORD": "$$cap_admin_pass",
+                    "DISCOURSE_EMAIL": "$$cap_admin_email",
                     "DISCOURSE_SITENAME": "$$cap_sitename",
                     "DISCOURSE_POSTGRESQL_NAME": "$$cap_db_name",
                     "DISCOURSE_POSTGRESQL_USERNAME": "$$cap_db_user",
@@ -79,8 +79,8 @@
         }
     },
     "instructions": {
-        "start": "Discourse is the 100% open source discussion platform built for the next decade of the Internet. Use it as a mailing list, discussion forum, long-form chat room, and more!",
-        "end": "Discourse is deployed and will be available in the next few minutes as $$cap_appname"
+        "start": "Discourse is a relatively heavy application, atleast 2GB RAM is recommended to run Discourse",
+        "end": "Discourse image is deployed and the installation process has begun. The installation process takes about 10 minutes."
     },
     "variables": [
         {
@@ -114,19 +114,22 @@
             "id": "$$cap_admin_user",
             "label": "Admin username",
             "defaultValue": "admin",
-            "description": "Name of the admin account"
+            "description": "Name of the admin account",
+            "validRegex": "/.{1,}/"
         },
         {
             "id": "$$cap_admin_pass",
             "label": "Admin password",
             "defaultValue": "sTr0nG_p@s$wo%d",
-            "description": "Password of the admin account"
+            "description": "Password of the admin account",
+            "validRegex": "/.{1,}/"
         },
         {
             "id": "$$cap_admin_email",
             "label": "Admin email",
             "defaultValue": "your_email@gmail.com",
-            "description": "Email of the admin account"
+            "description": "Email of the admin account",
+            "validRegex": "/.{1,}/"
         },
         {
             "id": "$$cap_db_name",
