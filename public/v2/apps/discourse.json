@@ -45,7 +45,11 @@
                     "DISCOURSE_POSTGRESQL_USERNAME": "$$cap_db_user",
                     "DISCOURSE_POSTGRESQL_PASSWORD": "$$cap_db_pass",
                     "DISCOURSE_HOSTNAME": "$$cap_appname.$$cap_root_domain",
-                    "REDIS_HOST": "srv-captain--$$cap_appname-redis"
+                    "REDIS_HOST": "srv-captain--$$cap_appname-redis",
+                    "SMTP_HOST": "$$cap_smtp_host",
+                    "SMTP_PORT": "$$cap_smtp_port",
+                    "SMTP_USER": "$$cap_smtp_user",
+                    "SMTP_PASSWORD": "$$cap_smtp_pass"
                 }
             },
             "$$cap_appname-sidekiq": {
@@ -65,7 +69,11 @@
                     "DISCOURSE_PORT": "3000",
                     "DISCOURSE_HOSTNAME": "$$cap_appname.$$cap_root_domain",
                     "POSTGRESQL_HOST": "srv-captain--$$cap_appname-postgresql",
-                    "REDIS_HOST": "srv-captain--$$cap_appname-redis"
+                    "REDIS_HOST": "srv-captain--$$cap_appname-redis",
+                    "SMTP_HOST": "$$cap_smtp_host",
+                    "SMTP_PORT": "$$cap_smtp_port",
+                    "SMTP_USER": "$$cap_smtp_user",
+                    "SMTP_PASSWORD": "$$cap_smtp_pass"
                 }
             }
         }
@@ -121,6 +129,30 @@
             "label": "Database password",
             "description": "Password for the database user and root using postgresql",
             "validRegex": "/.{1,}/"
+        },
+        {
+            "id": "$$cap_smtp_host",
+            "label": "SMPT host",
+            "defaultValue": "smtp.gmail.com",
+            "description": "The host for your smtp server"
+        },
+        {
+            "id": "$$cap_smtp_port",
+            "label": "SMTP port",
+            "defaultValue": "587",
+            "description": "The port for your smtp server"
+        },
+        {
+            "id": "$$cap_smtp_user",
+            "label": "SMTP user",
+            "defaultValue": "your_email@gmail.com",
+            "description": "The user for your smtp server"
+        },
+        {
+            "id": "$$cap_smtp_pass",
+            "label": "SMTP password",
+            "defaultValue": "sTr0nG_p@s$wo%d",
+            "description": "The password for your smtp server"
         }
     ]
 }
