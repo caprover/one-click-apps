@@ -50,7 +50,6 @@
             },
             "$$cap_appname-sidekiq": {
                 "documentaion": "Taken from https://hub.docker.com/r/bitnami/discourse",
-                "image": "docker.io/bitnami/discourse:$$cap_discourse_version",
                 "notExposeAsWebApp": "true",
                 "depends_on": ["$$cap_appname"],
                 "volumes": ["$$cap_appname-data:/bitnami"],
@@ -65,7 +64,8 @@
                     "DISCOURSE_HOST": "srv-captain--$$cap_appname",
                     "DISCOURSE_PORT": "3000",
                     "DISCOURSE_HOSTNAME": "$$cap_appname.$$cap_root_domain",
-                    "POSTGRESQL_HOST": "srv-captain--$$cap_appname-postgresql"
+                    "POSTGRESQL_HOST": "srv-captain--$$cap_appname-postgresql",
+                    "REDIS_HOST": "srv-captain--$$cap_appname-redis"
                 }
             }
         }
