@@ -111,6 +111,24 @@
             "validRegex": "/^([^\\s^\\/])+$/"
         },
         {
+            "id": "$$cap_admin_user",
+            "label": "Admin username",
+            "defaultValue": "admin",
+            "description": "Name of the admin account"
+        },
+        {
+            "id": "$$cap_admin_pass",
+            "label": "Admin password",
+            "defaultValue": "sTr0nG_p@s$wo%d",
+            "description": "Password of the admin account"
+        },
+        {
+            "id": "$$cap_admin_email",
+            "label": "Admin email",
+            "defaultValue": "your_email@gmail.com",
+            "description": "Email of the admin account"
+        },
+        {
             "id": "$$cap_db_name",
             "label": "Database name",
             "defaultValue": "discourse_db",
