@@ -145,6 +145,7 @@
         {
             "id": "$$cap_db_pass",
             "label": "Database password",
+            "defaultValue": "sTr0nG_p@s$wo%d",
             "description": "Password for the database user and root using postgresql",
             "validRegex": "/.{1,}/"
         },
