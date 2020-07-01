@@ -1,7 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "Taken from https://github.com/caprover/nginx-redirect",
-    "displayName": "Nginx Reverse Proxy",
+    "displayName": "Nginx Redirect",
     "description": "A simple nginx image preloaded with redirect config that allows you to redirect to another URL. Useful for domain alias creation.",
     "dockerCompose": {
         "version": "3.3",
