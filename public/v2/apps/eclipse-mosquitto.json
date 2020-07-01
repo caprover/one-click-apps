@@ -15,8 +15,7 @@
                 ],
                 "notExposeAsWebApp": "true",
                 "ports": [
-                    "$$cap_mqtt_port:1883",
-                    "$$cap_ws_port:9001"
+
                 ],
                 "restart": "always"
             }
@@ -24,7 +23,7 @@
     },
     "instructions": {
         "start": "Eclipse Mosquitto is an open source message broker which implements MQTT version 5, 3.1.1 and 3.1. Enter Parameters below",
-        "end": "Eclipes-Mosquitto is deployed and available as srv-captain--$$cap_appname:$$cap_mqtt_port to other apps and srv-captain--$$cap_appname:$$cap_ws_port as a websocket."
+        "end": "Eclipes-Mosquitto is deployed and available as srv-captain--$$cap_appname:1883 to other apps and srv-captain--$$cap_appname 9001 as a websocket."
     },
     "variables": [
         {
