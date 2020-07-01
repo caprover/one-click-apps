@@ -1,0 +1,48 @@
+{
+    "captainVersion": "2",
+    "documentation": "Taken from https://github.com/eclipse/mosquitto. Mosquitto is an open source implementation of a server for version 5.0, 3.1.1, and 3.1 of the MQTT protocol. It also includes a C and C++ client library, and the mosquitto_pub and mosquitto_sub utilities for publishing and subscribing.",
+    "displayName": "Eclipse Mosquitto - A MQTT Broker",
+    "description": "Eclipse Mosquitto is an open source message broker which implements MQTT version 5, 3.1.1 and 3.1",
+    "dockerCompose": {
+        "version": "3.3",
+        "services": {
+            "$$cap_appname": {
+                "image": "eclipse-mosquitto:$$cap_eclipse_version",
+                "volumes": [
+                    "$$cap_appname-eclipse-config:/mosquitto/config/",
+                    "$$cap_appname-eclipse-data:/mosquitto/data/",
+                    "$$cap_appname-eclipse-log:/mosquitto/log/"
+                ],
+                "notExposeAsWebApp": "true",
+                "ports": [
+
+                ],
+                "restart": "always"
+            }
+        }
+    },
+    "instructions": {
+        "start": "Eclipse Mosquitto is an open source message broker which implements MQTT version 5, 3.1.1 and 3.1. Enter Parameters below",
+        "end": "Eclipes-Mosquitto is deployed and available as srv-captain--$$cap_appname:1883 to other apps and srv-captain--$$cap_appname 9001 as a websocket."
+    },
+    "variables": [
+        {
+            "id": "$$cap_eclipse_version",
+            "label": "Eclipes-Mosquitto Image Version",
+            "defaultValue": "latest",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        },
+        {
+            "id": "$$cap_mqtt_port",
+            "label": "MQTT Port",
+            "defaultValue": "1883",
+            "validRegex": "/.{1,}/"
+        },
+        {
+            "id": "$$cap_ws_port",
+            "label": "MQTT Websocket Port",
+            "defaultValue": "8083",
+            "validRegex": "/.{1,}/"
+        }
+    ]
+}
