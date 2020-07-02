@@ -2,7 +2,7 @@
     "captainVersion": "2",
     "documentation": "Taken from https://hub.docker.com/r/prismagraphql/prisma/",
     "displayName": "",
-    "description": "Prisma is a database abstraction layer that turns your databases into GraphQL APIs with CRUD operations and realtime capabilities",
+    "description": "Prisma 1 is a database abstraction layer that turns your databases into GraphQL APIs with CRUD operations and realtime capabilities",
     "dockerCompose": {
         "version": "3",
         "services": {
@@ -31,15 +31,15 @@
         }
     },
     "instructions": {
-        "end": "Prisma is deployed and available as $$cap_appname.",
-        "start": "Prisma - Database tools for modern application development. This setup runs Prisma along with a MySQL Database."
+        "end": "Prisma 1 is deployed and available as $$cap_appname.",
+        "start": "Prisma 1 - Database tools for modern application development. This setup runs Prisma 1 along with a MySQL Database."
     },
     "variables": [
         {
             "id": "$$cap_prisma_version",
-            "label": "Prisma Version",
+            "label": "Prisma 1 Version",
             "defaultValue": "1.29",
-            "description": "Check out their GitHub page for their latest version https://github.com/prisma/prisma",
+            "description": "Check out their GitHub page for their latest version https://github.com/prisma/prisma1",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
         {
@@ -57,7 +57,7 @@
         },
         {
             "id": "$$cap_management_secret",
-            "label": "Prisma Management API secret",
+            "label": "Prisma 1 Management API secret",
             "description": "To ensure only entitled users are able to perform actions through the Management API. Minimum 10 characters, at least one letter and one number.",
             "validRegex": "/^(?=.*\\d).{10,}$/"
         }
