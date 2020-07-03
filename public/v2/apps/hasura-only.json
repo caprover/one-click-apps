@@ -41,7 +41,7 @@
             "id": "$$cap_database_url",
             "label": "Postgres Connection URL",
             "description": "postgres://username:password@host/database",
-            "validRegex": "/postgres:\/\/.+\/.+/"
+            "validRegex": "/postgres://.+/.+/"
         }
     ]
 }
