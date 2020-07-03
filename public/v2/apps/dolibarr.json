@@ -1,6 +1,6 @@
 {
     "captainVersion": "2",
-    "documentation": "https://github.com/caprover/one-click-apps",
+    "documentation": "https://hub.docker.com/r/upshift/dolibarr",
     "description": "Open Source ERP & CRM for Business (sme or large companies, freelancers, foundations)",
     "displayName": "Dolibarr",
     "dockerCompose": {
