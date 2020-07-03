@@ -1,7 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "https://github.com/caprover/one-click-apps",
-    "description": "Open Source ERP & CRM for Business (sme or large companies, freelancers, foundations)", 
+    "description": "Open Source ERP & CRM for Business (sme or large companies, freelancers, foundations)",
     "displayName": "Dolibarr",
     "dockerCompose": {
         "version": "3.8",
@@ -9,9 +9,7 @@
             "$$cap_appname-db": {
                 "image": "postgres:$$cap_postgres-version",
                 "notExposeAsWebApp": "true",
-                "volumes": [
-                    "$$cap_appname-db:/var/lib/postgresql/data"
-                ],
+                "volumes": ["$$cap_appname-db:/var/lib/postgresql/data"],
                 "restart": "always",
                 "environment": {
                     "POSTGRES_USER": "dolibarr",
@@ -22,11 +20,9 @@
             "$$cap_appname": {
                 "image": "upshift/dolibarr:$$cap_dolibarr-version",
                 "containerHttpPort": "80",
-                "depends_on": [
-                    "$$cap_appname-db"
-                ],
+                "depends_on": ["$$cap_appname-db"],
                 "volumes": [
-        	        "$$cap_appname-html:/var/www/html",
+                    "$$cap_appname-html:/var/www/html",
                     "$$cap_appname-docs:/var/www/documents"
                 ],
                 "restart": "always",
