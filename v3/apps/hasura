@@ -34,7 +34,7 @@
     },
     "instructions": {
         "end": "Hasura is deployed and available as $$cap_appname. \n\n IMPORTANT: It will take up to 2 minutes for Hasura to be ready. Before that, you might see 502 error page.\n",
-        "start": "Instant Realtime GraphQL on Postgres with web admin cosole. This Docker Compose setup runs Hasura GraphQL Engine along with a Postgres database with the PostGIS extension."
+        "start": "Instant Realtime GraphQL on Postgres with web admin console. This Docker Compose setup runs Hasura GraphQL Engine along with a Postgres database with the PostGIS extension."
     },
     "variables": [
         {
