@@ -11,7 +11,10 @@
                 "notExposeAsWebApp": "true",
                 "volumes": ["$$cap_appname-db-data:/var/lib/influxdb"],
                 "restart": "always",
-                "ports": ["$$cap_influxdb_port:8086", "$$cap_graphite_port:2003"],
+                "ports": [
+                    "$$cap_influxdb_port:8086",
+                    "$$cap_graphite_port:2003"
+                ],
                 "environment": {
                     "INFLUXDB_DB": "$$cap_influx_db",
                     "INFLUXDB_HTTP_AUTH_ENABLED": "$$cap_influx_auth_enabled",
@@ -51,7 +54,6 @@
             "defaultValue": "2003",
             "id": "$$cap_graphite_port"
         },
-
         {
             "label": "Influx DB",
             "description": "Automatically initializes a database with the name of this environment variable.",
