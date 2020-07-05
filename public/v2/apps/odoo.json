@@ -1,0 +1,70 @@
+{
+    "captainVersion": "2",
+    "documentation": "https://hub.docker.com/_/odoo?tab=description",
+    "description": "Odoo, formerly known as OpenERP, is a suite of open-source business apps written in Python and released under the AGPL license. This suite of applications covers all business needs, from Website/Ecommerce down to manufacturing, inventory and accounting, all seamlessly integrated. It is the first time ever a software editor managed to reach such a functional coverage. Odoo is the most installed business software in the world. Odoo is used by 2.000.000 users worldwide ranging from very small companies (1 user) to very large ones (300 000 users)",
+    "dockerCompose": {
+        "version": "3.8",
+        "services": {
+            "$$cap_appname-db": {
+                "image": "postgres:$$cap_postgres_version",
+                "notExposeAsWebApp": "true",
+                "volumes": ["$$cap_appname-db-data:/var/lib/postgresql/data"],
+                "restart": "always",
+                "environment": {
+                    "POSTGRES_USER": "odoo",
+                    "POSTGRES_PASSWORD": "$$cap_postgres_password",
+                    "POSTGRES_DB": "postgres"
+                }
+            },
+            "$$cap_appname": {
+                "image": "odoo:$$cap_odoo_version",
+                "containerHttpPort": "8069",
+                "depends_on": ["$$cap_appname-db"],
+                "volumes": [
+                    "odoo-web-data:/var/lib/odoo",
+                    "config:/etc/odoo",
+                    "addons:/mnt/extra-addons"
+                ],
+                "restart": "always",
+                "environment": {
+                    "POSTGRES_PASSWORD": "$$cap_postgres_password",
+                    "HOST": "srv-captain--$$cap_appname-db"
+                }
+            }
+        }
+    },
+    "networks": {
+        "db": {
+            "driver": "bridge"
+        },
+        "search": {
+            "driver": "bridge"
+        }
+    },
+    "instructions": {
+        "start": "Odoo is an open source product CRM",
+        "end": "Odoo is deployed and available as srv-captain--$$cap_appname:8069 to other apps."
+    },
+    "variables": [
+        {
+            "id": "$$cap_postgres_version",
+            "label": "Postgres Version",
+            "defaultValue": "9.6.18-alpine",
+            "description": "Checkout their docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        },
+        {
+            "id": "$$cap_postgres_password",
+            "label": "Postgres Password",
+            "description": "",
+            "validRegex": "/.{1,}/"
+        },
+        {
+            "id": "$$cap_odoo_version",
+            "label": "Odoo Version",
+            "defaultValue": "13.0",
+            "description": "Checkout their docker page for the valid tags https://hub.docker.com/_/odoo?tab=tags",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        }
+    ]
+}
