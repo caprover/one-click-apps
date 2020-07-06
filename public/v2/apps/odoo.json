@@ -1,7 +1,7 @@
 {
     "captainVersion": "2",
     "documentation": "https://hub.docker.com/_/odoo?tab=description",
-    "description": "Odoo, formerly known as OpenERP, is a suite of open-source business apps written in Python and released under the AGPL license. This suite of applications covers all business needs, from Website/Ecommerce down to manufacturing, inventory and accounting, all seamlessly integrated. It is the first time ever a software editor managed to reach such a functional coverage. Odoo is the most installed business software in the world. Odoo is used by 2.000.000 users worldwide ranging from very small companies (1 user) to very large ones (300 000 users)",
+    "description": "Odoo, formerly known as OpenERP, is a suite of open-source business apps written in Python and released under the AGPL license.",
     "dockerCompose": {
         "version": "3.8",
         "services": {
@@ -21,9 +21,9 @@
                 "containerHttpPort": "8069",
                 "depends_on": ["$$cap_appname-db"],
                 "volumes": [
-                    "odoo-web-data:/var/lib/odoo",
-                    "config:/etc/odoo",
-                    "addons:/mnt/extra-addons"
+                    "$$cap_appname-odoo-web-data:/var/lib/odoo",
+                    "$$cap_appname-config:/etc/odoo",
+                    "$$cap_appname-addons:/mnt/extra-addons"
                 ],
                 "restart": "always",
                 "environment": {
@@ -31,6 +31,12 @@
                     "HOST": "srv-captain--$$cap_appname-db"
                 }
             }
+        },
+        "volumes": {
+            "$$cap_appname-odoo-web-data": {},
+            "$$cap_appname-config": {},
+            "$$cap_appname-addons": {},
+            "$$cap_appname-db-data": {}
         }
     },
     "networks": {
@@ -43,7 +49,7 @@
     },
     "instructions": {
         "start": "Odoo is an open source product CRM",
-        "end": "Odoo is deployed and available as srv-captain--$$cap_appname:8069 to other apps."
+        "end": "Odoo is deployed and the dashboard is available from http://$$cap_appname.$$cap_root_domain."
     },
     "variables": [
         {
