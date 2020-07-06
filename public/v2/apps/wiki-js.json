@@ -5,16 +5,24 @@
     "description": "The most powerful and extensible open source Wiki software",
     "dockerCompose": {
         "services": {
+            "$$cap_appname-postgres": {
+                "image": "postgres:$$cap_postgres_version",
+                "environment": {
+                    "POSTGRES_DB": "wiki",
+                    "POSTGRES_PASSWORD": "$$cap_DB_PASS",
+                    "POSTGRES_USER": "wikijs"
+                },
+                "volumes": ["$$cap_appname-db-data:/var/lib/postgresql/data"]
+            },
             "$$cap_appname": {
                 "containerHttpPort": "3000",
                 "environment": {
-                    "DB_TYPE": "$$cap_DB_TYPE",
-                    "DB_HOST": "$$cap_DB_HOST",
-                    "DB_PORT": "$$cap_DB_PORT",
-                    "DB_USER": "$$cap_DB_USER",
+                    "DB_TYPE": "postgres",
+                    "DB_HOST": "srv-captain--$$cap_appname-postgres",
+                    "DB_PORT": "5432",
+                    "DB_USER": "wikijs",
                     "DB_PASS": "$$cap_DB_PASS",
-                    "DB_NAME": "$$cap_DB_NAME",
-                    "DB_SSL": "$$cap_DB_SSL"
+                    "DB_NAME": "wiki"
                 },
                 "image": "requarks/wiki:$$cap_version",
                 "restart": "always",
@@ -38,46 +46,15 @@
             "id": "$$cap_version"
         },
         {
-            "label": "DB_TYPE",
-            "description": "Type of database (mysql, postgres, mariadb, mssql or sqlite)",
-            "defaultValue": "mariadb",
-            "id": "$$cap_DB_TYPE"
+            "label": "Postgres Version",
+            "defaultValue": "11-alpine",
+            "id": "$$cap_postgres_version"
         },
         {
-            "label": "DB_HOST",
-            "description": "Hostname or IP of the database",
-            "defaultValue": "localhost",
-            "id": "$$cap_DB_HOST"
-        },
-        {
-            "label": "DB_PORT",
-            "description": "Port of the database",
-            "defaultValue": "3306",
-            "id": "$$cap_DB_PORT"
-        },
-        {
-            "label": "DB_USER",
-            "description": "Username to connect to the database",
-            "defaultValue": "wiki-user",
-            "id": "$$cap_DB_USER"
-        },
-        {
-            "label": "DB_PASS",
+            "label": "Database Password",
             "description": "Password to connect to the database",
-            "defaultValue": "wiki-password",
+            "defaultValue": "daTaBaSePaSsWorD",
             "id": "$$cap_DB_PASS"
-        },
-        {
-            "label": "DB_NAME",
-            "description": "Database name",
-            "defaultValue": "wiki",
-            "id": "$$cap_DB_NAME"
-        },
-        {
-            "label": "DB_SSL",
-            "description": "Set to either 1 or true to enable. (optional, off if omitted)",
-            "defaultValue": "false",
-            "id": "$$cap_DB_SSL"
         }
     ]
 }
