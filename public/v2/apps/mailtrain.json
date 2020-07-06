@@ -110,7 +110,7 @@
             "id": "$$cap_mailtrain_version",
             "label": "Mailtrain Version",
             "defaultValue": "latest",
-            "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/osixia/mailtrain/tags",
+            "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/mailtrain/mailtrain/tags",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
         {
