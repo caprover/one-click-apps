@@ -1,8 +1,8 @@
 {
     "captainVersion": "2",
-    "documentation": "Taken from https://github.com/Mailtrain-org/mailtrain/blob/master/docker-compose.yml",
+    "documentation": "Taken from https://github.com/Mailtrain-org/mailtrain/blob/development/docker-compose.yml",
     "displayName": "Mailtrain V2(Beta)",
-    "description": "Mailtrain is a self hosted newsletter application built on Node.js (v7+) and MySQL (v5.5+ or MariaDB).",
+    "description": "Mailtrain is a self hosted newsletter application built on Node.js (v10+) and MySQL (v8+) or MariaDB (v10+).",
     "dockerCompose": {
         "version": "3.8",
         "services": {
