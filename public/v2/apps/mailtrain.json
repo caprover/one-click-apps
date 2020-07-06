@@ -118,14 +118,14 @@
             "label": "Sandbox Mailtrain App Name",
             "defaultValue": "sdbx",
             "description": "",
-            "validRegex": "/.{1,}/"
+            "validRegex": "/^[a-z]{1,}$/"
         },
         {
             "id": "$$cap_mailtrain_lists-appname",
             "label": "Public Mailtrain App Name",
             "defaultValue": "lists",
             "description": "",
-            "validRegex": "/.{1,}/"
+            "validRegex": "/^[a-z]{1,}$/"
         }
     ]
 }
