@@ -9,30 +9,31 @@
             "$$cap_appname": {
                 "image": "osixia/openldap:$$cap_openldap_version",
                 "restart": "always",
-                "ports": ["389:389", "636:636"],
+                "notExposeAsWebApp": "true",
                 "environment": {
                     "LDAP_ORGANISATION": "$$cap_openldap_ldap-organisation",
-                    "LDAP_DOMAIN": "$$cap_openldap_ldap-domain",
+                    "LDAP_DOMAIN": "$$cap_root_domain",
                     "LDAP_ADMIN_PASSWORD": "$$cap_openldap_ldap-admin-password"
                 }
             },
-            "php$$cap_appnameadmin": {
+            "$$cap_appname-admin": {
                 "image": "osixia/phpldapadmin:$$cap_phpldapadmin_version",
-                "containerHttpPort": "443",
+                "containerHttpPort": "80",
                 "restart": "always",
                 "depends_on": ["$$cap_appname"],
                 "environment": {
                     "PHPLDAPADMIN_TRUST_PROXY_SSL": true,
-                    "PHPLDAPADMIN_LDAP_HOSTS": "$$cap_appname.$$cap_root_domain",
+                    "PHPLDAPADMIN_LDAP_HOSTS": "srv-captain--$$cap_appname",
                     "PHPLDAPADMIN_SERVER_ADMIN": "$$cap_phpldapadmin_admin-email",
-                    "PHPLDAPADMIN_SERVER_PATH": "https://php$$cap_appnameadmin.$$cap_root_domain"
+                    "PHPLDAPADMIN_SERVER_PATH": "https://$$cap_appname-admin.$$cap_root_domain",
+                    "PHPLDAPADMIN_HTTPS": false
                 }
             }
         }
     },
     "instructions": {
         "start": "OpenLDAP Software is an open source implementation of the Lightweight Directory Access Protocol.",
-        "end": "OpenLDAP is deployed and available as srv-captain--$$cap_appname:389 to other apps."
+        "end": "OpenLDAP is deployed and the admin interface is available on http://$$cap_appname-admin.$$cap_root_domain. You can connect by adapting cn=admin,dc=my-company,dc=com. If you want to access to your ldap server from outside, do not forget to add port mapping (389 for ldap with starttls, 636 for ldaps)."
     },
     "variables": [
         {
@@ -47,12 +48,6 @@
             "label": "Ldap Organisation",
             "description": "The Organization name",
             "validRegex": "/.{1,}/"
-        },
-        {
-            "id": "$$cap_openldap_ldap-domain",
-            "label": "Ldap Host",
-            "description": "The host",
-            "validRegex": "/(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/"
         },
         {
             "id": "$$cap_openldap_ldap-admin-password",
