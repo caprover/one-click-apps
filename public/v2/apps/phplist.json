@@ -1,0 +1,69 @@
+{
+    "captainVersion": "2",
+    "documentation": "Take from ",
+    "displayName": "phpList",
+    "description": "phpList is Open Source newsletter and email marketing software",
+    "dockerCompose": {
+        "version": "2",
+        "services": {
+            "dbhost": {
+                "image": "mariadb:$$cap_mariadb_version",
+                "volumes": ["dbhost_data:/var/lib/mysql"],
+                "restart": "always",
+                "environment": {
+                    "MYSQL_ROOT_PASSWORD": "${MYSQL_ROOT_PASSWORD}",
+                    "MYSQL_DATABASE": "${MYSQL_DATABASE}",
+                    "MYSQL_USER": "${MYSQL_USER}",
+                    "MYSQL_PASSWORD": "${MYSQL_PASSWORD}"
+                }
+            },
+            "mailhost": {
+                "image": "phplist/postfix:latest",
+                "volumes": ["mailhost_spool:/var/spool/postfix"]
+            },
+            "phplist": {
+                "depends_on": ["dbhost", "mailhost"],
+                "image": "phplist/phplist:$$cap_phplist_version",
+                "volumes": [
+                    "images:/var/www/phpList3/public_html/images",
+                    "./phplist/docker-apache-phplist.conf:/etc/apache2/sites-enabled/docker-apache-phplist.conf:ro"
+                ],
+                "ports": ["${PORT}:80"],
+                "restart": "always",
+                "environment": {
+                    "DB_HOST": "dbhost",
+                    "DB_USER": "${MYSQL_USER}",
+                    "DB_PASSWORD": "${MYSQL_PASSWORD}",
+                    "DB_NAME": "${MYSQL_DATABASE}",
+                    "ADMIN_NAME": "${PHPLIST_ADMINNAME}",
+                    "ADMIN_PASSWORD": "${PHPLIST_ADMINPASSWORD}",
+                    "ADMIN_EMAIL": "${PHPLIST_ADMINEMAIL}",
+                    "HOSTNAME": "${HOSTNAME}",
+                    "PORT": "${PORT}",
+                    "MAILHOST": "mailhost"
+                }
+            }
+        }
+    },
+    "instructions": {
+        "start": "",
+        "end": ""
+    },
+    "variables": [
+        {
+            "id": "$$cap_mariadb_version",
+            "label": "MariaDB Version",
+            "defaultValue": "10.1",
+            "description": "Version of MariaDB",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        },
+        {
+            "id": "$$cap_phplist_version",
+            "label": "phpList Version",
+            "defaultValue": "3.3.6",
+            "description": "Version of phpList",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        },
+        {}
+    ]
+}
