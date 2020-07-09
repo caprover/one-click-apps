@@ -27,7 +27,7 @@
         }
     },
     "instructions": {
-        "start": "Enter your OpenVPN Access Server Configuration parameters and click on next. OpenVPN-as container will be created for you.  The process will take about a minute for the process to finish.",
+        "start": "Enter your OpenVPN Access Server Configuration parameters and click on next. OpenVPN-as container will be created for you. The process will take a few minutes to complete.",
         "end": "OpenVPN is deployed and available as $$cap_appname. It will take a few minutes for the service to finish setting up.\n\nVisit https://hub.docker.com/r/linuxserver/openvpn-as/ and follow the 'Application Setup' section to configure your new VPN."
     },
     "variables": [
