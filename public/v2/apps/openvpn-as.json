@@ -6,7 +6,7 @@
   "dockerCompose": {
     "version": "3.3",
     "services": {
-      "$$cap_appname-openvpn-as": {
+      "$$cap_appname": {
         "image": "linuxserver/openvpn-as",
         "container_name": "openvpn-as",
         "cap_add": ["NET_ADMIN"],
@@ -24,7 +24,7 @@
   },
   "instructions": {
     "start": "Enter your OpenVPN Access Server Configuration parameters and click on next. OpenVPN-as container will be created for you.  The process will take about a minute for the process to finish.",
-    "end": "OpenVPN is deployed and available as $$cap_appname-openvpn-as.\n\nVisit https://hub.docker.com/r/linuxserver/openvpn-as/ and follow the 'Application Setup' section to configure your new VPN."
+    "end": "OpenVPN is deployed and available as $$cap_appname. It will take a few minutes for the service to finish setting up.\n\nVisit https://hub.docker.com/r/linuxserver/openvpn-as/ and follow the 'Application Setup' section to configure your new VPN."
   },
   "variables": [
     {
