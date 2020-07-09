@@ -80,7 +80,7 @@
         },
         {
             "id": "$$cap_interface",
-            "label": "Interface",
+            "label": "OPTIONAL: Interface",
             "defaultValue": "eth0",
             "description": "With bridge networking, leave it as eth0 (or don't include at all), if host or macvlan, set it to your host's network interface, found by running ifconfig"
         }
