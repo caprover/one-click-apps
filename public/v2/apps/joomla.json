@@ -7,7 +7,7 @@
         "version": "3.3",
         "services": {
             "$$cap_appname-joomla": {
-                "image": "joomla:latest",
+                "image": "joomla:$$cap_joomla_version",
                 "volumes": ["$$cap_appname-wp-data:/var/www/html"],
                 "restart": "always",
                 "environment": {
