@@ -6,9 +6,9 @@
     "dockerCompose": {
         "version": "2",
         "services": {
-            "dbhost": {
+            "$$cap_appname-db": {
                 "image": "mariadb:$$cap_mariadb_version",
-                "volumes": ["dbhost_data:/var/lib/mysql"],
+                "volumes": ["$$cap_appname-db-data:/var/lib/mysql"],
                 "restart": "always",
                 "environment": {
                     "MYSQL_ROOT_PASSWORD": "${MYSQL_ROOT_PASSWORD}",
@@ -17,18 +17,17 @@
                     "MYSQL_PASSWORD": "${MYSQL_PASSWORD}"
                 }
             },
-            "mailhost": {
+            "$$cap_appname-mailhost": {
                 "image": "phplist/postfix:latest",
-                "volumes": ["mailhost_spool:/var/spool/postfix"]
+                "volumes": ["$$cap_appname-mailhost-data:/var/spool/postfix"]
             },
-            "phplist": {
+            "$$cap_appname-phplist": {
                 "depends_on": ["dbhost", "mailhost"],
                 "image": "phplist/phplist:$$cap_phplist_version",
                 "volumes": [
                     "images:/var/www/phpList3/public_html/images",
                     "./phplist/docker-apache-phplist.conf:/etc/apache2/sites-enabled/docker-apache-phplist.conf:ro"
                 ],
-                "ports": ["${PORT}:80"],
                 "restart": "always",
                 "environment": {
                     "DB_HOST": "dbhost",
@@ -64,6 +63,12 @@
             "description": "Version of phpList",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
-        {}
+        {
+            "id": "",
+            "label": "",
+            "defaultValue": "",
+            "description": "",
+            "validRegex": ""
+        }
     ]
 }
