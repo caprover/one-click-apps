@@ -1,0 +1,78 @@
+{
+  "captainVersion": "2",
+  "documentation": "Taken from https://hub.docker.com/r/linuxserver/openvpn-as/.",
+  "displayName": "OpenVPN Access Server",
+  "description": "Openvpn-as is a full featured secure network tunneling VPN software solution that integrates OpenVPN server capabilities, enterprise management capabilities, simplified OpenVPN Connect UI, and OpenVPN Client software packages",
+  "dockerCompose": {
+    "version": "3.3",
+    "services": {
+      "$$cap_appname-openvpn-as": {
+        "image": "linuxserver/openvpn-as",
+        "container_name": "openvpn-as",
+        "cap_add": ["NET_ADMIN"],
+        "environment": {
+          "PUID": "$$cap_puid",
+          "PGID": "$$cap_pgid",
+          "TZ": "$$cap_tz",
+          "INTERFACE": "$$cap_interface"
+        },
+        "volumes": ["$$cap_appname-config-data:/config"],
+        "ports": ["$$cap_udp_port:1194", "$$cap_admin_gui_port:943", "$$cap_tcp_port:9443"],
+        "restart": "always"
+      }
+    }
+  },
+  "instructions": {
+    "start": "Enter your OpenVPN Access Server Configuration parameters and click on next. OpenVPN-as container will be created for you.  The process will take about a minute for the process to finish.",
+    "end": "OpenVPN is deployed and available as $$cap_appname-openvpn-as.\n\nVisit https://hub.docker.com/r/linuxserver/openvpn-as/ and follow the 'Application Setup' section to configure your new VPN."
+  },
+  "variables": [
+    {
+      "id": "$$cap_admin_gui_port",
+      "label": "Admin GUI Port",
+      "defaultValue": "943",
+      "description": "Sets the port that the host exposes for Admin GUI. This is also used for creating the port mapping.",
+      "validRegex": "/^([0-9])+$/"
+    },
+    {
+      "id": "$$cap_tcp_port",
+      "label": "TCP Port",
+      "defaultValue": "9443",
+      "description": "Sets the TCP port that the host exposes. This is also used for creating the port mapping.",
+      "validRegex": "/^([0-9])+$/"
+    },
+    {
+      "id": "$$cap_udp_port",
+      "label": "UDP Port",
+      "defaultValue": "1194",
+      "description": "Sets the UDP port that the host exposes. This is also used for creating the port mapping.",
+      "validRegex": "/^([0-9])+$/"
+    },
+    {
+      "id": "$$cap_puid",
+      "label": "UserID",
+      "defaultValue": "1000",
+      "description": "Only change if using volumes; consult 'User / Group Identifiers' at https://hub.docker.com/r/linuxserver/openvpn-as/ for details.",
+      "validRegex": "/^([0-9])+$/"
+    },
+    {
+      "id": "$$cap_pgid",
+      "label": "GroupdID",
+      "defaultValue": "1000",
+      "description": "Only change if using volumes; consult 'User / Group Identifiers' at https://hub.docker.com/r/linuxserver/openvpn-as/ for details.",
+      "validRegex": "/^([0-9])+$/"
+    },
+    {
+      "id": "$$cap_tz",
+      "label": "Timezone",
+      "defaultValue": "Europe/London",
+      "description": "Specify a timezone to use, e.g. Europe/London."
+    },
+    {
+      "id": "$$cap_interface",
+      "label": "Interface",
+      "defaultValue": "eth0",
+      "description": "With bridge networking, leave it as eth0 (or don't include at all), if host or macvlan, set it to your host's network interface, found by running ifconfig"
+    }
+  ]
+}
