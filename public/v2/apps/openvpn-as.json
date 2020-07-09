@@ -7,7 +7,7 @@
         "version": "3.3",
         "services": {
             "$$cap_appname": {
-                "image": "linuxserver/openvpn-as",
+                "image": "linuxserver/openvpn-as:$$cap_version",
                 "container_name": "openvpn-as",
                 "cap_add": ["NET_ADMIN"],
                 "environment": {
@@ -31,6 +31,12 @@
         "end": "OpenVPN is deployed and available as $$cap_appname. It will take a few minutes for the service to finish setting up.\n\nVisit https://hub.docker.com/r/linuxserver/openvpn-as/ and follow the 'Application Setup' section to configure your new VPN."
     },
     "variables": [
+        {
+            "id": "$$cap_version",
+            "label": "Version",
+            "defaultValue": "2.8.5-f4ad562b-Ubuntu18-ls77",
+            "description": "Checkout this page for the valid tags https://hub.docker.com/r/linuxserver/openvpn-as/tags"
+        },
         {
             "id": "$$cap_admin_gui_port",
             "label": "Admin GUI Port",
