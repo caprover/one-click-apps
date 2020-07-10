@@ -1,6 +1,6 @@
 ## Repo for CapRover One Click Apps
 
-Process:
+To create a new one click app:
 - Find/create a docker-compose file for the one click app
 - Convert yaml file to json
 - Copy the content into the one-click app structure. See this for the reference: [wordpress.json](https://github.com/caprover/one-click-apps/blob/master/public/v2/apps/wordpress.json)
