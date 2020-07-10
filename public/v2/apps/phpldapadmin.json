@@ -9,6 +9,7 @@
             "$$cap_appname": {
                 "image": "osixia/openldap:$$cap_openldap_version",
                 "restart": "always",
+                "volumes": ["$$cap_appname-db:/var/lib/ldap"],
                 "notExposeAsWebApp": "true",
                 "environment": {
                     "LDAP_ORGANISATION": "$$cap_openldap_ldap-organisation",
@@ -29,6 +30,9 @@
                     "PHPLDAPADMIN_HTTPS": false
                 }
             }
+        },
+        "volumes": {
+            "$$cap_appname-db": {}
         }
     },
     "instructions": {
