@@ -35,7 +35,7 @@
                     "PARSE_SERVER_DATABASE_URI": "mongodb://root:$$cap_mongo_password@srv-captain--$$cap_appname-mongodb:27017/parse?authSource=admin"
                 }
             },
-            "$$cap_appname-parse-dashbaord": {
+            "$$cap_appname-parse-dashboard": {
                 "depends_on": ["$$cap_appname-parse"],
                 "image": "parseplatform/parse-dashboard:$$cap_parse_dashboard_version",
                 "containerHttpPort": "4040",
