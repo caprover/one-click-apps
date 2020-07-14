@@ -7,7 +7,7 @@
         "version": "3.3",
         "services": {
             "$$cap_appname-postgres": {
-                "image": "postgres:11.6",
+                "image": "postgres:12",
                 "notExposeAsWebApp": "true",
                 "volumes": [
                     "$$cap_appname-postgres-data:/var/lib/postgresql/data"
@@ -38,7 +38,7 @@
                     "RUN chmod +x docker/entrypoints/rails.sh",
                     "ENTRYPOINT [\"docker/entrypoints/rails.sh\"]",
                     "EXPOSE 3000",
-                    "CMD bundle exec rake db:setup; bundle exec rake db:migrate; bundle exec rails s -b 0.0.0.0 -p 3000"
+                    "CMD bundle exec rails db:prepare; bundle exec rails s -b 0.0.0.0 -p 3000"
                 ],
                 "restart": "always",
                 "environment": {
@@ -78,14 +78,14 @@
     },
     "instructions": {
         "start": "Open-source customer support saas alternative to Intercom, Drift, Crisp.",
-        "end": "Your Chatwoot instance is now successfully deployed. \n\n Refer https://www.chatwoot.com/docs/environment-variables/ for full list of environment variables available. Let us know if you have any queries through hello@chatwoot.com"
+        "end": "Your Chatwoot instance is now successfully deployed. You can login using test credentials 'john@acme.inc' and '123456' \n\n Refer https://www.chatwoot.com/docs/environment-variables/ for full list of environment variables available. Let us know if you have any queries through hello@chatwoot.com"
     },
     "variables": [
         {
             "id": "$$cap_chatwoot_version",
             "label": "Chatwoot Version Tag",
             "description": "https://hub.docker.com/r/chatwoot/chatwoot/tags",
-            "defaultValue": "v1.3.0"
+            "defaultValue": "v1.6.0"
         },
         {
             "id": "$$cap_chatwoot_secret_key_base",
