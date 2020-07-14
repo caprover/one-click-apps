@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
         with:
-          node-version: 10
-      - run: npm ci && npm run validate_json
+          node-version: 14
+      - run: npm ci && npm run validate_json && npm run formatter
         env:
           GITHUB_PERSONAL_TOKEN: ${{secrets.GITHUB_PERSONAL_TOKEN}}

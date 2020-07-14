@@ -20,9 +20,7 @@
                 }
             },
             "$$cap_appname-parse": {
-                "depends_on": [
-                    "$$cap_appname-mongodb"
-                ],
+                "depends_on": ["$$cap_appname-mongodb"],
                 "image": "parseplatform/parse-server:$$cap_parse_version",
                 "containerHttpPort": "8080",
                 "restart": "always",
@@ -37,10 +35,8 @@
                     "PARSE_SERVER_DATABASE_URI": "mongodb://root:$$cap_mongo_password@srv-captain--$$cap_appname-mongodb:27017/parse?authSource=admin"
                 }
             },
-            "$$cap_appname-parse-dashbaord": {
-                "depends_on": [
-                    "$$cap_appname-parse"
-                ],
+            "$$cap_appname-parse-dashboard": {
+                "depends_on": ["$$cap_appname-parse"],
                 "image": "parseplatform/parse-dashboard:$$cap_parse_dashboard_version",
                 "containerHttpPort": "4040",
                 "restart": "always",
@@ -61,7 +57,8 @@
         "start": "Parse Server is an open source version of the Parse backend that can be deployed to any infrastructure that can run Node.js. For more information on Parse platform see http://parseplatform.org\n\n Enter your Parse Configuration parameters and click on next. A MongoDB (database) and a Parse container will be created for you.  The process will take about a minute for the process to finish.",
         "end": "Parse is deployed! IMPORTANT: Make sure to enable HTTPS and Force HTTPS on your apps before accessing them! Your Parse Dashboard username is \"caprover\""
     },
-    "variables": [{
+    "variables": [
+        {
             "id": "$$cap_mongo_version",
             "label": "MongoDB Version",
             "defaultValue": "4",
@@ -106,5 +103,4 @@
             "validRegex": "/^([a-zA-Z0-9])+$/"
         }
     ]
-
 }

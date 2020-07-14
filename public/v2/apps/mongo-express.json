@@ -27,7 +27,8 @@
         "start": "MongoExpress is a Web-based MongoDB admin interface, written with Node.js and express.  See MongoExpress page for more details: https://github.com/mongo-express/mongo-express\n\n Enter your MongoExpress Configuration parameters and click on next. It will take about a minute for the process to finish.",
         "end": "MongoExpress is deployed and available as $$cap_appname"
     },
-    "variables": [{
+    "variables": [
+        {
             "id": "$$cap_mongoexpress_version",
             "label": "Mongo Express Version Tag",
             "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/library/mongo-express/tags/",
@@ -73,5 +74,4 @@
             "validRegex": "/^([a-zA-Z0-9])+$/"
         }
     ]
-
 }

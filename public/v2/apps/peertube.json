@@ -9,9 +9,7 @@
             "$$cap_appname-db": {
                 "image": "postgres:$$cap_postgres_version",
                 "notExposeAsWebApp": "true",
-                "volumes": [
-                    "$$cap_appname-db-data:/var/lib/postgresql/data"
-                ],
+                "volumes": ["$$cap_appname-db-data:/var/lib/postgresql/data"],
                 "restart": "always",
                 "environment": {
                     "POSTGRES_USER": "$$cap_db_user",
@@ -22,16 +20,11 @@
             "$$cap_appname-redis": {
                 "image": "redis:$$cap_redis_version",
                 "notExposeAsWebApp": "true",
-                "volumes": [
-                    "$$cap_appname-redis-data:/data"
-                ],
+                "volumes": ["$$cap_appname-redis-data:/data"],
                 "restart": "always"
             },
             "$$cap_appname": {
-                "depends_on": [
-                    "$$cap_appname-db",
-                    "$$cap_appname-redis"
-                ],
+                "depends_on": ["$$cap_appname-db", "$$cap_appname-redis"],
                 "image": "chocobozzz/peertube:$$cap_peertube_version",
                 "containerHttpPort": "9000",
                 "volumes": [
@@ -40,22 +33,22 @@
                 ],
                 "restart": "always",
                 "environment": {
-                  "PEERTUBE_DB_USERNAME": "$$cap_db_user",
-                  "PEERTUBE_DB_PASSWORD": "$$cap_db_pass",
-                  "PEERTUBE_DB_HOSTNAME": "srv-captain--$$cap_appname-db",
-                  "PEERTUBE_REDIS_HOSTNAME": "srv-captain--$$cap_appname-redis",
-                  "PEERTUBE_WEBSERVER_HOSTNAME": "$$cap_appname.$$cap_root_domain",
-                  "PEERTUBE_WEBSERVER_PORT": "443",
-                  "PEERTUBE_WEBSERVER_HTTPS": "true",
-                  "PEERTUBE_TRUST_PROXY": "[\"127.0.0.1\", \"loopback\", \"172.18.0.0/16\"]",
-                  "PEERTUBE_SMTP_USERNAME": "$$cap_smtp_username",
-                  "PEERTUBE_SMTP_PASSWORD": "$$cap_smtp_password",
-                  "PEERTUBE_SMTP_HOSTNAME": "$$cap_smtp_hostname",
-                  "PEERTUBE_SMTP_PORT": "$$cap_smtp_port",
-                  "PEERTUBE_SMTP_FROM": "$$cap_smtp_from",
-                  "PEERTUBE_SMTP_TLS": "$$cap_smtp_tls",
-                  "PEERTUBE_SMTP_DISABLE_STARTTLS": "$$cap_smtp_starttls",
-                  "PEERTUBE_ADMIN_EMAIL": "$$cap_admin_email"
+                    "PEERTUBE_DB_USERNAME": "$$cap_db_user",
+                    "PEERTUBE_DB_PASSWORD": "$$cap_db_pass",
+                    "PEERTUBE_DB_HOSTNAME": "srv-captain--$$cap_appname-db",
+                    "PEERTUBE_REDIS_HOSTNAME": "srv-captain--$$cap_appname-redis",
+                    "PEERTUBE_WEBSERVER_HOSTNAME": "$$cap_appname.$$cap_root_domain",
+                    "PEERTUBE_WEBSERVER_PORT": "443",
+                    "PEERTUBE_WEBSERVER_HTTPS": "true",
+                    "PEERTUBE_TRUST_PROXY": "[\"127.0.0.1\", \"loopback\", \"172.18.0.0/16\"]",
+                    "PEERTUBE_SMTP_USERNAME": "$$cap_smtp_username",
+                    "PEERTUBE_SMTP_PASSWORD": "$$cap_smtp_password",
+                    "PEERTUBE_SMTP_HOSTNAME": "$$cap_smtp_hostname",
+                    "PEERTUBE_SMTP_PORT": "$$cap_smtp_port",
+                    "PEERTUBE_SMTP_FROM": "$$cap_smtp_from",
+                    "PEERTUBE_SMTP_TLS": "$$cap_smtp_tls",
+                    "PEERTUBE_SMTP_DISABLE_STARTTLS": "$$cap_smtp_starttls",
+                    "PEERTUBE_ADMIN_EMAIL": "$$cap_admin_email"
                 }
             }
         },
@@ -67,7 +60,8 @@
         "start": "PeerTube is a free, decentralized and federated video platform. (Github : https://github.com/Chocobozzz/PeerTube/)",
         "end": "Peertube is deployed and available as $$cap_appname. \n\n IMPORTANT: It will take up to 2 minutes for peertube to be ready. Before that, you might see 502 error page.\n"
     },
-    "variables": [{
+    "variables": [
+        {
             "id": "$$cap_db_user",
             "label": "Database user",
             "defaultValue": "peertubeuser",
@@ -141,5 +135,4 @@
             "defaultValue": ""
         }
     ]
-
 }

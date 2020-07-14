@@ -10,9 +10,7 @@
                 "image": "hardware/rainloop:$$cap_rainloop_version",
                 "containerHttpPort": "8888",
                 "restart": "always",
-                "volumes": [
-                    "$$cap_appname-data:/rainloop/data"
-                ]
+                "volumes": ["$$cap_appname-data:/rainloop/data"]
             }
         },
         "volumes": {
