@@ -1,0 +1,111 @@
+{
+    "captainVersion": "2",
+    "documentation": "Taken from https://hub.docker.com/r/phplist/phplist",
+    "displayName": "phplist",
+    "description": "PHPList is an email marketing application for managing email lists and sending out marketing emails to those lists.",
+    "dockerCompose": {
+        "version": "3.5",
+        "services": {
+            "$$cap_appname-db": {
+                "documentation": "Taken from https://hub.docker.com/_/mariadb",
+                "image": "mariadb:$$cap_mariadb_version",
+                "notExposeAsWebApp": "true",
+                "volumes": ["$$cap_appname-db-data:/var/lib/mysql"],
+                "restart": "always",
+                "environment": {
+                    "MYSQL_ROOT_PASSWORD": "$$cap_db_pass",
+                    "MYSQL_DATABASE": "$$cap_db_name",
+                    "MYSQL_USER": "$$cap_db_user",
+                    "MYSQL_PASSWORD": "$$cap_db_pass"
+                }
+            },
+            "$$cap_appname": {
+                "depends_on": ["$$cap_appname-db"],
+                "documentation": "Taken from https://hub.docker.com/r/phplist/phplist",
+                "image": "phplist:$$cap_phplist_version",
+                "volumes": { 
+		            ["$$cap_appname-data:/var/www/phpList3/public_html/images"],
+		            ["$$cap_appname-plugin-data:/var/www/phpList3/public_html/lists/admin/plugins"]
+				},
+                "restart": "always",
+                "environment": {
+		            "DB_HOST": "srv-captain--$$cap_appname-db",
+		            "DB_USER": "$$cap_db_user",
+		            "DB_PASSWORD": "$$cap_db_pass",
+		            "DB_NAME": "$$cap_db_name",
+		            "ADMIN_NAME": "$$cap_admin_user",,
+		            "ADMIN_PASSWORD": "$$cap_admin_pass",
+		            "ADMIN_EMAIL": "$$cap_admin_email",
+		            "HOSTNAME": "$$cap_appname.$$cap_root_domain",
+		            "PORT": "$$cap_phplist_port",
+		            "MAILHOST: mailhost"
+                }
+            }
+        }
+    },
+    "instructions": {
+        "start": "PHPList",
+        "end": "NextCloud is deployed and will be available on few minutes as $$cap_appname.\nIf you set the cors sections to https, please enable https on your app. If you do not activate it you will have an error.\n\nFor better performances and compliance, you can add \"add_header Strict-Transport-Security \"max-age=15552000; includeSubDomains\" always;\" below \"proxy_set_header X-Forwarded-Proto $scheme;\" into the nginx configuration."
+    },
+    "variables": [
+        {
+            "id": "$$cap_phplist_version",
+            "label": "PHPList Version",
+            "defaultValue": "latest",
+            "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/phplist/phplist/tags.",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        },
+        {
+            "id": "$$cap_mariadb_version",
+            "label": "MariaDB (database) version",
+            "defaultValue": "10.5.4",
+            "description": "Check out their Docker page for the valid tags https://hub.docker.com/_/mariadb?tab=tags",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        },
+        {
+            "id": "$$cap_db_pass",
+            "label": "database password",
+            "description": "Password for the database user and root using mysql.",
+            "validRegex": "/.{1,}/"
+        },
+        {
+            "id": "$$cap_db_user",
+            "label": "database user",
+            "defaultValue": "phplist",
+            "description": "Username for the database using mysql.",
+            "validRegex": "/^([a-zA-Z0-9])+$/"
+        },
+		{
+            "id": "$$cap_db_name",
+            "label": "database name",
+            "defaultValue": "phplist",
+            "description": "Database name for the database using mysql.",
+            "validRegex": "/^([a-zA-Z0-9])+$/"
+        },
+        {
+            "id": "$$cap_admin_user",
+            "label": "admin name",
+            "defaultValue": "admin",
+            "description": "Name of the Nextcloud admin user.",
+            "validRegex": "/^([a-zA-Z0-9\\@\\.])+$/"
+        },
+        {
+            "id": "$$cap_admin_pass",
+            "label": "admin password",
+            "description": "Password for the Nextcloud admin user.",
+            "validRegex": "/.{1,}/"
+        },
+		{
+            "id": "$$cap_admin_email",
+            "label": "admin email",
+            "description": "Email for PHPList administrator account.",
+            "validRegex": "/.{1,}/"
+        },
+		{
+            "id": "$$cap_phplist_port",
+            "label": "port number",
+            "description": "Port number for phplist installation",
+            "validRegex": "/.{1,}/"
+        },
+    ]
+}
