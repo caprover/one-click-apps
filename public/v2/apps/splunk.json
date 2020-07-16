@@ -26,17 +26,17 @@
         "end": "Splunk is deployed and available as $$cap_appname"
     },
     "variables": [
-    {
-        "id": "$$cap_splunk_password",
-        "label": "Admin Password",
-        "description": "Admin password for splunk",
-        "defaultValue": "changeme"
-    },
-    {
-        "id": "$$cap_splunk_version",
-        "label": "Splunk Version",
-        "description": "Version of Splunk",
-        "defaultValue": "latest"
-    }
+        {
+            "id": "$$cap_splunk_password",
+            "label": "Admin Password",
+            "description": "Admin password for splunk",
+            "defaultValue": "changeme"
+        },
+        {
+            "id": "$$cap_splunk_version",
+            "label": "Splunk Version",
+            "description": "Version of Splunk",
+            "defaultValue": "latest"
+        }
     ]
 }
