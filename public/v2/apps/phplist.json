@@ -33,7 +33,7 @@
 					"ADMIN_NAME": "$$cap_admin_user",
 					"ADMIN_PASSWORD": "$$cap_admin_pass",
 					"ADMIN_EMAIL": "$$cap_admin_email",
-					"HOSTNAME": "$$cap_appname.$$cap_root_domain",
+					"HOSTNAME": "$$cap_appname.$$cap_root_domain"
 				}
 			}
 		}
