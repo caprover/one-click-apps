@@ -23,22 +23,22 @@
                 "depends_on": ["$$cap_appname-db"],
                 "documentation": "Taken from https://hub.docker.com/r/phplist/phplist",
                 "image": "phplist:$$cap_phplist_version",
-                "volumes": { 
-		            ["$$cap_appname-data:/var/www/phpList3/public_html/images"],
-		            ["$$cap_appname-plugin-data:/var/www/phpList3/public_html/lists/admin/plugins"]
-				},
+                "volumes": [
+                    "$$cap_appname-data:/var/www/phpList3/public_html/images",
+                    "$$cap_appname-plugin-data:/var/www/phpList3/public_html/lists/admin/plugins"
+                ],
                 "restart": "always",
                 "environment": {
-		            "DB_HOST": "srv-captain--$$cap_appname-db",
-		            "DB_USER": "$$cap_db_user",
-		            "DB_PASSWORD": "$$cap_db_pass",
-		            "DB_NAME": "$$cap_db_name",
-		            "ADMIN_NAME": "$$cap_admin_user",,
-		            "ADMIN_PASSWORD": "$$cap_admin_pass",
-		            "ADMIN_EMAIL": "$$cap_admin_email",
-		            "HOSTNAME": "$$cap_appname.$$cap_root_domain",
-		            "PORT": "$$cap_phplist_port",
-		            "MAILHOST: mailhost"
+                    "DB_HOST": "srv-captain--$$cap_appname-db",
+                    "DB_USER": "$$cap_db_user",
+                    "DB_PASSWORD": "$$cap_db_pass",
+                    "DB_NAME": "$$cap_db_name",
+                    "ADMIN_NAME": "$$cap_admin_user",
+                    "ADMIN_PASSWORD": "$$cap_admin_pass",
+                    "ADMIN_EMAIL": "$$cap_admin_email",
+                    "HOSTNAME": "$$cap_appname.$$cap_root_domain",
+                    "PORT": "$$cap_phplist_port",
+                    "MAILHOST": "mailhost"
                 }
             }
         }
@@ -75,7 +75,7 @@
             "description": "Username for the database using mysql.",
             "validRegex": "/^([a-zA-Z0-9])+$/"
         },
-		{
+        {
             "id": "$$cap_db_name",
             "label": "database name",
             "defaultValue": "phplist",
@@ -95,17 +95,17 @@
             "description": "Password for the Nextcloud admin user.",
             "validRegex": "/.{1,}/"
         },
-		{
+        {
             "id": "$$cap_admin_email",
             "label": "admin email",
             "description": "Email for PHPList administrator account.",
             "validRegex": "/.{1,}/"
         },
-		{
+        {
             "id": "$$cap_phplist_port",
             "label": "port number",
             "description": "Port number for phplist installation",
             "validRegex": "/.{1,}/"
-        },
+        }
     ]
 }
