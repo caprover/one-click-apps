@@ -1,0 +1,42 @@
+{
+    "captainVersion": "2",
+    "documentation": "Splunk.com",
+    "displayName": "Splunk Single instance",
+    "description": "A simple splunk instance",
+    "dockerCompose": {
+        "version": "3.3",
+        "services": {
+            "$$cap_appname": {
+                "image": "splunk/splunk:$$cap_splunk_version",
+                "restart": "always",
+                "containerHttpPort": "8000",
+                "environment": {
+                    "SPLUNK_START_ARGS": "--accept-license",
+                    "SPLUNK_PASSWORD": "$$cap_splunk_password"
+                },
+                "volumes": [
+                    "$$cap_appname-var:/opt/splunk/var",
+                    "$$cap_appname-etc:/opt/splunk/etc"
+                ]
+            }
+        }
+    },
+    "instructions": {
+        "start": "This is a very simple splunk instance",
+        "end": "Splunk is deployed and available as $$cap_appname"
+    },
+    "variables": [
+    {
+        "id": "$$cap_splunk_password",
+        "label": "Admin Password",
+        "description": "Admin password for splunk",
+        "defaultValue": "changeme"
+    },
+    {
+        "id": "$$cap_splunk_version",
+        "label": "Splunk Version",
+        "description": "Version of Splunk",
+        "defaultValue": "latest"
+    }
+    ]
+}
