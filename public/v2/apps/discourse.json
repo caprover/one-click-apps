@@ -86,14 +86,14 @@
         {
             "id": "$$cap_discourse_version",
             "label": "Discourse Version",
-            "defaultValue": "2-debian-10",
+            "defaultValue": "2.4.4",
             "description": "Version of Discourse",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
         {
             "id": "$$cap_postgresql_version",
             "label": "Postgresql (database) version",
-            "defaultValue": "11-debian-10",
+            "defaultValue": "11",
             "description": "Version of Postgresql",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
@@ -106,7 +106,7 @@
         {
             "id": "$$cap_redis_version",
             "label": "Redis version",
-            "defaultValue": "5.0-debian-10",
+            "defaultValue": "5.0",
             "description": "Version of Redis",
             "validRegex": "/^([^\\s^\\/])+$/"
         },
