@@ -45,7 +45,7 @@
     },
     "instructions": {
         "start": "PHPList",
-        "end": "NextCloud is deployed and will be available on few minutes as $$cap_appname.\nIf you set the cors sections to https, please enable https on your app. If you do not activate it you will have an error.\n\nFor better performances and compliance, you can add \"add_header Strict-Transport-Security \"max-age=15552000; includeSubDomains\" always;\" below \"proxy_set_header X-Forwarded-Proto $scheme;\" into the nginx configuration."
+        "end": "PHPList is an email marketing application for managing email lists and sending out marketing emails to those lists."
     },
     "variables": [
         {
