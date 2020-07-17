@@ -21,9 +21,7 @@
             },
             "mailhost": {
                 "image": "phplist/postfix:latest",
-                "volumes": [
-                    "mailhost_spool:/var/spool/postfix"
-                ]
+                "volumes": ["mailhost_spool:/var/spool/postfix"]
             },
             "$$cap_appname": {
                 "depends_on": ["$$cap_appname-db"],
