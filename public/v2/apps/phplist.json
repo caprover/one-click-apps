@@ -22,9 +22,9 @@
             "mailhost": {
                 "image": "phplist/postfix:latest",
                 "volumes": [
-                "mailhost_spool:/var/spool/postfix"
-      ]
-   },
+                    "mailhost_spool:/var/spool/postfix"
+                ]
+            },
             "$$cap_appname": {
                 "depends_on": ["$$cap_appname-db"],
                 "documentation": "Taken from https://hub.docker.com/r/phplist/phplist",
