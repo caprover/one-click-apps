@@ -21,7 +21,8 @@
             },
             "mailhost": {
                 "image": "phplist/postfix:latest",
-                "volumes": ["mailhost_spool:/var/spool/postfix"]
+                "volumes": ["mailhost_spool:/var/spool/postfix"],
+                "restart": "always"
             },
             "$$cap_appname": {
                 "depends_on": ["$$cap_appname-db"],
@@ -41,7 +42,6 @@
                     "ADMIN_PASSWORD": "$$cap_admin_pass",
                     "ADMIN_EMAIL": "$$cap_admin_email",
                     "HOSTNAME": "$$cap_appname.$$cap_root_domain",
-                    "PORT": "$$cap_phplist_port",
                     "MAILHOST": "mailhost"
                 }
             }
@@ -69,46 +69,40 @@
         {
             "id": "$$cap_db_pass",
             "label": "database password",
-            "description": "Password for the database user and root using mysql.",
+            "description": "Password for the database user and root using mariadb.",
             "validRegex": "/.{1,}/"
         },
         {
             "id": "$$cap_db_user",
             "label": "database user",
             "defaultValue": "phplist",
-            "description": "Username for the database using mysql.",
+            "description": "Username for the database using mariadb.",
             "validRegex": "/^([a-zA-Z0-9])+$/"
         },
         {
             "id": "$$cap_db_name",
             "label": "database name",
             "defaultValue": "phplist",
-            "description": "Database name for the database using mysql.",
+            "description": "Database name for the database using mariadb.",
             "validRegex": "/^([a-zA-Z0-9])+$/"
         },
         {
             "id": "$$cap_admin_user",
             "label": "admin name",
             "defaultValue": "admin",
-            "description": "Name of the Nextcloud admin user.",
+            "description": "Name of the admin user.",
             "validRegex": "/^([a-zA-Z0-9\\@\\.])+$/"
         },
         {
             "id": "$$cap_admin_pass",
             "label": "admin password",
-            "description": "Password for the Nextcloud admin user.",
+            "description": "Password for the admin user.",
             "validRegex": "/.{1,}/"
         },
         {
             "id": "$$cap_admin_email",
             "label": "admin email",
             "description": "Email for PHPList administrator account.",
-            "validRegex": "/.{1,}/"
-        },
-        {
-            "id": "$$cap_phplist_port",
-            "label": "port number",
-            "description": "Port number for phplist installation",
             "validRegex": "/.{1,}/"
         }
     ]
