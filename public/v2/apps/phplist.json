@@ -110,6 +110,7 @@
         {
             "id": "$$cap_port",
             "label": "port",
+            "defaultValue": "80",
             "description": "port to connect.",
             "validRegex": "/.{1,}/"
         }
