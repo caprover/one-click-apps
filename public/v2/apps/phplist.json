@@ -33,7 +33,7 @@
                     "$$cap_appname-plugin-data:/var/www/phpList3/public_html/lists/admin/plugins"
                 ],
                 "restart": "always",
-                "containerHttpPort": "$$cap_port",
+                "containerHttpPort": "80",
                 "environment": {
                     "DB_HOST": "srv-captain--$$cap_appname-db",
                     "DB_USER": "$$cap_db_user",
@@ -110,7 +110,7 @@
         {
             "id": "$$cap_port",
             "label": "port",
-            "defaultValue": "80",
+            "defaultValue": "8080",
             "description": "port to connect.",
             "validRegex": "/.{1,}/"
         }
