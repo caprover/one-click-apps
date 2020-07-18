@@ -42,6 +42,7 @@
                     "ADMIN_PASSWORD": "$$cap_admin_pass",
                     "ADMIN_EMAIL": "$$cap_admin_email",
                     "HOSTNAME": "$$cap_appname.$$cap_root_domain",
+                    "PORT": "$$cap_phplist_port",
                     "MAILHOST": "mailhost"
                 }
             }
@@ -96,7 +97,7 @@
         {
             "id": "$$cap_admin_pass",
             "label": "admin password",
-            "description": "Password for the admin user.",
+            "description": "Passwuord for the admin user.",
             "validRegex": "/.{1,}/"
         },
         {
@@ -104,6 +105,13 @@
             "label": "admin email",
             "description": "Email for PHPList administrator account.",
             "validRegex": "/.{1,}/"
+        },
+        {
+            "id": "$$cap_phplist_port",
+            "label": "Port for phplist, leave default",
+            "defaultValue": "9000",
+            "description": "Port for phplist, if you don't know what you're doing leave default",
+            "validRegex": "/^([a-zA-Z0-9\\@\\.])+$/"
         }
     ]
 }
