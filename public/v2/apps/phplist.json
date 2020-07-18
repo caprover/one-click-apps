@@ -33,8 +33,8 @@
                     "$$cap_appname-plugin-data:/var/www/phpList3/public_html/lists/admin/plugins"
                 ],
                 "restart": "always",
-                "ports": "8080:80",
-                "containerHttpPort": "8080",
+                "ports": "8181:80",
+                "containerHttpPort": "8181",
                 "environment": {
                     "DB_HOST": "srv-captain--$$cap_appname-db",
                     "DB_USER": "$$cap_db_user",
@@ -45,7 +45,7 @@
                     "ADMIN_EMAIL": "$$cap_admin_email",
                     "HOSTNAME": "$$cap_appname.$$cap_root_domain",
                     "MAILHOST": "srv-captain--$$cap_appname-mailhost",
-                    "PORT": "8080"
+                    "PORT": "8181"
                 }
             }
         }
