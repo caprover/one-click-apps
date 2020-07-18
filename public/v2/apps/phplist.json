@@ -33,7 +33,6 @@
                     "$$cap_appname-plugin-data:/var/www/phpList3/public_html/lists/admin/plugins"
                 ],
                 "restart": "always",
-                "ports": "$$cap_port:80",
                 "containerHttpPort": "$$cap_port",
                 "environment": {
                     "DB_HOST": "srv-captain--$$cap_appname-db",
