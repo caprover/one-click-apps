@@ -19,13 +19,13 @@
                     "MYSQL_PASSWORD": "$$cap_db_pass"
                 }
             },
-            "mailhost": {
+            "$$cap_appname-mailhost": {
                 "image": "phplist/postfix:latest",
-                "volumes": ["mailhost_spool:/var/spool/postfix"],
+                "volumes": ["$$cap_appname-mailhost-spool:/var/spool/postfix"],
                 "restart": "always"
             },
             "$$cap_appname": {
-                "depends_on": ["$$cap_appname-db"],
+                "depends_on": ["$$cap_appname-db", "$$cap_appname-mailhost"],
                 "documentation": "Taken from https://hub.docker.com/r/phplist/phplist",
                 "image": "phplist:$$cap_phplist_version",
                 "volumes": [
