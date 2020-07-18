@@ -107,7 +107,7 @@
             "label": "admin email",
             "description": "Email for PHPList administrator account.",
             "validRegex": "/.{1,}/"
-        }
+        },
         {
             "id": "$$cap_port",
             "label": "port",
