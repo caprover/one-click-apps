@@ -42,7 +42,7 @@
                     "ADMIN_PASSWORD": "$$cap_admin_pass",
                     "ADMIN_EMAIL": "$$cap_admin_email",
                     "HOSTNAME": "$$cap_appname.$$cap_root_domain",
-                    "MAILHOST": "mailhost"
+                    "MAILHOST": "srv-captain--$$cap_appname-mailhost"
                 }
             }
         }
