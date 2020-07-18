@@ -20,7 +20,7 @@
                 }
             },
             "$$cap_appname-mailhost": {
-                "image": "phplist/postfix:latest",
+                "image": "tozd/postfix:alpine-38",
                 "volumes": ["$$cap_appname-mailhost-spool:/var/spool/postfix"],
                 "restart": "always"
             },
