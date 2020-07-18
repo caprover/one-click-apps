@@ -43,13 +43,8 @@
                     "ADMIN_PASSWORD": "$$cap_admin_pass",
                     "ADMIN_EMAIL": "$$cap_admin_email",
                     "HOSTNAME": "$$cap_appname.$$cap_root_domain",
-<<<<<<< HEAD
-                    "PORT": "$$cap_phplist_port",
-                    "MAILHOST": "mailhost"
-=======
                     "MAILHOST": "srv-captain--$$cap_appname-mailhost",
                     "PORT": "$$cap_port"
->>>>>>> 8226bf2df70c8b5319770ed8f802aead319a38d2
                 }
             }
         }
@@ -113,19 +108,11 @@
             "validRegex": "/.{1,}/"
         },
         {
-<<<<<<< HEAD
             "id": "$$cap_phplist_port",
             "label": "Port for phplist, leave default",
             "defaultValue": "9000",
             "description": "Port for phplist, if you don't know what you're doing leave default",
             "validRegex": "/^([a-zA-Z0-9\\@\\.])+$/"
-=======
-            "id": "$$cap_port",
-            "label": "port",
-            "defaultValue": "8080",
-            "description": "port to connect.",
-            "validRegex": "/.{1,}/"
->>>>>>> 8226bf2df70c8b5319770ed8f802aead319a38d2
         }
     ]
 }
