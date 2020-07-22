@@ -60,9 +60,9 @@
         },
         {
             "id": "$$cap_db_type",
-            "label": "DB Type",
+            "label": "Database Type",
             "defaultValue": "mysql",
-            "description": "You can either choose MariaDB or MySQL, you need to change the version according to which DB is selected",
+            "description": "You can either choose mariadb or mysql, you need to change the version according to which DB is selected. It is case sensitive.",
             "validRegex": "/.{1,}/"
         },
         {
