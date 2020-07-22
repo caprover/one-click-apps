@@ -35,6 +35,17 @@
                     "NEXTCLOUD_ADMIN_PASSWORD": "$$cap_admin_pass",
                     "NEXTCLOUD_TRUSTED_DOMAINS": "$$cap_appname.$$cap_root_domain"
                 }
+            },
+            "$$cap_appname-cron": {
+                "depends_on": ["$$cap_appname-db", "$$cap_appname"],
+                "notExposeAsWebApp": "true",
+                "documentation": "https://github.com/nextcloud/docker/blob/master/.examples/docker-compose/insecure/mariadb-cron-redis/apache/docker-compose.yml",
+                "restart": "always",
+                "volumes": ["$$cap_appname-data:/var/www/html"],
+                "dockerfileLines": [
+                    "FROM nextcloud:$$cap_nextcloud_version",
+                    "ENTRYPOINT [ \"./cron.sh\" ] "
+                ]
             }
         }
     },
