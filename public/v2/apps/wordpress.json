@@ -7,7 +7,7 @@
         "version": "3.3",
         "services": {
             "$$cap_appname-db": {
-                "image": "$$cap_db_type:$$cap_mysql_version",
+                "image": "$$cap_db_type:$$cap_database_version",
                 "notExposeAsWebApp": "true",
                 "volumes": ["$$cap_appname-db-data:/var/lib/mysql"],
                 "restart": "always",
@@ -66,7 +66,7 @@
             "validRegex": "/.{1,}/"
         },
         {
-            "id": "$$cap_mysql_version",
+            "id": "$$cap_database_version",
             "label": "Database Version, default is MySQL",
             "defaultValue": "5.7",
             "description": "Check out the Docker pages for the valid tags https://hub.docker.com/r/library/mysql/tags/ or https://hub.docker.com/_/mariadb?tab=tags",
