@@ -7,7 +7,7 @@
         "version": "3.3",
         "services": {
             "$$cap_appname-db": {
-                "image": "$$cap_db_type:$$cap_mysql_version",
+                "image": "$$cap_db_type:$$cap_database_version",
                 "notExposeAsWebApp": "true",
                 "volumes": ["$$cap_appname-db-data:/var/lib/mysql"],
                 "restart": "always",
@@ -63,10 +63,17 @@
             "label": "Database Type",
             "defaultValue": "mysql",
             "description": "You can either choose mariadb or mysql, you need to change the version according to which DB is selected. It is case sensitive.",
+<<<<<<< HEAD
             "validRegex": "/.{1,}/"
         },
         {
             "id": "$$cap_mysql_version",
+=======
+            "validRegex": "/^(mysql|mariadb)$/"
+        },
+        {
+            "id": "$$cap_database_version",
+>>>>>>> 3a88ff218ed998a00ff172df2c0a1bf734a22b0d
             "label": "Database Version, default is MySQL",
             "defaultValue": "5.7",
             "description": "Check out the Docker pages for the valid tags https://hub.docker.com/r/library/mysql/tags/ or https://hub.docker.com/_/mariadb?tab=tags",
