@@ -63,7 +63,7 @@
             "label": "Database Type",
             "defaultValue": "mysql",
             "description": "You can either choose mariadb or mysql, you need to change the version according to which DB is selected. It is case sensitive.",
-            "validRegex": "/.{1,}/"
+            "validRegex": "/^(mysql|mariadb)$/"
         },
         {
             "id": "$$cap_database_version",
