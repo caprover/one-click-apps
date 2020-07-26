@@ -20,7 +20,10 @@
                     "node.name": "$$cap_appname",
                     "node.master": "$$cap_elasticsearch_node_master",
                     "node.data": "$$cap_elasticsearch_node_data",
-                    "discovery.seed_hosts": "$$cap_elasticsearch_discovery_seed_hosts"
+                    "discovery.seed_hosts": "$$cap_elasticsearch_discovery_seed_hosts",
+                    "xpack.security.enabled":  "$$cap_elasticsearch_enable_security",
+                    "xpack.security.transport.ssl.enabled": "$$cap_elasticsearch_enable_security",
+                    "ELASTIC_PASSWORD":  "$$cap_elasticsearch_password"
                 },
                 "containerHttpPort": "$$cap_container_port"
             }
@@ -79,6 +82,17 @@
             "defaultValue": "9200",
             "description": "Internal port for Elasticsearch the container listens to.",
             "validRegex": "/^([0-9])+$/"
+        },
+        {
+            "id": "$$cap_elasticsearch_enable_security",
+            "label": "Enable elasticsearch security?",
+            "defaultValue": "false",
+            "description": "If this is enabled, and ELASTIC_PASSWORD is provided, your elastic search will be protected by basic auth with use 'elastic'. NOTE: HTTPS needs to be enabled if you chose this option!"
+        },
+        {
+            "id": "$$cap_elasticsearch_password",
+            "label": "ELASTIC_PASSWORD",
+            "description": "To be used if security is enabled."
         }
     ]
 }

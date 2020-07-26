@@ -11,7 +11,9 @@
                     "SERVER_NAME": "$$cap_appname",
                     "KIBANA_DEFAULTAPPID": "$$cap_KIBANA_DEFAULTAPPID",
                     "MONITORING_ENABLED": "$$cap_MONITORING_ENABLED",
-                    "ELASTICSEARCH_HOSTS": "$$cap_ELASTICSEARCH_HOSTS"
+                    "ELASTICSEARCH_HOSTS": "$$cap_ELASTICSEARCH_HOSTS",
+                    "ELASTICSEARCH_PASSWORD": "$$cap_ELASTICSEARCH_PASSWORD",
+                    "ELASTICSEARCH_USERNAME": "$$cap_ELASTICSEARCH_USERNAME"
                 },
                 "image": "docker.elastic.co/kibana/kibana:$$cap_version",
                 "restart": "always"
@@ -46,6 +48,17 @@
             "label": "ELASTICSEARCH_HOSTS",
             "description": "URL of the elasticsearch hosts to use. Please include the http or https in the urls. eg. http://srv-captain--elastic",
             "id": "$$cap_ELASTICSEARCH_HOSTS"
+        },
+        {
+            "label": "ELASTICSEARCH_USERNAME",
+            "defaultValue": "elastic",
+            "description": "To use if your cluster has security enabled. Username is the elasticsearch default 'elastic'",
+            "id": "$$cap_ELASTICSEARCH_USERNAME"
+        },
+        {
+            "label": "ELASTICSEARCH_PASSWORD",
+            "description": "Password of your elastic search cluster if security enabled",
+            "id": "$$cap_ELASTICSEARCH_PASSWORD"
         }
     ]
 }
