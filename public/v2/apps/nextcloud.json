@@ -38,7 +38,7 @@
             },
             "$$cap_appname-cron": {
                 "dockerfileLines": [
-                    "FROM nextcloud:apache",
+                    "FROM nextcloud:$$cap_nextcloud_version",
                     "ENTRYPOINT [ \"/cron.sh\" ] "
                 ],
                 "depends_on": ["$$cap_appname-db", "$$cap_appname"],
