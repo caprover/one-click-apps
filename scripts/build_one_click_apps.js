@@ -13,7 +13,8 @@ const fs = require('fs-extra');
 // 1- DUPLICATE this script. The new script is to ONLY read from /public/v4/*.yaml
 // 2- Test with a new YAML file
 // 3- Write script to convert all v2 JSON to V4 yaml and place them in /public/v4/*.yaml
-// 4- Push all 3 steps above at the same time to GITHUB
+// 4- Update readme!!!!
+// 5- Push all 3 steps above at the same time to GITHUB
 
 const pathOfPublic = path.join(__dirname, '..', `public`);
 
