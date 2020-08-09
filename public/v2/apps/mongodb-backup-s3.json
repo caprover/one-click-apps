@@ -19,7 +19,7 @@
                     "EXTRA_OPTS": "$$cap_extra_opts",
                     "CRON_TIME": "$$cap_cron_time",
                     "TZ": "$$cap_tz",
-                    "CRON_TZ": "$$cap_cron_tz",
+                    "CRON_TZ": "$$cap_tz",
                     "INIT_BACKUP": "$$cap_init_backup",
                     "INIT_RESTORE": "$$cap_init_restore",
                     "DISABLE_CRON": "$$cap_disable_cron"
@@ -60,11 +60,10 @@
             "label": "BACKUP_FOLDER"
         },
         {
-            "description": "The host/ip of your mongodb database",
+            "description": "The host/ip of your mongodb database. For CapRover hosted database, use srv-captain--your-mongodb-name",
             "id": "$$cap_mongodb_host",
             "label": "MONGODB HOST",
-            "validRegex": "/^.+$/",
-            "defaultValue": "localhost"
+            "validRegex": "/^.+$/"
         },
         {
             "description": "The port number of your mongodb database",
@@ -97,37 +96,31 @@
         {
             "description": "The interval of cron job to run mongodump. 0 3 * * * by default, which is every day at 03:00hrs.",
             "id": "$$cap_cron_time",
-            "label": "CRON_TIME",
+            "label": "CRON TIME",
             "defaultValue": "0 3 * * *"
         },
         {
             "description": "timezone",
             "id": "$$cap_tz",
-            "label": "TZ",
-            "defaultValue": "US/Eastern"
-        },
-        {
-            "description": "cron timezone",
-            "id": "$$cap_cron_tz",
-            "label": "CRON_TZ",
+            "label": "TIMEZONE",
             "defaultValue": "US/Eastern"
         },
         {
             "description": "If set, create a backup when the container launched",
             "id": "$$cap_init_backup",
-            "label": "INIT_BACKUP",
+            "label": "INIT BACKUP",
             "defaultValue": "true"
         },
         {
             "description": "If set (any string, eg. true), restore from latest when container is launched.",
             "id": "$$cap_init_restore",
-            "label": "INIT_RESTORE",
+            "label": "INIT RESTORE",
             "defaultValue": ""
         },
         {
             "description": "if set (any string, eg.true), it will skip setting up automated backups. good for when you want to use this container to seed a dev environment.",
             "id": "$$cap_disable_cron",
-            "label": "DISABLE_CRON",
+            "label": "DISABLE CRON",
             "defaultValue": ""
         }
     ]
