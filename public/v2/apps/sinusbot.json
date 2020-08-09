@@ -3,6 +3,7 @@
     "documentation": "https://hub.docker.com/r/sinusbot/docker",
     "displayName": "SinusBot",
     "description": "Music bot for TS3 and Discord.",
+    "isOfficial": true,
     "dockerCompose": {
         "services": {
             "$$cap_appname": {

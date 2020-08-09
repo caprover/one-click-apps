@@ -3,6 +3,7 @@
     "documentation": "Taken from https://docs.docker.com/engine/examples/running_ssh_service/#build-an-eg_sshd-image ",
     "displayName": "SSH Container",
     "description": "Just a simple container that has sshd installed so you can SSH directly into this container.",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

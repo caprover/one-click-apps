@@ -3,6 +3,7 @@
     "documentation": "Taken from https://docs.gitlab.com/omnibus/docker/",
     "displayName": "Gitlab (CE)",
     "description": "CE version of GitLab for CI/CD pipeline",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

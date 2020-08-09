@@ -3,6 +3,7 @@
     "documentation": "Taken from https://hub.docker.com/r/bitwardenrs/server",
     "displayName": "Bitwarden_rs",
     "description": "Lightweight fully featured Rust implementation of Bitwarden.",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

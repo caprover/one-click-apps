@@ -3,6 +3,7 @@
     "documentation": "Read the poste.io documentation @ https://poste.io/doc",
     "displayName": "Poste.io",
     "description": "Poste.io - complete mailserver built in one container",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.7",
         "services": {

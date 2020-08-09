@@ -3,6 +3,7 @@
     "documentation": "Taken from https://hub.docker.com/r/mongo/",
     "displayName": "MongoDB",
     "description": "MongoDB is a cross-platform document-oriented database program. Classified as a NoSQL database program",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

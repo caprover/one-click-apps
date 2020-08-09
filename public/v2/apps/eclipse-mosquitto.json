@@ -3,6 +3,7 @@
     "documentation": "Taken from https://github.com/eclipse/mosquitto. Mosquitto is an open source implementation of a server for version 5.0, 3.1.1, and 3.1 of the MQTT protocol. It also includes a C and C++ client library, and the mosquitto_pub and mosquitto_sub utilities for publishing and subscribing.",
     "displayName": "Eclipse Mosquitto - A MQTT Broker",
     "description": "Eclipse Mosquitto is an open source message broker which implements MQTT version 5, 3.1.1 and 3.1",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

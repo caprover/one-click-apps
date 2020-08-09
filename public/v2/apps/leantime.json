@@ -3,6 +3,7 @@
     "documentation": "https://github.com/Leantime/docker-leantime/blob/master/docker-compose.yml",
     "displayName": "Leantime",
     "description": "Open source project management for small teams",
+    "isOfficial": true,
     "dockerCompose": {
         "services": {
             "$$cap_appname-mysql": {

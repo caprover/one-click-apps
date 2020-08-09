@@ -3,6 +3,7 @@
     "documentation": "Taken from https://github.com/outline/outline/blob/master/docker-compose.yml",
     "displayName": "Outline",
     "description": "An open, extensible, wiki for your team built using React and Node.js.",
+    "isOfficial": true,
     "dockerCompose": {
         "services": {
             "$$cap_appname-redis": {

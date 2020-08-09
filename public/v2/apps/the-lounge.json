@@ -3,6 +3,7 @@
     "documentation": "Adapted from https://thelounge.chat/docs/install-and-upgrade#docker.",
     "description": "The Lounge is a self-hosted web IRC client with modern features, persistent connections, and multi-user support.",
     "displayName": "The Lounge",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

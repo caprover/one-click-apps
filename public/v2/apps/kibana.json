@@ -3,6 +3,7 @@
     "documentation": "https://www.elastic.co/guide/en/kibana/current/docker.html",
     "displayName": "kibana",
     "description": "Kibana is a free and open user interface that lets you visualize your Elasticsearch data and navigate the Elastic Stack.",
+    "isOfficial": true,
     "dockerCompose": {
         "services": {
             "$$cap_appname": {

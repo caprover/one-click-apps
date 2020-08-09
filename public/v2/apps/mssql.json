@@ -3,6 +3,7 @@
     "documentation": "Taken from https://hub.docker.com/_/microsoft-mssql-server",
     "displayName": "Microsoft SQL",
     "description": "Microsoft SQL Server is a relational database management system developed by Microsoft",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

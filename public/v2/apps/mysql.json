@@ -3,6 +3,7 @@
     "documentation": "Taken from https://docs.docker.com/compose/mysql/ port mapping removed from WP as it's not needed",
     "displayName": "MySQL",
     "description": "MySQL is a relational database management system based on SQL",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

@@ -3,6 +3,7 @@
     "documentation": "https://hub.docker.com/r/syncthing/syncthing",
     "displayName": "Syncthing",
     "description": "Open Source Continuous File Synchronization.",
+    "isOfficial": true,
     "dockerCompose": {
         "services": {
             "$$cap_appname": {

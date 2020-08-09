@@ -3,6 +3,7 @@
     "documentation": "Taken from https://docs.docker.com/compose/wordpress/. Port mapping removed from WP as it is no longer needed",
     "displayName": "WordPress",
     "description": "WordPress is a content management system based on PHP and MySQL that is usually used with the MySQL or MariaDB database",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

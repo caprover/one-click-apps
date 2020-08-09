@@ -3,6 +3,7 @@
     "documentation": "Built from scratch (https://github.com/nightscout/cgm-remote-monitor)",
     "displayName": "",
     "description": "Nightscout is a free and open-source project, and associated social movement, that enables accessing and working with continuous glucose monitor data",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

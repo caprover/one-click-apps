@@ -3,6 +3,7 @@
     "documentation": "Taken from https://hub.docker.com/r/plexinc/pms-docker.",
     "displayName": "Plex Media Server",
     "description": "Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices.",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.1",
         "services": {

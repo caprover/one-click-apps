@@ -3,6 +3,7 @@
     "documentation": "Taken from https://hub.docker.com/r/photoprism/photoprism",
     "displayName": "Photoprism",
     "description": "An app for browsing, organizing and sharing your personal photo collection.",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

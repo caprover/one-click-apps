@@ -3,6 +3,7 @@
     "documentation": "Adapted from: https://github.com/FusionAuth/fusionauth-containers",
     "displayName": "FusionAuth",
     "description": "FusionAuth is a scalable, identity and user management platform built for devs",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

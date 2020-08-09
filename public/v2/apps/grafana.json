@@ -3,6 +3,7 @@
     "documentation": "https://hub.docker.com/r/grafana/grafana",
     "displayName": "Grafana",
     "description": "Grafana allows you to query, visualize, alert on and understand your metrics no matter where they are stored.",
+    "isOfficial": true,
     "dockerCompose": {
         "services": {
             "$$cap_appname": {
