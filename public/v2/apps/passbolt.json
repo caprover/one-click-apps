@@ -3,6 +3,7 @@
     "documentation": "Taken from https://hub.docker.com/r/passbolt/passbolt.",
     "displayName": "Passbolt",
     "description": "Passbolt is a free and open source password manager that allows team members to store and share credentials securely.",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.4",
         "services": {

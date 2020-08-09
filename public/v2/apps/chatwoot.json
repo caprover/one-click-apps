@@ -3,6 +3,7 @@
     "documentation": "Read more at: https://www.chatwoot.com/docs",
     "displayName": "Chatwoot",
     "description": "Open-source customer support saas alternative to Intercom, Drift, Crisp",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

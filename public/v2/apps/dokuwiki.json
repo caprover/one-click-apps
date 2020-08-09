@@ -3,6 +3,7 @@
     "documentation": "Taken from https://hub.docker.com/r/linuxserver/dokuwiki/tags",
     "displayName": "DokuWiki",
     "description": "Dokuwiki is a simple to use and highly versatile Open Source wiki software that doesn't require a database.",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.1",
         "services": {

@@ -3,6 +3,7 @@
     "documentation": "Taken from https://hub.docker.com/_/adminer ",
     "description": "Adminer (formerly phpMinAdmin) is a full-featured database management tool written in PHP",
     "displayName": "Adminer",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

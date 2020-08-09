@@ -3,6 +3,7 @@
     "documentation": "https://hub.docker.com/_/teamspeak",
     "displayName": "TeamSpeak",
     "description": "TeamSpeak is the number one choice VoIP communication system for Online Gaming.",
+    "isOfficial": true,
     "dockerCompose": {
         "services": {
             "$$cap_appname": {

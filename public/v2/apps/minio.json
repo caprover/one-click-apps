@@ -3,6 +3,7 @@
     "documentation": "Taken from https://hub.docker.com/r/minio/minio",
     "displayName": "",
     "description": "MinIO is a cloud storage server compatible with Amazon S3",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

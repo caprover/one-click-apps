@@ -3,6 +3,7 @@
     "documentation": "Taken from https://hub.docker.com/_/mongo-express/ except it is manually adjusted for port 80",
     "displayName": "Mongo Express",
     "description": "Web-based MongoDB admin interface, written with Node.js and express",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

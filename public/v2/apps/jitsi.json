@@ -3,6 +3,7 @@
     "documentation": "https://github.com/jitsi/docker-jitsi-meet",
     "displayName": "Jitsi",
     "description": "Free open-source video conferencing for web & mobile",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3",
         "services": {

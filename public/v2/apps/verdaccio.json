@@ -3,6 +3,7 @@
     "documentation": "Taken from https://hub.docker.com/r/verdaccio/verdaccio/",
     "displayName": "",
     "description": "Verdaccio is a lightweight private npm proxy registry that allows you to have your own npm registry for free",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {
