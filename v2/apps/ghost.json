@@ -3,6 +3,7 @@
     "documentation": "Taken from https://docs.ghost.org/",
     "displayName": "",
     "description": "Ghost is a free and open source blogging platform written in JavaScript and distributed under the MIT License",
+    "isOfficial": true,
     "dockerCompose": {
         "services": {
             "$$cap_appname": {

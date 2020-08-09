@@ -2,6 +2,7 @@
     "captainVersion": "2",
     "displayName": "Mautic beta",
     "description": "Mautic is an open source marketing automation platform.",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "2",
         "services": {

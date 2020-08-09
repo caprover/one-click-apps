@@ -3,6 +3,7 @@
     "documentation": "Taken from https://hub.docker.com/_/redis",
     "displayName": "",
     "description": "Redis is an in-memory data structure store, used as a database, cache and message broker",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

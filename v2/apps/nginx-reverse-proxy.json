@@ -3,6 +3,7 @@
     "documentation": "Taken from https://github.com/caprover/nginx-reverse-proxy",
     "displayName": "Nginx Reverse Proxy",
     "description": "A simple nginx image preloaded with reverse proxy config that allows you to proxy a URL to another URL",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

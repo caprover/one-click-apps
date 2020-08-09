@@ -3,6 +3,7 @@
     "documentation": "Taken from https://hub.docker.com/_/postgres",
     "displayName": "PostgreSQL",
     "description": "The PostgreSQL object-relational database system provides reliability and data integrity",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

@@ -3,6 +3,7 @@
     "documentation": "ArangoDB",
     "description": "ArangoDB is native multi-model database for using and combining graph, document and key/value models",
     "displayName": "ArangoDB",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

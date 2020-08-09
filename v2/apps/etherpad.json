@@ -3,6 +3,7 @@
     "documentation": "https://github.com/ether/etherpad-lite/blob/develop/doc/docker.md ",
     "displayName": "Etherpad",
     "description": "Etherpad is a real-time collaborative editor for the web",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.8",
         "services": {

@@ -3,6 +3,7 @@
     "documentation": "Look at https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html for further assistance using Elasticsearch with docker.",
     "displayName": "",
     "description": "Elasticsearch is a search engine based on the Lucene library",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

@@ -3,6 +3,7 @@
     "documentation": "https://hub.docker.com/r/resilio/sync",
     "displayName": "Resilio Sync",
     "description": "File synchronization and sharing solution based on BitTorrent technology.",
+    "isOfficial": true,
     "dockerCompose": {
         "services": {
             "$$cap_appname": {

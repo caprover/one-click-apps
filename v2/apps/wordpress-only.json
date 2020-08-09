@@ -3,6 +3,7 @@
     "documentation": "Taken from https://docs.docker.com/compose/wordpress/. Port mapping removed from WP as it is no longer needed",
     "displayName": "WordPress - No Database",
     "description": "This will create a WordPress only. You will need to create and configure the database information manually. Intended for advanced users.",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

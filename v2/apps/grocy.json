@@ -3,6 +3,7 @@
     "documentation": "Taken from https://hub.docker.com/r/linuxserver/grocy/tags",
     "displayName": "Grocy",
     "description": "Grocy is an ERP system for your kitchen and groceries! Cut down on food waste, and manage your chores with this brilliant utulity.",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.1",
         "services": {

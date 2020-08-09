@@ -3,6 +3,7 @@
     "documentation": "Taken from https://hub.docker.com/r/parseplatform/parse-server/",
     "displayName": "",
     "description": "Parse Server is an open source Backend-as-a-Service(BaaS) framework initially developed by Facebook",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

@@ -3,6 +3,7 @@
     "documentation": "Taken from https://hub.docker.com/r/portainer/portainer/",
     "displayName": "",
     "description": "Portainer is a lightweight management UI which allows you to easily manage your different Docker environments",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

@@ -3,6 +3,7 @@
     "documentation": "https://github.com/mattermost/mattermost-docker",
     "displayName": "Mattermost",
     "description": "Mattermost Team Edition open source collaboration/chat software",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

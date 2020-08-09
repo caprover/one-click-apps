@@ -3,6 +3,7 @@
     "documentation": "Taken from https://hub.docker.com/r/sourcegraph/server/",
     "displayName": "",
     "description": "Sourcegraph is a free, self-hosted code search and intelligence server that helps developers find, review, understand, and debug code",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

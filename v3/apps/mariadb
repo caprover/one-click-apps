@@ -3,6 +3,7 @@
     "documentation": "Taken from https://hub.docker.com/_/mariadb.",
     "displayName": "MariaDB",
     "description": "MariaDB Server is one of the most popular open source relational databases. It's made by the original developers of MySQL and guaranteed to stay open source",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.1",
         "services": {

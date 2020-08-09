@@ -3,6 +3,7 @@
     "documentation": "Taken from https://filebrowser.xyz/installation#docker except moved the database to a directory to be able to associate with a volume",
     "displayName": "",
     "description": "filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files with supports for multi users.",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

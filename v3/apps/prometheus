@@ -3,6 +3,7 @@
     "documentation": "https://hub.docker.com/r/prom/prometheus/",
     "displayName": "Prometheus",
     "description": "Prometheus is a systems and service monitoring system.",
+    "isOfficial": true,
     "dockerCompose": {
         "services": {
             "$$cap_appname": {

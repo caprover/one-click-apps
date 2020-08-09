@@ -3,6 +3,7 @@
     "displayName": "Miniflux",
     "documentation": "https://miniflux.app/docs/index.html",
     "description": "Self hosted RSS server",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.8",
         "services": {

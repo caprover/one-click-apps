@@ -3,6 +3,7 @@
     "documentation": "Taken from https://hub.docker.com/_/rethinkdb.",
     "displayName": "RethinkDB",
     "description": "RethinkDB pushes JSON to your apps in realtime",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "7",
         "services": {

@@ -3,6 +3,7 @@
     "documentation": "Taken from https://docs.ghost.org/",
     "displayName": "Ghost - No Database",
     "description": "This will create a Ghost blog without a database. After installation you will need to change config.production.json, theres a bug where the port number is in the url.",
+    "isOfficial": true,
     "dockerCompose": {
         "services": {
             "$$cap_appname": {

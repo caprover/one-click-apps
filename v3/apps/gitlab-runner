@@ -3,6 +3,7 @@
     "documentation": "Taken from https://docs.gitlab.com/runner/install/docker.html and https://docs.gitlab.com/runner/register/",
     "displayName": "Gitlab (runner)",
     "description": "Runner version of GitLab for CI/CD pipeline",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3",
         "services": {

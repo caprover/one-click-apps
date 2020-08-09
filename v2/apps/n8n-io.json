@@ -2,6 +2,7 @@
     "captainVersion": "2",
     "displayName": "n8n.io",
     "description": "n8n is a free and open node based Workflow Automation Tool.",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "2",
         "services": {

@@ -3,6 +3,7 @@
     "documentation": "Inspired by https://github.com/caprover/one-click-apps/pull/111 and from https://www.collaboraoffice.com/code/docker/",
     "displayName": "Collabora Online",
     "description": "Collabora Online is an online and collaborating office suite",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "1",
         "services": {

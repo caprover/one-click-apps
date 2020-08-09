@@ -3,6 +3,7 @@
     "documentation": "Taken from https://github.com/caprover/nginx-redirect",
     "displayName": "Nginx Redirect",
     "description": "A simple nginx image preloaded with redirect config that allows you to redirect to another URL. Useful for domain alias creation.",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

@@ -3,6 +3,7 @@
     "documentation": "Taken from https://hub.docker.com/_/nextcloud",
     "displayName": "nextcloud",
     "description": "Nextcloud is a suite of client-server software for creating and using file hosting services",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
         "services": {

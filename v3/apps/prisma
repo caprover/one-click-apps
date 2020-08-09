@@ -3,6 +3,7 @@
     "documentation": "Taken from https://hub.docker.com/r/prismagraphql/prisma/",
     "displayName": "",
     "description": "Prisma 1 is a database abstraction layer that turns your databases into GraphQL APIs with CRUD operations and realtime capabilities",
+    "isOfficial": true,
     "dockerCompose": {
         "version": "3",
         "services": {

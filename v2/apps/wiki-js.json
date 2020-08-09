@@ -3,6 +3,7 @@
     "documentation": "https://docs.requarks.io/",
     "displayName": "wiki.js",
     "description": "The most powerful and extensible open source Wiki software",
+    "isOfficial": true,
     "dockerCompose": {
         "services": {
             "$$cap_appname-postgres": {
