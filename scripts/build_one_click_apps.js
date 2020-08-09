@@ -51,6 +51,7 @@ function createAppList(appsList, pathOfApps) {
                 name: apps[i],
                 displayName: content.displayName,
                 description: content.description,
+                isOfficial: `${content.isOfficial}`.toLowerCase() === 'true',
                 logoUrl: apps[i] + '.png'
             };
         } else {
