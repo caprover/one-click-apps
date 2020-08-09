@@ -3,10 +3,22 @@ const path = require('path');
 const yaml = require('yaml');
 const fs = require('fs-extra');
 
+// Next, for V4:
+// ============================================================================
+// ============================================================================
+// *********** THIS IS ONLY TO BE DONE AFTER CAPROVER 1.8 RELEASE *************
+// ============================================================================
+// ============================================================================
+// 
+// 1- DUPLICATE this script. The new script is to ONLY read from /public/v4/*.yaml
+// 2- Test with a new YAML file
+// 3- Write script to convert all v2 JSON to V4 yaml and place them in /public/v4/*.yaml
+// 4- Push all 3 steps above at the same time to GITHUB
+
 const pathOfPublic = path.join(__dirname, '..', `public`);
 
 const pathOfDist = path.join(__dirname, '..', `dist`);
-//  const pathOfDistV1 = path.join(pathOfDist, 'v1');
+
 const pathOfDistV2 = path.join(pathOfDist, 'v2');
 const pathOfDistV3 = path.join(pathOfDist, 'v3');
 const pathOfDistV4 = path.join(pathOfDist, 'v4');
