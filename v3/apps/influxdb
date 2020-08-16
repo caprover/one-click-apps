@@ -2,7 +2,7 @@
     "captainVersion": "2",
     "documentation": "Taken from https://hub.docker.com/_/influxdb",
     "displayName": "InfluxDb",
-    "description": "InfluxDB is a time series database built from the ground up to handle high write and query loads. InfluxDB is meant to be used as a backing store for any use case involving large amounts of timestamped data, including DevOps monitoring, application metrics, IoT sensor data, and real-time analytics.",
+    "description": "InfluxDB is a time series database. It stores large amounts of timestamped data, including DevOps monitoring, application metrics, IoT sensor data, and real-time analytics.",
     "isOfficial": true,
     "dockerCompose": {
         "version": "3.3",
