@@ -77,11 +77,11 @@ function convertV2toV4(v2String) {
         parsed[propertyName] = undefined;
     }
 
-    parsed.captainVersion = 4;
-    parsed.caproverOneClickApp = {};
-
     parsed.services = parsed.dockerCompose.services;
     parsed.dockerCompose = undefined;
+    
+    parsed.captainVersion = 4;
+    parsed.caproverOneClickApp = {};
 
     moveProperty('variables');
     moveProperty('instructions');
