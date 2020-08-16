@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
   $$cap_appname:
-    image: caprover/nginx-redirect:latest
+    image: caprover/nginx-redirect@sha256:9b1037462e62d61da7357fb6b95a01f0e6533205aca79a4ce8e02d0942369a31
     restart: always
     environment:
       RETURN_LOCATION: return 301 $$cap_redirect_url$request_uri;
