@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "One Click App Repository for CapRover",
   "scripts": {
-    "formatter": "prettier --check './public/**/*.(json|yml)'",
-    "formatter-write": "prettier --write './public/**/*.(json|yml)'",
+    "formatter": "prettier --check './public/**/*.json'",
+    "formatter-write": "prettier --write './public/**/*.json'",
     "build": "rm -rf ./dist/ && mkdir -p dist && node ./scripts/build_one_click_apps.js && node ./scripts/build_one_click_apps_from_v4.js",
     "validate_json": "node ./scripts/validate_json.js",
     "publish": "npm run build && ./scripts/publish-from-actions.sh"
