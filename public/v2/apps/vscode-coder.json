@@ -1,0 +1,41 @@
+{
+    "captainVersion": "2",
+    "documentation": "Taken from https://github.com/cdr/code-server/ . Except the image version (tag) is fixed to a specific version rather than generic 'v2' as this will ensure consistency of deployments.",
+    "displayName": "vscode via code-server",
+    "description": "code-server by Coder is VS Code running on a remote server, accessible through the browser.",
+    "isOfficial": true,
+    "dockerCompose": {
+        "services": {
+            "$$cap_appname": {
+                "containerHttpPort": "8080",
+                "environment": {
+                    "PASSWORD": "$$cap_coder_password"
+                },
+                "dockerfileLines": [
+                    "FROM codercom/code-server:2.1697-vsc1.39.2",
+                    "# Similar to the original file, except setting the user to root to prevent permission issues.",
+                    "USER root"
+                ],
+                "image": "",
+                "restart": "always",
+                "volumes": [
+                    "$$cap_appname-config-data:/home/coder/.local/share/code-server",
+                    "$$cap_appname-project-directory:/home/coder/project"
+                ]
+            }
+        },
+        "version": "2"
+    },
+    "instructions": {
+        "end": "Code server is deployed and is available as $$cap_appname.\n\n IMPORTANT: Make sure to enable websocket capability in the app config on CapRover dashboard!",
+        "start": "This installation will install a Visual Studio Code that's accessible through browser!\n\nIMPORTANT: Make sure you have at least 2GB of RAM when you run code-server."
+    },
+    "variables": [
+        {
+            "description": "Password for accessing VS Code",
+            "id": "$$cap_coder_password",
+            "label": "Password",
+            "validRegex": "/^[^\"]*$/"
+        }
+    ]
+}

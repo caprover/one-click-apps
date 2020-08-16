@@ -114,23 +114,8 @@ function convertV2toV4(v2String) {
 
 
 function buildDist() {
-    return Promise.resolve()
-        .then(function () {
-            return fs.existsSync(pathOfSourceDirectoryApps)
-        })
-        .then(function (dirExists) {
-
-            if (!dirExists) {
-                return [];
-            }
-
-            return fs.readdir(pathOfSourceDirectoryApps);
-        })
+    return fs.readdir(pathOfSourceDirectoryApps)
         .then(function (appsFileNames) { // [ app1.json app2.json .... ]
-
-            if (appsFileNames.length === 0) {
-                return;
-            }
 
             appsFileNames.forEach(appFileName => {
                 const pathOfAppFileInSource = path.join(pathOfSourceDirectoryApps, appFileName);
@@ -158,7 +143,8 @@ function buildDist() {
             fs.outputJsonSync(path.join(pathOfDistV2, 'list'), v3List); // TODO delete oneClickApps: 
             fs.outputJsonSync(path.join(pathOfDistV3, 'list'), v3List);
             fs.outputJsonSync(path.join(pathOfDistV4, 'list'), v3List);
-
+        })
+        .then(function () {
             return fs.copySync(path.join(pathOfPublic, 'CNAME'), path.join(pathOfDist, 'CNAME'));
         });
 }
