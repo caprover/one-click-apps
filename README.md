@@ -21,9 +21,6 @@ caproverOneClickApp:
             are installing one click app!
             It can be multiline and contain more details and probably special
             hardware requirements!
-
-            It can also include the dynamic parameters such as
-            $$cap_appname and $$cap_other_random_char
         end: |-
             A summary when the app is deployed!
             It can be multiline.
