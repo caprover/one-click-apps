@@ -6,7 +6,7 @@
     "formatter": "prettier --check './public/**/*.(json|yml)'",
     "formatter-write": "prettier --write './public/**/*.(json|yml)'",
     "build": "rm -rf ./dist/ && mkdir -p dist && node ./scripts/build_one_click_apps.js && node ./scripts/build_one_click_apps_from_v4.js",
-    "validate_json": "node ./scripts/validate_json.js",
+    "validate_apps": "node ./scripts/validate_apps.js",
     "publish": "npm run build && ./scripts/publish-from-actions.sh"
   },
   "repository": {
