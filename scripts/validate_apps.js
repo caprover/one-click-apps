@@ -41,6 +41,10 @@
                      throw new Error(`Cannot find description for ${apps[i]}`);
                  }
 
+                 if (content.caproverOneClickApp.description.length > 200) {
+                     throw new Error(`Description too long for ${apps[i]}  - keep it below 200 chars`);
+                 }
+
                  if (!content.caproverOneClickApp.instructions ||
                      !content.caproverOneClickApp.instructions.start ||
                      !content.caproverOneClickApp.instructions.end) {
@@ -105,6 +109,9 @@
 
                  if (!content.description) {
                      throw new Error(`Cannot find description for ${apps[i]}`);
+                 }
+                 if (content.description.length > 200) {
+                     throw new Error(`Description too long for ${apps[i]}  - keep it below 200 chars`);
                  }
 
                  const logoFileName = apps[i] + '.png';
