@@ -6,8 +6,52 @@
  const pathOfPublic = path.join(__dirname, '..', PUBLIC);
 
 
+ // validating version 4
+ //  function validateV4() {
+
+ //      const version = '2';
+ //      const pathOfVersion = path.join(pathOfPublic, 'v' + version);
+ //      const pathOfApps = path.join(pathOfVersion, 'apps');
+
+ //      return fs.readdir(pathOfApps)
+ //          .then(function (items) {
+
+ //              const apps = items.filter(v => v.includes('.json'));
+
+ //              for (var i = 0; i < apps.length; i++) {
+ //                  const contentString = fs.readFileSync(path.join(pathOfApps, apps[i]));
+ //                  const content = JSON.parse(contentString);
+ //                  const captainVersion = (content.captainVersion + '');
+ //                  const versionString = (version + '');
+ //                  if (versionString !== captainVersion)
+ //                      throw new Error(`unmatched versions   ${versionString}  ${captainVersion} for ${apps[i]}`);
+
+ //                  apps[i] = apps[i].replace('.json', '');
+
+ //                  if (!content.description){
+ //                     throw new Error(`Cannot find description for ${apps[i]}`);
+ //                  }
+
+ //                  const logoFileName = apps[i] + '.png';
+
+ //                  const logoFullPath = path.join(pathOfVersion, 'logos', logoFileName);
+
+ //                  if (!fs.existsSync(logoFullPath) ||
+ //                      !fs.statSync(logoFullPath).isFile()) {
+ //                      let printablePath = logoFullPath;
+ //                      printablePath = printablePath.substr(printablePath.indexOf(`/${PUBLIC}`));
+ //                      throw new Error(`Cannot find logo for ${apps[i]} ${printablePath}`);
+ //                  }
+
+ //                  console.log(`Validated ${apps[i]}`);
+
+ //              }
+
+ //          });
+ //  }
+
  // validating version 2
- function validate() {
+ function validateV2() {
 
      const version = '2';
      const pathOfVersion = path.join(pathOfPublic, 'v' + version);
@@ -28,11 +72,9 @@
 
                  apps[i] = apps[i].replace('.json', '');
 
-                 if (!content.displayName) {
-                     content.displayName = apps[i];
-                     content.displayName = content.displayName.substr(0, 1).toUpperCase() + content.displayName.substring(1, content.displayName.length);
+                 if (!content.description) {
+                     throw new Error(`Cannot find description for ${apps[i]}`);
                  }
-                 if (!content.description) content.description = '';
 
                  const logoFileName = apps[i] + '.png';
 
@@ -52,10 +94,9 @@
          });
  }
 
-
  Promise.resolve()
      .then(function () {
-         return validate();
+         return validateV2();
      })
      .catch(function (err) {
          console.error(err);
