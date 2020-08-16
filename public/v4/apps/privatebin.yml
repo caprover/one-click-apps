@@ -30,5 +30,6 @@ caproverOneClickApp:
         end: |-
             PrivateBin has been successfully deployed!
     displayName: PrivateBin
+    isOfficial: true
     description: A minimalist, open source online pastebin where the server has zero knowledge of pasted data. Data is encrypted/decrypted in the browser using 256 bits AES.
     documentation: See https://github.com/PrivateBin/docker-nginx-fpm-alpine

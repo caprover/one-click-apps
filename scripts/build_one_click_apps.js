@@ -79,13 +79,14 @@ function convertV2toV4(v2String) {
 
     parsed.services = parsed.dockerCompose.services;
     parsed.dockerCompose = undefined;
-    
+
     parsed.captainVersion = 4;
     parsed.caproverOneClickApp = {};
 
     moveProperty('variables');
     moveProperty('instructions');
     moveProperty('displayName');
+    moveProperty('isOfficial');
     moveProperty('description');
     moveProperty('documentation');
 

@@ -92,6 +92,7 @@ function convertV4toV2(v4String) {
     moveProperty('variables');
     moveProperty('instructions');
     moveProperty('displayName');
+    moveProperty('isOfficial');
     moveProperty('description');
     moveProperty('documentation');
 
