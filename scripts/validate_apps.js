@@ -88,6 +88,10 @@
      const pathOfVersion = path.join(pathOfPublic, 'v' + version);
      const pathOfApps = path.join(pathOfVersion, 'apps');
 
+     if (!fs.existsSync(pathOfApps)) {
+         return;
+     }
+
      return fs.readdir(pathOfApps)
          .then(function (items) {
 
