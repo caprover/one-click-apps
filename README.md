@@ -32,7 +32,7 @@ caproverOneClickApp:
             $$cap_appname and $$cap_other_random_char
     displayName: The Awesome App
     isOfficial: true ## Only if all images used here are official or from a trusted source.
-    description: A relatively short description, less than 250 characters.
+    description: A relatively short description, less than 200 characters.
     documentation: This docker-compose is taken from example.com
 ```
 
