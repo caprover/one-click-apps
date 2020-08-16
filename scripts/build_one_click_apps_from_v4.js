@@ -162,8 +162,10 @@ function buildDist() {
                             list.push(a);
                             names[a.name] = true;
                         }
-                    })
-                    v3List.oneClickApps = list;
+                    });
+                    v3List.oneClickApps = list.sort(function (a, b) {
+                        return `${a.name}`.localeCompare(b.name);
+                    });
 
                     allAppsList.appList = list.map(l => l.name);
                     allAppsList.appDetails = v3List.oneClickApps;
