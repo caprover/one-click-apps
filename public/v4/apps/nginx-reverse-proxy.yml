@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
   $$cap_appname:
-    image: caprover/nginx-reverse-proxy:latest
+    image: caprover/nginx-reverse-proxy@sha256:6bdb54abf8c3010126a532ecd6f457a1d09bdd708c40693c5762e93fe77817aa
     restart: always
     environment:
       UPSTREAM_HTTP_ADDRESS: $$cap_upstream_http_address
