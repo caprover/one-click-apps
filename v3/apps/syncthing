@@ -1,1 +1,40 @@
-{"captainVersion":2,"dockerCompose":{"services":{"$$cap_appname":{"ports":["$$cap_port_sync:22000"],"image":"syncthing/syncthing:$$cap_version","restart":"always","volumes":["$$cap_appname-data:/var/syncthing"],"containerHttpPort":"8384"}}},"variables":[{"label":"Syncthing Docker Version","defaultValue":"1.5.0","description":"It's highly recommended that you don't use the latest tag but instead the major version you need.","id":"$$cap_version"},{"label":"Sync Protocol Listening Port","description":"Port that Syncthing listens on for data synchronization (TCP).","defaultValue":"22000","id":"$$cap_port_sync"}],"instructions":{"end":"Your instance of Syncthing is now starting up.","start":"Read more about Syncthing's goals: https://github.com/syncthing/syncthing#goals"},"displayName":"Syncthing","isOfficial":true,"description":"Open Source Continuous File Synchronization.","documentation":"https://hub.docker.com/r/syncthing/syncthing"}
+{
+    "captainVersion": "2",
+    "documentation": "https://hub.docker.com/r/syncthing/syncthing",
+    "displayName": "Syncthing",
+    "description": "Open Source Continuous File Synchronization.",
+    "isOfficial": true,
+    "dockerCompose": {
+        "services": {
+            "$$cap_appname": {
+                "containerHttpPort": "8384",
+                "ports": ["$$cap_port_sync:22000"],
+                "image": "syncthing/syncthing:$$cap_version",
+                "restart": "always",
+                "volumes": ["$$cap_appname-data:/var/syncthing"]
+            }
+        },
+        "version": "2",
+        "volumes": {
+            "$$cap_appname-data": {}
+        }
+    },
+    "instructions": {
+        "end": "Your instance of Syncthing is now starting up.",
+        "start": "Read more about Syncthing's goals: https://github.com/syncthing/syncthing#goals"
+    },
+    "variables": [
+        {
+            "label": "Syncthing Docker Version",
+            "defaultValue": "1.5.0",
+            "description": "It's highly recommended that you don't use the latest tag but instead the major version you need.",
+            "id": "$$cap_version"
+        },
+        {
+            "label": "Sync Protocol Listening Port",
+            "description": "Port that Syncthing listens on for data synchronization (TCP).",
+            "defaultValue": "22000",
+            "id": "$$cap_port_sync"
+        }
+    ]
+}

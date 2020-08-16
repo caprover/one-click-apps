@@ -1,1 +1,31 @@
-{"captainVersion":2,"dockerCompose":{"services":{"$$cap_appname":{"image":"countly/countly-server:$$cap_countly_version","volumes":["$$cap_appname-data:/var/lib/mongodb"],"restart":"always","environment":{}}}},"variables":[{"id":"$$cap_countly_version","label":"What version/tag do you want?","description":"Go here to see all versions https://hub.docker.com/r/countly/countly-server/tags","defaultValue":"19.08.1","validRegex":"/^([^\\s^\\/])+$/"}],"instructions":{"start":"Countly. This will only work over HTTPS, so enable plz :) | Product Analytics for Mobile, Web, Desktop and IoT | https://count.ly","end":"Countly is deployed and available as $$cap_appname"},"displayName":"","isOfficial":true,"description":"Countly helps you get insights from your application","documentation":"Taken from https://hub.docker.com/r/countly/countly-server"}
+{
+    "captainVersion": "2",
+    "documentation": "Taken from https://hub.docker.com/r/countly/countly-server",
+    "displayName": "",
+    "description": "Countly helps you get insights from your application",
+    "isOfficial": true,
+    "dockerCompose": {
+        "version": "3.3",
+        "services": {
+            "$$cap_appname": {
+                "image": "countly/countly-server:$$cap_countly_version",
+                "volumes": ["$$cap_appname-data:/var/lib/mongodb"],
+                "restart": "always",
+                "environment": {}
+            }
+        }
+    },
+    "instructions": {
+        "start": "Countly. This will only work over HTTPS, so enable plz :) | Product Analytics for Mobile, Web, Desktop and IoT | https://count.ly",
+        "end": "Countly is deployed and available as $$cap_appname"
+    },
+    "variables": [
+        {
+            "id": "$$cap_countly_version",
+            "label": "What version/tag do you want?",
+            "description": "Go here to see all versions https://hub.docker.com/r/countly/countly-server/tags",
+            "defaultValue": "19.08.1",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        }
+    ]
+}

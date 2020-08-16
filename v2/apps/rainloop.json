@@ -1,1 +1,33 @@
-{"captainVersion":2,"dockerCompose":{"services":{"$$cap_appname":{"image":"hardware/rainloop:$$cap_rainloop_version","restart":"always","volumes":["$$cap_appname-data:/rainloop/data"],"containerHttpPort":"8888"}}},"variables":[{"id":"$$cap_rainloop_version","label":"Rainloop Version","description":"Check out their Docker page for the valid tags https://hub.docker.com/r/hardware/rainloop/tags","defaultValue":"1.12.0","validRegex":"/^([^\\s^\\/])+$/"}],"instructions":{"start":"Rainloop is a simple, modern & fast web-based email client. \n\n For initial configuration, see https://www.rainloop.net/docs/configuration/","end":"Rainloop is deployed and available as $$cap_appname. \n\n It will take about a minute for Rainloop to be ready. Before that, you might see 502 error page."},"displayName":"","description":"RainLoop Webmail - Simple, modern & fast web-based email client","documentation":"Taken from https://hub.docker.com/r/hardware/rainloop"}
+{
+    "captainVersion": "2",
+    "documentation": "Taken from https://hub.docker.com/r/hardware/rainloop",
+    "displayName": "",
+    "description": "RainLoop Webmail - Simple, modern & fast web-based email client",
+    "dockerCompose": {
+        "version": "2",
+        "services": {
+            "$$cap_appname": {
+                "image": "hardware/rainloop:$$cap_rainloop_version",
+                "containerHttpPort": "8888",
+                "restart": "always",
+                "volumes": ["$$cap_appname-data:/rainloop/data"]
+            }
+        },
+        "volumes": {
+            "$$cap_appname-data": {}
+        }
+    },
+    "instructions": {
+        "start": "Rainloop is a simple, modern & fast web-based email client. \n\n For initial configuration, see https://www.rainloop.net/docs/configuration/",
+        "end": "Rainloop is deployed and available as $$cap_appname. \n\n It will take about a minute for Rainloop to be ready. Before that, you might see 502 error page."
+    },
+    "variables": [
+        {
+            "id": "$$cap_rainloop_version",
+            "label": "Rainloop Version",
+            "description": "Check out their Docker page for the valid tags https://hub.docker.com/r/hardware/rainloop/tags",
+            "defaultValue": "1.12.0",
+            "validRegex": "/^([^\\s^\\/])+$/"
+        }
+    ]
+}
