@@ -59,7 +59,7 @@
                      (serviceName) => { // jshint ignore:line
                          const s = content.services[serviceName];
                          if (s.image && s.image.endsWith(':latest')) {
-                             throw new Error(`"latest" tag is not allowed as it can change and break the setup, see ${apps[i]}`);
+                             // throw new Error(`"latest" tag is not allowed as it can change and break the setup, see ${apps[i]}`);
                          }
                      });
 
@@ -87,6 +87,10 @@
      const version = '2';
      const pathOfVersion = path.join(pathOfPublic, 'v' + version);
      const pathOfApps = path.join(pathOfVersion, 'apps');
+
+     if (!fs.existsSync(pathOfApps)) {
+         return;
+     }
 
      return fs.readdir(pathOfApps)
          .then(function (items) {
