@@ -2,6 +2,7 @@ captainVersion: 4
 services:
     $$cap_appname:
         image: gitlab/gitlab-ce:$$cap_gitlab_version
+        hostname: $$cap_appname.$$cap_root_domain
         volumes:
             - '$$cap_appname-config: /etc/gitlab'
             - '$$cap_appname-logs: /var/log/gitlab'
