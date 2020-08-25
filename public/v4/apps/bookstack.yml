@@ -1,0 +1,60 @@
+captainVersion: 4
+services:
+    $$cap_appname-mariadb:
+        image: linuxserver/mariadb:110.4.14mariabionic-ls77
+        environment:
+            MYSQL_ROOT_PASSWORD: $$cap_DB_PASS
+            MYSQL_DATABASE: bookstack
+            MYSQL_USER: bookstack
+            MYSQL_PASSWORD: $$cap_DB_PASS
+            PGID: 1000
+            PUID: 1000
+            TZ: $$cap_timezone
+        volumes:
+            - $$cap_appname-mariadb-config:/config
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname:
+        environment:
+            DB_HOST: srv-captain--$$cap_appname-mariadb
+            DB_USER: bookstack
+            DB_PASS: $$cap_DB_PASS
+            DB_DATABASE: bookstack
+            DB_PORT: 3306
+            PGID: 1000
+            PUID: 1000
+            TZ: $$cap_timezone
+            APP_URL: $$cap_appurl
+        image: linuxserver/bookstack:v0.29.3-ls99
+        restart: always
+        volumes:
+            - $$cap_appname-config:/config
+        caproverExtra:
+            containerHttpPort: '80'
+caproverOneClickApp:
+    variables:
+        - label: Database Password
+          description: Password to connect to the database
+          defaultValue: $$cap_gen_random_hex(16)
+          id: $$cap_DB_PASS
+        - label: Timezone
+          description: This is the timezone for the application, find yours at https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+          defaultValue: Europe/London
+          id: $$cap_timezone
+        - label: App URL
+          description: This is required for asset links to navigate the proxy
+          defaultValue: https://domain.tld
+          id: $$cap_appurl
+    instructions:
+        start: |-
+            A platform to create documentation/wiki content built with PHP & Laravel.
+
+            GitHub: https://github.com/BookStackApp/BookStack
+        end: |-
+            Aaaand you're done! 😄
+
+            Your service is available as $$cap_appname, the default username is admin@admin.com with the password of password.
+    displayName: BookStack
+    isOfficial: true
+    description: A platform to create documentation/wiki content built with PHP & Laravel
+    documentation: https://www.bookstackapp.com/docs/
