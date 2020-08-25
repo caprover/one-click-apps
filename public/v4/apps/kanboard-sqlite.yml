@@ -3,7 +3,7 @@ services:
     '$$cap_appname':
         image: kanboard/kanboard:$$cap_version
         environment:
-          PLUGIN_INSTALLER: $$cap_plugin_installer
+            PLUGIN_INSTALLER: $$cap_plugin_installer
         volumes:
             - '$$cap_appname-data:/var/www/app/data'
             - '$$cap_appname-plugins:/var/www/app/plugins'
