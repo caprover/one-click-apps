@@ -10,8 +10,8 @@ services:
             ME_CONFIG_MONGODB_PORT: $$cap_me_server_port
             ME_CONFIG_BASICAUTH_USERNAME: $$cap_me_dashboard_username
             ME_CONFIG_BASICAUTH_PASSWORD: $$cap_me_dashboard_password
-            ME_CONFIG_SITE_COOKIESECRET: $$cap_appname$$cap_mongoexpress_version
-            ME_CONFIG_SITE_SESSIONSECRET: $$cap_appname$$cap_mongoexpress_version
+            ME_CONFIG_SITE_COOKIESECRET: $$cap_appname$$cap_gen_random_hex(16)
+            ME_CONFIG_SITE_SESSIONSECRET: $$cap_appname$$cap_gen_random_hex(16)
         caproverExtra:
             containerHttpPort: '8081'
 caproverOneClickApp:
