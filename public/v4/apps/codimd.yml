@@ -9,7 +9,7 @@ services:
             MYSQL_PASSWORD: $$cap_DB_PASS
             PGID: 1000
             PUID: 1000
-            TZ: Europe/London
+            TZ: $$cap_timezone
         volumes:
             - $$cap_appname-mariadb-config:/config
         caproverExtra:
@@ -23,7 +23,7 @@ services:
             DB_PORT: 3306
             PGID: 1000
             PUID: 1000
-            TZ: Europe/London
+            TZ: $$cap_timezone
         image: linuxserver/codimd:1.6.0-ls44
         restart: always
         volumes:
@@ -36,6 +36,10 @@ caproverOneClickApp:
           description: Password to connect to the database
           defaultValue: $$cap_gen_random_hex(16)
           id: $$cap_DB_PASS
+        - label: Timezone
+          description: This is the timezone for the application, find yours at https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+          defaultValue: Europe/London
+          id: $$cap_timezone
     instructions:
         start: |-
             Realtime collaborative markdown notes on all platforms.
