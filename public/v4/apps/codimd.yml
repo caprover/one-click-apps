@@ -32,11 +32,17 @@ caproverOneClickApp:
     variables:
         - label: Database Password
           description: Password to connect to the database
-          defaultValue: daTaBaSePaSsWorD
+          defaultValue: $$cap_gen_random_hex(16)
           id: $$cap_DB_PASS
     instructions:
-        start: Realtime collaborative markdown notes on all platforms
-        end: Aaaand you're done! 😄
+        start: |-
+            Realtime collaborative markdown notes on all platforms.
+
+            GitHub: https://github.com/hackmdio/codimd
+        end: |-
+            Aaaand you're done! 😄
+
+            Your service is available as $$cap_appname
     displayName: CodiMD
     isOfficial: true
     description: Realtime collaborative markdown notes on all platforms
