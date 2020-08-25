@@ -22,9 +22,10 @@ caproverOneClickApp:
           validRegex: '/^(true|false)$/'
     instructions:
         start: |-
-            Kanboard is a free and open source Kanban project management software.
+            Kanboard is a free and open source Kanban project management software. For more info visit https://kanboard.org/
         end: |-
             Kanboard has been successfully deployed!
+            You can connect to http://$$cap_appname.$$cap_root_domain with the user admin and password admin. Do not forget to update it with something more secure.
     displayName: Kanboard SQLite
     isOfficial: true
     description: Kanboard is a free and open source Kanban project management software.
