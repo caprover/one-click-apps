@@ -25,7 +25,7 @@ caproverOneClickApp:
             Kanboard is a free and open source Kanban project management software.
         end: |-
             Kanboard has been successfully deployed!
-    displayName: Kanboard Sqlite
+    displayName: Kanboard SQLite
     isOfficial: true
     description: Kanboard is a free and open source Kanban project management software.
     documentation: See https://kanboard.org/
