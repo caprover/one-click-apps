@@ -29,8 +29,6 @@ services:
         restart: always
         volumes:
             - $$cap_appname-config:/config
-        caproverExtra:
-            containerHttpPort: '80'
 caproverOneClickApp:
     variables:
         - label: Database Password
@@ -43,7 +41,7 @@ caproverOneClickApp:
           id: $$cap_timezone
         - label: App URL
           description: This is required for asset links to navigate the proxy
-          defaultValue: https://domain.tld
+          defaultValue: http://$$cap_appname.$$cap_root_domain
           id: $$cap_appurl
     instructions:
         start: |-
