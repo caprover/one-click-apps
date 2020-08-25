@@ -12,6 +12,8 @@ services:
             TZ: Europe/London
         volumes:
             - $$cap_appname-mariadb-config:/config
+        caproverExtra:
+            notExposeAsWebApp: 'true'
     $$cap_appname:
         environment:
             DB_HOST: srv-captain--$$cap_appname-mariadb
