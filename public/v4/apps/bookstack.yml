@@ -24,8 +24,8 @@ services:
             PGID: 1000
             PUID: 1000
             TZ: $$cap_timezone
-            APP_URL: $$cap_appurl
-        image: linuxserver/bookstack:v0.29.3-ls99
+            APP_URL: http://$$cap_appname.$$cap_root_domain
+        image: linuxserver/bookstack:$$cap_bookstack_version
         restart: always
         volumes:
             - $$cap_appname-config:/config
@@ -39,10 +39,10 @@ caproverOneClickApp:
           description: This is the timezone for the application, find yours at https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
           defaultValue: Europe/London
           id: $$cap_timezone
-        - label: App URL
-          description: This is required for asset links to navigate the proxy
-          defaultValue: http://$$cap_appname.$$cap_root_domain
-          id: $$cap_appurl
+        - id: $$cap_bookstack_version
+          label: Version Tag
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/bookstack/tags
+          defaultValue: 'v0.29.3-ls99'
     instructions:
         start: |-
             A platform to create documentation/wiki content built with PHP & Laravel.
@@ -51,7 +51,9 @@ caproverOneClickApp:
         end: |-
             Aaaand you're done! 😄
 
-            Your service is available as $$cap_appname, the default username is admin@admin.com with the password of password.
+            Your service is available at http://$$cap_appname.$$cap_root_domain
+
+            The default username is admin@admin.com with the password of password.
     displayName: BookStack
     isOfficial: true
     description: A platform to create documentation/wiki content built with PHP & Laravel
