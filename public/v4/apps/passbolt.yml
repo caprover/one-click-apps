@@ -22,7 +22,7 @@ services:
             EMAIL_TRANSPORT_DEFAULT_HOST: $$cap_email_host
             EMAIL_TRANSPORT_DEFAULT_PORT: $$cap_email_port
             EMAIL_TRANSPORT_DEFAULT_USERNAME: $$cap_email_user
-            EMAIL_TRANSPORT_DEFAULT_FROM: $$cap_email_user
+            EMAIL_DEFAULT_FROM: $$cap_email_user
             EMAIL_TRANSPORT_DEFAULT_PASSWORD: $$cap_email_pass
             EMAIL_TRANSPORT_DEFAULT_TLS: $$cap_email_tls
         volumes:
