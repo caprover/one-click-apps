@@ -101,9 +101,9 @@ caproverOneClickApp:
             Deployment of Graylog if finished. 
             You will see 502 errors for the next 5+ minutes while Graylog starts up. 
             Goto <YOUR-APP-URL> and login as "admin" with your unhashed password.
-            
+
             IMPORTANT! Do not forget to map port 12201 and 12202 in your app config. Without port mapping, Graylog will not work.
-            
+
     displayName: ''
     isOfficial: true
     description: Graylog is used for log management of both structured and unstructured data along with debugging applications.
