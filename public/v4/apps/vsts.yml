@@ -8,6 +8,8 @@ services:
             VSTS_TOKEN: $$cap_vsts_token
             VSTS_AGENT: $$cap_vsts_name
             VSTS_POOL: $$cap_vsts_pool
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
 caproverOneClickApp:
     variables:
         - id: $$cap_vsts_version
