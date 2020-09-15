@@ -76,22 +76,15 @@ caproverOneClickApp:
         start: >-
             n8n is a free and open node based Workflow Automation Tool.
 
-            The process will deploy a database and the App.
-
-            The process will take about a minute for the process to finish.
+            The process will deploy a database and the App. It will take about a minute for the process to finish.
         end: >-
             n8n is deployed and available as $$cap_appname.
+            
+            IMPORTANT!! You need to follow these post-installation steps
+            
+            First, please change your nginx config according to this issue https://github.com/caprover/one-click-apps/issues/265
 
-
-            Please activate Websocket Support in the app then wait few seconds before use it.
-
-
-            Important information, it will not work without websocket support nor with https enabled.
-
-            Please do not activate https nor basic auth (it is setted by the docker and use the caprover one would make your webhook failed).
-
-
-            See https://github.com/n8n-io/n8n/issues/593 for more details.
+            Also, make sure you do not activate basic auth manually.
     displayName: n8n.io
     isOfficial: true
     description: n8n is a free and open node based Workflow Automation Tool.
