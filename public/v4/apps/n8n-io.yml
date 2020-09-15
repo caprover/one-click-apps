@@ -79,9 +79,9 @@ caproverOneClickApp:
             The process will deploy a database and the App. It will take about a minute for the process to finish.
         end: >-
             n8n is deployed and available as $$cap_appname.
-            
+
             IMPORTANT!! You need to follow these post-installation steps
-            
+
             First, please change your nginx config according to this issue https://github.com/caprover/one-click-apps/issues/265
 
             Also, make sure you do not activate basic auth manually.
