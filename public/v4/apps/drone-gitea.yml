@@ -6,7 +6,7 @@ services:
             - /var/run/docker.sock:/var/run/docker.sock
         restart: always
         environment:
-            DRONE_RPC_HOST:  $$drone_server_host:80
+            DRONE_RPC_HOST: $$drone_server_host:80
             DRONE_RPC_SECRET: $$cap_drone_secret
             DRONE_RPC_PROTO: $$cap_drone_server_proto
         caproverExtra:
