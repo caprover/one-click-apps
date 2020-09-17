@@ -1,14 +1,17 @@
 captainVersion: 4
 services:
     $$cap_appname-agent:
-        image: drone/agent:$$cap_drone_version
+        image: drone/agent:$$cap_drone_runner_version
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
         restart: always
         environment:
-            DRONE_SERVER: srv-captain--$$cap_appname-server:9000
-            DRONE_SECRET: $$cap_drone_secret
+            DRONE_RPC_HOST:  $$drone_server_host:80
+            DRONE_RPC_SECRET: $$cap_drone_secret
+            DRONE_RPC_PROTO: $$cap_drone_server_proto
         caproverExtra:
             notExposeAsWebApp: 'true'
-    $$cap_appname-server:
+    $$cap_appname:
         depends_on:
             - $$cap_appname-agent
         image: drone/drone:$$cap_drone_version
@@ -22,15 +25,21 @@ services:
             DRONE_RUNNER_CAPACITY: $$cap_drone_runner_capacity
             DRONE_SERVER_PROTO: $$cap_drone_server_proto
             DRONE_SERVER_HOST: $$cap_drone_server_host
-            DRONE_TLS_AUTOCERT: $$cap_drone_tls_autocert
-            DRONE_SECRET: $$cap_drone_secret
+            DRONE_GITEA_CLIENT_ID: $$cap_drone_gitea_client_id
+            DRONE_GITEA_CLIENT_SECRET: $$cap_drone_gitea_client_secret
+            DRONE_RPC_SECRET: $$cap_drone_secret
         caproverExtra:
             containerHttpPort: '80'
 caproverOneClickApp:
     variables:
         - id: $$cap_drone_version
           label: drone Version
-          defaultValue: 1.0.0-rc.5
+          defaultValue: 1.9.0
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/drone/drone/tags
+          validRegex: ''
+        - id: $$cap_drone_runner_version
+          label: drone runner Version
+          defaultValue: 1.5.1
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/drone/drone/tags
           validRegex: ''
         - id: $$cap_drone_gitea_server
@@ -45,7 +54,7 @@ caproverOneClickApp:
           validRegex: ''
         - id: $$cap_drone_runner_capacity
           label: DRONE_RUNNER_CAPACITY
-          defaultValue: '2'
+          defaultValue: '4'
           description: An integer defining the maximum number of pipelines the agent should execute concurrently. The default value is two pipelines.
           validRegex: /^[0-9]+$/
         - id: $$cap_drone_server_proto
@@ -58,6 +67,11 @@ caproverOneClickApp:
           defaultValue: drone.yourhost.com
           description: A string containing your Drone server hostname or IP address.
           validRegex: ''
+        - id: $$cap_drone_server_port
+          label: DRONE_RPC_PORT
+          defaultValue: 443
+          description: The port number on which your drone server will be running (for runner communication).
+          validRegex: ''
         - id: $$cap_drone_tls_autocert
           label: DRONE_TLS_AUTOCERT
           defaultValue: 'false'
@@ -68,14 +82,22 @@ caproverOneClickApp:
           description: some random secret here (min 10 characters)
           defaultValue: ''
           validRegex: /.{10,}/
+        - id: $$cap_drone_gitea_client_id
+          label: client ID created previously in gitea
+          description: Get from gitea settings -> Applications -> Oauth2 Applications
+          defaultValue: ''
+          validRegex: ''
+        - id: $$cap_drone_gitea_client_secret
+          label: client secret created previously in gitea
+          description: Get from gitea settings -> Applications -> Oauth2 Applications
+          defaultValue: ''
+          validRegex: ''
     instructions:
         start: >-
             Drone is a self-service Continuous Delivery platform for busy development teams. It can be used with different GIT servers like gogs, gitea as well as services like gitlab and github. This installer is gitea focused and requires a running gitea instances (which you can install via one-click-apps in caprover).
-
              Enter your Drone for Gitea configuration parameters and click on next. The process will take about a minute to finish.
         end: >
-            Drone is deployed and available as $$cap_appname-server.
-
+            Drone is deployed and available as $$cap_appname.
               IMPORTANT: It will take up to 2 minutes for Drone for Gitea to be ready. Before that, you might see 502 error page.
     displayName: Drone.io
     isOfficial: true
