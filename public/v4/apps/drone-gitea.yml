@@ -41,7 +41,7 @@ caproverOneClickApp:
         - id: $$cap_drone_runner_version
           label: Drone Docker runner Version
           defaultValue: 1.5.1
-          description: Check out their Docker page for the valid tags https://hub.docker.com/r/drone/drone-runner-docker/tags 
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/drone/drone-runner-docker/tags
           validRegex: ''
         - id: $$cap_drone_gitea_server
           label: DRONE_GITEA_SERVER
@@ -98,10 +98,10 @@ caproverOneClickApp:
             Drone is a self-service Continuous Delivery platform for busy development teams. It can be used with different GIT servers like gogs, gitea as well as services like gitlab and github. This installer is gitea focused and requires a running gitea instances (which you can install via one-click-apps in caprover).   
 
              You must generate an OAuth2 application in Gitea (Settings->Applications->Create a new OAuth2 Application) with the "Redirect URI" https://<your drone server>/login. Make a note of the Client ID and the Client Secret and use them in the appropriate fields below.  
-            
+
              Enter your Drone for Gitea configuration parameters and click on next. The process will take about a minute to finish.  
-            
-             Please make sure that after deployment you add HTTPS to your $$cap_appname application or communication with the runner will fail.  
+
+             Please make sure that after deployment you add HTTPS to your $$cap_appname application or communication with the runner will fail.
         end: >
             Drone is deployed and available as $$cap_appname.
               IMPORTANT: It will take up to 2 minutes for Drone for Gitea to be ready. Before that, you might see 502 error page.
