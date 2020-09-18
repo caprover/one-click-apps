@@ -95,9 +95,9 @@ caproverOneClickApp:
           validRegex: ''
     instructions:
         start: >-
-            Drone is a self-service Continuous Delivery platform for busy development teams. It can be used with different GIT servers like gogs, gitea as well as services like gitlab and github. This installer is gitea focused and requires a running gitea instances (which you can install via one-click-apps in caprover).  
+            Drone is a self-service Continuous Delivery platform for busy development teams. It can be used with different GIT servers like gogs, gitea as well as services like gitlab and github. This installer is gitea focused and requires a running gitea instances (which you can install via one-click-apps in caprover).   
 
-            You must generate an OAuth2 application in Gitea (Settings->Applications->Create a new OAuth2 Application) with the "Redirect URI" https://<your drone server>/login. Make a note of the Client ID and the Client Secret and use them in the appropriate fields below.  
+             You must generate an OAuth2 application in Gitea (Settings->Applications->Create a new OAuth2 Application) with the "Redirect URI" https://<your drone server>/login. Make a note of the Client ID and the Client Secret and use them in the appropriate fields below.  
             
              Enter your Drone for Gitea configuration parameters and click on next. The process will take about a minute to finish.  
             
