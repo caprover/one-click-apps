@@ -1,0 +1,40 @@
+captainVersion: 4
+services:
+    $$cap_appname-registry:
+        image: registry:$$cap_registry_version
+        volumes:
+            - $$cap_appname-registry-data:/var/lib/registry
+            - $$cap_appname-registry-auth:/auth
+        environment:
+            REGISTRY_AUTH: htpasswd
+            REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
+            REGISTRY_AUTH_HTPASSWD_REALM: Docker Registry
+        caproverExtra:
+            containerHttpPort: '5000'
+    $$cap_appname-ui:
+        depends_on:
+            - $$cap_appname-registry
+        image: joxit/docker-registry-ui:static
+        restart: always
+        environment:
+            DELETE_IMAGES: 'true'
+            REGISTRY_URL: http://srv-captain--$$cap_appname-registry:5000
+        caproverExtra:
+            containerHttpPort: '80'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_registry_version
+          label: Docker Registry image version
+          defaultValue: 2
+          description: Check out their Docker page for the valid tags https://hub.docker.com/_/registry?tab=tags - default is 2 as of 2020-09-20
+    instructions:
+        start: Standard docker registry with a Web UI for image maintenance. 
+          
+          Make sure you create a htpasswd file somewhere on your host with htpasswd -Bbn username password > /<path>/htpasswd.
+          
+          Then after deploying the one-click-app go to your application and pount the persistent directory /auth to the path where you created the htpasswd file, and click Save & Update.
+        end: The registry must be accessed as https://$$cap_appname_registry.<your domain> (DO activate HTTPS"!). The UI is available as http(s)://$$cap_appname_ui.<your domain>. Note that the application may take some time to become available.
+    displayName: Docker Registry and UI
+    isOfficial: false
+    description: This is ths standard Docker registry plus a convenient UI for it. Alternative to Caprover's built-in registry. 
+    documentation: 'https://docs.docker.com/registry/deploying/'
