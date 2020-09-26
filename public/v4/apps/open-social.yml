@@ -1,0 +1,44 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: "goalgorilla/open_social_docker:$$open_social_version"
+        volumes:
+          - "$$cap_appname-modules:/var/www/html/modules"
+          - "$$cap_appname-profiles:/var/www/html/profiles"
+          - "$$cap_appname-sites:/var/www/html/sites"
+          - "$$cap_appname-themes:/var/www/html/themes"
+        restart: always
+    $$cap_appname-db:
+        image: mysql:$$cap_mysql_version
+        volumes:
+            - $$cap_appname-db-data:/var/lib/mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: $$cap_db_pass
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+
+caproverOneClickApp:
+    variables:
+        - id: $$open_social_version
+          label: Open Social Version
+          defaultValue: 'latest'
+          description: CCheck out their Docker page for the valid tags https://hub.docker.com/r/goalgorilla/open_social_docker/tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_mysql_version
+          label: MySQL Version
+          defaultValue: '5.7'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/mysql/tags/
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_db_pass
+          label: MySQL Root password
+          description: ''
+          validRegex: /.{1,}/
+    instructions:
+        start: >-
+            Please note down the MSQL database credentials, you will need it when configuring OpenSocial.
+        end: When asked in your config, use srv-captain--$$cap_appname-db for the URL in your configuration, port 3306, user root, and the password you chose
+    displayName: ''
+    isOfficial: false
+    description: A intranet based on Drupal
+    documentation: https://hub.docker.com/r/goalgorilla/open_social_docker
