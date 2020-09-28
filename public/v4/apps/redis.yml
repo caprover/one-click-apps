@@ -20,7 +20,7 @@ caproverOneClickApp:
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_redis_password
           label: Redis Password
-          validRegex: /^([\w\S])+$/
+          validRegex: /^(\w|[^\s"])+$/
     instructions:
         start: >-
             Redis is an open source key-value store that functions as a data structure server.
