@@ -19,7 +19,9 @@
             "restart":"always",
             "volumes":[
                "$$cap_appname-config-data:/home/coder/.local/share/code-server",
-               "$$cap_appname-project-directory:/home/coder/project"
+               "$$cap_appname-project-directory:/home/coder/project",
+               "$$cap_appname-ssh-directory:/root/.ssh",
+               "$$cap_appname-theme-and-plugin-directory:/root/.local/share/code-server"
             ]
          }
       },
