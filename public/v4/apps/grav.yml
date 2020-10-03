@@ -1,0 +1,27 @@
+captainVersion: 4
+services:
+  $$cap_appname:
+    image: 'yobasystems/alpine-grav:latest'
+    environment:
+       GRAV_VERSION: '$$cap_version'
+    volumes:
+      - $$cap_appname-data:/usr/html
+    caproverExtra:
+            containerHttpPort: '80'
+caproverOneClickApp:
+    variables:
+        - id: '$$cap_version'
+          label: Grav Version
+          defaultValue: '1.6.27'
+          description: Check out their release page for the valid tags https://github.com/getgrav/grav/tags
+          validRegex: "/^.+$/"
+    instructions:
+        start: |-
+            Modern, Crazy Fast, Ridiculously Easy and Amazingly Powerful Flat-File CMS.
+            More details: https://getgrav.org/
+        end: |-
+            Grav has been successfully deployed!
+    displayName: Grav
+    isOfficial: false
+    description:  Modern, Crazy Fast, Ridiculously Easy and Amazingly Powerful Flat-File CMS.
+    documentation: See https://getgrav.org/
