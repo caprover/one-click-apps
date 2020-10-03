@@ -5,7 +5,7 @@ services:
     volumes:
       - $$cap_appname-data:/usr/html
     caproverExtra:
-            containerHttpPort: '80'
+        containerHttpPort: '80'
 caproverOneClickApp:
     variables:
         - id: '$$cap_version'
