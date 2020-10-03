@@ -10,7 +10,7 @@ caproverOneClickApp:
     variables:
         - id: '$$cap_version'
           label: Grav Version
-          defaultValue: '1.6.26'
+          defaultValue: 'admin-1.6.26'
           description: Check out the Docker Hub page for the valid tags https://hub.docker.com/r/dsavell/grav/tags
           validRegex: "/^.+$/"
     instructions:
