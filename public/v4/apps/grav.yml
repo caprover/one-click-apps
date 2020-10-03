@@ -11,14 +11,14 @@ caproverOneClickApp:
         - id: '$$cap_version'
           label: Grav Version
           defaultValue: 'admin-1.6.26'
-          description: Check out the Docker Hub page for the valid tags https://hub.docker.com/r/dsavell/grav/tags
+          description: Check out the Docker Hub page for the valid tags https://hub.docker.com/r/dsavell/grav/tags. Tags begining with "admin-" include the admin UI.
           validRegex: "/^.+$/"
     instructions:
         start: |-
             Modern, Crazy Fast, Ridiculously Easy and Amazingly Powerful Flat-File CMS.
             More details: https://getgrav.org/
         end: |-
-            Grav has been successfully deployed!
+            Grav has been successfully deployed at $$cap_appname.$$cap_root_domain ! It may take a minute to work.
     displayName: Grav
     isOfficial: false
     description:  Modern, Crazy Fast, Ridiculously Easy and Amazingly Powerful Flat-File CMS.
