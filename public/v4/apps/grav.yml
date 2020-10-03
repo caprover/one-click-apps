@@ -11,7 +11,7 @@ caproverOneClickApp:
         - id: '$$cap_version'
           label: Grav Version
           defaultValue: 'admin-1.6.26'
-          description: Check out the Docker Hub page for the valid tags https://hub.docker.com/r/dsavell/grav/tags. Tags begining with "admin-" include the admin UI.
+          description: "Check out the Docker Hub page for the valid tags https://hub.docker.com/r/dsavell/grav/tags. Tags begining with 'admin' include the admin UI."
           validRegex: "/^.+$/"
     instructions:
         start: |-
