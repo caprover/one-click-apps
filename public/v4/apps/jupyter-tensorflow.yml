@@ -23,7 +23,7 @@ caproverOneClickApp:
         - id: $$cap_jupyterlab
           label: Jupyter Lab
           defaultValue: yes
-          description: Select "Yes" to enable JupyterLab and "No" otherwise
+          description: Enter "yes" to enable JupyterLab and leave empty otherwise
     instructions:
         start: JupyterLab is the next-generation user interface for Project Jupyter.
         end: >-
