@@ -1,25 +1,28 @@
 captainVersion: 4
 services:
-  '$$cap_appname':
-    image: dsavell/grav:$$cap_version
-    volumes:
-      - '$$cap_appname-data:/usr/html'
-    caproverExtra:
-        containerHttpPort: '80'
+    $$cap_appname:
+        image: 'dsavell/grav:$$cap_version'
+        volumes:
+            - '$$cap_appname-data:/usr/html'
+        caproverExtra:
+            containerHttpPort: '80'
 caproverOneClickApp:
     variables:
-        - id: '$$cap_version'
-          label: Grav Version
-          defaultValue: 'admin-1.6.26'
-          description: Check out the Docker Hub page for the valid tags https://hub.docker.com/r/dsavell/grav/tags
-          validRegex: "/^.+$/"
+        - id: $$cap_version
+            label: Grav Version
+            defaultValue: admin-1.6.26
+            description: |-
+                Check out the Docker Hub page for the valid tags https://hub.docker.com/r/dsavell/grav/tags
+            validRegex: /^.+$/
     instructions:
         start: |-
             Modern, Crazy Fast, Ridiculously Easy and Amazingly Powerful Flat-File CMS.
+
             More details at https://getgrav.org/
         end: |-
-            Grav has been successfully deployed at $$cap_appname.$$cap_root_domain ! It may take a minute to work.
+            Grav has been successfully deployed at $$cap_appname.$$cap_root_domain ! It may take a minute to be accessible.
     displayName: Grav
     isOfficial: false
-    description:  Modern, Crazy Fast, Ridiculously Easy and Amazingly Powerful Flat-File CMS.
-    documentation: See https://getgrav.org/
+    description: |-
+        Modern, Crazy Fast, Ridiculously Easy and Amazingly Powerful Flat-File CMS.
+    documentation: 'See https://getgrav.org/'
