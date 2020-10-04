@@ -11,10 +11,10 @@ caproverOneClickApp:
     variables:
         - id: $$cap_version
           label: Grav Version
-          defaultValue: "admin-1.6.26"
+          defaultValue: 'admin-1.6.26'
           description: |-
-                Check out the Docker Hub page for the valid tags https://hub.docker.com/r/dsavell/grav/tags
-          validRegex: "/^.+$/"
+              Check out the Docker Hub page for the valid tags https://hub.docker.com/r/dsavell/grav/tags
+          validRegex: '/^.+$/'
     instructions:
         start: |-
             Modern, Crazy Fast, Ridiculously Easy and Amazingly Powerful Flat-File CMS.
