@@ -8,7 +8,7 @@ services:
         enviroment:
             - TZ=$$cap_node-red_timezone
         caproverExtra:
-            containerHttpPort: "1880"
+            containerHttpPort: '1880'
 caproverOneClickApp:
     variables:
         - id: $$cap_node-red_version
@@ -27,7 +27,7 @@ caproverOneClickApp:
             It would be also a good idea to set basic authentication or modify the node-red settings respectively to the documentation.
 
              IMPORTANT: It will take up to 2 minutes for node-red to be ready. Before that, you might see 502 error page.
-    displayName: "Node-Red"
+    displayName: 'Node-Red'
     description: Low-code programming for event-driven applications
     documentation: Read the documentation @ https://nodered.org/docs/
     isOfficial: true
