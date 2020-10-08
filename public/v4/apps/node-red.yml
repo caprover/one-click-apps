@@ -5,8 +5,8 @@ services:
         volumes:
             - $$cap_appname-data:/data
         restart: always
-        enviroment:
-            - TZ=$$cap_node-red_timezone
+        environment:
+            TZ: $$cap_node-red_timezone
         caproverExtra:
             containerHttpPort: '1880'
 caproverOneClickApp:
