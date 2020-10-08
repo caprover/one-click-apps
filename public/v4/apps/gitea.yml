@@ -12,7 +12,7 @@ services:
             MYSQL_PASSWORD: $$cap_db_pass
         caproverExtra:
             notExposeAsWebApp: 'true'
-    $$cap_appname-gitea:
+    $$cap_appname:
         depends_on:
             - $$cap_appname-db
         image: gitea/gitea:$$cap_gitea_version
@@ -49,7 +49,7 @@ caproverOneClickApp:
 
              Enter your Gitea Configuration parameters and click on next. A MySQL (database) and a Gitea container will be created for you. The process will take about a minute to finish.
         end: >
-            Gitea is deployed and available as $$cap_appname-gitea.
+            Gitea is deployed and available as $$cap_appname.
 
              Since Gitea is running inside a container, you can optionally map a port (not 22) of the host to port 22 of the container, if you want to use git commands over SSH. You can perform port mapping in your CapRover dashboard, in App Config section.
 
