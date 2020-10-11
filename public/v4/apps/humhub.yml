@@ -26,9 +26,9 @@ services:
         image: mriedmann/humhub:$$cap_humhub_version
         restart: always
         volumes:
-          - "$$cap_appname-config:/var/www/localhost/htdocs/protected/config"
-          - "$$cap_appname-uploads:/var/www/localhost/htdocs/uploads"
-          - "$$cap_appname-modules:/var/www/localhost/htdocs/protected/modules"
+            - '$$cap_appname-config:/var/www/localhost/htdocs/protected/config'
+            - '$$cap_appname-uploads:/var/www/localhost/htdocs/uploads'
+            - '$$cap_appname-modules:/var/www/localhost/htdocs/protected/modules'
 caproverOneClickApp:
     variables:
         - label: Database Root Password
