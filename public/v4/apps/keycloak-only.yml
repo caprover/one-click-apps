@@ -1,0 +1,64 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: jboss/keycloak:$$cap_keycloak_version
+        restart: always
+        environment:
+            DB_VENDOR: postgres
+            DB_ADDR: $$cap_pg_host
+            POSTGRES_DB: $$cap_db_name
+            DB_USER: $$cap_pg_user
+            DB_PASSWORD: $$cap_pg_pass
+            KEYCLOAK_USER: $$cap_keycloak_user
+            KEYCLOAK_PASSWORD: $$cap_keycloak_password
+            PROXY_ADDRESS_FORWARDING: 'true'
+        caproverExtra:
+            containerHttpPort: '8080'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_keycloak_version
+          label: Keycloak Version
+          defaultValue: 11.0.2
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/jboss/keycloak/tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_db_name
+          label: Database Name
+          description: Database name
+          defaultValue: keycloak
+        - id: $$cap_pg_host
+          label: Postgres Host
+          description: The host address for your postgres server.
+          defaultValue: srv-captain--SOME-POSTGRES-HOST
+        - id: $$cap_pg_user
+          label: Postgres User
+          description: 'The username with access to your keycloak database.'
+          validRegex: /.{1,}/
+        - id: $$cap_pg_pass
+          label: Postgres Password
+          description: 'Password strength requeriments: Should contain at least one digit, one lower case, one upper case and at least 12 from the mentioned characters.'
+          validRegex: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{12,}$/
+        - id: $$cap_keycloak_user
+          label: Keycloak user
+          description: ''
+          validRegex: /.{1,}/
+        - id: $$cap_keycloak_password
+          label: Keycloak password
+          description: 'Password strength requeriments: Should contain at least one digit, one lower case, one upper case and at least 12 from the mentioned characters.'
+          validRegex: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{12,}$/
+    instructions:
+        start: >-
+            Keycloak is an Open Source Identity and Access Management solution for modern Applications and Services. It makes it easy to secure applications and services with little to no code.
+
+             For documentation, see: https://www.keycloak.org/documentation.html
+
+            For source code, see: https://github.com/keycloak/keycloak
+
+
+            For docker image, see: https://hub.docker.com/r/jboss/keycloak
+
+              Enter your Keycloak Configuration parameters and click on next. It will take about a minute for the process to finish.
+        end: Keycloak is deployed and available as srv-captain--$$cap_appname:8080 to other apps
+    displayName: ''
+    isOfficial: true
+    description: Keycloak is an open source identity and access management solution
+    documentation: Taken from https://github.com/jboss-dockerfiles/keycloak/blob/master/server/README.md
