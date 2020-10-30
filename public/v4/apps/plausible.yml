@@ -65,7 +65,7 @@ services:
             SMTP_HOST_PORT: "25"
             GEOLITE2_COUNTRY_DB: "/geoip/GeoLite2-Country.mmdb"
         volumes:
-            - $$cap_appname-geoip-data:/geoip:ro
+            - $$cap_appname-geoip-data:/geoip
 
 caproverOneClickApp:
     variables:
@@ -118,8 +118,13 @@ caproverOneClickApp:
     instructions:
         start: >-
             Plausible is a lightweight and open-source website analytics tool.
-
             It doesn’t use cookies and is fully compliant with GDPR, CCPA and PECR. Made and hosted in the EU.
+            This one click app uses the:
+            - official image from https://hub.docker.com/r/plausible/analytics
+            - https://hub.docker.com/r/bytemark/smtp, that allows linked containers to send outgoing email
+            - official PostgreSQL image based on Alpine Linux
+            - ClickHouse image https://hub.docker.com/r/yandex/clickhouse-server, an open-source column-oriented database
+            - official image from https://hub.docker.com/r/maxmindinc/geoipupdate, the well known MaxMind GeoIP Update Tool.
         end: >-
             Plausible.io is deployed and available as $$cap_appname.
             In case you add a new domain to your application, remember to set the environment variable BASE_URL accordingly.
