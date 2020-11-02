@@ -32,7 +32,7 @@ caproverOneClickApp:
         - id: $$cap_db_pass
           label: Database password
           description: ''
-          validRegex: /^([a-zA-Z0-9])+$/
+          validRegex: /^(\w|[^\s"'\\])+$/
         - id: $$cap_wp_version
           label: WordPress Version
           defaultValue: '4.9'
