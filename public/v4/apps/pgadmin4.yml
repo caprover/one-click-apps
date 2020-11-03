@@ -30,7 +30,7 @@ caproverOneClickApp:
             pgAdmin is the most popular and feature rich Open Source administration and development platform for PostgreSQL, the most advanced Open Source database in the world.
 
               Enter your Configuration parameters and click on next. It will take about a minute for the process to finish.
-        end: You pgAdmin is deployed and being started. Please wait one minute before accessing you pgAdmin!
+        end: Your pgAdmin is deployed and being started. Please wait one minute before accessing your pgAdmin!
     displayName: ''
     isOfficial: true
     description: pgAdmin 4 is a complete rewrite of pgAdmin, built using Python and Javascript/jQuery
