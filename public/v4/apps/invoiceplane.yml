@@ -11,20 +11,20 @@ services:
             MYSQL_USER_PWD: $$cap_DB_PASSWORD
             MYSQL_USER_DB: $$cap_DB_DATABASE
         caproverExtra:
-            notExposeAsWebApp: "true"
+            notExposeAsWebApp: 'true'
 
     $$cap_appname:
-        image: "thomascenni/alpine-invoiceplane:v1.5.11"
+        image: 'thomascenni/alpine-invoiceplane:v1.5.11'
         volumes:
             - $$cap_appname-storage:/storage
             - $$cap_appname-config:/config
         environment:
-            IP_URL: "http://$$cap_appname.$$cap_root_domain"
-            DB_HOSTNAME: "srv-captain--$$cap_appname-db"
+            IP_URL: 'http://$$cap_appname.$$cap_root_domain'
+            DB_HOSTNAME: 'srv-captain--$$cap_appname-db'
             DB_USERNAME: $$cap_DB_USERNAME
             DB_PASSWORD: $$cap_DB_PASSWORD
             DB_DATABASE: $$cap_DB_DATABASE
-            DB_PORT: "3306"
+            DB_PORT: '3306'
 
 caproverOneClickApp:
     variables:
@@ -33,7 +33,7 @@ caproverOneClickApp:
           id: $$cap_MYSQL_ROOT_PWD
           label: MYSQL_ROOT_PWD
           validRegex: /^([^\s^\/])+$/
-        - defaultValue: "invoiceplane"
+        - defaultValue: 'invoiceplane'
           description: This is the username to access the invoiceplane db. Can use the default provided.
           id: $$cap_DB_USERNAME
           label: DB_USERNAME
@@ -43,7 +43,7 @@ caproverOneClickApp:
           id: $$cap_DB_PASSWORD
           label: DB_PASSWORD
           validRegex: /^([^\s^\/])+$/
-        - defaultValue: "invoiceplane"
+        - defaultValue: 'invoiceplane'
           description: This is name for the database hosting InvoicePlane application. Can use the default provided.
           id: $$cap_DB_DATABASE
           label: DB_DATABASE
