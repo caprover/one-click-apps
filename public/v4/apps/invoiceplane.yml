@@ -2,7 +2,7 @@ captainVersion: 4
 
 services:
     $$cap_appname-db:
-        image: woahbase/alpine-mysql:x86_64
+        image: mysql:5.7.32
         volumes:
             - $$cap_appname-mysql-data:/var/lib/mysql
         environment:
