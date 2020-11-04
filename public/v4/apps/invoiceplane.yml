@@ -6,10 +6,10 @@ services:
         volumes:
             - $$cap_appname-mysql-data:/var/lib/mysql
         environment:
-            MYSQL_ROOT_PWD: $$cap_MYSQL_ROOT_PWD
+            MYSQL_ROOT_PASSWORD: $$cap_MYSQL_ROOT_PWD
             MYSQL_USER: $$cap_DB_USERNAME
-            MYSQL_USER_PWD: $$cap_DB_PASSWORD
-            MYSQL_USER_DB: $$cap_DB_DATABASE
+            MYSQL_PASSWORD: $$cap_DB_PASSWORD
+            MYSQL_DATABASE: $$cap_DB_DATABASE
         caproverExtra:
             notExposeAsWebApp: 'true'
 
