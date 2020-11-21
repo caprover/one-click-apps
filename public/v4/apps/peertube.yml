@@ -35,7 +35,7 @@ services:
             PEERTUBE_WEBSERVER_HOSTNAME: $$cap_appname.$$cap_root_domain
             PEERTUBE_WEBSERVER_PORT: '443'
             PEERTUBE_WEBSERVER_HTTPS: 'true'
-            PEERTUBE_TRUST_PROXY: '["127.0.0.1", "loopback", "172.18.0.0/16"]'
+            PEERTUBE_TRUST_PROXY: '["127.0.0.1", "loopback", "10.0.0.0/16"]'
             PEERTUBE_SMTP_USERNAME: $$cap_smtp_username
             PEERTUBE_SMTP_PASSWORD: $$cap_smtp_password
             PEERTUBE_SMTP_HOSTNAME: $$cap_smtp_hostname
