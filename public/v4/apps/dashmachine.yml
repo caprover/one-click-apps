@@ -1,0 +1,33 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: rmountjoy/dashmachine:$$cap_dashmachine_version
+        hostname: $$cap_appname.$$cap_root_domain
+        volumes:
+            - $$cap_appname-config:/dashmachine/dashmachine/user_data
+        caproverExtra:
+            containerHttpPort: 5000
+caproverOneClickApp:
+    variables:
+        - id: $$cap_dashmachine_version
+          label: DashMachine Version
+          defaultValue: 'v0.5-4'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/rmountjoy/dashmachine/tags
+          validRegex: /^([^\s^\/])+$/
+    instructions:
+        start: >-
+            Another web application bookmark dashboard, with fun features.
+        end: >-
+            DashMachine is deployed and available as $$cap_appname.
+
+
+            The user data folder is located at /var/lib/docker/volumes/captain--$$cap_appname-config/_data/.
+
+
+            This is where the config.ini, custom backgrounds/icons, and the database file live.
+
+            A reference for what can go into the config.ini file can be found on the settings page of the dashmachine by clicking the info icon next to 'Config'.
+    displayName: DashMachine
+    isOfficial: true
+    description: Another web application bookmark dashboard, with fun features.
+    documentation: Taken from https://hub.docker.com/r/rmountjoy/dashmachine.
