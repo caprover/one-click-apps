@@ -6,15 +6,15 @@ services:
         command: $$cap_SEARX_COMMAND
         environment:
             BIND_ADDRESS: 0.0.0.0:8080
-            BASE_URL: $$cap_SEARX_BASEURL
-            MORTY_URL: $$cap_MORTY_URL
+            BASE_URL: https://$$cap_appname.$$cap_root_domain
+            MORTY_URL: http://$$cap_appname-morty.$$cap_root_domain
             MORTY_KEY: $$cap_MORTY_KEY
         caproverExtra:
             containerHttpPort: '8080'
     # Filtron
     $$cap_appname-filtron:
         volumes:
-            - $$cap_FILTRON_RULES:/etc/filtron/rules.json
+            - $$cap_appname-filtron-data:/etc/filtron
         ports:
             - 4004:4004
             - 4005:4005
@@ -22,6 +22,9 @@ services:
         caproverExtra:
             dockerfileLines:
                 - FROM dalf/filtron@$$cap_filtron_version
+                - ADD https://raw.githubusercontent.com/searx/searx-docker/master/rules.json /etc/filtron/rules.json
+                - USER root
+                - RUN chmod -R 755 /etc/filtron/
                 - ENTRYPOINT ["/usr/local/filtron/filtron", "--rules", "/etc/filtron/rules.json", "--listen", "0.0.0.0:4004", "--api", "0.0.0.0:4005", "--target", "srv-captain--searx:8080"]
             containerHttpPort: '3000'
     # Morty
@@ -44,7 +47,7 @@ services:
             notExposeAsWebApp: true
             dockerfileLines:
                 - FROM searx/searx-checker@$$cap_checker_version
-                - CMD -o html/data/status.json http://srv-captain--$$cap_appname:8080
+                - CMD ["-cron", "-o", "html/data/status.json", "http://srv-captain--$$cap_appname:8080"]
 caproverOneClickApp:
     variables:
         - id: $$cap_searx_version
@@ -63,34 +66,17 @@ caproverOneClickApp:
           label: Searx-checker Docker Version Hash
           defaultValue: 'sha256:8ebda54ed8854e1300a4670e2bba86a5d2f4ceeb5c39290e4cc20df22bf974be'
           description: Starts with 'sha256:'.  Find on https://hub.docker.com/r/searx/searx-checker/tags/
-        - label: Searx base url
-          description: Base url to your Searx
-          defaultValue: https://searx.app.gocloud.fun
-          id: $$cap_SEARX_BASEURL
-        - label: Morty URL
-          description: Base url to your Morty
-          defaultValue: https://searx-morty.app.gocloud.fun
-          id: $$cap_MORTY_URL
         - label: Morty Secret Key
           description: use openssl rand -base64 33
           defaultValue: RemplaceWithARealKey!
           id: $$cap_MORTY_KEY
-        - label: Path to Filtron rules.json file
-          defaultValue: /var/lib/docker/volumes/captain--searx-filtron-rules/_data/rules.json
-          id: $$cap_FILTRON_RULES
     instructions:
         start: >-
             Privacy-respecting, hackable metasearch engine.
-
-            Mayday! Mayday! Mayday!
-
-            First of all put the content of https://github.com/searx/searx-docker/blob/master/rules.json
-
-            anywhere on your server folder and then edit "Path to Filtron rules.json file" settings here at the verry bottom
         end: >-
             Aaaand you're done! 😄
 
-            Now enable HTTPS on Searx, Filtron $ Morty
+            Now enable HTTPS on Searx, Filtron & Morty.
     displayName: Searx
     description: Privacy-respecting, hackable metasearch engine.
     documentation: Taken from https://github.com/searx/searx-docker
