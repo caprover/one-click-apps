@@ -7,7 +7,7 @@ services:
         environment:
             BIND_ADDRESS: 0.0.0.0:8080
             BASE_URL: https://$$cap_appname.$$cap_root_domain
-            MORTY_URL: http://$$cap_appname-morty.$$cap_root_domain
+            MORTY_URL: https://$$cap_appname-morty.$$cap_root_domain
             MORTY_KEY: $$cap_MORTY_KEY
         caproverExtra:
             containerHttpPort: '8080'
@@ -37,7 +37,7 @@ services:
             containerHttpPort: '3000'
             dockerfileLines:
                 - FROM dalf/morty@$$cap_morty_version
-                - CMD -listen 0.0.0.0:3000 -timeout 6 -ipv6
+                - CMD -timeout 6 -ipv6
     # Checker
     $$cap_appname-checker:
         restart: always
