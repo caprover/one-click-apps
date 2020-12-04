@@ -3,7 +3,6 @@ services:
     # SearX
     $$cap_appname:
         image: searx/searx:$$cap_searx_version
-        command: $$cap_SEARX_COMMAND
         environment:
             BIND_ADDRESS: 0.0.0.0:8080
             BASE_URL: https://$$cap_appname.$$cap_root_domain
