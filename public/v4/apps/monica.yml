@@ -4,7 +4,7 @@ services:
     $$cap_appname:
         depends_on:
             - $$cap_appname-mariadb
-        image: monica:apache
+        image: monica@$$cap_monica_version
         restart: 'always'
         environment:
             APP_KEY: $$cap_gen_random_hex(32)
@@ -14,8 +14,6 @@ services:
             DB_PASSWORD: $$cap_mariadb-pass
         volumes:
             - $$cap_appname-storage:/var/www/html/storage
-        caproverExtra:
-            containerHttpPort: '80'
     # MariaDB
     $$cap_appname-mariadb:
         image: mariadb:$$cap_mariadb_version
@@ -31,6 +29,10 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
+        - id: $$cap_monica_version
+          label: Monica Docker Hash
+          defaultValue: sha256:469001036f96018b94312dd017678123aa23d56816ba6402ed03c6a8d1805a92
+          description: Starts with 'sha256:'.  Find on https://hub.docker.com/_/monica?tab=tags.  Use the hash from Apache tag otherwise it won't work.
         - id: $$cap_mariadb_version
           label: MariaDB Version
           defaultValue: '10.5.6'
