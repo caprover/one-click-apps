@@ -32,8 +32,6 @@ services:
             DIRECTUS_DATABASE_PASSWORD: $$cap_mysql_passwd
             DIRECTUS_AUTH_SECRETKEY: $$cap_directus_auth_secret_key
             DIRECTUS_AUTH_PUBLICKEY: $$cap_directus_auth_public_key
-        caproverExtra:
-            containerHttpPort: '80'
 caproverOneClickApp:
     variables:
         - description: Tag of Directus image on https://hub.docker.com/r/directus/directus/tags

@@ -10,8 +10,6 @@ services:
         restart: always
         environment:
             GITLAB_OMNIBUS_CONFIG: $$cap_gitlab_omnibus_config
-        caproverExtra:
-            containerHttpPort: '80'
 caproverOneClickApp:
     variables:
         - id: $$cap_gitlab_version
