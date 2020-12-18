@@ -23,8 +23,6 @@ services:
             - $$cap_appname-conf:/conf
             - $$cap_appname-uploads:/uploads
             - $$cap_appname-sym:/sym
-        caproverExtra:
-            containerHttpPort: '80'
     # MariaDB
     $$cap_appname-mariadb:
         image: mariadb:$$cap_mariadb_version
