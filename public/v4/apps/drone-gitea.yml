@@ -29,8 +29,6 @@ services:
             DRONE_GITEA_CLIENT_ID: $$cap_drone_gitea_client_id
             DRONE_GITEA_CLIENT_SECRET: $$cap_drone_gitea_client_secret
             DRONE_RPC_SECRET: $$cap_drone_secret
-        caproverExtra:
-            containerHttpPort: '80'
 caproverOneClickApp:
     variables:
         - id: $$cap_drone_version

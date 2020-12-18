@@ -15,8 +15,6 @@ services:
             CHEVERETO_DB_NAME: $$cap_mariadb-db
         volumes:
             - $$cap_appname-images:/var/www/html/images
-        caproverExtra:
-            containerHttpPort: '80'
     # MariaDB
     $$cap_appname-mariadb:
         image: mariadb:$$cap_mariadb_version

@@ -31,8 +31,6 @@ services:
             DOLI_ADMIN_LOGIN: $$cap_admin-login
             DOLI_ADMIN_PASSWORD: $$cap_admin-pass
             DOLI_URL_ROOT: http://$$cap_appname.$$cap_root_domain
-        caproverExtra:
-            containerHttpPort: '80'
 caproverOneClickApp:
     variables:
         - id: $$cap_postgres-version
