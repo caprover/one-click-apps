@@ -68,19 +68,15 @@ caproverOneClickApp:
           validRegex: /^([a-zA-Z0-9])+$/
         - id: $$cap_smtp_host
           label: SMPT host
-          defaultValue: smtp.gmail.com
           description: The host for your smtp server
         - id: $$cap_smtp_port
           label: SMTP port
-          defaultValue: '587'
           description: The port for your smtp server
         - id: $$cap_smtp_user
           label: SMTP user
-          defaultValue: your_email@gmail.com
           description: The user for your smtp server
         - id: $$cap_smtp_pass
           label: SMTP password
-          defaultValue: sTr0nG_p@s$wo%d
           description: The password for your smtp server
     instructions:
         start: |-
