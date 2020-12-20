@@ -32,7 +32,7 @@ services:
             WEBLATE_ADMIN_PASSWORD: $$cap_admin_password
             WEBLATE_SERVER_EMAIL: $$cap_server_email
             WEBLATE_DEFAULT_FROM_EMAIL: $$cap_email_from
-            WEBLATE_REGISTRATION_OPEN: 1
+            WEBLATE_REGISTRATION_OPEN: $$cap_open_registration
             POSTGRES_PASSWORD: $$cap_pg_pass
             POSTGRES_USER: weblate
             POSTGRES_DATABASE: weblate
@@ -75,6 +75,10 @@ caproverOneClickApp:
         - id: $$cap_email_from
           label: Weblate FROM email
           description: (eg weblate@example.com)
+        - id: $$cap_open_registration
+          label: Allow open registration of people (0/1)
+          defaultValue: 0
+          description: Do you allow people to register openly to the platform?
     instructions:
         start: Open-source collaborative localization tools
         end: weblate is deployed and available as srv-captain--$$cap_appname:80.  Note that the application may take up to ten minutes to become available.
