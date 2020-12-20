@@ -26,6 +26,8 @@ services:
             - $$cap_appname-data:/weblate/data
         restart: always
         environment:
+            DEBUG: 0
+            WEBLATE_LOGLEVEL: INFO
             WEBLATE_ADMIN_EMAIL: $$cap_admin_email
             WEBLATE_ADMIN_PASSWORD: $$cap_admin_password
             WEBLATE_SERVER_EMAIL: $$cap_server_email
@@ -39,6 +41,8 @@ services:
             WEBLATE_SITE_DOMAIN: $$cap_appname.$$cap_root_domain
             WEBLATE_SITE_TITLE: $$cap_appname Weblate
             WEBLATE_ADMIN_NAME: Weblate Admin
+            POSTGRES_PORT: 5432
+            REDIS_PORT: 6379
         caproverExtra:
             containerHttpPort: '8080'
 caproverOneClickApp:
