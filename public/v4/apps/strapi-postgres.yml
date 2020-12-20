@@ -38,7 +38,7 @@ caproverOneClickApp:
           label: PostgreSQL Version
           defaultValue: '9.6.20'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/
-          validRegex: /^([a-zA-Z0-9])+$/
+          validRegex: /^([^\s^\/])+$/
         - id: $$cap_postgres_password
           label: PostgreSQL password
           description: Only use alphanumeric chars.
