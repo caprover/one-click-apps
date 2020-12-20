@@ -58,7 +58,7 @@ caproverOneClickApp:
         - id: $$cap_weblate_version
           label: weblate Docker Image SHA Hash
           defaultValue: latest
-          description: Check out their Docker page for the valid tags https://hub.docker.com/r/weblate/weblate    
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/weblate/weblate
         - id: $$cap_pg_pass
           label: Postgres Password
           description: Password must be at least 30 characters.  Please use a random string.
@@ -70,7 +70,7 @@ caproverOneClickApp:
           label: Password of the first user and administrator of weblate
           description: Will be used to login to weblate
         - id: $$cap_server_email
-          label: Weblate server email 
+          label: Weblate server email
           description: (eg weblate@example.com)
         - id: $$cap_email_from
           label: Weblate FROM email
