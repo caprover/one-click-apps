@@ -8,8 +8,6 @@ services:
             - 53:53
             - 67:67
             - 68:68
-            - 8081:80
-            - 4433:443
             - 853:853
         volumes:
             - $$cap_appname-work:/opt/adguardhome/work
