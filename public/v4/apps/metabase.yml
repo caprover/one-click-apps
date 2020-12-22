@@ -19,6 +19,7 @@ services:
             - $$cap_appname-data:/metabase-data
         caproverExtra:
             containerHttpPort: '3000'
+    # Database
     $$cap_appname-db:
         image: postgres:12-alpine
         volumes:
