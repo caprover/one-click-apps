@@ -47,7 +47,7 @@ caproverOneClickApp:
         - id: $$cap_postgres_version
           label: Postgres (database) version
           defaultValue: '12'
-          description: Check out their Docker page for the valid tags https://hub.docker.com/_/mariadb?tab=tags
+          description: Check out their Docker page for the valid tags https://hub.docker.com/_/postgres?tab=tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_db_pass
           label: database password
