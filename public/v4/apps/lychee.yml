@@ -17,8 +17,6 @@ services:
             DB_USERNAME: $$cap_mariadb-user
             DB_PASSWORD: $$cap_mariadb-password
             STARTUP_DELAY: '30'
-        ports:
-            - $$cap_webui_port:80
         volumes:
             - $$cap_appname-conf:/conf
             - $$cap_appname-uploads:/uploads
@@ -57,10 +55,6 @@ caproverOneClickApp:
           defaultValue: '1000'
           description: Group ID that the process uses, run (id $user) in your instance to see the id
           validRegex: /.{1,}/
-        - id: $$cap_webui_port
-          label: Lychee WebUI Port
-          description: The port used to access Lychee
-          defaultValue: '90'
         - id: $$cap_mariadb_version
           label: MariaDB Version
           defaultValue: '10.5.6'
