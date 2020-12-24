@@ -17,8 +17,6 @@ services:
             DB_USERNAME: $$cap_mariadb-user
             DB_PASSWORD: $$cap_mariadb-password
             STARTUP_DELAY: '30'
-        ports:
-            - $$cap_webui_port:80
         volumes:
             - $$cap_appname-conf:/conf
             - $$cap_appname-uploads:/uploads
