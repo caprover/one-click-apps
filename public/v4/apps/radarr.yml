@@ -17,7 +17,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_radarr_version
           label: Radarr Version
-          defaultValue: amd64-latest
+          defaultValue: version-3.0.1.4259
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/radarr/tags
           validRegex: /^([^\s^\/])+$/
 
