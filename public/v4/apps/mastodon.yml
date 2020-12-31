@@ -201,6 +201,13 @@ caproverOneClickApp:
             Step 2: Now that you are inside your mastodon container: run the following command assuming your username is alice:
 
             "RAILS_ENV=production bin/tootctl accounts modify alice --role admin"
+
+
+            Step 3: Now we have to give our persistent directory the correct user rights
+
+            From your terminal run the following assuming your app name is mastodon
+
+            chown -R 991:991 /var/lib/docker/volumes/captain--mastodon-system
         end: >-
             Aaaand you're done! 😄
 
