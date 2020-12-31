@@ -35,10 +35,10 @@ services:
             ADMIN_PASSWORD: $$cap_ADMIN_PASSWORD
             DATABASE_URL: postgres://chaskiq:$$cap_chaskiq_postgres_password@srv-captain--$$cap_appname-postgres:5432/chaskiq
             REDIS_URL: redis://default:$$cap_chaskiq_redis_password@srv-captain--$$cap_appname-redis:6379
-            AWS_ACCESS_KEY_ID: $$cap_chaskiq_aws_key_id      
+            AWS_ACCESS_KEY_ID: $$cap_chaskiq_aws_key_id
             AWS_SECRET_ACCESS_KEY: $$cap_chaskiq_aws_access_key
-            AWS_S3_BUCKET:  $$cap_chaskiq_aws_s3_bucket
-            AWS_S3_REGION:  $$cap_chaskiq_aws_s3_region
+            AWS_S3_BUCKET: $$cap_chaskiq_aws_s3_bucket
+            AWS_S3_REGION: $$cap_chaskiq_aws_s3_region
             GEOCODER_API_KEY: $$cap_chaskiq_geocoder_api_key
             DEFAULT_GEOCODER_SERVICE: $$cap_chaskiq_geocoder_service
             SCOUT_KEY: $$cap_chaskiq_scoutapp_key
@@ -63,10 +63,10 @@ services:
             ADMIN_PASSWORD: $$cap_ADMIN_PASSWORD
             DATABASE_URL: postgres://chaskiq:$$cap_chaskiq_postgres_password@srv-captain--$$cap_appname-postgres:5432/chaskiq
             REDIS_URL: redis://default:$$cap_chaskiq_redis_password@srv-captain--$$cap_appname-redis:6379
-            AWS_ACCESS_KEY_ID: $$cap_chaskiq_aws_key_id      
+            AWS_ACCESS_KEY_ID: $$cap_chaskiq_aws_key_id
             AWS_SECRET_ACCESS_KEY: $$cap_chaskiq_aws_access_key
-            AWS_S3_BUCKET:  $$cap_chaskiq_aws_s3_bucket
-            AWS_S3_REGION:  $$cap_chaskiq_aws_s3_region
+            AWS_S3_BUCKET: $$cap_chaskiq_aws_s3_bucket
+            AWS_S3_REGION: $$cap_chaskiq_aws_s3_region
             GEOCODER_API_KEY: $$cap_chaskiq_geocoder_api_key
             DEFAULT_GEOCODER_SERVICE: $$cap_chaskiq_geocoder_service
             SCOUT_KEY: $$cap_chaskiq_scoutapp_key
@@ -96,8 +96,8 @@ caproverOneClickApp:
           validRegex: /^[^\@]{12,}$/
         - id: $$cap_chaskiq_default_sender_email
           label: Default sender email
-          description: "Default email sender, like: notifications@mail.yourapp.com"
-          validRegex: /^([^\s^\/])+$/   
+          description: 'Default email sender, like: notifications@mail.yourapp.com'
+          validRegex: /^([^\s^\/])+$/
         - id: $$cap_chaskiq_default_ongoing_domain
           label: Default deliver domain
           description: For multiple email deliver tasks, like mail.yourdomain.com
@@ -120,14 +120,14 @@ caproverOneClickApp:
           label: AWS access key id
           description: Amazon access key id (for file storage and email dispatching S3 / SES / SNS)
         - id: $$cap_chaskiq_aws_access_key
-          label: AWS access key 
+          label: AWS access key
           description: Amazon access key (for file storage and email dispatching S3 / SES / SNS)
         - id: $$cap_chaskiq_aws_s3_bucket
-          label: AWS S3 bucket 
+          label: AWS S3 bucket
           description: Amazon S3 bucket name
         - id: $$cap_chaskiq_aws_s3_region
           label: AWS bucket region
-          description: "AWS S3 bucket region like: us-east-1"
+          description: 'AWS S3 bucket region like: us-east-1'
         - id: $$cap_chaskiq_aws_sns_configuration_set
           label: SNS configuration set
           description: This is important for chaskiq to receive emails (optional)
@@ -150,7 +150,6 @@ caproverOneClickApp:
             The admin account was created, just log in with those credentials.
             The app will need to be served over SSL, activate HTTPS on the domain and websocket support.
 
-            
     displayName: Chaskiq
     isOfficial: true
     description: A full featured Live Chat, Support & Marketing platform
