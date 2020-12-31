@@ -144,7 +144,7 @@ caproverOneClickApp:
           label: Geocoder API key
 
     instructions:
-        start: A full featured Live Chat, Support & Marketing platform
+        start: A full featured Live Chat, Support & Marketing platform https://chaskiq.io
         end: >-
             Your Chaskiq instance is now successfully deployed. 
             The admin account was created, just log in with those credentials.
@@ -153,4 +153,4 @@ caproverOneClickApp:
     displayName: Chaskiq
     isOfficial: true
     description: A full featured Live Chat, Support & Marketing platform
-    documentation: 'Read more at: https://dev.chaskiq.com'
+    documentation: 'Read more at: https://dev.chaskiq.io'
