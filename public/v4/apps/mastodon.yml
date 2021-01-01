@@ -195,7 +195,7 @@ caproverOneClickApp:
 
             Step 1: From your terminal run the following command.
 
-            docker exec -it $(docker ps --filter name='srv-captain--mastodon.1' -q) /bin/bash
+            docker exec -it $(docker ps --filter name='srv-captain--{appname}.1' -q) /bin/bash
 
 
             Step 2: Now that you are inside your mastodon container: run the following command assuming your username is alice:
@@ -207,7 +207,7 @@ caproverOneClickApp:
 
             From your terminal run the following assuming your app name is mastodon
 
-            chown -R 991:991 /var/lib/docker/volumes/captain--mastodon-system
+            chown -R 991:991 /var/lib/docker/volumes/captain--{appname}-system
         end: >-
             Aaaand you're done! 😄
 
