@@ -138,8 +138,9 @@ caproverOneClickApp:
           label: Bugsnag API key
           description: Bugsnag API key for error reporting (optional)
         - id: $$cap_chaskiq_geocoder_service
+          defaultValue: maxmind_local
           label: Geocoder service name, like (maxmind, ip_info, baidu, yandex)
-          description: The complete list of services can be found at https://github.com/alexreisner/geocoder/tree/master/lib/geocoder/lookups
+          description: The complete list of services can be found at https://github.com/alexreisner/geocoder/tree/master/lib/geocoder/lookups, just leave empty if maxmind_loca is set
         - id: $$cap_chaskiq_geocoder_api_key
           label: Geocoder API key
 
