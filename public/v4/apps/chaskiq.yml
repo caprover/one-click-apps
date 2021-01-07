@@ -140,9 +140,11 @@ caproverOneClickApp:
         - id: $$cap_chaskiq_geocoder_service
           defaultValue: maxmind_local
           label: Geocoder service name, like (maxmind, ip_info, baidu, yandex)
-          description: The complete list of services can be found at https://github.com/alexreisner/geocoder/tree/master/lib/geocoder/lookups, just leave empty if maxmind_loca is set
+          description: The complete list of services can be found at https://github.com/alexreisner/geocoder/tree/master/lib/geocoder/lookups
         - id: $$cap_chaskiq_geocoder_api_key
           label: Geocoder API key
+          description: leave this empty if maxmind_local service is set
+
 
     instructions:
         start: A full featured Live Chat, Support & Marketing platform https://chaskiq.io
