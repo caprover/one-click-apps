@@ -23,7 +23,7 @@ caproverOneClickApp:
           label: Set FPM to True or False
           defaultValue: 'true'
           description: Should Organizr us a socket connection instead of TCP?
-          validRegex: '/^(true | false)/'
+          validRegex: '/^(true|false)$/'
 
         - id: '$$cap_branch'
           label: Organizr branch
