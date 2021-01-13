@@ -3,7 +3,7 @@ services:
     $$cap_appname-redis:
         image: redis:$$cap_redis_version
         volumes:
-            - $$cap_appname-cache-data:/data
+            - $$cap_appname-cache-data:/app/data
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname-postgres:
