@@ -18,7 +18,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname:
-        image: weblate/weblate
+        image: weblate/weblate:$$cap_weblate_version
         depends_on:
             - $$cap_appname-postgres
             - $$cap_appname-redis
@@ -56,7 +56,7 @@ caproverOneClickApp:
           defaultValue: 6-alpine
           description: Check out their Docker page for the valid versions https://hub.docker.com/r/library/redis
         - id: $$cap_weblate_version
-          label: weblate Docker Image SHA Hash
+          label: weblate Docker Image tag
           defaultValue: latest
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/weblate/weblate
         - id: $$cap_pg_pass
@@ -80,9 +80,9 @@ caproverOneClickApp:
           defaultValue: 0
           description: Do you allow people to register openly to the platform?
     instructions:
-        start: Open-source collaborative localization tools
-        end: weblate is deployed and available as srv-captain--$$cap_appname:80.  Note that the application may take up to ten minutes to become available.
+        start: Open-source collaborative localization tools. Check all the environment settings you can set here - https://github.com/WeblateOrg/docker-compose/blob/master/environment
+        end: Weblate is deployed and available as srv-captain--$$cap_appname:80. Note that the application may take up to ten minutes to become available.
     displayName: weblate
-    isOfficial: false
+    isOfficial: true
     description: Weblate is a copylefted libre software web-based continuous localization system, used by over 1150 libre projects and companies in more than 115 countries.
     documentation: https://hub.docker.com/r/weblate/weblate https://github.com/WeblateOrg/docker-compose https://docs.weblate.org/en/latest/admin/install/docker.html
