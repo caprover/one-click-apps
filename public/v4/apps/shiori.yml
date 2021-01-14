@@ -1,0 +1,39 @@
+captainVersion: 4
+
+services:
+    $$cap_appname:
+        image: radhifadlillah/shiori@sha256:3d1eb1f0aeb9804dea41f3ec5d29de5cf214bb66ef04dce1aa942ca17caec7bb
+        environment:
+            SHIORI_DIR: /data
+        volumes:
+            - $$cap_appname-shiori-data:/data
+        restart: on-failure
+        caproverExtra:
+            containerHttpPort: '8080'
+
+caproverOneClickApp:
+    isOfficial: false
+    description: 'A simple bookmark manager built with Go.'
+    instructions:
+        start: >
+            This app stores its data in a SQLite database in a Docker volume.
+
+            Once deployed, this app will be accessible with a default username and
+            password. If this is a problem, you should deploy behind TLS and
+            basic-auth until you can log in and change them.
+
+            username: shiori
+
+            password: gopher
+        end: >
+            Shiori is up and running.
+
+            You can log in with the username and password below to  create and account
+            under `Settings`. Once you've created an account the default credentials
+            will be disabled.
+
+            username: shiori
+
+            password: gopher
+        documentation: >
+            From https://github.com/go-shiori/shiori.
