@@ -19,7 +19,7 @@ caproverOneClickApp:
         - id: $$cap_mongoexpress_version
           label: Mongo Express Version Tag
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/mongo-express/tags/
-          defaultValue: '0.49'
+          defaultValue: '0.54'
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_me_server_address
           label: MongoDB Server Address
