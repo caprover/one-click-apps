@@ -33,7 +33,7 @@ caproverOneClickApp:
         - id: $$cap_monica_version
           label: Monica Docker version
           defaultValue: '2.19.1'
-          description: Checkout this page for the valid tags Find on https://hub.docker.com/_/monica?tab=tags.  Use the Apache tag otherwise it won't work.
+          description: Checkout this page for the valid tags Find on https://hub.docker.com/_/monica?tab=tags. Use the Apache tag otherwise it won't work.
         - id: $$cap_mariadb_version
           label: MariaDB Version
           defaultValue: '10.5.6'
