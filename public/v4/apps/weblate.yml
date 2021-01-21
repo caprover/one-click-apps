@@ -26,7 +26,7 @@ services:
             - $$cap_appname-data:/app/data
         restart: always
         environment:
-            DEBUG: 0
+            WEBLATE_DEBUG: 0
             WEBLATE_LOGLEVEL: INFO
             WEBLATE_ADMIN_EMAIL: $$cap_admin_email
             WEBLATE_ADMIN_PASSWORD: $$cap_admin_password
@@ -57,7 +57,7 @@ caproverOneClickApp:
           description: Check out their Docker page for the valid versions https://hub.docker.com/r/library/redis/tags
         - id: $$cap_weblate_version
           label: weblate Docker Image tag
-          defaultValue: latest
+          defaultValue: 4.4.2-1
           description: latest, edge, bleeding, or version - Check out their Docker page for the valid tags https://hub.docker.com/r/weblate/weblate/tags
         - id: $$cap_pg_pass
           label: Postgres Password
