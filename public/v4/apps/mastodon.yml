@@ -61,6 +61,8 @@ services:
             SMTP_TLS: $$cap_smtp_tls
             S3_ENABLED: 'false'
             RAILS_ENV: production
+        volumes:
+            - $$cap_appname-system:/mastodon/public/system
         caproverExtra:
             containerHttpPort: '4000'
             dockerfileLines:
@@ -93,6 +95,8 @@ services:
             SMTP_TLS: $$cap_smtp_tls
             S3_ENABLED: 'false'
             RAILS_ENV: production
+        volumes:
+            - $$cap_appname-system:/mastodon/public/system
         caproverExtra:
             dockerfileLines:
                 - FROM tootsuite/mastodon:$$cap_mastodon_version
