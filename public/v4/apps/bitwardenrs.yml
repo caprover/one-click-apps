@@ -5,8 +5,6 @@ services:
         volumes:
             - $$cap_appname-data:/data
         restart: always
-        caproverExtra:
-            containerHttpPort: '80'
 caproverOneClickApp:
     variables:
         - id: $$cap_bitwardenrs_version

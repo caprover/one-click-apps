@@ -11,7 +11,7 @@ caproverOneClickApp:
         - id: $$cap_upstream_http_address
           label: Upstream address
           description: >-
-              For example use https://caprover.com to forward all request to CapRover.
+              For example use https://caprover.com to forward all request to CapRover. Do not include a trailing slash.
                If you're forwarding http requests to a CapRover internal app use http://srv-captain--yourappnamehere or if you want a particular port, use http://srv-captain--yourappnamehere:8080
           defaultValue: ''
           validRegex: /^(http:\/\/|https:\/\/)\S*$/

@@ -28,8 +28,6 @@ services:
             MATOMO_DATABASE_USERNAME: matomo
             MATOMO_DATABASE_PASSWORD: $$cap_db_pass
             MATOMO_DATABASE_DBNAME: matomo
-        caproverExtra:
-            containerHttpPort: '80'
 caproverOneClickApp:
     variables:
         - id: $$cap_matomo_version

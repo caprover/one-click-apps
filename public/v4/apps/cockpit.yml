@@ -5,8 +5,6 @@ services:
         volumes:
             - $$cap_appname-storage:/var/www/html/storage
         restart: always
-        caproverExtra:
-            containerHttpPort: '80'
 caproverOneClickApp:
     variables:
         - id: $$cap_cockpit_version
