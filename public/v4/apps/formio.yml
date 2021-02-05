@@ -6,9 +6,6 @@ services:
         volumes:
             - $$cap_appname-db-data:/data/db
         restart: always
-        environment:
-            MONGO_INITDB_ROOT_USERNAME: $$cap_db_user
-            MONGO_INITDB_ROOT_PASSWORD: $$cap_db_pass
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname:
@@ -22,7 +19,7 @@ services:
         environment:
             APP_URL: 'https://$$cap_appname.$$cap_root_domain'
             API_URL: 'https://$$cap_appname.$$cap_root_domain'
-            MONGO: mongodb://$$cap_db_user:$$cap_db_pass@srv-captain--$$cap_appname-mongodb:27017/formio
+            MONGO: mongodb://srv-captain--$$cap_appname-mongodb:27017/formio
             ROOT_EMAIL: $$cap_admin_email
             ROOT_PASSWORD: $$cap_admin_pass
             SMTP_HOST: $$cap_smtp_host
@@ -52,20 +49,6 @@ caproverOneClickApp:
           defaultValue: 4.1
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/mongo?tab=tags
           validRegex: /^([^\s^\/])+$/
-        - id: $$cap_db_pass
-          label: database password
-          description: Password for the database user and root using mongodb.
-          validRegex: /.{1,}/
-        - id: $$cap_db_name
-          label: database name
-          defaultValue: formio
-          description: name for the database.
-          validRegex: /^([a-zA-Z0-9])+$/
-        - id: $$cap_db_user
-          label: database user
-          defaultValue: formio
-          description: Username for the database using mongodb.
-          validRegex: /^([a-zA-Z0-9])+$/
         - id: $$cap_smtp_host
           label: SMPT host
           description: The host for your smtp server
