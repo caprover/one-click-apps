@@ -32,7 +32,7 @@ services:
       $$cap_appname
 
   $$cap_appname-exporter:
-    image: "penpotapp/exporter:latest"
+    image: "penpotapp/exporter:1.1.0-alpha"
     restart: always
     environment:
       PENPOT_PUBLIC_URI: "http://penpot-frontend"
@@ -42,7 +42,7 @@ services:
       $$cap_appname
 
   $$cap_appname-backend:
-    image: "penpotapp/backend:latest"
+    image: "penpotapp/backend:1.1.0-alpha"
     volumes:
       - $$cap_appname_assets_data:/opt/data
     environment:
@@ -73,7 +73,7 @@ services:
       $$cap_appname
 
   $$cap_appname-frontend:
-    image: "penpotapp/frontend:latest"
+    image: "penpotapp/frontend:1.1.0-alpha"
     volumes:
       - $$cap_appname_assets_data:/opt/data
     caproverExtra:
