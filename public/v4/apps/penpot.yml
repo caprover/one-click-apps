@@ -1,89 +1,84 @@
 captainVersion: 4
 networks:
-  $$cap_appname:
+    $$cap_appname:
 
 volumes:
-  $$cap_appname_db_data:
-  $$cap_appname_assets_data:
+    $$cap_appname_db_data:
+    $$cap_appname_assets_data:
 
 services:
-  $$cap_appname-db:
-    image: "postgres:13"
-    volumes:
-      - $$cap_appname_db_data:/var/lib/postgresql/data
-    restart: always
-    stop_signal: SIGINT
-    environment:
-      POSTGRES_INITDB_ARGS: --data-checksums
-      POSTGRES_DB: penpot
-      POSTGRES_USER: penpot
-      POSTGRES_PASSWORD: penpot
-    caproverExtra:
-      notExposeAsWebApp: 'true'
-    network:
-      $$cap_appname
+    $$cap_appname-db:
+        image: 'postgres:13'
+        volumes:
+            - $$cap_appname_db_data:/var/lib/postgresql/data
+        restart: always
+        stop_signal: SIGINT
+        environment:
+            POSTGRES_INITDB_ARGS: --data-checksums
+            POSTGRES_DB: penpot
+            POSTGRES_USER: penpot
+            POSTGRES_PASSWORD: penpot
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+        network: $$cap_appname
 
-  $$cap_appname-redis:
-    image: "redis:6"
-    restart: always
-    caproverExtra:
-      notExposeAsWebApp: 'true'
-    network:
-      $$cap_appname
+    $$cap_appname-redis:
+        image: 'redis:6'
+        restart: always
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+        network: $$cap_appname
 
-  $$cap_appname-exporter:
-    image: "penpotapp/exporter:1.1.0-alpha"
-    restart: always
-    environment:
-      PENPOT_PUBLIC_URI: "http://penpot-frontend"
-    caproverExtra:
-      notExposeAsWebApp: 'true'
-    network:
-      $$cap_appname
+    $$cap_appname-exporter:
+        image: 'penpotapp/exporter:1.1.0-alpha'
+        restart: always
+        environment:
+            PENPOT_PUBLIC_URI: 'http://penpot-frontend'
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+        network: $$cap_appname
 
-  $$cap_appname-backend:
-    image: "penpotapp/backend:1.1.0-alpha"
-    volumes:
-      - $$cap_appname_assets_data:/opt/data
-    environment:
-      PENPOT_PUBLIC_URI: $$cap_public_uri
-      PENPOT_TELEMETRY_ENABLED: $$cap_telemetry_enabled
-      PENPOT_SMTP_DEFAULT_FROM: $$cap_smtp_from
-      PENPOT_SMTP_DEFAULT_REPLY_TO: $$cap_smtp_reply_to
-      PENPOT_SMTP_HOST: $$cap_smtp_host
-      PENPOT_SMTP_PORT: $$cap_smtp_port
-      PENPOT_SMTP_USERNAME: $$cap_smtp_username
-      PENPOT_SMTP_PASSWORD: $$cap_smtp_password
-      PENPOT_SMTP_TLS: $$cap_smtp_tls
-      PENPOT_SMTP_SSL: $$cap_smtp_ssl 
+    $$cap_appname-backend:
+        image: 'penpotapp/backend:1.1.0-alpha'
+        volumes:
+            - $$cap_appname_assets_data:/opt/data
+        environment:
+            PENPOT_PUBLIC_URI: $$cap_public_uri
+            PENPOT_TELEMETRY_ENABLED: $$cap_telemetry_enabled
+            PENPOT_SMTP_DEFAULT_FROM: $$cap_smtp_from
+            PENPOT_SMTP_DEFAULT_REPLY_TO: $$cap_smtp_reply_to
+            PENPOT_SMTP_HOST: $$cap_smtp_host
+            PENPOT_SMTP_PORT: $$cap_smtp_port
+            PENPOT_SMTP_USERNAME: $$cap_smtp_username
+            PENPOT_SMTP_PASSWORD: $$cap_smtp_password
+            PENPOT_SMTP_TLS: $$cap_smtp_tls
+            PENPOT_SMTP_SSL: $$cap_smtp_ssl
 
-      PENPOT_DATABASE_URI: postgresql://$$cap_appname-db/penpot
-      PENPOT_DATABASE_USERNAME: penpot
-      PENPOT_DATABASE_PASSWORD: penpot
-      PENPOT_REDIS_URI: redis://$$cap_appname-redis/0
-      PENPOT_STORAGE_BACKEND: fs
-      PENPOT_STORAGE_FS_DIRECTORY: /opt/data/assets
-      PENPOT_SMTP_ENABLED: true
-    depends_on:
-      - $$cap_appname-db
-      - $$cap_appname-redis
-    caproverExtra:
-      notExposeAsWebApp: 'true'
-    networks:
-      $$cap_appname
+            PENPOT_DATABASE_URI: postgresql://$$cap_appname-db/penpot
+            PENPOT_DATABASE_USERNAME: penpot
+            PENPOT_DATABASE_PASSWORD: penpot
+            PENPOT_REDIS_URI: redis://$$cap_appname-redis/0
+            PENPOT_STORAGE_BACKEND: fs
+            PENPOT_STORAGE_FS_DIRECTORY: /opt/data/assets
+            PENPOT_SMTP_ENABLED: true
+        depends_on:
+            - $$cap_appname-db
+            - $$cap_appname-redis
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+        networks: $$cap_appname
 
-  $$cap_appname-frontend:
-    image: "penpotapp/frontend:1.1.0-alpha"
-    volumes:
-      - $$cap_appname_assets_data:/opt/data
-    caproverExtra:
-      containerHttpPort: '9001'
-    depends_on:
-      - $$cap_appname-backend
-      - $$cap_appname-exporter
-    networks:
-      $$cap_appname
-    
+    $$cap_appname-frontend:
+        image: 'penpotapp/frontend:1.1.0-alpha'
+        volumes:
+            - $$cap_appname_assets_data:/opt/data
+        caproverExtra:
+            containerHttpPort: '9001'
+        depends_on:
+            - $$cap_appname-backend
+            - $$cap_appname-exporter
+        networks: $$cap_appname
+
 caproverOneClickApp:
     variables:
         - id: $$cap_public_uri
@@ -116,7 +111,7 @@ caproverOneClickApp:
           validRegex: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
         - id: $$cap_smtp_password
           label: STMP password
-          defaultValue: 
+          defaultValue:
           validRegex: /.{1,}/
         - id: $$cap_smtp_tls
           label: STMP TLS support
@@ -128,7 +123,7 @@ caproverOneClickApp:
           validRegex: /^(true|false)$/
     instructions:
         start: >-
-          The open-source solution for design and prototyping.
+            The open-source solution for design and prototyping.
         end: >
             Penpot is deployed and available as $$cap_appname-frontend. IMPORTANT: It will take up to 2 minutes for Penpot to be ready. Before that, you might see a 502 error page.
     displayName: Penpot
