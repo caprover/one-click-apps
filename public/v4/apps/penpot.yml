@@ -1,0 +1,137 @@
+captainVersion: 4
+networks:
+  $$cap_appname:
+
+volumes:
+  $$cap_appname_db_data:
+  $$cap_appname_assets_data:
+
+services:
+  $$cap_appname-db:
+    image: "postgres:13"
+    volumes:
+      - $$cap_appname_db_data:/var/lib/postgresql/data
+    restart: always
+    stop_signal: SIGINT
+    environment:
+      POSTGRES_INITDB_ARGS: --data-checksums
+      POSTGRES_DB: penpot
+      POSTGRES_USER: penpot
+      POSTGRES_PASSWORD: penpot
+    caproverExtra:
+      notExposeAsWebApp: 'true'
+    network:
+      $$cap_appname
+
+  $$cap_appname-redis:
+    image: "redis:6"
+    restart: always
+    caproverExtra:
+      notExposeAsWebApp: 'true'
+    network:
+      $$cap_appname
+
+  $$cap_appname-exporter:
+    image: "penpotapp/exporter:latest"
+    restart: always
+    environment:
+      PENPOT_PUBLIC_URI: "http://penpot-frontend"
+    caproverExtra:
+      notExposeAsWebApp: 'true'
+    network:
+      $$cap_appname
+
+  $$cap_appname-backend:
+    image: "penpotapp/backend:latest"
+    volumes:
+      - $$cap_appname_assets_data:/opt/data
+    environment:
+      PENPOT_PUBLIC_URI: $$cap_public_uri
+      PENPOT_TELEMETRY_ENABLED: $$cap_telemetry_enabled
+      PENPOT_SMTP_DEFAULT_FROM: $$cap_smtp_from
+      PENPOT_SMTP_DEFAULT_REPLY_TO: $$cap_smtp_reply_to
+      PENPOT_SMTP_HOST: $$cap_smtp_host
+      PENPOT_SMTP_PORT: $$cap_smtp_port
+      PENPOT_SMTP_USERNAME: $$cap_smtp_username
+      PENPOT_SMTP_PASSWORD: $$cap_smtp_password
+      PENPOT_SMTP_TLS: $$cap_smtp_tls
+      PENPOT_SMTP_SSL: $$cap_smtp_ssl 
+
+      PENPOT_DATABASE_URI: postgresql://$$cap_appname-db/penpot
+      PENPOT_DATABASE_USERNAME: penpot
+      PENPOT_DATABASE_PASSWORD: penpot
+      PENPOT_REDIS_URI: redis://$$cap_appname-redis/0
+      PENPOT_STORAGE_BACKEND: fs
+      PENPOT_STORAGE_FS_DIRECTORY: /opt/data/assets
+      PENPOT_SMTP_ENABLED: true
+    depends_on:
+      - $$cap_appname-db
+      - $$cap_appname-redis
+    caproverExtra:
+      notExposeAsWebApp: 'true'
+    networks:
+      $$cap_appname
+
+  $$cap_appname-frontend:
+    image: "penpotapp/frontend:latest"
+    volumes:
+      - $$cap_appname_assets_data:/opt/data
+    caproverExtra:
+      containerHttpPort: '9001'
+    depends_on:
+      - $$cap_appname-backend
+      - $$cap_appname-exporter
+    networks:
+      $$cap_appname
+    
+caproverOneClickApp:
+    variables:
+        - id: $$cap_public_uri
+          label: Public URI
+          defaultValue: http://penpot-frontend
+          validRegex: /^^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?$/
+        - id: $$cap_telemetry_enabled
+          label: Telemetry enabled
+          description: 'When enabled, a periodical process will send anonymous data about this instance. Telemetry data will enable us to learn on how the application is used based on real scenarios. If you want to help us, please leave it enabled. In any case you can see the source code of both client and server in the penpot repository.'
+          validRegex: /^(true|false)$/
+        - id: $$cap_smtp_from
+          label: STMP from address
+          defaultValue: no-reply@example.com
+          validRegex: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+        - id: $$cap_smtp_reply_to
+          label: STMP reply address
+          defaultValue: 
+          validRegex: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+        - id: $$cap_smtp_host
+          label: STMP host
+          defaultValue: 
+          validRegex: /^^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?$/
+        - id: $$cap_smtp_port
+          label: STMP port
+          defaultValue: 587
+          validRegex: /^^((6553[0-5])|(655[0-2][0-9])|(65[0-4][0-9]{2})|(6[0-4][0-9]{3})|([1-5][0-9]{4})|([0-5]{0,5})|([0-9]{1,4}))$$/
+        - id: $$cap_smtp_username
+          label: STMP username
+          defaultValue: 
+          validRegex: /^([a-zA-Z0-9])+$/
+        - id: $$cap_smtp_password
+          label: STMP password
+          defaultValue: 
+          validRegex: /.{1,}/
+        - id: $$cap_smtp_tls
+          label: STMP TLS support
+          defaultValue: true
+          validRegex: /^(true|false)$/
+        - id: $$cap_smtp_ssl
+          label: STMP SSL support
+          defaultValue: false
+          validRegex: /^(true|false)$/
+    instructions:
+        start: >-
+          The open-source solution for design and prototyping.
+        end: >
+            Penpot is deployed and available as $$cap_appname-frontend. IMPORTANT: It will take up to 2 minutes for Penpot to be ready. Before that, you might see a 502 error page.
+    displayName: Penpot
+    isOfficial: false
+    description: The open-source solution for design and prototyping.
+    documentation: Official docs are [here](https://github.com/penpot/penpot/tree/develop/docs)
