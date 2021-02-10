@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname-db:
-        image: postgres:$$cap_pg_version
+        image: mattermost/mattermost-prod-db:$$cap_mattermost_version
         volumes:
             - $$cap_appname-db-data:/var/lib/postgresql/data
         restart: always
@@ -12,7 +12,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname:
-        image: mattermost/mattermost-enterprise-edition:$$cap_mattermost_version
+        image: mattermost/mattermost-prod-app:$$cap_mattermost_version
         depends_on:
             - $$cap_appname-db
         volumes:
@@ -27,27 +27,24 @@ services:
             MM_PASSWORD: $$cap_pg_pass
             MM_DBNAME: mattermost
             DB_HOST: srv-captain--$$cap_appname-db
+            MM_SERVICESETTINGS_SITEURL: https://$$cap_appname.$$cap_root_domain
         caproverExtra:
-            containerHttpPort: '8065'
+            containerHttpPort: '8000'
 caproverOneClickApp:
     variables:
-      - id: $$cap_pg_version
-        label: postgres Docker Image tag
-        defaultValue: 13.1
-        description: Check out their Docker page for the valid tags https://hub.docker.com/_/postgres
       - id: $$cap_mattermost_version
         label: mattermost Docker Image tag
         defaultValue: v5.31.1
-        description: Check out their Docker page for the valid tags https://hub.docker.com/r/mattermost/mattermost-prod-app
+        description: Check out their Docker page for the valid tags https://hub.docker.com/r/mattermost/mattermost-prod-app/tags
       - id: $$cap_pg_pass
         label: Database Password
         description: Password must be at least 30 characters.  Please use a random string.
         defaultValue: $$cap_gen_random_hex(32)
         validRegex: /^[^\@]{30,}$/
     instructions:
-        start: Open-source collaboration/chat server Mattermost Team Edition.
-        end: Mattermost is deployed and available as srv-captain--$$cap_appname:80.  Note that the application may take up to ten minutes to become available.  Following deployment you must verify MM_SERVICESETTINGS_SITEURL in the application's environment refers to your app's official public URL.
-    displayName: Mattermost Entreprise Edition
+        start: Open-source collaboration/chat server Mattermost Team Edition. Note that version of mattermost is the E0 version, you do not need any licence to run it. This version is the one recommanded by mattermost to allow one click upgrade for E10 and E20 versions.
+        end: Mattermost is deployed and available as srv-captain--$$cap_appname. Note that the application may take up to ten minutes to become available.
+    displayName: Mattermost Entreprise Edition E0
     isOfficial: true
     description: Mattermost Team Edition open source collaboration/chat software
     documentation: https://github.com/mattermost/mattermost-docker
