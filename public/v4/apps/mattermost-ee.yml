@@ -32,15 +32,15 @@ services:
             containerHttpPort: '8000'
 caproverOneClickApp:
     variables:
-      - id: $$cap_mattermost_version
-        label: mattermost Docker Image tag
-        defaultValue: v5.31.1
-        description: Check out their Docker page for the valid tags https://hub.docker.com/r/mattermost/mattermost-prod-app/tags
-      - id: $$cap_pg_pass
-        label: Database Password
-        description: Password must be at least 30 characters.  Please use a random string.
-        defaultValue: $$cap_gen_random_hex(32)
-        validRegex: /^[^\@]{30,}$/
+        - id: $$cap_mattermost_version
+          label: mattermost Docker Image tag
+          defaultValue: v5.31.1
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/mattermost/mattermost-prod-app/tags
+        - id: $$cap_pg_pass
+          label: Database Password
+          description: Password must be at least 30 characters.  Please use a random string.
+          defaultValue: $$cap_gen_random_hex(32)
+          validRegex: /^[^\@]{30,}$/
     instructions:
         start: Open-source collaboration/chat server Mattermost Team Edition. Note that version of mattermost is the E0 version, you do not need any licence to run it. This version is the one recommanded by mattermost to allow one click upgrade for E10 and E20 versions.
         end: Mattermost is deployed and available as srv-captain--$$cap_appname. Note that the application may take up to ten minutes to become available.
