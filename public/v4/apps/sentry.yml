@@ -91,7 +91,7 @@ services:
                 - "RUN echo 'mail.use-tls: true' >> /etc/sentry/config.yml"
                 - 'RUN echo ''mail.username: ""'' >> /etc/sentry/config.yml'
                 - 'RUN echo ''system.admin-email: ""'' >> /etc/sentry/config.yml'
-                - 'RUN echo ''system.url-prefix: ""'' >> /etc/sentry/config.yml'
+                - 'RUN echo ''system.url-prefix: "http://$$cap_appname-sentry.$$cap_root_domain"'' >> /etc/sentry/config.yml'
                 - RUN echo '#!/bin/bash' >> ./init.sh
                 - RUN echo 'echo Starting configuration. The App will restart multiple times.' >> ./init.sh
                 - "RUN echo 'echo 1 of 4 : running upgrade' >> ./init.sh"
