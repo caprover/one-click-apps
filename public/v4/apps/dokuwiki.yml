@@ -12,7 +12,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_dokuwiki_version
           label: DokuWiki Version
-          defaultValue: 2018-04-22c-ls37
+          defaultValue: version-2020-07-29
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/dokuwiki/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_puid
