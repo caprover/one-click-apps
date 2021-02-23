@@ -41,7 +41,7 @@ services:
                 - RUN chmod +x docker/entrypoints/rails.sh
                 - ENTRYPOINT ["docker/entrypoints/rails.sh"]
                 - EXPOSE 3000
-                - CMD bundle exec rails db:prepare; bundle exec rails s -b 0.0.0.0 -p 3000
+                - CMD bundle exec rails db:chatwoot_prepare; bundle exec rails s -b 0.0.0.0 -p 3000
     $$cap_appname-worker:
         restart: always
         environment:
@@ -65,8 +65,8 @@ caproverOneClickApp:
     variables:
         - id: $$cap_chatwoot_version
           label: Chatwoot Version Tag
-          description: https://hub.docker.com/r/chatwoot/chatwoot/tags
-          defaultValue: v1.9.0
+          description: Choose the latest version from https://hub.docker.com/r/chatwoot/chatwoot/tags
+          defaultValue: v1.13.1
         - id: $$cap_chatwoot_secret_key_base
           label: Chatwoot Secret Key Base
           description: The randomized string which is used to verify the integrity of signed cookies. Please use a string with more than 26 characters
@@ -82,7 +82,7 @@ caproverOneClickApp:
     instructions:
         start: Open-source customer support saas alternative to Intercom, Drift, Crisp.
         end: >-
-            Your Chatwoot instance is now successfully deployed. You can create a new account using signup option. 
+            Your Chatwoot instance is now successfully deployed.
 
              Refer https://www.chatwoot.com/docs/environment-variables/ for full list of environment variables available. Let us know if you have any queries through hello@chatwoot.com
     displayName: Chatwoot
