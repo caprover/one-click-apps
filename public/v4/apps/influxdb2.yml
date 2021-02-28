@@ -14,7 +14,7 @@ services:
             DOCKER_INFLUXDB_INIT_MODE: setup
             DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: $$cap_influx_token
         caproverExtra:
-            notExposeAsWebApp: 'true'
+            containerHttpPort: '8086'
 caproverOneClickApp:
     variables:
         - id: $$cap_influx_version
@@ -48,7 +48,7 @@ caproverOneClickApp:
 
              Enter your Influxdb configuration parameters and click on next. The default configuration has no users or authentication and is only accessible to other Caprover apps. It will take about a minute for the process to finish.
         end: >-
-            All set. Influx is deployed and available as srv-captain--$$cap_appname:8086 to other apps.
+            All set. Influx is deployed and available as srv-captain--$$cap_appname:8086 to other apps. Externally you can access it via HTTP like a regular app. Make sure you enable SSL.
     displayName: InfluxDb2
     isOfficial: true
     description: InfluxDB2 is a time series database. It stores large amounts of timestamped data, including DevOps monitoring, application metrics, IoT sensor data, and real-time analytics.
