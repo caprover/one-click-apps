@@ -15,7 +15,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_version
           label: version tag
-          description: Checkout their docker page for the valid tags @ https://hub.docker.com/r/grburst/etesync
+          description: Check out their docker page for the valid tags @ https://hub.docker.com/r/grburst/etesync
           defaultValue: alpine
         - id: $$cap_SUPER_USER
           label: user name
@@ -30,8 +30,8 @@ caproverOneClickApp:
           description: etesync super user password
           validRegex: /^([a-zA-Z0-9])+$/
     instructions:
-        start: ETESync is a open source and privacy focuse sync service
+        start: ETESync is a open source and privacy focused sync service
         end: Deployment of ETEsync is finished. You might see 502 errors for the next 2 minutes. Goto <YOUR-APP-URL>/admin to manage your users for ETEsync.
     displayName: ETESync
-    description: ETESync is a self hosted syning solution, it is secure, end-to-end encrypted, and privacy respecting sync for your contacts, calendars and tasks.
+    description: ETESync is a self hosted syncing solution, it is secure, end-to-end encrypted, and privacy respecting sync for your contacts, calendars and tasks.
     documentation: Read the documentation @ https://github.com/GRBurst/docker-etesync-server
