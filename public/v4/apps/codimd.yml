@@ -42,7 +42,7 @@ caproverOneClickApp:
           id: $$cap_timezone
     instructions:
         start: |-
-            Realtime collaborative markdown notes on all platforms.
+            Realtime collaborative Markdown notes on all platforms.
 
             GitHub: https://github.com/hackmdio/codimd
         end: |-
@@ -51,5 +51,5 @@ caproverOneClickApp:
             Your service is available as $$cap_appname
     displayName: CodiMD
     isOfficial: true
-    description: Realtime collaborative markdown notes on all platforms
+    description: Realtime collaborative Markdown notes on all platforms
     documentation: https://hackmd.io/c/codimd-documentation

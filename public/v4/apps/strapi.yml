@@ -57,7 +57,7 @@ caproverOneClickApp:
             1Ghz minimum CPU clock speed
         end: >-
             Strapi is deployed and available as $$cap_appname-core 
-             IMPORTANT!! It takes up to 2-5 minutes for Strapi to boot up. You will see a 502 Error until the startup is finished.
+            IMPORTANT!! It takes up to 2-5 minutes for Strapi to boot up. You will see a 502 Error until the startup is finished.
 
             IMPORTANT: You need to add a config file manually to support the correct domain name. See this issue for more details: https://github.com/strapi/strapi-docker/issues/173
     displayName: ''

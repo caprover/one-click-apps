@@ -81,7 +81,7 @@ caproverOneClickApp:
           label: DISABLE CRON
           defaultValue: ''
     instructions:
-        start: Runs mongodump to backup data using cronjob to an s3 bucket
+        start: Runs mongodump to backup data using cronjob to an S3 bucket
         end: MongoDB Backup S3 is ready
     displayName: MongoDB Backup Amazon S3
     description: Runs mongodump to backup data using cronjob to an Amazon S3 bucket
