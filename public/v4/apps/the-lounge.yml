@@ -18,7 +18,7 @@ caproverOneClickApp:
         start: The Lounge, a self-hosted web IRC client.
         end: >-
             Your instance is now fully deployed.
-            
+
             To create your user, run `docker exec --user node -it $(docker ps -f name=srv-captain--$$cap_appname --quiet) thelounge add [user]` on your host.
     displayName: The Lounge
     isOfficial: true

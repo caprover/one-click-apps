@@ -57,7 +57,7 @@ caproverOneClickApp:
             4 - Add the Collabora Online extension for Nextcloud (3.7.0 for now)
 
             5 - Go to your Nextcloud plugin configuration > collabora online > use your own server > paste the FQDN of your new instance of collabora > save
-            
+
             That's all, you can use collabora online to all your Nextcloud instance.
     displayName: Collabora Online
     isOfficial: true
