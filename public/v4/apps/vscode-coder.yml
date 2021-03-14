@@ -26,7 +26,7 @@ caproverOneClickApp:
         end: >-
             Code server is deployed and is available as $$cap_appname.
 
-             IMPORTANT: Make sure to enable websocket capability in the app config on CapRover dashboard!
+            IMPORTANT: Make sure to enable websocket capability in the app config on CapRover dashboard!
         start: >-
             This installation will install a Visual Studio Code that's accessible through browser!
 

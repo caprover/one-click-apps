@@ -29,7 +29,7 @@ caproverOneClickApp:
         end: >
             Hasura is deployed and available as $$cap_appname. 
 
-             IMPORTANT: It will take up to 2 minutes for Hasura to be ready. Before that, you might see 502 error page.
+            IMPORTANT: It will take up to 2 minutes for Hasura to be ready. Before that, you might see 502 error page.
         start: Instant Realtime GraphQL on Postgres with web admin console.
     displayName: Hasura - No Database
     isOfficial: true

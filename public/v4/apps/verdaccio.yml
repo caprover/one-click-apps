@@ -20,11 +20,11 @@ caproverOneClickApp:
         start: >-
             Verdaccio is a simple, zero-config-required local private npm registry. 
 
-             No need for an entire database just to get started! Verdaccio comes out of the box with its own tiny database, and the ability to proxy other registries (eg. npmjs.org), caching the downloaded modules along the way. For those looking to extend their storage capabilities, Verdaccio supports various community-made plugins to hook into services such as Amazon's S3, Google Cloud Storage, or create your own plugin. 
+            No need for an entire database just to get started! Verdaccio comes out of the box with its own tiny database, and the ability to proxy other registries (eg. npmjs.org), caching the downloaded modules along the way. For those looking to extend their storage capabilities, Verdaccio supports various community-made plugins to hook into services such as Amazon's S3, Google Cloud Storage, or create your own plugin. 
 
-             For more details, see: https://hub.docker.com/r/verdaccio/verdaccio
+            For more details, see: https://hub.docker.com/r/verdaccio/verdaccio
 
-              Enter your verdaccio Configuration parameters and click on next. It will take about a minute for the process to finish.
+            Enter your verdaccio Configuration parameters and click on next. It will take about a minute for the process to finish.
         end: Verdaccio is deployed and available as srv-captain--$$cap_appname:4873 to other apps..
     displayName: ''
     isOfficial: true

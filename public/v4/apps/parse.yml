@@ -78,7 +78,7 @@ caproverOneClickApp:
         start: >-
             Parse Server is an open source version of the Parse backend that can be deployed to any infrastructure that can run Node.js. For more information on Parse platform see http://parseplatform.org
 
-             Enter your Parse Configuration parameters and click on next. A MongoDB (database) and a Parse container will be created for you.  The process will take about a minute for the process to finish.
+            Enter your Parse Configuration parameters and click on next. A MongoDB (database) and a Parse container will be created for you.  The process will take about a minute for the process to finish.
         end: 'Parse is deployed! IMPORTANT: Make sure to enable HTTPS and Force HTTPS on your apps before accessing them! Your Parse Dashboard username is "caprover"'
     displayName: ''
     isOfficial: true

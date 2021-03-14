@@ -80,12 +80,12 @@ caproverOneClickApp:
           description: Password must be at least 12 characters. Please use a random string.
           validRegex: /^[^\@]{12,}$/
     instructions:
-        start: Open-source customer support saas alternative to Intercom, Drift, Crisp.
+        start: Open-source customer support SaaS alternative to Intercom, Drift, Crisp.
         end: >-
             Your Chatwoot instance is now successfully deployed.
 
-             Refer https://www.chatwoot.com/docs/environment-variables/ for full list of environment variables available. Let us know if you have any queries through hello@chatwoot.com
+            Refer https://www.chatwoot.com/docs/environment-variables/ for full list of environment variables available. Let us know if you have any queries through hello@chatwoot.com
     displayName: Chatwoot
     isOfficial: true
-    description: Open-source customer support saas alternative to Intercom, Drift, Crisp
+    description: Open-source customer support SaaS alternative to Intercom, Drift, Crisp
     documentation: 'Read more at: https://www.chatwoot.com/docs'

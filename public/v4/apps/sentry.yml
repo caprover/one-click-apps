@@ -163,21 +163,21 @@ caproverOneClickApp:
         start: >-
             Open-source error tracking that helps developers monitor and fix crashes in real time.
 
-             Information about this container:
-             https://hub.docker.com/_/sentry/ 
+            Information about this container:
+            https://hub.docker.com/_/sentry/ 
 
             Documentation:
-             https://docs.sentry.io/server/
+            https://docs.sentry.io/server/
 
             Minimum Hardware Requirements: At least 3GB Ram
 
             Not filling this requirement may cause some errors during the initial configuration when running the database migrations.
 
-             Enter your Sentry Configuration parameters and click on next. The initial installation will take about 5 minutes for the process to finish.
+            Enter your Sentry Configuration parameters and click on next. The initial installation will take about 5 minutes for the process to finish.
         end: >
             Sentry is deployed and available as srv-captain--$$cap_appname:9000. 
 
-             IMPORTANT: It will take up to 10 minutes for Sentry to be ready. Before that, you might see 502 error page.
+            IMPORTANT: It will take up to 10 minutes for Sentry to be ready. Before that, you might see 502 error page.
     displayName: ''
     isOfficial: true
     description: Open-source error tracking with full stacktraces & asynchronous context

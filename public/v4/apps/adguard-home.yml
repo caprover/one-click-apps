@@ -19,7 +19,7 @@ caproverOneClickApp:
         - id: $$cap_adguard_version
           label: AdGuard Home Version
           defaultValue: 'v0.104.3'
-          description: Checkout their docker page for the valid tags https://hub.docker.com/r/adguard/adguardhome/tags
+          description: Check out their docker page for the valid tags https://hub.docker.com/r/adguard/adguardhome/tags
     instructions:
         start: >-
             AdGuard Home is a fast and easy way to block ads on any device and protect kids online!

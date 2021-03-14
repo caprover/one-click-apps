@@ -31,9 +31,9 @@ caproverOneClickApp:
           defaultValue: long-secret
           validRegex: /^\s*\S.*$/
     instructions:
-        start: Reporting tools for creating PDF, HTMLS, Excel by converting your HTML + CSS + Javascript knowledge.
+        start: Reporting tools for creating PDF, HTMLS, Excel by converting your HTML + CSS + JavaScript knowledge.
         end: Congratulations! You have the new jsReport instance running. Happy reporting!
     displayName: ''
     isOfficial: true
-    description: jsreport is an open source reporting platform where reports are designed using popular javascript templating engines
+    description: jsreport is an open source reporting platform where reports are designed using popular JavaScript templating engines
     documentation: Taken from https://hub.docker.com/r/jsreport/jsreport/
