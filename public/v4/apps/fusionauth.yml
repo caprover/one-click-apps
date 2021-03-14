@@ -113,7 +113,7 @@ caproverOneClickApp:
           validRegex: /^([0-9])+$/
     instructions:
         start: >-
-            NOTE: This app requires at least 4GB of RAM. Without this requirement it fails to start up. 
+            NOTE: This app requires at least 4GB of RAM. Without this requirement it fails to start up.
 
 
             FusionAuth is a modern platform for Customer Identity and Access Management (CIAM). FusionAuth provides APIs and a responsive web user interface to support login, registration, localized email, multi-factor authentication, reporting and much more. See: https://fusionauth.io/docs/v1/tech/getting-started/ and https://github.com/FusionAuth/fusionauth-containers

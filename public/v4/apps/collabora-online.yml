@@ -37,7 +37,7 @@ caproverOneClickApp:
           validRegex: /^([^\s^\/])+$/
     instructions:
         start: >-
-            Collabora CODE version is an online Office Suite. 
+            Collabora CODE version is an online Office Suite.
 
             When you are using Nextcloud or ownCloud you can use it to enhance your online office document experience.
 

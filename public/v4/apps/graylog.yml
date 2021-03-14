@@ -90,7 +90,7 @@ caproverOneClickApp:
           validRegex: /^([0-9])+$/
     instructions:
         start: >-
-            Graylog Log Management. 
+            Graylog Log Management.
 
 
             NOTICE!:

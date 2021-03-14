@@ -98,7 +98,7 @@ caproverOneClickApp:
     instructions:
         start: 'PeerTube is a free, decentralized and federated video platform. (Github : https://github.com/Chocobozzz/PeerTube/)'
         end: >
-            Peertube is deployed and available as $$cap_appname. 
+            Peertube is deployed and available as $$cap_appname.
 
              IMPORTANT: It will take up to 2 minutes for peertube to be ready. Before that, you might see 502 error page.
     displayName: ''

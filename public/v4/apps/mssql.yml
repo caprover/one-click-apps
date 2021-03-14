@@ -45,14 +45,14 @@ caproverOneClickApp:
           validRegex: /^Y{1}$/
     instructions:
         start: >-
-            SQL Server is a central part of the Microsoft data platform. SQL Server is an industry leader in operational database management systems (ODBMS).  
+            SQL Server is a central part of the Microsoft data platform. SQL Server is an industry leader in operational database management systems (ODBMS).
 
 
-            SQL Server Developer edition lets developers build any kind of application on top of SQL Server. 
+            SQL Server Developer edition lets developers build any kind of application on top of SQL Server.
 
-             It includes all the functionality of Enterprise edition, but is licensed for use as a development and test system, not as a production server. 
+             It includes all the functionality of Enterprise edition, but is licensed for use as a development and test system, not as a production server.
 
-             SQL Server Developer Edition cannot be used in a production environment. 
+             SQL Server Developer Edition cannot be used in a production environment.
 
              The SQL Server 2017 Developer Edition license terms are located here: https://go.microsoft.com/fwlink/?linkid=857698 .
 

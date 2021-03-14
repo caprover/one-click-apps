@@ -14,7 +14,7 @@ caproverOneClickApp:
     instructions:
         start: Cockpit is Simple Content Platform to manage any structured content. A self-hosted headless and api-driven CMS.
         end: >-
-            Cockpit is deployed and available as $$cap_appname. 
+            Cockpit is deployed and available as $$cap_appname.
 
              IMPORTANT: Navigate to /install to finish the installation and to create an admin user!
     displayName: Cockpit
