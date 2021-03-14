@@ -12,7 +12,7 @@ caproverOneClickApp:
         - id: $$cap_thumbor_version
           label: Thumbor Version
           defaultValue: 6.7.0
-          description: Checkout their Docker page for the valid tags https://hub.docker.com/r/minimalcompact/thumbor/tags/
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/minimalcompact/thumbor/tags/
           validRegex: /^([^\s^\/])+$/
     instructions:
         start: >-

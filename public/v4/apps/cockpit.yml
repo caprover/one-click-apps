@@ -9,7 +9,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_cockpit_version
           label: cockpit version tag
-          description: Checkout their docker page for the valid tags @ https://hub.docker.com/r/agentejo/cockpit/tags
+          description: Check out their docker page for the valid tags @ https://hub.docker.com/r/agentejo/cockpit/tags
           defaultValue: 0.9.3
     instructions:
         start: Cockpit is Simple Content Platform to manage any structured content. A self-hosted headless and api-driven CMS.

@@ -27,7 +27,7 @@ caproverOneClickApp:
         - id: $$cap_ackee_version
           label: Ackee Version
           defaultValue: '2.3.0'
-          description: Checkout their docker page for the valid tags https://hub.docker.com/r/electerious/ackee/tags
+          description: Check out their docker page for the valid tags https://hub.docker.com/r/electerious/ackee/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_ackee_username
           label: Ackee Admin User
@@ -45,7 +45,7 @@ caproverOneClickApp:
         - id: $$cap_mongo_version
           label: MongoDB Version
           defaultValue: '4.0.20'
-          description: Checkout their docker page for the valid tags https://hub.docker.com/r/library/mongo/tags/
+          description: Check out their docker page for the valid tags https://hub.docker.com/r/library/mongo/tags/
           validRegex: /^([^\s^\/])+$/
     instructions:
         start: >-

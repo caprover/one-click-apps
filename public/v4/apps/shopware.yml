@@ -77,7 +77,7 @@ caproverOneClickApp:
           defaultValue: shopware
     instructions:
         start: Shopware is a trendsetting ecommerce platform to power your online business.
-        end: Shopware is successfully deployed. Please wait a minute before accessing the shop. For help and support checkout https://github.com/shyim/shopware-image
+        end: Shopware is successfully deployed. Please wait a minute before accessing the shop. For help and support check out https://github.com/shyim/shopware-image
     displayName: Shopware
     description: Shopware is a trendsetting ecommerce platform to power your online business.
     documentation: See https://hub.docker.com/r/shyim/shopware for tags and other variables

@@ -83,7 +83,7 @@ caproverOneClickApp:
           validRegex: /^([0-9])+$/
         - id: $$cap_elasticsearch_version
           label: 'Elasticsearch Version Tag '
-          description: 'Checkout the releases overview: https://www.elastic.co/de/downloads/elasticsearch'
+          description: 'Check out the releases overview: https://www.elastic.co/de/downloads/elasticsearch'
           defaultValue: 6.7.1
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_elasticsearch_cluster_name

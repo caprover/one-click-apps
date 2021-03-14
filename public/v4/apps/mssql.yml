@@ -19,7 +19,7 @@ caproverOneClickApp:
         - id: $$cap_server_version
           label: Version
           defaultValue: 2017-CU12-ubuntu
-          description: Checkout this page for the valid tags https://mcr.microsoft.com/v2/mssql/server/tags/list
+          description: Check out this page for the valid tags https://mcr.microsoft.com/v2/mssql/server/tags/list
         - id: $$cap_host_port
           label: Host Port
           defaultValue: '1433'
@@ -40,7 +40,7 @@ caproverOneClickApp:
         - id: $$cap_accept_eula
           label: Accept EULA (Y/N)
           description: >-
-              Confirms your acceptance of the End-User Licensing Agreement https://go.microsoft.com/fwlink/?linkid=857698. 
+              Confirms your acceptance of the End-User Licensing Agreement https://go.microsoft.com/fwlink/?linkid=857698.
                By passing the value "Y", you are expressing that you have a valid and existing license for the edition and version of SQL Server that you intend to use. You also agree that your use of SQL Server software running in a Docker container image will be governed by the terms of your SQL Server license.
           validRegex: /^Y{1}$/
     instructions:

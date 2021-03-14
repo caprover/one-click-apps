@@ -34,7 +34,7 @@ caproverOneClickApp:
         - id: $$cap_statping_version
           label: Statping Version
           defaultValue: 'v0.90.74'
-          description: Checkout their docker page for the valid tags https://hub.docker.com/r/statping/statping/tags
+          description: Check out their docker page for the valid tags https://hub.docker.com/r/statping/statping/tags
           validRegex: /^([^\s^\/])+$/
 
         - id: $$cap_db_user
