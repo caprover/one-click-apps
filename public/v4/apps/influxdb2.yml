@@ -46,7 +46,7 @@ caproverOneClickApp:
         start: >-
             Influxdb2 is a time series database, and part of the tickstack. After installation on CapRover, it will be available as srv-captain--YOUR_CONTAINER_NAME to other CapRover apps.
 
-             Enter your Influxdb configuration parameters and click on next. The default configuration has no users or authentication and is only accessible to other Caprover apps. It will take about a minute for the process to finish.
+            Enter your Influxdb configuration parameters and click on next. The default configuration has no users or authentication and is only accessible to other Caprover apps. It will take about a minute for the process to finish.
         end: >-
             All set. Influx is deployed and available as srv-captain--$$cap_appname:8086 to other apps. Externally you can access it via HTTP like a regular app. Make sure you enable SSL.
     displayName: InfluxDb2

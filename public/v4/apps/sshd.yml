@@ -37,14 +37,13 @@ caproverOneClickApp:
             The following app sets up an SSHd service in a container that you can use to connect to and inspect other container’s volumes, or to get quick access to a test container.
 
 
-
             IMPORTANT:
 
             This setup uses password login. You can optionally mount your keys and use public/private key to log in.
         end: >-
             The container is built and deployed. You can now connect to this container from your local machine by running the following command: 
 
-             ssh root@IpAddressOfServer -p $$cap_sshd_port
+            ssh root@IpAddressOfServer -p $$cap_sshd_port
     displayName: SSH Container
     isOfficial: true
     description: Just a simple container that has sshd installed so you can SSH directly into this container.

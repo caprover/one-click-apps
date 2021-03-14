@@ -48,18 +48,15 @@ caproverOneClickApp:
 
             IMPORTANT: You need do 5 manual steps before access.
 
-             1 - enable websocket on HTTP settings tab
+            1 - Enable websocket on HTTP settings tab
 
-             2 - add the "proxy_read_timeout 36000s;" instruction below "proxy_http_version 1.1;"
+            2 - Add the "proxy_read_timeout 36000s;" instruction below "proxy_http_version 1.1;"
 
             3 - Enable and force HTTPS and wait few minutes.
 
+            4 - Add the Collabora Online extension for Nextcloud (3.7.0 for now)
 
-            4 - add the Collabora Online extension for Nextcloud (3.7.0 for now)
-
-
-            5 - go to your Nextcloud plugin configuration > collabora online > use your own server > paste the FQDN of your new instance of collabora > save
-
+            5 - Go to your Nextcloud plugin configuration > collabora online > use your own server > paste the FQDN of your new instance of collabora > save
 
             That's all, you can use collabora online to all your Nextcloud instance.
     displayName: Collabora Online

@@ -46,5 +46,5 @@ caproverOneClickApp:
             IMPORTANT: It will take up to 2 minutes for the application to be ready. Before that, you might see a 502 error page.
     displayName: Coral Talk
     isOfficial: true
-    description: Coral is an open source commenting platform with a full suite of tools helps moderators easily identify disruptive comments.
+    description: Coral is an open-source commenting platform with a full suite of tools helps moderators easily identify disruptive comments.
     documentation: Taken from https://docs.coralproject.net/coral/installation-from-docker/

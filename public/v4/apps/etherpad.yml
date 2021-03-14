@@ -45,7 +45,7 @@ caproverOneClickApp:
           validRegex: /^([^\s^\/])+$/
     instructions:
         start: Etherpad is a real-time collaborative editor for the web
-        end: Etherpad is a real-time collaborative editor for the web is deployed and available as srv-captain--$$cap_appname.  Note that the application may take some time to become available.
+        end: Etherpad is a real-time collaborative editor for the web is deployed and available as srv-captain--$$cap_appname. Note that the application may take some time to become available.
     displayName: Etherpad
     isOfficial: true
     description: Etherpad is a real-time collaborative editor for the web

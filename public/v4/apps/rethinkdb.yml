@@ -12,7 +12,7 @@ caproverOneClickApp:
         end: >
             RethinkDB is deployed and available as http://$$cap_appname.$$cap_root_domain/.
 
-             It may take a few minutes for RethinkDB to initialize.
+            It may take a few minutes for RethinkDB to initialize.
         start: RethinkDB is an open-source, distributed database built to store JSON documents and effortlessly scale to multiple machines.
     displayName: RethinkDB
     isOfficial: true

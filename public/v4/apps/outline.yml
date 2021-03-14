@@ -102,7 +102,7 @@ caproverOneClickApp:
 
             You can customize more settings by environmental variables described here: https://github.com/outline/outline/blob/0deecfac446c37545e0787b3d32062e608a950ab/.env.sample 
 
-             IMPORTANT: It will take up to 2 minutes for it to be ready. Before that, you might see a 502 error page.
+            IMPORTANT: It will take up to 2 minutes for it to be ready. Before that, you might see a 502 error page.
     displayName: Outline
     isOfficial: true
     description: An open, extensible, wiki for your team built using React and Node.js.

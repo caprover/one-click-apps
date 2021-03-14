@@ -35,7 +35,7 @@ caproverOneClickApp:
     instructions:
         start: >-
             Leantime is a lean project management system for innovators. Designed to help you manage your projects from ideation to delivery.
-             See more details here: https://leantime.io
+            See more details here: https://leantime.io
         end: Leantime is deployed as available as $$cap_appname! You MUST ENABLE HTTPS before accessing the panel.
     displayName: Leantime
     isOfficial: true

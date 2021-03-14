@@ -86,19 +86,19 @@ caproverOneClickApp:
 
             As said in the documentation (https://docs.directus.io/installation/docker.html#step-4-initialize-the-database-and-an-admin-user), currently (30/06/2020), Directus does not support automatic database setup so you need to do it yourself the first time you launch directus.
 
-             But since Caprover does not use standard docker-compose file, you need to run a slightly uglier command than the one shown in the documentation.
+            But since Caprover does not use standard docker-compose file, you need to run a slightly uglier command than the one shown in the documentation.
 
-             Run the following command on your server (using SSH for example, you might need to be root):
+            Run the following command on your server (using SSH for example, you might need to be root):
 
             docker run -e DIRECTUS_DATABASE_HOST=srv-captain--$$cap_appname-db -e DIRECTUS_DATABASE_NAME=$$cap_mysql_database_name -e DIRECTUS_DATABASE_USERNAME=$$cap_mysql_user -e DIRECTUS_DATABASE_PASSWORD=$$cap_mysql_passwd -e DIRECTUS_AUTH_SECRETKEY=$$cap_directus_auth_secret_key -e DIRECTUS_AUTH_PUBLICKEY=$$cap_directus_auth_public_key --network $(docker network ls | grep "captain-overlay-network" | awk '{print $1}') --rm directus/directus:$$cap_directus_tag install --email $$cap_directus_install_email --password $$cap_directus_install_password
 
 
             Once this is done, Directus is deployed and available as $$cap_appname-directus.
 
-             It may take a few minutes for Directus to initialize.
+            It may take a few minutes for Directus to initialize.
         start: >-
             Directus is an open-source suite of software that wraps custom SQL databases with a dynamic API and intuitive Admin App.
-             For more information and available options, see https://github.com/directus/docker or the official documentation at https://docs.directus.io
+            For more information and available options, see https://github.com/directus/docker or the official documentation at https://docs.directus.io
     displayName: ''
     isOfficial: true
     description: Directus is an open-source tool for managing content across all your omni-channel digital experiences

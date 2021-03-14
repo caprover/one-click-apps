@@ -61,11 +61,9 @@ caproverOneClickApp:
             read more on https://strapi.io/documentation/developer-docs/latest/setup-deployment-guides/deployment.html#hosting-provider-guides
         end: >-
             Strapi is deployed and available as $$cap_appname
-
             IMPORTANT: It will take up to 3 minutes for Strapi to be ready. Before that, you will see an 502 error page.
 
             Note when installing a plugin an error will be displayed. This error message is due to a restart on plugin installation.
-
             This behaviour is normal. Refresh the page after few seconds (502 can happen if you refresh too fast).
     displayName: ''
     isOfficial: true

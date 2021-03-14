@@ -60,7 +60,7 @@ caproverOneClickApp:
 
             PREREQUISITE: 
 
-            MongoDB database with initial appsmith installation data
+            MongoDB database with initial appsmith installation data.
         end: >-
             Appsmith is deployed and available as $$cap_appname.
 
