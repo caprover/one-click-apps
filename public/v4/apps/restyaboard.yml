@@ -1,0 +1,47 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: restyaplatform/restyaboard:dev
+        volumes:
+            - $$cap_appname-media:/var/lib/nginx/html/media
+        environment:
+            - POSTGRES_HOST=srv-captain--$$cap_appname-postgres
+            - POSTGRES_PORT=5432
+            - POSTGRES_ADMIN_USER=postgres
+            - POSTGRES_ADMIN_PASS=$$cap_db_pass
+            - RESTYA_DB_USERNAME=restya
+            - RESTYA_DB_USERPASS=restya
+            - RESTYA_DB=restyaboard
+            # - SMTP_SERVER=smtp_relay
+            # - SMTP_PORT=587
+            # - TZ=Etc/UTC
+        depends_on:
+            - $$cap_appname-postgres
+        restart: always
+        caproverExtra:
+            containerHttpPort: '80'
+            
+    $$cap_appname-postgres:
+    image: postgres:12-alpine
+    volumes:
+      - $$cap_appname-postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=$$cap_db_pass
+    restart: always
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+            
+caproverOneClickApp:
+    variables:
+        - id: $$cap_db_pass
+          label: Database administrator password
+          description: 'Please provide a password for the DB admin user (the user is admin by default)'
+          validRegex: /.{1,}/
+    instructions:
+        start: Restyaboard is a Kanban Board similar to Trello and Wekan. This first version does not provide email integration or functionality. 
+        end: Restyaboard is deployed and available as srv-captain--$$cap_appname.  Note that the application may take some time to become available. The initial user is "admin" with the password "restya"
+    displayName: Restyaboard
+    isOfficial: false
+    description: Restyaboard is a Kanban Board almost like Trello. 
+    documentation: 'https://restya.com/board/docs/install-restyaboard-docker'
