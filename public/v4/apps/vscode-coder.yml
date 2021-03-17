@@ -13,7 +13,7 @@ services:
         caproverExtra:
             containerHttpPort: '8080'
             dockerfileLines:
-                - FROM codercom/code-server:3.8.0
+                - FROM codercom/code-server:3.9.1
                 - '# Similar to the original file, except setting the user to root to prevent permission issues.'
                 - USER root
 caproverOneClickApp:
