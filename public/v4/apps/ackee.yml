@@ -41,7 +41,7 @@ caproverOneClickApp:
         - id: $$cap_ackee_access_origin
           label: CORS headers
           defaultValue: 'https://example.com,https://example2.com'
-          description: 'Ackee requires correct CORS headers. pls read https://docs.ackee.electerious.com/#/docs/CORS%20headers#heroku-or-platforms-as-a-service-configuration'
+          description: 'Ackee requires correct CORS headers. Please read https://docs.ackee.electerious.com/#/docs/CORS%20headers#heroku-or-platforms-as-a-service-configuration'
         - id: $$cap_mongo_version
           label: MongoDB Version
           defaultValue: '4.0.20'

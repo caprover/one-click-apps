@@ -15,7 +15,7 @@ caproverOneClickApp:
           description: Find versions on DockerHub https://hub.docker.com/r/grafana/grafana/tags
           id: $$cap_version
     instructions:
-        end: Grafana is now starting.  You can log in with the default login/password of admin/admin.
+        end: Grafana is now starting. You can log in with the default login/password of admin/admin.
         start: 'Read more about Grafana: https://grafana.com/'
     displayName: Grafana
     isOfficial: true

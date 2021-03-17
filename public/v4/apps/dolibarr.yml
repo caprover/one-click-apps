@@ -60,5 +60,5 @@ caproverOneClickApp:
         start: Dolibarr is an Open Source ERP & CRM for Business
         end: Dolibarr is deployed and available as srv-captain--$$cap_appname:8080 to other apps.
     displayName: Dolibarr
-    description: Open Source ERP & CRM for Business (sme or large companies, freelancers, foundations)
+    description: Open Source ERP & CRM for Business (SME or large companies, freelancers, foundations)
     documentation: https://hub.docker.com/r/upshift/dolibarr

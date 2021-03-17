@@ -102,7 +102,7 @@ caproverOneClickApp:
         end: >
             Ghost is deployed and available as $$cap_appname. 
 
-             IMPORTANT: It will take up to 2 minutes for Ghost to be ready. Before that, you might see 502 error page.
+            IMPORTANT: It will take up to 2 minutes for Ghost to be ready. Before that, you might see 502 error page.
         start: Ghost is a fully open source, adaptable platform for building and running a modern online publication. We power blogs, magazines and journalists from Zappos to Sky News.
     displayName: Ghost - No Database
     isOfficial: true

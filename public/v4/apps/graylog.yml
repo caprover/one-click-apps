@@ -94,9 +94,9 @@ caproverOneClickApp:
 
 
             NOTICE!:
-             Be sure to extend the virtual memory on all your hosts!
-              1. echo 'vm.max_map_count=262144' >> /etc/sysctl.conf
-              2. sysctl -p
+            Be sure to extend the virtual memory on all your hosts!
+            1. echo 'vm.max_map_count=262144' >> /etc/sysctl.conf
+            2. sysctl -p
         end: >-
             Deployment of Graylog if finished.
             You will see 502 errors for the next 5+ minutes while Graylog starts up.

@@ -51,7 +51,7 @@ caproverOneClickApp:
         start: >-
             MongoExpress is a Web-based MongoDB admin interface, written with Node.js and express.  See MongoExpress page for more details: https://github.com/mongo-express/mongo-express
 
-             Enter your MongoExpress Configuration parameters and click on next. It will take about a minute for the process to finish.
+            Enter your MongoExpress Configuration parameters and click on next. It will take about a minute for the process to finish.
         end: MongoExpress is deployed and available as $$cap_appname
     displayName: Mongo Express
     isOfficial: true

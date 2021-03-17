@@ -50,13 +50,13 @@ caproverOneClickApp:
 
             SQL Server Developer edition lets developers build any kind of application on top of SQL Server.
 
-             It includes all the functionality of Enterprise edition, but is licensed for use as a development and test system, not as a production server.
+            It includes all the functionality of Enterprise edition, but is licensed for use as a development and test system, not as a production server. 
 
-             SQL Server Developer Edition cannot be used in a production environment.
+            SQL Server Developer Edition cannot be used in a production environment. 
 
-             The SQL Server 2017 Developer Edition license terms are located here: https://go.microsoft.com/fwlink/?linkid=857698 .
+            The SQL Server 2017 Developer Edition license terms are located here: https://go.microsoft.com/fwlink/?linkid=857698 .
 
-             After installation on CapRover, it will be available as srv-captain--YOUR_CONTAINER_NAME at the port specified for "Container TCP Port" field to other apps.
+            After installation on CapRover, it will be available as srv-captain--YOUR_CONTAINER_NAME at the port specified for "Container TCP Port" field to other apps.
 
             Enter your SQL Server Configuration parameters and click on next. It will take about a minute for the process to finish.
         end: SQL Server is deployed and available as srv-captain--$$cap_appname-db:$$cap_container_port to other apps.
