@@ -27,7 +27,7 @@ caproverOneClickApp:
         - id: $$cap_openldap_version
           label: Openldap Version
           defaultValue: 1.4.0
-          description: Checkout their docker page for the valid tags https://hub.docker.com/r/osixia/openldap/tags
+          description: Check out their docker page for the valid tags https://hub.docker.com/r/osixia/openldap/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_openldap_ldap-organisation
           label: Ldap Organisation
@@ -40,7 +40,7 @@ caproverOneClickApp:
         - id: $$cap_phpldapadmin_version
           label: PHPLadapAdmin Version
           defaultValue: 0.9.0
-          description: Checkout their docker page for the valid tags https://hub.docker.com/r/osixia/phpldapadmin/tags
+          description: Check out their docker page for the valid tags https://hub.docker.com/r/osixia/phpldapadmin/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_phpldapadmin_admin-email
           label: The admin email
