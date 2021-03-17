@@ -35,7 +35,7 @@ caproverOneClickApp:
         - id: $$cap_postgres_version
           label: Postgres Version
           defaultValue: 9.6.18-alpine
-          description: Checkout their docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/
+          description: Check out their docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_postgres_password
           label: Postgres Password
@@ -44,7 +44,7 @@ caproverOneClickApp:
         - id: $$cap_odoo_version
           label: Odoo Version
           defaultValue: '13.0'
-          description: Checkout their docker page for the valid tags https://hub.docker.com/_/odoo?tab=tags
+          description: Check out their docker page for the valid tags https://hub.docker.com/_/odoo?tab=tags
           validRegex: /^([^\s^\/])+$/
     instructions:
         start: Odoo is an open source product CRM

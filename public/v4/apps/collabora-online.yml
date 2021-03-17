@@ -26,7 +26,7 @@ caproverOneClickApp:
         - id: $$cap_collabora_version
           label: Collabora CODE Version
           defaultValue: 4.2.4.4
-          description: Checkout their docker page for the valid tags https://hub.docker.com/r/collabora/code/tags/
+          description: Check out their docker page for the valid tags https://hub.docker.com/r/collabora/code/tags/
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_wopihost_domain
           label: WOPI host domain - yournextcloud.your.rootdomain.com
@@ -37,7 +37,7 @@ caproverOneClickApp:
           validRegex: /^([^\s^\/])+$/
     instructions:
         start: >-
-            Collabora CODE version is an online Office Suite. 
+            Collabora CODE version is an online Office Suite.
 
             When you are using Nextcloud or ownCloud you can use it to enhance your online office document experience.
 

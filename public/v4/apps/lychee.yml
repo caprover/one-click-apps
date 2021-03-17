@@ -43,7 +43,7 @@ caproverOneClickApp:
         - id: $$cap_lychee_version
           label: Lychee Version
           defaultValue: 'v4.0.7'
-          description: Checkout their docker page for the valid tags https://hub.docker.com/r/lycheeorg/lychee/tags
+          description: Check out their docker page for the valid tags https://hub.docker.com/r/lycheeorg/lychee/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_puid
           label: User ID
@@ -58,7 +58,7 @@ caproverOneClickApp:
         - id: $$cap_mariadb_version
           label: MariaDB Version
           defaultValue: '10.5.6'
-          description: Checkout their docker page for the valid tags https://hub.docker.com/r/library/mariadb/tags/
+          description: Check out their docker page for the valid tags https://hub.docker.com/r/library/mariadb/tags/
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_mariadb-db
           label: MariaDB Database

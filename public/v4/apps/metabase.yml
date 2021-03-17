@@ -36,7 +36,7 @@ caproverOneClickApp:
         - id: $$cap_mb_version
           label: Metabase Version
           defaultValue: 'v0.38.0-rc1'
-          description: Checkout their docker page for the valid tags https://hub.docker.com/r/metabase/metabase/tags
+          description: Check out their docker page for the valid tags https://hub.docker.com/r/metabase/metabase/tags
 
         - id: $$cap_db_pass
           label: Database Password
