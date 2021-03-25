@@ -5,8 +5,6 @@ services:
         depends_on:
             - $$cap_appname-db
         image: akaunting/akaunting:$$cap_app_version
-        build:
-            context: .
         restart: always
         environment:
             APP_URL: http://$$cap_appname.$$cap_root_domain
