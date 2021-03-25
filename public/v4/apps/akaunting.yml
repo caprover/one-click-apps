@@ -3,10 +3,10 @@ services:
     # Akaunting
     $$cap_appname:
         depends_on:
-           - $$cap_appname-db
+            - $$cap_appname-db
         image: akaunting/akaunting:$$cap_app_version
         build:
-          context: .      
+            context: .
         restart: always
         environment:
             APP_URL: http://$$cap_appname.$$cap_root_domain
@@ -65,11 +65,11 @@ caproverOneClickApp:
           label: Admin Email
           defaultValue: 'admin@company.com'
           description: This will be your default login username
-          
+
         - id: $$cap_admin_password
           label: Admin Password
           defaultValue: $$cap_gen_random_hex(16)
-          description: This will be your default login password          
+          description: This will be your default login password
 
     instructions:
         start: >-
