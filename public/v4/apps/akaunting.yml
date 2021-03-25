@@ -6,9 +6,7 @@ services:
            - $$cap_appname-db
         image: akaunting/akaunting:$$cap_app_version
         build:
-          context: .
-        ports:
-            - 8080:80        
+          context: .      
         restart: always
         environment:
             APP_URL: http://$$cap_appname.$$cap_root_domain
@@ -29,7 +27,7 @@ services:
             - $$cap_appname-modules:/akaunting-modules
     # Database
     $$cap_appname-db:
-        image: mariadb
+        image: mariadb:10.5.9
         volumes:
             - $$cap_appname-db:/var/lib/mysql/data
         restart: always
