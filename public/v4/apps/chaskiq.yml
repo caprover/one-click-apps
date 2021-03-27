@@ -83,7 +83,7 @@ caproverOneClickApp:
         - id: $$cap_chaskiq_version
           label: Chaskiq Version Tag
           description: You can use latest tag or check version builds on https://hub.docker.com/r/chaskiq/chaskiq/tags
-          defaultValue: d56aad5
+          defaultValue: 9009088
         - defaultValue: 'admin@example.com'
           description: This is the admin email. Please change it.
           id: $$cap_ADMIN_USER_EMAIL
