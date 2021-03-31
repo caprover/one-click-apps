@@ -52,7 +52,7 @@ caproverOneClickApp:
               Check out their Docker page for the valid tags https://hub.docker.com/r/library/nextcloud/tags/
 
 
-              do not use fpm versions.
+              Do not use fpm versions.
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_mariadb_version
           label: MariaDB (database) version

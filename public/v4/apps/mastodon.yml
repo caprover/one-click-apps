@@ -191,7 +191,7 @@ caproverOneClickApp:
         start: >-
             Before you proceed keep a note of the following.
 
-            -----------------------------------------------------
+            --------------------------------------------------
 
 
             After you deploy mastodon and created your fist user in the browser, you will need to use the command line to give your newly created account admin privileges.
@@ -220,7 +220,7 @@ caproverOneClickApp:
 
             You can add more environment variables to use with aws s3 for example
 
-            Checkout https://docs.joinmastodon.org/admin/config/ for more env vars
+            Check out https://docs.joinmastodon.org/admin/config/ for more env vars
     displayName: Mastodon
     isOfficial: true
     description: Social networking, back in your hands.

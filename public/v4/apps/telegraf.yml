@@ -1,0 +1,22 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: telegraf:$$cap_version
+        restart: always
+        volumes:
+            - $$cap_appname-config:/etc/telegraf
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+caproverOneClickApp:
+    variables:
+        - label: Telegraf Version
+          defaultValue: 1.17.3-alpine
+          description: Find versions on DockerHub https://hub.docker.com/_/telegraf?tab=tags
+          id: $$cap_version
+    instructions:
+        end: Telegraf is now starting. Navigate to the mountpoint of $$cap_appname-config to configure your instance. Read https://github.com/docker-library/docs/tree/master/telegraf#using-a-custom-config-file
+        start: Telegraf is an open source agent written in Go for collecting metrics and data on the system it's running on or from other services. Telegraf writes data it collects to InfluxDB in the correct format.
+    displayName: Telegraf
+    isOfficial: true
+    description: Telegraf is an open source agent written in Go for collecting metrics.
+    documentation: https://hub.docker.com/_/telegraf

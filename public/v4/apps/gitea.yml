@@ -47,13 +47,13 @@ caproverOneClickApp:
         start: >-
             A painless self-hosted Git service. Gitea is a community managed fork of Gogs.
 
-             Enter your Gitea Configuration parameters and click on next. A MySQL (database) and a Gitea container will be created for you. The process will take about a minute to finish.
+            Enter your Gitea Configuration parameters and click on next. A MySQL (database) and a Gitea container will be created for you. The process will take about a minute to finish.
         end: >
             Gitea is deployed and available as $$cap_appname.
 
-             Since Gitea is running inside a container, you can optionally map a port (not 22) of the host to port 22 of the container, if you want to use git commands over SSH. You can perform port mapping in your CapRover dashboard, in App Config section.
+            Since Gitea is running inside a container, you can optionally map a port (not 22) of the host to port 22 of the container, if you want to use git commands over SSH. You can perform port mapping in your CapRover dashboard, in App Config section.
 
-             IMPORTANT: It will take up to 2 minutes for Gitea to be ready. Before that, you might see 502 error page.
+            IMPORTANT: It will take up to 2 minutes for Gitea to be ready. Before that, you might see 502 error page.
     displayName: ''
     isOfficial: true
     description: Gitea is a software package for hosting software development using Git as well as bug tracking, wikis and code review

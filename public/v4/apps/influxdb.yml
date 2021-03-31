@@ -80,7 +80,7 @@ caproverOneClickApp:
         start: >-
             Influxdb is a time series database, and part of the tickstack. After installation on CapRover, it will be available as srv-captain--YOUR_CONTAINER_NAME at the port you choose (8086 by default) to other CapRover apps.
 
-             Enter your Influxdb configuration parameters and click on next. The default configuration has no users or authentication and is only accessible to other Caprover apps. It will take about a minute for the process to finish.
+            Enter your Influxdb configuration parameters and click on next. The default configuration has no users or authentication and is only accessible to other Caprover apps. It will take about a minute for the process to finish.
         end: All set. Influx is deployed and available as srv-captain--$$cap_appname-db:$$cap_influxdb_port to other apps. For example with curl 'curl -G http://srv-captain--$$cap_appname-db:$$cap_influxdb_port/query --data-urlencode "q=CREATE DATABASE mydb"'
     displayName: InfluxDb
     isOfficial: true

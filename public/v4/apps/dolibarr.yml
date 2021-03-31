@@ -36,12 +36,12 @@ caproverOneClickApp:
         - id: $$cap_postgres-version
           label: Postgres Version
           defaultValue: 9.6-alpine
-          description: Checkout their docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/
+          description: Check out their docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_dolibarr-version
           label: Dolibarr Version
           defaultValue: '11.0'
-          description: Checkout their docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/
+          description: Check out their docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_pg-pass
           label: Postgres Password
@@ -60,5 +60,5 @@ caproverOneClickApp:
         start: Dolibarr is an Open Source ERP & CRM for Business
         end: Dolibarr is deployed and available as srv-captain--$$cap_appname:8080 to other apps.
     displayName: Dolibarr
-    description: Open Source ERP & CRM for Business (sme or large companies, freelancers, foundations)
+    description: Open Source ERP & CRM for Business (SME or large companies, freelancers, foundations)
     documentation: https://hub.docker.com/r/upshift/dolibarr

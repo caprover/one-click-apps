@@ -27,9 +27,9 @@ caproverOneClickApp:
         start: >-
             Adminer (formerly phpMinAdmin) is a full-featured database management tool written in PHP. Conversely to phpMyAdmin, it consist of a single file ready to deploy to the target server. Adminer is available for MySQL, PostgreSQL, SQLite, MS SQL, Oracle, Firebird, SimpleDB, Elasticsearch and MongoDB. 
 
-             For more details, see: https://github.com/vrana/adminer
+            For more details, see: https://github.com/vrana/adminer
 
-              Enter your Adminer Configuration parameters and click on next. It will take about a minute for the process to finish.
+            Enter your Adminer Configuration parameters and click on next. It will take about a minute for the process to finish.
         end: Adminer is deployed and available as $$cap_appname
     displayName: Adminer
     isOfficial: true

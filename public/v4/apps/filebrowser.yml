@@ -25,7 +25,6 @@ caproverOneClickApp:
             filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files. It allows the creation of multiple users and each user can have its own directory.
 
 
-
             IMPORTANT:
 
             The default image maps an empty volume to FileBrowser in order to avoid exposing your files, but after you finished installation and changed the password you can mount the root directory of host. i.e. / to /srv in the app.

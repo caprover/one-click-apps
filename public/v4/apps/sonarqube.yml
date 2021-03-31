@@ -51,17 +51,17 @@ caproverOneClickApp:
     instructions:
         start: >-
             SonarQube is an open source product for continuous inspection of code quality. 
-             This Docker image contains the Community Edition of SonarQube.
+            This Docker image contains the Community Edition of SonarQube.
 
-             Enter your Sonarqube Configuration parameters and click on next. 
+            Enter your SonarQube Configuration parameters and click on next. 
 
-             More information about this container can be found here:
-             https://hub.docker.com/_/sonarqube?tab=description
+            More information about this container can be found here:
+            https://hub.docker.com/_/sonarqube?tab=description
 
-             Default username: admin
-             Default password: admin
+            Default username: admin
+            Default password: admin
 
-             It will take about a minute for the process to finish.
+            It will take about a minute for the process to finish.
         end: SonarQube is deployed and available as srv-captain--$$cap_appname:9000 to other apps.
     displayName: ''
     isOfficial: true

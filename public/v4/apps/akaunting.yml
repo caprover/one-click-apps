@@ -1,0 +1,81 @@
+captainVersion: 4
+services:
+    # Akaunting
+    $$cap_appname:
+        depends_on:
+            - $$cap_appname-db
+        image: akaunting/akaunting:$$cap_app_version
+        restart: always
+        environment:
+            APP_URL: http://$$cap_appname.$$cap_root_domain
+            LOCALE: en-US
+            AKAUNTING_SETUP: true
+            DB_HOST: srv-captain--$$cap_appname-db
+            DB_PORT: 3306
+            DB_USERNAME: akaunting
+            DB_DATABASE: akaunting
+            DB_PASSWORD: $$cap_db_pass
+            DB_PREFIX: $$cap_db_prefix
+            COMPANY_NAME: $$cap_company_name
+            COMPANY_EMAIL: $$cap_company_email
+            ADMIN_EMAIL: $$cap_admin_email
+            ADMIN_PASSWORD: $$cap_admin_password
+        volumes:
+            - $$cap_appname-data:/akaunting-data
+            - $$cap_appname-modules:/akaunting-modules
+    # Database
+    $$cap_appname-db:
+        image: mariadb:10.5.9
+        volumes:
+            - $$cap_appname-db:/var/lib/mysql/data
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: $$cap_db_pass
+            MYSQL_USER: akaunting
+            MYSQL_PASSWORD: $$cap_db_pass
+            MYSQL_DATABASE: akaunting
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_app_version
+          label: Akaunting Version
+          defaultValue: '2.1.8'
+          description: Check out their docker page for the valid tags https://hub.docker.com/r/akaunting/akaunting/tags
+
+        - id: $$cap_db_pass
+          label: Database Password
+          defaultValue: $$cap_gen_random_hex(16)
+
+        - id: $$cap_db_prefix
+          label: Database Prefix
+          defaultValue: 'aka_'
+
+        - id: $$cap_company_name
+          label: Company Name
+          description: OPTIONAL
+
+        - id: $$cap_company_email
+          label: Company Email
+          description: OPTIONAL
+
+        - id: $$cap_admin_email
+          label: Admin Email
+          defaultValue: 'admin@company.com'
+          description: This will be your default login username
+
+        - id: $$cap_admin_password
+          label: Admin Password
+          defaultValue: $$cap_gen_random_hex(16)
+          description: This will be your default login password
+
+    instructions:
+        start: >-
+            From invoicing to expense tracking to accounting, Akaunting has all the tools you need to manage your money online, for free.
+        end: >-
+            Done! 😄
+            Your service is available at http://$$cap_appname.$$cap_root_domain
+    displayName: 'Akaunting'
+    isOfficial: true
+    description: From invoicing to expense tracking to accounting, Akaunting has all the tools you need to manage your money online, for free.
+    documentation: https://akaunting.com/docs
