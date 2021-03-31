@@ -5,7 +5,7 @@ services:
         image: getfider/fider:$$cap_fider_version
         restart: always
         environment:
-            HOST_DOMAIN: 'https://$$cap_appname.$$cap_root_domain'
+            HOST_DOMAIN: '$$cap_appname.$$cap_root_domain'
             DATABASE_URL: $$cap_db_url
             JWT_SECRET: $$cap_gen_random_hex(16)
             EMAIL_NOREPLY: $$cap_email_noreply
