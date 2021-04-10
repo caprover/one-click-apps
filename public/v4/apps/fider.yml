@@ -19,7 +19,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_db_url
           label: Fider database URL
-          description: Database connection URL for Fider.
+          description: Postgres database connection URL for Fider, for example "postgres://username:password@srv-captain--mypostgres:5432/fider?sslmode=disable"
         - id: $$cap_fider_version
           label: Fider Version
           defaultValue: 0.18.1
@@ -48,4 +48,4 @@ caproverOneClickApp:
     displayName: Fider - No Database
     isOfficial: true
     description: Fider is a platform to collect and organize customer feedback.
-    documentation: See https://github.com/getfider/fider
+    documentation: See https://getfider.com/docs/hosting-instance
