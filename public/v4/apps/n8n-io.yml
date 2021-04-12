@@ -20,11 +20,12 @@ services:
         volumes:
             - $$cap_appname-data:/root/.n8n
         environment:
-            POSTGRES_DATABASE: n8n
-            POSTGRES_HOST: srv-captain--$$cap_appname-db
-            POSTGRES_PASSWORD: $$cap_db_pass
-            POSTGRES_PORT: '5432'
-            POSTGRES_USER: $$cap_db_user
+            DB_POSTGRESDB_DATABASE: n8n
+            DB_POSTGRESDB_HOST: srv-captain--$$cap_appname-db
+            DB_POSTGRESDB_PASSWORD: $$cap_db_pass
+            DB_POSTGRESDB_PORT: '5432'
+            DB_POSTGRESDB_USER: $$cap_db_user
+            DB_TYPE: postgresdb
             GENERIC_TIMEZONE: $$cap_timezone
             TZ: $$cap_timezone
             N8N_PROTOCOL: http
