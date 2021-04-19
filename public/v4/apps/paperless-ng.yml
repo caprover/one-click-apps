@@ -32,7 +32,7 @@ services:
             PAPERLESS_TIKA_ENABLED: 1
             PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://srv-captain--$$cap_appname-gotenberg:3000
             PAPERLESS_TIKA_ENDPOINT: http://srv-captain--$$cap_appname-tika:9998
-            
+
         volumes:
             - $$cap_appname-data:/usr/src/paperless/data
             - $$cap_appname-media:/usr/src/paperless/media
@@ -70,16 +70,16 @@ services:
         image: thecodingmachine/gotenberg
         restart: unless-stopped
         environment:
-          DISABLE_GOOGLE_CHROME: 1
+            DISABLE_GOOGLE_CHROME: 1
         caproverExtra:
             containerHttpPort: '3000'
 
     # tika
     $$cap_appname-tika:
-      image: apache/tika
-      restart: unless-stopped
-      caproverExtra:
-          containerHttpPort: '9998'
+        image: apache/tika
+        restart: unless-stopped
+        caproverExtra:
+            containerHttpPort: '9998'
 
 caproverOneClickApp:
     variables:
@@ -91,61 +91,61 @@ caproverOneClickApp:
         - id: $$cap_dbpass
           label: Database Password
           defaultValue: $$cap_gen_random_hex(64)
-        
+
         - id: $$cap_redis_version
           label: Redis version
           defaultValue: 6.0
-          
+
         - id: $$cap_dbname
           label: Database name
           defaultValue: 'paperless'
-        
+
         - id: $$cap_dbuser
           label: Database User
           defaultValue: 'paperless'
 
         - id: $$cap_filename_format
           label: Database User
-          defaultValue: 
+          defaultValue:
           description: 'Changes the filenames paperless uses to store documents in the media directory. See File name handling (https://paperless-ng.readthedocs.io/en/latest/advanced_usage.html#advanced-file-name-handling) for details. Default is none, which disables this feature.'
-        
+
         - id: $$cap_logrotate_max_size
           label: Log Rotate Max Size (MB)
           defaultValue: 1
-        
+
         - id: $$cap_logrotate_max_backup
           label: Log Rotate Max Backup Count
           defaultValue: 20
-        
+
         - id: $$cap_secret_key
           label: Secret Key
           defaultValue: $$cap_gen_random_hex(64)
-          
+
         - id: $$cap_admin_user
           label: Admin User
           defaultValue: 'admin'
-  
+
         - id: $$cap_admin_password
           label: Admin Password
           defaultValue: $$cap_gen_random_hex(64)
-          
+
         - id: $$cap_cookie_prefix
           label: Cookie Prefix
           defaultValue: $$cap_appname
-          
+
         - id: $$cap_ocr_language
           label: OCR Language
           defaultValue: 'eng'
           description: 'It should be a 3-letter language code consistent with ISO 639 https://www.loc.gov/standards/iso639-2/php/code_list.php This can be a combination of multiple languages such as deu+eng, in which case tesseract will use whatever language matches best. Keep in mind that tesseract uses much more cpu time with multiple languages enabled.'
-        
+
         - id: $$cap_ocr_mode
           label: OCR Mode
           defaultValue: 'skip'
-          
+
         - id: $$cap_ocr_clean
           label: OCR Clean
           defaultValue: 'clean'
-        
+
         - id: $$cap_ocr_deskew
           label: OCR Deskew
           defaultValue: 'true'
@@ -161,7 +161,7 @@ caproverOneClickApp:
         - id: $$cap_ocr_page_count
           label: OCR Pages Count
           defaultValue: '0'
-          
+
         - id: $cap_ocr_user_args
           label: OCR User Args
           description: OCRmyPDF Refrence https://ocrmypdf.readthedocs.io/en/latest/api.html#reference
@@ -171,7 +171,6 @@ caproverOneClickApp:
           defaultValue: 'UTC'
           description: 'Set the time zone here. See https://docs.djangoproject.com/en/3.1/ref/settings/#std:setting-TIME_ZONE for details on how to set it.'
 
-  
     instructions:
         start: >-
             Paperless is an application by Daniel Quinn and others that indexes your scanned documents and allows you to easily search for documents and store metadata alongside your documents.
