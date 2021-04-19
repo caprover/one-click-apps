@@ -1,0 +1,184 @@
+captainVersion: 4
+services:
+    # Paperless-ng
+    $$cap_appname:
+        depends_on:
+            - $$cap_appname-db
+            - $$cap_appname-redis
+        image: jonaswinkler/paperless-ng:$$cap_app_version
+        restart: always
+        environment:
+            APP_URL: http://$$cap_appname.$$cap_root_domain
+            PAPERLESS_REDIS: redis://srv-captain--$$cap_appname-redis:6379/0
+            PAPERLESS_DBHOST: srv-captain--$$cap_appname-db
+            PAPERLESS_DBNAME: $$cap_dbname
+            PAPERLESS_DBUSER: $$cap_dbuser
+            PAPERLESS_DBPASS: $$cap_dbpass
+            PAPERLESS_LOGROTATE_MAX_SIZE: $$cap_logrotate_max_size
+            PAPERLESS_LOGROTATE_MAX_BACKUPS: $$cap_logrotate_max_backup
+            PAPERLESS_SECRET_KEY: $$cap_secret_key
+            PAPERLESS_ADMIN_USER: $$cap_admin_user
+            PAPERLESS_ADMIN_PASSWORD: $$cap_admin_password
+            PAPERLESS_COOKIE_PREFIX: $$cap_cookie_prefix
+            PAPERLESS_OCR_LANGUAGE: $$cap_ocr_language
+            PAPERLESS_OCR_MODE: $$cap_ocr_mode
+            PAPERLESS_OCR_CLEAN: $$cap_ocr_clean
+            PAPERLESS_OCR_DESKEW: $$cap_ocr_deskew
+            PAPERLESS_OCR_ROTATE_PAGES: $$cap_ocr_rotate_pages
+            PAPERLESS_OCR_OUTPUT_TYPE: $$cap_ocr_output_type
+            PAPERLESS_OCR_PAGES: $$cap_ocr_page_count
+            PAPERLESS_OCR_USER_ARGS: $cap_ocr_user_args
+            PAPERLESS_TIME_ZONE: $$cap_timezone
+            PAPERLESS_TIKA_ENABLED: 1
+            PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://srv-captain--$$cap_appname-gotenberg:3000
+            PAPERLESS_TIKA_ENDPOINT: http://srv-captain--$$cap_appname-tika:9998
+            
+        volumes:
+            - $$cap_appname-data:/usr/src/paperless/data
+            - $$cap_appname-media:/usr/src/paperless/media
+            - $$cap_appname-export:/usr/src/paperless/export
+            - $$cap_appname-consume:/usr/src/paperless/consume
+        caproverExtra:
+            containerHttpPort: '8000'
+
+    # Redis
+    $$cap_appname-redis:
+        volumes:
+            - $$cap_appname-redis-data:/data
+        restart: always
+        caproverExtra:
+            dockerfileLines:
+                - FROM redis:$$cap_redis_version
+                - CMD exec redis-server
+            notExposeAsWebApp: 'true'
+
+    # Database
+    $$cap_appname-db:
+        image: postgres:13
+        volumes:
+            - $$cap_appname-db:/var/lib/postgresql/data
+        restart: always
+        environment:
+            POSTGRES_DB: $$cap_dbname
+            POSTGRES_USER: $$cap_dbuser
+            POSTGRES_PASSWORD: $$cap_dbpass
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+
+    # gotenberg
+    $$cap_appname-gotenberg:
+        image: thecodingmachine/gotenberg
+        restart: unless-stopped
+        environment:
+          DISABLE_GOOGLE_CHROME: 1
+        caproverExtra:
+            containerHttpPort: '3000'
+
+    # tika
+    $$cap_appname-tika:
+      image: apache/tika
+      restart: unless-stopped
+      caproverExtra:
+          containerHttpPort: '9998'
+
+caproverOneClickApp:
+    variables:
+        - id: $$cap_app_version
+          label: Paperless-ng
+          defaultValue: '1.4.1'
+          description: Check out their docker page for the valid tags https://hub.docker.com/r/jonaswinkler/paperless-ng/tags
+
+        - id: $$cap_dbpass
+          label: Database Password
+          defaultValue: $$cap_gen_random_hex(64)
+        
+        - id: $$cap_redis_version
+          label: Redis version
+          defaultValue: 6.0
+          
+        - id: $$cap_dbname
+          label: Database name
+          defaultValue: 'paperless'
+        
+        - id: $$cap_dbuser
+          label: Database User
+          defaultValue: 'paperless'
+
+        - id: $$cap_filename_format
+          label: Database User
+          defaultValue: 
+          description: 'Changes the filenames paperless uses to store documents in the media directory. See File name handling (https://paperless-ng.readthedocs.io/en/latest/advanced_usage.html#advanced-file-name-handling) for details. Default is none, which disables this feature.'
+        
+        - id: $$cap_logrotate_max_size
+          label: Log Rotate Max Size (MB)
+          defaultValue: 1
+        
+        - id: $$cap_logrotate_max_backup
+          label: Log Rotate Max Backup Count
+          defaultValue: 20
+        
+        - id: $$cap_secret_key
+          label: Secret Key
+          defaultValue: $$cap_gen_random_hex(64)
+          
+        - id: $$cap_admin_user
+          label: Admin User
+          defaultValue: 'admin'
+  
+        - id: $$cap_admin_password
+          label: Admin Password
+          defaultValue: $$cap_gen_random_hex(64)
+          
+        - id: $$cap_cookie_prefix
+          label: Cookie Prefix
+          defaultValue: $$cap_appname
+          
+        - id: $$cap_ocr_language
+          label: OCR Language
+          defaultValue: 'eng'
+          description: 'It should be a 3-letter language code consistent with ISO 639 https://www.loc.gov/standards/iso639-2/php/code_list.php This can be a combination of multiple languages such as deu+eng, in which case tesseract will use whatever language matches best. Keep in mind that tesseract uses much more cpu time with multiple languages enabled.'
+        
+        - id: $$cap_ocr_mode
+          label: OCR Mode
+          defaultValue: 'skip'
+          
+        - id: $$cap_ocr_clean
+          label: OCR Clean
+          defaultValue: 'clean'
+        
+        - id: $$cap_ocr_deskew
+          label: OCR Deskew
+          defaultValue: 'true'
+
+        - id: $$cap_ocr_rotate_pages
+          label: OCR Rotate Pages
+          defaultValue: 'true'
+
+        - id: $$cap_ocr_output_type
+          label: OCR Output Type
+          defaultValue: 'pdfa'
+
+        - id: $$cap_ocr_page_count
+          label: OCR Pages Count
+          defaultValue: '0'
+          
+        - id: $cap_ocr_user_args
+          label: OCR User Args
+          description: OCRmyPDF Refrence https://ocrmypdf.readthedocs.io/en/latest/api.html#reference
+
+        - id: $$cap_timezone
+          label: Timezone
+          defaultValue: 'UTC'
+          description: 'Set the time zone here. See https://docs.djangoproject.com/en/3.1/ref/settings/#std:setting-TIME_ZONE for details on how to set it.'
+
+  
+    instructions:
+        start: >-
+            Paperless is an application by Daniel Quinn and others that indexes your scanned documents and allows you to easily search for documents and store metadata alongside your documents.
+        end: >-
+            Done! 😄
+            Your service is available at http://$$cap_appname.$$cap_root_domain
+    displayName: 'Paperless-ng'
+    isOfficial: true
+    description: Paperless is an application by Daniel Quinn and others that indexes your scanned documents and allows you to easily search for documents and store metadata alongside your documents.
+    documentation: https://paperless-ng.readthedocs.io/en/latest/
