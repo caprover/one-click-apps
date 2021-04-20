@@ -1,0 +1,24 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: bitwardenrs/server:$$cap_version
+        volumes:
+            - $$cap_appname-data:/data/
+        restart: always
+        ports: []
+
+caproverOneClickApp:
+    variables:
+        - id: $$cap_version
+          label: bitwarden_rs version
+          defaultValue: '1.20.0'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/bitwardenrs/server/tags
+          validRegex: /^([^\s^\/])+$/
+
+    instructions:
+        start: bitwarden_rs is a Bitwarden server API implementation written in Rust compatible with upstream Bitwarden clients*, perfect for self-hosted deployment where running the official resource-heavy service might not be ideal.
+        end: bitwarden_rs is deployed and available as srv-captain--$$cap_appname:80 and srv-captain--$$cap_appname:3012 as websocket to other apps, you can customize using Environmental Variables https://github.com/dani-garcia/bitwarden_rs/blob/master/.env.template
+    displayName: bitwarden_rs
+    isOfficial: false
+    description: bitwarden_rs is a Bitwarden server API implementation written in Rust compatible with upstream Bitwarden clients*, perfect for self-hosted deployment where running the official resource-heavy service might not be ideal.
+    documentation: Learn more at https://github.com/dani-garcia/bitwarden_rs
