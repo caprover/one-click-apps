@@ -54,7 +54,8 @@ services:
             PAPERLESS_CONVERT_MEMORY_LIMIT: $$cap_convert_memory_limit
             PAPERLESS_CONVERT_TMPDIR: $$cap_convert_tempdir
             PAPERLESS_OPTIMIZE_THUMBNAILS: $$cap_optimize_thumbnails
-            PAPERLESS_POST_CONSUME_SCRIPT: $$cap_post_consumption_script
+            PAPERLESS_PRE_CONSUME_SCRIPT: $$cap_pre_consume_script
+            PAPERLESS_POST_CONSUME_SCRIPT: $$cap_post_consume_script
             PAPERLESS_FILENAME_DATE_ORDER: $$cap_filename_date_order
             PAPERLESS_THUMBNAIL_FONT_NAME: $$cap_thumbnail_font_name
             PAPERLESS_IGNORE_DATES: $$cap_paperless_ignore_dates
@@ -298,9 +299,13 @@ caproverOneClickApp:
           validRegex: /^(true|false)$/
           description: This usually reduces the size of thumbnails by about 20%, but uses considerable compute time during consumption.
 
-        - id: $$cap_post_consumption_script
-          label: Post Consume Script
-          description: For more information, take a look at Post-consumption script (https://paperless-ng.readthedocs.io/en/latest/advanced_usage.html#advanced-post-consume-script).
+        - id: $$cap_pre_consume_script
+          label: Pre Consume Script (path)
+          description: Executed after the consumer sees a new document in the consumption folder, but before any processing of the document is performed. For more information, take a look at Pre-consumption script (https://paperless-ng.readthedocs.io/en/latest/advanced_usage.html?highlight=PAPERLESS_PRE_CONSUME_SCRIPT#pre-consumption-script)
+
+        - id: $$cap_post_consume_script
+          label: Post Consume Script (path)
+          description: Executed after the consumer has successfully processed a document and has moved it into paperless. For more information, take a look at Post-consumption script (https://paperless-ng.readthedocs.io/en/latest/advanced_usage.html#advanced-post-consume-script)
 
         - id: $$cap_filename_date_order
           label: Filename Date Order
