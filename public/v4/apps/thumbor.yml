@@ -3,7 +3,7 @@ services:
     $$cap_appname:
         image: minimalcompact/thumbor:$$cap_thumbor_version
         volumes:
-            - $$cap_appname-thumbor:/data
+            - $$cap_appname-data:/data
         restart: always
         environment:
             THUMBOR_PORT: '80'
