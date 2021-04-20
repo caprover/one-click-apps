@@ -1,0 +1,93 @@
+captainVersion: 4
+services:
+    # Paperless-ng
+    $$cap_appname:
+        depends_on:
+            - $$cap_appname-db
+        restart: always
+        ports:
+            - $$cap_prisma_studio_port:5555
+        environment:
+            DATABASE_URL: postgresql://$$cap_dbuser:$$cap_dbpass@srv-captain--$$cap_appname-db:5432/$$cap_dbname
+            GOOGLE_API_CREDENTIALS: $$cap_google_api_credentials
+            NEXTAUTH_URL: $$cap_appname.$$cap_root_domain
+            NEXT_TELEMETRY_DISABLED: $$cap_next_telemetry_disabled
+            NODE_TLS_REJECT_UNAUTHORIZED: $$cap_tls_reject_unauthorized
+        caproverExtra:
+            containerHttpPort: '3000'
+            dockerfileLines:
+                - FROM ctadeu/calendso:$$cap_app_version
+                - CMD sh -c "npx prisma db push --preview-feature && yarn dev" 
+
+    # Database
+    $$cap_appname-db:
+        image: postgres:$$cap_postgres_version
+        volumes:
+            - $$cap_appname-db:/var/lib/postgresql/data
+        restart: always
+        environment:
+            POSTGRES_DB: $$cap_dbname
+            POSTGRES_USER: $$cap_dbuser
+            POSTGRES_PASSWORD: $$cap_dbpass
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+
+caproverOneClickApp:
+    variables:
+        - id: $$cap_app_version
+          label: Calendso Version
+          defaultValue: '0.0.8'
+          description: Check out their docker page for the valid tags https://hub.docker.com/r/ctadeu/calendso/tags
+
+        - id: $$cap_postgres_version
+          label: Postgres Version
+          defaultValue: '13'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/
+          validRegex: /^([^\s^\/])+$/
+
+        - id: $$cap_dbname
+          label: Database Name
+          defaultValue: 'calendso'
+          validRegex: /^([^\s^\/])+$/
+
+        - id: $$cap_dbuser
+          label: Database User
+          defaultValue: 'calendso'
+          validRegex: /^([^\s^\/])+$/
+
+        - id: $$cap_dbpass
+          label: Database Password
+          defaultValue: $$cap_gen_random_hex(64)
+          validRegex: /^([^\s^\/])+$/
+  
+        - id: $$cap_google_api_credentials
+          label: Google API Credentials
+          validRegex: /^([^\s^\/])+$/
+          description: You can get this from the Google API Console (https://console.cloud.google.com/apis/dashboard). More details on this can be found below under the Obtaining the Google API Credentials section (https://github.com/calendso/calendso#Obtaining-the-Google-API-Credentials).
+
+        - id: $$cap_prisma_studio_port
+          label: Prisma Studio Port
+          defaultValue: '5555'
+          validRegex: /^\d+$/
+
+        - id: $$cap_next_telemetry_disabled
+          label: Next Telemetry Disabled
+          defaultValue: '1'
+          validRegex: /^(0|1)$/
+          description: Next.js collects completely anonymous telemetry data about general usage. Participation in this anonymous program is optional, and you may opt-out if you'd not like to share any information. Setting to 0 enables the telemetry.
+
+        - id: $$cap_tls_reject_unauthorized
+          label: Node TLS Reject Unauthorized
+          defaultValue: '1'
+          validRegex: /^(0|1)$/
+
+    instructions:
+        start: >-
+            The open-source Calendly alternative.
+        end: >-
+            Done! 😄
+            Your service is available at http://$$cap_appname.$$cap_root_domain
+    displayName: 'Calendso'
+    isOfficial: true
+    description: The open-source Calendly alternative. You are in control of your events and data.
+    documentation: https://calendso.com/
