@@ -34,7 +34,7 @@ services:
             PAPERLESS_OCR_CLEAN: $$cap_ocr_clean
             PAPERLESS_OCR_DESKEW: $$cap_ocr_deskew
             PAPERLESS_OCR_ROTATE_PAGES: $$cap_ocr_rotate_pages
-            PAPERLESS_OCR_ROTATE_PAGES_THRESHOLD: $$cap_ocr_rotate_pages_threshold
+            PAPERLESS_OCR_ROTATE_PAGES_THRESHOLD: $$cap_ocr_rotate_threshold
             PAPERLESS_OCR_OUTPUT_TYPE: $$cap_ocr_output_type
             PAPERLESS_OCR_PAGES: $$cap_ocr_pages
             PAPERLESS_OCR_IMAGE_DPI: $$cap_ocr_image_dpi
@@ -155,7 +155,7 @@ caproverOneClickApp:
 
         - id: $$cap_logrotate_max_backup
           label: Log Rotate Max Backup Count
-          defaultValue: 20
+          defaultValue: '20'
           validRegex: /^\d{0,}$/
           description: Number of rotated log files to keep.
 
@@ -214,10 +214,10 @@ caproverOneClickApp:
           validRegex: /^(true|false)$/
           description: Tells paperless to correct page rotation (90°, 180° and 270° rotation). If you notice that paperless is not rotating incorrectly rotated pages (or vice versa), try adjusting the threshold up or down (see below).
 
-        - id: $$cap_ocr_rotate_pages_threshold
+        - id: $$cap_ocr_rotate_threshold
           label: OCR Rotate Pages Threshold
-          defaultValue: 12
-          validRegex: /^\d{0,}$/
+          defaultValue: '12'
+          validRegex: /^\d[\d.]*$/
           description: This is an arbitrary value reported by tesseract. “15” is a very conservative value, whereas “2” is a very aggressive option and will often result in correctly rotated pages being rotated as well.
 
         - id: $$cap_ocr_output_type
@@ -228,8 +228,8 @@ caproverOneClickApp:
 
         - id: $$cap_ocr_pages
           label: OCR Pages Count
-          defaultValue: 0
-          validRegex: /^\d{0,}$/
+          defaultValue: '0'
+          validRegex: /^\d{1,}$/
           description: Tells paperless to use only the specified amount of pages for OCR. Documents with less than the specified amount of pages get OCR’ed completely. Specifying 1 here will only use the first page. Specifying 0 disables this feature a and always use all pages.
 
         - id: $$cap_ocr_image_dpi
@@ -260,8 +260,8 @@ caproverOneClickApp:
 
         - id: $$cap_consumer_polling
           label: Consumer Polling (seconds)
-          defaultValue: 0
-          validRegex: /^\d{0,}$/
+          defaultValue: '0'
+          validRegex: /^\d{1,}$/
           description: Defaults to 0, which disables polling and uses filesystem notifications.
 
         - id: $$cap_consumer_delete_duplicates
@@ -284,8 +284,8 @@ caproverOneClickApp:
 
         - id: $$cap_convert_memory_limit
           label: Convert Memory Limit
-          defaultValue: 0
-          validRegex: /^\d{0,}$/
+          defaultValue: '0'
+          validRegex: /^\d{1,}$/
           description: For more information on how to use this value, you should search the web for “MAGICK_MEMORY_LIMIT”.
 
         - id: $$cap_convert_tempdir
@@ -317,19 +317,19 @@ caproverOneClickApp:
 
         - id: $$cap_webserver_workers
           label: Webserver Workers
-          defaultValue: 2
+          defaultValue: '2'
           validRegex: /^\d{1,}$/
           description: The number of worker processes the webserver should spawn.
 
         - id: $$cap_usermap_uid
           label: Usermap UID
-          defaultValue: 1000
+          defaultValue: '1000'
           validRegex: /^\d{1,}$/
           description: Set this to your actual user ID on the host system, which you can get by executing ```id -u```
 
         - id: $$cap_usermap_gid
           label: Usermap GID
-          defaultValue: 1000
+          defaultValue: '1000'
           validRegex: /^\d{1,}$/
           description: Set this to your actual user ID on the host system, which you can get by executing ```id -g```
 
