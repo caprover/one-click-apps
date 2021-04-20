@@ -23,7 +23,7 @@ services:
             # Hosting & Security (https://paperless-ng.readthedocs.io/en/latest/configuration.html#hosting-security)
             PAPERLESS_SECRET_KEY: $$cap_secret_key
             PAPERLESS_ALLOWED_HOSTS: $$cap_appname.$$cap_root_domain
-            PAPERLESS_CORS_ALLOWED_HOSTS: $$cap_appname.$$cap_root_domain
+            PAPERLESS_CORS_ALLOWED_HOSTS: http://$$cap_appname.$$cap_root_domain
             PAPERLESS_ADMIN_USER: $$cap_admin_user
             PAPERLESS_ADMIN_PASSWORD: $$cap_admin_password
             PAPERLESS_ADMIN_MAIL: $$cap_admin_email
