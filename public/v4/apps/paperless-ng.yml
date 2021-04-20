@@ -309,19 +309,19 @@ caproverOneClickApp:
         - id: $$cap_webserver_workers
           label: Webserver Workers
           defaultValue: 2
-          validRegex: /^\d{0,}$/
+          validRegex: /^\d{1,}$/
           description: The number of worker processes the webserver should spawn.
 
         - id: $$cap_usermap_uid
           label: Usermap UID
           defaultValue: 1000
-          validRegex: /^\d{0,}$/
+          validRegex: /^\d{1,}$/
           description: Set this to your actual user ID on the host system, which you can get by executing ```id -u```
 
         - id: $$cap_usermap_gid
           label: Usermap GID
           defaultValue: 1000
-          validRegex: /^\d{0,}$/
+          validRegex: /^\d{1,}$/
           description: Set this to your actual user ID on the host system, which you can get by executing ```id -g```
 
         - id: $$cap_usermap_gid
