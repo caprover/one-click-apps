@@ -17,7 +17,7 @@ services:
             containerHttpPort: '3000'
             dockerfileLines:
                 - FROM ctadeu/calendso:$$cap_app_version
-                - CMD sh -c "npx prisma db push --preview-feature && yarn dev" 
+                - CMD sh -c "npx prisma db push --preview-feature && yarn dev"
 
     # Database
     $$cap_appname-db:
@@ -59,7 +59,7 @@ caproverOneClickApp:
           label: Database Password
           defaultValue: $$cap_gen_random_hex(64)
           validRegex: /^([^\s^\/])+$/
-  
+
         - id: $$cap_google_api_credentials
           label: Google API Credentials
           validRegex: /^([^\s^\/])+$/
