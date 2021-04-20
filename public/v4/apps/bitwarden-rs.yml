@@ -21,9 +21,9 @@ caproverOneClickApp:
           defaultValue: 'Asia/Ho_Chi_Minh'
           description: Use TZ database name at https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     instructions:
-        start: bitwarden_rs is a Bitwarden server API implementation written in Rust compatible with upstream Bitwarden clients*, perfect for self-hosted deployment where running the official resource-heavy service might not be ideal.
-        end: bitwarden_rs is deployed and available as srv-captain--$$cap_appname:80 and srv-captain--$$cap_appname:3012 as websocket to other apps, you can customize using Environmental Variables https://github.com/dani-garcia/bitwarden_rs/blob/master/.env.template
+        start: bitwarden_rs is a Bitwarden server API implementation written in Rust compatible with upstream Bitwarden clients.
+        end: bitwarden_rs is deployed and available as http://$$cap_appname.$$cap_root_domain and srv-captain--$$cap_appname:3012 as websocket to other apps, you can customize using Environmental Variables https://github.com/dani-garcia/bitwarden_rs/blob/master/.env.template
     displayName: bitwarden_rs
     isOfficial: false
-    description: bitwarden_rs is a Bitwarden server API implementation written in Rust compatible with upstream Bitwarden clients*, perfect for self-hosted deployment where running the official resource-heavy service might not be ideal.
+    description: bitwarden_rs is a Bitwarden server API implementation written in Rust compatible with upstream Bitwarden clients.
     documentation: Learn more at https://github.com/dani-garcia/bitwarden_rs
