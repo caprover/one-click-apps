@@ -22,12 +22,12 @@ caproverOneClickApp:
         - id: $$cap_register_enabled
           label: enabled open registration
           defaultValue: true
-          description: if setted to true, all visitors can create an account. If setted to false only administrator can invite other users
+          description: If field is true, all visitors can create an account. If false, only the administrator can invite other users.
           validRegex: /^(true|false)$/
         - id: $$cap_admin_token
           label: admin password
           defaultValue:
-          description: this password enable the admin zone. on /admin. If you let this password empty, the admin interface will be disabled and it will be the best security option.
+          description: this password enables the admin zone on /admin. If you let this password empty, the admin interface will be disabled and it will be the best safety option.
     instructions:
         start: >-
             This is a Bitwarden server API implementation written in Rust compatible with upstream Bitwarden clients, perfect for self-hosted deployment where running the official resource-heavy service might not be ideal.
@@ -38,7 +38,7 @@ caproverOneClickApp:
         end: >-
             Bitwarden_rs is deployed and available as $$cap_appname. Please give it a few minutes to boot, otherwise you will see a 502 error (even if the logs say it's working).
 
-            Please activate https and https redirect otherwise you will have error on account creation. You need to enable websocket too.
+            Please activate https and https redirect otherwise you will have an error on account creation. You need to enable websocket too.
 
             If you enabled the admin token please go to https://$$cap_appname.$$cap_root_domain/admin to begin
     displayName: Bitwarden_rs
