@@ -44,8 +44,8 @@ services:
             PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://srv-captain--$$cap_appname-gotenberg:3000
             PAPERLESS_TIKA_ENDPOINT: http://srv-captain--$$cap_appname-tika:9998
             # Software tweaks (https://paperless-ng.readthedocs.io/en/latest/configuration.html#software-tweaks)
-            PAPERLESS_TASK_WORKERS: $$cap_task_workers
-            PAPERLESS_THREADS_PER_WORKER: $$cap_threads_per_worker
+            # PAPERLESS_TASK_WORKERS: $$cap_task_workers
+            # PAPERLESS_THREADS_PER_WORKER: $$cap_threads_per_worker
             PAPERLESS_TIME_ZONE: $$cap_timezone
             PAPERLESS_CONSUMER_POLLING: $$cap_consumer_polling
             PAPERLESS_CONSUMER_DELETE_DUPLICATES: $$cap_consumer_delete_duplicates
@@ -84,7 +84,7 @@ services:
 
     # Database
     $$cap_appname-db:
-        image: postgres:13
+        image: postgres:$$cap_postgres_version
         volumes:
             - $$cap_appname-db:/var/lib/postgresql/data
         restart: always
@@ -118,9 +118,15 @@ caproverOneClickApp:
           defaultValue: '1.4.1'
           description: Check out their docker page for the valid tags https://hub.docker.com/r/jonaswinkler/paperless-ng/tags
 
+        - id: $$cap_postgres_version
+          label: Postgres Version
+          defaultValue: '13'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/
+          validRegex: /^([^\s^\/])+$/
+
         - id: $$cap_redis_version
           label: Redis version
-          defaultValue: '6.0'
+          defaultValue: '6.2.1-alpine'
           validRegex: /^([^\s^\/])+$/
 
         - id: $$cap_dbname
@@ -234,15 +240,18 @@ caproverOneClickApp:
           label: OCR User Args
           description: See https://ocrmypdf.readthedocs.io/en/latest/api.html#reference for valid parameters. Specify arguments as a JSON dictionary. Keep note of lower case booleans and double quoted parameter names and strings.
 
-        - id: $$cap_task_workers
-          label: Paperless Task Workers
-          validRegex: /^\d{0,2}$/
-          description: Leave blank to calculate automatically based on CPU core count
+        #   commenting out but keeping the code if somone tries to add these variables
+        #   these are optional variables and paperless-ng calculates automatically if no value is provided
+        #   but leaving it blank raises ValueError: invalid literal for int() with base 10:
+        # - id: $$cap_task_workers
+        #   label: Paperless Task Workers
+        #   validRegex: /^\d{0,2}$/
+        #   description: Leave blank to calculate automatically based on CPU core count
 
-        - id: $$cap_threads_per_worker
-          label: Paperless Threads per Workers
-          validRegex: /^\d{0,2}$/
-          description: Leave blank to calculate automatically based on CPU core count. Ensure that the product PAPERLESS_TASK_WORKERS * PAPERLESS_THREADS_PER_WORKER does not exceed your CPU core count
+        # - id: $$cap_threads_per_worker
+        #   label: Paperless Threads per Workers
+        #   validRegex: /^\d{0,2}$/
+        #   description: Leave blank to calculate automatically based on CPU core count. Ensure that the product PAPERLESS_TASK_WORKERS * PAPERLESS_THREADS_PER_WORKER does not exceed your CPU core count
 
         - id: $$cap_timezone
           label: Timezone
@@ -324,7 +333,7 @@ caproverOneClickApp:
           validRegex: /^\d{1,}$/
           description: Set this to your actual user ID on the host system, which you can get by executing ```id -g```
 
-        - id: $$cap_usermap_gid
+        - id: $$cap_docker_ocr_languages
           label: OCR Languages to install
           description: Additional OCR languages to install. By default, paperless comes with English, German, Italian, Spanish and French.
 
