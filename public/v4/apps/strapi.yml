@@ -33,7 +33,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_strapi_version
           label: Strapi Version
-          defaultValue: 3.5.3
+          defaultValue: 3.5.4
           description: Check out the Docker page for the valid tags https://hub.docker.com/r/strapi/strapi/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_mongo_version
