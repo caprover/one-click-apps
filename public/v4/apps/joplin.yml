@@ -1,0 +1,65 @@
+captainVersion: 4
+
+services:
+    $$cap_appname-db:
+        image: postgres:$$cap_postgres_version
+        volumes:
+            - '$$cap_appname-db-data:/var/lib/postgresql/data'
+        restart: unless-stopped
+        environment:
+            APP_PORT: 22300
+            POSTGRES_PASSWORD: $$cap_postgres_password
+            POSTGRES_USER: $$cap_postgres_user
+            POSTGRES_DB: $$cap_postgres_db
+        caproverExtra:
+            notExposeAsWebApp: true
+
+    $$cap_appname:
+        image: joplin/server:$$cap_joplin_tag
+        depends_on:
+            - $$cap_appname-db
+        restart: unless-stopped
+        environment:
+            APP_BASE_URL: http://$$cap_appname.$$cap_root_domain
+            DB_CLIENT: pg
+            POSTGRES_PASSWORD: $$cap_postgres_password
+            POSTGRES_DATABASE: $$cap_postgres_db
+            POSTGRES_USER: $$cap_postgres_user
+            POSTGRES_HOST: srv-captain--$$cap_appname-db
+        caproverExtra:
+            containerHttpPort: '22300'
+
+caproverOneClickApp:
+    variables:
+        - id: $$cap_postgres_version
+          label: Postgres Version
+          defaultValue: '13.1'
+        - id: $$cap_postgres_db
+          label: Postgres DB
+          defaultValue: 'joplin'
+        - id: $$cap_postgres_user
+          label: Postgres User
+          defaultValue: 'joplin'
+        - id: $$cap_postgres_password
+          label: Postgres Password
+          defaultValue: cA3rS2oK
+        - id: $$cap_joplin_tag
+          label: Joplin Version
+          defaultValue: '1.7.2'
+          description: Check out their docker page for the valid tags https://hub.docker.com/r/joplin/server/tags
+    instructions:
+        start: >-
+            Joplin - an open source note taking and to-do application with synchronization capabilities for Windows, macOS, Linux, Android and iOS.
+            For more info visit https://joplinapp.org/
+        end: |-
+            Joplin has been successfully deployed!
+            App is available as http://$$cap_appname.$$cap_root_domain
+            Login at http://$$cap_appname.$$cap_root_domain/login & change default email / password
+            Default email: admin@localhost
+            Default password: admin
+    displayName: Joplin
+    isOfficial: false
+    description: >-
+        Joplin - an open source note taking and to-do application with synchronization capabilities for Windows, macOS, Linux, Android and iOS.
+    documentation: >-
+        This docker-compose is taken from https://github.com/laurent22/joplin/blob/adad4cab75/docker-compose.server.yml
