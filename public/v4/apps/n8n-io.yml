@@ -20,7 +20,7 @@ services:
         volumes:
             - $$cap_appname-data:/root/.n8n
             - $$cap_appname-data-write:/files
-            - $$cap_appname-docker-daemon:/var/run/docker.sock
+            - /var/run/docker.sock:/var/run/docker.sock
         environment:
             DB_POSTGRESDB_DATABASE: n8n
             DB_POSTGRESDB_HOST: srv-captain--$$cap_appname-db
