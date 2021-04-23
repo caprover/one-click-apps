@@ -38,8 +38,6 @@ services:
             NEXTCLOUD_ADMIN_USER: $$cap_admin_user
             NEXTCLOUD_ADMIN_PASSWORD: $$cap_admin_pass
             NEXTCLOUD_TRUSTED_DOMAINS: $$cap_appname.$$cap_root_domain
-        caproverExtra:
-            containerHttpPort: '8080'
     $$cap_appname-cron:
         depends_on:
             - $$cap_appname-db
