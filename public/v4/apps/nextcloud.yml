@@ -105,7 +105,14 @@ caproverOneClickApp:
             If you set the cors sections to https, please enable https on your app. If you do not activate it you will have an error.
 
 
-            For better performances and compliance, you can add "add_header Strict-Transport-Security "max-age=15552000; includeSubDomains" always;" below "proxy_set_header X-Forwarded-Proto $scheme;" into the nginx configuration.
+            For better performances and compliance, click on "edit default nginx configuration" button then
+            below "proxy_set_header X-Forwarded-Proto $scheme;"
+            add "add_header Strict-Transport-Security "max-age=15552000; includeSubDomains" always;"  into the nginx configuration.
+
+            You can see HSTS parts of the nextcloud security documentation https://docs.nextcloud.com/server/21/admin_manual/installation/harden_server.html for further informations
+
+
+            You can also scan your nextcloud instance on https://scan.nextcloud.com/
     displayName: nextcloud
     isOfficial: true
     description: Nextcloud is a suite of client-server software for creating and using file hosting services
