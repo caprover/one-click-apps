@@ -56,7 +56,7 @@ caproverOneClickApp:
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_mariadb_version
           label: MariaDB (database) version
-          defaultValue: 10.5.3
+          defaultValue: 10.5.9
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/mariadb?tab=tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_db_pass
