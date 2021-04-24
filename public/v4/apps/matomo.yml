@@ -44,10 +44,12 @@ caproverOneClickApp:
           label: MariaDB Matomo User Password
           description: The password to use for the matomo database
           validRegex: /.{1,}/
+          defaultValue: $$cap_gen_random_hex(32)
         - id: $$cap_db_pass
           label: MariaDB Root Password
           description: The root password to use for the MariaDB instance
           validRegex: /.{1,}/
+          defaultValue: $$cap_gen_random_hex(32)
     instructions:
         start: Matomo is the leading open-source analytics platform that gives you more than powerful analytics.
         end: Matomo is successfully deployed!
