@@ -20,7 +20,7 @@ services:
             DB_PASSWORD1: $$cap_db_pass
             DB_DATABASE1: $$cap_db_name
             IS_DOCKER: 'true'
-            PHANTOMJS_PDF_GENERATION: $$cap_phantomjs_pdf_generation
+            PHANTOMJS_PDF_GENERATION: $$cap_phantomjs_cloud_enable
             PHANTOMJS_CLOUD_KEY: $$cap_phantomjs_cloud_key
             BAK_PUBLIC_PATH: '/var/www/app/docker-backup-public'
             NINJA_PROD: 'true'
@@ -74,21 +74,22 @@ caproverOneClickApp:
           label: User Email
           defaultValue: user@example.com
         - id: $$cap_user_password
-          label: User Password
+          label: User Password (write this down as you won't be able to see it after deployment)
           defaultValue: $$cap_gen_random_hex(8)
         - id: $$cap_app_key
           label: App Key
           defaultValue: $$cap_gen_random_hex(32)
         - id: $$cap_app_debug
           label: App Debug
-          defaultValue: 'true'
-        - id: $$cap_phantomjs_pdf_generation
-          label: PhantomJS PDF Generation
           defaultValue: 'false'
+        - id: $$cap_phantomjs_cloud_enable
+          label: Enable PhantomJS Cloud to generate PDF
+          defaultValue: 'false'
+          description: By default Invoice Ninja using local Chromimum to generate PDF
         - id: $$cap_phantomjs_cloud_key
           label: PhantomJS Cloud Key
           defaultValue: 'a-demo-key-with-low-quota-per-ip-address'
-          description: 'https://phantomjscloud.com/'
+          description: 'For some reason, if you cannot run Chromium, enable PhantomJS Cloud and grab your PhantomJS Cloud key at https://phantomjscloud.com/'
         - id: $$cap_nginx_tag
           label: Nginx Tag
           defaultValue: '1.20.0-alpine'
