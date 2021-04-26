@@ -1,0 +1,25 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: getmeili/meilisearch:$$cap_app_version
+        volumes:
+            - $$cap_appname-data-ms:/data.ms
+        restart: always
+        caproverExtra:
+            containerHttpPort: '7700'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_app_version
+          label: MeiliSearch Version
+          description: 'Check out their Docker page for the valid tags: https://hub.docker.com/r/getmeili/meilisearch/tags'
+          defaultValue: 'v0.20.0'
+          validRegex: /^([^\s^\/])+$/
+    instructions:
+        start: >-
+            MeiliSearch is a lightning Fast, Ultra Relevant, and Typo-Tolerant Search Engine
+        end: Done! 😄
+            Your service is available at http://$$cap_appname.$$cap_root_domain
+    displayName: ''
+    isOfficial: true
+    description: MeiliSearch is a lightning Fast, Ultra Relevant, and Typo-Tolerant Search Engine
+    documentation: https://docs.meilisearch.com/
