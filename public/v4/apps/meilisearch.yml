@@ -98,9 +98,16 @@ caproverOneClickApp:
     instructions:
         start: >-
             MeiliSearch is a lightning Fast, Ultra Relevant, and Typo-Tolerant Search Engine
-        end: Done! 😄
+        end: >-
             Your service is available at http://$$cap_appname.$$cap_root_domain
-    displayName: ''
+
+            Each instance of MeiliSearch has three keys- a master, a private, and a public. (https://docs.meilisearch.com/reference/api/keys.html#keys)
+
+
+            Get your private and public key using-
+
+            curl -H "X-Meili-API-Key: $$cap_master_key" -X GET 'http://$$cap_appname.$$cap_root_domain/keys'
+    displayName: 'MeiliSearch'
     isOfficial: true
     description: MeiliSearch is a lightning Fast, Ultra Relevant, and Typo-Tolerant Search Engine
     documentation: https://docs.meilisearch.com/
