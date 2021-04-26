@@ -64,7 +64,7 @@ caproverOneClickApp:
           label: Disable Sentry
           defaultValue: 'true'
           validRegex: /^(true|false)$/
-          description: MeiliSearch use Sentry to get bug reports and diagnostics, and improve MeiliSearch experience. To deactivate Sentry, set this value to true.        
+          description: MeiliSearch use Sentry to get bug reports and diagnostics, and improve MeiliSearch experience. To deactivate Sentry, set this value to true.
         - id: $$cap_schedule_snapshot
           label: Schedule Snapshot Creation
           defaultValue: 'false'
