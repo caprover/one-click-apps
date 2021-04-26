@@ -37,7 +37,7 @@ services:
             REDIS_HOST: srv-captain--$$cap_appname-redis
             NEXTCLOUD_ADMIN_USER: $$cap_admin_user
             NEXTCLOUD_ADMIN_PASSWORD: $$cap_admin_pass
-            NEXTCLOUD_TRUSTED_DOMAINS: $$cap_appname.$$cap_root_domain
+            NEXTCLOUD_TRUSTED_DOMAINS: $$cap_appname.$$cap_root_domain $$cap_hostnames
     $$cap_appname-cron:
         depends_on:
             - $$cap_appname-db
@@ -97,6 +97,9 @@ caproverOneClickApp:
           defaultValue: https
           description: Choose either http or https. cors configuration to login are set by the docker image, if you do not set this same as your proxy configuration, login will fail
           validRegex: /^http[s]?$/
+        - id: $$cap_hostnames
+          label: hostnames
+          description: Add all your additional hostnames where nextcloud will be exposed separated by space char. After first run, this variables are not reloaded by nextcloud and you will have to change the configuration according to the nextcloud's documentation.
     instructions:
         start: A safe home for all your data. Access & share your files, calendars, contacts, mail & more from any device, on your terms. http://Nextcloud.com
         end: >-
