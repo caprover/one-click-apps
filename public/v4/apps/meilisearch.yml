@@ -3,12 +3,11 @@ services:
     $$cap_appname:
         image: getmeili/meilisearch:$$cap_app_version
         volumes:
-            - $$cap_appname-data:/$$cap_db_path
-            - $$cap_appname-snapshot:/$$cap_snapshot_dir
-            - $$cap_appname-dump:/$$cap_dump_dir
+            - $$cap_appname-data:/data.ms
+            - $$cap_appname-snapshot:/snapshot
+            - $$cap_appname-dump:/dumps
         restart: always
         environment:
-            MEILI_DB_PATH: $$cap_db_path
             MEILI_MASTER_KEY: $$cap_master_key
             MEILI_NO_ANALYTICS: $$cap_no_analytics
             MEILI_ENV: $$cap_env
@@ -17,9 +16,7 @@ services:
             MEILI_MAX_UDB_SIZE: $$cap_max_udb_size
             MEILI_NO_SENTRY: $$cap_no_sentry
             MEILI_SCHEDULE_SNAPSHOT: $$cap_schedule_snapshot
-            MEILI_SNAPSHOT_DIR: $$cap_snapshot_dir
             MEILI_SNAPSHOT_INTERVAL_SEC: $$cap_snapshot_interval
-            MEILI_DUMPS_DIR: $$cap_dump_dir
             MEILI_DUMP_BATCH_SIZE: $$cap_dump_batchsize
         caproverExtra:
             containerHttpPort: '7700'
@@ -80,21 +77,6 @@ caproverOneClickApp:
           defaultValue: '1024'
           validRegex: /^\d[\d.]*$/
           description: Sets the batch size used in the dump importation process.
-        - id: $$cap_db_path
-          label: Database path
-          description: Defines the location for the database files.
-          defaultValue: 'meilifiles'
-          validRegex: /^([^\s^\/])+$/
-        - id: $$cap_snapshot_dir
-          label: Snapshot Destination
-          description: The directory path where MeiliSearch will create snapshots.
-          defaultValue: 'snapshots'
-          validRegex: /^([^\s^\/])+$/
-        - id: $$cap_dump_dir
-          label: Dumps Destination
-          description: Path of the directory where dumps will be created if the dump route is called.
-          defaultValue: 'dumps'
-          validRegex: /^([^\s^\/])+$/
     instructions:
         start: >-
             MeiliSearch is a lightning Fast, Ultra Relevant, and Typo-Tolerant Search Engine
