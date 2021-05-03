@@ -34,7 +34,7 @@ caproverOneClickApp:
     variables:
         - id: '$$cap_filerun_version'
           label: Filerun Version
-          defaultValue: latest
+          defaultValue: latest@sha256:52748bc49d47e7e4883d7d677879f0f92298bbdcc391952382cda2ba1136aabf
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/filerun/tags
           validRegex: "/.{1,}/"
         - id: '$$cap_mariadb_version'
