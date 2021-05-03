@@ -11,6 +11,8 @@ services:
       MYSQL_DATABASE: filerun
     volumes:
       - $$cap_appname-db-data:/var/lib/mysql
+    caproverExtra:
+      notExposeAsWebApp: true
 
   $$cap_appname:
     image: afian/filerun:$$cap_filerun_version
