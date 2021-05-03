@@ -1,0 +1,66 @@
+captainVersion: 4
+version: '2'
+
+services:
+  $$cap_appname-db:
+    image: mariadb:$$cap_mariadb_version
+    environment:
+      MYSQL_ROOT_PASSWORD: $$cap_gen_random_hex(10)
+      MYSQL_USER: filerun
+      MYSQL_PASSWORD: $$cap_db_password
+      MYSQL_DATABASE: filerun
+    volumes:
+      - $$cap_appname-db-data:/var/lib/mysql
+
+  $$cap_appname:
+    image: afian/filerun:$$cap_filerun_version
+    environment:
+      FR_DB_HOST: srv-captain--$$cap_appname-db
+      FR_DB_PORT: 3306
+      FR_DB_NAME: filerun
+      FR_DB_USER: filerun
+      FR_DB_PASS: $$cap_db_password
+      APACHE_RUN_USER: www-data
+      APACHE_RUN_USER_ID: 33
+      APACHE_RUN_GROUP: www-data
+      APACHE_RUN_GROUP_ID: 33
+    depends_on:
+      - $$cap_appname-db
+    volumes:
+      - $$cap_appname-www-data:/var/www/html
+      - $$cap_appname-user-files:/user-files
+
+caproverOneClickApp:
+    variables:
+        - id: '$$cap_filerun_version'
+          label: Filerun Version
+          defaultValue: latest
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/filerun/tags
+          validRegex: "/.{1,}/"
+        - id: '$$cap_mariadb_version'
+          label: MariaDB Version
+          defaultValue: 10.1
+          description: MariaDB for Filerun. Check out their Docker page for the valid tags https://hub.docker.com/r/mariadb/tags
+          validReges: "/.{1,}/"
+        - id: '$$cap_db_password'
+          label: MariaDB Filerun User Password
+          description: Password for Filerun user of MariaDB.
+        
+    instructions:
+        start: |-
+            Filerun is a self-hosted file sync and sharing system.
+            It's extandable with plugins like: Google Docs Editor and Viewer, CloudConvert, ONLYOFFICE, Office Web View, etc.
+
+            Website: https://filerun.com/
+        end: |-
+            Filerun have been installed successfully!
+            Congratulations!
+
+            Your Filerun instance will be available soon at http://$$cap_appname.$$cap_root_domain/
+
+            Default credentials:
+            superuser:superuser
+    displayName: Filerun
+    isOfficial: true
+    description: Self-hosted file sync and sharing system, like Google Drive.
+    documentation: https://docs.filerun.com/
