@@ -110,41 +110,41 @@ caproverOneClickApp:
           description: 'Frontend url to access your Penpot'
           validRegex: /^^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?$/
         - id: $$cap_smtp_from
-          label: STMP from address
+          label: SMTP from address
           defaultValue: user@example.com
           validRegex: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
         - id: $$cap_smtp_reply_to
-          label: STMP reply address
+          label: SMTP reply address
           defaultValue: no-reply@example.com
           validRegex: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
         - id: $$cap_smtp_host
-          label: STMP host
+          label: SMTP host
           defaultValue: smtp.example.com
           validRegex: /^^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?$/
         - id: $$cap_smtp_port
-          label: STMP port
+          label: SMTP port
           defaultValue: 587
           validRegex: /^^((6553[0-5])|(655[0-2][0-9])|(65[0-4][0-9]{2})|(6[0-4][0-9]{3})|([1-5][0-9]{4})|([0-5]{0,5})|([0-9]{1,4}))$$/
         - id: $$cap_smtp_username
-          label: STMP username
+          label: SMTP username
           defaultValue: user@example.com
           validRegex: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
         - id: $$cap_smtp_password
-          label: STMP password
+          label: SMTP password
           defaultValue:
           validRegex: /.{1,}/
         - id: $$cap_smtp_tls
-          label: STMP TLS support
-          defaultValue: true
+          label: SMTP TLS support
+          defaultValue: 'true'
           validRegex: /^(true|false)$/
         - id: $$cap_smtp_ssl
-          label: STMP SSL support
-          defaultValue: false
+          label: SMTP SSL support
+          defaultValue: 'false'
           validRegex: /^(true|false)$/
         - id: $$cap_enable_telemetry
           label: Send Anonymous Data
           description: When enabled, a periodical process will send annonymous data about this instance. Read more at https://github.com/penpot/penpot/blob/f2fd97693427c7decb86e745bf178fe70fe332a0/docker/images/docker-compose.yaml#L56-L62
-          defaultValue: false
+          defaultValue: 'false'
           validRegex: /^(true|false)$/
 
     instructions:
