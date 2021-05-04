@@ -4,7 +4,7 @@ services:
         image: linuxserver/qbittorrent:$$cap_qbittorrent_version
         environment:
             TZ: $$cap_tz
-            UMASK_SET: 022
+            UMASK: 022
             WEBUI_PORT: $$cap_webui_port
         ports:
             - $$cap_webui_port:8080
