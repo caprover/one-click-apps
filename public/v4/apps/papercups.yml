@@ -1,0 +1,65 @@
+captainVersion: 4
+
+services:
+    $$cap_appname:
+        depends_on:
+            - $$cap_appname-db
+        environment:
+            DATABASE_URL: 'ecto://postgres:$$cap_postgres_password@srv-captain--$$cap_appname-db/postgres'
+            SECRET_KEY_BASE: $$cap_secret_key
+            BACKEND_URL: $$cap_appname.$$cap_root_domain
+            MIX_ENV: $$cap_mix_env
+            REQUIRE_DB_SSL: 'false'
+            REACT_APP_FILE_UPLOADS_ENABLED: $$cap_upload_enabled
+            REACT_APP_URL: $$cap_appname.$$cap_root_domain
+        caproverExtra:
+            containerHttpPort: '4000'
+            dockerfileLines:
+                - FROM papercups/papercups:$$cap_papercups_tag
+                - ENTRYPOINT sh -c "sleep 10 && /entrypoint.sh db createdb && /entrypoint.sh db migrate && echo 'running' && /entrypoint.sh run"
+
+    $$cap_appname-db:
+        image: postgres:$$cap_postgres_tag
+        volume:
+            - '$$cap_appname-db-data:/var/lib/postgresql/data'
+        environment:
+            POSTGRES_PASSWORD: $$cap_postgres_password
+        caproverExtra:
+            notExposeAsWebApp: true
+
+caproverOneClickApp:
+    variables:
+        - id: $$cap_papercups_tag
+          label: Papercups Tag
+          defaultValue: latest
+          description: 'Check out their docker page for the valid tags https://hub.docker.com/r/papercups/papercups/tags'
+        - id: $$cap_secret_key
+          label: Papercups Secret Key
+          defaultValue: $$cap_gen_random_hex(16)
+        - id: $$cap_mix_env
+          label: Mix Env
+          defaultValue: prod
+        - id: $$cap_upload_enabled
+          label: Papercups Upload Enabled
+          defaultValue: 1
+        - id: $$cap_postgres_tag
+          label: Postgres Tag
+          defaultValue: alpine
+          description: 'Check out their docker page for the valid tags https://hub.docker.com/_/postgres?tab=tags'
+        - id: $$cap_postgres_password
+          label: Postgres Password
+          defaultValue: $$cap_gen_random_hex(16)
+    instructions:
+        start: >-
+            Papercups is an open source live customer chat web app written in Elixir.
+            For more info visit https://papercups.io/
+        end: |-
+            Papercups has been successfully deployed!
+            App is available as http://$$cap_appname.$$cap_root_domain
+    displayName: Papercups
+    isOfficial: false
+    description: >-
+        Papercups is an open source live customer chat web app written in Elixir.
+    documentation: >-
+        This docker-compose is taken from
+        https://github.com/papercups-io/papercups/blob/master/docker-compose.prod.yml
