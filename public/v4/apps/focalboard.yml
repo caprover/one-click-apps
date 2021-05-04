@@ -37,7 +37,7 @@ caproverOneClickApp:
           defaultValue: boards
         - id: $$cap_postgres_user
           label: Postgres User
-          defaultValue: boardsuser          
+          defaultValue: boardsuser
         - id: $$cap_postgres_password
           label: Postgres Password
           defaultValue: $$cap_gen_random_hex(16)
