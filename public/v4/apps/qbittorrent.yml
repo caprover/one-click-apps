@@ -19,7 +19,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_qbittorrent_version
           label: qBittorrent Version
-          defaultValue: version-14.2.5.99202004250119-7015-2c65b79ubuntu18.04.1
+          defaultValue: version-14.3.5.99202105022253-7365-063844ed4ubuntu20.04.1
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/qbittorrent/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_tz
@@ -40,7 +40,9 @@ caproverOneClickApp:
             The qBittorrent project aims to provide an open-source software alternative to µTorrent.
             qBittorrent is based on the Qt toolkit and libtorrent-rasterbar library.
         end: >-
-            qBittorrent is deployed and available as $$cap_appname.
+            qBittorrent is deployed and available as http://$$cap_appname.$$cap_root_domain.
+            The default username/password is admin/adminadmin.
+            Change username/password via the webui in the webui section of settings.
     displayName: qBittorrent
     isOfficial: true
     description: qBittorrent BitTorrent client
