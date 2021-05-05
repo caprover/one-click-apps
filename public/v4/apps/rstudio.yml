@@ -12,7 +12,7 @@ caproverOneClickApp:
         - id: $$cap_rstudio_version
           label: RStudio Version Tag
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/rocker/rstudio/tags
-          defaultValue: 'devel'
+          defaultValue: '4.0.4'
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_rstudio_password
           label: 'Password'
