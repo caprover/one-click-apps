@@ -1,0 +1,39 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: rocker/rstudio:$$cap_rstudio_version
+        restart: always
+        environment:
+            PASSWORD: $$cap_rstudio_password
+        caproverExtra:
+            containerHttpPort: '8787'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_rstudio_version
+          label: RStudio Version Tag
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/rocker/rstudio/tags
+          defaultValue: 'devel'
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_rstudio_password
+          label: 'Password'
+          description: 'Your super secret Password for RStudio'
+          validRegex: /^([^\s^\/])+$/
+    instructions:
+        start: >-
+            RStudio Server enables you to provide a browser based interface to a version of R running on a remote Linux server, bringing the power and productivity of the RStudio IDE to server-based deployments of R. 
+
+            For more details, see: https://hub.docker.com/r/rocker/rstudio
+
+            Enter your RStudio Configuration parameters and click on next. It will take about a minute for the process to finish.
+        end: >-
+            Aaaand you're done! 🔥 
+            Your RStudio Server instance is available at http://$$cap_appname.$$cap_root_domain
+            Use username "rstudio" and your super secret passwort to login to your RStudio Server instance
+
+
+            To keep files after restarts you have to edit your caprover config at /captain/data/config-captain.json
+            and set "hasPersistentData": true
+    displayName: RStudio
+    isOfficial: true
+    description: RStudio Server enables you to provide a browser based interface to a version of R running on a remote Linux server, bringing the power and productivity of the RStudio IDE to server-based deployments of R.
+    documentation: 'Taken from https://hub.docker.com/r/rocker/rstudio'
