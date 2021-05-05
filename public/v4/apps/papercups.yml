@@ -51,11 +51,11 @@ caproverOneClickApp:
     variables:
         - id: $$cap_papercups_tag
           label: Papercups Tag
-          defaultValue: latest
+          defaultValue: 1.1.0
           description: 'Check out their docker page for the valid tags https://hub.docker.com/r/papercups/papercups/tags'
         - id: $$cap_postgres_tag
           label: Postgres Tag
-          defaultValue: alpine
+          defaultValue: 9.6-alpine
           description: 'Check out their docker page for the valid tags https://hub.docker.com/_/postgres?tab=tags'
         - id: $$cap_postgres_password
           label: Postgres Password
