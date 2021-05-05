@@ -21,11 +21,9 @@ services:
             TIME_ZONE: '$$cap_timezone'
             SEAFILE_ADMIN_EMAIL: '$$cap_admin_email' # Specifies Seafile admin user, default is 'me@example.com'.
             SEAFILE_ADMIN_PASSWORD: '$$cap_admin_pswd'
-            SEAFILE_SERVER_LETSENCRYPT: 'false'
             SEAFILE_SERVER_HOSTNAME: '$$cap_seafile_hostname'
         depends_on:
             - $$cap_appname-db
-            - $$cap_appname-memcached
 
 caproverOneClickApp:
     variables:
@@ -38,11 +36,6 @@ caproverOneClickApp:
           label: MariaDB Version
           defaultValue: '10.6'
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/mariadb?tab=tags
-          validRegex: '/.{1,}/'
-        - id: '$$cap_memcached_version'
-          label: Memcached version
-          defaultValue: '1.5.6'
-          description: Check out their Docker page for the valid tags https://hub.docker.com/_/memcached?tab=tags
           validRegex: '/.{1,}/'
         - id: '$$cap_mariadb_root_pswd'
           label: MariaDB Root Password
