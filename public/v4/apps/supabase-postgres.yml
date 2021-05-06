@@ -37,11 +37,11 @@ caproverOneClickApp:
           validRegex: /.{0,}/
     instructions:
         start: >-
-              Postgres + goodies = Supabase Postgres
+            Postgres + goodies = Supabase Postgres
 
-              Unmodified Postgres with some useful plugins. 
+            Unmodified Postgres with some useful plugins. 
 
-              Our goal with this repo is not to modify Postgres, but to provide some of the most common extensions with a one-click install.
+            Our goal with this repo is not to modify Postgres, but to provide some of the most common extensions with a one-click install.
         end: "Supabase (Postgres) is deployed and available as srv-captain--$$cap_appname-db:5432 to other apps. For example with NodeJS: 'const client = new Client({ user: 'cap_pg_user', host: 'srv-captain--$$cap_appname', database: 'cap_pg_db', password: '********', port: 5432})'"
     displayName: Supabase PostgreSQL
     isOfficial: true
