@@ -42,7 +42,7 @@ caproverOneClickApp:
 
             PS. It might not work with RPi, or atleast, you wont be able to use OpenMax or V4L2 because Caprover ignores 'devices' parameters of docker-compose
         end: |-
-            Jellyfin has been successfully deployed! Please wait atleast 2-4 mins before trying to connect.
+            Jellyfin has been successfully deployed! Please wait atleast 2-4 mins before trying to connect. To enable HTTPS, enable it inside app config from caprover dashboard. 'Enable HTTPS' setting inside of Jellyfin might not work.
     displayName: Jellyfin
     isOfficial: false
     description: A free media streaming alternative to Plesk. Also supports group sync.
