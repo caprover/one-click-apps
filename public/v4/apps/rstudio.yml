@@ -39,5 +39,5 @@ caproverOneClickApp:
             Use $$cap_rstudio_username  and your super secret passwort to login to your RStudio Server instance
     displayName: RStudio
     isOfficial: false
-    description: RStudio Server enables you to provide a browser based interface to a version of R running on a remote Linux server, bringing the power and productivity of the RStudio IDE to server-based deployments of R.
+    description: RStudio Server enables you to provide a browser based interface to a version of R running on a Linux server, bringing the power & productivity of the RStudio IDE to server-based deployments of R.
     documentation: 'Taken from https://hub.docker.com/r/rocker/rstudio'
