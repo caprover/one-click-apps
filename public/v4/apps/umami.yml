@@ -16,7 +16,6 @@ services:
             - $$cap_appname-postgres
         caproverExtra:
           containerHttpPort: '3000'
-
     # PostgreSQL
     $$cap_appname-postgres:
         image: postgres:$$cap_postgres_version
@@ -30,8 +29,6 @@ services:
             POSTGRES_INITDB_ARGS: $$cap_pg_initdb_args
         caproverExtra:
             notExposeAsWebApp: 'true'
-
-
 caproverOneClickApp:
     variables:
         - id: $$cap_postgres_version
@@ -53,10 +50,9 @@ caproverOneClickApp:
           label: "OPTIONAL: Arguments for 'postgres initdb'"
           description: For example, --data-checksums
           validRegex: /.{0,}/
-
     instructions:
         start: >-
-            Umami is a simple, easy to use, self-hosted web analytics solution. The goal is to provide you with a friendly privacy-focused alternative to Google Analytics.
+            umami is a simple, easy to use, self-hosted web analytics solution. The goal is to provide you with a friendly privacy-focused alternative to Google Analytics.
 
 
             This app will install a default postgres instance with persistant data. You can choose the version yourself. The deployment was tested with postgres 12.x.
@@ -72,8 +68,9 @@ caproverOneClickApp:
         end: >-
             Aaaand you're done! 🔥 
             Your umami instance is available at http://$$cap_appname.$$cap_root_domain
-            Use user 'admin' and password 'umami' to login and change your password immediately!
+
+            IMPORTANT: Use user 'admin' and password 'umami' to login and change your password immediately!
     displayName: umami
     isOfficial: false
-    description: Umami is a simple, easy to use, self-hosted web analytics solution. The goal is to provide you with a friendly privacy-focused alternative to Google Analytics.
+    description: umami is a simple, easy to use, self-hosted web analytics solution. The goal is to provide you with a friendly privacy-focused alternative to Google Analytics.
     documentation: Official docs are [here](https://github.com/mikecao/umami)
