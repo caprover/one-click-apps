@@ -15,7 +15,7 @@ services:
         depends_on:
             - $$cap_appname-postgres
         caproverExtra:
-          containerHttpPort: '3000'
+            containerHttpPort: '3000'
     # PostgreSQL
     $$cap_appname-postgres:
         image: postgres:$$cap_postgres_version
