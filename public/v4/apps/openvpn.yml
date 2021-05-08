@@ -22,12 +22,12 @@ caproverOneClickApp:
         - id: '$$cap_puid'
           label: OpenVPN UserID
           defaultValue: 1000
-          description: UserID used by JellyFin to avoid permission problems, please refer to docs- https://github.com/linuxserver/docker-openvpn-as#Parameters
+          description: UserID used by OpenVPN to avoid permission problems, please refer to docs- https://github.com/linuxserver/docker-openvpn-as#Parameters
           validRegex: /[0-9]/
         - id: '$$cap_pgid'
           label: OpenVPN GroupID
           defaultValue: 1000
-          description: GroupID used by JellyFin to avoid permission problems, please refer to docs- https://github.com/linuxserver/docker-openvpn-as#Parameters
+          description: GroupID used by OpenVPN to avoid permission problems, please refer to docs- https://github.com/linuxserver/docker-openvpn-as#Parameters
           validRegex: /[0-9]/
         - id: '$$cap_tz'
           label: Time Zone
