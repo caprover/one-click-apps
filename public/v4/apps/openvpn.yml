@@ -2,7 +2,7 @@ captainVersion: 4
 services:
     $$cap_appname:
         image: ghcr.io/linuxserver/openvpn-as
-        cap_add: # Missing support
+        cap_add:
             - NET_ADMIN
         environment:
             PUID: $$cap_puid
