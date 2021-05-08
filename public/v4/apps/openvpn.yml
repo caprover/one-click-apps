@@ -45,7 +45,7 @@ caproverOneClickApp:
 
             For more details visit- https://openvpn.net/index.php/access-server/overview.html
         end: |-
-            OpenVPN has been successfully deployed! Please wait atleast 2-4 mins before trying to connect. To enable HTTPS, enable it inside app config from caprover dashboard. 'Enable HTTPS' setting inside of Jellyfin might not work.
+            OpenVPN has been successfully deployed! Please wait atleast 2-4 mins before trying to connect.
     displayName: OpenVPN Access Server
     isOfficial: false
     description: A free media streaming alternative to Plesk. Also supports group sync.
