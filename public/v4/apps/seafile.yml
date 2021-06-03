@@ -65,7 +65,7 @@ caproverOneClickApp:
             Seafile has been successfully deployed!
             App is available as http://$$cap_appname.$$cap_root_domain
     displayName: Seafile
-    isOfficial: false
+    isOfficial: true
     description: >-
         Seafile is an open source cloud storage system with file encryption and
         group sharing.
