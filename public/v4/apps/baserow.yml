@@ -81,7 +81,7 @@ caproverOneClickApp:
             --------------------------------------------
 
             App is available as http://$$cap_appname.$$cap_root_domain
-    displayName: SeaTable
+    displayName: Baserow
     isOfficial: false
     description: >-
         Baserow is an open source online database tool and Airtable alternative.
