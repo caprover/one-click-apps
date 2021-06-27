@@ -76,13 +76,14 @@ caproverOneClickApp:
     instructions:
         start: >-
             Moodle Caprover installation - From Bitnami Docker Image
-            Note: This app is intended for advanced users who'd like to have a central DB in a single container for multiple WP's. You should start by configuring your DB first and then comeback with all the DB Information.
+            Note: You should start by configuring your DB first and then comeback with all the DB Information.
         end: >
            Moodle is deployed and available as $$cap_appname . 
            IMPORTANT: It will take up to 10 minutes for Moodle to be ready. Before that, you might see a 502 error page.
            'Native MYSQL Authentication' is recommended as MYSQL Authentication plugin.
            Remember that this app will not create a Database by itself. You need to provide all that information.
            
+            For Advanced Users:
             SMTP Configuration
             To configure MoodleTM to send email using SMTP you can set the following environment variables:
             MOODLE_SMTP_HOST: SMTP host.
@@ -90,7 +91,7 @@ caproverOneClickApp:
             MOODLE_SMTP_USER: SMTP account user.
             MOODLE_SMTP_PASSWORD: SMTP account password.
             MOODLE_SMTP_PROTOCOL: SMTP protocol.
-
+            
             PHP configuration
             PHP_ENABLE_OPCACHE: Enable OPcache for PHP scripts. No default.
             PHP_EXPOSE_PHP: Enables HTTP header with PHP version. No default.
