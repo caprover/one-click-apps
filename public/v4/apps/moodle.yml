@@ -1,0 +1,106 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: bitnami/moodle:$$cap_wp_version
+        volumes:
+            - $$cap_appname-moodle:/bitnami/moodle
+            - $$cap_appname-moodledata:/bitnami/moodledata
+        restart: always
+        environment:
+            MOODLE_DATABASE_TYPE: $$cap_db_type
+            MOODLE_DATABASE_HOST: $$cap_db_host
+            MOODLE_DATABASE_PORT_NUMBER: $$cap_db_port
+            MOODLE_DATABASE_USER: $$cap_db_user
+            MOODLE_DATABASE_NAME: $$cap_db_name
+            MOODLE_DATABASE_PASSWORD: $$cap_db_pass
+            ALLOW_EMPTY_PASSWORD: 'no'
+            MOODLE_USERNAME: $$cap_md_username
+            MOODLE_PASSWORD: $$cap_md_password
+            MOODLE_EMAIL: $$cap_md_admin_email
+            MOODLE_SITE_NAME: $$cap_md_sitename
+            MOODLE_SKIP_BOOTSTRAP: $$cap_md_bootstrap
+        caproverExtra:
+            containerHttpPort: '8080'
+caproverOneClickApp:
+    variables:
+        - description: Valid values mariadb, mysqli
+          defaultValue: mysqli
+          id: $$cap_db_type
+          label: Database type
+        - description: Database host
+          defaultValue: srv-captain--xxx
+          id: $$cap_db_host
+          label: Database Host
+        - id: $$cap_db_port
+          label: Database Port
+          defaultValue: '3306'
+          description: Default Mysql port will be 3306
+          validRegex: /^([^\s^\/])+$/
+        - description: Database name
+          defaultValue: moodle
+          id: $$cap_db_name
+          label: DB Name
+        - id: $$cap_db_user
+          label: Database user
+          defaultValue: moodleuser
+          description: Database username
+        - id: $$cap_db_pass
+          label: Database password
+          description: ''
+          validRegex: /.{1,}/
+        - id: $$cap_wp_version
+          label: Moodle Version
+          defaultValue: latest
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/bitnami/moodle/tags/
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_md_username
+          label: Moodle Admin Username
+          defaultValue: admin
+          description: Moodle application username.
+        - id: $$cap_md_password
+          label: Moodle Admin Password
+          defaultValue: password
+          description: Moodle application password.
+        - id: $$cap_md_sitename
+          label: Moodle Site Name
+          defaultValue: New site
+          description: Moodle Site name.
+        - id: $$cap_md_admin_email
+          label: Moodle Admin Email
+          defaultValue: user@example.com
+          description: Moodle application email.
+        - id: $$cap_md_bootstrap
+          label: Is moodle exists in db?
+          defaultValue: 'no'
+          description: Set 'no' for new installation. This is necessary in case you use a database that already has Moodle data.
+    instructions:
+        start: >-
+            Moodle Caprover installation - From Bitnami Docker Image
+            Note: You should start by configuring your DB first and then comeback with all the DB Information.
+        end: >
+           Moodle is deployed and available as $$cap_appname . 
+           IMPORTANT: It will take up to 10 minutes for Moodle to be ready. Before that, you might see a 502 error page.
+           'Native MYSQL Authentication' is recommended as MYSQL Authentication plugin.
+           Remember that this app will not create a Database by itself. You need to provide all that information.
+           
+            For Advanced Users:
+            SMTP Configuration
+            To configure MoodleTM to send email using SMTP you can set the following environment variables:
+            MOODLE_SMTP_HOST: SMTP host.
+            MOODLE_SMTP_PORT: SMTP port.
+            MOODLE_SMTP_USER: SMTP account user.
+            MOODLE_SMTP_PASSWORD: SMTP account password.
+            MOODLE_SMTP_PROTOCOL: SMTP protocol.
+            
+            PHP configuration
+            PHP_ENABLE_OPCACHE: Enable OPcache for PHP scripts.
+            PHP_EXPOSE_PHP: Enables HTTP header with PHP version.
+            PHP_MAX_EXECUTION_TIME: Maximum execution time for PHP scripts.
+            PHP_MAX_INPUT_TIME: Maximum input time for PHP scripts.
+            PHP_MAX_INPUT_VARS: Maximum amount of input variables for PHP scripts.
+            PHP_MEMORY_LIMIT: Memory limit for PHP scripts. Default: 256M
+            PHP_POST_MAX_SIZE: Maximum size for PHP POST requests.
+            PHP_UPLOAD_MAX_FILESIZE: Maximum file size for PHP uploads.
+    displayName: Moodle 
+    description: Moodle(TM) is a very popular open source learning management solution (LMS) for the delivery of elearning courses and programs.
+    documentation: Taken from https://hub.docker.com/r/bitnami/moodle/. Port mapping removed from Moodle as it is no longer needed
