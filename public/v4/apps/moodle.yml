@@ -14,8 +14,8 @@ services:
             MOODLE_DATABASE_NAME: $$cap_db_name
             MOODLE_DATABASE_PASSWORD: $$cap_db_pass
             ALLOW_EMPTY_PASSWORD: 'no'
-            MOODLE_USERNAME: $$cap_md_username
-            MOODLE_PASSWORD: $$cap_md_password
+            MOODLE_USERNAME: admin
+            MOODLE_PASSWORD: password
             MOODLE_EMAIL: $$cap_md_admin_email
             MOODLE_SITE_NAME: $$cap_md_sitename
             MOODLE_SKIP_BOOTSTRAP: $$cap_md_bootstrap
@@ -24,7 +24,7 @@ services:
 caproverOneClickApp:
     variables:
         - description: Valid values mariadb, mysqli
-          defaultValue: mysqli
+          defaultValue: mariadb
           id: $$cap_db_type
           label: Database type
         - description: Database host
@@ -53,14 +53,6 @@ caproverOneClickApp:
           defaultValue: latest
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/bitnami/moodle/tags/
           validRegex: /^([^\s^\/])+$/
-        - id: $$cap_md_username
-          label: Moodle Admin Username
-          defaultValue: admin
-          description: Moodle application username.
-        - id: $$cap_md_password
-          label: Moodle Admin Password
-          defaultValue: password
-          description: Moodle application password.
         - id: $$cap_md_sitename
           label: Moodle Site Name
           defaultValue: New site
@@ -78,7 +70,10 @@ caproverOneClickApp:
             Moodle Caprover installation - From Bitnami Docker Image
             Note: You should start by configuring your DB first and then comeback with all the DB Information.
         end: >
-           Moodle is deployed and available as $$cap_appname . 
+           Moodle is deployed and available as $$cap_appname. 
+           Username: admin
+           Password: password
+           
            IMPORTANT: It will take up to 10 minutes for Moodle to be ready. Before that, you might see a 502 error page.
            'Native MYSQL Authentication' is recommended as MYSQL Authentication plugin.
            Remember that this app will not create a Database by itself. You need to provide all that information.
@@ -101,6 +96,6 @@ caproverOneClickApp:
             PHP_MEMORY_LIMIT: Memory limit for PHP scripts. Default: 256M
             PHP_POST_MAX_SIZE: Maximum size for PHP POST requests.
             PHP_UPLOAD_MAX_FILESIZE: Maximum file size for PHP uploads.
-    displayName: Moodle 
+    displayName: Moodle LMS
     description: Moodle(TM) is a very popular open source learning management solution (LMS) for the delivery of elearning courses and programs.
     documentation: Taken from https://hub.docker.com/r/bitnami/moodle/. Port mapping removed from Moodle as it is no longer needed
