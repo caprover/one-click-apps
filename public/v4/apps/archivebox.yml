@@ -23,7 +23,7 @@ caproverOneClickApp:
         - id: $$cap_max_size_in_mo
           label: Media max size
           defaultValue: 750m
-          description: Max size of media in mo
+          description: Max size of media in MO
           validRegex: /^[0-9]+m$/
     instructions:
         start: >-
