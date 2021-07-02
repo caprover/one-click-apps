@@ -52,7 +52,6 @@ caproverOneClickApp:
           description: Database username
         - id: $$cap_db_pass
           label: Database password
-          description: ''
           validRegex: /.{1,}/
         - id: $$cap_md_version
           label: Moodle Version
