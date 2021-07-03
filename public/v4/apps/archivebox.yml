@@ -1,0 +1,40 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        documentation: Taken from https://docs.archivebox.io/en/latest/Docker.html and https://docs.archivebox.io/en/latest/Configuration.html?highlight=Configuration#configuration
+        volumes:
+            - $$cap_appname-data:/data
+        environment:
+            ALLOWED_HOSTS: '*'
+            MEDIA_MAX_SIZE: $$cap_max_size_in_mo
+        restart: always
+        caproverExtra:
+            dockerfileLines:
+                - FROM archivebox/archivebox:$$cap_archivebox_version
+                - CMD ["server", "--quick-init", "0.0.0.0:8000"]
+            containerHttpPort: '8000'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_archivebox_version
+          label: archivebox Version
+          defaultValue: sha-5940dd6
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/archivebox/archivebox/tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_max_size_in_mo
+          label: Media max size
+          defaultValue: 750m
+          description: Max size of media in MO
+          validRegex: /^[0-9]+m$/
+    instructions:
+        start: >-
+            ArchiveBox is a powerful, self-hosted internet archiving solution to collect, save, and view sites you want to preserve offline.
+            please note ArchiveBox NEED you to run some command lines to create the account and does not allow to create a default account.
+        end: >-
+            ArchiveBox is deployed and available as $$cap_appname.
+            It may take a few minutes for ArchiveBox to initialize.
+            Before adding something you need to create an account by running the command `su - archivebox` then `archivebox manage createsuperuser" into the `data` folder
+            To go into your container please follow those instructions: https://caprover.com/docs/troubleshooting.html#how-to-run-shell-inside-my-application-inside-container
+            Once the super admin is setted you can add other via the web ui.
+    displayName: ArchiveBox
+    isOfficial: true
+    description: Open-source self-hosted web archiving.
