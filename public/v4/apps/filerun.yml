@@ -18,7 +18,7 @@ services:
             APACHE_RUN_GROUP_ID: 33
 caproverOneClickApp:
     variables:
-        - description: Database host. Remember Latest MYSQL use SHA256_Hashing plugin for authentication, If you are using MySQL database, change user password hashing plugin into Native authentication plugin.
+        - description: Database host. Remember Latest version of MYSQL use SHA256_Hashing plugin for authentication by default, If you are using MySQL database, change user password hashing plugin into Native authentication plugin.
           defaultValue: srv-captain--xxx
           id: $$cap_db_host
           label: Database Host
@@ -51,7 +51,7 @@ caproverOneClickApp:
             Note: This app is intended for advanced users who'd like to have a central DB in a single container. You should start by configuring your DB first and then comeback with all the DB Information.
         end: >-
             FileRun is deployed and available as $$cap_appname-wordpress. 
-            
+
             Username: superuser  Password: superuser
 
             IMPORTANT: It will take up to 2 minutes for FileRun to be ready. Before that, you might see a 502 error page.
@@ -60,4 +60,4 @@ caproverOneClickApp:
     displayName: FileRun - No DB
     isOfficial: true
     description: FileRun is a self-hosted Google Drive alternative. It is a full featured web based file manager with an easy to use user interface.
-    documentation: Taken from https://hub.docker.com/r/afian/filerun/. Port mapping removed from WP as it is no longer needed
+    documentation: Taken from https://hub.docker.com/r/afian/filerun/.
