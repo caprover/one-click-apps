@@ -59,19 +59,6 @@ caproverOneClickApp:
             2. Enable "Force HTTPS by redirecting all HTTP traffic to HTTPS"
 
             3. Enable Websocket Support.
-
-            4. Click on Edit Nginx Configuration and right under
-
-            "set $upstream https://<%-s.localDomain%>:<%-s.containerHttpPort%>;" add the following code
-
-                location /ws/ {
-                    proxy_pass $upstream;
-                    proxy_http_version 1.1;
-                    proxy_set_header Upgrade $http_upgrade;
-                    proxy_set_header Connection "Upgrade";
-                }
-
-            5. Click Save & update
         end: >-
             Deployment of Pydio is finished.
 
@@ -86,20 +73,7 @@ caproverOneClickApp:
 
             3. Enable Websocket Support.
 
-            4. Click on Edit Nginx Configuration and right under
-
-            "set $upstream https://<%-s.localDomain%>:<%-s.containerHttpPort%>;" add the following code
-
-                location /ws/ {
-                    proxy_pass $upstream;
-                    proxy_http_version 1.1;
-                    proxy_set_header Upgrade $http_upgrade;
-                    proxy_set_header Connection "Upgrade";
-                }
-
-            5. Click Save & update
-
-            6. after some time go to https://$$cap_appname.$$cap_root_domain and follow the installation steps.
+            4. after some time go to https://$$cap_appname.$$cap_root_domain and follow the installation steps.
     displayName: 'Pydio Cells'
     isOfficial: true
     baseUrl: https://pydio.com/
