@@ -45,7 +45,7 @@ caproverOneClickApp:
     instructions:
         start: >-
             FileRun is a self-hosted Google Drive alternative. It is a full featured web based file manager with an easy to use user interface. It is great for managing your photo, movie, audio collection, or sharing files with your family and friends.
-            
+
             Enter your Database Configuration parameters and click on next. A FileRun container will be created for you. The process will take about a minute for the process to finish. 
 
             Note: This app is intended for advanced users who'd like to have a central DB in a single container. You should start by configuring your DB first and then comeback with all the DB Information.
