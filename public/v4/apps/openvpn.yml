@@ -1,0 +1,52 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: ghcr.io/linuxserver/openvpn-as
+        cap_add:
+            - NET_ADMIN
+        environment:
+            PUID: $$cap_puid
+            PGID: $$cap_pgid
+            TZ: $$cap_tz
+            INTERFACE: $$cap_interface
+        volumes:
+            - $$cap_appname-config:/config
+        caproverExtra:
+            containerHttpPort: '943'
+        ports:
+            - 9443:9443
+            - 1194:1194
+        restart: unless-stopped
+caproverOneClickApp:
+    variables:
+        - id: '$$cap_puid'
+          label: OpenVPN UserID
+          defaultValue: 1000
+          description: UserID used by OpenVPN to avoid permission problems, please refer to docs- https://github.com/linuxserver/docker-openvpn-as#Parameters
+          validRegex: /[0-9]/
+        - id: '$$cap_pgid'
+          label: OpenVPN GroupID
+          defaultValue: 1000
+          description: GroupID used by OpenVPN to avoid permission problems, please refer to docs- https://github.com/linuxserver/docker-openvpn-as#Parameters
+          validRegex: /[0-9]/
+        - id: '$$cap_tz'
+          label: Time Zone
+          defaultValue: Asia/Kolkata
+          description: Get yours from https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+          validRegex: /.{1,}/
+        - id: '$$cap_interface'
+          label: Interface
+          defaultValue: eth0
+          description: Interface to be used by OpenVPN. With bridge networking, leave it as eth0 (or don't include at all), if host or macvlan, set it to your host's network interface, found by running 'ifconfig' in terminal
+          validRegex: /.{1,}/
+    instructions:
+        start: |-
+            OpenVPN Access Server is a full featured secure network tunneling VPN software solution that integrates OpenVPN server capabilities, enterprise management capabilities, simplified OpenVPN Connect UI, and OpenVPN Client software packages
+
+            For more details visit- https://openvpn.net/index.php/access-server/overview.html
+        end: |-
+            OpenVPN has been successfully deployed! Please wait atleast 2-4 mins before trying to connect.
+    displayName: OpenVPN Access Server
+    isOfficial: false
+    description: A free media streaming alternative to Plesk. Also supports group sync.
+    documentation: See https://github.com/linuxserver/docker-openvpn-as
