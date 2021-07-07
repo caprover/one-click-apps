@@ -6,6 +6,7 @@ services:
         environment:
             UPSTREAM_HTTP_ADDRESS: $$cap_upstream_http_address
             CLIENT_MAX_BODY_SIZE: $$cap_max_body_size
+            PROXY_REDIRECT: $$cap_proxy_redirect
 caproverOneClickApp:
     variables:
         - id: $$cap_upstream_http_address
@@ -20,6 +21,10 @@ caproverOneClickApp:
           description: Sets the maximum allowed size of the client request body, specified in the “Content-Length” request header field. If the size in a request exceeds the configured value, the 413 (Request Entity Too Large) error is returned to the client. Please be aware that browsers cannot correctly display this error. Setting size to 0 disables checking of client request body size.
           defaultValue: 256M
           validRegex: /^\d+M$/
+        - id: $$cap_proxy_redirect
+          label: Proxy redirect value
+          description: Sets the text that should be changed in the “Location” and “Refresh” header fields of a proxied server response.
+          defaultValue: default
     instructions:
         start: This is a very simply reverse proxy image. It forwards all HTTP requests to the HTTP address that you define.
         end: Reverse Proxy is deployed and available as $$cap_appname
