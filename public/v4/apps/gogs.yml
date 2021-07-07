@@ -1,0 +1,29 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: gogs/gogs:0.12
+        restart: always
+        volumes:
+            - $$cap_appname-config:/data
+        ports:
+            - 10022:22
+        caproverExtra:
+            containerHttpPort: '3000'
+caproverOneClickApp:
+    instructions:
+        start: |-
+            Gogs is a painless self-hosted Git service.
+
+            This is a clean install, so no database will be provisioned for you!
+
+            GitHub: https://github.com/gogs/gogs
+        end: |-
+            Aaaand you're done! 😄
+
+            Your service is available as $$cap_appname, you'll need to complete installation by visiting it in your browser.
+
+            REMEMBER: Your SSH port is currently set to 10022 (TCP), so make sure to open it in your firewall if you need to access it externally.
+    displayName: Gogs (No DB)
+    isOfficial: true
+    description: Gogs is a painless self-hosted Git service. This is a clean install, so no database will be provisioned for you!
+    documentation: https://gogs.io/docs
