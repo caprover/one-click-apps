@@ -1,0 +1,157 @@
+captainVersion: 4
+caproverOneClickApp:
+    variables:
+        - label: HTTP Port
+          description: This is the HTTP port to access appwrite
+          defaultValue: '8000'
+          id: $$cap_http_port
+        - label: HTTPS Port
+          description: This is the HTTPS port to access appwrite
+          defaultValue: '8443'
+          id: $$cap_https_port
+        - label: This is the secret key for appwrite
+          description: This key should not be shared publicly with anyone
+          defaultValue: $$cap_gen_random_hex(64)
+          validRegex: /.{1,}/
+          id: $$cap_secret_key
+        - label: App console whitelist emails
+          description: This option allows you to limit creation of users to Appwrite console. This option is very useful for small teams or sole developers. To enable it, pass a list of allowed email addresses separated by a comma.
+          id: $$cap_console_whitelist_emails
+        - label: Database password
+          description: Password for the database user and root using mariadb.
+          defaultValue: $$cap_gen_random_hex(18)
+          validRegex: /^(\w|[^\s"'\\])+$/
+          id: $$cap_db_pass
+        - label: Database username
+          defaultValue: appwrite
+          description: Username for the database using mariadb.
+          validRegex: /^([a-z0-9])+$/i
+          id: $$cap_db_user
+        - label: SMTP host
+          description: The host for your smtp server
+          defaultValue: smtp.gmail.com
+          id: $$cap_smtp_host
+        - label: SMTP secure
+          description: SMTP secure connection protocol. Empty by default, change to 'tls' if running on a secure connection.
+          defaultValue: ''
+          id: $$cap_smtp_secure
+        - label: SMTP port
+          description: The port for your smtp server
+          defaultValue: '587'
+          id: $$cap_smtp_port
+        - label: SMTP user
+          description: The user for your smtp server
+          defaultValue: your_email@gmail.com
+          id: $$cap_smtp_user
+        - label: SMTP password
+          description: The password for your smtp server
+          defaultValue: sTr0nG_p@s$wo%d
+          id: $$cap_smtp_pass
+        - label: System Email name
+          description: This is the sender name value that will appear on email messages sent to developers from the Appwrite console. The default value is 'Appwrite Team'. You can use url encoded strings for spaces and special chars.
+          defaultValue: 'Appwrite Team'
+          validRegex: /.{1,}/
+          id: $$cap_system_email_name
+        - label: System Email address
+          description: This is the sender email address that will appear on email messages sent to developers from the Appwrite console. The default value is 'team@appwrite.io'. You should choose an email address that is allowed to be used from your SMTP server to avoid the server email ending in the users' SPAM folders.
+          defaultValue: team@appwrite.io
+          validRegex: /.{1,}/
+          id: $$cap_system_email_address
+    instructions:
+        start: |-
+            Secure Open-Source Backend Server for Web, Mobile & Flutter Developers
+
+            Appwrite is a self-hosted solution that provides developers with a set of easy-to-use and integrate REST APIs to manage their core backend needs.
+        end: |-
+            Appwrite has been successfully deployed! Be sure to activate (or better yet, enforce) https access for $$cap_appname. 
+            
+            In this setup we are using emails for our whitelist, but this can be changed by going to the docs and reading about the other environment variable options https://appwrite.io/docs/production.
+
+            You should enable https in caprover before you start using the app.
+    displayName: Appwrite
+    isOfficial: true
+    description: Secure Open-Source Backend Server for Web, Mobile & Flutter Developers
+    documentation: https://appwrite.io/docs
+########
+services:
+    $$cap_appname-appwrite:
+        image: appwrite/appwrite:latest
+        ports:
+            - $$cap_http_port:80
+            - $$cap_https_port:443
+        volumes:
+            - $$cap_appname-appwrite-uploads:/storage/uploads
+            - $$cap_appname-appwrite-cache:/storage/cache
+            - $$cap_appname-appwrite-config:/storage/config
+            - $$cap_appname-appwrite-certificates:/storage/certificates
+        depends_on:
+            - $$cap_appname-mariadb
+            - $$cap_appname-redis
+            - $$cap_appname-clamav
+            - $$cap_appname-influxdb
+            - $$cap_appname-telegraf
+        environment:
+            _APP_ENV: production
+            _APP_OPTIONS_FORCE_HTTPS: true
+            _APP_OPENSSL_KEY_V1: $$cap_secret_key
+            _APP_DOMAIN: http://$$cap_appname.$$cap_root_domain/
+            _APP_DOMAIN_TARGET: http://$$cap_appname.$$cap_root_domain/
+            _APP_CONSOLE_WHITELIST_EMAILS: $$cap_console_whitelist_emails
+            _APP_REDIS_HOST: srv-captain--$$cap_appname-redis
+            _APP_REDIS_PORT: 6379
+            _APP_DB_HOST: srv-captain--$$cap_appname-mariadb
+            _APP_DB_PORT: 3306
+            _APP_DB_SCHEMA: appwrite
+            _APP_DB_USER: $$cap_db_user
+            _APP_DB_PASS: $$cap_db_pass
+            _APP_INFLUXDB_HOST: srv-captain--$$cap_appname-influxdb
+            _APP_INFLUXDB_PORT: 8086
+            _APP_STATSD_HOST: srv-captain--$$cap_appname-telegraf
+            _APP_STATSD_PORT: 8125
+            _APP_SMTP_HOST: $$cap_smtp_host
+            _APP_SMTP_PORT: $$cap_smtp_port
+            _APP_SMTP_SECURE: $$cap_smtp_secure
+            _APP_SMTP_USERNAME: $$cap_smtp_user
+            _APP_SMTP_PASSWORD: $$cap_smtp_pass
+            _APP_SYSTEM_EMAIL_NAME: $$cap_system_email_name
+            _APP_SYSTEM_EMAIL_ADDRESS: $$cap_system_email_address
+
+    $$cap_appname-mariadb:
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+            dockerfileLines:
+                - FROM appwrite/mariadb:1.1.0
+                - CMD ["mysqld" , "--innodb-flush-method=fsync"]
+        volumes:
+            - $$cap_appname-appwrite-mariadb:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: $$cap_gen_random_hex(24)
+            MYSQL_DATABASE: appwrite
+            MYSQL_USER: $$cap_db_user
+            MYSQL_PASSWORD: $$cap_db_pass
+
+    $$cap_appname-redis:
+        image: redis:5.0
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+        volumes:
+            - $$cap_appname-appwrite-redis:/data
+
+    $$cap_appname-clamav:
+        image: appwrite/clamav:1.1.0
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+        volumes:
+            - $$cap_appname-appwrite-uploads:/storage/uploads
+
+    $$cap_appname-influxdb:
+        image: influxdb:1.6
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+        volumes:
+            - $$cap_appname-appwrite-influxdb:/var/lib/influxdb
+
+    $$cap_appname-telegraf:
+        image: appwrite/telegraf:1.1.0
+        caproverExtra:
+            notExposeAsWebApp: 'true'
