@@ -7,8 +7,8 @@ services:
             PGID: '1000'
             TZ: $$cap_tz
             TRANSMISSION_WEB_HOME: /$$cap_ui/
-            USER: admin #optional
-            PASS: admin #optional
+            USER: $$cap_user
+            PASS: $$cap_pass
             WHITELIST: '' #optional
             HOST_WHITELIST: '' #optional
             WEBUI_PORT: '9091'
@@ -25,7 +25,7 @@ services:
 caproverOneClickApp:
     variables:
         - id: $$cap_transmission_version
-          label: transmission Version
+          label: Transmission Version
           defaultValue: arm64v8-version-3.00-r2
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/transmission/tags
           validRegex: /^([^\s^\/])+$/
@@ -34,6 +34,12 @@ caproverOneClickApp:
           defaultValue: Asia/Kolkata
           description: Get yours from https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
           validRegex: /.{1,}/
+        - id: $$cap_user
+          label: Username
+          defaultValue: admin
+        - id: $$cap_pass
+          label: Password
+          defaultValue: password
         - id: $$cap_ui
           label: User Interface
           defaultValue: transmission-web-control
@@ -44,7 +50,7 @@ caproverOneClickApp:
             Transmission is designed for easy, powerful use. Transmission has the features you want from a BitTorrent client: encryption, a web interface, peer exchange, magnet links, DHT, µTP, UPnP and NAT-PMP port forwarding, webseed support, watch directories, tracker editing, global and per-torrent speed limits, and more.
         end: >-
             Transmission is deployed and available as $$cap_appname.$$cap_root_domain.
-            The default username/password is admin/admin.
+            The default username/password is $$cap_user/$$cap_pass.
             Change username/password via the webui in the webui section of settings or using enviornament variables.
     displayName: Transmission
     isOfficial: true
