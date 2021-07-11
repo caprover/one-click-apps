@@ -37,5 +37,5 @@ caproverOneClickApp:
             Wait for few minutes to build and configure the app.
     displayName: Papermerge
     isOfficial: true
-    description: Papermerge is an open source document management system (DMS) primarily designed for archiving and retrieving your digital documents. 
+    description: Papermerge is an open source document management system (DMS) primarily designed for archiving and retrieving your digital documents.
     documentation: Taken from https://hub.docker.com/r/linuxserver/papermerge. Website -  https://www.papermerge.com/
