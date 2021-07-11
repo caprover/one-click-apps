@@ -13,7 +13,6 @@ services:
             HOST_WHITELIST: '' #optional
             WEBUI_PORT: '9091'
         ports:
-            - 9091:9091
             - 51413:51413
         hostname: $$cap_appname.$$cap_root_domain
         volumes:
@@ -51,9 +50,10 @@ caproverOneClickApp:
           description: Specify an alternative UI options are combustion-release, transmission-web-control, kettu and flood-for-transmission.
           validRegex: /^(combustion-release|transmission-web-control|kettu|flood-for-transmission)$/
     instructions:
-        start: >-
+        start: |-
             Transmission is designed for easy, powerful use. Transmission has the features you want from a BitTorrent client: encryption, a web interface, peer exchange, magnet links, DHT, µTP, UPnP and NAT-PMP port forwarding, webseed support, watch directories, tracker editing, global and per-torrent speed limits, and more.
-        end: >-
+            This app uses port 51413 as Torrent port and port 9091 for Web UI.
+        end: |-
             Transmission is deployed and available as $$cap_appname.$$cap_root_domain.
             The default username/password is $$cap_user/$$cap_pass.
             Change username/password via the webui in the webui section of settings or using enviornament variables.
