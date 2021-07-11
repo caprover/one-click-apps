@@ -28,8 +28,9 @@ caproverOneClickApp:
           validRegex: /.{1,}/
         - id: $$cap_path_to_downloads
           label: Path to downloads folder
-          description: Path to downloads folder where u want to save the downloaded torrents
-          validRegex: /\/[^\s-][a-zA-Z0-9_\/-]*[^\/][^\s-]/
+          defaultValue: pyload-downloads
+          description: Path to pictures folder where u want to save the downloaded files. You can mention an existing directory here too. Eg. /home/user/downloads/
+          validRegex: "/.{1,}/"
     instructions:
         start: >-
             Pyload is a Free and Open Source download manager written in Python and designed to be extremely lightweight, easily extensible and fully manageable via web.
