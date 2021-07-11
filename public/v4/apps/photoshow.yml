@@ -1,0 +1,45 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: linuxserver/photoshow:$$cap_photoshow_version
+        environment:
+            PUID: '1000'
+            PGID: '1000'
+            TZ: $$cap_tz
+        ports:
+            - 9091:9091
+            - 51413:51413
+        hostname: $$cap_appname.$$cap_root_domain
+        volumes:
+            - $$cap_appname-config:/config
+            - $$cap_path_to_pictures:/Pictures:ro
+            - $$cap_appname-watch:/Thumbs
+        caproverExtra:
+            containerHttpPort: '80'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_photoshow_version
+          label: photoshow Version
+          defaultValue: 48aabb98-ls105
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/photoshow/tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_tz
+          label: Time Zone
+          defaultValue: Asia/Kolkata
+          description: Get yours from https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+          validRegex: /.{1,}/
+        - id: $$cap_path_to_pictures
+          defaultValue: photoshow-pictures
+          label: Path to pictures folder
+          description: Path to pictures folder where u want to save the uploaded pictures. You can mention an existing directory here too. Eg. /home/user/pictures/
+          validRegex: "/.{1,}/"
+    instructions:
+        start: >-
+            PhotoShow, your web gallery. PhotoShow is a free and open source web gallery, that you can very easily install on your web server. It doesnt even require a database !
+        end: |-
+            On first run create an admin account, any folder and its subfolders that you map to /Pictures will be presented as a webgallery. Config settings are persistent and stored as a subfolder of the /Thumbs mapping.
+            Photoshow is deployed and available as http://$$cap_appname.$$cap_root_domain.
+    displayName: Photoshow
+    isOfficial: true
+    description: Photoshow is gallery software at its easiest, it doesnt even require a database.
+    documentation: Taken from https://hub.docker.com/r/linuxserver/photoshow. Github - https://github.com/thibaud-rohmer/PhotoShow
