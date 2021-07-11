@@ -32,7 +32,7 @@ caproverOneClickApp:
     instructions:
         start: |-
             ProjectSend is a self-hosted application (you can install it easily on your own VPS or shared web hosting account) that lets you upload files and assign them to specific clients that you create yourself! Secure, private and easy. No more depending on external services or e-mail to send those files!
-            Requires a user and database in either mysql or mariadb. 
+            Requires a user and database in either mysql or mariadb.
         end: |-
             IMPORTANT This image no longer supports MSSQL since being migrated to PHP7, if you want MSSQL support please use the tag r1053-ls27
             ProjectSend is deployed and available as http://$$cap_appname.$$cap_root_domain.
