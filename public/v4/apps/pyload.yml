@@ -9,7 +9,7 @@ services:
         hostname: $$cap_appname.$$cap_root_domain
         volumes:
             - $$cap_appname-config:/config
-            - $$cap_appname-downloads:/downloads
+            - $$cap_path_to_downloads:/downloads
         ports:
             - 7227:7227
         caproverExtra:
@@ -26,6 +26,10 @@ caproverOneClickApp:
           defaultValue: Europe/Brussels
           description: Get yours from https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
           validRegex: /.{1,}/
+        - id: $$cap_path_to_downloads
+          label: Path to downloads folder
+          description: Path to downloads folder where u want to save the downloaded torrents
+          validRegex: /\/[^\s-][a-zA-Z0-9_\/-]*[^\/][^\s-]/
     instructions:
         start: >-
             Pyload is a Free and Open Source download manager written in Python and designed to be extremely lightweight, easily extensible and fully manageable via web.
