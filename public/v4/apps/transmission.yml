@@ -44,7 +44,7 @@ caproverOneClickApp:
           label: Path to downloads folder
           defaultValue: transmission-downloads
           description: Path to pictures folder where u want to save the downloaded torrents. You can mention an existing directory here too. Eg. /home/user/torrents/
-          validRegex: "/.{1,}/"
+          validRegex: '/.{1,}/'
         - id: $$cap_ui
           label: User Interface
           defaultValue: transmission-web-control
