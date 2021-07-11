@@ -29,12 +29,14 @@ caproverOneClickApp:
           validRegex: /.{1,}/
         - id: $$cap_webui_port
           label: qBittorrent WebUI Port
+          defaultValue: '8081'
           description: The port used to access qBittorrent
           validRegex: /\d/
         - id: $$cap_path_to_downloads
           label: Path to downloads folder
-          description: Path to downloads folder where u want to save the downloaded torrents
-          validRegex: /\/[^\s-][a-zA-Z0-9_\/-]*[^\/][^\s-]/
+          defaultValue: qbittorent-downloads
+          description: Path to downloads folder where u want to save the downloaded torrents. You can mention an existing directory here too. Eg. /home/user/downloads/
+          validRegex: /.{1,}/
     instructions:
         start: >-
             The qBittorrent project aims to provide an open-source software alternative to µTorrent.
