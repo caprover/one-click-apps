@@ -32,7 +32,7 @@ caproverOneClickApp:
           defaultValue: photoshow-pictures
           label: Path to pictures folder
           description: Path to pictures folder where u want to save the uploaded pictures. You can mention an existing directory here too. Eg. /home/user/pictures/
-          validRegex: "/.{1,}/"
+          validRegex: '/.{1,}/'
     instructions:
         start: >-
             PhotoShow, your web gallery. PhotoShow is a free and open source web gallery, that you can very easily install on your web server. It doesnt even require a database !
