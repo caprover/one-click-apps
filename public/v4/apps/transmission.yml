@@ -18,7 +18,7 @@ services:
         hostname: $$cap_appname.$$cap_root_domain
         volumes:
             - $$cap_appname-config:/config
-            - $$cap_appname-downloads:/downloads
+            - $$cap_path_to_downloads:/downloads
             - $$cap_appname-watch:/watch
         caproverExtra:
             containerHttpPort: '9091'
@@ -40,6 +40,10 @@ caproverOneClickApp:
         - id: $$cap_pass
           label: Password
           defaultValue: password
+        - id: $$cap_path_to_downloads
+          label: Path to downloads folder
+          description: Path to downloads folder where u want to save the downloaded torrents
+          validRegex: /\/[^\s-][a-zA-Z0-9_\/-]*[^\/][^\s-]/
         - id: $$cap_ui
           label: User Interface
           defaultValue: transmission-web-control
