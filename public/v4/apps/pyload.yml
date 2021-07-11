@@ -30,7 +30,7 @@ caproverOneClickApp:
           label: Path to downloads folder
           defaultValue: pyload-downloads
           description: Path to pictures folder where u want to save the downloaded files. You can mention an existing directory here too. Eg. /home/user/downloads/
-          validRegex: "/.{1,}/"
+          validRegex: '/.{1,}/'
     instructions:
         start: >-
             Pyload is a Free and Open Source download manager written in Python and designed to be extremely lightweight, easily extensible and fully manageable via web.
