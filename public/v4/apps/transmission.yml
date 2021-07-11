@@ -52,7 +52,7 @@ caproverOneClickApp:
     instructions:
         start: |-
             Transmission is designed for easy, powerful use. Transmission has the features you want from a BitTorrent client: encryption, a web interface, peer exchange, magnet links, DHT, µTP, UPnP and NAT-PMP port forwarding, webseed support, watch directories, tracker editing, global and per-torrent speed limits, and more.
-            This app uses port 51413 as Torrent port and port 9091 for Web UI.
+            This app uses port 51413 as Torrent port, Always allow this port on your firewall.
         end: |-
             Transmission is deployed and available as $$cap_appname.$$cap_root_domain.
             The default username/password is $$cap_user/$$cap_pass.
