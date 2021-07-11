@@ -1,0 +1,90 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: tiredofit/baserow:$$cap_baserow_tag
+        depends_on:
+            - $$cap_appname-db
+        volumes:
+            - '$$cap_appname-data:/data'
+        environment:
+            ZABBIX_HOSTNAME: $$cap_appname.$$cap_root_domain
+            TIMEZONE: $$cap_timezone
+            API_HOSTNAME: api.$$cap_appname.$$cap_root_domain
+            APPLICATION_HOSTNAME: $$cap_appname.$$cap_root_domain
+            MEDIA_HOSTNAME: media.$$cap_appname.$$cap_root_domain
+            DB_HOST: srv-captain--$$cap_appname-db
+            DB_PORT: 5432
+            DB_USER: $$cap_postgres_user
+            DB_PASS: $$cap_postgres_password
+            DB_NAME: $$cap_postgres_database
+            BACKEND_WORKERS: $$cap_backend_workers
+            PASSWORD_RESET_MAX_AGE: $$cap_password_reset_max_age
+        restart: always
+
+    $$cap_appname-db:
+        image: tiredofit/postgres:$$cap_postgres_tag
+        volumes:
+            - '$$cap_appname-db-data:/var/lib/postgresql/data'
+        environment:
+            TIMEZONE: $$cap_timezone
+            ZABBIX_HOSTNAME: $$cap_appname.$$cap_root_domain
+            POSTGRES_DB: $$cap_postgres_database
+            POSTGRES_USER: $$cap_postgres_user
+            POSTGRES_PASSWORD: $$cap_postgres_password
+        restart: always
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+
+caproverOneClickApp:
+    variables:
+        - id: $$cap_baserow_tag
+          label: Baserow Tag
+          defaultValue: 0.5.1
+          description: 'Check out their docker page for the valid tags https://hub.docker.com/r/tiredofit/baserow/tags'
+        - id: $$cap_timezone
+          label: Timezone
+          defaultValue: UTC
+          description: List of tz database time zones https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+        - id: $$cap_backend_workers
+          label: Number of Backend Workers
+          defaultValue: 1
+        - id: $$cap_password_reset_max_age
+          label: Baserow Password Reset Max Age (days)
+          defaultValue: 1
+        - id: $$cap_postgres_tag
+          label: Tireofit's Postgres's tag
+          defaultValue: 13
+          description: 'Check out their docker page for the valid tags https://hub.docker.com/r/tiredofit/postgres/tags?page=1&ordering=last_updated'
+        - id: $$cap_postgres_database
+          label: Postgres Database
+          defaultValue: baserow
+        - id: $$cap_postgres_user
+          label: Postgres User
+          defaultValue: baserow
+        - id: $$cap_postgres_password
+          label: Postgres Password
+          defaultValue: $$cap_gen_random_hex(16)
+
+    instructions:
+        start: >-
+            Baserow is an open source online database tool and Airtable alternative.
+            For more info visit https://baserow.io/
+        end: |-
+            Baserow has been successfully deployed!
+
+            --------------------------------------------
+
+            Before you proceed, please use "Caprover's Connect New Domain" to add domains for:
+            - Baserow's API: api.$$cap_appname.$$cap_root_domain
+            - Baserow's Media: media.$$cap_appname.$$cap_root_domain
+
+            --------------------------------------------
+
+            App is available as http://$$cap_appname.$$cap_root_domain
+    displayName: Baserow
+    isOfficial: false
+    description: >-
+        Baserow is an open source online database tool and Airtable alternative.
+    documentation: >-
+        This docker-compose is taken from
+        https://github.com/tiredofit/docker-baserow
