@@ -21,7 +21,8 @@ caproverOneClickApp:
         end: |-
             Wait for few minutes to completly finish the deployment.
             Visit http://$$cap_appname.$$cap_root_domain on the host machine to see the Web Console to start Couchbase Server setup. 
-            DB will be internally available as srv-captain--$$cap_appname in ports 8091,8092,8093,8094,11210. If you want this app available externally, map these ports on Caprover App-Config settings
+            DB will be internally available as srv-captain--$$cap_appname in ports 8091,8092,8093,8094,11210.
+            If you want this app available externally, map these ports on Caprover App-Config settings and allow on firewall.
     displayName: CouchBase
     isOfficial: true
     description: Couchbase is an open-source, distributed multi-model NoSQL document-oriented database software
