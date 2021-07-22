@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: bitwardenrs/server:$$cap_bitwardenrs_version
+        image: vaultwarden/server:$$cap_bitwardenrs_version
         environment:
             DOMAIN: https://$$cap_appname.$$cap_root_domain
             WEBSOCKET_ENABLED: true
@@ -15,9 +15,9 @@ services:
 caproverOneClickApp:
     variables:
         - id: $$cap_bitwardenrs_version
-          label: Bitwarden_rs Version
-          defaultValue: 1.20.0
-          description: Check out their Docker page for the valid tags https://hub.docker.com/r/bitwardenrs/server/tags
+          label: vaultwarden Version
+          defaultValue: 1.21.0
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/vaultwarden/server/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_register_enabled
           label: enabled open registration
@@ -41,7 +41,7 @@ caproverOneClickApp:
             Please activate https and https redirect otherwise you will have an error on account creation. You need to enable websocket too.
 
             If you enabled the admin token please go to https://$$cap_appname.$$cap_root_domain/admin to begin
-    displayName: Bitwarden_rs
+    displayName: vaultwarden
     isOfficial: true
     description: Lightweight fully featured Rust implementation of Bitwarden.
-    documentation: Taken from https://hub.docker.com/r/bitwardenrs/server
+    documentation: Taken from https://hub.docker.com/r/vaultwarden/server
