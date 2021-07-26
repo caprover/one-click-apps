@@ -25,7 +25,7 @@ services:
                 - CMD ["/app/yagpdb", "-all", "-pa", "-exthttps=true", "-https=false"]
     # Redis
     $$cap_appname-redis:
-        image: redis:alpine
+        image: redis:6.2.5-alpine
         volumes:
             - $$cap_appname-redis-data:/data
         caproverExtra:
@@ -84,6 +84,6 @@ caproverOneClickApp:
             Aaaand you're done! 😄
             Your service is available at http://$$cap_appname.$$cap_root_domain
     displayName: Yagpdb
-    isOfficial: true
+    isOfficial: false
     description: Yet another general purpose discord bot
     documentation: Taken from https://yagpdb.xyz/
