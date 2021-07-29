@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname-db:
-        image: mysql:5.7
+        image: mysql:$$cap_mysql_version
         volumes:
             - $$cap_appname-db-data:/var/lib/mysql
         restart: always
@@ -13,12 +13,12 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname-guacd:
-        image: guacamole/guacd:1.3.0
+        image: guacamole/guacd:$$cap_guacd_version
         restart: always
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname:
-        image: guacamole/guacamole:1.3.0
+        image: guacamole/guacamole:$$cap_guacamole_version
         restart: always
         depends_on:
             - $$cap_appname-db
@@ -37,6 +37,21 @@ caproverOneClickApp:
           label: Database password
           description: ''
           validRegex: /.{1,}/
+        - id: $$cap_guacamole_version
+          label: Guacamole Version
+          defaultValue: '1.3.0'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/guacamole/guacamole/tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_guacd_version
+          label: Guacd Version
+          defaultValue: '1.3.0'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/guacamole/guacd/tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_mysql_version
+          label: MySQL Version
+          defaultValue: '8.0.26'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/_/mysql?tab=tags
+          validRegex: /^([^\s^\/])+$/
     instructions:
         start: Guacamole is an HTML5 Remote Desktop application.
         end: Guacamole is deployed and available as srv-captain--$$cap_appname. In order to use Guacamole, you must enable websockets and setup the MySQL database. For instructions on how to setup the database, check out https://github.com/christopher-kapic/caprover-guacamole
