@@ -17,7 +17,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_minio_version
           label: Minio Version
-          defaultValue: 2021-02-19T04:38:02Z
+          defaultValue: RELEASE.2021-02-19T04-38-02Z
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/minio/minio/tags/
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_access_key
