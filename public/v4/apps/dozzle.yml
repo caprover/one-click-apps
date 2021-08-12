@@ -20,7 +20,7 @@ caproverOneClickApp:
           label: Username
           defaultValue: 'admin'
         - id: $$cap_password
-          label: Password 
+          label: Password
           defaultValue: $$cap_gen_random_hex(16)
     instructions:
         start: |-
