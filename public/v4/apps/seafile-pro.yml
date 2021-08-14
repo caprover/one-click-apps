@@ -38,7 +38,7 @@ caproverOneClickApp:
     variables:
         - id: '$$cap_seafile_version'
           label: Seafile Version
-          defaultValue: 'latest'
+          defaultValue: '8.0.4'
           description: You need to add their private docker registry to caprover settings. further instructions at https://manual.seafile.com/docker/pro-edition/deploy_seafile_pro_with_docker/#download-the-seafile-images
           validRegex: '/.{1,}/'
         - id: $$cap_memcached_version
