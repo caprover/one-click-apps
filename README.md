@@ -56,11 +56,11 @@ caproverOneClickApp:
 
 
 ## Test your One Click Apps
-After creating your One-Click app json, like [this](https://github.com/caprover/one-click-apps/blob/master/public/v2/apps/adminer.json), you need to test it before creating a Pull Request. Here is how you test it:
+After creating your One-Click app yaml file, you need to test it before creating a Pull Request. Here is how you test it:
 - Login to your CapRover dashboard
 - Go to **apps** and click on **One-Click Apps/Databases**
 - Select **>> TEMPLATE <<** at the bottom of the dropdown list 
-- Copy and paste your JSON into the text area, and click **NEXT**.
+- Copy and paste your YAML into the text area, and click **NEXT**.
 - Enter values and make sure it's working as expected.
 
 ---------
