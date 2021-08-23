@@ -1,0 +1,45 @@
+captainVersion: 4
+
+version: "2"
+
+services:
+  $$cap_appname:
+    image: debdutdeb/rocketchat-nocmd:3.17.1
+    restart: unless-stopped
+    volumes:
+      - $$cap_appname-data:/app/uploads
+    environment:
+      PORT: 3000
+      ROOT_URL: $$cap_appname.$$cap_root_domain
+      MONGO_URL: mongodb://srv-captain--$$cap_appname-db:27017/rocketchat
+      MONGO_OPLOG_URL: mongodb://srv-captain--$$cap_appname-db:27017/local
+
+  $$cap_appname-db:
+    image: bitnami/mongodb:4.0
+    environment:
+      ALLOW_EMPTY_PASSWORD: "yes"
+      MONGODB_REPLICA_SET_MODE: primary
+      MONGODB_REPLICA_SET_NAME: rs0
+      MONGODB_PORT_NUMBER: 27017
+      MONGODB_INITIAL_PRIMARY_HOST: srv-captain--$$cap_appname-db
+      MONGODB_INITIAL_PRIMARY_PORT_NUMBER: 27017
+      MONGODB_ADVERTISED_HOSTNAME: srv-captain--$$cap_appname-db
+
+caproverOneClickApp:
+  instructions:
+    start: |-
+      A description that will be displayed to the user when they
+      are installing one click app!
+      It can be multiline and contain more details and probably special
+      hardware requirements!
+    end: |-
+      A summary when the app is deployed!
+      It can be multiline.
+
+      It can also include the dynamic parameters such as
+      $$cap_appname and $$cap_other_random_char
+
+  displayName: Rocket.Chat
+  isOfficial: true
+  description: A relatively short description, less than 200 characters.
+  documentation: This docker-compose is taken from example.com
