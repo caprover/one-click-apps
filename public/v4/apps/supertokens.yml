@@ -55,6 +55,7 @@ caproverOneClickApp:
           label: Postgres Username
           description: ''
           validRegex: /.{1,}/
+          defaultValue: supertokens
         - id: $$cap_pg_pass
           label: Postgres Password
           description: ''
@@ -63,6 +64,7 @@ caproverOneClickApp:
           label: Postgres Default Database
           description: ''
           validRegex: /.{1,}/
+          defaultValue: supertokens
 
         
     instructions:
