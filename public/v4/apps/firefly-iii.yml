@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: jc5x/firefly-iii:$$cap_firefly_version
+        image: fireflyiii/core:$$cap_firefly_version
         volumes:
             - $$cap_appname-export:/var/www/firefly-iii/storage/export
             - $$cap_appname-upload:/var/www/firefly-iii/storage/upload
@@ -46,8 +46,8 @@ caproverOneClickApp:
           validRegex: /.{1,}/
         - id: $$cap_firefly_version
           label: Firefly Version Tag
-          description: Check out their Docker page for the valid tags https://hub.docker.com/r/jc5x/firefly-iii/tags
-          defaultValue: release-5.3.0
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/fireflyiii/core/tags
+          defaultValue: version-5.5.13
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_firefly_site-owner
           label: Firefly Site Owner Mail
