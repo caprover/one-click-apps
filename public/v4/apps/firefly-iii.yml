@@ -47,7 +47,7 @@ caproverOneClickApp:
         - id: $$cap_firefly_version
           label: Firefly Version Tag
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/fireflyiii/core/tags
-          defaultValue: release-5.3.0
+          defaultValue: version-5.5.13
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_firefly_site-owner
           label: Firefly Site Owner Mail
