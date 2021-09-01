@@ -5,6 +5,7 @@ services:
         restart: always
         volumes:
             - $$cap_appname-db:/var/lib/ldap
+            - $$cap_appname-config:/etc/ldap/slapd.d
         environment:
             LDAP_ORGANISATION: $$cap_openldap_ldap-organisation
             LDAP_DOMAIN: $$cap_root_domain
