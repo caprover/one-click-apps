@@ -14,7 +14,7 @@ services:
             YAGPDB_HOST: $$cap_appname.$$cap_root_domain
             YAGPDB_PQHOST: srv-captain--$$cap_appname-postgres
             YAGPDB_PQUSERNAME: yagpdb
-            YAGPDB_PQDB: yagpdb_prod
+            YAGPDB_PQDB: yagpdb_production
             YAGPDB_PQPASSWORD: $$cap_postgres_password
             YAGPDB_REDIS: srv-captain--$$cap_appname-redis:6379
         volumes:
