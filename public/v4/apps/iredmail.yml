@@ -34,14 +34,12 @@ services:
         - ARG MLMMJADMIN_API_TOKEN
         - ARG ROUNDCUBE_DES_KEY
         - ARG ADMIN_VIRSION=NoChange
-        - ARG MAIL_THE_TIP_FILE
         - ENV ADMIN_VIRSION=$ADMIN_VIRSION
         - ENV FIRST_MAIL_DOMAIN=$FIRST_MAIL_DOMAIN
         - ENV HOSTNAME=$HOSTNAME
         - ENV FIRST_MAIL_DOMAIN_ADMIN_PASSWORD=$FIRST_MAIL_DOMAIN_ADMIN_PASSWORD
         - ENV MLMMJADMIN_API_TOKEN=$MLMMJADMIN_API_TOKEN
         - ENV ROUNDCUBE_DES_KEY=ROUNDCUBE_DES_KEY
-        - ENV MAIL_THE_TIP_FILE=$MAIL_THE_TIP_FILE
         - >-
           RUN echo "if [\"$ADMIN_VIRSION\" != \"NoChange\" && \"$ADMIN_VIRSION\"
           != \"\$(ls /opt/www/ | grep 'iRedAdmin-' | cut -d'-' -f2)\"]; then
