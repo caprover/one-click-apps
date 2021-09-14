@@ -2,13 +2,13 @@ captainVersion: 4
 services:
   $$cap_appname:
     ports:
-      - '25:25'
-      - '110:110'
-      - '143:143'
-      - '465:465'
-      - '587:587'
-      - '993:993'
-      - '995:995'
+      - "25:25"
+      - "110:110"
+      - "143:143"
+      - "465:465"
+      - "587:587"
+      - "993:993"
+      - "995:995"
     volumes:
       - /etc/localtime:/etc/localtime
       - $$cap_appname-data-backup-mysql:/var/vmail/backup/mysql
@@ -157,7 +157,7 @@ services:
           $'s/\\\\n/\\\n/g')" | tee /opt/www/iredadmin/libs/iredbase.py
         - RUN apt install -y amavisd-new
         - EXPOSE 80 443 25 465 587 110 995 143 993
-      containerHttpPort: '80'
+      containerHttpPort: "80"
     environment:
       VERSION: $$cap_iredmail_version
       MLMMJADMIN_API_TOKEN: $$cap_gen_random_hex(32)
@@ -184,7 +184,7 @@ caproverOneClickApp:
 
 
         Check out their GitHub page for the newest version
-        https://github.com/iredmail/iRedAdmin/releases  
+        https://github.com/iredmail/iRedAdmin/releases
       defaultValue: NoChange
     - id: $$cap_iredmail_default_password
       label: First Password
