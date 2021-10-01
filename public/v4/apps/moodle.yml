@@ -20,7 +20,7 @@ services:
             MOODLE_SITE_NAME: $$cap_md_sitename
             MOODLE_SKIP_BOOTSTRAP: $$cap_md_bootstrap
             PHP_MAX_INPUT_VARS: '6000'
-            PHP_MEMORY_LIMIT: '256'
+            PHP_MEMORY_LIMIT: '256M'
             PHP_UPLOAD_MAX_FILESIZE: 100M
             PHP_POST_MAX_SIZE: 100M
             PHP_MAX_INPUT_TIME: '30'
