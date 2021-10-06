@@ -27,7 +27,7 @@ caproverOneClickApp:
         end: |-
             Chadburn has been successfully deployed! Please visit https://github.com/PremoWeb/Chadburn for more information on usage.
     displayName: Chadburn
-    isOfficial: false
+    isOfficial: true
     description: Chadburn is a modern and low footprint job scheduler for docker environments, built on Go. Ofelia aims to be a replacement for the old fashioned cron.
     documentation: See https://github.com/Premoweb/Chadburn for official documentation. Please visit https://premoweb.com/docs/chadburn-caprover.html for more information on usage within Caprover.
   
