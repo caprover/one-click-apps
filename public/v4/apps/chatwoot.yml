@@ -34,6 +34,7 @@ services:
             POSTGRES_PASSWORD: $$cap_chatwoot_postgres_password
             REDIS_URL: redis://srv-captain--$$cap_appname-redis:6379
             REDIS_PASSWORD: $$cap_chatwoot_redis_password
+            INSTALLATION_ENV: caprover
         caproverExtra:
             containerHttpPort: '3000'
             dockerfileLines:
@@ -54,6 +55,7 @@ services:
             POSTGRES_PASSWORD: $$cap_chatwoot_postgres_password
             REDIS_URL: redis://srv-captain--$$cap_appname-redis:6379
             REDIS_PASSWORD: $$cap_chatwoot_redis_password
+            INSTALLATION_ENV: caprover
         caproverExtra:
             dockerfileLines:
                 - FROM chatwoot/chatwoot:$$cap_chatwoot_version
@@ -66,7 +68,7 @@ caproverOneClickApp:
         - id: $$cap_chatwoot_version
           label: Chatwoot Version Tag
           description: Choose the latest version from https://hub.docker.com/r/chatwoot/chatwoot/tags
-          defaultValue: v1.13.1
+          defaultValue: v1.20.0
         - id: $$cap_chatwoot_secret_key_base
           label: Chatwoot Secret Key Base
           description: The randomized string which is used to verify the integrity of signed cookies. Please use a string with more than 26 characters
