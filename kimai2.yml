@@ -31,7 +31,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname:
-        image: lcxat/nginx-fpm-reverse-proxy
+        image: lcxat/nginx-fpm-reverse-proxy:$$cap_nginx_version
         environment:
             FPM_NGINX_HOST: srv-captain--$$cap_appname-fpm
         volumes:
@@ -45,10 +45,16 @@ caproverOneClickApp:
           label: Version Tag
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/kimai/kimai2/tags
           defaultValue: 'fpm-1.15.2-prod'
+          validRegex: /^([^\s^\/])+$/
         - id: $$cap_mariadb_version
           label: mariaDB Version
           defaultValue: '10'
           description: Check out their docker page for the valid tags https://hub.docker.com/_/mariadb
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_nginx_version
+          label: nginx fpm Version
+          defaultValue: '1.21.3'
+          description: Check out their docker page for the valid tags https://hub.docker.com/r/lcxat/nginx-fpm-reverse-proxy/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_kimai-adminmail
           label: Admin
@@ -90,6 +96,6 @@ caproverOneClickApp:
             Your service is available at http://$$cap_appname.$$cap_root_domain
             -------------------------------------------------------------------
     displayName: Kimai
-    isOfficial: true
+    isOfficial: false
     description: With Kimai, the boring process of feeding Excel spreadsheets with your working hours is not only simplified, it also offers dozens of other exciting features that you don't even know you're missing so far!
     documentation: https://www.kimai.org/documentation/
