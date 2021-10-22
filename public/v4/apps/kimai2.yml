@@ -24,7 +24,7 @@ services:
             MYSQL_DATABASE: $$cap_mariadb-db
             MYSQL_USER: $$cap_mariadb-user
             MYSQL_PASSWORD: $$cap_mariadb-pass
-            MYSQL_ROOT_PASSWORD: $$cap_maridb-rootpass
+            MYSQL_ROOT_PASSWORD: $$cap_mariadb-rootpass
         volumes:
             - $$cap_appname-db-data:/var/lib/mysql
         restart: unless-stopped
