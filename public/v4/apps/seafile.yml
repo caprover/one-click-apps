@@ -17,7 +17,7 @@ services:
             - seafile-net
         caproverExtra:
             notExposeAsWebApp: true
-    $$cap_appname-seafile:
+    $$cap_appname:
         image: 'seafileltd/seafile-mc:$$cap_seafile_version'
         volumes:
             - '$$cap_appname-seafile-data:/shared'
@@ -27,6 +27,7 @@ services:
             TIME_ZONE: $cap_timezone
             SEAFILE_ADMIN_EMAIL: $$cap_seafile_admin_email
             SEAFILE_ADMIN_PASSWORD: $$cap_seafile_admin_password
+            SEAFILE_SERVER_HOSTNAME: '$$cap_seafile_hostname'
         depends_on:
             $$cap_appname-db:
                 condition: service_healthy
@@ -38,25 +39,41 @@ caproverOneClickApp:
     variables:
         - id: $$cap_seafile_version
           label: Seafile Version
-          defaultValue: 8.0.4
+          defaultValue: 8.0.7
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/seafileltd/seafile-mc/tags
+          validRegex: '/.{1,}/'
         - id: $$cap_memcached_version
           label: Memcached Version
           defaultValue: 1.5.6
+          description: Check out their Docker page for the valid tags https://hub.docker.com/_/memcached?tab=tags
+          validRegex: '/.{1,}/'
         - id: $$cap_mariadb_version
           label: MariaDB Version
-          defaultValue: '10.5'
+          defaultValue: '10.6.4'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/_/mariadb?tab=tags
+          validRegex: '/.{1,}/'
         - id: $$cap_mariadb_root_passwd
           label: MariaDB Root Password
-          defaultValue: zR5oZ2gN
+          defaultValue: '$$cap_gen_random_hex(10)'
+          description: Default password for root user of MariaDB. Must have at least 8 chars, 1 letter and 1 number
+          validRegex: '/.{8,}/'
         - id: $$cap_seafile_admin_email
           label: Seafile Admin Email
           defaultValue: admin@localhost
+          description: Email for admin user of Seafile
         - id: $$cap_seafile_admin_password
           label: Seafile Admin Password
-          defaultValue: xL2kX7iW
+          defaultValue: '$$cap_gen_random_hex(10)'
+          description: Password for admin user of Seafile. Must have at least 8 chars, 1 letter and 1 number
+          validRegex: '/.{8,}/'
         - id: $cap_timezone
           label: Seafile Time zone
-          defaultValue: Asia/Ho_Chi_Minh
+          defaultValue: 'Etc/UTC'
+          description: Timezone that Seafile should use
+        - id: '$$cap_seafile_hostname'
+          label: Seafile Hostname
+          description: Hostname of Seafile instance (that will be used by it in future)
+          validRegex: '/.{3,}/'
     instructions:
         start: >-
             Seafile is an open source cloud storage system with file encryption and
@@ -64,7 +81,8 @@ caproverOneClickApp:
         end: |-
             Seafile has been successfully deployed!
             App is available as http://$$cap_appname.$$cap_root_domain
-    displayName: Seafile
+            Don't forget to add specified hostname to Seafile domains!
+    displayName: Seafile (memcached)
     isOfficial: true
     description: >-
         Seafile is an open source cloud storage system with file encryption and

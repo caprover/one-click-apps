@@ -29,18 +29,19 @@ caproverOneClickApp:
     variables:
         - id: '$$cap_seafile_version'
           label: Seafile Version
-          defaultValue: '8.0.4'
+          defaultValue: '8.0.7'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/seafileltd/seafile-mc/tags
           validRegex: '/.{1,}/'
         - id: '$$cap_mariadb_version'
           label: MariaDB Version
-          defaultValue: '10.6'
+          defaultValue: '10.6.4'
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/mariadb?tab=tags
           validRegex: '/.{1,}/'
         - id: '$$cap_mariadb_root_pswd'
           label: MariaDB Root Password
-          defaultValue: '$$cap_gen_random_hex(32)'
+          defaultValue: '$$cap_gen_random_hex(10)'
           description: Default password for root user of MariaDB. Must have at least 8 chars, 1 letter and 1 number
+          validRegex: '/.{8,}/'
         - id: '$$cap_timezone'
           label: 'Seafile Timezone'
           defaultValue: 'Etc/UTC'
@@ -49,12 +50,16 @@ caproverOneClickApp:
           label: Seafile Admin Email
           description: Email for admin user of Seafile
           defaultValue: 'admin@seafile.com'
+          validRegex: '/.{1,}/'
         - id: '$$cap_admin_pswd'
           label: Seafile Admin Password
           description: Password for admin user of Seafile. Must have at least 8 chars, 1 letter and 1 number
+          defaultValue: '$$cap_gen_random_hex(10)'
+          validRegex: '/.{8,}/'
         - id: '$$cap_seafile_hostname'
           label: Seafile Hostname
           description: Hostname of Seafile instance (that will be used by it in future)
+          validRegex: '/.{3,}/'
 
     instructions:
         start: |-
@@ -67,7 +72,7 @@ caproverOneClickApp:
             Your app will soon be available at http://$$cap_appname.$$cap_root_domain/
 
             Don't forget to add specified hostname to Seafile domains!
-    displayName: Seafile (Official)
+    displayName: Seafile (no memcached)
     isOfficial: true
     description: Reliable and Performant File Sync and Share Solution
     documentation: Taken from https://manual.seafile.com/
