@@ -39,7 +39,7 @@ caproverOneClickApp:
   variables:
     - id: $$cap_browserless_version
       label: Browserless Version
-      defaultValue: latest
+      defaultValue: 1-chrome-stable
       description: Browserless Image Version
       validRegex: /^([^\s^\/])+$/
     - id: $$cap_demo_mode
