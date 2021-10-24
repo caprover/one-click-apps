@@ -38,7 +38,7 @@ caproverOneClickApp:
         - description: Maria DB port
           defaultValue: '3306'
           id: $$cap_mariadb_port_number
-          label: MariaDB user
+          label: MariaDB port
         - description: Database name
           defaultValue: ghost
           id: $$cap_ghost_database_name
