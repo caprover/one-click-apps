@@ -1,0 +1,108 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: libretranslate/libretranslate:$$cap_version
+        environment:
+            LT_HOST: https://$$cap_appname.$$cap_root_domain
+            LT_CHAR_LIMIT: $$cap_char_limit
+            LT_REQ_LIMIT: $$cap_req_limit
+            LT_BATCH_LIMIT: $$cap_batch_limit
+            LT_GA_ID: $$cap_ga_id
+            LT_DEBUG: $$cap_debug
+            LT_SSL: $$cap_ssl
+            LT_FRONTEND_LANGUAGE_SOURCE: $$cap_frontend_language_source
+            LT_FRONTEND_LANGUAGE_TARGET: $$cap_frontend_language_target
+            LT_FRONTEND_TIMEOUT: $$cap_frontend_timeout
+            LT_API_KEYS: $$cap_frontend_api_keys
+            LT_REQUIRE_API_KEY_ORIGIN: $$cap_api_key_origin
+            LT_LOAD_ONLY: $$cap_load_only
+        volumes:
+            - '$$cap_appname-data:/datastore'
+        caproverExtra:
+            containerHttpPort: '5000'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_version
+          label: LiberTranslate version
+          defaultValue: 'main'
+          description: 'Check out their docker page for the valid tags https://hub.docker.com/r/libretranslate/libretranslate/tags'
+          validRegex: /^([^\s^\/])+$/
+
+        - id: $$cap_char_limit
+          label: Character Limit
+          defaultValue: 'No limit'
+          description: 'Set character limit'
+
+        - id: $$cap_req_limit
+          label: Request Limit
+          defaultValue: 'No limit'
+          description: 'Set maximum number of requests per minute per client'
+
+        - id: $$cap_req_limit
+          label: Batch Limit
+          defaultValue: 'No limit'
+          description: 'Set maximum number of texts to translate in a batch request'
+
+        - id: $$cap_ga_id
+          label: Google Analytics
+          defaultValue: 'No tracking'
+          description: 'Enable Google Analytics on the API client page by providing an ID'
+
+        - id: $$cap_debug
+          label: Debug
+          defaultValue: 'False'
+          description: 'Enable debug environment'
+          validRegex: /^(True|False)$/
+
+        - id: $$cap_ssl
+          label: Enable SSL
+          defaultValue: 'False'
+          description: 'Whether to enable SSL'
+          validRegex: /^(True|False)$/
+
+        - id: $$cap_frontend_language_source
+          label: Frontend language source
+          defaultValue: 'en'
+          description: 'Set frontend default language - source'
+          validRegex: /^([^\s^\/])+$/
+
+        - id: $$cap_frontend_language_target
+          label: Frontend language target
+          defaultValue: 'es'
+          description: 'Set frontend default language - target'
+          validRegex: /^([^\s^\/])+$/
+
+        - id: $$cap_frontend_timeout
+          label: Frontend Timeout
+          defaultValue: '500'
+          description: 'Set frontend translation timeout'
+          validRegex: /^([^\s^\/])+$/
+
+        - id: $$cap_frontend_api_keys
+          label: Frontend API Keys
+          defaultValue: ''
+          description: 'Enable API keys database for per-user rate limits lookup'
+
+        - id: $$cap_api_key_origin
+          label: Origin Domain
+          defaultValue: 'No restrictions on domain origin'
+          description: 'Require use of an API key for programmatic access to the API, unless the request origin matches this domain'
+
+        - id: $$cap_load_only
+          label: Available Languages
+          defaultValue: 'all from argostranslate'
+          description: 'Set available languages	'
+    instructions:
+        start: >-
+            Free and Open Source Machine Translation API, entirely self-hosted.
+            Unlike other APIs, it doesn't rely on proprietary providers such as Google or Azure to perform translations.
+        end: |-
+            LibreTranslate has been successfully deployed!
+            App is available as http://$$cap_appname.$$cap_root_domain.
+    displayName: LibreTranslate
+    isOfficial: true
+    description: >-
+        Free and Open Source Machine Translation API, entirely self-hosted.
+        Unlike other APIs, it doesn't rely on proprietary providers such as Google or Azure to perform translations.
+    documentation: >-
+        This docker-compose is taken from https://libretranslate.com/docs/
