@@ -130,7 +130,7 @@ caproverOneClickApp:
         - id: $$cap_email_server_password
           label: Email Server Password
 
-        - id: cap_calendso_encryption_key
+        - id: $$cap_calendso_encryption_key
           label: Calendso Encryption Key
           description: Encryption key that will be used to encrypt CalDAV credentials, choose a random string, for example with `dd if=/dev/urandom bs=1K count=1 | md5sum`
 
