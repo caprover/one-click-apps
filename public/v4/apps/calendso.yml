@@ -117,7 +117,6 @@ caproverOneClickApp:
         - id: $$cap_email_from
           label: Email From Address
           description: Configures the global From header whilst sending emails
-          validRegex: /^([^\s^\/]@[^\s^\/]\.[^\s^\/])+$/
 
         - id: $$cap_email_server_host
           label: Email Server Host
