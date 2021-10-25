@@ -146,7 +146,9 @@ caproverOneClickApp:
 
         - id: $$cap_calendso_encryption_key
           label: Calendso Encryption Key
+          defaultValue: $$cap_gen_random_hex(32)
           description: Encryption key that will be used to encrypt CalDAV credentials, choose a random string, for example with `dd if=/dev/urandom bs=1K count=1 | md5sum`
+          validRegex: /^([^\s^\/])+$/
 
         - id: $$cap_next_public_stripe_key
           label: Stripe Public Key
