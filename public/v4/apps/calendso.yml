@@ -106,7 +106,7 @@ caproverOneClickApp:
           label: Node TLS Reject Unauthorized
           defaultValue: '1'
           validRegex: /^(0|1)$/
-          
+
         - id: $$cap_jwt_secret
           label: JWT Secret
           defaultValue: $$cap_gen_random_hex(64)
@@ -150,19 +150,19 @@ caproverOneClickApp:
 
         - id: $$cap_next_public_stripe_key
           label: Stripe Public Key
-          
+
         - id: $$cap_stripe_private_key
           label: Stripe Private Key
-          
+
         - id: $$cap_stripe_client_id
           label: Stripe Client ID
-          
+
         - id: $$cap_stripe_webhook_secret
           label: Stripe Webhook Secret
-          
+
         - id: $$cap_payment_fee_percentage
           label: Stripe Payment Fee Percentage
-          
+
         - id: $$cap_payment_fee_fixed
           label: Stripe Payment Fee Fixed
 
