@@ -1,6 +1,6 @@
 captainVersion: 4
 services:
-    # Paperless-ng
+    # Calendso
     $$cap_appname:
         image: ctadeu/calendso:$$cap_app_version
         depends_on:
@@ -12,8 +12,8 @@ services:
             DATABASE_URL: postgresql://$$cap_dbuser:$$cap_dbpass@srv-captain--$$cap_appname-db:5432/$$cap_dbname
             GOOGLE_API_CREDENTIALS: $$cap_google_api_credentials
             DAILY_API_KEY: $$cap_daily_api_key
-            BASE_URL: $$cap_appname.$$cap_root_domain
-            NEXTAUTH_URL: $$cap_appname.$$cap_root_domain
+            BASE_URL: http://$$cap_appname.$$cap_root_domain
+            NEXT_PUBLIC_APP_URL: http://$$cap_appname.$$cap_root_domain
             NEXT_TELEMETRY_DISABLED: $$cap_next_telemetry_disabled
             JWT_SECRET: $$cap_jwt_secret
             NODE_TLS_REJECT_UNAUTHORIZED: $$cap_tls_reject_unauthorized
@@ -39,7 +39,7 @@ services:
             STRIPE_WEBHOOK_SECRET: $$cap_stripe_webhook_secret
             PAYMENT_FEE_PERCENTAGE: $$cap_payment_fee_percentage
             PAYMENT_FEE_FIXED: $$cap_payment_fee_fixed
-
+            NEXT_PUBLIC_INTERCOM_APP_ID: $$cap_next_public_intercom_app_id
         caproverExtra:
             containerHttpPort: '3000'
     # Database
@@ -165,6 +165,9 @@ caproverOneClickApp:
 
         - id: $$cap_payment_fee_fixed
           label: Stripe Payment Fee Fixed
+
+        - id: $$cap_next_public_intercom_app_id
+          label: Next Public Intercom App ID
 
     instructions:
         start: >-
