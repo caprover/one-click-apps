@@ -11,13 +11,11 @@ services:
             LT_DEBUG: $$cap_debug
             LT_SSL: $$cap_ssl
             LT_FRONTEND_LANGUAGE_SOURCE: $$cap_frontend_language_source
-            LT_FRONTEND_LANGUAGE_TARGET: $$cap_frontend_language_target
+#            LT_FRONTEND_LANGUAGE_TARGET: $$cap_frontend_language_target
             LT_FRONTEND_TIMEOUT: $$cap_frontend_timeout
-            LT_API_KEYS: $$cap_frontend_api_keys
+#            LT_API_KEYS: $$cap_frontend_api_keys
             LT_REQUIRE_API_KEY_ORIGIN: $$cap_api_key_origin
-            LT_LOAD_ONLY: $$cap_load_only
-        volumes:
-            - '$$cap_appname-data:/datastore'
+#            LT_LOAD_ONLY: $$cap_load_only
         caproverExtra:
             containerHttpPort: '5000'
 caproverOneClickApp:
@@ -62,15 +60,15 @@ caproverOneClickApp:
 
         - id: $$cap_frontend_language_source
           label: Frontend language source
-          defaultValue: 'en'
+          defaultValue: 'auto'
           description: 'Set frontend default language - source'
           validRegex: /^([^\s^\/])+$/
 
-        - id: $$cap_frontend_language_target
-          label: Frontend language target
-          defaultValue: 'es'
-          description: 'Set frontend default language - target'
-          validRegex: /^([^\s^\/])+$/
+#        - id: $$cap_frontend_language_target
+#          label: Frontend language target
+#          defaultValue: 'es'
+#          description: 'Set frontend default language - target'
+#          validRegex: /^([^\s^\/])+$/
 
         - id: $$cap_frontend_timeout
           label: Frontend Timeout
@@ -78,20 +76,20 @@ caproverOneClickApp:
           description: 'Set frontend translation timeout'
           validRegex: /^([^\s^\/])+$/
 
-        - id: $$cap_frontend_api_keys
-          label: Frontend API Keys
-          defaultValue: ''
-          description: 'Enable API keys database for per-user rate limits lookup'
+#        - id: $$cap_frontend_api_keys
+#          label: Frontend API Keys
+#          defaultValue: ''
+#          description: 'Enable API keys database for per-user rate limits lookup'
 
         - id: $$cap_api_key_origin
           label: Origin Domain
           defaultValue: 'No restrictions on domain origin'
           description: 'Require use of an API key for programmatic access to the API, unless the request origin matches this domain'
 
-        - id: $$cap_load_only
-          label: Available Languages
-          defaultValue: 'all from argostranslate'
-          description: 'Set available languages	'
+#        - id: $$cap_load_only
+#          label: Available Languages
+#          defaultValue: 'all'
+#          description: 'Set available languages'
     instructions:
         start: >-
             Free and Open Source Machine Translation API, entirely self-hosted.
