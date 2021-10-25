@@ -15,6 +15,7 @@ services:
             BASE_URL: $$cap_appname.$$cap_root_domain
             NEXTAUTH_URL: $$cap_appname.$$cap_root_domain
             NEXT_TELEMETRY_DISABLED: $$cap_next_telemetry_disabled
+            JWT_SECRET: $$cap_jwt_secret
             NODE_TLS_REJECT_UNAUTHORIZED: $$cap_tls_reject_unauthorized
             # Used for the Office 365 / Outlook.com Calendar integration
             MS_GRAPH_CLIENT_ID: $$cap_ms_graph_client_id
@@ -31,6 +32,14 @@ services:
             EMAIL_SERVER_USER: $$cap_email_server_user
             EMAIL_SERVER_PASSWORD: $$cap_email_server_password
             CALENDSO_ENCRYPTION_KEY: $$cap_calendso_encryption_key
+            # Stripe Config
+            NEXT_PUBLIC_STRIPE_PUBLIC_KEY: $$cap_next_public_stripe_key
+            STRIPE_PRIVATE_KEY: $$cap_stripe_private_key
+            STRIPE_CLIENT_ID: $$cap_stripe_client_id
+            STRIPE_WEBHOOK_SECRET: $$cap_stripe_webhook_secret
+            PAYMENT_FEE_PERCENTAGE: $$cap_payment_fee_percentage
+            PAYMENT_FEE_FIXED: $$cap_payment_fee_fixed
+
         caproverExtra:
             containerHttpPort: '3000'
     # Database
@@ -97,6 +106,11 @@ caproverOneClickApp:
           label: Node TLS Reject Unauthorized
           defaultValue: '1'
           validRegex: /^(0|1)$/
+          
+        - id: $$cap_jwt_secret
+          label: JWT Secret
+          defaultValue: $$cap_gen_random_hex(64)
+          validRegex: /^([^\s^\/])+$/
 
         - id: $$cap_ms_graph_client_id
           label: MS Graph Client ID
@@ -134,13 +148,32 @@ caproverOneClickApp:
           label: Calendso Encryption Key
           description: Encryption key that will be used to encrypt CalDAV credentials, choose a random string, for example with `dd if=/dev/urandom bs=1K count=1 | md5sum`
 
+        - id: $$cap_next_public_stripe_key
+          label: Stripe Public Key
+          
+        - id: $$cap_stripe_private_key
+          label: Stripe Private Key
+          
+        - id: $$cap_stripe_client_id
+          label: Stripe Client ID
+          
+        - id: $$cap_stripe_webhook_secret
+          label: Stripe Webhook Secret
+          
+        - id: $$cap_payment_fee_percentage
+          label: Stripe Payment Fee Percentage
+          
+        - id: $$cap_payment_fee_fixed
+          label: Stripe Payment Fee Fixed
+
     instructions:
         start: >-
             The open-source Calendly alternative.
         end: >-
             Done! 😄
             Your service is available at http://$$cap_appname.$$cap_root_domain
+            Make sure to enable https on your domain
     displayName: 'Calendso'
-    isOfficial: true
+    isOfficial: false
     description: The open-source Calendly alternative. You are in control of your events and data.
     documentation: https://calendso.com/
