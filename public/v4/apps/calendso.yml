@@ -2,6 +2,7 @@ captainVersion: 4
 services:
     # Paperless-ng
     $$cap_appname:
+        image: ctadeu/calendso:$$cap_app_version
         depends_on:
             - $$cap_appname-db
         restart: always
@@ -10,15 +11,28 @@ services:
         environment:
             DATABASE_URL: postgresql://$$cap_dbuser:$$cap_dbpass@srv-captain--$$cap_appname-db:5432/$$cap_dbname
             GOOGLE_API_CREDENTIALS: $$cap_google_api_credentials
+            DAILY_API_KEY: $$cap_daily_api_key
+            BASE_URL: $$cap_appname.$$cap_root_domain
             NEXTAUTH_URL: $$cap_appname.$$cap_root_domain
             NEXT_TELEMETRY_DISABLED: $$cap_next_telemetry_disabled
             NODE_TLS_REJECT_UNAUTHORIZED: $$cap_tls_reject_unauthorized
+            # Used for the Office 365 / Outlook.com Calendar integration
+            MS_GRAPH_CLIENT_ID: $$cap_ms_graph_client_id
+            MS_GRAPH_CLIENT_SECRET: $$cap_ms_graph_client_secret
+            # Used for the Zoom integration
+            ZOOM_CLIENT_ID: $$cap_zoom_client_id
+            ZOOM_CLIENT_SECRET: $$cap_zoom_client_secret
+            # E-mail settings
+            # Configures the global From: header whilst sending emails.
+            EMAIL_FROM: $$cap_email_from
+            # Configure SMTP settings (@see https://nodemailer.com/smtp/).
+            EMAIL_SERVER_HOST: $$cap_email_server_host
+            EMAIL_SERVER_PORT: $$cap_email_server_port
+            EMAIL_SERVER_USER: $$cap_email_server_user
+            EMAIL_SERVER_PASSWORD: $$cap_email_server_password
+            CALENDSO_ENCRYPTION_KEY: $$cap_calendso_encryption_key
         caproverExtra:
             containerHttpPort: '3000'
-            dockerfileLines:
-                - FROM ctadeu/calendso:$$cap_app_version
-                - CMD sh -c "npx prisma db push --preview-feature && yarn dev"
-
     # Database
     $$cap_appname-db:
         image: postgres:$$cap_postgres_version
@@ -36,7 +50,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_app_version
           label: Calendso Version
-          defaultValue: '0.0.8'
+          defaultValue: '0.0.17-1'
           description: Check out their docker page for the valid tags https://hub.docker.com/r/ctadeu/calendso/tags
 
         - id: $$cap_postgres_version
@@ -62,8 +76,11 @@ caproverOneClickApp:
 
         - id: $$cap_google_api_credentials
           label: Google API Credentials
-          validRegex: /^([^\s^\/])+$/
           description: You can get this from the Google API Console (https://console.cloud.google.com/apis/dashboard). More details on this can be found below under the Obtaining the Google API Credentials section (https://github.com/calendso/calendso#Obtaining-the-Google-API-Credentials).
+
+        - id: $$cap_daily_api_key
+          label: Daily API Key
+          description: Obtain from https://dashboard.daily.co/developers
 
         - id: $$cap_prisma_studio_port
           label: Prisma Studio Port
@@ -80,6 +97,43 @@ caproverOneClickApp:
           label: Node TLS Reject Unauthorized
           defaultValue: '1'
           validRegex: /^(0|1)$/
+
+        - id: $$cap_ms_graph_client_id
+          label: MS Graph Client ID
+          description: Used for the Office 365 / Outlook.com Calendar integration
+
+        - id: $$cap_ms_graph_client_secret
+          label: MS Graph Client Secret
+          description: Used for the Office 365 / Outlook.com Calendar integration
+
+        - id: $$cap_zoom_client_id
+          label: Zoom Client ID
+          description: Used for the Zoom integration
+
+        - id: $$cap_zoom_client_secret
+          label: Zoom Client ID
+          description: Used for the Zoom integration
+
+        - id: $$cap_email_from
+          label: Email From Address
+          description: Configures the global From header whilst sending emails
+          validRegex: /^([^\s^\/]@[^\s^\/]\.[^\s^\/])+$/
+
+        - id: $$cap_email_server_host
+          label: Email Server Host
+
+        - id: $$cap_email_server_port
+          label: Email Server Port
+
+        - id: $$cap_email_server_user
+          label: Email Server User
+
+        - id: $$cap_email_server_password
+          label: Email Server Password
+
+        - id: cap_calendso_encryption_key
+          label: Calendso Encryption Key
+          description: Encryption key that will be used to encrypt CalDAV credentials, choose a random string, for example with `dd if=/dev/urandom bs=1K count=1 | md5sum`
 
     instructions:
         start: >-
