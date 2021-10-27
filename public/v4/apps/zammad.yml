@@ -1,8 +1,15 @@
 captainVersion: 4
 caproverOneClickApp:
     instructions:
-        start: >-
-            Zammad is a web-based, open source user support/ticketing solution.
+        start: |-
+            Zammad is a web-based, open source user support/ticketing solution. For Zammad and a database server like PostgreSQL we recommend at least:
+
+            - 2 CPU cores
+            - 4 GB of RAM (+4 GB if you want to run Elasticsearch on the same server)
+            - For optimal performance up to 40 agents:
+            - 4 CPU cores
+            - 6 GB of RAM (+6 GB if you want to run Elasticsearch on the same server)
+
         end: >
             Zammad is deployed and available.
              IMPORTANT: It will take up to 5 minutes for Zammad to be ready. Before that, you might see a 502 error page.
