@@ -24,7 +24,7 @@ services:
             MYSQL_DATABASE: $$cap_mariadb-db
             MYSQL_USER: $$cap_mariadb-user
             MYSQL_PASSWORD: $$cap_mariadb-pass
-            MYSQL_ROOT_PASSWORD: $$cap_maridb-rootpass
+            MYSQL_ROOT_PASSWORD: $$cap_mariadb-rootpass
         volumes:
             - $$cap_appname-db-data:/var/lib/mysql
         restart: unless-stopped
@@ -35,9 +35,9 @@ services:
         environment:
             FPM_NGINX_HOST: srv-captain--$$cap_appname-fpm
         volumes:
-          - $$cap_appname-public:/opt/kimai/public:ro
+            - $$cap_appname-public:/opt/kimai/public:ro
         depends_on:
-          - $$cap_appname-fpm
+            - $$cap_appname-fpm
         restart: unless-stopped
 caproverOneClickApp:
     variables:
@@ -90,12 +90,12 @@ caproverOneClickApp:
           defaultValue: $$cap_gen_random_hex(32)
     instructions:
         start: |-
-           With Kimai, the boring process of feeding Excel spreadsheets with your working hours is not only simplified, it also offers dozens of other exciting features that you don't even know you're missing so far!
+            With Kimai, the boring process of feeding Excel spreadsheets with your working hours is not only simplified, it also offers dozens of other exciting features that you don't even know you're missing so far!
         end: |-
             Aaaand you're done! 😄
             Your service is available at http://$$cap_appname.$$cap_root_domain
             -------------------------------------------------------------------
     displayName: Kimai
     isOfficial: false
-    description: With Kimai, the boring process of feeding Excel spreadsheets with your working hours is not only simplified, it also offers dozens of other exciting features that you don't even know you're missing so far!
+    description: With Kimai, the boring process of feeding spreadsheets with your working hours is not only simplified, it also offers dozens of other exciting features that you don't even know you're missing!
     documentation: https://www.kimai.org/documentation/
