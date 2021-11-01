@@ -35,9 +35,9 @@ services:
         environment:
             FPM_NGINX_HOST: srv-captain--$$cap_appname-fpm
         volumes:
-          - $$cap_appname-public:/opt/kimai/public:ro
+            - $$cap_appname-public:/opt/kimai/public:ro
         depends_on:
-          - $$cap_appname-fpm
+            - $$cap_appname-fpm
         restart: unless-stopped
 caproverOneClickApp:
     variables:
@@ -90,7 +90,7 @@ caproverOneClickApp:
           defaultValue: $$cap_gen_random_hex(32)
     instructions:
         start: |-
-           With Kimai, the boring process of feeding Excel spreadsheets with your working hours is not only simplified, it also offers dozens of other exciting features that you don't even know you're missing so far!
+            With Kimai, the boring process of feeding Excel spreadsheets with your working hours is not only simplified, it also offers dozens of other exciting features that you don't even know you're missing so far!
         end: |-
             Aaaand you're done! 😄
             Your service is available at http://$$cap_appname.$$cap_root_domain
