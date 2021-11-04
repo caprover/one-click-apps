@@ -44,12 +44,12 @@ caproverOneClickApp:
     variables:
         - id: $$cap_n8n_version
           label: n8n.io Version
-          defaultValue: 0.116.1
+          defaultValue: 0.147.1
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/n8nio/n8n/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_postgres_version
           label: Postgres (database) version
-          defaultValue: '12'
+          defaultValue: '14'
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/postgres?tab=tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_db_pass
