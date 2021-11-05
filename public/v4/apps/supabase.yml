@@ -3,7 +3,7 @@ services:
     $$cap_appname-kong:
         image: kong:$$cap_kong_version
         volumes:
-            - $$cap_appname-kong-config:/var/lib/kong/kong.yml
+            - $$cap_appname-kong-config:/var/lib/kong
         restart: always
         ports:
             - $$cap_kong_http_port:8000
@@ -19,8 +19,6 @@ services:
         image: supabase/gotrue:$$cap_auth_version
         depends_on:
             - $$cap_appname-db
-        volumes:
-            - $$cap_appname-kong-config:/var/lib/kong/kong.yml
         restart: always
         environment:
             GOTRUE_API_HOST: $$cap_gotrue_api_host
@@ -47,6 +45,8 @@ services:
             GOTRUE_MAILER_URLPATHS_EMAIL_CHANGE: /auth/v1/verify
             GOTRUE_EXTERNAL_PHONE_ENABLED: $$cap_gotrue_enable_phone_signup
             GOTRUE_SMS_AUTOCONFIRM: $$cap_gotrue_sms_autoconfirm
+        caproverExtra:
+          containerHttpPort: $$cap_gotrue_api_port
     $$cap_appname-rest:
         image: postgrest/postgrest:$$cap_postgrest_version
         depends_on:
@@ -284,7 +284,12 @@ caproverOneClickApp:
     instructions:
         start: >-
             Supabase is an open source Firebase alternative.
-        end: 'Supabase is deployed'
+        end: >
+            Supabase is deployed.
+            1. Make sure to enable websocket support inside $$cap_appname-realtime.
+            2. You will also have to create a kong.yml inside /var/lib/docker/volumes/captain--$$cap_appname-kong-config/_data
+               Check https://github.com/supabase/supabase/blob/master/docker/volumes/kong.yml for the example content
+                (make sure to edit and add your ANON_KEY, SERVICE_KEY and service url)
     displayName: Supabase
     isOfficial: true
     description: Supabase is an open source Firebase alternative.
