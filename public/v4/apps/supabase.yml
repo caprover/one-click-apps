@@ -25,7 +25,7 @@ services:
             GOTRUE_API_PORT: $$cap_gotrue_api_port
             GOTRUE_DB_DRIVER: postgres
             GOTRUE_DB_DATABASE_URL: postgres://$$cap_pg_user:$$cap_pg_pass@srv-captain--$$cap_appname-db:5432/$$cap_pg_db?sslmode=disable&search_path=auth
-            GOTRUE_SITE_URL: $$cap_gotrue_site_url
+            GOTRUE_SITE_URL: $$cap_appname-auth.$$cap_root_domain
             GOTRUE_URI_ALLOW_LIST: $$cap_gotrue_uri_allow_list
             GOTRUE_DISABLE_SIGNUP: $$cap_gotrue_disable_signup
             GOTRUE_JWT_SECRET: $$cap_jwt_secret
@@ -164,11 +164,6 @@ caproverOneClickApp:
         - id: $$cap_gotrue_api_port
           label: Gotrue API port
           defaultValue: '9999'
-          validRegex: /^([^\s^\/])+$/
-        - id: $$cap_gotrue_site_url
-          label: Gotrue Site URL
-          defaultValue: $$cap_appname-rest.$$cap_root_domain
-          description: Check out their Docker page for the valid tags https://hub.docker.com/r/supabase/gotrue/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_gotrue_uri_allow_list
           label: Gotrue URI allow list
