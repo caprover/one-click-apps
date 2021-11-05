@@ -46,7 +46,7 @@ services:
             GOTRUE_EXTERNAL_PHONE_ENABLED: $$cap_gotrue_enable_phone_signup
             GOTRUE_SMS_AUTOCONFIRM: $$cap_gotrue_sms_autoconfirm
         caproverExtra:
-          containerHttpPort: $$cap_gotrue_api_port
+            containerHttpPort: $$cap_gotrue_api_port
     $$cap_appname-rest:
         image: postgrest/postgrest:$$cap_postgrest_version
         depends_on:
