@@ -159,7 +159,6 @@ caproverOneClickApp:
         - id: $$cap_gotrue_uri_allow_list
           label: Gotrue URI allow list
           defaultValue: ''
-          validRegex: /^([^\s^\/])+$/
         - id: $$cap_gotrue_disable_signup
           label: Gotrue Disable Signup
           defaultValue: 'false'
