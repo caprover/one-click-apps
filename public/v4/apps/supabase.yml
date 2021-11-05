@@ -6,102 +6,104 @@ services:
             - $$cap_appname-kong-config:/var/lib/kong/kong.yml
         restart: always
         ports:
-          - $$cap_kong_http_port:8000
-          - $$cap_kong_https_port:8443
+            - $$cap_kong_http_port:8000
+            - $$cap_kong_https_port:8443
         environment:
-          KONG_DATABASE: $$cap_kong_database
-          # https://github.com/supabase/cli/issues/14
-          KONG_DNS_ORDER: $$cap_kong_dns_order
-          KONG_PLUGINS: $$cap_kong_plugins
+            KONG_DATABASE: $$cap_kong_database
+            # https://github.com/supabase/cli/issues/14
+            KONG_DNS_ORDER: $$cap_kong_dns_order
+            KONG_PLUGINS: $$cap_kong_plugins
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname-auth:
         image: supabase/gotrue:$$cap_auth_version
         depends_on:
-          - $$cap_appname-db
+            - $$cap_appname-db
         volumes:
             - $$cap_appname-kong-config:/var/lib/kong/kong.yml
         restart: always
         environment:
-          GOTRUE_API_HOST: $$cap_gotrue_api_host
-          GOTRUE_API_PORT: $$cap_gotrue_api_port
-          GOTRUE_DB_DRIVER: postgres
-          GOTRUE_DB_DATABASE_URL: postgres://$$cap_pg_user:$$cap_pg_pass@srv-captain--$$cap_appname-db:5432/$$cap_pg_db?sslmode=disable&search_path=auth
-          GOTRUE_SITE_URL: $$cap_gotrue_site_url
-          GOTRUE_URI_ALLOW_LIST: $$cap_gotrue_site_allow_list
-          GOTRUE_DISABLE_SIGNUP: $$cap_gotrue_disable_signup
-          GOTRUE_JWT_SECRET: $$cap_gotrue_jwt_secret
-          GOTRUE_JWT_EXP: $$cap_gotrue_jwt_expiry
-          GOTRUE_JWT_DEFAULT_GROUP_NAME: $$cap_gotrue_jwt_default_group_name
-          GOTRUE_EXTERNAL_EMAIL_ENABLED: $$cap_gotrue_enable_email_signup
-          GOTRUE_MAILER_AUTOCONFIRM: $$cap_gotrue_enable_email_autoconfirm
-          GOTRUE_SMTP_ADMIN_EMAIL: $$cap_gotrue_smtp_admin_email
-          GOTRUE_SMTP_HOST: $$cap_gotrue_smtp_host
-          GOTRUE_SMTP_PORT: $$cap_gotrue_smtp_port
-          GOTRUE_SMTP_USER: $$cap_gotrue_smtp_user
-          GOTRUE_SMTP_PASS: $$cap_gotrue_smtp_pass
-          GOTRUE_SMTP_SENDER_NAME: $$cap_gotrue_smtp_sender_name
-          GOTRUE_MAILER_URLPATHS_INVITE: /auth/v1/verify
-          GOTRUE_MAILER_URLPATHS_CONFIRMATION: /auth/v1/verify
-          GOTRUE_MAILER_URLPATHS_RECOVERY: /auth/v1/verify
-          GOTRUE_MAILER_URLPATHS_EMAIL_CHANGE: /auth/v1/verify
-          GOTRUE_EXTERNAL_PHONE_ENABLED: $$cap_gotrue_enable_phone_signup
-          GOTRUE_SMS_AUTOCONFIRM: $$cap_gotrue_sms_autoconfirm
+            GOTRUE_API_HOST: $$cap_gotrue_api_host
+            GOTRUE_API_PORT: $$cap_gotrue_api_port
+            GOTRUE_DB_DRIVER: postgres
+            GOTRUE_DB_DATABASE_URL: postgres://$$cap_pg_user:$$cap_pg_pass@srv-captain--$$cap_appname-db:5432/$$cap_pg_db?sslmode=disable&search_path=auth
+            GOTRUE_SITE_URL: $$cap_gotrue_site_url
+            GOTRUE_URI_ALLOW_LIST: $$cap_gotrue_uri_allow_list
+            GOTRUE_DISABLE_SIGNUP: $$cap_gotrue_disable_signup
+            GOTRUE_JWT_SECRET: $$cap_gotrue_jwt_secret
+            GOTRUE_JWT_EXP: $$cap_gotrue_jwt_expiry
+            GOTRUE_JWT_DEFAULT_GROUP_NAME: $$cap_gotrue_jwt_default_group_name
+            GOTRUE_EXTERNAL_EMAIL_ENABLED: $$cap_gotrue_external_email_enabled
+            GOTRUE_MAILER_AUTOCONFIRM: $$cap_gotrue_mailer_autoconfirm
+            GOTRUE_SMTP_ADMIN_EMAIL: $$cap_gotrue_smtp_admin_email
+            GOTRUE_SMTP_HOST: $$cap_gotrue_smtp_host
+            GOTRUE_SMTP_PORT: $$cap_gotrue_smtp_port
+            GOTRUE_SMTP_USER: $$cap_gotrue_smtp_user
+            GOTRUE_SMTP_PASS: $$cap_gotrue_smtp_pass
+            GOTRUE_SMTP_SENDER_NAME: $$cap_gotrue_smtp_sender_name
+            GOTRUE_MAILER_URLPATHS_INVITE: /auth/v1/verify
+            GOTRUE_MAILER_URLPATHS_CONFIRMATION: /auth/v1/verify
+            GOTRUE_MAILER_URLPATHS_RECOVERY: /auth/v1/verify
+            GOTRUE_MAILER_URLPATHS_EMAIL_CHANGE: /auth/v1/verify
+            GOTRUE_EXTERNAL_PHONE_ENABLED: $$cap_gotrue_enable_phone_signup
+            GOTRUE_SMS_AUTOCONFIRM: $$cap_gotrue_sms_autoconfirm
     $$cap_appname-rest:
         image: postgrest/postgrest:$$cap_postgrest_version
         depends_on:
-          - $$cap_appname-db
+            - $$cap_appname-db
         restart: always
         environment:
-          PGRST_DB_URI: postgres://$$cap_pg_user:$$cap_pg_pass@srv-captain--$$cap_appname-db:5432/$$cap_pg_db
-          PGRST_DB_SCHEMA: public, storage
-          PGRST_DB_ANON_ROLE: anon
-          PGRST_JWT_SECRET: $$cap_postgrest_jwt_secret
+            PGRST_DB_URI: postgres://$$cap_pg_user:$$cap_pg_pass@srv-captain--$$cap_appname-db:5432/$$cap_pg_db
+            PGRST_DB_SCHEMA: public, storage
+            PGRST_DB_ANON_ROLE: anon
+            PGRST_JWT_SECRET: $$cap_postgrest_jwt_secret
         caproverExtra:
             containerHttpPort: 3000
     $$cap_appname-realtime:
-      image: supabase/realtime:$$cap_realtime_version
-      depends_on:
-        - $$cap_appname-db
-      restart: always
-      environment:
-        DB_HOST: srv-captain--$$cap_appname-db
-        DB_PORT: 5432
-        DB_NAME: $$cap_pg_db
-        DB_USER: $$cap_pg_user
-        DB_PASSWORD: $$cap_pg_pass
-        SLOT_NAME: supabase_realtime
-        PORT: 4000
-        SECURE_CHANNELS: "true"
-        JWT_SECRET: $$cap_realtime_jwt_secret
-      caproverExtra:
-        containerHttpPort: 4000
+        image: supabase/realtime:$$cap_realtime_version
+        depends_on:
+            - $$cap_appname-db
+        restart: always
+        environment:
+            DB_HOST: srv-captain--$$cap_appname-db
+            DB_PORT: 5432
+            DB_NAME: $$cap_pg_db
+            DB_USER: $$cap_pg_user
+            DB_PASSWORD: $$cap_pg_pass
+            SLOT_NAME: supabase_realtime
+            PORT: 4000
+            SECURE_CHANNELS: 'true'
+            JWT_SECRET: $$cap_realtime_jwt_secret
+        caproverExtra:
+            containerHttpPort: 4000
     $$cap_appname-storage:
-      image: supabase/storage-api:$$cap_storage_version
-      depends_on:
-        - $$cap_appname-db
-        - $$cap_appname-rest
-      restart: always
-      volumes:
-        - $$cap_appname-storage:/var/lib/storage
-      environment:
-        ANON_KEY: $$cap_storage_anon_key
-        SERVICE_KEY: $$cap_storage_service_key
-        POSTGREST_URL: srv-captain--$$cap_appname-rest
-        PGRST_JWT_SECRET: $$cap_postgrest_jwt_secret
-        DATABASE_URL: postgres://$$cap_pg_user:$$cap_pg_pass@srv-captain--$$cap_appname-db:5432/$$cap_pg_db
-        PGOPTIONS: -c search_path=storage
-        FILE_SIZE_LIMIT: 52428800
-        STORAGE_BACKEND: file
-        FILE_STORAGE_BACKEND_PATH: /var/lib/storage
-        # TODO: https://github.com/supabase/storage-api/commit/a836fc9666c2434d89ca4b31402f74772d50fb6d
-        PROJECT_REF: stub
-        # TODO: https://github.com/supabase/storage-api/issues/55
-        REGION: stub
-        GLOBAL_S3_BUCKET: stub
-      caproverExtra:
-        notExposeAsWebApp: 'true'
+        image: supabase/storage-api:$$cap_storage_version
+        depends_on:
+            - $$cap_appname-db
+            - $$cap_appname-rest
+        restart: always
+        volumes:
+            - $$cap_appname-storage:/var/lib/storage
+        environment:
+            ANON_KEY: $$cap_storage_anon_key
+            SERVICE_KEY: $$cap_storage_service_key
+            POSTGREST_URL: srv-captain--$$cap_appname-rest
+            PGRST_JWT_SECRET: $$cap_postgrest_jwt_secret
+            DATABASE_URL: postgres://$$cap_pg_user:$$cap_pg_pass@srv-captain--$$cap_appname-db:5432/$$cap_pg_db
+            PGOPTIONS: -c search_path=storage
+            FILE_SIZE_LIMIT: $$cap_storage_file_size_limit
+            STORAGE_BACKEND: file
+            FILE_STORAGE_BACKEND_PATH: /var/lib/storage
+            # TODO: https://github.com/supabase/storage-api/commit/a836fc9666c2434d89ca4b31402f74772d50fb6d
+            PROJECT_REF: stub
+            # TODO: https://github.com/supabase/storage-api/issues/55
+            REGION: stub
+            GLOBAL_S3_BUCKET: stub
+        caproverExtra:
+            notExposeAsWebApp: 'true'
     $$cap_appname-db:
+        # not using postgres image because supabase/postgres
+        # has some additional initdb script
         image: supabase/postgres:$$cap_db_version
         volumes:
             - $$cap_appname-db-data:/var/lib/postgresql/data
@@ -149,8 +151,102 @@ caproverOneClickApp:
           defaultValue: 'v2.1.8'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/supabase/gotrue/tags
           validRegex: /^([^\s^\/])+$/
+        - id: $$cap_gotrue_site_url
+          label: Gotrue Site URL
+          defaultValue: $$cap_appname-rest.$$cap_root_domain
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/supabase/gotrue/tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_gotrue_uri_allow_list
+          label: Gotrue URI allow list
+          defaultValue: ''
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_gotrue_disable_signup
+          label: Gotrue Disable Signup
+          defaultValue: 'false'
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_gotrue_jwt_secret
+          label: Gotrue JWT secret
+          defaultValue: $$cap_gen_random_hex(64)
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_gotrue_jwt_expiry
+          label: Gotrue JWT expiry
+          defaultValue: '84600'
+          validRegex: /^\d+$/
+        - id: $$cap_gotrue_jwt_default_group_name
+          label: Gotrue Default Group Name
+          defaultValue: 'authenticated'
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_gotrue_external_email_enabled
+          label: Gotrue external email enabled
+          defaultValue: 'true'
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_gotrue_mailer_autoconfirm
+          label: Gotrue mailer autoconfirm
+          defaultValue: 'false'
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_gotrue_smtp_admin_email
+          label: Gotrue SMTP admin email
+          defaultValue: 'admin@example.com'
+        - id: $$cap_gotrue_smtp_host
+          label: Gotrue SMTP Host
+          defaultValue: ''
+        - id: $$cap_gotrue_smtp_port
+          label: Gotrue SMTP port
+          defaultValue: ''
+        - id: $$cap_gotrue_smtp_user
+          label: Gotrue SMTP user
+          defaultValue: ''
+        - id: $$cap_gotrue_smtp_pass
+          label: Gotrue SMTP password
+          defaultValue: ''
+        - id: $$cap_gotrue_smtp_sender_name
+          label: Gotrue SMTP sender name
+          defaultValue: ''
 
-      # postgres variables
+        # postgrest variables
+        - id: $$cap_postgrest_version
+          label: Postgrest Version
+          defaultValue: 'v8.0.0'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/postgrest/postgrest/tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_postgrest_jwt_secret
+          label: Postgrest JWT Secret
+          defaultValue: $$cap_gen_random_hex(64)
+          validRegex: /^([^\s^\/])+$/
+
+        # realtime variables
+        - id: $$cap_realtime_version
+          label: Storage Realtime Version
+          defaultValue: 'v0.15.0'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/supabase/realtime/tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_realtime_jwt_secret
+          label: Realtime JWT Secret
+          defaultValue: $$cap_gen_random_hex(64)
+          validRegex: /^([^\s^\/])+$/
+
+        # storage variables
+        - id: $$cap_storage_version
+          label: Storage API Version
+          defaultValue: 'v0.9.3'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/supabase/gotrue/tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_storage_anon_key
+          label: Storage Anon Key
+          defaultValue: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYyNzIwODU0MCwiZXhwIjoxOTc0MzYzNzQwfQ.zcaQfHd3VA7XgJmdGfmV86OLVJT9s2MTmSy-e69BpUY'
+          description: https://github.com/supabase/supabase/blob/master/docker/docker-compose.yml#L90
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_storage_service_key
+          label: Storage Service Key
+          defaultValue: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIiwiaWF0IjoxNjI3MjA4NTQwLCJleHAiOjE5NzQzNjM3NDB9.pkT3PNpO4DtO45Ac5HK_TKCx8sGLgNtV__pr_ZrRSAU'
+          description: https://github.com/supabase/supabase/blob/master/docker/docker-compose.yml#L91
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_storage_file_size_limit
+          label: Storage File Size Limit
+          defaultValue: '52428800'
+          validRegex: /^\d+$/
+
+        # postgres variables
         - id: $$cap_db_version
           label: Postgres Version
           defaultValue: '13.3.0'
@@ -175,17 +271,11 @@ caproverOneClickApp:
           label: "OPTIONAL: Arguments for 'postgres initdb'"
           description: For example, --data-checksums
           validRegex: /.{0,}/
-
-        - id: $$cap_app_version
-          label: Supabase Version
-          defaultValue: '0.14.0'
-          description: Check out their Docker page for the valid tags https://hub.docker.com/r/supabase/postgres/tags
-          validRegex: /^([^\s^\/])+$/
     instructions:
         start: >-
-            Supabase.
-        end: "Supabase is deployed"
+            Supabase is an open source Firebase alternative.
+        end: 'Supabase is deployed'
     displayName: Supabase
     isOfficial: true
-    description: Supabase makes it easy to use Postgres.
-    documentation: Taken from https://github.com/supabase/postgres
+    description: Supabase is an open source Firebase alternative.
+    documentation: Taken from https://github.com/supabase/supabase
