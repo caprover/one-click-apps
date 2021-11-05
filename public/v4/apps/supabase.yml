@@ -1,0 +1,191 @@
+captainVersion: 4
+services:
+    $$cap_appname-kong:
+        image: kong:$$cap_kong_version
+        volumes:
+            - $$cap_appname-kong-config:/var/lib/kong/kong.yml
+        restart: always
+        ports:
+          - $$cap_kong_http_port:8000
+          - $$cap_kong_https_port:8443
+        environment:
+          KONG_DATABASE: $$cap_kong_database
+          # https://github.com/supabase/cli/issues/14
+          KONG_DNS_ORDER: $$cap_kong_dns_order
+          KONG_PLUGINS: $$cap_kong_plugins
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname-auth:
+        image: supabase/gotrue:$$cap_auth_version
+        depends_on:
+          - $$cap_appname-db
+        volumes:
+            - $$cap_appname-kong-config:/var/lib/kong/kong.yml
+        restart: always
+        environment:
+          GOTRUE_API_HOST: $$cap_gotrue_api_host
+          GOTRUE_API_PORT: $$cap_gotrue_api_port
+          GOTRUE_DB_DRIVER: postgres
+          GOTRUE_DB_DATABASE_URL: postgres://$$cap_pg_user:$$cap_pg_pass@srv-captain--$$cap_appname-db:5432/$$cap_pg_db?sslmode=disable&search_path=auth
+          GOTRUE_SITE_URL: $$cap_gotrue_site_url
+          GOTRUE_URI_ALLOW_LIST: $$cap_gotrue_site_allow_list
+          GOTRUE_DISABLE_SIGNUP: $$cap_gotrue_disable_signup
+          GOTRUE_JWT_SECRET: $$cap_gotrue_jwt_secret
+          GOTRUE_JWT_EXP: $$cap_gotrue_jwt_expiry
+          GOTRUE_JWT_DEFAULT_GROUP_NAME: $$cap_gotrue_jwt_default_group_name
+          GOTRUE_EXTERNAL_EMAIL_ENABLED: $$cap_gotrue_enable_email_signup
+          GOTRUE_MAILER_AUTOCONFIRM: $$cap_gotrue_enable_email_autoconfirm
+          GOTRUE_SMTP_ADMIN_EMAIL: $$cap_gotrue_smtp_admin_email
+          GOTRUE_SMTP_HOST: $$cap_gotrue_smtp_host
+          GOTRUE_SMTP_PORT: $$cap_gotrue_smtp_port
+          GOTRUE_SMTP_USER: $$cap_gotrue_smtp_user
+          GOTRUE_SMTP_PASS: $$cap_gotrue_smtp_pass
+          GOTRUE_SMTP_SENDER_NAME: $$cap_gotrue_smtp_sender_name
+          GOTRUE_MAILER_URLPATHS_INVITE: /auth/v1/verify
+          GOTRUE_MAILER_URLPATHS_CONFIRMATION: /auth/v1/verify
+          GOTRUE_MAILER_URLPATHS_RECOVERY: /auth/v1/verify
+          GOTRUE_MAILER_URLPATHS_EMAIL_CHANGE: /auth/v1/verify
+          GOTRUE_EXTERNAL_PHONE_ENABLED: $$cap_gotrue_enable_phone_signup
+          GOTRUE_SMS_AUTOCONFIRM: $$cap_gotrue_sms_autoconfirm
+    $$cap_appname-rest:
+        image: postgrest/postgrest:$$cap_postgrest_version
+        depends_on:
+          - $$cap_appname-db
+        restart: always
+        environment:
+          PGRST_DB_URI: postgres://$$cap_pg_user:$$cap_pg_pass@srv-captain--$$cap_appname-db:5432/$$cap_pg_db
+          PGRST_DB_SCHEMA: public, storage
+          PGRST_DB_ANON_ROLE: anon
+          PGRST_JWT_SECRET: $$cap_postgrest_jwt_secret
+        caproverExtra:
+            containerHttpPort: 3000
+    $$cap_appname-realtime:
+      image: supabase/realtime:$$cap_realtime_version
+      depends_on:
+        - $$cap_appname-db
+      restart: always
+      environment:
+        DB_HOST: srv-captain--$$cap_appname-db
+        DB_PORT: 5432
+        DB_NAME: $$cap_pg_db
+        DB_USER: $$cap_pg_user
+        DB_PASSWORD: $$cap_pg_pass
+        SLOT_NAME: supabase_realtime
+        PORT: 4000
+        SECURE_CHANNELS: "true"
+        JWT_SECRET: $$cap_realtime_jwt_secret
+      caproverExtra:
+        containerHttpPort: 4000
+    $$cap_appname-storage:
+      image: supabase/storage-api:$$cap_storage_version
+      depends_on:
+        - $$cap_appname-db
+        - $$cap_appname-rest
+      restart: always
+      volumes:
+        - $$cap_appname-storage:/var/lib/storage
+      environment:
+        ANON_KEY: $$cap_storage_anon_key
+        SERVICE_KEY: $$cap_storage_service_key
+        POSTGREST_URL: srv-captain--$$cap_appname-rest
+        PGRST_JWT_SECRET: $$cap_postgrest_jwt_secret
+        DATABASE_URL: postgres://$$cap_pg_user:$$cap_pg_pass@srv-captain--$$cap_appname-db:5432/$$cap_pg_db
+        PGOPTIONS: -c search_path=storage
+        FILE_SIZE_LIMIT: 52428800
+        STORAGE_BACKEND: file
+        FILE_STORAGE_BACKEND_PATH: /var/lib/storage
+        # TODO: https://github.com/supabase/storage-api/commit/a836fc9666c2434d89ca4b31402f74772d50fb6d
+        PROJECT_REF: stub
+        # TODO: https://github.com/supabase/storage-api/issues/55
+        REGION: stub
+        GLOBAL_S3_BUCKET: stub
+      caproverExtra:
+        notExposeAsWebApp: 'true'
+    $$cap_appname-db:
+        image: supabase/postgres:$$cap_db_version
+        volumes:
+            - $$cap_appname-db-data:/var/lib/postgresql/data
+            - $$cap_appname-db-init:/docker-entrypoint-initdb.d
+        restart: always
+        environment:
+            POSTGRES_USER: $$cap_pg_user
+            POSTGRES_PASSWORD: $$cap_pg_pass
+            POSTGRES_DB: $$cap_pg_db
+            POSTGRES_INITDB_ARGS: $$cap_pg_initdb_args
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+caproverOneClickApp:
+    variables:
+        # kong variables
+        - id: $$cap_kong_version
+          label: Kong version
+          defaultValue: '2.1'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/_/kong?tab=tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_kong_http_port
+          label: Kong HTTP port
+          defaultValue: '8000'
+          validRegex: /^\d+$/
+        - id: $$cap_kong_https_port
+          label: Kong HTTPS port
+          defaultValue: '8443'
+          validRegex: /^\d+$/
+        - id: $$cap_kong_database
+          label: Kong Database
+          defaultValue: 'off'
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_kong_dns_order
+          label: Kong DNS order
+          defaultValue: 'LAST,A,CNAME'
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_kong_plugins
+          label: Kong Plugins
+          defaultValue: 'request-transformer,cors,key-auth'
+          validRegex: /^([^\s^\/])+$/
+
+        # auth variables
+        - id: $$cap_auth_version
+          label: Auth Version
+          defaultValue: 'v2.1.8'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/supabase/gotrue/tags
+          validRegex: /^([^\s^\/])+$/
+
+      # postgres variables
+        - id: $$cap_db_version
+          label: Postgres Version
+          defaultValue: '13.3.0'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/supabase/postgres/tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_pg_user
+          label: Postgres Username
+          defaultValue: 'postgres'
+          description: 'Postgres Username'
+          validRegex: /.{1,}/
+        - id: $$cap_pg_pass
+          label: Postgres Password
+          defaultValue: $$cap_gen_random_hex(64)
+          description: 'Postgres Password'
+          validRegex: /.{1,}/
+        - id: $$cap_pg_db
+          label: Postgres Default Database
+          defaultValue: 'postgres'
+          description: 'Default database'
+          validRegex: /.{1,}/
+        - id: $$cap_pg_initdb_args
+          label: "OPTIONAL: Arguments for 'postgres initdb'"
+          description: For example, --data-checksums
+          validRegex: /.{0,}/
+
+        - id: $$cap_app_version
+          label: Supabase Version
+          defaultValue: '0.14.0'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/supabase/postgres/tags
+          validRegex: /^([^\s^\/])+$/
+    instructions:
+        start: >-
+            Supabase.
+        end: "Supabase is deployed"
+    displayName: Supabase
+    isOfficial: true
+    description: Supabase makes it easy to use Postgres.
+    documentation: Taken from https://github.com/supabase/postgres
