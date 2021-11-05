@@ -14,7 +14,7 @@ services:
             KONG_DNS_ORDER: $$cap_kong_dns_order
             KONG_PLUGINS: $$cap_kong_plugins
         caproverExtra:
-            notExposeAsWebApp: 'true'
+            containerHttpPort: $$cap_kong_http_port
     $$cap_appname-auth:
         image: supabase/gotrue:$$cap_auth_version
         depends_on:
@@ -151,6 +151,14 @@ caproverOneClickApp:
           defaultValue: 'v2.1.8'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/supabase/gotrue/tags
           validRegex: /^([^\s^\/])+$/
+        - id: $$cap_gotrue_api_host
+          label: Gotrue API Host
+          defaultValue: '0.0.0.0'
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_gotrue_api_port
+          label: Gotrue API port
+          defaultValue: '9999'
+          validRegex: /^([^\s^\/])+$/
         - id: $$cap_gotrue_site_url
           label: Gotrue Site URL
           defaultValue: $$cap_appname-rest.$$cap_root_domain
@@ -162,7 +170,7 @@ caproverOneClickApp:
         - id: $$cap_gotrue_disable_signup
           label: Gotrue Disable Signup
           defaultValue: 'false'
-          validRegex: /^([^\s^\/])+$/
+          validRegex: /^(true|false)$/
         - id: $$cap_gotrue_jwt_secret
           label: Gotrue JWT secret
           defaultValue: $$cap_gen_random_hex(64)
@@ -178,11 +186,11 @@ caproverOneClickApp:
         - id: $$cap_gotrue_external_email_enabled
           label: Gotrue external email enabled
           defaultValue: 'true'
-          validRegex: /^([^\s^\/])+$/
+          validRegex: /^(true|false)$/
         - id: $$cap_gotrue_mailer_autoconfirm
           label: Gotrue mailer autoconfirm
           defaultValue: 'false'
-          validRegex: /^([^\s^\/])+$/
+          validRegex: /^(true|false)$/
         - id: $$cap_gotrue_smtp_admin_email
           label: Gotrue SMTP admin email
           defaultValue: 'admin@example.com'
@@ -191,7 +199,8 @@ caproverOneClickApp:
           defaultValue: ''
         - id: $$cap_gotrue_smtp_port
           label: Gotrue SMTP port
-          defaultValue: ''
+          defaultValue: '567'
+          validRegex: /^\d+$/
         - id: $$cap_gotrue_smtp_user
           label: Gotrue SMTP user
           defaultValue: ''
@@ -201,6 +210,14 @@ caproverOneClickApp:
         - id: $$cap_gotrue_smtp_sender_name
           label: Gotrue SMTP sender name
           defaultValue: ''
+        - id: $$cap_gotrue_enable_phone_signup
+          label: Gotrue External Phone Signup
+          defaultValue: 'true'
+          validRegex: /^(true|false)$/
+        - id: $$cap_gotrue_sms_autoconfirm
+          label: Gotrue SMS autoconfirm
+          defaultValue: 'false'
+          validRegex: /^(true|false)$/
 
         # postgrest variables
         - id: $$cap_postgrest_version
