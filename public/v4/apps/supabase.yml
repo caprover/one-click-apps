@@ -260,17 +260,14 @@ caproverOneClickApp:
         - id: $$cap_pg_user
           label: Postgres Username
           defaultValue: 'postgres'
-          description: 'Postgres Username'
           validRegex: /.{1,}/
         - id: $$cap_pg_pass
           label: Postgres Password
           defaultValue: $$cap_gen_random_hex(64)
-          description: 'Postgres Password'
           validRegex: /.{1,}/
         - id: $$cap_pg_db
           label: Postgres Default Database
           defaultValue: 'postgres'
-          description: 'Default database'
           validRegex: /.{1,}/
         - id: $$cap_pg_initdb_args
           label: "OPTIONAL: Arguments for 'postgres initdb'"
