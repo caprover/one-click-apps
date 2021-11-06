@@ -15,7 +15,7 @@ services:
             # https://github.com/supabase/cli/issues/14
             KONG_DNS_ORDER: $$cap_kong_dns_order
             KONG_PLUGINS: $$cap_kong_plugins
-            KONG_ADMIN_LISTEN: 0.0.0.0:8001, 0.0.0.0:8444 ssl
+            KONG_ADMIN_LISTEN: 0.0.0.0:$$cap_kong_admin_port, 0.0.0.0:$$cap_kong_admin_ssl_port ssl
         caproverExtra:
           containerHttpPort: $$cap_kong_http_port
     $$cap_appname-auth:
