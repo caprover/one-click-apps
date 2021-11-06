@@ -100,7 +100,7 @@ services:
             REGION: stub
             GLOBAL_S3_BUCKET: stub
         caproverExtra:
-            notExposeAsWebApp: 'true'
+            containerHttpPort: 5000
     $$cap_appname-db:
         # not using postgres image because supabase/postgres
         # has some additional initdb script
@@ -285,6 +285,17 @@ caproverOneClickApp:
             2. You will also have to create a kong.yml inside /var/lib/docker/volumes/captain--$$cap_appname-kong-config/_data
                Check https://github.com/supabase/supabase/blob/master/docker/volumes/kong.yml for the example content
                 (make sure to edit and add your ANON_KEY, SERVICE_KEY and service url)
+            3. Set $$cap_appname-db instance count to 0
+            4. Run the following command
+              # delete already created database
+              `rm -rf /var/lib/docker/volumes/captain--$$cap_appname-db-data/_data/*`
+              # clone supabase repo to extract migrations
+              `git clone https://github.com/supabase/supabase`
+              # copy migrations required for supabase
+              `cp supabase/docker/volumes/db/init/* /var/lib/docker/volumes/captain--supabase-db-init/_data/ && rm -rf supabase`
+              # set wal_level to logical
+              `echo "wal_level = 'logical'" >> $PGDATA/pg_hba.conf`
+              # now set instance count for $$cap_appname-db back to 1 and save
     displayName: Supabase
     isOfficial: true
     description: Supabase is an open source Firebase alternative.
