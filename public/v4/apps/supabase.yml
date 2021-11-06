@@ -14,7 +14,7 @@ services:
             KONG_DNS_ORDER: $$cap_kong_dns_order
             KONG_PLUGINS: $$cap_kong_plugins
         caproverExtra:
-            containerHttpPort: $$cap_kong_http_port
+            containerHttpPort: 8001
     $$cap_appname-auth:
         image: supabase/gotrue:$$cap_auth_version
         depends_on:
