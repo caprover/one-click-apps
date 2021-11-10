@@ -35,7 +35,7 @@ caproverOneClickApp:
           validRegex: /.{1,}/
         - id: $$cap_gitea_version
           label: Gitea Version
-          defaultValue: '1.7'
+          defaultValue: '1.15.6'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/gitea/gitea/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_mysql_version
