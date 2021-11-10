@@ -76,5 +76,5 @@ caproverOneClickApp:
             You HAVE TO enable Websocket Support in HTTP settings page. 
     displayName: Foundry Virtual Tabletop
     isOfficial: false
-    description: Foundry VTT is a standalone application built for experiencing multiplayer tabletop RPGs using a feature-rich and modern self-hosted application where your players connect directly through the browser.
+    description: Foundry VTT is an application built for experiencing multiplayer tabletop RPGs where your players connect directly through the browser. REQUIRES LICENCE
     documentation: Taken from https://github.com/felddy/foundryvtt-docker
