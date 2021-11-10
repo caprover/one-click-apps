@@ -16,7 +16,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_api_key
           label: Cloudflare API token
-          defaultValue: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklm'
+          defaultValue: ''
           description: Your CloudFlare scoped API token. See the Creating a Cloudflare API token upward.
           validRegex: /.{1,}/
         - id: $$cap_zone
