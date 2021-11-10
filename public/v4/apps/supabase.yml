@@ -5,11 +5,11 @@ services:
         volumes:
             - $$cap_appname-kong-config:/var/lib/kong
         restart: always
-         ports:
-             - $$cap_kong_http_port:8000
-             - $$cap_kong_https_port:8443
-             - $$cap_kong_admin_port:8001
-             - $$cap_kong_admin_ssl_port:8444
+        ports:
+            - $$cap_kong_http_port:8000
+            - $$cap_kong_https_port:8443
+            - $$cap_kong_admin_port:8001
+            - $$cap_kong_admin_ssl_port:8444
         environment:
             KONG_DATABASE: $$cap_kong_database
             # https://github.com/supabase/cli/issues/14
@@ -17,7 +17,7 @@ services:
             KONG_PLUGINS: $$cap_kong_plugins
             KONG_ADMIN_LISTEN: 0.0.0.0:$$cap_kong_admin_port, 0.0.0.0:$$cap_kong_admin_ssl_port ssl
         caproverExtra:
-          containerHttpPort: $$cap_kong_http_port
+            containerHttpPort: $$cap_kong_http_port
     $$cap_appname-auth:
         image: supabase/gotrue:$$cap_auth_version
         depends_on:
