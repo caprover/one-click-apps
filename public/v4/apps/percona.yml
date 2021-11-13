@@ -4,23 +4,26 @@ services:
         image: percona:$$cap_percona_version
         volumes:
             - $$cap_appname-percona-data:/var/lib/mysql
-            - $$cap_appname-percona-mycnf:/etc/my.cnf.d
         restart: always
         environment:
             MYSQL_ROOT_PASSWORD: $$cap_db_pass
         caproverExtra:
+            dockerfileLines:
+                - FROM percona:$$cap_percona_version
+                - CMD ["--character-set-server=$$cap_charset", "--collation-server=$$cap_collation", "--skip-character-set-client-handshake"]
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
         - id: $$cap_percona_version
           label: Percona Version
-          defaultValue: '10.4'
+          defaultValue: 'ps-8.0'
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/mariadb?tab=tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_db_pass
           label: Percona Root password
           description: ''
           validRegex: /.{1,}/
+          defaultValue: $$cap_gen_random_hex(12)
         - id: $$cap_charset
           label: Default server character set
           description: See the MariaDB website for supported character sets (https://mariadb.com/kb/en/library/supported-character-sets-and-collations/#character-sets)
@@ -35,4 +38,4 @@ caproverOneClickApp:
     displayName: Percona Server
     isOfficial: true
     description: Percona Server for MySQL is a fork of the MySQL relational database management system created by Percona.
-    documentation: https://en.wikipedia.org/wiki/Percona_Server
+    documentation: https://www.percona.com/software/mysql-database/percona-server
