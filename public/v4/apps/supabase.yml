@@ -4,7 +4,7 @@ services:
         image: kong:$$cap_kong_version
         volumes:
             - $$cap_appname-kong-config:/var/lib/kong
-        restart: always
+        restart: unless-stopped
         ports:
             - $$cap_kong_http_port:8000
             - $$cap_kong_https_port:8443
@@ -22,7 +22,7 @@ services:
         image: supabase/gotrue:$$cap_auth_version
         depends_on:
             - $$cap_appname-db
-        restart: always
+        restart: unless-stopped
         environment:
             GOTRUE_API_HOST: $$cap_gotrue_api_host
             GOTRUE_API_PORT: $$cap_gotrue_api_port
@@ -54,7 +54,7 @@ services:
         image: postgrest/postgrest:$$cap_postgrest_version
         depends_on:
             - $$cap_appname-db
-        restart: always
+        restart: unless-stopped
         environment:
             PGRST_DB_URI: postgres://$$cap_pg_user:$$cap_pg_pass@srv-captain--$$cap_appname-db:5432/$$cap_pg_db
             PGRST_DB_SCHEMA: public, storage
@@ -66,7 +66,7 @@ services:
         image: supabase/realtime:$$cap_realtime_version
         depends_on:
             - $$cap_appname-db
-        restart: always
+        restart: unless-stopped
         environment:
             DB_HOST: srv-captain--$$cap_appname-db
             DB_PORT: 5432
@@ -84,7 +84,7 @@ services:
         depends_on:
             - $$cap_appname-db
             - $$cap_appname-rest
-        restart: always
+        restart: unless-stopped
         volumes:
             - $$cap_appname-storage:/var/lib/storage
         environment:
@@ -104,6 +104,20 @@ services:
             GLOBAL_S3_BUCKET: stub
         caproverExtra:
             containerHttpPort: 5000
+    $$cap_appname-pg-meta:
+        image: supabase/postgres-meta:$$cap_pg_meta_version
+        depends_on:
+            - $$cap_appname-db
+        restart: unless-stopped
+        environment:
+            PG_META_DB_NAME: $$cap_pg_db
+            PG_META_DB_USER: $$cap_pg_user
+            PG_META_DB_PASSWORD: $$cap_pg_pass
+            PG_META_DB_PORT: 5432
+            PG_META_DB_HOST: srv-captain--$$cap_appname-db
+            PG_META_PORT: $$cap_pg_meta_port
+        caproverExtra:
+            containerHttpPort: $$cap_pg_meta_port
     $$cap_appname-db:
         # not using postgres image because supabase/postgres
         # has some additional initdb script
@@ -111,7 +125,7 @@ services:
         volumes:
             - $$cap_appname-db-data:/var/lib/postgresql/data
             - $$cap_appname-db-init:/docker-entrypoint-initdb.d
-        restart: always
+        restart: unless-stopped
         environment:
             POSTGRES_USER: $$cap_pg_user
             POSTGRES_PASSWORD: $$cap_pg_pass
@@ -284,6 +298,17 @@ caproverOneClickApp:
           label: "OPTIONAL: Arguments for 'postgres initdb'"
           description: For example, --data-checksums
           validRegex: /.{0,}/
+
+        # pg-meta variables
+        - id: $$cap_pg_meta_version
+          label: Postgres Meta Version
+          defaultValue: 'v0.27.3'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/supabase/postgres-meta/tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_pg_meta_port
+          label: Postgres Meta Port
+          defaultValue: '8080'
+          validRegex: /^\d+$/
     instructions:
         start: >-
             Supabase is an open source Firebase alternative.
