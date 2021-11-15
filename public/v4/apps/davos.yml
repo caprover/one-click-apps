@@ -30,5 +30,5 @@ services:
         image: lscr.io/linuxserver/davos:$$cap_davos_version
         restart: unless-stopped
         volumes:
-            $$cap_appname-config:/config
-            $$cap_appname-download:/download
+            - $$cap_appname-config:/config
+            - $$cap_appname-download:/download
