@@ -26,7 +26,7 @@ services:
             MAPBOX_TOKEN: $$cap_mapbox_token
         volumes:
             - $$cap_appname-media-cache:/app/cache
-            - $$cap_photos_path:/photos:ro
+            - $$cap_photos_path:/photos
 
 caproverOneClickApp:
     displayName: Photoview
