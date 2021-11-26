@@ -1,0 +1,63 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: afian/filerun:$$cap_wp_version
+        volumes:
+            - $$cap_appname-html:/var/www/html
+            - $$cap_appname-userfiles:/user-files
+        restart: always
+        environment:
+            FR_DB_HOST: $$cap_db_host
+            FR_DB_PORT: $$cap_db_port
+            FR_DB_NAME: $$cap_db_name
+            FR_DB_USER: $$cap_db_user
+            FR_DB_PASS: $$cap_db_pass
+            APACHE_RUN_USER: www-data
+            APACHE_RUN_USER_ID: 33
+            APACHE_RUN_GROUP: www-data
+            APACHE_RUN_GROUP_ID: 33
+caproverOneClickApp:
+    variables:
+        - description: Database host. Remember Latest version of MYSQL use SHA256_Hashing plugin for authentication by default, If you are using MySQL database, change user password hashing plugin into Native authentication plugin.
+          defaultValue: srv-captain--xxx
+          id: $$cap_db_host
+          label: Database Host
+        - description: Database port. Default Value is 3306
+          defaultValue: '3306'
+          id: $$cap_db_port
+          label: Database Port
+        - description: Database name
+          defaultValue: filerun
+          id: $$cap_db_name
+          label: DB Name
+        - id: $$cap_db_user
+          label: Database user
+          defaultValue: filerunuser
+        - id: $$cap_db_pass
+          label: Database password
+          description: ''
+          validRegex: /.{1,}/
+        - id: $$cap_wp_version
+          label: Filerun Version.
+          defaultValue: ''
+          description: Use 'latest' tag for normal installation. If you wish to have LibreOffice included, use 'libreoffice' tag. Note that LibreOffice is considerably larger in disk size and memory usage. Check out their Docker page for the valid tags https://hub.docker.com/r/afian/filerun/tags
+          validRegex: /^([^\s^\/])+$/
+    instructions:
+        start: >-
+            FileRun is a self-hosted Google Drive alternative. It is a full featured web based file manager with an easy to use user interface. It is great for managing your photo, movie, audio collection, or sharing files with your family and friends.
+
+            Enter your Database Configuration parameters and click on next. A FileRun container will be created for you. The process will take about a minute for the process to finish. 
+
+            Note: This app is intended for advanced users who'd like to have a central DB in a single container. You should start by configuring your DB first and then comeback with all the DB Information.
+        end: >-
+            FileRun is deployed and available as $$cap_appname-wordpress. 
+
+            Username: superuser  Password: superuser
+
+            IMPORTANT: It will take up to 2 minutes for FileRun to be ready. Before that, you might see a 502 error page.
+
+            Remember that this app will not create a Database by itself. You need to provide all that information.
+    displayName: FileRun - No DB
+    isOfficial: true
+    description: FileRun is a self-hosted Google Drive alternative. It is a full featured web based file manager with an easy to use user interface.
+    documentation: Taken from https://hub.docker.com/r/afian/filerun/.

@@ -16,6 +16,7 @@ services:
             SYMFONY__ENV__DATABASE_PASSWORD: $$cap_mariadb-pass
             SYMFONY__ENV__SECRET: $$cap_gen_random_hex(30)
             SYMFONY__ENV__DOMAIN_NAME: https://$$cap_appname.$$cap_root_domain
+            SYMFONY__ENV__DATABASE_CHARSET: utf8mb4
         volumes:
             - $$cap_appname-images:/var/www/wallabag/web/assets/images
     # MariaDB

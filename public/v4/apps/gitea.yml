@@ -35,7 +35,7 @@ caproverOneClickApp:
           validRegex: /.{1,}/
         - id: $$cap_gitea_version
           label: Gitea Version
-          defaultValue: '1.7'
+          defaultValue: '1.15.6'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/gitea/gitea/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_mysql_version
@@ -50,6 +50,8 @@ caproverOneClickApp:
             Enter your Gitea Configuration parameters and click on next. A MySQL (database) and a Gitea container will be created for you. The process will take about a minute to finish.
         end: >
             Gitea is deployed and available as $$cap_appname.
+
+            Be sure to change 'Gitea Base URL' duirng initial setup otherwise you may experience issues. 
 
             Since Gitea is running inside a container, you can optionally map a port (not 22) of the host to port 22 of the container, if you want to use git commands over SSH. You can perform port mapping in your CapRover dashboard, in App Config section.
 

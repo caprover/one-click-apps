@@ -8,11 +8,11 @@ services:
             MYSQL_DATABASE: matomo
             MYSQL_USER: matomo
             MYSQL_PASSWORD: $$cap_db_pass
-            MYSQL_ROOT_PASSWORD: $$cap_db_root_pass
+            MYSQL_RANDOM_ROOT_PASSWORD: true
         caproverExtra:
             dockerfileLines:
                 - FROM mariadb:$$cap_mysql_version
-                - CMD ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci", "--skip-character-set-client-handshake", "--max-allowed-packet=64MB"]
+                - CMD ["--max-allowed-packet=64MB"]
             notExposeAsWebApp: 'true'
     $$cap_appname:
         depends_on:
@@ -21,6 +21,7 @@ services:
         restart: always
         volumes:
             - $$cap_appname-data:/var/www/html
+        documentation: taken from https://github.com/matomo-org/docker/blob/master/.examples/apache/docker-compose.yml example
         environment:
             MATOMO_DATABASE_HOST: srv-captain--$$cap_appname-db
             MATOMO_DATABASE_ADAPTER: mysql
@@ -32,25 +33,24 @@ caproverOneClickApp:
     variables:
         - id: $$cap_matomo_version
           label: Matomo Version
-          defaultValue: 3.11.0
+          defaultValue: 4.2.1
           description: Check out their docker page for the valid tags https://hub.docker.com/_/matomo?tab=tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_mysql_version
           label: MariaDB Version
-          defaultValue: '10.4'
+          defaultValue: 10.5.9
           description: Check out their docker page for the valid tags https://hub.docker.com/_/mariadb?tab=tags
           validRegex: /^([^\s^\/])+$/
-        - id: $$cap_db_root_pass
-          label: MariaDB Matomo User Password
-          description: The password to use for the matomo database
-          validRegex: /.{1,}/
         - id: $$cap_db_pass
           label: MariaDB Root Password
           description: The root password to use for the MariaDB instance
           validRegex: /.{1,}/
+          defaultValue: $$cap_gen_random_hex(32)
     instructions:
         start: Matomo is the leading open-source analytics platform that gives you more than powerful analytics.
-        end: Matomo is successfully deployed!
+        end: >-
+            Matomo is successfully deployed!
+            your application will be available in the next few seconds. Please note to enable https if you need to track datas on https websites.
     displayName: ''
     isOfficial: true
     description: Matomo tracks online visits to one or more websites and displays reports on these visits for analysis
