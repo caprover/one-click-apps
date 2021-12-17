@@ -29,16 +29,6 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
 
-    $$cap_appname-geoip:
-        image: maxmindinc/geoipupdate:v4.5
-        environment:
-            GEOIPUPDATE_ACCOUNT_ID: $$cap_GEOIPUPDATE_ACCOUNT_ID
-            GEOIPUPDATE_LICENSE_KEY: $$cap_GEOIPUPDATE_LICENSE_KEY
-            GEOIPUPDATE_EDITION_IDS: GeoLite2-Country
-            GEOIPUPDATE_FREQUENCY: 168
-        volumes:
-            - $$cap_appname-geoip-data:/usr/share/GeoIP
-
     $$cap_appname:
         depends_on:
             - $$cap_appname-postgres
@@ -63,9 +53,6 @@ services:
             MAILER_EMAIL: $$cap_RELAY_USERNAME
             SMTP_HOST_ADDR: srv-captain--$$cap_appname-mail
             SMTP_HOST_PORT: '25'
-            GEOLITE2_COUNTRY_DB: '/geoip/GeoLite2-Country.mmdb'
-        volumes:
-            - $$cap_appname-geoip-data:/geoip
 
 caproverOneClickApp:
     variables:
@@ -107,14 +94,6 @@ caproverOneClickApp:
           id: $$cap_RELAY_PASSWORD
           label: RELAY_PASSWORD
           validRegex: /^([^\s^\/])+$/
-        - description: Provide your own ACCOUNT_ID, you can sign-up at https://www.maxmind.com/en/geoip2-services-and-databases
-          id: $$cap_GEOIPUPDATE_ACCOUNT_ID
-          label: GEOIPUPDATE_ACCOUNT_ID
-          validRegex: /^([^\s^\/])+$/
-        - description: Provide the corresponding License Key for your own ACCOUNT_ID.
-          id: $$cap_GEOIPUPDATE_LICENSE_KEY
-          label: GEOIPUPDATE_LICENSE_KEY
-          validRegex: /^([^\s^\/])+$/
     instructions:
         start: >-
             Plausible is a lightweight and open-source website analytics tool.
@@ -122,9 +101,8 @@ caproverOneClickApp:
             This one click app uses the:
             - official image from https://hub.docker.com/r/plausible/analytics
             - https://hub.docker.com/r/bytemark/smtp, that allows linked containers to send outgoing email
-            - official PostgreSQL image based on Alpine Linux
-            - ClickHouse image https://hub.docker.com/r/yandex/clickhouse-server, an open-source column-oriented database
-            - official image from https://hub.docker.com/r/maxmindinc/geoipupdate, the well known MaxMind GeoIP Update Tool.
+            - official PostgreSQL image based on Alpine Linux and
+            - ClickHouse image https://hub.docker.com/r/yandex/clickhouse-server.
         end: >-
             Plausible.io is deployed and available as $$cap_appname.
             In case you add a new domain to your application, remember to set the environment variable BASE_URL accordingly.
