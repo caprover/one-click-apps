@@ -96,17 +96,17 @@ caproverOneClickApp:
           validRegex: /^([^\s^\/])+$/
         - description: The version of Plausible docker image (from https://hub.docker.com/r/plausible/analytics/tags eg. v1 or v1.4)
           id: $$cap_PLAUSIBLE_VERSION
-          label: PLAUSIBLE VERSION
+          label: PLAUSIBLE_VERSION
           defaultValue: v1
           validRegex: /^([^\s^\/])+$/
         - description: Clickhouse version (from https://hub.docker.com/r/yandex/clickhouse-server/tags, eg 21.12.2.17)
           id: $$cap_CLICKHOUSE_VERSION
-          label: CLICKHOUSE VERSION
+          label: CLICKHOUSE_VERSION
           defaultValue: 21.3.2.5
           validRegex: /^([^\s^\/])+$/
         - description: Postgres version (from https://hub.docker.com/_/postgres?tab=tags, eg 12 or 12-alpine)
           id: $$cap_POSTGRES_VERSION
-          label: POSTGRES VERSION
+          label: POSTGRES_VERSION
           defaultValue: 12-alpine
           validRegex: /^([^\s^\/])+$/
     instructions:
