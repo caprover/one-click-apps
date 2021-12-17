@@ -37,7 +37,7 @@ services:
         caproverExtra:
             containerHttpPort: '8000'
             dockerfileLines:
-                - FROM plausible/analytics:v1.1.1
+                - FROM plausible/analytics:$$cap_PLAUSIBLE_VERSION
                 - CMD ["sh", "-c", "sleep 10 && /entrypoint.sh db createdb && /entrypoint.sh db migrate && /entrypoint.sh db init-admin && /entrypoint.sh run"]
         environment:
             ADMIN_USER_EMAIL: $$cap_ADMIN_USER_EMAIL
@@ -93,6 +93,11 @@ caproverOneClickApp:
         - description: This is the password for logging into the SMTP host. Please change it according to your host.
           id: $$cap_RELAY_PASSWORD
           label: RELAY_PASSWORD
+          validRegex: /^([^\s^\/])+$/
+        - description: The version of Plausible docker image (from https://hub.docker.com/r/plausible/analytics/tags eg. v1 or v1.4)
+          id: $$cap_PLAUSIBLE_VERSION
+          label: PLAUSIBLE VERSION 
+          defaultValue: v1
           validRegex: /^([^\s^\/])+$/
     instructions:
         start: >-
