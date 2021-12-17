@@ -13,7 +13,7 @@ services:
             notExposeAsWebApp: 'true'
 
     $$cap_appname-postgres:
-        image: postgres:12-alpine
+        image: postgres:$$cap_POSTGRES_VERSION
         volumes:
             - $$cap_appname-postgres-data:/var/lib/postgresql/data
         environment:
@@ -23,7 +23,7 @@ services:
             notExposeAsWebApp: 'true'
 
     $$cap_appname-clickhouse:
-        image: yandex/clickhouse-server:20.8.5.45
+        image: yandex/clickhouse-server:$$cap_CLICKHOUSE_VERSION
         volumes:
             - $$cap_appname-clickhouse-data:/var/lib/clickhouse
         caproverExtra:
@@ -99,10 +99,20 @@ caproverOneClickApp:
           label: PLAUSIBLE VERSION 
           defaultValue: v1
           validRegex: /^([^\s^\/])+$/
+        - description: Clickhouse version (from https://hub.docker.com/r/yandex/clickhouse-server/tags, eg 21.12.2.17)
+          id: $$cap_CLICKHOUSE_VERSION
+          label: CLICKHOUSE VERSION 
+          defaultValue: 21.3.2.5
+          validRegex: /^([^\s^\/])+$/
+        - description: Postgres version (from https://hub.docker.com/_/postgres?tab=tags, eg 12 or 12-alpine)
+          id: $$cap_POSTGRES_VERSION
+          label: POSTGRES VERSION
+          defaultValue: 12-alpine
+          validRegex: /^([^\s^\/])+$/
     instructions:
         start: >-
             Plausible is a lightweight and open-source website analytics tool.
-            It doesn’t use cookies and is fully compliant with GDPR, CCPA and PECR. Made and hosted in the EU.
+            It doesn't use cookies and is fully compliant with GDPR, CCPA and PECR. Made and hosted in the EU.
             This one click app uses the:
             - official image from https://hub.docker.com/r/plausible/analytics
             - https://hub.docker.com/r/bytemark/smtp, that allows linked containers to send outgoing email
