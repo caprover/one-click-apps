@@ -13,7 +13,7 @@ services:
             notExposeAsWebApp: 'true'
 
     $$cap_appname-postgres:
-        image: postgres:12-alpine
+        image: postgres:$$cap_POSTGRES_VERSION
         volumes:
             - $$cap_appname-postgres-data:/var/lib/postgresql/data
         environment:
@@ -23,21 +23,11 @@ services:
             notExposeAsWebApp: 'true'
 
     $$cap_appname-clickhouse:
-        image: yandex/clickhouse-server:20.8.5.45
+        image: yandex/clickhouse-server:$$cap_CLICKHOUSE_VERSION
         volumes:
             - $$cap_appname-clickhouse-data:/var/lib/clickhouse
         caproverExtra:
             notExposeAsWebApp: 'true'
-
-    $$cap_appname-geoip:
-        image: maxmindinc/geoipupdate:v4.5
-        environment:
-            GEOIPUPDATE_ACCOUNT_ID: $$cap_GEOIPUPDATE_ACCOUNT_ID
-            GEOIPUPDATE_LICENSE_KEY: $$cap_GEOIPUPDATE_LICENSE_KEY
-            GEOIPUPDATE_EDITION_IDS: GeoLite2-Country
-            GEOIPUPDATE_FREQUENCY: 168
-        volumes:
-            - $$cap_appname-geoip-data:/usr/share/GeoIP
 
     $$cap_appname:
         depends_on:
@@ -47,7 +37,7 @@ services:
         caproverExtra:
             containerHttpPort: '8000'
             dockerfileLines:
-                - FROM plausible/analytics:v1.1.1
+                - FROM plausible/analytics:$$cap_PLAUSIBLE_VERSION
                 - CMD ["sh", "-c", "sleep 10 && /entrypoint.sh db createdb && /entrypoint.sh db migrate && /entrypoint.sh db init-admin && /entrypoint.sh run"]
         environment:
             ADMIN_USER_EMAIL: $$cap_ADMIN_USER_EMAIL
@@ -63,9 +53,6 @@ services:
             MAILER_EMAIL: $$cap_RELAY_USERNAME
             SMTP_HOST_ADDR: srv-captain--$$cap_appname-mail
             SMTP_HOST_PORT: '25'
-            GEOLITE2_COUNTRY_DB: '/geoip/GeoLite2-Country.mmdb'
-        volumes:
-            - $$cap_appname-geoip-data:/geoip
 
 caproverOneClickApp:
     variables:
@@ -107,27 +94,39 @@ caproverOneClickApp:
           id: $$cap_RELAY_PASSWORD
           label: RELAY_PASSWORD
           validRegex: /^([^\s^\/])+$/
-        - description: Provide your own ACCOUNT_ID, you can sign-up at https://www.maxmind.com/en/geoip2-services-and-databases
-          id: $$cap_GEOIPUPDATE_ACCOUNT_ID
-          label: GEOIPUPDATE_ACCOUNT_ID
+        - description: The version of Plausible docker image (from https://hub.docker.com/r/plausible/analytics/tags eg. v1 or v1.4)
+          id: $$cap_PLAUSIBLE_VERSION
+          label: PLAUSIBLE_VERSION
+          defaultValue: v1
           validRegex: /^([^\s^\/])+$/
-        - description: Provide the corresponding License Key for your own ACCOUNT_ID.
-          id: $$cap_GEOIPUPDATE_LICENSE_KEY
-          label: GEOIPUPDATE_LICENSE_KEY
+        - description: Clickhouse version (from https://hub.docker.com/r/yandex/clickhouse-server/tags, eg 21.12.2.17)
+          id: $$cap_CLICKHOUSE_VERSION
+          label: CLICKHOUSE_VERSION
+          defaultValue: 21.3.2.5
+          validRegex: /^([^\s^\/])+$/
+        - description: Postgres version (from https://hub.docker.com/_/postgres?tab=tags, eg 12 or 12-alpine)
+          id: $$cap_POSTGRES_VERSION
+          label: POSTGRES_VERSION
+          defaultValue: 12-alpine
           validRegex: /^([^\s^\/])+$/
     instructions:
         start: >-
             Plausible is a lightweight and open-source website analytics tool.
-            It doesn’t use cookies and is fully compliant with GDPR, CCPA and PECR. Made and hosted in the EU.
+            It doesn't use cookies and is fully compliant with GDPR, CCPA and PECR. Made and hosted in the EU.
             This one click app uses the:
             - official image from https://hub.docker.com/r/plausible/analytics
             - https://hub.docker.com/r/bytemark/smtp, that allows linked containers to send outgoing email
-            - official PostgreSQL image based on Alpine Linux
-            - ClickHouse image https://hub.docker.com/r/yandex/clickhouse-server, an open-source column-oriented database
-            - official image from https://hub.docker.com/r/maxmindinc/geoipupdate, the well known MaxMind GeoIP Update Tool.
+            - official PostgreSQL image based on Alpine Linux and
+            - ClickHouse image https://hub.docker.com/r/yandex/clickhouse-server.
+            This version includes an open source geoip database (db-ip). If you would like to use Maxmind db,
+            You will need to mount a volume and an additional container to update the database. You can use this docker
+            compose file for reference: https://github.com/plausible/hosting/blob/master/geoip/docker-compose.geoip.yml
         end: >-
             Plausible.io is deployed and available as $$cap_appname.
             In case you add a new domain to your application, remember to set the environment variable BASE_URL accordingly.
+
+            See https://github.com/plausible/analytics/blob/master/config/runtime.exs for all configurable
+            environment variables, for features like Google search, postmark, and slack integrations.
 
             IMPORTANT: It will take up to 2 minutes for Plausible to be ready. Before that, you might see 502 error page.
     displayName: Plausible
