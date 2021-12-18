@@ -118,9 +118,15 @@ caproverOneClickApp:
             - https://hub.docker.com/r/bytemark/smtp, that allows linked containers to send outgoing email
             - official PostgreSQL image based on Alpine Linux and
             - ClickHouse image https://hub.docker.com/r/yandex/clickhouse-server.
+            This version includes an open source geoip database (db-ip). If you would like to use Maxmind db,
+            You will need to mount a volume and an additional container to update the database. You can use this docker
+            compose file for reference: https://github.com/plausible/hosting/blob/master/geoip/docker-compose.geoip.yml
         end: >-
             Plausible.io is deployed and available as $$cap_appname.
             In case you add a new domain to your application, remember to set the environment variable BASE_URL accordingly.
+
+            See https://github.com/plausible/analytics/blob/master/config/runtime.exs for all configurable
+            environment variables, for features like Google search, postmark, and slack integrations.
 
             IMPORTANT: It will take up to 2 minutes for Plausible to be ready. Before that, you might see 502 error page.
     displayName: Plausible
