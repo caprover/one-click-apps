@@ -41,7 +41,7 @@ caproverOneClickApp:
         - id: $$cap_dolibarr-version
           label: Dolibarr Version
           defaultValue: '11.0'
-          description: Check out their docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/
+          description: Check out their docker page for the valid tags https://hub.docker.com/r/upshift/dolibarr/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_pg-pass
           label: Postgres Password
