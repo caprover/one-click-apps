@@ -12,14 +12,14 @@ services:
             NC_CONNECT_TO_EXTERNAL_DB_DISABLED: '$$cap_connect_to_external_db_disabled'
             NC_DISABLE_TELE: '$$cap_disable_tele'
         volumes:
-            - '$$cap_appname-data:/srv/data'
+            - '$$cap_appname-data:/usr/app/data'
         caproverExtra:
             containerHttpPort: '8080'
 caproverOneClickApp:
     variables:
         - id: '$$cap_version'
           label: NocoDB Version
-          defaultValue: '0.9.19'
+          defaultValue: '0.83.8'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/nocodb/nocodb/tags
           validRegex: "/^([^\\s^\\/])+$/"
         - id: '$$cap_nc_db'
