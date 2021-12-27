@@ -34,7 +34,7 @@ caproverOneClickApp:
         - id: $$cap_mercure_extra_directives
           label: Extra Directives
           defaultValue: 'subscriptions demo anonymous cors_origins * publish_origins *'
-          description: 'A list of extra Mercure directives inject in the Caddy file, one per line	'
+          description: 'A list of extra Mercure directives inject in the Caddy file, one per line'
     instructions:
         start: >-
             Mercure is a protocol allowing to push data updates to web browsers and other HTTP clients in a convenient, fast, reliable and battery-efficient way. It is especially useful to publish real-time updates of resources served through web APIs, to reactive web and mobile apps.
