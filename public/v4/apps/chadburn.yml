@@ -4,7 +4,7 @@ services:
     '$$cap_appname':
         image: ghcr.io/premoweb/chadburn:$$cap_version
         volumes:
-            - /var/run/docker.sock:/var/run/docker.sock:ro
+            - /var/run/docker.sock:/var/run/docker.sock
         caproverExtra:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
