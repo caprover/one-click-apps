@@ -11,7 +11,7 @@ caproverOneClickApp:
     variables:
         - id: '$$cap_version'
           label: Chadburn version
-          defaultValue: 'v1.0.0'
+          defaultValue: '1.0.1'
           description: See https://github.com/PremoWeb/Chadburn/releases for a list of versions and changelog details.
           validRegex: "/^([^\\s^\\/])+$/"
         - id: '$$cap_tz'
