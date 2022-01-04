@@ -2,6 +2,8 @@ captainVersion: 4
 services:
     $$cap_appname-appsmith:
         image: index.docker.io/appsmith/appsmith-ce:$$cap_appsmith_version
+        volumes:
+            - $$cap_appname-stacks-data:/appsmith-stacks
         restart: always
         environment:
             APPSMITH_MAIL_ENABLED: false
