@@ -1,3 +1,4 @@
+# tested on CR 1.10.1 2022-01-08 by sneak
 captainVersion: 4
 services:
     $$cap_appname-db:
@@ -36,21 +37,23 @@ caproverOneClickApp:
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_keycloak_version
           label: Keycloak Version
-          defaultValue: 6.0.1
-          description: Check out their Docker page for the valid tags https://hub.docker.com/r/jboss/keycloak/tags
+          defaultValue: 16.1.0
+          description: v16.1.0 current as of 2021-12-21.  Check out their Docker page for the valid tags https://hub.docker.com/r/jboss/keycloak/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_pg_pass
           label: Postgres Password
-          description: 'Password strength requeriments: Should contain at least one digit, one lower case, one upper case and at least 12 from the mentioned characters.'
-          validRegex: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{12,}$/
+          description: 'App-to-app database credential.  12-20 characters.'
+          defaultValue: $$cap_gen_random_hex(20)
+          validRegex: /.{12,20}/
         - id: $$cap_keycloak_user
           label: Keycloak user
-          description: ''
+          description: 'Login username for the first web user.'
           validRegex: /.{1,}/
         - id: $$cap_keycloak_password
           label: Keycloak password
-          description: 'Password strength requeriments: Should contain at least one digit, one lower case, one upper case and at least 12 from the mentioned characters.'
-          validRegex: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{12,}$/
+          description: 'Login password for the first web user.  12-20 characters.'
+          defaultValue: $$cap_gen_random_hex(20)
+          validRegex: /.{12,20}/
     instructions:
         start: >-
             Keycloak is an Open Source Identity and Access Management solution for modern Applications and Services. It makes it easy to secure applications and services with little to no code.
