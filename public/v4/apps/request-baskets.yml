@@ -2,8 +2,8 @@ captainVersion: 4
 services:
     $$cap_appname:
         image: darklynx/request-baskets:$$cap_version
-    caproverExtra:
-        containerHttpPort: '55555'
+        caproverExtra:
+            containerHttpPort: '55555'
 caproverOneClickApp:
     variables:
         - id: $$cap_version
