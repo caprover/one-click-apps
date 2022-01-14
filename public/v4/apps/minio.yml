@@ -14,7 +14,7 @@ services:
         caproverExtra:
             containerHttpPort: '9001'
             dockerfileLines:
-                - FROM minio/minio:RELEASE.2021-08-17T20-53-08Z
+                - FROM minio/minio:$$cap_minio_version
                 - CMD ["server", "/data", "--console-address", ":9001"]
     $$cap_appname-s3:
         image: caprover/nginx-reverse-proxy:1-ef5ffcb
