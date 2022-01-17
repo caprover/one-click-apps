@@ -34,8 +34,8 @@ caproverOneClickApp:
           validRegex: /\d/
         - id: $$cap_path_to_downloads
           label: Path to downloads folder
-          defaultValue: qbittorent-downloads
-          description: Path to downloads folder where u want to save the downloaded torrents. You can mention an existing directory here too. Eg. /home/user/downloads/
+          defaultValue: qbittorrent-downloads
+          description: Path to downloads folder where you want to save the downloaded torrents. You can mention an existing directory here too. Eg. /home/user/downloads/
           validRegex: /.{1,}/
     instructions:
         start: >-
