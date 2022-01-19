@@ -1,5 +1,20 @@
 captainVersion: 4
 services:
+    $$cap_appname-studio:
+        image: supabase/studio:$$cap_studio_version
+        restart: unless-stopped
+        environment:
+            SUPABASE_URL: http://$$cap_appname-supabase-kong.$$cap_root_domain
+            STUDIO_PG_META_URL: http://$$cap_appname-pg-meta.$$cap_root_domain
+            SUPABASE_ANON_KEY: $$cap_supabase_anon_key
+            SUPABASE_SERVICE_KEY: $$cap_supabase_service_key
+            POSTGRES_PASSWORD: $$cap_pg_pass
+        caproverExtra:
+            containerHttpPort: $$cap_studio_http_port
+        depends_on:
+            - $$cap_appname-db
+            - $$cap_appname-kong
+            - $$cap_appname-pg-meta
     $$cap_appname-kong:
         image: kong:$$cap_kong_version
         volumes:
@@ -88,8 +103,8 @@ services:
         volumes:
             - $$cap_appname-storage:/var/lib/storage
         environment:
-            ANON_KEY: $$cap_storage_anon_key
-            SERVICE_KEY: $$cap_storage_service_key
+            ANON_KEY: $$cap_supabase_anon_key
+            SERVICE_KEY: $$cap_supabase_service_key
             POSTGREST_URL: srv-captain--$$cap_appname-rest
             PGRST_JWT_SECRET: $$cap_jwt_secret
             DATABASE_URL: postgres://$$cap_pg_user:$$cap_pg_pass@srv-captain--$$cap_appname-db:5432/$$cap_pg_db
@@ -118,28 +133,49 @@ services:
             PG_META_PORT: $$cap_pg_meta_port
         caproverExtra:
             containerHttpPort: $$cap_pg_meta_port
-    $$cap_appname-db:
-        # not using postgres image because supabase/postgres
-        # has some additional initdb script
-        image: supabase/postgres:$$cap_db_version
-        volumes:
-            - $$cap_appname-db-data:/var/lib/postgresql/data
-            - $$cap_appname-db-init:/docker-entrypoint-initdb.d
-        restart: unless-stopped
-        environment:
-            POSTGRES_USER: $$cap_pg_user
-            POSTGRES_PASSWORD: $$cap_pg_pass
-            POSTGRES_DB: $$cap_pg_db
-            POSTGRES_INITDB_ARGS: $$cap_pg_initdb_args
-        caproverExtra:
-            notExposeAsWebApp: 'true'
+#    $$cap_appname-db:
+#        # not using postgres image because supabase/postgres
+#        # has some additional initdb script
+#        image: supabase/postgres:$$cap_db_version
+#        volumes:
+#            - $$cap_appname-db-data:/var/lib/postgresql/data
+#            - $$cap_appname-db-init:/docker-entrypoint-initdb.d
+#        restart: unless-stopped
+#        environment:
+#            POSTGRES_USER: $$cap_pg_user
+#            POSTGRES_PASSWORD: $$cap_pg_pass
+#            POSTGRES_DB: $$cap_pg_db
+#            POSTGRES_INITDB_ARGS: $$cap_pg_initdb_args
+#        caproverExtra:
+#            notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
         # shared env
         - id: $$cap_jwt_secret
           label: JWT secret
-          defaultValue: $$cap_gen_random_hex(32)
+          defaultValue: '9484f32cd477986337a9624dfd929685' # $$cap_gen_random_hex(32)
           validRegex: /^([^\s^\/])+$/
+        - id: $$cap_supabase_anon_key
+          label: Supabase Anon Key
+          defaultValue: "'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyAgCiAgICAicm9sZSI6ICJhbm9uIiwKICAgICJpc3MiOiAic3VwYWJhc2UiLAogICAgImlhdCI6IDE2NDI2MTcwMDAsCiAgICAiZXhwIjogMTgwMDM4MzQwMAp9.tNfXqyWnDBh3n3iblKSBAaP41xOekQPpHMFSV_AyLTc"
+          description: Generate ANON_KEY using your JWT secret at https://supabase.io/docs/guides/hosting/overview#api-keys
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_supabase_service_key
+          label: Supabase Service Key
+          defaultValue: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyAgCiAgICAicm9sZSI6ICJzZXJ2aWNlX3JvbGUiLAogICAgImlzcyI6ICJzdXBhYmFzZSIsCiAgICAiaWF0IjogMTY0MjYxNzAwMCwKICAgICJleHAiOiAxODAwMzgzNDAwCn0.hyXtpZkLXGeMeXAOnuviHb68pkuL8xPbyJV7b_pk7sY'
+          description: Generate SERVICE_KEY using your JWT secret at https://supabase.io/docs/guides/hosting/overview#api-keys
+          validRegex: /^([^\s^\/])+$/
+
+        # studio variables
+        - id: $$cap_studio_version
+          label: Studio version
+          defaultValue: 'latest'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/supabase/studio/tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_studio_http_port
+          label: Studio HTTP port
+          defaultValue: '3000'
+          validRegex: /^\d+$/
 
         # kong variables
         - id: $$cap_kong_version
@@ -261,16 +297,6 @@ caproverOneClickApp:
           defaultValue: 'v0.9.3'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/supabase/gotrue/tags
           validRegex: /^([^\s^\/])+$/
-        - id: $$cap_storage_anon_key
-          label: Storage Anon Key
-          defaultValue: ''
-          description: Generate ANON_KEY using your JWT secret at https://supabase.io/docs/guides/hosting/overview#api-keys
-          validRegex: /^([^\s^\/])+$/
-        - id: $$cap_storage_service_key
-          label: Storage Service Key
-          defaultValue: ''
-          description: Generate SERVICE_KEY using your JWT secret at https://supabase.io/docs/guides/hosting/overview#api-keys
-          validRegex: /^([^\s^\/])+$/
         - id: $$cap_storage_file_size_limit
           label: Storage File Size Limit
           defaultValue: '52428800'
@@ -302,7 +328,7 @@ caproverOneClickApp:
         # pg-meta variables
         - id: $$cap_pg_meta_version
           label: Postgres Meta Version
-          defaultValue: 'v0.27.3'
+          defaultValue: 'v0.29.0'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/supabase/postgres-meta/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_pg_meta_port
@@ -316,19 +342,21 @@ caproverOneClickApp:
             Supabase is deployed.
             1. Make sure to enable websocket support inside $$cap_appname-realtime.
             2. You will also have to create a kong.yml inside /var/lib/docker/volumes/captain--$$cap_appname-kong-config/_data
-               Check https://github.com/supabase/supabase/blob/master/docker/volumes/kong.yml for the example content
+               Check https://github.com/supabase/supabase/blob/master/docker/volumes/api/kong.yml for the example content
                 (make sure to edit and add your ANON_KEY, SERVICE_KEY and service url)
-            3. Set $$cap_appname-db instance count to 0
+            3. # Set $$cap_appname-db instance count to 0
+              `docker service scale srv-captain--$$cap_appname-db=0`
             4. Run the following command
               # delete already created database
               `rm -rf /var/lib/docker/volumes/captain--$$cap_appname-db-data/_data/*`
               # clone supabase repo to extract migrations
               `git clone https://github.com/supabase/supabase`
               # copy migrations required for supabase
-              `cp supabase/docker/volumes/db/init/* /var/lib/docker/volumes/captain--supabase-db-init/_data/ && rm -rf supabase`
-              # set wal_level to logical
-              `echo "wal_level = 'logical'" >> $PGDATA/pg_hba.conf`
-              # now set instance count for $$cap_appname-db back to 1 and save
+              `cp supabase/docker/volumes/db/init/* /var/lib/docker/volumes/captain--$$cap_appname-db-init/_data/ && rm -rf supabase`
+              # now set instance count for $$cap_appname-db back to 1
+              `docker service scale srv-captain--$$cap_appname-db=1`
+              # once database is started, set wal_level to logical and restart database again
+              `echo "wal_level = 'logical'" >> /var/lib/docker/volumes/captain--$$cap_appname-db/_data/pg_hba.conf`
     displayName: Supabase
     isOfficial: true
     description: Supabase is an open source Firebase alternative.
