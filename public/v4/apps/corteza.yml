@@ -7,7 +7,7 @@ services:
         depends_on:
             - $$cap_appname-db
         volumes:
-            - $$cap_appname-data:/data"
+            - $$cap_appname-data:/data
         environment:
             VIRTUAL_HOST: $$cap_appname.$$cap_root_domain
             DB_DSN: postgres://$$cap_postgre_username:$$cap_postgre_password@srv-captain--$$cap_appname-db:5432/$$cap_postgre_db_name?sslmode=disable
@@ -17,6 +17,8 @@ services:
     $$cap_appname-db:
         image: postgres:13
         restart: always
+        volumes:
+            - $$cap_appname-postgres-data:/var/lib/postgresql/data
         environment:
             POSTGRES_USER: $$cap_postgre_username
             POSTGRES_PASSWORD: $$cap_postgre_password
@@ -60,4 +62,4 @@ caproverOneClickApp:
     displayName: Corteza
     isOfficial: true ## Only if all images used here are official or from a trusted source.
     description: Corteza is a free, open-source, Low Code platform for building your organisation key applications, growing its productivity and protecting its data and the privacy of all those concerned.
-    documentation: This docker-compose is taken https://github.com/knadh/listmonk
+    documentation: This docker-compose is taken https://github.com/cortezaproject
