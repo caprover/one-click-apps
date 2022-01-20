@@ -23,10 +23,9 @@ services:
         ports:
             - $$cap_kong_http_port:8000
             - $$cap_kong_https_port:8443
-            - $$cap_kong_admin_port:8001
-            - $$cap_kong_admin_ssl_port:8444
         environment:
             KONG_DATABASE: $$cap_kong_database
+            KONG_DECLARATIVE_CONFIG: $$cap_kong_declaritive_config
             # https://github.com/supabase/cli/issues/14
             KONG_DNS_ORDER: $$cap_kong_dns_order
             KONG_PLUGINS: $$cap_kong_plugins
@@ -133,21 +132,21 @@ services:
             PG_META_PORT: $$cap_pg_meta_port
         caproverExtra:
             containerHttpPort: $$cap_pg_meta_port
-#    $$cap_appname-db:
-#        # not using postgres image because supabase/postgres
-#        # has some additional initdb script
-#        image: supabase/postgres:$$cap_db_version
-#        volumes:
-#            - $$cap_appname-db-data:/var/lib/postgresql/data
-#            - $$cap_appname-db-init:/docker-entrypoint-initdb.d
-#        restart: unless-stopped
-#        environment:
-#            POSTGRES_USER: $$cap_pg_user
-#            POSTGRES_PASSWORD: $$cap_pg_pass
-#            POSTGRES_DB: $$cap_pg_db
-#            POSTGRES_INITDB_ARGS: $$cap_pg_initdb_args
-#        caproverExtra:
-#            notExposeAsWebApp: 'true'
+    $$cap_appname-db:
+        # not using postgres image because supabase/postgres
+        # has some additional initdb script
+        image: supabase/postgres:$$cap_db_version
+        volumes:
+            - $$cap_appname-db-data:/var/lib/postgresql/data
+            - $$cap_appname-db-init:/docker-entrypoint-initdb.d
+        restart: unless-stopped
+        environment:
+            POSTGRES_USER: $$cap_pg_user
+            POSTGRES_PASSWORD: $$cap_pg_pass
+            POSTGRES_DB: $$cap_pg_db
+            POSTGRES_INITDB_ARGS: $$cap_pg_initdb_args
+        caproverExtra:
+            notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
         # shared env
@@ -203,19 +202,23 @@ caproverOneClickApp:
           label: Kong Database
           defaultValue: 'off'
           validRegex: /^([^\s^\/])+$/
+        - id: $$cap_kong_declaritive_config
+          label: Kong Declarative Config
+          defaultValue: '/var/lib/kong/kong.yml'
+          validRegex: /^([^\s^\/])+$/
         - id: $$cap_kong_dns_order
           label: Kong DNS order
           defaultValue: 'LAST,A,CNAME'
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_kong_plugins
           label: Kong Plugins
-          defaultValue: 'request-transformer,cors,key-auth'
+          defaultValue: 'request-transformer,cors,key-auth,acl'
           validRegex: /^([^\s^\/])+$/
 
         # auth variables
         - id: $$cap_auth_version
           label: Auth Version
-          defaultValue: 'v2.1.8'
+          defaultValue: 'v2.2.12'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/supabase/gotrue/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_gotrue_api_host
@@ -280,21 +283,21 @@ caproverOneClickApp:
         # postgrest variables
         - id: $$cap_postgrest_version
           label: Postgrest Version
-          defaultValue: 'v8.0.0'
+          defaultValue: 'v9.0.0'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/postgrest/postgrest/tags
           validRegex: /^([^\s^\/])+$/
 
         # realtime variables
         - id: $$cap_realtime_version
           label: Storage Realtime Version
-          defaultValue: 'v0.15.0'
+          defaultValue: 'v0.19.3'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/supabase/realtime/tags
           validRegex: /^([^\s^\/])+$/
 
         # storage variables
         - id: $$cap_storage_version
           label: Storage API Version
-          defaultValue: 'v0.9.3'
+          defaultValue: 'v0.10.0'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/supabase/gotrue/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_storage_file_size_limit
@@ -305,7 +308,7 @@ caproverOneClickApp:
         # postgres variables
         - id: $$cap_db_version
           label: Postgres Version
-          defaultValue: '13.3.0'
+          defaultValue: '14.1.0'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/supabase/postgres/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_pg_user
