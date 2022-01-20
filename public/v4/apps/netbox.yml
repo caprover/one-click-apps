@@ -1,6 +1,5 @@
 captainVersion: 4
 services:
-
     $$cap_appname-db:
         image: postgres:$$cap_pg_version
         volumes:
@@ -52,10 +51,10 @@ services:
             REDIS_PASSWORD: $$cap_redis_password
             REDIS_DB_TASK: 0
             REDIS_DB_CACHE: 1
-            
+
         caproverExtra:
             containerHttpPort: '8000'
-            
+
 caproverOneClickApp:
     variables:
         - id: $$cap_pg_version
@@ -98,22 +97,22 @@ caproverOneClickApp:
           label: Admin Password
           description: 'Password for user "admin".'
           defaultValue: $$cap_gen_random_hex(12)
-                    
+
     instructions:
-        start:  IP address and datacenter infrastructure management.
-                
-                ---
-            
-                Find out more at https://netbox.dev. This app's container image was built using https://docs.linuxserver.io/images/docker-netbox.
-        
+        start: IP address and datacenter infrastructure management.
+
+            ---
+
+            Find out more at https://netbox.dev. This app's container image was built using https://docs.linuxserver.io/images/docker-netbox.
+
         end: >-
             Netbox is deployed, it might take few moments before it's fully started.
-            
+
             Login with user `admin` and password `$$cap_superuser_pass`.
-            
-            
+
+
             Volumes created for `config`, `scripts`, and `reports` are available in your default folder for Caprover volumes, typically `/var/lib/docker/volumes`
-            
+
     displayName: Netbox
     isOfficial: false
     description: IP address management (IPAM) and data center infrastructure management (DCIM) tool
