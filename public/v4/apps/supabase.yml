@@ -152,16 +152,14 @@ caproverOneClickApp:
         # shared env
         - id: $$cap_jwt_secret
           label: JWT secret
-          defaultValue: '9484f32cd477986337a9624dfd929685' # $$cap_gen_random_hex(32)
+          defaultValue: $$cap_gen_random_hex(32)
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_supabase_anon_key
           label: Supabase Anon Key
-          defaultValue: "'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyAgCiAgICAicm9sZSI6ICJhbm9uIiwKICAgICJpc3MiOiAic3VwYWJhc2UiLAogICAgImlhdCI6IDE2NDI2MTcwMDAsCiAgICAiZXhwIjogMTgwMDM4MzQwMAp9.tNfXqyWnDBh3n3iblKSBAaP41xOekQPpHMFSV_AyLTc"
           description: Generate ANON_KEY using your JWT secret at https://supabase.io/docs/guides/hosting/overview#api-keys
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_supabase_service_key
           label: Supabase Service Key
-          defaultValue: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyAgCiAgICAicm9sZSI6ICJzZXJ2aWNlX3JvbGUiLAogICAgImlzcyI6ICJzdXBhYmFzZSIsCiAgICAiaWF0IjogMTY0MjYxNzAwMCwKICAgICJleHAiOiAxODAwMzgzNDAwCn0.hyXtpZkLXGeMeXAOnuviHb68pkuL8xPbyJV7b_pk7sY'
           description: Generate SERVICE_KEY using your JWT secret at https://supabase.io/docs/guides/hosting/overview#api-keys
           validRegex: /^([^\s^\/])+$/
 
