@@ -20,9 +20,9 @@ services:
         volumes:
             - $$cap_appname-kong-config:/var/lib/kong
         restart: unless-stopped
-        ports:
-            - $$cap_kong_http_port:8000
-            - $$cap_kong_https_port:8443
+        #        ports:
+        #            - $$cap_kong_http_port:8000
+        #            - $$cap_kong_https_port:8443
         environment:
             KONG_DATABASE: $$cap_kong_database
             KONG_DECLARATIVE_CONFIG: $$cap_kong_declaritive_config
@@ -31,7 +31,7 @@ services:
             KONG_PLUGINS: $$cap_kong_plugins
             KONG_ADMIN_LISTEN: 0.0.0.0:$$cap_kong_admin_port, 0.0.0.0:$$cap_kong_admin_ssl_port ssl
         caproverExtra:
-            containerHttpPort: $$cap_kong_http_port
+            containerHttpPort: 8000
     $$cap_appname-auth:
         image: supabase/gotrue:$$cap_auth_version
         depends_on:
@@ -203,7 +203,6 @@ caproverOneClickApp:
         - id: $$cap_kong_declaritive_config
           label: Kong Declarative Config
           defaultValue: '/var/lib/kong/kong.yml'
-          validRegex: /^([^\s^\/])+$/
         - id: $$cap_kong_dns_order
           label: Kong DNS order
           defaultValue: 'LAST,A,CNAME'
@@ -357,7 +356,7 @@ caproverOneClickApp:
               # now set instance count for $$cap_appname-db back to 1
               `docker service scale srv-captain--$$cap_appname-db=1`
               # once database is started, set wal_level to logical and restart database again
-              `echo "wal_level = 'logical'" >> /var/lib/docker/volumes/captain--$$cap_appname-db/_data/pg_hba.conf`
+              `echo "wal_level = 'logical'" >> /var/lib/docker/volumes/captain--$$cap_appname-db-data/_data/postgresql.conf`
     displayName: Supabase
     isOfficial: true
     description: Supabase is an open source Firebase alternative.
