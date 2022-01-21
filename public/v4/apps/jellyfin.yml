@@ -9,8 +9,6 @@ services:
             JELLYFIN_PublishedServerUrl: '$$cap_appname.$$cap_root_domain'
         volumes:
             - $$cap_appname-config:/config
-            - $$cap_appname-tvshows:/data/tvshows
-            - $$cap_appname-movies:/data/movies
         caproverExtra:
             containerHttpPort: '8096'
         ports:
@@ -42,8 +40,13 @@ caproverOneClickApp:
 
             PS. It might not work with RPi, or atleast, you wont be able to use OpenMax or V4L2 because Caprover ignores 'devices' parameters of docker-compose
         end: |-
-            Jellyfin has been successfully deployed! Please wait atleast 2-4 mins before trying to connect. To enable HTTPS, enable it inside app config from caprover dashboard. 'Enable HTTPS' setting inside of Jellyfin might not work.
+            Jellyfin has been successfully deployed! Please wait atleast 2-4 mins before trying to connect. 
+            To enable HTTPS, enable it inside app config from caprover dashboard. 'Enable HTTPS' setting inside of Jellyfin might not work.
+
+
+            Make sure to add volume mapping for your movies and videos after installation finishes.
+
     displayName: Jellyfin
     isOfficial: false
-    description: A free media streaming alternative to Plesk. Also supports group sync.
+    description: A free media streaming alternative to Plex. Also supports group sync.
     documentation: See https://github.com/linuxserver/docker-jellyfin
