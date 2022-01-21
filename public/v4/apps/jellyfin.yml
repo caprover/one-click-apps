@@ -48,6 +48,7 @@ caproverOneClickApp:
 
             Make sure to add volume mapping for your movies and videos after installation finishes.
 
+            You can also optionally map 7359 and 1900 for auto discovery.
     displayName: Jellyfin
     isOfficial: false
     description: A free media streaming alternative to Plex. Also supports group sync.
