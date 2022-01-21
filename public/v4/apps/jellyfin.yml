@@ -11,9 +11,6 @@ services:
             - $$cap_appname-config:/config
         caproverExtra:
             containerHttpPort: '8096'
-        ports:
-            - 7359:7359
-            - 1900:1900
 caproverOneClickApp:
     variables:
         - id: $$cap_jf_version
