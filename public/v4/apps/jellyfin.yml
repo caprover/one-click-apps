@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: ghcr.io/linuxserver/jellyfin
+        image: ghcr.io/linuxserver/jellyfin:$$cap_jf_version
         environment:
             PUID: $$cap_puid
             PGID: $$cap_pgid
@@ -16,6 +16,11 @@ services:
             - 1900:1900
 caproverOneClickApp:
     variables:
+        - id: $$cap_jf_version
+          label: Jellyfin Version
+          defaultValue: '10.7.7'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/jellyfin/tags
+          validRegex: /^([^\s^\/])+$/
         - id: '$$cap_puid'
           label: Jellyfin UserID
           defaultValue: 1000
