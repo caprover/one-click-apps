@@ -39,6 +39,7 @@ caproverOneClickApp:
         - id: $$cap__postgres_password
           label: Postgres Password
           description: Password must be at least 12 characters.  Please use a random string.
+          defaultValue: $$cap_gen_random_hex(16)
           validRegex: /^[^\@]{12,}$/
     instructions:
         start: |-
