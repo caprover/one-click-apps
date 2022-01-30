@@ -25,7 +25,7 @@ services:
         environment:
             POSTGRES_USER: $$cap_postgre_username
             POSTGRES_PASSWORD: $$cap_postgre_password
-            POSTGRES_DB: $$cap_postgre_db_name 
+            POSTGRES_DB: $$cap_postgre_db_name
 
 caproverOneClickApp:
     variables:
