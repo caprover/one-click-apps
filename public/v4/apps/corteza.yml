@@ -52,7 +52,7 @@ caproverOneClickApp:
         - id: $$cap_lets_encrypt
           defaultValue: $$cap_appname.$$cap_root_domain
           label: Lets Encrypt Host for SSL.
-          description: 'Set your root domain if you are going to use SSL (https://). Leave empty otherwise.
+          description: 'Set your root domain if you are going to use SSL (https://). Leave empty otherwise.'
 
     instructions:
         start: |-
