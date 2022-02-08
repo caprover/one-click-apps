@@ -47,6 +47,9 @@ caproverOneClickApp:
             The container is built and deployed. You can now connect to this container from your local machine by running the following command: 
 
             ssh -i /path/to/private.key $$cap_sshd_username@$$cap_appname.$$cap_root_domain -p $$cap_sshd_port
+
+
+            ** SSH Port Forwarding Rules ** might need to be manually added, see [here](https://github.com/caprover/caprover/issues/960#issuecomment-1027826772)
     displayName: SSH Container
     isOfficial: true
     description: Just a simple container that has sshd installed so you can SSH directly into this container.
