@@ -98,7 +98,7 @@ caproverOneClickApp:
             Imagor is currently running in unsafe mode for easier testing.
             In production environment, it is highly recommended turning off IMAGOR_UNSAFE 
             by setting the IMAGOR_UNSAFE to 0 or removing the IMAGOR_UNSAFE environment variable
-    displayName: Imagor S3
+    displayName: Imagor (S3 storage)
     isOfficial: true
     description: Imagor is a fast, Docker-ready image processing server written in Go. (Stores images in S3 bucket)
     documentation: https://github.com/cshum/imagor

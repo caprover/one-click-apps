@@ -36,14 +36,14 @@ caproverOneClickApp:
         start: |-
             Imagor is a fast, Docker-ready image processing server written in Go.
             This app will store the images in local file system, using mounted volume.
-            If you want to s3 buckets use the Imagor AWS instead.
+            If you want to s3 buckets use the Imagor S3 instead.
             GitHub: https://github.com/cshum/imagor
         end: |-
             $$cap_appname deployed successfuly.
             Imagor is currently running in unsafe mode for easier testing.
             In production environment, it is highly recommended turning off IMAGOR_UNSAFE 
             by setting the IMAGOR_UNSAFE to 0 or removing the IMAGOR_UNSAFE environment variable
-    displayName: Imagor Local
+    displayName: Imagor (Local storage)
     isOfficial: true
-    description: Imagor is a fast, Docker-ready image processing server written in Go. (Stores images as docker volumes)
+    description: Imagor is a fast, Docker-ready image processing server written in Go. (Stores images locally as docker volumes)
     documentation: https://github.com/cshum/imagor
