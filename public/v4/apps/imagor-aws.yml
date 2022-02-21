@@ -16,8 +16,8 @@ services:
             S3_STORAGE_BUCKET: $$cap_env_s3_storage_bucket
             S3_STORAGE_BASE_DIR: $$cap_env_s3_storage_bucket_dir
 
-            S3_RESULT_STORAGE_BUCKET: $$cap_env_s3_result_storage_bucket # enable S3 result storage by specifying bucket
-            S3_RESULT_STORAGE_BASE_DIR: $$cap_env_s3_result_storage_bucket_dir # optional
+            S3_RESULT_STORAGE_BUCKET: $$cap_env_s3_result_storage_bucket
+            S3_RESULT_STORAGE_BASE_DIR: $$cap_env_s3_result_storage_bucket_dir
         restart: always
 caproverOneClickApp:
     variables:
@@ -90,10 +90,15 @@ caproverOneClickApp:
     instructions:
         start: |-
             Imagor is a fast, Docker-ready image processing server written in Go.
+            This app will store the images in S3 bucket.
+            If you want to store the images locally as docker volume use Imagor Local instead.
             GitHub: https://github.com/cshum/imagor
         end: |-
-            All done.
-    displayName: Imagor AWS
+            $$cap_appname deployed successfuly.
+            Imagor is currently running in unsafe mode for easier testing.
+            In production environment, it is highly recommended turning off IMAGOR_UNSAFE 
+            by setting the IMAGOR_UNSAFE to 0 or removing the IMAGOR_UNSAFE environment variable
+    displayName: Imagor S3
     isOfficial: true
-    description: Imagor is a fast, Docker-ready image processing server written in Go.
+    description: Imagor is a fast, Docker-ready image processing server written in Go. (Stores images in S3 bucket)
     documentation: https://github.com/cshum/imagor
