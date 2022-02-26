@@ -6,17 +6,20 @@ services:
             - $$cap_appname-data:/data
         environment:
             CREATE_ADMIN: 'TRUE'
-            DATABASE_DRIVER: sqlite
-            DATABASE_URL: 'sqlite:///data/data.sqlite'
-            LOGIN_NOTE: 'Either login with admin:admin or create your own account to test OhMyForm'
             ADMIN_EMAIL: $$cap_ohmyform_email
             ADMIN_USERNAME: $$cap_ohmyform_user
             ADMIN_PASSWORD: $$cap_ohmyform_pass
             MAILER_URI: smtp://srv-captain--$$cap_appname-mailhog:1025
-            SECRET_KEY: $$cap_gen_random_hex(64)
+            PORT: '5000'
+            MONGODB_URI: mongodb://srv-captain--$$cap_appname-mongo/ohmyform
         caproverExtra:
-            containerHttpPort: '3000'
-
+            containerHttpPort: '5000'
+    $$cap_appname-mongo:
+        image: mongo:4
+        volumes:
+            - $$cap_appname-mongo:/data/db
+        caproverExtra:
+            notExposeAsWebApp: 'true'
     $$cap_appname-mailhog:
         image: mailhog/mailhog:v1.0.1
         caproverExtra:
