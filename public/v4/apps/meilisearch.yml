@@ -25,7 +25,7 @@ caproverOneClickApp:
         - id: $$cap_app_version
           label: MeiliSearch Version
           description: 'Check out their Docker page for the valid tags: https://hub.docker.com/r/getmeili/meilisearch/tags'
-          defaultValue: 'v0.20.0'
+          defaultValue: 'v0.25.2'
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_master_key
           label: MeiliSearch Master Key
@@ -88,7 +88,7 @@ caproverOneClickApp:
 
             Get your private and public key using-
 
-            curl -H "X-Meili-API-Key: $$cap_master_key" -X GET 'http://$$cap_appname.$$cap_root_domain/keys'
+            curl -H "Authorization: Bearer $$cap_master_key" -X GET 'http://$$cap_appname.$$cap_root_domain/keys'
     displayName: 'MeiliSearch'
     isOfficial: true
     description: MeiliSearch is a lightning Fast, Ultra Relevant, and Typo-Tolerant Search Engine
