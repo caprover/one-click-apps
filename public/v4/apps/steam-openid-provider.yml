@@ -8,7 +8,7 @@ services:
             OpenID__ClientID: $$cap_client_id
             OpenID__ClientSecret: $$cap_client_secret
             Hosting__PublicOrigin: $$cap_origin
-            Authentication__Steam__ApplicationKey: $$cap_api_key
+            Steam__ApplicationKey: $$cap_api_key
         caproverExtra:
             containerHttpPort: '80'
 caproverOneClickApp:
