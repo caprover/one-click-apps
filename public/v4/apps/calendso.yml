@@ -2,7 +2,7 @@ captainVersion: 4
 services:
     # Calendso
     $$cap_appname:
-        image: ctadeu/calendso:$$cap_app_version
+        image: calendso/calendso:$$cap_app_version
         depends_on:
             - $$cap_appname-db
         restart: always
@@ -60,7 +60,7 @@ caproverOneClickApp:
         - id: $$cap_app_version
           label: Calendso Version
           defaultValue: '0.0.17-1'
-          description: Check out their docker page for the valid tags https://hub.docker.com/r/ctadeu/calendso/tags
+          description: Check out their docker page for the valid tags https://hub.docker.com/r/calendso/calendso/tags
 
         - id: $$cap_postgres_version
           label: Postgres Version
