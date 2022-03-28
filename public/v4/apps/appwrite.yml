@@ -4,45 +4,40 @@ services:
     $$cap_appname-redis:
         caproverExtra:
             notExposeAsWebApp: 'true'
-        image: 'bitnami/redis:6.0.8-debian-10-r6'
-        ports:
-            - '6379:6379'
+        image: 'docker.io/bitnami/redis:6.0'
         environment:
             REDIS_DISABLE_COMMANDS: FLUSHDB,FLUSHALL
             ALLOW_EMPTY_PASSWORD: 'yes'
         volumes:
             - $$cap_appname-redis-data:/bitnami/redis/data
 
-    $$cap_appname-mariadb:
+    $$cap_appname-database:
         caproverExtra:
             notExposeAsWebApp: 'true'
-        image: 'docker.io/bitnami/mariadb:10.7'
-        ports:
-            - '3306:3306'
+            dockerfileLines:
+                - FROM mariadb:10.7
+                - CMD [ "--innodb-flush-method", "fsync" ]
         environment:
             MARIADB_ROOT_PASSWORD: $$cap_APP_DB_ROOT_PASS
             MARIADB_DATABASE: $$cap_APP_DB_SCHEMA
             MARIADB_USER: $$cap_APP_DB_USER
             MARIADB_PASSWORD: $$cap_APP_DB_PASS
-        command: 'mysqld --innodb-flush-method=fsync'
         volumes:
-            - $$cap_appname-mariadb-data:/bitnami/mariadb
+            - $$cap_appname-database-data:/var/lib/mysql
 
     $$cap_appname-influxdb:
         caproverExtra:
             notExposeAsWebApp: 'true'
-        image: 'appwrite/influxdb:1.0.0'
-        ports:
-            - '8086:8086'
+        image: 'appwrite/influxdb:1.5.0'
         volumes:
             - $$cap_appname-influxdb-data:/var/lib/influxdb
 
     $$cap_appname-telegraf:
         caproverExtra:
             notExposeAsWebApp: 'true'
-        image: 'appwrite/telegraf:1.2.0'
+        image: 'appwrite/telegraf:1.4.0'
         environment:
-            _APP_INFLUXDB_HOST: $$cap_appname-influxdb
+            _APP_INFLUXDB_HOST: srv-captain--$$cap_appname-influxdb
             _APP_INFLUXDB_PORT: 8086
         volumes:
             - $$cap_appname-influxdb-data:/var/lib/influxdb
@@ -57,7 +52,7 @@ services:
             - $$cap_appname-appwrite-functions:/storage/functions
         depends_on:
             - $$cap_appname-redis
-            - $$cap_appname-mariadb
+            - $$cap_appname-database
             - $$cap_appname-influxdb
         environment:
             _APP_ENV: $$cap_APP_ENV
@@ -83,13 +78,13 @@ services:
             _APP_REDIS_PORT: 6379
             _APP_REDIS_USER:
             _APP_REDIS_PASS:
-            _APP_DB_HOST: srv-captain--$$cap_appname-mariadb
+            _APP_DB_HOST: srv-captain--$$cap_appname-database
             _APP_DB_PORT: 3306
             _APP_DB_SCHEMA: $$cap_APP_DB_SCHEMA
             _APP_DB_USER: $$cap_APP_DB_USER
             _APP_DB_PASS: $$cap_APP_DB_PASS
             _APP_DB_ROOT_PASS: $$cap_APP_DB_ROOT_PASS
-            _APP_INFLUXDB_HOST: $$cap_appname-influxdb
+            _APP_INFLUXDB_HOST: srv-captain--$$cap_appname-influxdb
             _APP_INFLUXDB_PORT: 8086
             _APP_STATSD_HOST: srv-captain--$$cap_appname-telegraf
             _APP_STATSD_PORT: 8125
@@ -133,11 +128,14 @@ services:
             DOCKERHUB_PULL_EMAIL: $$cap_DOCKERHUB_PULL_EMAIL
 
     $$cap_appname-appwrite-realtime:
-        image: 'appwrite/appwrite:$$cap_APP_VERSION'
+        caproverExtra:
+            dockerfileLines:
+                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - ENTRYPOINT ["realtime"]
         entrypoint: realtime
         depends_on:
             - $$cap_appname-redis
-            - $$cap_appname-mariadb
+            - $$cap_appname-database
         environment:
             _APP_ENV: $$cap_APP_ENV
             _APP_LOCALE: $$cap_APP_LOCALE
@@ -162,13 +160,13 @@ services:
             _APP_REDIS_PORT: 6379
             _APP_REDIS_USER:
             _APP_REDIS_PASS:
-            _APP_DB_HOST: srv-captain--$$cap_appname-mariadb
+            _APP_DB_HOST: srv-captain--$$cap_appname-database
             _APP_DB_PORT: 3306
             _APP_DB_SCHEMA: $$cap_APP_DB_SCHEMA
             _APP_DB_USER: $$cap_APP_DB_USER
             _APP_DB_PASS: $$cap_APP_DB_PASS
             _APP_DB_ROOT_PASS: $$cap_APP_DB_ROOT_PASS
-            _APP_INFLUXDB_HOST: $$cap_appname-influxdb
+            _APP_INFLUXDB_HOST: srv-captain--$$cap_appname-influxdb
             _APP_INFLUXDB_PORT: 8086
             _APP_STATSD_HOST: srv-captain--$$cap_appname-telegraf
             _APP_STATSD_PORT: 8125
@@ -214,12 +212,13 @@ services:
     $$cap_appname-appwrite-executor:
         caproverExtra:
             notExposeAsWebApp: 'true'
-        image: 'appwrite/appwrite:$$cap_APP_VERSION'
-        entrypoint: executor
+            dockerfileLines:
+                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - ENTRYPOINT ["executor"]
         depends_on:
             - $$cap_appname-appwrite
             - $$cap_appname-redis
-            - $$cap_appname-mariadb
+            - $$cap_appname-database
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
             - $$cap_appname-appwrite-functions:/storage/functions
@@ -248,13 +247,13 @@ services:
             _APP_REDIS_PORT: 6379
             _APP_REDIS_USER:
             _APP_REDIS_PASS:
-            _APP_DB_HOST: srv-captain--$$cap_appname-mariadb
+            _APP_DB_HOST: srv-captain--$$cap_appname-database
             _APP_DB_PORT: 3306
             _APP_DB_SCHEMA: $$cap_APP_DB_SCHEMA
             _APP_DB_USER: $$cap_APP_DB_USER
             _APP_DB_PASS: $$cap_APP_DB_PASS
             _APP_DB_ROOT_PASS: $$cap_APP_DB_ROOT_PASS
-            _APP_INFLUXDB_HOST: $$cap_appname-influxdb
+            _APP_INFLUXDB_HOST: srv-captain--$$cap_appname-influxdb
             _APP_INFLUXDB_PORT: 8086
             _APP_STATSD_HOST: srv-captain--$$cap_appname-telegraf
             _APP_STATSD_PORT: 8125
@@ -300,11 +299,12 @@ services:
     $$cap_appname-appwrite-worker-database:
         caproverExtra:
             notExposeAsWebApp: 'true'
-        image: 'appwrite/appwrite:$$cap_APP_VERSION'
-        entrypoint: worker-database
+            dockerfileLines:
+                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - ENTRYPOINT ["worker-database"]
         depends_on:
             - $$cap_appname-redis
-            - $$cap_appname-mariadb
+            - $$cap_appname-database
         environment:
             _APP_ENV: $$cap_APP_ENV
             _APP_LOCALE: $$cap_APP_LOCALE
@@ -329,13 +329,13 @@ services:
             _APP_REDIS_PORT: 6379
             _APP_REDIS_USER:
             _APP_REDIS_PASS:
-            _APP_DB_HOST: srv-captain--$$cap_appname-mariadb
+            _APP_DB_HOST: srv-captain--$$cap_appname-database
             _APP_DB_PORT: 3306
             _APP_DB_SCHEMA: $$cap_APP_DB_SCHEMA
             _APP_DB_USER: $$cap_APP_DB_USER
             _APP_DB_PASS: $$cap_APP_DB_PASS
             _APP_DB_ROOT_PASS: $$cap_APP_DB_ROOT_PASS
-            _APP_INFLUXDB_HOST: $$cap_appname-influxdb
+            _APP_INFLUXDB_HOST: srv-captain--$$cap_appname-influxdb
             _APP_INFLUXDB_PORT: 8086
             _APP_STATSD_HOST: srv-captain--$$cap_appname-telegraf
             _APP_STATSD_PORT: 8125
@@ -381,11 +381,12 @@ services:
     $$cap_appname-appwrite-worker-builds:
         caproverExtra:
             notExposeAsWebApp: 'true'
-        image: 'appwrite/appwrite:$$cap_APP_VERSION'
-        entrypoint: worker-builds
+            dockerfileLines:
+                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - ENTRYPOINT ["worker-builds"]
         depends_on:
             - $$cap_appname-redis
-            - $$cap_appname-mariadb
+            - $$cap_appname-database
         environment:
             _APP_ENV: $$cap_APP_ENV
             _APP_LOCALE: $$cap_APP_LOCALE
@@ -410,13 +411,13 @@ services:
             _APP_REDIS_PORT: 6379
             _APP_REDIS_USER:
             _APP_REDIS_PASS:
-            _APP_DB_HOST: srv-captain--$$cap_appname-mariadb
+            _APP_DB_HOST: srv-captain--$$cap_appname-database
             _APP_DB_PORT: 3306
             _APP_DB_SCHEMA: $$cap_APP_DB_SCHEMA
             _APP_DB_USER: $$cap_APP_DB_USER
             _APP_DB_PASS: $$cap_APP_DB_PASS
             _APP_DB_ROOT_PASS: $$cap_APP_DB_ROOT_PASS
-            _APP_INFLUXDB_HOST: $$cap_appname-influxdb
+            _APP_INFLUXDB_HOST: srv-captain--$$cap_appname-influxdb
             _APP_INFLUXDB_PORT: 8086
             _APP_STATSD_HOST: srv-captain--$$cap_appname-telegraf
             _APP_STATSD_PORT: 8125
@@ -462,11 +463,12 @@ services:
     $$cap_appname-appwrite-worker-audits:
         caproverExtra:
             notExposeAsWebApp: 'true'
-        image: 'appwrite/appwrite:$$cap_APP_VERSION'
-        entrypoint: worker-audits
+            dockerfileLines:
+                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - ENTRYPOINT ["worker-audits"]
         depends_on:
             - $$cap_appname-redis
-            - $$cap_appname-mariadb
+            - $$cap_appname-database
         environment:
             _APP_ENV: $$cap_APP_ENV
             _APP_LOCALE: $$cap_APP_LOCALE
@@ -491,13 +493,13 @@ services:
             _APP_REDIS_PORT: 6379
             _APP_REDIS_USER:
             _APP_REDIS_PASS:
-            _APP_DB_HOST: srv-captain--$$cap_appname-mariadb
+            _APP_DB_HOST: srv-captain--$$cap_appname-database
             _APP_DB_PORT: 3306
             _APP_DB_SCHEMA: $$cap_APP_DB_SCHEMA
             _APP_DB_USER: $$cap_APP_DB_USER
             _APP_DB_PASS: $$cap_APP_DB_PASS
             _APP_DB_ROOT_PASS: $$cap_APP_DB_ROOT_PASS
-            _APP_INFLUXDB_HOST: $$cap_appname-influxdb
+            _APP_INFLUXDB_HOST: srv-captain--$$cap_appname-influxdb
             _APP_INFLUXDB_PORT: 8086
             _APP_STATSD_HOST: srv-captain--$$cap_appname-telegraf
             _APP_STATSD_PORT: 8125
@@ -543,11 +545,12 @@ services:
     $$cap_appname-appwrite-worker-webhooks:
         caproverExtra:
             notExposeAsWebApp: 'true'
-        image: 'appwrite/appwrite:$$cap_APP_VERSION'
-        entrypoint: worker-webhooks
+            dockerfileLines:
+                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - ENTRYPOINT ["worker-webhooks"]
         depends_on:
             - $$cap_appname-redis
-            - $$cap_appname-mariadb
+            - $$cap_appname-database
         environment:
             _APP_ENV: $$cap_APP_ENV
             _APP_LOCALE: $$cap_APP_LOCALE
@@ -572,13 +575,13 @@ services:
             _APP_REDIS_PORT: 6379
             _APP_REDIS_USER:
             _APP_REDIS_PASS:
-            _APP_DB_HOST: srv-captain--$$cap_appname-mariadb
+            _APP_DB_HOST: srv-captain--$$cap_appname-database
             _APP_DB_PORT: 3306
             _APP_DB_SCHEMA: $$cap_APP_DB_SCHEMA
             _APP_DB_USER: $$cap_APP_DB_USER
             _APP_DB_PASS: $$cap_APP_DB_PASS
             _APP_DB_ROOT_PASS: $$cap_APP_DB_ROOT_PASS
-            _APP_INFLUXDB_HOST: $$cap_appname-influxdb
+            _APP_INFLUXDB_HOST: srv-captain--$$cap_appname-influxdb
             _APP_INFLUXDB_PORT: 8086
             _APP_STATSD_HOST: srv-captain--$$cap_appname-telegraf
             _APP_STATSD_PORT: 8125
@@ -624,11 +627,12 @@ services:
     $$cap_appname-appwrite-worker-deletes:
         caproverExtra:
             notExposeAsWebApp: 'true'
-        image: 'appwrite/appwrite:$$cap_APP_VERSION'
-        entrypoint: worker-deletes
+            dockerfileLines:
+                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - ENTRYPOINT ["worker-deletes"]
         depends_on:
             - $$cap_appname-redis
-            - $$cap_appname-mariadb
+            - $$cap_appname-database
         volumes:
             - appwrite-uploads:/storage/uploads:rw
             - appwrite-cache:/storage/cache:rw
@@ -657,13 +661,13 @@ services:
             _APP_REDIS_PORT: 6379
             _APP_REDIS_USER:
             _APP_REDIS_PASS:
-            _APP_DB_HOST: srv-captain--$$cap_appname-mariadb
+            _APP_DB_HOST: srv-captain--$$cap_appname-database
             _APP_DB_PORT: 3306
             _APP_DB_SCHEMA: $$cap_APP_DB_SCHEMA
             _APP_DB_USER: $$cap_APP_DB_USER
             _APP_DB_PASS: $$cap_APP_DB_PASS
             _APP_DB_ROOT_PASS: $$cap_APP_DB_ROOT_PASS
-            _APP_INFLUXDB_HOST: $$cap_appname-influxdb
+            _APP_INFLUXDB_HOST: srv-captain--$$cap_appname-influxdb
             _APP_INFLUXDB_PORT: 8086
             _APP_STATSD_HOST: srv-captain--$$cap_appname-telegraf
             _APP_STATSD_PORT: 8125
@@ -709,11 +713,12 @@ services:
     $$cap_appname-appwrite-worker-functions:
         caproverExtra:
             notExposeAsWebApp: 'true'
-        image: 'appwrite/appwrite:$$cap_APP_VERSION'
-        entrypoint: worker-functions
+            dockerfileLines:
+                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - ENTRYPOINT ["worker-functions"]
         depends_on:
             - $$cap_appname-redis
-            - $$cap_appname-mariadb
+            - $$cap_appname-database
             - $$cap_appname-appwrite-executor
         environment:
             _APP_ENV: $$cap_APP_ENV
@@ -739,13 +744,13 @@ services:
             _APP_REDIS_PORT: 6379
             _APP_REDIS_USER:
             _APP_REDIS_PASS:
-            _APP_DB_HOST: srv-captain--$$cap_appname-mariadb
+            _APP_DB_HOST: srv-captain--$$cap_appname-database
             _APP_DB_PORT: 3306
             _APP_DB_SCHEMA: $$cap_APP_DB_SCHEMA
             _APP_DB_USER: $$cap_APP_DB_USER
             _APP_DB_PASS: $$cap_APP_DB_PASS
             _APP_DB_ROOT_PASS: $$cap_APP_DB_ROOT_PASS
-            _APP_INFLUXDB_HOST: $$cap_appname-influxdb
+            _APP_INFLUXDB_HOST: srv-captain--$$cap_appname-influxdb
             _APP_INFLUXDB_PORT: 8086
             _APP_STATSD_HOST: srv-captain--$$cap_appname-telegraf
             _APP_STATSD_PORT: 8125
@@ -791,8 +796,9 @@ services:
     $$cap_appname-appwrite-worker-mails:
         caproverExtra:
             notExposeAsWebApp: 'true'
-        image: 'appwrite/appwrite:$$cap_APP_VERSION'
-        entrypoint: worker-mails
+            dockerfileLines:
+                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - ENTRYPOINT ["worker-mails"]
         depends_on:
             - $$cap_appname-redis
         environment:
@@ -819,13 +825,13 @@ services:
             _APP_REDIS_PORT: 6379
             _APP_REDIS_USER:
             _APP_REDIS_PASS:
-            _APP_DB_HOST: srv-captain--$$cap_appname-mariadb
+            _APP_DB_HOST: srv-captain--$$cap_appname-database
             _APP_DB_PORT: 3306
             _APP_DB_SCHEMA: $$cap_APP_DB_SCHEMA
             _APP_DB_USER: $$cap_APP_DB_USER
             _APP_DB_PASS: $$cap_APP_DB_PASS
             _APP_DB_ROOT_PASS: $$cap_APP_DB_ROOT_PASS
-            _APP_INFLUXDB_HOST: $$cap_appname-influxdb
+            _APP_INFLUXDB_HOST: srv-captain--$$cap_appname-influxdb
             _APP_INFLUXDB_PORT: 8086
             _APP_STATSD_HOST: srv-captain--$$cap_appname-telegraf
             _APP_STATSD_PORT: 8125
@@ -871,8 +877,9 @@ services:
     $$cap_appname-appwrite-maintenance:
         caproverExtra:
             notExposeAsWebApp: 'true'
-        image: 'appwrite/appwrite:$$cap_APP_VERSION'
-        entrypoint: maintenance
+            dockerfileLines:
+                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - ENTRYPOINT ["maintenance"]
         depends_on:
             - $$cap_appname-redis
         environment:
@@ -899,13 +906,13 @@ services:
             _APP_REDIS_PORT: 6379
             _APP_REDIS_USER:
             _APP_REDIS_PASS:
-            _APP_DB_HOST: srv-captain--$$cap_appname-mariadb
+            _APP_DB_HOST: srv-captain--$$cap_appname-database
             _APP_DB_PORT: 3306
             _APP_DB_SCHEMA: $$cap_APP_DB_SCHEMA
             _APP_DB_USER: $$cap_APP_DB_USER
             _APP_DB_PASS: $$cap_APP_DB_PASS
             _APP_DB_ROOT_PASS: $$cap_APP_DB_ROOT_PASS
-            _APP_INFLUXDB_HOST: $$cap_appname-influxdb
+            _APP_INFLUXDB_HOST: srv-captain--$$cap_appname-influxdb
             _APP_INFLUXDB_PORT: 8086
             _APP_STATSD_HOST: srv-captain--$$cap_appname-telegraf
             _APP_STATSD_PORT: 8125
@@ -951,11 +958,12 @@ services:
     $$cap_appname-appwrite-usage:
         caproverExtra:
             notExposeAsWebApp: 'true'
-        image: 'appwrite/appwrite:$$cap_APP_VERSION'
-        entrypoint: usage
+            dockerfileLines:
+                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - ENTRYPOINT ["usage"]
         depends_on:
             - $$cap_appname-influxdb
-            - $$cap_appname-mariadb
+            - $$cap_appname-database
         environment:
             _APP_ENV: $$cap_APP_ENV
             _APP_LOCALE: $$cap_APP_LOCALE
@@ -980,13 +988,13 @@ services:
             _APP_REDIS_PORT: 6379
             _APP_REDIS_USER:
             _APP_REDIS_PASS:
-            _APP_DB_HOST: srv-captain--$$cap_appname-mariadb
+            _APP_DB_HOST: srv-captain--$$cap_appname-database
             _APP_DB_PORT: 3306
             _APP_DB_SCHEMA: $$cap_APP_DB_SCHEMA
             _APP_DB_USER: $$cap_APP_DB_USER
             _APP_DB_PASS: $$cap_APP_DB_PASS
             _APP_DB_ROOT_PASS: $$cap_APP_DB_ROOT_PASS
-            _APP_INFLUXDB_HOST: $$cap_appname-influxdb
+            _APP_INFLUXDB_HOST: srv-captain--$$cap_appname-influxdb
             _APP_INFLUXDB_PORT: 8086
             _APP_STATSD_HOST: srv-captain--$$cap_appname-telegraf
             _APP_STATSD_PORT: 8125
@@ -1032,8 +1040,9 @@ services:
     $$cap_appname-appwrite-schedule:
         caproverExtra:
             notExposeAsWebApp: 'true'
-        image: 'appwrite/appwrite:$$cap_APP_VERSION'
-        entrypoint: schedule
+            dockerfileLines:
+                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - ENTRYPOINT ["schedule"]
         depends_on:
             - $$cap_appname-redis
         environment:
@@ -1060,13 +1069,13 @@ services:
             _APP_REDIS_PORT: 6379
             _APP_REDIS_USER:
             _APP_REDIS_PASS:
-            _APP_DB_HOST: srv-captain--$$cap_appname-mariadb
+            _APP_DB_HOST: srv-captain--$$cap_appname-database
             _APP_DB_PORT: 3306
             _APP_DB_SCHEMA: $$cap_APP_DB_SCHEMA
             _APP_DB_USER: $$cap_APP_DB_USER
             _APP_DB_PASS: $$cap_APP_DB_PASS
             _APP_DB_ROOT_PASS: $$cap_APP_DB_ROOT_PASS
-            _APP_INFLUXDB_HOST: $$cap_appname-influxdb
+            _APP_INFLUXDB_HOST: srv-captain--$$cap_appname-influxdb
             _APP_INFLUXDB_PORT: 8086
             _APP_STATSD_HOST: srv-captain--$$cap_appname-telegraf
             _APP_STATSD_PORT: 8125
