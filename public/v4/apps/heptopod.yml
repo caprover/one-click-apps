@@ -1,0 +1,48 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: octobus/heptapod:$$cap_heptapod_version
+        hostname: $$cap_appname.$$cap_root_domain
+        volumes:
+            - '$$cap_appname-config: /etc/gitlab'
+            - '$$cap_appname-logs: /var/log/gitlab'
+            - '$$cap_appname-data: /var/opt/gitlab'
+        restart: always
+        environment:
+            heptapod_OMNIBUS_CONFIG: $$cap_heptapod_omnibus_config
+caproverOneClickApp:
+    variables:
+        - id: $$cap_heptapod_version
+          label: heptapod-CE Version Tag
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/octobus/heptapod/tags
+          defaultValue: 0.30.0
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_heptapod_omnibus_config
+          label: Omnibus Config (Optional)
+          description: 'More information here: https://hub.docker.com/r/octobus/heptapod'
+    instructions:
+        start: >-
+            heptapod is a single application for the entire software development lifecycle. 
+            From project planning and source code management to CI/CD, monitoring, and security. 
+            Forked from gitlab, heptopod adds support for mercurial to gitlab.
+
+            More about this container:
+            https://hub.docker.com/r/octobus/heptapod
+
+            Hardware and Software requirements can be found here:
+            https://docs.gitlab.com/ce/install/requirements.html
+
+            For security reasons, no port mapping is created, those can be created after deploying the app.
+            More information about Caprover's Firewall & Port Forwarding and configuration can be found here:
+            https://caprover.com/docs/firewall.html 
+
+
+            More information about heptapod's docker configuration can be found here:
+            https://docs.heptapod.com/omnibus/docker/#configure-heptapod
+
+            It can take some time (2-3 minutes) for the service to launch in a new container. Check the "Deployment" tab logs to determine once heptapod is ready.
+        end: heptapod-CE is deployed and available as srv-captain--$$cap_appname:80 to other apps.
+    displayName: heptapod (CE)
+    isOfficial: true
+    description: CE version of heptapod for CI/CD pipeline
+    documentation: https://heptapod.net/pages/docs.html#docs
