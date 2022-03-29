@@ -24,7 +24,7 @@ caproverOneClickApp:
         start: >-
             heptapod is a single application for the entire software development lifecycle. 
             From project planning and source code management to CI/CD, monitoring, and security. 
-            Forked from gitlab, heptopod adds support for mercurial to gitlab.
+            Forked from gitlab, heptapod adds support for mercurial to gitlab.
 
             More about this container:
             https://hub.docker.com/r/octobus/heptapod
