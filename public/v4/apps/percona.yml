@@ -17,7 +17,7 @@ caproverOneClickApp:
         - id: $$cap_percona_version
           label: Percona Version
           defaultValue: 'ps-8.0'
-          description: Check out their Docker page for the valid tags https://hub.docker.com/_/mariadb?tab=tags
+          description: Check out their Docker page for the valid tags https://hub.docker.com/_/percona
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_db_pass
           label: Percona Root password
