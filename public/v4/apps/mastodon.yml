@@ -1,39 +1,5 @@
 captainVersion: 4
 services:
-    # Mastodon
-    $$cap_appname:
-        environment:
-            LOCAL_DOMAIN: $$cap_appname.$$cap_root_domain
-            ALTERNATE_DOMAINS: $$cap_alt_domain
-            REDIS_HOST: srv-captain--$$cap_appname-redis
-            REDIS_PORT: 6379
-            REDIS_PASSWORD: $$cap_redis_password
-            DB_HOST: srv-captain--$$cap_appname-postgres
-            DB_USER: mastodon
-            DB_NAME: mastodon_production
-            DB_PASS: $$cap_postgres_password
-            DB_PORT: 5432
-            ES_ENABLED: 'false'
-            OTP_SECRET: $$cap_opt_secret_base
-            SECRET_KEY_BASE: $$cap_secret_key_base
-            VAPID_PRIVATE_KEY: $$cap_gen_random_hex(16)
-            VAPID_PUBLIC_KEY: $$cap_gen_random_hex(16)
-            SINGLE_USER_MODE: $$cap_su_mode
-            SMTP_SERVER: $$cap_smtp_server
-            SMTP_PORT: $$cap_smtp_port
-            SMTP_LOGIN: $$cap_smtp_user
-            SMTP_PASSWORD: $$cap_smtp_pass
-            SMTP_FROM_ADDRESS: $$cap_smtp_from
-            SMTP_TLS: $$cap_smtp_tls
-            S3_ENABLED: 'false'
-            RAILS_ENV: production
-        volumes:
-            - $$cap_appname-system:/mastodon/public/system
-        caproverExtra:
-            containerHttpPort: '3000'
-            dockerfileLines:
-                - FROM tootsuite/mastodon:$$cap_mastodon_version
-                - CMD rm -f /mastodon/tmp/pids/server.pid; bundle exec rails db:setup; bundle exec rails s -b 0.0.0.0 -p 3000
     # Streaming
     $$cap_appname-streaming:
         environment:
@@ -104,7 +70,7 @@ services:
             notExposeAsWebApp: 'true'
     # PostgreSQL
     $$cap_appname-postgres:
-        image: postgres:12
+        image: postgres:13.6
         volumes:
             - $$cap_appname-postgres-data:/var/lib/postgresql/data
         environment:
@@ -124,12 +90,46 @@ services:
                 - FROM redis:alpine
                 - CMD exec redis-server --requirepass "$$cap_redis_password"
             notExposeAsWebApp: 'true'
+    # Mastodon
+    $$cap_appname:
+        environment:
+            LOCAL_DOMAIN: $$cap_appname.$$cap_root_domain
+            ALTERNATE_DOMAINS: $$cap_alt_domain
+            REDIS_HOST: srv-captain--$$cap_appname-redis
+            REDIS_PORT: 6379
+            REDIS_PASSWORD: $$cap_redis_password
+            DB_HOST: srv-captain--$$cap_appname-postgres
+            DB_USER: mastodon
+            DB_NAME: mastodon_production
+            DB_PASS: $$cap_postgres_password
+            DB_PORT: 5432
+            ES_ENABLED: 'false'
+            OTP_SECRET: $$cap_opt_secret_base
+            SECRET_KEY_BASE: $$cap_secret_key_base
+            VAPID_PRIVATE_KEY: $$cap_gen_random_hex(16)
+            VAPID_PUBLIC_KEY: $$cap_gen_random_hex(16)
+            SINGLE_USER_MODE: $$cap_su_mode
+            SMTP_SERVER: $$cap_smtp_server
+            SMTP_PORT: $$cap_smtp_port
+            SMTP_LOGIN: $$cap_smtp_user
+            SMTP_PASSWORD: $$cap_smtp_pass
+            SMTP_FROM_ADDRESS: $$cap_smtp_from
+            SMTP_TLS: $$cap_smtp_tls
+            S3_ENABLED: 'false'
+            RAILS_ENV: production
+        volumes:
+            - $$cap_appname-system:/mastodon/public/system
+        caproverExtra:
+            containerHttpPort: '3000'
+            dockerfileLines:
+                - FROM tootsuite/mastodon:$$cap_mastodon_version
+                - CMD rm -f /mastodon/tmp/pids/server.pid; bundle exec rails db:setup; bundle exec rails s -b 0.0.0.0 -p 3000
 caproverOneClickApp:
     variables:
         - id: $$cap_mastodon_version
           label: Mastodon Version Tag
           description: You can use latest tag or check version builds on https://hub.docker.com/r/tootsuite/mastodon/tags
-          defaultValue: v3.3.0
+          defaultValue: v3.5.1
 
         - id: $$cap_secret_key_base
           defaultValue: $$cap_gen_random_hex(64)
@@ -219,6 +219,8 @@ caproverOneClickApp:
 
 
             You can add more environment variables to use with aws s3 for example
+
+            NOTE: If you change environment variables for the Mastodon instance, be sure to update the corresponding environment variables in the Sidekiq instance as well.
 
             Check out https://docs.joinmastodon.org/admin/config/ for more env vars
     displayName: Mastodon
