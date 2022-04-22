@@ -289,6 +289,6 @@ caproverOneClickApp:
   displayName: Taiga
   isOfficial: true
   description: >
-      Taiga is a project management platform for startups and agile developers & designers who want a simple, beautiful tool that makes work truly enjoyable.
-      **Warning: This App only works with an SMTP-connection and over HTTPS!**
+    Taiga is a project management platform for startups and agile developers & designers that makes work truly enjoyable.
+    **Warning: This App only requires a SMTP-connection and HTTPS!**
   documentation: Official docs are [here](https://docs.taiga.io/)
