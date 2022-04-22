@@ -37,8 +37,8 @@ services:
       EMAIL_HOST_PASSWORD: $$cap_email_smtp_pass
       # Rabbitmq settings
       # Should be the same as in taiga-async-rabbitmq and taiga-events-rabbitmq
-      RABBITMQ_USER: taiga
-      RABBITMQ_PASS: taiga
+      EVENTS_PUSH_BACKEND_URL: amqp://$$cap_rabbit_user:$$cap_rabbit_pass@srv-captain--$$cap_appname-events-rabbitmq:5672/taiga
+      CELERY_BROKER_URL: amqp://$$cap_rabbit_user:$$cap_rabbit_pass@srv-captain--$$cap_appname-async-rabbitmq:5672/taiga
       # Telemetry settings
       ENABLE_TELEMETRY: $$cap_enable_telemetry
     volumes:
