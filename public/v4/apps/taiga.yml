@@ -1,0 +1,294 @@
+captainVersion: 4
+
+services:
+  $$cap_appname-db:
+    image: postgres:$$cap_postgres_version
+    environment:
+      POSTGRES_DB: $$cap_postgres_db
+      POSTGRES_USER: $$cap_postgres_user
+      POSTGRES_PASSWORD: $$cap_postgres_pass
+    volumes:
+      - $$cap_appname-db-data:/var/lib/postgresql/data
+    caproverExtra:
+      notExposeAsWebApp: 'true'
+
+  $$cap_appname-back:
+    caproverExtra:
+      notExposeAsWebApp: 'true'
+    image: taigaio/taiga-back:$$cap_taiga_back_version
+    environment:
+      POSTGRES_DB: $$cap_postgres_db
+      POSTGRES_USER: $$cap_postgres_user
+      POSTGRES_PASSWORD: $$cap_postgres_pass
+      POSTGRES_HOST: srv-captain--$$cap_appname-db
+      # Taiga settings
+      TAIGA_SECRET_KEY: $$cap_taiga_secret
+      TAIGA_SITES_SCHEME: "https"
+      TAIGA_SITES_DOMAIN: $$cap_appname.$$cap_root_domain
+      TAIGA_SUBPATH: ""
+      # Email settings. Uncomment following lines and configure your SMTP server
+      EMAIL_BACKEND: "django.core.mail.backends.smtp.EmailBackend"
+      DEFAULT_FROM_EMAIL: $$cap_default_from_email
+      EMAIL_USE_TLS: $$cap_email_use_tls
+      EMAIL_USE_SSL: $$cap_email_use_ssl
+      EMAIL_HOST: $$cap_email_smtp_host
+      EMAIL_PORT: $$cap_email_smtp_port
+      EMAIL_HOST_USER: $$cap_email_smtp_user
+      EMAIL_HOST_PASSWORD: $$cap_email_smtp_pass
+      # Rabbitmq settings
+      # Should be the same as in taiga-async-rabbitmq and taiga-events-rabbitmq
+      RABBITMQ_USER: taiga
+      RABBITMQ_PASS: taiga
+      # Telemetry settings
+      ENABLE_TELEMETRY: $$cap_enable_telemetry
+    volumes:
+      - $$cap_appname-static-data:/taiga-back/static
+      - $$cap_appname-media-data:/taiga-back/media
+    depends_on:
+      - $$cap_appname-db
+      - $$cap_appname-events-rabbitmq
+      - $$cap_appname-async-rabbitmq
+
+  $$cap_appname-async:
+    image: taigaio/taiga-back:$$cap_taiga_back_version
+    entrypoint: ["/taiga-back/docker/async_entrypoint.sh"]
+    environment:
+      POSTGRES_DB: $$cap_postgres_db
+      POSTGRES_USER: $$cap_postgres_user
+      POSTGRES_PASSWORD: $$cap_postgres_pass
+      POSTGRES_HOST: srv-captain--$$cap_appname-db
+      # Taiga settings
+      TAIGA_SECRET_KEY: $$cap_taiga_secret
+      TAIGA_SITES_SCHEME: "https"
+      TAIGA_SITES_DOMAIN: $$cap_appname.$$cap_root_domain
+      TAIGA_SUBPATH: "" # "" or "/subpath"
+      # Email settings. Uncomment following lines and configure your SMTP server
+      EMAIL_BACKEND: "django.core.mail.backends.smtp.EmailBackend"
+      DEFAULT_FROM_EMAIL: $$cap_default_from_email
+      EMAIL_USE_TLS: $$cap_email_use_tls
+      EMAIL_USE_SSL: $$cap_email_use_ssl
+      EMAIL_HOST: $$cap_email_smtp_host
+      EMAIL_PORT: $$cap_email_smtp_port
+      EMAIL_HOST_USER: $$cap_email_smtp_user
+      EMAIL_HOST_PASSWORD: $$cap_email_smtp_pass
+      # Rabbitmq settings
+      # Should be the same as in taiga-async-rabbitmq and taiga-events-rabbitmq
+      RABBITMQ_USER: $$cap_rabbit_user
+      RABBITMQ_PASS: $$cap_rabbit_pass
+      RABBITMQ_URL: amqp://$$cap_rabbit_user:$$cap_rabbit_pass@srv-captain--$cap_appname-async-rabbitmq:5672/taiga
+      # Telemetry settings
+      ENABLE_TELEMETRY: $$cap_enable_telemetry
+    volumes:
+      - $$cap_appname-static-data:/taiga-back/static
+      - $$cap_appname-media-data:/taiga-back/media
+    depends_on:
+      - $$cap_appname-db
+      - $$cap_appname-back
+      - $$cap_appname-async-rabbitmq
+    caproverExtra:
+      notExposeAsWebApp: 'true'
+
+  $$cap_appname-async-rabbitmq:
+    image: rabbitmq:$$cap_rabbitmq_version
+    environment:
+      RABBITMQ_ERLANG_COOKIE: $$cap_erlang_cookie
+      RABBITMQ_DEFAULT_USER: $$cap_rabbit_user
+      RABBITMQ_DEFAULT_PASS: $$cap_rabbit_pass
+      RABBITMQ_DEFAULT_VHOST: taiga
+    volumes:
+      - $$cap_appname-async-rabbitmq-data:/var/lib/rabbitmq
+    caproverExtra:
+      notExposeAsWebApp: 'true'
+
+  $$cap_appname-front:
+    image: taigaio/taiga-front:$$cap_taiga_front_version
+    environment:
+      TAIGA_URL: "https://$$cap_appname.$$cap_root_domain"
+      TAIGA_WEBSOCKETS_URL: "wss://$$cap_appname.$$cap_root_domain"
+      TAIGA_SUBPATH: "" # "" or "/subpath"
+    # volumes:
+    #   - ./conf.json:/usr/share/nginx/html/conf.json
+    caproverExtra:
+      notExposeAsWebApp: 'true'
+
+  $$cap_appname-events:
+    image: taigaio/taiga-events:$$cap_taiga_events_version
+    environment:
+      RABBITMQ_USER: $$cap_rabbit_user
+      RABBITMQ_PASS: $$cap_rabbit_pass
+      TAIGA_SECRET_KEY: $$cap_taiga_secret
+      RABBITMQ_URL: amqp://$$cap_rabbit_user:$$cap_rabbit_pass@srv-captain--$cap_appname-events-rabbitmq:5672/taiga
+    depends_on:
+      - $$cap_appname-events-rabbitmq
+    caproverExtra:
+      notExposeAsWebApp: 'true'
+
+  $$cap_appname-events-rabbitmq:
+    image: rabbitmq:$$cap_rabbitmq_version
+    environment:
+      RABBITMQ_ERLANG_COOKIE: $$cap_erlang_cookie
+      RABBITMQ_DEFAULT_USER: $$cap_rabbit_user
+      RABBITMQ_DEFAULT_PASS: $$cap_rabbit_pass
+      RABBITMQ_DEFAULT_VHOST: taiga
+    volumes:
+      - $$cap_appname-events-rabbitmq-data:/var/lib/rabbitmq
+    caproverExtra:
+      notExposeAsWebApp: 'true'
+
+  $$cap_appname-protected:
+    image: taigaio/taiga-protected:$$cap_taiga_protected_version
+    environment:
+      MAX_AGE: 360
+      SECRET_KEY: $$cap_taiga_secret
+    caproverExtra:
+      notExposeAsWebApp: 'true'
+
+  # Gateway
+  $$cap_appname:
+    ports:
+      - "9000:80"
+    volumes:
+      - $$cap_appname-static-data:/taiga/static
+      - $$cap_appname-media-data:/taiga/media
+    caproverExtra:
+      dockerfileLines:
+        - FROM nginx:$$cap_nginx_version
+        - RUN curl https://raw.githubusercontent.com/kaleidos-ventures/taiga-docker/$$cap_taiga_docker_version/taiga-gateway/taiga.conf > /etc/nginx/conf.d/default.conf
+        - RUN sed -i 's/http:\/\/taiga-front/http:\/\/srv-captain--$$cap_appname-front/g' /etc/nginx/conf.d/default.conf
+        - RUN sed -i 's/http:\/\/taiga-back/http:\/\/srv-captain--$$cap_appname-back/g' /etc/nginx/conf.d/default.conf
+        - RUN sed -i 's/http:\/\/taiga-protected/http:\/\/srv-captain--$$cap_appname-protected/g' /etc/nginx/conf.d/default.conf
+        - RUN sed -i 's/http:\/\/taiga-events/http:\/\/srv-captain--$$cap_appname-events/g' /etc/nginx/conf.d/default.conf
+    depends_on:
+      - $$cap_appname-front
+      - $$cap_appname-back
+      - $$cap_appname-events
+
+
+caproverOneClickApp:
+  variables:
+    - id: $$cap_taiga_back_version
+      label: Taiga Backend Version
+      defaultValue: 6.5.1
+      description: Check out their page for the valid tags https://hub.docker.com/r/taigaio/taiga-back/tags
+      validRegex: /^.+$/
+    - id: $$cap_taiga_front_version
+      label: Taiga Frontend Version
+      defaultValue: 6.5.1
+      description: Check out their page for the valid tags https://hub.docker.com/r/taigaio/taiga-front/tags
+      validRegex: /^.+$/
+    - id: $$cap_taiga_protected_version
+      label: Taiga Protected Version
+      defaultValue: 6.5.0
+      description: Check out their page for the valid tags https://hub.docker.com/r/taigaio/taiga-protected/tags
+      validRegex: /^.+$/
+    - id: $$cap_taiga_events_version
+      label: Taiga Events Version
+      defaultValue: 6.5.0
+      description: Check out their page for the valid tags https://hub.docker.com/r/taigaio/taiga-events/tags
+      validRegex: /^.+$/
+    - id: $$cap_taiga_docker_version
+      label: Taiga Docker Repository Version
+      description: Check out their page for the valid tags https://github.com/kaleidos-ventures/taiga-docker/tags
+      defaultValue: 6.5.0
+      validRegex: /^.+$/
+    - id: $$cap_postgres_version
+      label: Postgres Version
+      defaultValue: 13.6
+      description: Version 14 or higher might fail. Check out their page for the valid tags https://hub.docker.com/_/postgres?tab=tags
+      validRegex: /^.+$/
+    - id: $$cap_rabbitmq_version
+      label: RabbitMQ Version
+      defaultValue: 3.9.15-management-alpine
+      description: Check out their page for the valid tags https://hub.docker.com/_/rabbitmq?tab=tags
+      validRegex: /^.+$/
+    - id: $$cap_nginx_version
+      label: Nginx Version
+      defaultValue: 1.21.6
+      description: Check out their page for the valid tags https://hub.docker.com/_/nginx?tab=tags
+      validRegex: /^.+$/
+    - id: $$cap_taiga_secret
+      label: Taiga Secret
+      description: Secret to use between taigas modules. Use `openssl rand -hex 32`
+      defaultValue: $$cap_gen_random_hex(64)
+      validRegex: /^.+$/
+    - id: $$cap_erlang_cookie
+      label: Secret Erlang Cookie
+      description: Secret to use between taigas modules. Use `openssl rand -hex 32`
+      defaultValue: $$cap_gen_random_hex(64)
+      validRegex: /^.+$/
+    - id: $$cap_default_from_email
+      label: SMTP - Default From E-Mail
+      description: e.g. "noreply@example.com"
+      validRegex: /^.+@.+$/
+    - id: $$cap_email_use_tls
+      label: SMTP - Use TLS
+      defaultValue: "False"
+      validRegex: /^(True|False)$/
+    - id: $$cap_email_use_ssl
+      label: SMTP - Use SSL
+      description: e.g. "noreply@example.com"
+      defaultValue: "True"
+      validRegex: /^(True|False)$/
+    - id: $$cap_email_smtp_host
+      label: SMTP - Host
+      description: e.g. "smtp.example.com"
+      validRegex: /^.+$/
+    - id: $$cap_email_smtp_port
+      label: SMTP - Port
+      defaultValue: 465
+      validRegex: /^[0-9]+$/
+    - id: $$cap_email_smtp_user
+      label: SMTP - User
+      validRegex: /^.+$/
+    - id: $$cap_email_smtp_pass
+      label: SMTP - Password
+    - id: $$cap_enable_telemetry
+      label: Enable Telemetry
+      defaultValue: "False"
+      validRegex: /^(True|False)$/
+    - id: $$cap_postgres_db
+      label: Postgres Database Name
+      defaultValue: taiga
+      validRegex: /^.+$/
+    - id: $$cap_postgres_user
+      label: Postgres Database Username
+      defaultValue: taiga
+      validRegex: /^.+$/
+    - id: $$cap_postgres_pass
+      label: Postgres Database Password
+      description: E.g. use `openssl rand -hex 32`
+      defaultValue: $$cap_gen_random_hex(64)
+      validRegex: /^.+$/
+    - id: $$cap_rabbit_user
+      label: RabbitMQ Username
+      defaultValue: taiga
+      validRegex: /^.+$/
+    - id: $$cap_rabbit_pass
+      label: RabbitMQ Password
+      description: E.g. use `openssl rand -hex 32`
+      defaultValue: $$cap_gen_random_hex(64)
+      validRegex: /^.+$/
+
+  instructions:
+    start: >
+      Taiga is a project management platform for startups and agile developers & designers who want a simple, beautiful tool that makes work truly enjoyable.
+      **Warning: This App only works with an SMTP-connection and over HTTPS!**
+    end: >
+      The automatic setup of Taiga was successful! Now you need to perform the following steps:
+       1. `Enable HTTPS` and `Websocket Support` at [https://captain.$$cap_root_domain/#/apps/details/$$cap_appname](https://captain.$$cap_root_domain/#/apps/details/$$cap_appname)
+       2. After the Migrations were successful (see logs of [$$cap_appname-back](https://captain.$$cap_root_domain/#/apps/details/$$cap_appname-back)), install the [Taiga Superuser Setup](https://captain.$$cap_root_domain/#/apps/oneclick/taiga-superuser-setup?baseDomain=https%3A%2F%2Foneclickapps.caprover.com). You will need the following data:
+         - App Name: `$$cap_appname` (Yes, the same!)
+         - Taiga Backend Version: `$$cap_taiga_back_version`
+         - Taiga Secret: `$$cap_taiga_secret`
+         - Postgres Database Name: `$$cap_postgres_db`
+         - Postgres Database User: `$$cap_postgres_user`
+         - Postgres Database Pass: `$$cap_postgres_pass`
+         - And the E-Mail and Username of the superuser.
+       3. Delete the newly created [$$cap_appname-superuser-setup image](https://captain.$$cap_root_domain/#/apps/details/$$cap_appname-superuser-setup)
+       4. Request a password by using the "forgot password form" for E-Mail `$$cap_superemail` at [https://$$cap_appname.$$cap_root_domain/forgot-password](https://$$cap_appname.$$cap_root_domain/forgot-password)
+  displayName: Taiga
+  isOfficial: true
+  description: >
+      Taiga is a project management platform for startups and agile developers & designers who want a simple, beautiful tool that makes work truly enjoyable.
+      **Warning: This App only works with an SMTP-connection and over HTTPS!**
+  documentation: Official docs are [here](https://docs.taiga.io/)

@@ -1,0 +1,64 @@
+captainVersion: 4
+
+services:
+
+  $$cap_appname-superuser-setup:
+    caproverExtra:
+      notExposeAsWebApp: 'true'
+      dockerfileLines:
+        - FROM taigaio/taiga-back:latest
+        - ENTRYPOINT python manage.py createsuperuser --username $$cap_superuser --email $$cap_superemail --noinput
+    environment:
+      POSTGRES_DB: $$cap_postgres_db
+      POSTGRES_USER: $$cap_postgres_user
+      POSTGRES_PASSWORD: $$cap_postgres_pass
+      POSTGRES_HOST: srv-captain--$$cap_appname-db
+      TAIGA_SECRET_KEY: $$cap_taiga_secret
+
+
+caproverOneClickApp:
+  variables:
+    - id: $$cap_taiga_back_version
+      label: Taiga Backend Version
+      defaultValue: 6.5.1
+      description: Use the same version as in the initial installation
+      validRegex: /^.+$/
+    - id: $$cap_taiga_secret
+      label: Taiga Secret
+      description: Use the same secret as in the initial installation
+      validRegex: /^.+$/
+    - id: $$cap_postgres_db
+      label: Postgres Database Name
+      description: Use the same database name as in the initial installation
+      defaultValue: taiga
+      validRegex: /^.+$/
+    - id: $$cap_postgres_user
+      label: Postgres Database Username
+      description: Use the same database username as in the initial installation
+      defaultValue: taiga
+      validRegex: /^.+$/
+    - id: $$cap_postgres_pass
+      label: Postgres Database Password
+      description: Use the same database password as in the initial installation
+      validRegex: /^.+$/
+    - id: $$cap_superuser
+      label: Superuser Username
+      validRegex: /^.+$/
+    - id: $$cap_superemail
+      label: Superuser E-Mail
+      validRegex: /^.+@.+$/
+
+  instructions:
+    start: >
+      This is the companion-image for single-time initial super user installation of Taiga. Install Taiga before!
+      **For ease of use, you can use the same appname!**
+    end: >
+      Now you need to perform the following steps:
+       1. Delete [this image ($$cap_appname-superuser-setup)](https://captain.$$cap_root_domain/#/apps/details/$$cap_appname-superuser-setup)
+       2. Request a password by using the "forgot password form" for E-Mail `$$cap_superemail` at [https://$$cap_appname.$$cap_root_domain/forgot-password](https://$$cap_appname.$$cap_root_domain/forgot-password)
+  displayName: Taiga Superuser Setup
+  isOfficial: true
+  description: >
+      Taiga is a project management platform for startups and agile developers & designers who want a simple, beautiful tool that makes work truly enjoyable.
+      **Warning: This App only works with an SMTP-connection and over HTTPS!**
+  documentation: Official docs are [here](https://docs.taiga.io/)
