@@ -59,6 +59,5 @@ caproverOneClickApp:
   displayName: Taiga Superuser Setup
   isOfficial: true
   description: >
-      Taiga is a project management platform for startups and agile developers & designers who want a simple, beautiful tool that makes work truly enjoyable.
-      **Warning: This App only works with an SMTP-connection and over HTTPS!**
+    **Superuser Setup Companion App** for Taiga, which is a project management platform for startups and agile developers & designers that makes work truly enjoyable.
   documentation: Official docs are [here](https://docs.taiga.io/)
