@@ -18,8 +18,6 @@ services:
             DB_NAME: wiki
         image: requarks/wiki:$$cap_version
         restart: always
-        volumes:
-            - $$cap_appname-data:/wiki
         caproverExtra:
             containerHttpPort: '3000'
 caproverOneClickApp:
