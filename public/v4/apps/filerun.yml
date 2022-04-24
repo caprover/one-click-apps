@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: afian/filerun:$$cap_wp_version
+        image: filerun/filerun:$$cap_wp_version
         volumes:
             - $$cap_appname-html:/var/www/html
             - $$cap_appname-userfiles:/user-files
@@ -39,8 +39,8 @@ caproverOneClickApp:
           validRegex: /.{1,}/
         - id: $$cap_wp_version
           label: Filerun Version.
-          defaultValue: ''
-          description: Use 'latest' tag for normal installation. If you wish to have LibreOffice included, use 'libreoffice' tag. Note that LibreOffice is considerably larger in disk size and memory usage. Check out their Docker page for the valid tags https://hub.docker.com/r/afian/filerun/tags
+          defaultValue: 'latest'
+          description: Use 'latest' tag for normal installation. Check out their Docker page for the valid tags https://hub.docker.com/r/filerun/filerun/tags
           validRegex: /^([^\s^\/])+$/
     instructions:
         start: >-
@@ -60,4 +60,4 @@ caproverOneClickApp:
     displayName: FileRun - No DB
     isOfficial: true
     description: FileRun is a self-hosted Google Drive alternative. It is a full featured web based file manager with an easy to use user interface.
-    documentation: Taken from https://hub.docker.com/r/afian/filerun/.
+    documentation: Taken from https://hub.docker.com/r/filerun/filerun/.
