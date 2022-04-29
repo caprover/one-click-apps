@@ -44,20 +44,6 @@ services:
         volumes:
             - $$cap_appname-db-data:/var/lib/postgresql/data
         restart: always
-        command:
-            - postgres
-            - -c
-            - checkpoint_completion_target=0.6
-            - -c
-            - default_statistics_target=200
-            - -c
-            - maintenance_work_mem=128MB
-            - -c
-            - max_connections=150
-            - -c
-            - shared_buffers=256MB
-            - -c
-            - work_mem=8MB
         environment:
             POSTGRES_DB: $$cap_dbname
             POSTGRES_USER: $$cap_dbuser
@@ -146,7 +132,7 @@ caproverOneClickApp:
 
     instructions:
         start: >-
-            Mayan EDMS is an opensource web-based Document Management System. 
+            Mayan EDMS is an open source web-based Document Management System (More info at https://www.mayan-edms.com/)
             Most settings can be set inside the app, but environment variables will override them.
             Minimum requirements 2GB RAM and 2vCPUs. Recommended 4GB RAM and 4vCPUs
         end: >-
