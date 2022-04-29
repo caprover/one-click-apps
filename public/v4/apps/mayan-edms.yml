@@ -142,15 +142,15 @@ caproverOneClickApp:
       defaultValue: "Mayan EDMS"
       description: Title and header of your site
 
-instructions:
-  start: >-
-    Mayan EDMS is an opensource web-based Document Management System. 
-    Most settings can be set inside the app, but environment variables will override them.
-    Minimum requirements 2GB RAM and 2vCPUs. Recommended 4GB RAM and 4vCPUs
-  end: >-
-    Done!
-    Your service is available at http://$$cap_appname.$$cap_root_domain
-displayName: 'Mayan EDMS'
-isOfficial: false
-description: Mayan EDMS is an open source web-based Document Management System with many advanced features.
-documentation: https://www.mayan-edms.com/
+  instructions:
+    start: >-
+      Mayan EDMS is an opensource web-based Document Management System. 
+      Most settings can be set inside the app, but environment variables will override them.
+      Minimum requirements 2GB RAM and 2vCPUs. Recommended 4GB RAM and 4vCPUs
+    end: >-
+      Done!
+      Your service is available at http://$$cap_appname.$$cap_root_domain
+  displayName: 'Mayan EDMS'
+  isOfficial: false
+  description: Mayan EDMS is an open source web-based Document Management System with many advanced features.
+  documentation: https://www.mayan-edms.com/
