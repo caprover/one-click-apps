@@ -81,11 +81,13 @@ caproverOneClickApp:
         - id: $$cap_redis_version
           label: Redis version
           defaultValue: '6.2.1-alpine'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/_/redis?tab=tags
           validRegex: /^([^\s^\/])+$/
 
         - id: $$cap_redis_pass
           label: Redis password
           defaultValue: mayanredispassword
+          validRegex: /^([^\s^\/])+$/
 
         - id: $$cap_dbname
           label: Database Name
@@ -105,17 +107,17 @@ caproverOneClickApp:
         - id: $$cap_default_document_lang
           label: Default document language
           defaultValue: eng
-          description: Use the ISO 639-3 code (https://en.wikipedia.org/wiki/ISO_639).
+          description: Use the ISO 639-3 code (https://en.wikipedia.org/wiki/ISO_639). Will default to *eng* if left blank.
 
         - id: $$cap_language_code
           label: Default language for the installation
           defaultValue: en-us
-          description: Mayan EDMS UI will default to this language if the user's locale is not found
+          description: Mayan EDMS UI will default to this language if the user's locale is not found. Will default to *en-us* if left blank
 
         - id: $$cap_ocr_langs
           label: Extra packages
           defaultValue: 'tesseract-ocr-spa'
-          description: Use to add extra languagues for OCR (English installed by default). Insert as many packages as you need, separated by a space, as *tesseract-ocr-CODE*. Language codes in https://tesseract-ocr.github.io/tessdoc/Data-Files-in-different-versions.html
+          description: Use to add extra languagues for OCR (English is installed by default). Insert as many packages as you need, separated by a space, as *tesseract-ocr-CODE*. Language codes in https://tesseract-ocr.github.io/tessdoc/Data-Files-in-different-versions.html
 
         - id: $$cap_timezone
           label: Time Zone
