@@ -4,12 +4,9 @@ services:
     $$cap_appname-redis:
         caproverExtra:
             notExposeAsWebApp: 'true'
-        image: 'docker.io/bitnami/redis:6.0'
-        environment:
-            REDIS_DISABLE_COMMANDS: FLUSHDB,FLUSHALL
-            ALLOW_EMPTY_PASSWORD: 'yes'
+        image: 'redis:6.2-alpine'
         volumes:
-            - $$cap_appname-redis-data:/bitnami/redis/data
+            - $$cap_appname-redis-data:/data
 
     $$cap_appname-database:
         caproverExtra:
