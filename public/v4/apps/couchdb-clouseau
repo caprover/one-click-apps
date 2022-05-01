@@ -32,7 +32,7 @@ caproverOneClickApp:
             After installation on CapRover, it will be available as srv-captain--YOUR_CONTAINER_NAME at port 5984 to other CapRover apps.
             Enter your CouchDB Configuration parameters and click on next. It will take about a minute for the process to finish.
         end: CouchDB is deployed and available as $$cap_appname at port 5984 to other apps
-    displayName: CouchDB
+    displayName: CouchDB + Clouseau
     isOfficial: true
     description: CouchDB + Clouseau (Full Text Search) - IBM CouchDB 3 official image
-    documentation: Taken from https://hub.docker.com/_/couchdb/
+    documentation: Taken from https://hub.docker.com/r/ibmcom/couchdb3/
