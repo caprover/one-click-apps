@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname-db:
-        image: postgres:$$cap_mattermost_version
+        image: postgres:$$cap_postgres_version
         volumes:
             - $$cap_appname-db-data:/var/lib/postgresql/data
         restart: always
@@ -34,9 +34,13 @@ services:
 caproverOneClickApp:
     variables:
         - id: $$cap_mattermost_version
-          label: mattermost Docker Image tag
-          defaultValue: latest
+          label: mattermost Docker Image tag. Use 'latest' for updated images.
+          defaultValue: release-6.7
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/mattermost/mattermost-prod-app/tags
+        - id: $$cap_postgres_version
+          label: postgres database Docker Image tag. Use 'latest' for updated images.
+          defaultValue: 14.3
+          description: Check out their Docker page for the valid tags https://hub.docker.com/_/postgres?tab=tags
         - id: $$cap_pg_pass
           label: Database Password
           description: Password must be at least 30 characters.  Please use a random string.
