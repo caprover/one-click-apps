@@ -10,7 +10,7 @@ services:
         volumes:
             - $$cap_appname-db:/var/lib/mysql
     $$cap_appname-pb:
-        image: passbolt/passbolt:2.12.1-debian
+        image: passbolt/passbolt:$$cap_pb_version
         depends_on:
             - $$cap_appname-db
         environment:
