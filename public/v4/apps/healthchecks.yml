@@ -36,7 +36,7 @@ caproverOneClickApp:
           label: hc Manifest digest
           defaultValue: 'v1.25.0'
           description: Find on https://hub.docker.com/r/healthchecks/healthchecks/tags
-        - id: $$cap__postgres_password
+        - id: $$cap_postgres_password
           label: Postgres Password
           description: Password must be at least 12 characters.  Please use a random string.
           defaultValue: $$cap_gen_random_hex(16)
