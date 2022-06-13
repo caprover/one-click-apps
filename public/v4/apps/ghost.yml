@@ -110,7 +110,7 @@ caproverOneClickApp:
           label: STMP password
         - description: The SMTP protocol to use. Allowed values tls, ssl. No default.
           id: $$cap_ghost_smtp_protocol
-          label: [OPTIONAL] STMP protocol
+          label: '[OPTIONAL] STMP protocol'
         - defaultValue: blog@example.com
           description: STMP from address
           id: $$cap_ghost_smtp_from

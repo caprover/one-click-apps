@@ -77,7 +77,7 @@ caproverOneClickApp:
           label: Ghost Port
         - description: The SMTP protocol to use. Allowed values tls, ssl. No default.
           id: $$cap_ghost_smtp_protocol
-          label: [OPTIONAL] STMP protocol
+          label: '[OPTIONAL] STMP protocol'
         - defaultValue: smtp.gmail.com
           description: The STMP host you will be using
           id: $$cap_ghost_smtp_host
