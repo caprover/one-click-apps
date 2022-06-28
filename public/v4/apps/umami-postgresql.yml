@@ -1,17 +1,11 @@
 captainVersion: 4
 services:
-    # Umami
+    # Umami postgres
     $$cap_appname:
-        image: tschannik/caprover-umami:$$cap_umami_version
+        image: ghcr.io/mikecao/umami:postgresql-$$cap_umami_version
         restart: always
         environment:
             DATABASE_URL: postgresql://umami:$$cap_postgres_pass@srv-captain--$$cap_appname-postgres/umami
-            POSTGRES_HOSTNAME: srv-captain--$$cap_appname-postgres
-            POSTGRES_DB: umami
-            POSTGRES_USER: umami
-            POSTGRES_PASSWORD: $$cap_postgres_pass
-            POSTGRES_INITDB_ARGS: $$cap_pg_initdb_args
-            HASH_SALT: $$cap_gen_random_hex(16)
         depends_on:
             - $$cap_appname-postgres
         caproverExtra:
@@ -33,17 +27,17 @@ caproverOneClickApp:
     variables:
         - id: $$cap_postgres_version
           label: Postgres Version
-          defaultValue: '12.6-alpine'
+          defaultValue: '14.4-alpine'
           description: Checkout their page for the valid tags https://hub.docker.com/_/postgres
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_umami_version
           label: Caprover Umami Version
-          defaultValue: 'postgresql-5ecaf55'
-          description: Checkout their github page for the valid tags https://github.com/tschannik/caprover-umami
+          defaultValue: 'v1.33.2'
+          description: Checkout their github page for the valid tags (minimum compatible version v1.33.2) https://github.com/mikecao/umami/releases
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_postgres_pass
           label: Potgress Database password
-          description: 'Pasword for postgres'
+          description: 'Password for postgres'
           defaultValue: $$cap_gen_random_hex(16)
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_pg_initdb_args
@@ -55,11 +49,9 @@ caproverOneClickApp:
             umami is a simple, easy to use, self-hosted web analytics solution. The goal is to provide you with a friendly privacy-focused alternative to Google Analytics.
 
 
-            This app will install a default postgres instance with persistant data. You can choose the version yourself. The deployment was tested with postgres 12.x.
+            This app will install a default postgres instance with persistant data. You can choose the version yourself. The deployment was tested with postgres 14.x.
 
-            After the installation we'll fork a slightly customized version of the original umami package which makes sure that your data is not corrupted on new container deployments or restarts. 
-            Open a PR on https://github.com/tschannik/caprover-umami of your desired umami-version is not supported.
-
+            For Updating just Deploy latest image from https://github.com/mikecao/umami/pkgs/container/umami using the Deploy via ImageName section in your caprover umami container
 
             For more details about umami, see: https://umami.is
 
@@ -71,6 +63,6 @@ caproverOneClickApp:
 
             IMPORTANT: Use user 'admin' and password 'umami' to login and change your password immediately!
     displayName: umami
-    isOfficial: false
+    isOfficial: true
     description: umami is a simple, easy to use, self-hosted web analytics solution. The goal is to provide you with a friendly privacy-focused alternative to Google Analytics.
     documentation: Official docs are [here](https://github.com/mikecao/umami)
