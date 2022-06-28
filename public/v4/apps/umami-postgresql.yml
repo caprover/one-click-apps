@@ -32,8 +32,8 @@ caproverOneClickApp:
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_umami_version
           label: Caprover Umami Version
-          defaultValue: '1.33.1'
-          description: Checkout their github page for the valid tags https://github.com/mikecao/umami/releases
+          defaultValue: '1.33.2'
+          description: Checkout their github page for the valid tags (minimum compatible version 1.33.2) https://github.com/mikecao/umami/releases
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_postgres_pass
           label: Potgress Database password
