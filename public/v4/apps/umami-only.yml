@@ -43,6 +43,7 @@ caproverOneClickApp:
 
             For more details about umami, see: https://umami.is
 
+            Note: This app is intended for advanced users who'd like to have a umami without Database service installed. You need run your Database Service and then set the Database configuration accordingly.
 
             Enter your configuration parameters and click on next. It will take about a minute for the process to finish.
         end: >-
