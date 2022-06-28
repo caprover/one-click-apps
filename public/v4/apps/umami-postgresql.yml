@@ -63,6 +63,6 @@ caproverOneClickApp:
 
             IMPORTANT: Use user 'admin' and password 'umami' to login and change your password immediately!
     displayName: umami
-    isOfficial: false
+    isOfficial: true
     description: umami is a simple, easy to use, self-hosted web analytics solution. The goal is to provide you with a friendly privacy-focused alternative to Google Analytics.
     documentation: Official docs are [here](https://github.com/mikecao/umami)
