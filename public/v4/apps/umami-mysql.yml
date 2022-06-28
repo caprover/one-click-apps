@@ -1,6 +1,6 @@
 captainVersion: 4
 services:
-    # Umami postgres
+    # Umami mysql
     $$cap_appname:
         image: ghcr.io/mikecao/umami:mysql-$$cap_umami_version
         restart: always
