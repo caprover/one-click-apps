@@ -1,4 +1,3 @@
-# tested on CR 1.10.1 2022-01-08 by sneak
 captainVersion: 4
 services:
     $$cap_appname-db:
@@ -13,45 +12,47 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname:
-        image: jboss/keycloak:$$cap_keycloak_version
         depends_on:
             - $$cap_appname-db
         restart: always
         environment:
             DB_VENDOR: postgres
             DB_ADDR: srv-captain--$$cap_appname-db
-            POSTGRES_DB: keycloak
+            DB_DATABASE: keycloak
             DB_USER: keycloak
             DB_PASSWORD: $$cap_pg_pass
-            KEYCLOAK_USER: $$cap_keycloak_user
-            KEYCLOAK_PASSWORD: $$cap_keycloak_password
-            PROXY_ADDRESS_FORWARDING: 'true'
+            KEYCLOAK_ADMIN: $$cap_keycloak_admin
+            KEYCLOAK_ADMIN_PASSWORD: $$cap_keycloak_password
         caproverExtra:
             containerHttpPort: '8080'
+            dockerfileLines:
+                - FROM quay.io/keycloak/keycloak:$$cap_keycloak_version
+                # TODO: Persistance in database KO -> to be fixed
+                - CMD ["start", "--hostname=$$cap_appname.$$cap_root_domain", "--proxy=edge", "--db-url-host=jdbc:postgresql://srv-captain--$$cap_appname-db/keycloak", "--db-username=keycloak", "--db-password=$$cap_pg_pass"]
 caproverOneClickApp:
     variables:
         - id: $$cap_postgres_version
           label: Postgres Version
-          defaultValue: '9.6'
-          description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/
+          defaultValue: '10.21'
+          description: Check out their DB page for any valid major tested https://www.keycloak.org/server/db 
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_keycloak_version
           label: Keycloak Version
-          defaultValue: 16.1.0
-          description: v16.1.0 current as of 2021-12-21.  Check out their Docker page for the valid tags https://hub.docker.com/r/jboss/keycloak/tags
+          defaultValue: 18.0.2
+          description: v18.0.2 current as of 2022-07-04.  Check out their Docker page for the valid tags https://quay.io/repository/keycloak/keycloak?tab=tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_pg_pass
           label: Postgres Password
           description: 'App-to-app database credential.  12-20 characters.'
           defaultValue: $$cap_gen_random_hex(20)
           validRegex: /.{12,20}/
-        - id: $$cap_keycloak_user
-          label: Keycloak user
-          description: 'Login username for the first web user.'
+        - id: $$cap_keycloak_admin
+          label: Keycloak admin user
+          description: 'Login username for the admin web user.'
           validRegex: /.{1,}/
         - id: $$cap_keycloak_password
-          label: Keycloak password
-          description: 'Login password for the first web user.  12-20 characters.'
+          label: Keycloak admin password
+          description: 'Login password for the admin web user.  12-20 characters.'
           defaultValue: $$cap_gen_random_hex(20)
           validRegex: /.{12,20}/
     instructions:
@@ -62,11 +63,21 @@ caproverOneClickApp:
 
             For source code, see: https://github.com/keycloak/keycloak
 
-            For docker image, see: https://hub.docker.com/r/jboss/keycloak
+            For docker image, see: https://quay.io/repository/keycloak/keycloak
 
-            Enter your Keycloak Configuration parameters and click on next. It will take about a minute for the process to finish.
-        end: Keycloak is deployed and available as srv-captain--$$cap_appname:8080 to other apps
+            Enter your Keycloak Configuration parameters and click on next.
+        end: >
+            Keycloak is deployed and available as $$cap_appname. 
+            
+            Before starting using Keycloak, you'll need to
+
+            - Enable HTTPS
+
+            - Force HTTPS by redirecting all HTTP traffic to HTTPS
+
+            
+            IMPORTANT: It will take up to 1 minutes for Keycloak to be ready. Before that, you might see 502 error page.
     displayName: ''
     isOfficial: true
     description: Keycloak is an open source identity and access management solution
-    documentation: Taken from https://github.com/jboss-dockerfiles/keycloak/blob/master/server/README.md
+    documentation: Taken from https://github.com/keycloak/keycloak-containers/blob/main/docker-compose-examples/keycloak-postgres.yml
