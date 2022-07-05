@@ -16,19 +16,27 @@ services:
             - $$cap_appname-db
         restart: always
         environment:
-            DB_VENDOR: postgres
-            DB_ADDR: srv-captain--$$cap_appname-db
-            DB_DATABASE: keycloak
-            DB_USER: keycloak
-            DB_PASSWORD: $$cap_pg_pass
             KEYCLOAK_ADMIN: $$cap_keycloak_admin
             KEYCLOAK_ADMIN_PASSWORD: $$cap_keycloak_password
+            KC_DB_PASSWORD: $$cap_pg_pass
         caproverExtra:
             containerHttpPort: '8080'
             dockerfileLines:
+                - FROM quay.io/keycloak/keycloak:$$cap_keycloak_version as builder
+                - ENV KC_HEALTH_ENABLED=true
+                - ENV KC_METRICS_ENABLED=false
+                - ENV KC_FEATURES=token-exchange,recovery-codes
+                - ENV KC_DB=postgres
+                - RUN /opt/keycloak/bin/kc.sh build
+
                 - FROM quay.io/keycloak/keycloak:$$cap_keycloak_version
-                # TODO: Persistance in database KO -> to be fixed
-                - CMD ["start", "--hostname=$$cap_appname.$$cap_root_domain", "--proxy=edge", "--db-url-host=jdbc:postgresql://srv-captain--$$cap_appname-db/keycloak", "--db-username=keycloak", "--db-password=$$cap_pg_pass"]
+                - COPY --from=builder /opt/keycloak/ /opt/keycloak/
+                - WORKDIR /opt/keycloak
+                - ENV KC_DB_URL=jdbc:postgresql://srv-captain--$$cap_appname-db/keycloak
+                - ENV KC_DB_USERNAME=keycloak
+                - ENV KC_DB_PASSWORD=$$cap_pg_pass
+                - ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start", "--hostname=$$cap_appname.$$cap_root_domain", "--proxy=edge"]
+
 caproverOneClickApp:
     variables:
         - id: $$cap_postgres_version
