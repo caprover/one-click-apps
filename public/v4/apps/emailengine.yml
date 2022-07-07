@@ -14,7 +14,7 @@ services:
   # Redis
   $$cap_appname-redis:
     image: redis:$$cap_redis_version
-    command: redis-server --requirepass $$cap_redis_password
+    command: redis-server
     volumes:
       - $$cap_appname-db-data:/data/db
     environment:
