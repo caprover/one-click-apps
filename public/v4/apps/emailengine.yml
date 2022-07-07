@@ -8,7 +8,7 @@ services:
     restart: always
     environment:
       WAIT_HOSTS: srv-captain--$$cap_appname-redis:6379
-      EENGINE_REDIS: redis://:$$cap_redis_password@srv-captain--$$cap_appname-redis:6379
+      EENGINE_REDIS: redis://:@srv-captain--$$cap_appname-redis:6379
     caproverExtra:
       containerHttpPort: "3000"
   # Redis
@@ -17,8 +17,6 @@ services:
     command: redis-server
     volumes:
       - $$cap_appname-db-data:/data/db
-    environment:
-      REDIS_PASSWORD: $$cap_redis_password
     restart: always
     caproverExtra:
       notExposeAsWebApp: "true"
@@ -33,11 +31,6 @@ caproverOneClickApp:
       label: Redis Version
       defaultValue: "7.0.2"
       description: Check out their docker page for the valid tags https://hub.docker.com/_/redis?tab=tags
-      validRegex: /^([^\s^\/])+$/
-    - id: $$cap_redis_password
-      label: Redis Password
-      defaultValue: ""
-      description: "Your super password for Redis"
       validRegex: /^([^\s^\/])+$/
   instructions:
     start: >-
