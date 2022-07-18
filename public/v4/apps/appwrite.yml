@@ -1222,13 +1222,13 @@ caproverOneClickApp:
         # phone
         - label: Phone | _APP_PHONE_PROVIDER
           description: |
-            Provider used for delivering SMS for Phone authentication. Use the following format: 'phone://[USER]:[SECRET]@[PROVIDER]'.
-            Available providers are twilio, text-magic and telesign.
+              Provider used for delivering SMS for Phone authentication. Use the following format: 'phone://[USER]:[SECRET]@[PROVIDER]'.
+              Available providers are twilio, text-magic and telesign.
           defaultValue: ''
           id: $$cap_APP_PHONE_PROVIDER
         - label: From | _APP_PHONE_FROM
           description: |
-            Phone number used for sending out messages. Must start with a leading '+' and maximum of 15 digits without spaces (+123456789).
+              Phone number used for sending out messages. Must start with a leading '+' and maximum of 15 digits without spaces (+123456789).
           defaultValue: ''
           id: $$cap_APP_PHONE_FROM
 
