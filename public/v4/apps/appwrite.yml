@@ -40,7 +40,7 @@ services:
             - $$cap_appname-influxdb-data:/var/lib/influxdb
 
     $$cap_appname-appwrite:
-        image: 'appwrite/appwrite:$$cap_APP_VERSION_PATCH'
+        image: 'appwrite/appwrite:0.15.$$cap_APP_VERSION_PATCH'
         volumes:
             - $$cap_appname-appwrite-uploads:/storage/uploads
             - $$cap_appname-appwrite-cache:/storage/cache
@@ -127,7 +127,7 @@ services:
     $$cap_appname-appwrite-realtime:
         caproverExtra:
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION_PATCH
+                - FROM appwrite/appwrite:0.15.$$cap_APP_VERSION_PATCH
                 - ENTRYPOINT ["realtime"]
         entrypoint: realtime
         depends_on:
@@ -210,7 +210,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION_PATCH
+                - FROM appwrite/appwrite:0.15.$$cap_APP_VERSION_PATCH
                 - ENTRYPOINT ["executor"]
         depends_on:
             - $$cap_appname-appwrite
@@ -297,7 +297,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION_PATCH
+                - FROM appwrite/appwrite:0.15.$$cap_APP_VERSION_PATCH
                 - ENTRYPOINT ["worker-database"]
         depends_on:
             - $$cap_appname-redis
@@ -379,7 +379,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION_PATCH
+                - FROM appwrite/appwrite:0.15.$$cap_APP_VERSION_PATCH
                 - ENTRYPOINT ["worker-builds"]
         depends_on:
             - $$cap_appname-redis
@@ -461,7 +461,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION_PATCH
+                - FROM appwrite/appwrite:0.15.$$cap_APP_VERSION_PATCH
                 - ENTRYPOINT ["worker-audits"]
         depends_on:
             - $$cap_appname-redis
@@ -543,7 +543,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION_PATCH
+                - FROM appwrite/appwrite:0.15.$$cap_APP_VERSION_PATCH
                 - ENTRYPOINT ["worker-webhooks"]
         depends_on:
             - $$cap_appname-redis
@@ -625,7 +625,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION_PATCH
+                - FROM appwrite/appwrite:0.15.$$cap_APP_VERSION_PATCH
                 - ENTRYPOINT ["worker-deletes"]
         depends_on:
             - $$cap_appname-redis
@@ -711,7 +711,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION_PATCH
+                - FROM appwrite/appwrite:0.15.$$cap_APP_VERSION_PATCH
                 - ENTRYPOINT ["worker-functions"]
         depends_on:
             - $$cap_appname-redis
@@ -794,7 +794,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION_PATCH
+                - FROM appwrite/appwrite:0.15.$$cap_APP_VERSION_PATCH
                 - ENTRYPOINT ["worker-mails"]
         depends_on:
             - $$cap_appname-redis
@@ -875,7 +875,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION_PATCH
+                - FROM appwrite/appwrite:0.15.$$cap_APP_VERSION_PATCH
                 - ENTRYPOINT ["maintenance"]
         depends_on:
             - $$cap_appname-redis
@@ -956,7 +956,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION_PATCH
+                - FROM appwrite/appwrite:0.15.$$cap_APP_VERSION_PATCH
                 - ENTRYPOINT ["usage"]
         depends_on:
             - $$cap_appname-influxdb
@@ -1038,7 +1038,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION_PATCH
+                - FROM appwrite/appwrite:0.15.$$cap_APP_VERSION_PATCH
                 - ENTRYPOINT ["schedule"]
         depends_on:
             - $$cap_appname-redis
