@@ -40,7 +40,7 @@ services:
             - $$cap_appname-influxdb-data:/var/lib/influxdb
 
     $$cap_appname-appwrite:
-        image: 'appwrite/appwrite:$$cap_APP_VERSION'
+        image: 'appwrite/appwrite:$$cap_APP_VERSION_PATCH'
         volumes:
             - $$cap_appname-appwrite-uploads:/storage/uploads
             - $$cap_appname-appwrite-cache:/storage/cache
@@ -127,7 +127,7 @@ services:
     $$cap_appname-appwrite-realtime:
         caproverExtra:
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - FROM appwrite/appwrite:$$cap_APP_VERSION_PATCH
                 - ENTRYPOINT ["realtime"]
         entrypoint: realtime
         depends_on:
@@ -210,7 +210,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - FROM appwrite/appwrite:$$cap_APP_VERSION_PATCH
                 - ENTRYPOINT ["executor"]
         depends_on:
             - $$cap_appname-appwrite
@@ -297,7 +297,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - FROM appwrite/appwrite:$$cap_APP_VERSION_PATCH
                 - ENTRYPOINT ["worker-database"]
         depends_on:
             - $$cap_appname-redis
@@ -379,7 +379,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - FROM appwrite/appwrite:$$cap_APP_VERSION_PATCH
                 - ENTRYPOINT ["worker-builds"]
         depends_on:
             - $$cap_appname-redis
@@ -461,7 +461,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - FROM appwrite/appwrite:$$cap_APP_VERSION_PATCH
                 - ENTRYPOINT ["worker-audits"]
         depends_on:
             - $$cap_appname-redis
@@ -543,7 +543,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - FROM appwrite/appwrite:$$cap_APP_VERSION_PATCH
                 - ENTRYPOINT ["worker-webhooks"]
         depends_on:
             - $$cap_appname-redis
@@ -625,7 +625,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - FROM appwrite/appwrite:$$cap_APP_VERSION_PATCH
                 - ENTRYPOINT ["worker-deletes"]
         depends_on:
             - $$cap_appname-redis
@@ -711,7 +711,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - FROM appwrite/appwrite:$$cap_APP_VERSION_PATCH
                 - ENTRYPOINT ["worker-functions"]
         depends_on:
             - $$cap_appname-redis
@@ -794,7 +794,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - FROM appwrite/appwrite:$$cap_APP_VERSION_PATCH
                 - ENTRYPOINT ["worker-mails"]
         depends_on:
             - $$cap_appname-redis
@@ -875,7 +875,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - FROM appwrite/appwrite:$$cap_APP_VERSION_PATCH
                 - ENTRYPOINT ["maintenance"]
         depends_on:
             - $$cap_appname-redis
@@ -956,7 +956,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - FROM appwrite/appwrite:$$cap_APP_VERSION_PATCH
                 - ENTRYPOINT ["usage"]
         depends_on:
             - $$cap_appname-influxdb
@@ -1038,7 +1038,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - FROM appwrite/appwrite:$$cap_APP_VERSION_PATCH
                 - ENTRYPOINT ["schedule"]
         depends_on:
             - $$cap_appname-redis
@@ -1117,10 +1117,10 @@ services:
 
 caproverOneClickApp:
     variables:
-        - label: Version
-          description: Application version
-          defaultValue: '0.13'
-          id: $$cap_APP_VERSION
+        - label: Version - patch
+          description: Application version - patch release.
+          defaultValue: '2'
+          id: $$cap_APP_VERSION_PATCH
 
         # general
         - label: General | _APP_ENV
@@ -1218,6 +1218,19 @@ caproverOneClickApp:
           description: MariaDB server user password.
           defaultValue: $$cap_gen_random_hex(16)
           id: $$cap_APP_DB_PASS
+
+        # phone
+        - label: Phone | _APP_PHONE_PROVIDER
+          description: |
+            Provider used for delivering SMS for Phone authentication. Use the following format: 'phone://[USER]:[SECRET]@[PROVIDER]'.
+            Available providers are twilio, text-magic and telesign.
+          defaultValue: ''
+          id: $$cap_APP_PHONE_PROVIDER
+        - label: From | _APP_PHONE_FROM
+          description: |
+            Phone number used for sending out messages. Must start with a leading '+' and maximum of 15 digits without spaces (+123456789).
+          defaultValue: ''
+          id: $$cap_APP_PHONE_FROM
 
         # smtp
         - label: SMTP | _APP_SMTP_HOST
@@ -1328,7 +1341,7 @@ caproverOneClickApp:
           defaultValue:
           id: $$cap_DOCKERHUB_PULL_EMAIL
 
-    displayName: Appwrite
+    displayName: Appwrite 0.15
     isOfficial: true
     description: Secure Open-Source Backend Server for Web, Mobile & Flutter Developers
     documentation: https://appwrite.io/docs
