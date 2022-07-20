@@ -31,6 +31,7 @@ services:
             DB_USER: kutt
             DB_PASSWORD: $$cap_db-pass
             REDIS_HOST: srv-captain--$$cap_appname-redis
+            ADMIN_EMAILS: $$cap_admin-emails
             SITE_NAME: Kutt URL Shortener
             DEFAULT_DOMAIN: $$cap_appname.$$cap_root_domain
             JWT_SECRET: $$cap_gen_random_hex(64)
@@ -49,16 +50,20 @@ caproverOneClickApp:
           label: PostgreSQL Password
           description: Password must be at least 12 characters.  Please use a random string.
           validRegex: /^[^\@]{12,}$/
+        - id: $$cap_admin-emails
+          label: Admin Email(s)
+          description: A comma-separated list of administrator accounts.
+          validRegex: /^([^\s^,])+[^\s^,]*$/
         - id: $$cap_mail_host
           label: Email Host
           defaultValue: 'smtp.gmail.com'
           description: STMP mail host for Kutt
         - id: $$cap_mail_port
           label: Email Port
-          defaultValue: 587
+          defaultValue: 465
         - id: $$cap_mail_user
           label: Kutt Mail User
-          defaultValue: smtp
+          defaultValue: user@gmail.com
         - id: $$cap_mail-pass
           label: Email Password
     instructions:
@@ -71,6 +76,8 @@ caproverOneClickApp:
             --------------------------------------------
             --------------------------------------------
             IMPORTANT: It will take up to 2 minutes for the application to finish building. Before that, you might see a 502 error page.
+            To access the admin panel, initiate a password reset using an admin email you provided in the previous step ($$cap_admin-emails). If you cannot use the password reset, see https://github.com/thedevs-network/kutt/issues/269#issuecomment-628604256 for details on bypassing the usual login process.
+
             More information on initial configuration can be found at https://github.com/thedevs-network/kutt.
     displayName: Kutt
     isOfficial: true
