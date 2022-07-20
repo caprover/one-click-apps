@@ -1,13 +1,13 @@
 captainVersion: 4
 services:
-    $$cap_appname-postgres:
+    $$cap_appname-db:
         image: postgres:12-alpine
         volumes:
-            - $$cap_appname-postgres-data:/var/lib/postgresql/data
+            - $$cap_appname-db-data:/var/lib/postgresql/data
         restart: always
         environment:
             POSTGRES_USER: kutt
-            POSTGRES_PASSWORD: $$cap_kutt_postgres_password
+            POSTGRES_PASSWORD: $$cap_db-pass
             POSTGRES_DB: kutt
         caproverExtra:
             notExposeAsWebApp: 'true'
@@ -17,59 +17,64 @@ services:
             - $$cap_appname-redis:/data
         caproverExtra:
             notExposeAsWebApp: 'true'
-    $$cap_appname-kutt:
+    $$cap_appname:
         depends_on:
-            - $$cap_appname-postgres
+            - $$cap_appname-db
             - $$cap_appname-redis
-        image: kutt/kutt:$$cap_kutt_version
+        image: kutt/kutt:$$cap_kutt-version
         restart: always
         caproverExtra:
             containerHttpPort: '3000'
         environment:
-            DB_HOST: srv-captain--$$cap_appname-postgres
+            DB_HOST: srv-captain--$$cap_appname-db
             DB_NAME: kutt
             DB_USER: kutt
-            DB_PASSWORD: $$cap_kutt_postgres_password
+            DB_PASSWORD: $$cap_db-pass
             REDIS_HOST: srv-captain--$$cap_appname-redis
-            SITE_NAME: $$cap_appname URL Shortener
-            DEFAULT_DOMAIN: $$cap_appname-kutt.$$cap_root_domain
+            SITE_NAME: Kutt URL Shortener
+            DEFAULT_DOMAIN: $$cap_appname.$$cap_root_domain
             JWT_SECRET: $$cap_gen_random_hex(64)
-            MAIL_HOST: $$cap_kutt_mail_host
-            MAIL_PORT: $$cap_kutt_mail_port
-            MAIL_USER: $$cap_kutt_mail_user
-            MAIL_PASSWORD: $$cap_kutt_mail_password
+            MAIL_HOST: $$cap_mail_host
+            MAIL_PORT: $$cap_mail_port
+            MAIL_USER: $$cap_mail_user
+            MAIL_PASSWORD: $$cap_mail-pass
 caproverOneClickApp:
     variables:
-        - id: $$cap_kutt_version
+        - id: $$cap_kutt-version
           label: Kutt Version
-          defaultValue: 'v2.7.3'
+          defaultValue: v2.7.4
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/kutt/kutt/tags
           validRegex: /^([^\s^\/])+$/
-        - id: $$cap_kutt_postgres_password
-          label: Postgres Password
+        - id: $$cap_db-pass
+          label: PostgreSQL Password
           description: Password must be at least 12 characters.  Please use a random string.
           validRegex: /^[^\@]{12,}$/
-        - id: $$cap_kutt_mail_host
-          label: Kutt Mail Host
+        - id: $$cap_mail_host
+          label: Email Host
           defaultValue: 'smtp.gmail.com'
           description: STMP mail host for Kutt
-        - id: $$cap_kutt_mail_port
-          label: Kutt Mail Port
+        - id: $$cap_mail_port
+          label: Email Port
           defaultValue: 587
-        - id: $$cap_kutt_mail_user
+        - id: $$cap_mail_user
           label: Kutt Mail User
           defaultValue: smtp
-        - id: $$cap_kutt_mail_password
-          label: Kutt Mail Password
+        - id: $$cap_mail-pass
+          label: Email Password
     instructions:
-        start: >-
+        start: |
             Kutt is a modern URL shortener with support for custom domains. Shorten URLs, manage your links and view the click rate statistics.
+            For more info visit https://github.com/thedevs-network/kutt
 
-        end: >
-            Kutt is deployed and available as $$cap_appname-kutt . 
-
-            IMPORTANT: It will take up to 2 minutes for the application to be ready. Before that, you might see a 502 error page.
+        end: |
+            Kutt has been successfully deployed and will be available at http://$$cap_appname.$$cap_root_domain!
+            --------------------------------------------
+            --------------------------------------------
+            IMPORTANT: It will take up to 2 minutes for the application to finish building. Before that, you might see a 502 error page.
+            More information on initial configuration can be found at https://github.com/thedevs-network/kutt.
     displayName: Kutt
     isOfficial: true
-    description: Kutt is a modern URL shortener with support for custom domains. Shorten URLs, manage your links and view the click rate statistics.
-    documentation: Taken from https://github.com/thedevs-network/kutt
+    description: >-
+        Kutt is a modern URL shortener with support for custom domains. Shorten URLs, manage your links and view the click rate statistics.
+    documentation: >-
+        Taken from https://github.com/thedevs-network/kutt
