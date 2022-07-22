@@ -61,7 +61,8 @@ caproverOneClickApp:
 
             sudo docker exec -it $(sudo docker ps | grep -o srv-captain--$$cap_appname.*) register_new_matrix_user http://localhost:8008 -c /data/homeserver.yaml
 
-
+            --------------------------------------------------
+            optional:
             To change the maximum upload size of media execute (change the value to your needs):
           
             echo -e "\nmax_upload_size: 60m" | sudo tee -a /var/lib/docker/volumes/captain--$$cap_appname-data/_data/homeserver.yaml > /dev/null
@@ -69,6 +70,10 @@ caproverOneClickApp:
           
             If your upload size is higher than 500M go to the web interface and click on "Edit Default Nginx Configuration"
             and change the value of "client_max_body_size" to your needs (e.g. "client_max_body_size: 700m;")
+          
+            
+            
+            "Save & Update" to apply the changes
 
     displayName: Matrix Synapse (simple configuration)
     isOfficial: true
