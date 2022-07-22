@@ -1,0 +1,67 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: matrixdotorg/synapse:$$cap_synapse_version
+        environment:
+          TZ: $$cap_time_zone
+        volumes:
+          - $$cap_appname-data:/data
+        caproverExtra:
+            containerHttpPort: '8008'
+
+caproverOneClickApp:
+    variables:
+        - id: '$$cap_synapse_version'
+          label:  Synapse Version
+          defaultValue: 'latest'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/matrixdotorg/synapse/tags
+          validRegex: "/.{1,}/"
+        - id: '$$cap_time_zone'
+          label: Time zone
+          defaultValue: Europe/Berlin
+          description: The time zone of your server https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+          validRegex: "/.{1,}/"
+    instructions:
+        start: >-
+            Matrix synapse server (simple configuration)
+
+            CAUTION this is not a simple one-click app you will have to execute some commands at the end
+
+        end: >-
+            Copy the following lines temporary in a text editor of your choise
+
+
+            Execute the following commands on the command line:
+
+            sudo docker run -it --rm -v captain--$$cap_appname-data:/data -e SYNAPSE_SERVER_NAME=$$cap_appname.$$cap_root_domain -e SYNAPSE_REPORT_STATS=yes matrixdotorg/synapse:$$cap_synapse_version generate
+
+            echo -e "\nserve_server_wellknown: true" | sudo tee -a /var/lib/docker/volumes/captain--$$cap_appname-data/_data/homeserver.yaml > /dev/null
+
+
+            After that enable and force https
+    
+            Wait a 30 sec go to https://$$cap_appname.$$cap_root_domain and should be able to see "It works! Synapse is running"
+
+            https://$$cap_appname.$$cap_root_domain is the domain you enter in the custom homeserver field of your client
+
+            Remember this is just the server, you also need a client like https://app.element.io/ to use this app.
+
+
+            Next you need at least one user
+
+
+            This is NOT recommended, but to enable public registraion execute: (after that everyone can register on your server):
+
+            echo -e "\nenable_registration: true\nenable_registration_without_verification: true" | sudo tee -a /var/lib/docker/volumes/captain--$$cap_appname-data/_data/homeserver.yaml > /dev/null
+
+            Restart the server by clicking "Save & Update"
+
+
+            It's better to create new user with the following command:
+
+            sudo docker exec -it $(sudo docker ps | grep -o srv-captain--$$cap_appname.*) register_new_matrix_user http://localhost:8008 -c /data/homeserver.yaml
+
+    displayName: Matrix Synapse (simple configuration)
+    isOfficial: true
+    description: Server for the matrix protocol
+    documentation: https://github.com/matrix-org/synapse/tree/develop/docker
