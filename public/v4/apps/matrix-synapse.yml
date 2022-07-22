@@ -23,7 +23,7 @@ caproverOneClickApp:
           validRegex: "/.{1,}/"
     instructions:
         start: >-
-            Matrix synapse server (simple configuration)
+            Matrix synapse server
 
             CAUTION this is not a simple one-click app you will have to execute some commands at the end
 
@@ -76,7 +76,7 @@ caproverOneClickApp:
             
             "Save & Update" to apply the changes
 
-    displayName: Matrix Synapse (simple configuration)
+    displayName: Matrix Synapse
     isOfficial: true
     description: Server for the matrix protocol
     documentation: https://github.com/matrix-org/synapse/tree/develop/docker
