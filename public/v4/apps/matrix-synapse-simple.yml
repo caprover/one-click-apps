@@ -28,7 +28,7 @@ caproverOneClickApp:
             CAUTION this is not a simple one-click app you will have to execute some commands at the end
 
         end: >-
-            Copy the following lines temporary in a text editor of your choise
+            Copy the following lines in a text editor of your choice
 
 
             Execute the following commands on the command line:
@@ -38,11 +38,11 @@ caproverOneClickApp:
             echo -e "\nserve_server_wellknown: true" | sudo tee -a /var/lib/docker/volumes/captain--$$cap_appname-data/_data/homeserver.yaml > /dev/null
 
 
-            After that enable and force https
+            After that enable and force https in the web interface
     
             Wait a 30 sec go to https://$$cap_appname.$$cap_root_domain and should be able to see "It works! Synapse is running"
 
-            https://$$cap_appname.$$cap_root_domain is the domain you enter in the custom homeserver field of your client
+            $$cap_appname.$$cap_root_domain is the domain you enter in the custom homeserver field of your client
 
             Remember this is just the server, you also need a client like https://app.element.io/ to use this app.
 
@@ -50,7 +50,7 @@ caproverOneClickApp:
             Next you need at least one user
 
 
-            This is NOT recommended, but to enable public registraion execute: (after that everyone can register on your server):
+            This is NOT recommended, but to enable public registration execute: (after that everyone can register on your server):
 
             echo -e "\nenable_registration: true\nenable_registration_without_verification: true" | sudo tee -a /var/lib/docker/volumes/captain--$$cap_appname-data/_data/homeserver.yaml > /dev/null
 
@@ -60,6 +60,15 @@ caproverOneClickApp:
             It's better to create new user with the following command:
 
             sudo docker exec -it $(sudo docker ps | grep -o srv-captain--$$cap_appname.*) register_new_matrix_user http://localhost:8008 -c /data/homeserver.yaml
+
+
+            To change the maximum upload size of media execute (change the value to your needs):
+          
+            echo -e "\nmax_upload_size: 60m" | sudo tee -a /var/lib/docker/volumes/captain--$$cap_appname-data/_data/homeserver.yaml > /dev/null
+          
+          
+            If your upload size is higher than 500M go to the web interface and click on "Edit Default Nginx Configuration"
+            and change the value of "client_max_body_size" to your needs (e.g. "client_max_body_size: 700m;")
 
     displayName: Matrix Synapse (simple configuration)
     isOfficial: true
