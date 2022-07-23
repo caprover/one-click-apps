@@ -1,14 +1,12 @@
 captainVersion: 4
 services:
-    $$cap_appname-appsmith:
-        image: index.docker.io/appsmith/appsmith-ce:$$cap_appsmith_version
+    $$cap_appname:
+        image: appsmith/appsmith-ce:$$cap_appsmith_version
         volumes:
-            - $$cap_appname-stacks-data:/appsmith-stacks
+            - $$cap_appname-stacks:/appsmith-stacks
         restart: always
         environment:
-            APPSMITH_MAIL_ENABLED: false
             APPSMITH_DISABLE_TELEMETRY: true
-            APPSMITH_DISABLE_INTERCOM: true
 caproverOneClickApp:
     variables:
         - id: $$cap_appsmith_version
@@ -17,11 +15,21 @@ caproverOneClickApp:
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/appsmith/appsmith-ce/tags
           validRegex: /^([^\s^\/])+$/
     instructions:
-        start: >-
-            Appsmith is the fastest way to build internal apps over any database or API.
-        end: >-
-            Please wait for 2 minutes. Appsmith is deployed and available as $$cap_appname-appsmith. 
-            To further enhance the installation, see the complete environment variables here https://github.com/appsmithorg/appsmith/blob/release/deploy/template/docker.env.sh
+        start: |
+            The Appsmith Docker image is built with all the components required to run within a single Docker container, with supervisord managing the various processes. 
+
+            **Minimum system requirements**: Appsmith recommends 4 GB RAM with 2 CPUs
+
+            All configuration options are available post-installation from within the UI. For more information, see https://docs.appsmith.com/setup/docker.
+        end: |
+            Success!
+            ---
+
+            ∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙
+            Appsmith has been deployed, it can be accessed at $$cap_appname.$$cap_root_domain where you will be prompted to create an admin user.
+            IMPORTANT: It will take up to 2 minutes for it to be ready. Before that, you might see a 502 error page.
+            ∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙∙
+            For further configuration, see the complete environment variables here https://github.com/appsmithorg/appsmith/blob/release/deploy/template/docker.env.sh
     displayName: Appsmith
     isOfficial: true
     description: Appsmith is the fastest way to build internal apps over any database or API.
