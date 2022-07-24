@@ -17,6 +17,8 @@ services:
         - RUN echo "\nenable_registration\072 $$cap_enable_registration \nenable_registration_without_verification\072 true" >> /data/homeserver.yaml
         - RUN echo "\nmax_upload_size\072 $$cap_max_upload_sizeM" >> /data/homeserver.yaml
         - RUN sed -i '/^server_name.*/a public_baseurl\o072 "https://$$cap_appname.$$cap_root_domain"' /data/homeserver.yaml
+        - RUN sed -i 's/name\o072 sqlite3/name\o072 psycopg2/g' /data/homeserver.yaml
+        - RUN sed -i 's/database\o072 .*homeserver\.db/database\o072 synapse_db\n    user\o072 synapse_user\n    password\o072 $$cap_db_password\n    host\o072 srv-captain--$$cap_appname-db\n    port\o072 5432\n/g' /data/homeserver.yaml
 
 
 
@@ -52,6 +54,12 @@ caproverOneClickApp:
         
         If you set this higher than 500, you will will also need to increase the nginx "client_max_body_size".
       validRegex: '/^[0-9]{1,}$/'
+    - id: '$$cap_db_password'
+      label: Database password
+      defaultValue: $$cap_gen_random_hex(20)
+      description: >-
+          The password for the Synapse database.
+      validRegex: '/^[0-9a-zA-Z]{1,}$/'
   instructions:
     start: >-
       Matrix synapse server
