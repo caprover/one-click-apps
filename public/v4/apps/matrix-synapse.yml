@@ -1,6 +1,20 @@
 captainVersion: 4
 services:
+  $$cap_appname-db:
+    image: postgres:$$cap_postgres_version
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: synapse_db
+      POSTGRES_PASSWORD: $$cap_db_password
+      POSTGRES_USER: synapse_user
+      POSTGRES_INITDB_ARGS: --encoding='UTF8' --lc-collate='C' --lc-ctype='C'
+    volumes:
+      - $$cap_appname-db:/var/lib/postgresql/data
+    caproverExtra:
+      notExposeAsWebApp: true
+
   $$cap_appname:
+    restart: unless-stopped
     environment:
       TZ: $$cap_time_zone
     volumes:
@@ -28,7 +42,7 @@ caproverOneClickApp:
       label: Synapse Version
       defaultValue: 'v1.63.1'
       description: Check out their Docker page for the valid tags https://hub.docker.com/r/matrixdotorg/synapse/tags
-      validRegex: '/.{1,}/'
+      validRegex: '/^v[0-9]{1,}|latest$/'
     - id: '$$cap_time_zone'
       label: Time zone
       defaultValue: Europe/Berlin
@@ -54,6 +68,13 @@ caproverOneClickApp:
         
         If you set this higher than 500, you will will also need to increase the nginx "client_max_body_size".
       validRegex: '/^[0-9]{1,}$/'
+    - id: '$$cap_postgres_version'
+      label: Postgres version
+      defaultValue: '14'
+      description: >-
+        The version of postgres that you want to use.
+        You can find the valid versions here: https://hub.docker.com/r/postgres/postgres/tags
+      validRegex: '/^[0-9]{1,}|latest$/'
     - id: '$$cap_db_password'
       label: Database password
       defaultValue: $$cap_gen_random_hex(20)
