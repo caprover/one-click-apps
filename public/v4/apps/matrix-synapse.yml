@@ -16,6 +16,7 @@ services:
         - RUN echo '\nserve_server_wellknown\072 true' >> /data/homeserver.yaml
         - RUN echo "\nenable_registration\072 $$cap_enable_registration \nenable_registration_without_verification\072 true" >> /data/homeserver.yaml
         - RUN echo "\nmax_upload_size\072 $$cap_max_upload_sizeM" >> /data/homeserver.yaml
+        - RUN sed -i '/^server_name.*/a public_baseurl\o072 "https://$$cap_appname.$$cap_root_domain"' /data/homeserver.yaml
 
 
 
