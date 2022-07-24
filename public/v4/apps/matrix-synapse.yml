@@ -1,85 +1,85 @@
 captainVersion: 4
 services:
-    $$cap_appname:
-        environment:
-            TZ: $$cap_time_zone
-        volumes:
-            - $$cap_appname-data:/data
-        caproverExtra:
-            containerHttpPort: '8008'
-            dockerfileLines:
-                - FROM matrixdotorg/synapse:$$cap_synapse_version
-                - RUN mkdir /data/
-                - ENV SYNAPSE_SERVER_NAME=$$cap_appname.$$cap_root_domain
-                - ENV SYNAPSE_REPORT_STATS=$$cap_synapse_stats
-                - RUN /start.py generate
-                - RUN echo '\nserve_server_wellknown\072 true' >> /data/homeserver.yaml
-                - RUN echo "\nenable_registration\072 $$cap_enable_registration \nenable_registration_without_verification\072 true" >> /data/homeserver.yaml
-                - RUN echo "\nmax_upload_size\072 $$cap_max_upload_sizeM" >> /data/homeserver.yaml
+  $$cap_appname:
+    environment:
+      TZ: $$cap_time_zone
+    volumes:
+      - $$cap_appname-data:/data
+    caproverExtra:
+      containerHttpPort: '8008'
+      dockerfileLines:
+        - FROM matrixdotorg/synapse:$$cap_synapse_version
+        - RUN mkdir /data/
+        - ENV SYNAPSE_SERVER_NAME=$$cap_appname.$$cap_root_domain
+        - ENV SYNAPSE_REPORT_STATS=$$cap_synapse_stats
+        - RUN /start.py generate
+        - RUN echo '\nserve_server_wellknown\072 true' >> /data/homeserver.yaml
+        - RUN echo "\nenable_registration\072 $$cap_enable_registration \nenable_registration_without_verification\072 true" >> /data/homeserver.yaml
+        - RUN echo "\nmax_upload_size\072 $$cap_max_upload_sizeM" >> /data/homeserver.yaml
 
 
 
 caproverOneClickApp:
-    variables:
-        - id: '$$cap_synapse_version'
-          label: Synapse Version
-          defaultValue: 'v1.63.1'
-          description: Check out their Docker page for the valid tags https://hub.docker.com/r/matrixdotorg/synapse/tags
-          validRegex: '/.{1,}/'
-        - id: '$$cap_time_zone'
-          label: Time zone
-          defaultValue: Europe/Berlin
-          description: The time zone of your server https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-          validRegex: '/.{1,}/'
-        - id: '$$cap_synapse_stats'
-          label: Report stats
-          defaultValue: 'no'
-          description: 'Report stats'
-          validRegex: '/^(yes|no)$/i'
-        - id: '$$cap_enable_registration'
-          label: Enable public registration
-          defaultValue: 'false'
-          description: >-
-            Set this to true if you want EVERYONE to be able to register.
-            It's recommended to set this to false and create users manually.
-          validRegex: '/^(true|false)$/i'
-        - id: '$$cap_max_upload_size'
-          label: Max upload size
-          defaultValue: '300'
-          description: >- 
-            The maximum size of a file that can be uploaded, in megabytes.
-          
-            If you set this higher than 500, you will will also need to increase the nginx "client_max_body_size".
-          validRegex: '/^[0-9]{1,}$/'
-    instructions:
-        start: >-
-            Matrix synapse server
+  variables:
+    - id: '$$cap_synapse_version'
+      label: Synapse Version
+      defaultValue: 'v1.63.1'
+      description: Check out their Docker page for the valid tags https://hub.docker.com/r/matrixdotorg/synapse/tags
+      validRegex: '/.{1,}/'
+    - id: '$$cap_time_zone'
+      label: Time zone
+      defaultValue: Europe/Berlin
+      description: The time zone of your server https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+      validRegex: '/.{1,}/'
+    - id: '$$cap_synapse_stats'
+      label: Report stats
+      defaultValue: 'no'
+      description: 'Report stats'
+      validRegex: '/^(yes|no)$/i'
+    - id: '$$cap_enable_registration'
+      label: Enable public registration
+      defaultValue: 'false'
+      description: >-
+        Set this to true if you want EVERYONE to be able to register.
+        It's recommended to set this to false and create users manually.
+      validRegex: '/^(true|false)$/i'
+    - id: '$$cap_max_upload_size'
+      label: Max upload size
+      defaultValue: '300'
+      description: >-
+        The maximum size of a file that can be uploaded, in megabytes.
+        
+        If you set this higher than 500, you will will also need to increase the nginx "client_max_body_size".
+      validRegex: '/^[0-9]{1,}$/'
+  instructions:
+    start: >-
+      Matrix synapse server
 
-        end: >-
-            Almost done.
-          
-            Enable and force https in the web interface
+    end: >-
+      Almost done.
+      
+      Enable and force https in the web interface
+      
+      Wait 30 seconds, go to https://$$cap_appname.$$cap_root_domain and should be able to see "It works! Synapse is running"
+      
+      $$cap_appname.$$cap_root_domain is the domain you enter in the custom homeserver field of your client
+      
+      Remember this is just the server, you also need a client like https://app.element.io/ to use this app.
+      
+      
+      If you set public registration to false, you can create new users with the following command:
+      
+      sudo docker exec -it $(sudo docker ps | grep -o srv-captain--$$cap_appname.*) register_new_matrix_user http://localhost:8008 -c /data/homeserver.yaml
+      
+      
+      You can always change the config file located in /var/lib/docker/volumes/srv-captain--$$cap_appname-data/_data/homeserver.yaml
+      
+      
+      link to the the configuration manual: https://matrix-org.github.io/synapse/latest/usage/configuration/config_documentation.html
+      
+      after a change restart the container by clicking "Save & Update"
 
-            Wait 30 seconds, go to https://$$cap_appname.$$cap_root_domain and should be able to see "It works! Synapse is running"
-
-            $$cap_appname.$$cap_root_domain is the domain you enter in the custom homeserver field of your client
-
-            Remember this is just the server, you also need a client like https://app.element.io/ to use this app.
-
-
-            If you set public registration to false, you can create new users with the following command:
-
-            sudo docker exec -it $(sudo docker ps | grep -o srv-captain--$$cap_appname.*) register_new_matrix_user http://localhost:8008 -c /data/homeserver.yaml
-          
-          
-            You can always change the config file located in /var/lib/docker/volumes/srv-captain--$$cap_appname-data/_data/homeserver.yaml
-          
-          
-            link to the the configuration manual: https://matrix-org.github.io/synapse/latest/usage/configuration/config_documentation.html
-          
-            after a change restart the container by clicking "Save & Update"
-
-    displayName: Matrix Synapse
-    isOfficial: true
-    description: Server for the matrix protocol
-    documentation: https://github.com/matrix-org/synapse/tree/develop/docker
+  displayName: Matrix Synapse
+  isOfficial: true
+  description: Server for the matrix protocol
+  documentation: https://github.com/matrix-org/synapse/tree/develop/docker
