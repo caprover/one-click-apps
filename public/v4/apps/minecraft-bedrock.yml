@@ -29,7 +29,7 @@ caproverOneClickApp:
           id: $$cap_eula
         - label: Docker Image Version
           description: Choose a Tag from https://hub.docker.com/r/itzg/minecraft-bedrock-server/tags
-          defaultValue: latest
+          defaultValue: "2022.1.0"
           id: $$cap_version
         - label:  Bedrock Server Version
           description: Can be set to a specific server version or the following special values can be used, check https://github.com/itzg/docker-minecraft-bedrock-server#container-specific
