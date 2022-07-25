@@ -79,12 +79,15 @@ caproverOneClickApp:
       label: Database password
       defaultValue: $$cap_gen_random_hex(20)
       description: >-
-          The password for the Synapse database.
+        The password for the Synapse database.
       validRegex: '/^[0-9a-zA-Z]{1,}$/'
   instructions:
     start: >-
-      Matrix synapse server
-
+      Synapse is a server implementation of the matrix protocol that allows you to host your own messaging server.
+      
+      Matrix is build to federate with other servers, so you can communicate with people from other servers.
+      
+      More information about matrix can be found here: https://matrix.org/
     end: >-
       Almost done.
       
