@@ -15,6 +15,7 @@ services:
             ALLOW_LIST: $$cap_bs_allowlist
             ALLOW_LIST_USERS: $$cap_bs_allowlist_users
             PLAYER_IDLE_TIMEOUT: $$cap_bs_idle
+            ALLOW_CHEATS: $$cap_bs_cheats
         image: itzg/minecraft-bedrock-server:$$cap_version
         restart: always
         volumes:
@@ -67,6 +68,10 @@ caproverOneClickApp:
           description: After a player has idled for this many minutes they will be kicked. If set to 0 then players can idle indefinitely.
           defaultValue: '0'
           id: $$cap_bs_idle
+        - label: Allo Cheats 
+          description: After a player has idled for this many minutes they will be kicked. If set to 0 then players can idle indefinitely.
+          defaultValue: 'true'
+          id: $$cap_bs_cheats
 
     instructions:
         end: The container will now download and build the minecraft-bedrock-server, so you will need a few minutes before you can access it. Check the status in the logs.
