@@ -30,14 +30,14 @@ caproverOneClickApp:
           id: $$cap_eula
         - label: Docker Image Version
           description: Choose a Tag from https://hub.docker.com/r/itzg/minecraft-bedrock-server/tags
-          defaultValue: "2022.1.0"
+          defaultValue: '2022.1.0'
           id: $$cap_version
-        - label:  Bedrock Server Version
+        - label: Bedrock Server Version
           description: Can be set to a specific server version or the following special values can be used, check https://github.com/itzg/docker-minecraft-bedrock-server#container-specific
           defaultValue: LATEST
           id: $$cap_bs_version
         - label: Game Server Name
-          description:  	Used as the server name. Cannot contain a ":" (colon). 
+          description: Used as the server name. Cannot contain a ":" (colon).
           defaultValue: ''
           id: $$cap_bs_name
         - label: Game Server Port (TCP/UDP)
@@ -48,15 +48,15 @@ caproverOneClickApp:
           description: Comma Separated list of XUIs that will be the server OPs
           defaultValue: ''
           id: $$cap_bs_ops
-        - label: Game Mode 
+        - label: Game Mode
           description: Defines the mode of gameplay. survival, creative, adventure, spectator
           defaultValue: 'survival'
           id: $$cap_bs_gamemode
-        - label: Difficulty 
+        - label: Difficulty
           description: Sets the difficulty of the world. peaceful, easy, normal, hard
           defaultValue: 'normal'
           id: $$cap_bs_difficulty
-        - label: Allowlist?  
+        - label: Allowlist?
           description: If true then all connected players must be listed on variable 'ALLOW_LIST_USERS'
           defaultValue: 'true'
           id: $$cap_bs_allowlist
@@ -64,11 +64,11 @@ caproverOneClickApp:
           description: This list is player names, not XUIs
           defaultValue: 'some_user_name'
           id: $$cap_bs_allowlist_users
-        - label: Player Idle time 
+        - label: Player Idle time
           description: After a player has idled for this many minutes they will be kicked. If set to 0 then players can idle indefinitely.
           defaultValue: '0'
           id: $$cap_bs_idle
-        - label: Allo Cheats 
+        - label: Allo Cheats
           description: After a player has idled for this many minutes they will be kicked. If set to 0 then players can idle indefinitely.
           defaultValue: 'true'
           id: $$cap_bs_cheats
