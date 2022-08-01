@@ -68,7 +68,7 @@ caproverOneClickApp:
           description: After a player has idled for this many minutes they will be kicked. If set to 0 then players can idle indefinitely.
           defaultValue: '0'
           id: $$cap_bs_idle
-        - label: Allo Cheats
+        - label: Allow Cheats
           description: After a player has idled for this many minutes they will be kicked. If set to 0 then players can idle indefinitely.
           defaultValue: 'true'
           id: $$cap_bs_cheats
