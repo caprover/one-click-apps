@@ -94,27 +94,27 @@ caproverOneClickApp:
           id: $$cap_ghost_blog_title
           label: Ghost Blog Title
         - defaultValue: smtp.gmail.com
-          description: The STMP host you will be using
+          description: The SMTP host you will be using
           id: $$cap_ghost_smtp_host
-          label: STMP host
+          label: SMTP host
         - defaultValue: '587'
-          description: The STMP port you will be using
+          description: The SMTP port you will be using
           id: $$cap_ghost_smtp_port
-          label: STMP port
+          label: SMTP port
         - defaultValue: your_email@gmail.com
           description: Your user on the SMTP service
           id: $$cap_ghost_smtp_user
-          label: STMP user
+          label: SMTP user
         - description: Your password on the SMTP service
           id: $$cap_ghost_smtp_password
-          label: STMP password
+          label: SMTP password
         - description: The SMTP protocol to use. Allowed values tls, ssl. No default.
           id: $$cap_ghost_smtp_protocol
-          label: '[OPTIONAL] STMP protocol'
+          label: '[OPTIONAL] SMTP protocol'
         - defaultValue: blog@example.com
-          description: STMP from address
+          description: SMTP from address
           id: $$cap_ghost_smtp_from
-          label: STMP from address
+          label: SMTP from address
     instructions:
         end: >
             Ghost is deployed and available as $$cap_appname. 
