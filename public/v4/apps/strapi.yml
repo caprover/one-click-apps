@@ -3,11 +3,12 @@ services:
     $$cap_appname:
         depends_on:
             - $$cap_appname-mongo
-        image: strapi/strapi:$$cap_strapi_version
+        image: naskio/strapi:$$cap_strapi_version
         volumes:
             - $$cap_appname-data:/srv/app
         restart: always
         environment:
+            NODE_ENV: production
             DATABASE_CLIENT: mongo
             DATABASE_HOST: srv-captain--$$cap_appname-mongo
             DATABASE_PORT: '27017'
@@ -33,7 +34,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_strapi_version
           label: Strapi Version
-          defaultValue: 3.5.4
+          defaultValue: 4.3.2
           description: Check out the Docker page for the valid tags https://hub.docker.com/r/strapi/strapi/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_mongo_version
