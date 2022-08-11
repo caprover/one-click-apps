@@ -38,7 +38,7 @@ caproverOneClickApp:
     variables:
         - id: '$$cap_version'
           label: Invidious Version
-          defaultValue: '9cc041876944dde46cd8cc3e269995244c8e7724'
+          defaultValue: '@sha256:38d9630df74d77e9b704c0dbac10c626ef0f8ccb75fa0457e546018e7227b215'
           description: Check out their Quay.io page for the valid tags https://quay.io/repository/invidious/invidious?tab=tags. If you want to use the latest tag (or a versioned release, if available), start with a colon (e.g. :latest).
           validRegex: "/^([^\\s^\\/])+$/"
         - id: '$$db_version'
