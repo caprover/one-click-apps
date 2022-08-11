@@ -14,7 +14,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname:
-        image: omarroth/invidious$$cap_version
+        image: quay.io/invidious/invidious$$cap_version
         restart: always
         environment:
             # Adapted from ./config/config.yml
@@ -39,11 +39,11 @@ caproverOneClickApp:
         - id: '$$cap_version'
           label: Invidious Version
           defaultValue: '@sha256:31d0c0061778fecc98b693c8d53073e5ac758b1d570ac2881370547079fa2a4c'
-          description: Check out their Docker page for the valid tags https://hub.docker.com/r/omarroth/invidious/tags. If you want to use the latest tag (or a versioned release, if available), start with a colon (e.g. :latest).
+          description: Check out their Quay.io page for the valid tags https://quay.io/repository/invidious/invidious?tab=tags. If you want to use the latest tag (or a versioned release, if available), start with a colon (e.g. :latest).
           validRegex: "/^([^\\s^\\/])+$/"
         - id: '$$db_version'
           label: Postgres Version
-          defaultValue: '10' # there is no other tag provided
+          defaultValue: '14' # there is no other tag provided
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/postgres?tab=tags
           validRegex: "/^([^\\s^\\/])+$/"
     instructions:
