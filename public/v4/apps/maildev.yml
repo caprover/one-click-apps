@@ -1,0 +1,34 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: maildev/maildev:$$cap_maildev_version
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - $$cap_appname-data:/data
+        restart: always
+        caproverExtra:
+            containerHttpPort: '1080'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_maildev_version
+          label: MailDev Version
+          defaultValue: 2.0.5
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/maildev/maildev/tags
+          validRegex: /^([^\s^\/])+$/
+    instructions:
+        start: >-
+            MailDev is a simple way to test your project's generated email during development, with an easy to use web interface that runs on your machine built on top of Node.js.
+
+            More information about this container can be found here:
+            https://hub.docker.com/r/maildev/maildev .
+
+            Official website: https://maildev.github.io/maildev/
+
+            After installation on CapRover, it will be available as srv-captain--YOUR_CONTAINER_NAME at port 1080 to other CapRover apps .
+
+            Port Mapping: You need map port 1025 to the container application to get inbound mail work .
+        end: MailDev is a simple way to test your project's generated email during development
+    displayName: ''
+    isOfficial: true
+    description: MailDev is a simple way to test your project's generated email during development.
+    documentation: Taken from https://hub.docker.com/r/maildev/maildev
