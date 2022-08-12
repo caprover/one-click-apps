@@ -53,6 +53,6 @@ caproverOneClickApp:
         end: |-
             Invidious has been successfully deployed! It may take a couple of minutes until the web frontend can be reached.
     displayName: Invidious
-    isOfficial: true
+    isOfficial: false
     description: Invidious is an alternative front-end to YouTube.
     documentation: See https://github.com/iv-org/invidious
