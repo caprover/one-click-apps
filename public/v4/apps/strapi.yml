@@ -67,6 +67,6 @@ caproverOneClickApp:
             Note when installing a plugin an error will be displayed. This error message is due to a restart on plugin installation.
             This behaviour is normal. Refresh the page after few seconds (502 can happen if you refresh too fast).
     displayName: ''
-    isOfficial: true
+    isOfficial: false
     description: The Open source Headless CMS Front-End Developers love. Manage your content. Distribute it anywhere
     documentation: Taken from https://github.com/strapi/strapi-docker/blob/master/examples/mongo/docker-compose.yml
