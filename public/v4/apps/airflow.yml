@@ -2,9 +2,9 @@ captainVersion: 4
 caproverOneClickApp:
     instructions:
         start: |-
-           Apache Airflow is a tool to express and execute workflows as directed acyclic graphs (DAGs). 
-           It includes utilities to schedule tasks, monitor task progress and handle task dependencies.
-           This instance uses the Bitnami images
+            Apache Airflow is a tool to express and execute workflows as directed acyclic graphs (DAGs). 
+            It includes utilities to schedule tasks, monitor task progress and handle task dependencies.
+            This instance uses the Bitnami images
         end: >
             Airflow is deployed is deployed, it might take few moments before it's fully started.
             Initial user is: $$cap_airflow_user with password $$cap_airflow_password.
@@ -12,7 +12,7 @@ caproverOneClickApp:
 
     displayName: Airflow
     isOfficial: false
-    description:  A tool to express and execute workflows as directed acyclic graphs (DAGs).
+    description: A tool to express and execute workflows as directed acyclic graphs (DAGs).
     documentation: |-
         Based on https://github.com/bitnami/bitnami-docker-airflow#readme
 
@@ -68,7 +68,7 @@ caproverOneClickApp:
           label: Airflow email
           description: Email address that will receive notifications from airflow (need SMPT details)
         - id: $$cap_airflow_examples
-          label: Load Airflow DAG Examples? 
+          label: Load Airflow DAG Examples?
           defaultValue: 'no'
           description: Wheter to load or not load sample DAGs (yes/no)
         - id: $$cap_airflow_secret_key
@@ -82,7 +82,7 @@ caproverOneClickApp:
         - id: $$cap_airflow_py_requirements
           label: Path or volume to a requirements.txt file
           defaultValue: airflow-requstxt
-          description:  Installation of additional python modules at start-up time, make sure the file is accesible
+          description: Installation of additional python modules at start-up time, make sure the file is accesible
         # SMTP datails
         - id: $$cap_smtp_host
           label: SMTP Host
@@ -91,11 +91,11 @@ caproverOneClickApp:
           label: SMTP Port
           description: Port for SMPT connection
         - id: $$cap_smtp_starttls
-          label: Use startTLS? 
+          label: Use startTLS?
           defaultValue: 'no'
           description: Do you want to use startTLS? (yes/no)
         - id: $$cap_smtp_ssl
-          label: Use SSL? 
+          label: Use SSL?
           defaultValue: 'no'
           description: Check the tag version on https://hub.docker.com/r/bitnami/airflow-scheduler
         - id: $$cap_smtp_user
@@ -108,18 +108,17 @@ caproverOneClickApp:
           label: Mail from address
           description: Specofy who the email is from
 
-
 services:
     $$cap_appname-db:
         restart: always
         image: 'bitnami/postgresql:$$cap_postgresql_version'
         user:
         environment:
-          POSTGRESQL_DATABASE: $$cap_postgresql_name
-          POSTGRESQL_USERNAME: $$cap_postgresql_user
-          POSTGRESQL_PASSWORD: $$cap_postgresql_password
+            POSTGRESQL_DATABASE: $$cap_postgresql_name
+            POSTGRESQL_USERNAME: $$cap_postgresql_user
+            POSTGRESQL_PASSWORD: $$cap_postgresql_password
         volumes:
-          - $$cap_appname-postgresql-persistance:/bitnami
+            - $$cap_appname-postgresql-persistance:/bitnami
         caproverExtra:
             notExposeAsWebApp: true
 
@@ -128,92 +127,92 @@ services:
         image: 'bitnami/redis:$$cap_redis_version'
         user:
         environment:
-          REDIS_PASSWORD: $$cap_redis_password
+            REDIS_PASSWORD: $$cap_redis_password
         volumes:
-          - $$cap_appname-redis-persistance:/bitnami
+            - $$cap_appname-redis-persistance:/bitnami
         caproverExtra:
             notExposeAsWebApp: true
 
     $$cap_appname:
         restart: always
         depends_on:
-          - $$cap_appname-db
-          - $$cap_appname-redis
+            - $$cap_appname-db
+            - $$cap_appname-redis
         image: 'bitnami/airflow:$$cap_airflow_version'
         user:
         environment:
-          AIRFLOW_EXECUTOR: CeleryExecutor
-          AIRFLOW_DATABASE_HOST: srv-captain--$$cap_appname-db
-          AIRFLOW_DATABASE_NAME: $$cap_postgresql_name
-          AIRFLOW_DATABASE_USERNAME: $$cap_postgresql_user
-          AIRFLOW_DATABASE_PASSWORD: $$cap_postgresql_password
-          REDIS_HOST: srv-captain--$$cap_appname-redis
-          REDIS_PASSWORD: $$cap_redis_password
-          AIRFLOW_WEBSERVER_HOST: srv-captain--$$cap_appname
-          AIRFLOW_BASE_URL: https://$$cap_appname.$$cap_root_domain/
-          AIRFLOW_SECRET_KEY: $$cap_airflow_secret_key
-          AIRFLOW_LOAD_EXAMPLES: $$cap_airflow_examples
-          AIRFLOW_USERNAME: $$cap_airflow_user
-          AIRFLOW_PASSWORD: $$cap_airflow_password
-          AIRFLOW_EMAIL: $$cap_airflow_email
-          AIRFLOW__SMTP__SMTP_HOST: $$cap_smtp_host
-          AIRFLOW__SMTP__SMTP_PORT: $$cap_smtp_port
-          AIRFLOW__SMTP__SMTP_STARTTLS: $$cap_smtp_starttls
-          AIRFLOW__SMTP__SMTP_SSL: $$cap_smtp_ssl
-          AIRFLOW__SMTP__SMTP_USER: $$cap_smtp_user
-          AIRFLOW__SMTP__SMTP_PASSWORD: $$cap_smtp_password
-          AIRFLOW__SMTP__SMTP_MAIL_FROM: $$cap_smtp_mail_from
+            AIRFLOW_EXECUTOR: CeleryExecutor
+            AIRFLOW_DATABASE_HOST: srv-captain--$$cap_appname-db
+            AIRFLOW_DATABASE_NAME: $$cap_postgresql_name
+            AIRFLOW_DATABASE_USERNAME: $$cap_postgresql_user
+            AIRFLOW_DATABASE_PASSWORD: $$cap_postgresql_password
+            REDIS_HOST: srv-captain--$$cap_appname-redis
+            REDIS_PASSWORD: $$cap_redis_password
+            AIRFLOW_WEBSERVER_HOST: srv-captain--$$cap_appname
+            AIRFLOW_BASE_URL: https://$$cap_appname.$$cap_root_domain/
+            AIRFLOW_SECRET_KEY: $$cap_airflow_secret_key
+            AIRFLOW_LOAD_EXAMPLES: $$cap_airflow_examples
+            AIRFLOW_USERNAME: $$cap_airflow_user
+            AIRFLOW_PASSWORD: $$cap_airflow_password
+            AIRFLOW_EMAIL: $$cap_airflow_email
+            AIRFLOW__SMTP__SMTP_HOST: $$cap_smtp_host
+            AIRFLOW__SMTP__SMTP_PORT: $$cap_smtp_port
+            AIRFLOW__SMTP__SMTP_STARTTLS: $$cap_smtp_starttls
+            AIRFLOW__SMTP__SMTP_SSL: $$cap_smtp_ssl
+            AIRFLOW__SMTP__SMTP_USER: $$cap_smtp_user
+            AIRFLOW__SMTP__SMTP_PASSWORD: $$cap_smtp_password
+            AIRFLOW__SMTP__SMTP_MAIL_FROM: $$cap_smtp_mail_from
         ports:
-          - '8080:8080'
+            - '8080:8080'
         volumes:
-          - $$cap_airflow_dag_path:/opt/bitnami/airflow/dags
-          - $$cap_airflow_py_requirements:/bitnami/python/requirements.txt
+            - $$cap_airflow_dag_path:/opt/bitnami/airflow/dags
+            - $$cap_airflow_py_requirements:/bitnami/python/requirements.txt
         caproverExtra:
-          containerHttpPort: '8080'
+            containerHttpPort: '8080'
 
     $$cap_appname-worker:
         image: bitnami/airflow-worker:$$cap_airflow_worker_version
         depends_on:
             - $$cap_appname
         environment:
-          AIRFLOW_EXECUTOR: CeleryExecutor
-          AIRFLOW_DATABASE_HOST: srv-captain--$$cap_appname-db
-          AIRFLOW_DATABASE_NAME: $$cap_postgresql_name
-          AIRFLOW_DATABASE_USERNAME: $$cap_postgresql_user
-          AIRFLOW_DATABASE_PASSWORD: $$cap_postgresql_password
-          REDIS_HOST: srv-captain--$$cap_appname-redis
-          REDIS_PASSWORD: $$cap_redis_password
-          AIRFLOW_WEBSERVER_HOST: srv-captain--$$cap_appname
-          AIRFLOW_BASE_URL: https://$$cap_appname.$$cap_root_domain/
-          AIRFLOW_SECRET_KEY: $$cap_airflow_secret_key
-          AIRFLOW_LOAD_EXAMPLES: $$cap_airflow_examples
+            AIRFLOW_EXECUTOR: CeleryExecutor
+            AIRFLOW_DATABASE_HOST: srv-captain--$$cap_appname-db
+            AIRFLOW_DATABASE_NAME: $$cap_postgresql_name
+            AIRFLOW_DATABASE_USERNAME: $$cap_postgresql_user
+            AIRFLOW_DATABASE_PASSWORD: $$cap_postgresql_password
+            REDIS_HOST: srv-captain--$$cap_appname-redis
+            REDIS_PASSWORD: $$cap_redis_password
+            AIRFLOW_WEBSERVER_HOST: srv-captain--$$cap_appname
+            AIRFLOW_BASE_URL: https://$$cap_appname.$$cap_root_domain/
+            AIRFLOW_SECRET_KEY: $$cap_airflow_secret_key
+            AIRFLOW_LOAD_EXAMPLES: $$cap_airflow_examples
         volumes:
-          - $$cap_appname-data:/opt/bitnami/airflow/data
-          - $$cap_airflow_dag_path:/opt/bitnami/airflow/dags
-          - $$cap_airflow_py_requirements:/bitnami/python/requirements.txt
+            - $$cap_appname-data:/opt/bitnami/airflow/data
+            - $$cap_airflow_dag_path:/opt/bitnami/airflow/dags
+            - $$cap_airflow_py_requirements:/bitnami/python/requirements.txt
         caproverExtra:
             notExposeAsWebApp: true
 
     $$cap_appname-scheduler:
         restart: always
         depends_on:
-          - $$cap_appname
+            - $$cap_appname
         image: 'bitnami/airflow-scheduler:$$cap_airflow_scheduler_version'
         user:
         environment:
-          AIRFLOW_EXECUTOR: CeleryExecutor
-          AIRFLOW_DATABASE_HOST: srv-captain--$$cap_appname-db
-          AIRFLOW_DATABASE_NAME: $$cap_postgresql_name
-          AIRFLOW_DATABASE_USERNAME: $$cap_postgresql_user
-          AIRFLOW_DATABASE_PASSWORD: $$cap_postgresql_password
-          REDIS_HOST: srv-captain--$$cap_appname-redis
-          REDIS_PASSWORD: $$cap_redis_password
-          AIRFLOW_WEBSERVER_HOST: srv-captain--$$cap_appname
-          AIRFLOW_BASE_URL: https://$$cap_appname.$$cap_root_domain/
-          AIRFLOW_SECRET_KEY: $$cap_airflow_secret_key
-          AIRFLOW_LOAD_EXAMPLES: $$cap_airflow_examples
+            AIRFLOW_EXECUTOR: CeleryExecutor
+            AIRFLOW_DATABASE_HOST: srv-captain--$$cap_appname-db
+            AIRFLOW_DATABASE_NAME: $$cap_postgresql_name
+            AIRFLOW_DATABASE_USERNAME: $$cap_postgresql_user
+            AIRFLOW_DATABASE_PASSWORD: $$cap_postgresql_password
+            REDIS_HOST: srv-captain--$$cap_appname-redis
+            REDIS_PASSWORD: $$cap_redis_password
+            AIRFLOW_WEBSERVER_HOST: srv-captain--$$cap_appname
+            AIRFLOW_BASE_URL: https://$$cap_appname.$$cap_root_domain/
+            AIRFLOW_SECRET_KEY: $$cap_airflow_secret_key
+            AIRFLOW_LOAD_EXAMPLES: $$cap_airflow_examples
         volumes:
-          - $$cap_airflow_dag_path:/opt/bitnami/airflow/dags
-          - $$cap_airflow_py_requirements:/bitnami/python/requirements.txt
+            - $$cap_airflow_dag_path:/opt/bitnami/airflow/dags
+            - $$cap_airflow_py_requirements:/bitnami/python/requirements.txt
         caproverExtra:
             notExposeAsWebApp: true
