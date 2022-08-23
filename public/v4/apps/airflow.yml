@@ -162,8 +162,6 @@ services:
             AIRFLOW__SMTP__SMTP_USER: $$cap_smtp_user
             AIRFLOW__SMTP__SMTP_PASSWORD: $$cap_smtp_password
             AIRFLOW__SMTP__SMTP_MAIL_FROM: $$cap_smtp_mail_from
-        ports:
-            - '8080:8080'
         volumes:
             - $$cap_airflow_dag_path:/opt/bitnami/airflow/dags
             - $$cap_airflow_py_requirements:/bitnami/python/requirements.txt
