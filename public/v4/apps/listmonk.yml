@@ -27,7 +27,7 @@ services:
             containerHttpPort: 9000
             dockerfileLines:
                 - FROM listmonk/listmonk:$$cap_listmonk_version
-                - CMD yes | ./listmonk --install && ./listmonk
+                - CMD yes | ./listmonk --install --idempotent && ./listmonk
         volumes:
             - $$cap_appname-data:/listmonk
         depends_on:
