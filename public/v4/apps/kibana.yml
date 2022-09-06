@@ -6,6 +6,7 @@ services:
             KIBANA_DEFAULTAPPID: $$cap_KIBANA_DEFAULTAPPID
             MONITORING_ENABLED: $$cap_MONITORING_ENABLED
             ELASTICSEARCH_HOSTS: $$cap_ELASTICSEARCH_HOSTS
+            server.publicBaseUrl: http://$$cap_appname.$$cap_root_domain/
         image: docker.elastic.co/kibana/kibana:$$cap_version
         restart: always
         caproverExtra:
@@ -13,8 +14,8 @@ services:
 caproverOneClickApp:
     variables:
         - label: Kibana version
-          defaultValue: 7.8.0
-          description: It's highly recommended that you don't use the latest tag but instead the major version you need.
+          defaultValue: 8.4.1
+          description: It's highly recommended that you don't use the latest tag but instead the major version you need. See https://hub.docker.com/_/kibana for a list of versions.
           id: $$cap_version
         - label: Default App id
           defaultValue: home
@@ -25,7 +26,7 @@ caproverOneClickApp:
           defaultValue: 'true'
           id: $$cap_MONITORING_ENABLED
         - label: ELASTICSEARCH_HOSTS
-          description: URL of the elasticsearch hosts to use. Please include the http or https in the urls. eg. http://srv-captain--elastic
+          description: URL of the elasticsearch hosts to use. Please include the http or https in the urls. eg. http://srv-captain--elastic:9200
           id: $$cap_ELASTICSEARCH_HOSTS
     instructions:
         end: >-
