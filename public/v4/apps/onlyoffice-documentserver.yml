@@ -1,0 +1,32 @@
+captainVersion: 4
+version: '2.0'
+services:
+    $$cap_appname:
+        image: onlyoffice/documentserver:$$cap_app_version
+        volumes:
+            - $$cap_appname-logs:/app/onlyoffice/DocumentServer/logs
+            - $$cap_appname-data:/app/onlyoffice/DocumentServer/data
+            - $$cap_appname-lib:/app/onlyoffice/DocumentServer/lib
+            - $$cap_appname-rabbitmq:/app/onlyoffice/DocumentServer/rabbitmq
+            - $$cap_appname-redis:/app/onlyoffice/DocumentServer/redis
+            - $$cap_appname-db:/app/onlyoffice/DocumentServer/db
+caproverOneClickApp:
+    variables:
+        - id: '$$cap_app_version'
+          label: Document Server Version
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/onlyoffice/documentserver/tags
+          defaultValue: '6.2.2'
+          validRegex: '/.{1,}/'
+    instructions:
+        start: |-
+            ONLYOFFICE Document Server is an online office suite comprising viewers and editors for texts, 
+            spreadsheets and presentations, fully compatible with Office Open XML formats: .docx, .xlsx, 
+            .pptx and enabling collaborative editing in real time.
+        end: |-
+            Congratulations, you have successfully deployed ONLYOFFICE Document Server!
+
+            Your app will soon be available at http://$$cap_appname.$$cap_root_domain/
+    displayName: 'ONLYOFFICE Document Server'
+    isOfficial: true
+    description: Online office suite comprising viewers and editors for texts, spreadsheets and presentations
+    documentation: Taken from https://github.com/ONLYOFFICE/Docker-DocumentServer

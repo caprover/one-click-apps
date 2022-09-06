@@ -1,0 +1,64 @@
+captainVersion: 4
+services:
+    $$cap_appname-core:
+        depends_on:
+            - $$cap_appname-postgres
+        image: strapi/strapi:$$cap_strapi_version
+        volumes:
+            - $$cap_appname-data:/srv/app
+        restart: always
+        environment:
+            DATABASE_CLIENT: postgres
+            DATABASE_HOST: srv-captain--$$cap_appname-postgres
+            DATABASE_PORT: '5432'
+            DATABASE_NAME: strapi
+            DATABASE_USERNAME: strapi
+            DATABASE_PASSWORD: $$cap_postgres_password
+        caproverExtra:
+            containerHttpPort: '1337'
+    $$cap_appname-postgres:
+        image: postgres:$$cap_postgres_version
+        volumes:
+            - $$cap_appname-postgres-data:/var/lib/postgresql/data
+        restart: always
+        environment:
+            POSTGRES_DB: strapi
+            POSTGRES_USER: strapi
+            POSTGRES_PASSWORD: $$cap_postgres_password
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_strapi_version
+          label: Strapi Version
+          defaultValue: 3.3.3
+          description: Check out their page for the valid versions https://hub.docker.com/r/strapi/strapi/tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_postgres_version
+          label: PostgreSQL Version
+          defaultValue: '9.6.20'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_postgres_password
+          label: PostgreSQL password
+          description: Only use alphanumeric chars.
+          validRegex: /^([a-zA-Z0-9])+$/
+    instructions:
+        start: >-
+            API creation made simple, secure and fast. The most advanced open-source Content Management Framework to build powerful API with no effort. Read more here: https://strapi.io 
+
+
+            NOTE: Hardware requirements: 
+
+            2GB minimum RAM required
+
+            1Ghz minimum CPU clock speed
+        end: >-
+            Strapi is deployed and available as $$cap_appname-core 
+            IMPORTANT!! It takes up to 2-5 minutes for Strapi to boot up. You will see a 502 Error until the startup is finished.
+
+            IMPORTANT: You need to add a config file manually to support the correct domain name. See this issue for more details: https://github.com/strapi/strapi-docker/issues/173
+    displayName: Strapi (postgresql)
+    isOfficial: true
+    description: The Open source Headless CMS Front-End Developers love. Manage your content. Distribute it anywhere
+    documentation: Taken from https://github.com/strapi/strapi-docker/blob/master/examples/postgresql/docker-compose.yml

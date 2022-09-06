@@ -96,8 +96,10 @@ caproverOneClickApp:
         end: |-
             Squidex is deployed and available as $$cap_appname 
             You'll need also to enable https in order to make this app work.
-             IMPORTANT!! Don't forget to change the URLS__BASEURL,LETSENCRYPT_HOST and VIRTUAL_HOST variable if you change your URL.
-             IMPORTANT!! It takes up to 2-5 minutes for Squidex to boot up. You will see a 502 Error until the startup is finished.
+
+            IMPORTANT!! Don't forget to change the URLS__BASEURL,LETSENCRYPT_HOST and VIRTUAL_HOST variable if you change your URL.
+
+            IMPORTANT!! It takes up to 2-5 minutes for Squidex to boot up. You will see a 502 Error until the startup is finished.
     displayName: ''
     isOfficial: true
     description: Squidex is an open source headless CMS and content management hub.

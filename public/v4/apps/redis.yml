@@ -16,7 +16,7 @@ caproverOneClickApp:
         - id: $$cap_redis_version
           label: Redis Version Tag
           description: 'Check out their Docker page for the valid tags: https://hub.docker.com/_/redis?tab=tags'
-          defaultValue: '5'
+          defaultValue: '6.2'
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_redis_password
           label: Redis Password
@@ -25,9 +25,9 @@ caproverOneClickApp:
         start: >-
             Redis is an open source key-value store that functions as a data structure server.
 
-             After installation on CapRover, it will be available as srv-captain--YOUR_CONTAINER_NAME at port 6379 to other CapRover apps.
+            After installation on CapRover, it will be available as srv-captain--YOUR_CONTAINER_NAME at port 6379 to other CapRover apps.
 
-             Enter your Redis container name and click on next. It will take about a minute for the process to finish.
+            Enter your Redis container name and click on next. It will take about a minute for the process to finish.
         end: "Redis is deployed and available as srv-captain--$$cap_appname:6379 to other apps. For example with NodeJS: const client = redis.createClient(6379, 'srv-captain--$$cap_appname' , {password: '$$cap_redis_password'})"
     displayName: ''
     isOfficial: true

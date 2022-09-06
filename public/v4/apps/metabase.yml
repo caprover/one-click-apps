@@ -1,0 +1,69 @@
+captainVersion: 4
+services:
+    # Metabase
+    $$cap_appname:
+        image: metabase/metabase:$$cap_mb_version
+        restart: always
+        environment:
+            MB_DB_TYPE: postgres
+            MB_DB_DBNAME: metabase
+            MB_DB_PORT: 5432
+            MB_DB_USER: metabase
+            MB_DB_PASS: $$cap_db_pass
+            MB_DB_HOST: srv-captain--$$cap_appname-db
+            MB_EMAIL_SMTP_HOST: $$cap_smtp_host
+            MB_EMAIL_SMTP_PORT: $$cap_smtp_port
+            MB_EMAIL_SMTP_USERNAME: $$cap_smtp_user
+            MB_EMAIL_SMTP_PASSWORD: $$cap_smtp_pass
+        volumes:
+            - $$cap_appname-data:/metabase-data
+        caproverExtra:
+            containerHttpPort: '3000'
+    # Database
+    $$cap_appname-db:
+        image: postgres:12-alpine
+        volumes:
+            - $$cap_appname-db:/var/lib/postgresql/data
+        restart: always
+        environment:
+            POSTGRES_USER: metabase
+            POSTGRES_PASSWORD: $$cap_db_pass
+            POSTGRES_DB: metabase
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_mb_version
+          label: Metabase Version
+          defaultValue: 'v0.38.0-rc1'
+          description: Check out their docker page for the valid tags https://hub.docker.com/r/metabase/metabase/tags
+
+        - id: $$cap_db_pass
+          label: Database Password
+          defaultValue: $$cap_gen_random_hex(16)
+
+        - id: $$cap_smtp_host
+          label: SMTP Host
+          description: OPTIONAL
+
+        - id: $$cap_smtp_port
+          label: SMTP Port
+          description: OPTIONAL
+
+        - id: $$cap_smtp_user
+          label: SMTP User
+          description: OPTIONAL
+
+        - id: $$cap_smtp_pass
+          label: SMTP Password
+          description: OPTIONAL
+    instructions:
+        start: >-
+            Metabase is the easy, open source way for everyone in your company to ask questions and learn from data.
+        end: >-
+            Aaaand you're done! 😄
+            Your service is available at http://$$cap_appname.$$cap_root_domain
+    displayName: 'Metabase'
+    isOfficial: true
+    description: Metabase is the easy, open source way for everyone in your company to ask questions and learn from data.
+    documentation: https://www.metabase.com/docs/latest/operations-guide/running-metabase-on-docker.html

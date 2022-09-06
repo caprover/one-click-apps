@@ -10,7 +10,7 @@ services:
         volumes:
             - $$cap_appname-db:/var/lib/mysql
     $$cap_appname-pb:
-        image: passbolt/passbolt:2.12.1-debian
+        image: passbolt/passbolt:$$cap_pb_version
         depends_on:
             - $$cap_appname-db
         environment:
@@ -68,11 +68,11 @@ caproverOneClickApp:
         start: >-
             Passbolt is a free and open source password manager that allows team members to store and share credentials securely.
 
-             Enter your Passbolt configuration parameters and click on next. A MariaDB (database) and a Passbolt container will be created for you.  The process will take about a minute for the process to finish.
+            Enter your Passbolt configuration parameters and click on next. A MariaDB (database) and a Passbolt container will be created for you.  The process will take about a minute for the process to finish.
         end: >-
             Passbolt is deployed and available as $$cap_appname-pb . 
 
-             IMPORTANT: It will take up to 2 minutes for Passbolt to be ready. Before that, you might see a 502 error page.
+            IMPORTANT: It will take up to 2 minutes for Passbolt to be ready. Before that, you might see a 502 error page.
 
             Note: Once the container is running create your first admin user running the following command in the terminal:
 

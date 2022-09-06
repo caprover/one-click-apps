@@ -1,0 +1,73 @@
+captainVersion: 4
+services:
+    $$cap_appname-editor:
+        restart: always
+        environment:
+            APPSMITH_REDIS_URL: srv-captain--$$cap_appname-redis
+            APPSMITH_MONGODB_URI: $$cap_db_uri
+        depends_on:
+            - $$cap_appname-server
+        caproverExtra:
+            dockerfileLines:
+                - FROM index.docker.io/appsmith/appsmith-editor:$$cap_appsmith_editor_version
+                -  # modifying default appsmith (localhost install) nginx configuration for caprover
+                - CMD [ "sh", "-c", "wget https://gist.githubusercontent.com/aqidd/6fc0a369a268d89ccf8c21408c4f6169/raw/11e3167d339f9ecfd017ae5748fb079e66cab0a1/appsmith-local.conf && sed 's/appsmith-internal-server/srv-captain--$$cap_appname-server/g' appsmith-local.conf > /nginx.conf.template && /start-nginx.sh" ]
+    $$cap_appname-server:
+        image: index.docker.io/appsmith/appsmith-server:$$cap_appsmith_server_version
+        restart: always
+        environment:
+            APPSMITH_REDIS_URL: redis://srv-captain--$$cap_appname-redis:6379
+            APPSMITH_MONGODB_URI: $$cap_db_uri
+            APPSMITH_ENCRYPTION_PASSWORD: $$cap_ENCRYPTION_PASSWORD
+            APPSMITH_ENCRYPTION_SALT: $$cap_ENCRYPTION_SALT
+        caproverExtra:
+            containerHttpPort: '8080'
+            notExposeAsWebApp: 'true'
+    $$cap_appname-redis:
+        image: redis:3.2
+        volumes:
+            - $$cap_appname-redis:/data
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+caproverOneClickApp:
+    variables:
+        - description: Your previous mongodb with Appsmith data
+          id: $$cap_db_uri
+          label: MongoDB URI
+        - id: $$cap_appsmith_server_version
+          label: Appsmith Server Version
+          defaultValue: v1.2.22
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/appsmith/appsmith-server/tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_appsmith_editor_version
+          label: Appsmith Editor Version
+          defaultValue: v1.2.22
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/appsmith/appsmith-editor/tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_ENCRYPTION_PASSWORD
+          label: APPSMITH ENCRYPTION PASSWORD
+          description: Appsmith encryption password
+          defaultValue: $$cap_gen_random_hex(16)
+        - id: $$cap_ENCRYPTION_SALT
+          label: APPSMITH ENCRYPTION SALT
+          description: Appsmith encryption salt
+          defaultValue: $$cap_gen_random_hex(16)
+    instructions:
+        start: >-
+            Appsmith is the fastest way to build internal apps over any database or API.
+
+            This app is intended for an installation without database. 
+
+            PREREQUISITE: 
+
+            MongoDB database with initial appsmith installation data.
+        end: >-
+            Appsmith is deployed and available as $$cap_appname.
+
+            Remember that this app will not create a Database by itself. You need to provide all that information.
+
+            Don't forget to also sync the encryption values and other configuration from the previous appsmith installation https://github.com/appsmithorg/appsmith/blob/release/deploy/template/docker.env.sh.
+    displayName: Appsmith - No Database
+    isOfficial: true
+    description: This will create an Appsmith instance only. You will need to create and configure the database information manually. Intended for advanced users.
+    documentation: Modified from https://github.com/appsmithorg/appsmith/tree/release/deploy/template.

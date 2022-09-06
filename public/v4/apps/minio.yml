@@ -6,36 +6,50 @@ services:
             - $$cap_appname-config-data:/root/.minio
         restart: always
         environment:
-            MINIO_ACCESS_KEY: $$cap_access_key
-            MINIO_SECRET_KEY: $$cap_secret_key
+            MINIO_ROOT_USER: $$cap_access_key
+            MINIO_ROOT_PASSWORD: $$cap_secret_key
+            MINIO_REGION_NAME: 'eu-east-1'
+            MINIO_BROWSER_REDIRECT_URL: https://$$cap_appname.$$cap_root_domain
+            MINIO_SERVER_URL: https://$$cap_appname-s3.$$cap_root_domain # MinIO S3 API
         caproverExtra:
-            containerHttpPort: '9000'
+            containerHttpPort: '9001'
             dockerfileLines:
                 - FROM minio/minio:$$cap_minio_version
-                - CMD ["minio", "server", "/data"]
+                - CMD ["server", "/data", "--console-address", ":9001"]
+    $$cap_appname-s3:
+        image: caprover/nginx-reverse-proxy:1-ef5ffcb
+        restart: always
+        depends_on:
+            - $$cap_appname
+        environment:
+            UPSTREAM_HTTP_ADDRESS: http://srv-captain--$$cap_appname:9000
 caproverOneClickApp:
     variables:
         - id: $$cap_minio_version
-          label: Minio Version
-          defaultValue: latest
+          label: MinIO Version
+          defaultValue: RELEASE.2021-08-17T20-53-08Z
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/minio/minio/tags/
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_access_key
-          label: Minio Access Key
+          label: MinIO Access Key
           defaultValue: ''
-          description: Username to access minio server
+          description: Username to access MinIO server
           validRegex: /.{5,}/
         - id: $$cap_secret_key
           label: Minio Secret Key
           defaultValue: ''
-          description: Password to access minio server
+          description: Password to access MinIO server
           validRegex: /.{8,}/
     instructions:
         start: >-
-            Minio is an object storage server released under Apache License v2.0. It is compatible with Amazon S3 cloud storage service. It is best suited for storing unstructured data such as photos, videos, log files, backups and container / VM images. Size of an object can range from a few KBs to a maximum of 5TB. Minio server is light enough to be bundled with the application stack, similar to NodeJS, Redis and MySQL. 
-             This one click app deploy one single instance of minio. If you are deploying minio in a high demand production environment, you should consider deploying multiple instances of minio. See minio docs for more details. https://www.minio.io/
-        end: Minio is deployed and available as $$cap_appname
+            MinIO is a High Performance Object Storage released under GNU Affero General Public License v3.0. 
+            It is API compatible with Amazon S3 cloud storage service.
+        end: >-
+            Minio is deployed and available as $$cap_appname. 
+            **Important**: Make sure to enable HTTPS for both $$cap_appname and $$cap_appname-s3
+            You can access the dashboard at https://$$cap_appname.$$cap_root_domain
+            And, you can access the S3 API Endpoint at https://$$cap_appname-s3.$$cap_root_domain
     displayName: ''
     isOfficial: true
     description: MinIO is a cloud storage server compatible with Amazon S3
-    documentation: Taken from https://hub.docker.com/r/minio/minio
+    documentation: Taken from https://docs.min.io/docs/minio-docker-quickstart-guide.html

@@ -13,7 +13,7 @@ services:
         caproverExtra:
             containerHttpPort: '8080'
             dockerfileLines:
-                - FROM codercom/code-server:2.1697-vsc1.39.2
+                - FROM codercom/code-server:$$cap_coder_version
                 - '# Similar to the original file, except setting the user to root to prevent permission issues.'
                 - USER root
 caproverOneClickApp:
@@ -22,11 +22,16 @@ caproverOneClickApp:
           id: $$cap_coder_password
           label: Password
           validRegex: /^[^"]*$/
+        - id: $$cap_coder_version
+          label: Code Server Version
+          defaultValue: 3.9.1
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/codercom/code-server/tags/
+          validRegex: /^([^\s^\/])+$/
     instructions:
         end: >-
             Code server is deployed and is available as $$cap_appname.
 
-             IMPORTANT: Make sure to enable websocket capability in the app config on CapRover dashboard!
+            IMPORTANT: Make sure to enable websocket capability in the app config on CapRover dashboard!
         start: >-
             This installation will install a Visual Studio Code that's accessible through browser!
 
@@ -35,4 +40,4 @@ caproverOneClickApp:
     displayName: vscode via code-server
     isOfficial: true
     description: code-server by Coder is VS Code running on a remote server, accessible through the browser.
-    documentation: Taken from https://github.com/cdr/code-server/ . Except the image version (tag) is fixed to a specific version rather than generic 'v2' as this will ensure consistency of deployments.
+    documentation: Taken from https://github.com/cdr/code-server/ . Except the image version (tag) is fixed to a specific version (3.8.0)

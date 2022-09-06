@@ -29,7 +29,7 @@ caproverOneClickApp:
         - id: $$cap_miniflux_version
           label: Miniflux version
           defaultValue: 2.0.22
-          description: Checkout valid tags at https://hub.docker.com/r/miniflux/miniflux/tags
+          description: Check out valid tags at https://hub.docker.com/r/miniflux/miniflux/tags
         - id: $$cap_admin_user
           label: Admin user
         - id: $$cap_admin_password
@@ -38,7 +38,7 @@ caproverOneClickApp:
         - id: $$cap_postgres_version
           label: Postgres Version
           defaultValue: 9.6.18-alpine
-          description: Checkout their docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/
+          description: Check out their docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_postgres_password
           label: Postgres Password

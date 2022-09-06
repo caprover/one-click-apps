@@ -29,12 +29,12 @@ caproverOneClickApp:
           id: $$cap_ELASTICSEARCH_HOSTS
     instructions:
         end: >-
-            That's it! If you get a 502 it might mean that kibana cannot find your elasticsearch instance. Please recheck your configs
+            That's it! If you get a 502 it might mean that kibana cannot find your elasticsearch instance. Please recheck your configs.
 
-            . Ensure basic auth is enabled so your data is not publicly available.
+            Ensure basic auth is enabled so your data is not publicly available.
         start: >-
             Provide the ELASTICSEARCH_HOSTS so that kibana can find your elasticsearch instance. be sure to include the http:// protocol in the url.
-             Note that Kibana does not have persistent volumes as all data is stored in the elasticsearch instance itself.
+            Note that Kibana does not have persistent volumes as all data is stored in the elasticsearch instance itself.
     displayName: kibana
     isOfficial: true
     description: Kibana is a free and open user interface that lets you visualize your Elasticsearch data and navigate the Elastic Stack.

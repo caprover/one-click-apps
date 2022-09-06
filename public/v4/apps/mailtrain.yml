@@ -46,14 +46,14 @@ services:
         caproverExtra:
             containerHttpPort: '3000'
     $$cap_appname-$$cap_mailtrain_sandbox-appname:
-        image: caprover/nginx-reverse-proxy:latest
+        image: caprover/nginx-reverse-proxy:1-ef5ffcb
         restart: always
         depends_on:
             - $$cap_appname
         environment:
             UPSTREAM_HTTP_ADDRESS: http://srv-captain--$$cap_appname:3003
     $$cap_appname-$$cap_mailtrain_lists-appname:
-        image: caprover/nginx-reverse-proxy:latest
+        image: caprover/nginx-reverse-proxy:1-ef5ffcb
         restart: always
         depends_on:
             - $$cap_appname

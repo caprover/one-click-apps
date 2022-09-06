@@ -24,7 +24,7 @@ caproverOneClickApp:
         end: >-
             JupyterLab server is deployed and is available as $$cap_appname.
 
-             IMPORTANT: Make sure to enable websocket capability in the app config on CapRover dashboard!
+            IMPORTANT: Make sure to enable websocket capability in the app config on CapRover dashboard!
     displayName: JupyterLab
     isOfficial: true
     description: JupyterLab is the next-generation user interface for Project Jupyter. It offers all the familiar building blocks of the classic Jupyter Notebook in a flexible and powerful user interface.

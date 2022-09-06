@@ -14,7 +14,7 @@ caproverOneClickApp:
           defaultValue: 19.08.1
           validRegex: /^([^\s^\/])+$/
     instructions:
-        start: Countly. This will only work over HTTPS, so enable plz :) | Product Analytics for Mobile, Web, Desktop and IoT | https://count.ly
+        start: Countly will only work over HTTPS, so please enable it. | Product Analytics for Mobile, Web, Desktop and IoT | https://count.ly
         end: Countly is deployed and available as $$cap_appname
     displayName: ''
     isOfficial: true

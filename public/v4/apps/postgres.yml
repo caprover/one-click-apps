@@ -16,7 +16,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_postgres_version
           label: Postgres Version
-          defaultValue: '9.6'
+          defaultValue: '14.1'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_pg_user
@@ -39,9 +39,9 @@ caproverOneClickApp:
         start: >-
             PostgreSQL, often simply Postgres, is an object-relational database management system (ORDBMS) with an emphasis on extensibility and standards-compliance. As a database server, its primary function is to store data, securely and supporting best practices, and retrieve it later, as requested by other software applications, be it those on the same computer or those running on another computer across a network (including the Internet). It can handle workloads ranging from small single-machine applications to large Internet-facing applications with many concurrent users.
 
-             After installation on CapRover, it will be available as srv-captain--YOUR_CONTAINER_NAME at port 5432 to other CapRover apps.
+            After installation on CapRover, it will be available as srv-captain--YOUR_CONTAINER_NAME at port 5432 to other CapRover apps.
 
-             Enter your Postgres Configuration parameters and click on next. It will take about a minute for the process to finish.
+            Enter your Postgres Configuration parameters and click on next. It will take about a minute for the process to finish.
         end: "Postgres is deployed and available as srv-captain--$$cap_appname-db:5432 to other apps. For example with NodeJS: 'const client = new Client({ user: 'cap_pg_user', host: 'srv-captain--$$cap_appname', database: 'cap_pg_db', password: '********', port: 5432})'"
     displayName: PostgreSQL
     isOfficial: true
