@@ -6,47 +6,35 @@ services:
             - $$cap_appname-elasticsearch-data:/usr/share/elasticsearch/data
         restart: always
         environment:
-            ES_JAVA_OPTS: -Xms512m -Xmx512m
+            CLI_JAVA_OPTS: -Xms512m -Xmx512m
             cluster.name: $$cap_elasticsearch_cluster_name
-            cluster.initial_master_nodes: $$cap_elasticsearch_cluster_initial_master_nodes
+            discovery.type: $$cap_elasticsearch_discovery_type
             http.port: $$cap_container_port
             node.name: $$cap_appname
-            node.master: $$cap_elasticsearch_node_master
-            node.data: $$cap_elasticsearch_node_data
-            discovery.seed_hosts: $$cap_elasticsearch_discovery_seed_hosts
+            xpack.security.enabled: $$cap_elasticsearch_security_enabled
         caproverExtra:
             containerHttpPort: $$cap_container_port
 caproverOneClickApp:
     variables:
         - id: $$cap_elasticsearch_version
-          label: 'Elasticsearch Version Tag '
-          description: 'Check out the releases overview: https://www.elastic.co/de/downloads/elasticsearch'
-          defaultValue: 7.8.0
+          label: 'Elasticsearch Version Tag'
+          description: 'Check out the releases overview: https://hub.docker.com/_/elasticsearch'
+          defaultValue: 8.4.1
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_elasticsearch_cluster_name
           label: Cluster Name
           description: Only nodes within the same cluster name can be combined
           defaultValue: elasticsearch-cluster
           validRegex: /^([^\s^\/])+$/
-        - id: $$cap_elasticsearch_cluster_initial_master_nodes
-          label: Cluster Initial Master Nodes
-          description: Nodes to be used as master nodes. If this is the master node, put the 'App Name' selected above
-          defaultValue: ''
+        - id: $$cap_elasticsearch_discovery_type
+          label: Discovery Type
+          description: Discovery type, for a single node cluster use `single-node`, otherwise `multi-node`
+          defaultValue: single-node
           validRegex: /^([^\s^\/])+$/
-        - id: $$cap_elasticsearch_node_data
-          label: Node Data
-          description: Should the node used for storing data? (true / false)
-          defaultValue: 'true'
-          validRegex: /^([^\s^\/])+$/
-        - id: $$cap_elasticsearch_node_master
-          label: Node Master
-          description: Define node as master-eligible (usual first node TRUE, others FALSE).
-          defaultValue: 'true'
-          validRegex: /^([^\s^\/])+$/
-        - id: $$cap_elasticsearch_discovery_seed_hosts
-          label: Discovery seed hosts
-          defaultValue: srv-captain--XXX
-          description: Domains to start the discovery of other nodes
+        - id: $$cap_elasticsearch_security_enabled
+          label: Security Enabled
+          defaultValue: 'false'
+          description: 'When you enable this option, Elasticsearch will create a random password (see startup logs) for the `elastic` user and create SSL certificates required for authentication. It is recommended to leave this off for a quick setup. Warning: make sure to enable HTTP Basic Auth in CapRover!'
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_container_port
           label: Container TCP Port
