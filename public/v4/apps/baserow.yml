@@ -1,14 +1,14 @@
 captainVersion: 4
 services:
-  $$cap_appname:
-    image: baserow/baserow:$$cap_baserow_version
-    restart: always
-    environment:
-      BASEROW_PUBLIC_URL: $$cap_appname.$$cap_root_domain
-    volumes:
-      - $$cap_appname-data:/baserow/data
+    $$cap_appname:
+        image: baserow/baserow:$$cap_baserow_version
+        restart: always
+        environment:
+            BASEROW_PUBLIC_URL: $$cap_appname.$$cap_root_domain
+        volumes:
+            - $$cap_appname-data:/baserow/data
 volumes:
-  $$cap_appname-data:
+    $$cap_appname-data:
 caproverOneClickApp:
     variables:
         - id: $$cap_baserow_version
