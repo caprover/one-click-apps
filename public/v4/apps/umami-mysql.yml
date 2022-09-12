@@ -2,7 +2,7 @@ captainVersion: 4
 services:
     # Umami mysql
     $$cap_appname:
-        image: ghcr.io/mikecao/umami:mysql-$$cap_umami_version
+        image: ghcr.io/umami-software/umami:mysql-$$cap_umami_version
         restart: always
         environment:
             DATABASE_URL: mysql://umami:$$cap_mysql_pass@srv-captain--$$cap_appname-mysql/umami
@@ -32,8 +32,8 @@ caproverOneClickApp:
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_umami_version
           label: Caprover Umami Version
-          defaultValue: 'v1.33.2'
-          description: Checkout their github page for the valid tags (minimum compatible version 1.33.2) https://github.com/mikecao/umami/releases
+          defaultValue: 'v1.38.0'
+          description: Checkout their github page for the valid tags https://github.com/umami-software/umami/pkgs/container/umami
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_mysql_pass
           label: mysql Database password
@@ -52,7 +52,7 @@ caproverOneClickApp:
 
             This app will install a default mysql instance with persistant data. You can choose the version yourself. The deployment was tested with mysql 8.0.x.
 
-            For Updating just Deploy latest image from https://github.com/mikecao/umami/pkgs/container/umami using the Deploy via ImageName section in your caprover umami container
+            For Updating just Deploy latest image from https://github.com/umami-software/umami/pkgs/container/umami using the Deploy via ImageName section in your caprover umami container
 
             For more details about umami, see: https://umami.is
 
@@ -66,4 +66,4 @@ caproverOneClickApp:
     displayName: umami-mysql
     isOfficial: true
     description: umami is a simple, easy to use, self-hosted web analytics solution. The goal is to provide you with a friendly privacy-focused alternative to Google Analytics.
-    documentation: Official docs are [here](https://github.com/mikecao/umami)
+    documentation: Official docs are [here](https://umami.is/docs/getting-started)
