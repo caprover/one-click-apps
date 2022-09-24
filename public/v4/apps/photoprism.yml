@@ -48,6 +48,7 @@ services:
     $$cap_appname-ofelia:
         restart: unless-stopped
         image: "mcuadros/ofelia:$$ofelia_version"
+        command: daemon --docker
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock:ro"
         caproverExtra:
