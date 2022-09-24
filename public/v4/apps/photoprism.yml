@@ -42,7 +42,7 @@ services:
             notExposeAsWebApp: 'true'
     $$cap_appname-chadburn:
         restart: unless-stopped
-        image: 'ghcr.io/premoweb/chadburn:$$chadburn_version'
+        image: 'premoweb/chadburn:$$chadburn_version'
         volumes:
             - '/var/run/docker.sock:/var/run/docker.sock:ro'
         caproverExtra:
