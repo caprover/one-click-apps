@@ -21,6 +21,6 @@ caproverOneClickApp:
         end: |-
             Baïkal  has been successfully deployed!
     displayName: Baïkal (vbbot)
-    isOfficial: true
+    isOfficial: false
     description: Baïkal is a lightweight CalDAV+CardDAV server. It offers an extensive web interface with easy management of users, address books and calendars.
     documentation: See https://sabre.io/baikal/
