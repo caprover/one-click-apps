@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: kiliandeca/excalidraw:$$cap_excalidraw_version
+        image: kiliandeca/excalidraw@$$cap_excalidraw_version
         restart: always
         environment:
             BACKEND_V2_GET_URL: https://$$cap_appname-storage.$$cap_root_domain/api/v2/scenes/
@@ -18,7 +18,7 @@ services:
         image: excalidraw/excalidraw-room
         restart: always
     $$cap_appname-storage-backend:
-        image: kiliandeca/excalidraw-storage-backend:$$cap_storage_backend_version
+        image: kiliandeca/excalidraw-storage-backend@$$cap_storage_backend_version
         restart: always
         environment:
             STORAGE_URI: redis://srv-captain--$$cap_appname-redis:6379
@@ -39,11 +39,11 @@ caproverOneClickApp:
     variables:
         - id: $$cap_excalidraw_version
           label: Excalidraw version
-          defaultValue: 'latest'
+          defaultValue: 'sha256:2fe5a14cc0aab940dcf6144a6a5e73b9d044bdf0148762f9c7bc0ceea424c872'
           description: Check out this Docker page for any valid tags https://hub.docker.com/r/kiliandeca/excalidraw/tags
         - id: $$cap_storage_backend_version
           label: Excalidraw storage backend adapter version
-          defaultValue: 'latest'
+          defaultValue: 'sha256:dd01b5214ad2e24970bdc255e28b2921ab59b1db14dbb826979d1fdea1c5c20b'
           description: Check out this Docker page for any valid tags https://hub.docker.com/r/kiliandeca/excalidraw-storage-backend/tags
         - id: $$cap_redis_version
           label: Redis Version
