@@ -11,7 +11,7 @@ caproverOneClickApp:
     variables:
         - id: '$$cap_version'
           label: Baikal Version
-          defaultValue: 'nginx'
+          defaultValue: '0.9.2-nginx'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/ckulka/baikal/tags
           validRegex: "/^([^\\s^\\/])+$/"
     instructions:
