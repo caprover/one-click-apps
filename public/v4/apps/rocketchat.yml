@@ -13,6 +13,7 @@ services:
             MONGO_OPLOG_URL: mongodb://$$cap_mongodb_root_username:$$cap_mongodb_root_password@srv-captain--$$cap_appname-db:27017/local?replicaSet=rs0&authSource=admin
 
             ADMIN_NAME: $$cap_admin_name
+            ADMIN_EMAIL: $$cap_admin_email
             ADMIN_USERNAME: $$cap_admin_username
             ADMIN_PASS: $$cap_admin_password
 
@@ -25,7 +26,6 @@ services:
 
     $$cap_appname-db:
         image: bitnami/mongodb:$$cap_app_db_version
-        restart: on-failure
         volumes:
             - $$cap_appname-db-data:/bitnami/mongodb
         environment:
@@ -50,16 +50,21 @@ caproverOneClickApp:
     variables:
         - id: $$cap_app_version
           label: Rocket.Chat Version
-          description: See version numbers at https://hub.docker.com/r/library/rocket-chat/tags/ or https://github.com/RocketChat/Rocket.Chat/releases. Version must be >=4.x.y
-          defaultValue: '4.2.1'
-          # enforcing deployment of v4+
-          validRegex: /^[4-9](\.[0-9](\.[0-9])?)?$/
+          description: See version numbers at https://hub.docker.com/r/rocketchat/rocket.chat/tags or https://github.com/RocketChat/Rocket.Chat/releases. Version must be >=5.x.y
+          defaultValue: '5.0.4'
+          # enforcing deployment of v5.0.4+
+          validRegex: /^[5-9](\.[0-9](\.[4-9])?)?$/
 
         - id: $$cap_admin_name
           label: Rocket.Chat Admin Real Name
           defaultValue: Captain
           description: Real name of your Rocket.Chat instance's Admin user
           validRegex: /^[a-zA-Z0-9\.-\s]+$/
+
+        - id: $$cap_admin_email
+          label: Rocket.Chat Admin Email Account
+          description: Email address of Rocket.Chat instance's Admin user
+          validRegex: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
         - id: $$cap_admin_username
           label: Rocket.Chat Admin Username
