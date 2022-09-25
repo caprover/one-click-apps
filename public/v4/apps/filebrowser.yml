@@ -18,7 +18,7 @@ caproverOneClickApp:
         - id: $$cap_filebrowser_version
           label: File Browser Version Tag
           description: 'Check out their Docker page for the valid tags: https://hub.docker.com/r/filebrowser/filebrowser/tags'
-          defaultValue: v2.0.16
+          defaultValue: v2.22.4
           validRegex: /^([^\s^\/])+$/
     instructions:
         start: >-

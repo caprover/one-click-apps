@@ -35,7 +35,7 @@ caproverOneClickApp:
           validRegex: /^(\w|[^\s"'\\])+$/
         - id: $$cap_wp_version
           label: WordPress Version
-          defaultValue: '4.9'
+          defaultValue: '6.0.1'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/wordpress/tags/
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_db_type
@@ -45,7 +45,7 @@ caproverOneClickApp:
           validRegex: /^(mysql|mariadb)$/
         - id: $$cap_database_version
           label: Database Version, default is MySQL
-          defaultValue: '5.7'
+          defaultValue: '8.0.29'
           description: Check out the Docker pages for the valid tags https://hub.docker.com/r/library/mysql/tags/ or https://hub.docker.com/_/mariadb?tab=tags
           validRegex: /^([^\s^\/])+$/
     instructions:
