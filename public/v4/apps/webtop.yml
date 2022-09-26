@@ -30,7 +30,7 @@ caproverOneClickApp:
         - id: $$cap_webtop_version
           label: Version Tag
           description: Check out their documentation for the valid tags https://docs.linuxserver.io/images/docker-webtop#version-tags
-          defaultValue: ubuntu-xfce
+          defaultValue: ubuntu-xfce-version-85c6c96d
           validRegex: "/^([^\\s^\\/])+$/"
         - id: $$cap_webtop_timezone
           label: Timezone
