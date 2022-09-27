@@ -112,6 +112,7 @@ caproverOneClickApp:
             Woodpecker is a simple CI engine with great extensibility.
             It is a community fork of the Drone CI system.
             It runs your pipelines inside Docker containers, so if you are already using them in your daily workflow, you'll love Woodpecker for sure.
+            You should set up `WOODPECKER_HOST` and at least one version control system (e.g. `WOODPECKER_GITEA` for Gitea or `WOODPECKER_GITHUB` for GitHub etc.).
         end: >
             Woodpecker has been successfully deployed! It might take few moments before it's fully started.
             You can access it at http://$$cap_appname.$$cap_root_domain
