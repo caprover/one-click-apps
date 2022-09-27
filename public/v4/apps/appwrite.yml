@@ -574,7 +574,7 @@ caproverOneClickApp:
         end: |-
             Appwrite has been successfully deployed!
             Please change the following settings before using the service:
-            1. Go the settings for $$cap_appname
+            1. Go to the settings for $$cap_appname
             2. Enable "Websocket Support"
             3. Click on "Edit Default Nginx Configurations" and paste the following content before the last closing bracket "}":
                 ```
