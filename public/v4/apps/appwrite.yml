@@ -121,7 +121,7 @@ services:
             _APP_FUNCTIONS_MEMORY_SWAP: $$cap_APP_FUNCTIONS_MEMORY_SWAP
             _APP_FUNCTIONS_RUNTIMES: $$cap_APP_FUNCTIONS_RUNTIMES
             _APP_EXECUTOR_SECRET: $$cap_APP_EXECUTOR_SECRET
-            _APP_EXECUTOR_HOST: http://srv-captain--$$cap_appname-executor/v1 srv-captain--$$cap_appname-executor
+            _APP_EXECUTOR_HOST: http://srv-captain--$$cap_appname-executor/v1
             _APP_LOGGING_PROVIDER: $$cap_APP_LOGGING_PROVIDER
             _APP_LOGGING_CONFIG: $$cap_APP_LOGGING_CONFIG
             _APP_STATSD_HOST: srv-captain--$$cap_appname-telegraf
@@ -250,7 +250,7 @@ services:
             _APP_ENV: $$cap_APP_ENV
             _APP_OPENSSL_KEY_V1: $$cap_APP_OPENSSL_KEY_V1
             _APP_EXECUTOR_SECRET: $$cap_APP_EXECUTOR_SECRET
-            _APP_EXECUTOR_HOST: http://srv-captain--$$cap_appname-executor/v1 srv-captain--$$cap_appname-executor
+            _APP_EXECUTOR_HOST: http://srv-captain--$$cap_appname-executor/v1
             _APP_REDIS_HOST: srv-captain--$$cap_appname-redis
             _APP_REDIS_PORT: $$cap_APP_REDIS_PORT
             _APP_REDIS_USER: $$cap_APP_REDIS_USER
@@ -358,7 +358,7 @@ services:
             _APP_LOGGING_PROVIDER: $$cap_APP_LOGGING_PROVIDER
             _APP_LOGGING_CONFIG: $$cap_APP_LOGGING_CONFIG
             _APP_EXECUTOR_SECRET: $$cap_APP_EXECUTOR_SECRET
-            _APP_EXECUTOR_HOST: http://srv-captain--$$cap_appname-executor/v1 srv-captain--$$cap_appname-executor
+            _APP_EXECUTOR_HOST: http://srv-captain--$$cap_appname-executor/v1
 
     $$cap_appname-worker-functions:
         caproverExtra:
