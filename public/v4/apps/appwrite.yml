@@ -186,7 +186,7 @@ services:
             _APP_FUNCTIONS_MEMORY_SWAP: $$cap_APP_FUNCTIONS_MEMORY_SWAP
             _APP_FUNCTIONS_INACTIVE_THRESHOLD: $$cap_APP_FUNCTIONS_INACTIVE_THRESHOLD
             _APP_EXECUTOR_SECRET: $$cap_APP_EXECUTOR_SECRET
-            OPEN_RUNTIMES_NETWORK: srv-captain--$$cap_appname-runtimes
+            OPEN_RUNTIMES_NETWORK: captain-overlay-network
             _APP_LOGGING_PROVIDER: $$cap_APP_LOGGING_PROVIDER
             _APP_LOGGING_CONFIG: $$cap_APP_LOGGING_CONFIG
             _APP_STORAGE_DEVICE: $$cap_APP_STORAGE_DEVICE
