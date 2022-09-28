@@ -28,6 +28,7 @@ services:
         restart: always
         environment:
             PENPOT_PUBLIC_URI: $$cap_public_uri
+            PENPOT_REDIS_URI: redis://srv-captain--$$cap_appname-redis:6379/0
         caproverExtra:
             notExposeAsWebApp: 'true'
 
@@ -39,6 +40,7 @@ services:
         environment:
             PENPOT_PUBLIC_URI: $$cap_public_uri
             PENPOT_TELEMETRY_ENABLED: $$cap_enable_telemetry
+            PENPOT_SMTP_ENABLED: 'true'
             PENPOT_SMTP_DEFAULT_FROM: $$cap_smtp_from
             PENPOT_SMTP_DEFAULT_REPLY_TO: $$cap_smtp_reply_to
             PENPOT_SMTP_HOST: $$cap_smtp_host
@@ -47,14 +49,15 @@ services:
             PENPOT_SMTP_PASSWORD: $$cap_smtp_password
             PENPOT_SMTP_TLS: $$cap_smtp_tls
             PENPOT_SMTP_SSL: $$cap_smtp_ssl
-
             PENPOT_DATABASE_URI: postgresql://srv-captain--$$cap_appname-postgres/penpot
             PENPOT_DATABASE_USERNAME: penpot
             PENPOT_DATABASE_PASSWORD: $$cap_postgres_pass
             PENPOT_REDIS_URI: redis://srv-captain--$$cap_appname-redis:6379/0
-            PENPOT_STORAGE_BACKEND: fs
-            PENPOT_STORAGE_FS_DIRECTORY: /opt/data/assets
-            PENPOT_SMTP_ENABLED: 'true'
+            PENPOT_ASSETS_STORAGE_BACKEND: assets-fs
+            PENPOT_STORAGE_ASSETS_FS_DIRECTORY: /opt/data/assets
+            PENPOT_FLAGS: $$cap_flags
+            PENPOT_REGISTRATION_DOMAIN_WHITELIST: $$cap_registration_domain_whitelist
+            PENPOT_TENANT: pro
         depends_on:
             - $$cap_appname-postgres
             - $$cap_appname-redis
@@ -65,6 +68,8 @@ services:
     $$cap_appname:
         volumes:
             - $$cap_appname-assets-data:/opt/data
+        environment:
+            PENPOT_FLAGS: $$cap_flags
         caproverExtra:
             dockerfileLines:
                 - FROM penpotapp/frontend:$$cap_penpot_frontend_version
@@ -84,26 +89,33 @@ caproverOneClickApp:
         - id: $$cap_redis_version
           label: Redis Version
           defaultValue: '6'
-          description: Checkout their docker desctiption page for the valid tags https://hub.docker.com/_/redis?tab=description
+          description: Checkout their docker description page for the valid tags https://hub.docker.com/_/redis?tab=description
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_penpot_frontend_version
           label: Penpot Frontend Version
-          defaultValue: '1.4.1-alpha'
+          defaultValue: '1.15.2-beta'
           description: Checkout their docker page for the valid tags https://hub.docker.com/r/penpotapp/frontend/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_penpot_backend_version
           label: Penpot Backend Version
-          defaultValue: '1.4.1-alpha'
+          defaultValue: '1.15.2-beta'
           description: Checkout their docker page for the valid tags https://hub.docker.com/r/penpotapp/backend/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_penpot_exporter_version
           label: Penpot Exporter Version
-          defaultValue: '1.4.1-alpha'
+          defaultValue: '1.15.2-beta'
           description: Checkout their docker page for the valid tags https://hub.docker.com/r/penpotapp/exporter/tags
           validRegex: /^([^\s^\/])+$/
+        - id: $$cap_flags
+          label: Penpot Flags
+          defaultValue: enable-registration enable-login
+          description: Add "disable-secure-session-cookies" if you are going to serve it without HTTPS. Checkout option on their documentation https://help.penpot.app/technical-guide/configuration
+        - id: $$cap_registration_domain_whitelist
+          label: Penpot Registration Domain Whitelist
+          description: Checkout option on their documentation https://help.penpot.app/technical-guide/configuration
         - id: $$cap_postgres_pass
-          label: Potgress Database password
-          description: 'Pasword for postgres'
+          label: Postgres Database password
+          description: 'Password for postgres'
           validRegex: /.{1,}/
         - id: $$cap_public_uri
           label: Public URI
@@ -142,7 +154,7 @@ caproverOneClickApp:
           validRegex: /^(true|false)$/
         - id: $$cap_enable_telemetry
           label: Send Anonymous Data
-          description: When enabled, a periodical process will send annonymous data about this instance. Read more at https://github.com/penpot/penpot/blob/f2fd97693427c7decb86e745bf178fe70fe332a0/docker/images/docker-compose.yaml#L56-L62
+          description: When enabled, a periodical process will send anonymous data about this instance. Read more at https://github.com/penpot/penpot/blob/f2fd97693427c7decb86e745bf178fe70fe332a0/docker/images/docker-compose.yaml#L56-L62
           defaultValue: 'false'
           validRegex: /^(true|false)$/
 
@@ -150,7 +162,7 @@ caproverOneClickApp:
         start: >-
             The open-source solution for design and prototyping.
         end: >
-            Penpot is deployed and available as http://$$cap_appname.$$cap_root_domain. IMPORTANT: It will take up to 2 minutes for Penpot to be ready. Before that, you might see a 502 error page.
+            Penpot is deployed and available as http://$$cap_appname.$$cap_root_domain. IMPORTANT: It will take up to 2 minutes for Penpot to be ready. Before that, you might see a 502 error page. Please enable "WebSocket Support" in the HTTP settings.
     displayName: Penpot
     isOfficial: true
     description: The open-source solution for design and prototyping.
