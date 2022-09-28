@@ -130,6 +130,7 @@ services:
             MYSQL_ROOT_PASSWORD: $$cap_DB_ROOT_PASSWORD
         volumes:
             - $$cap_appname-db-data:/var/lib/mysql
+            - $$cap_appname-db-dump:/docker-entrypoint-initdb.d
     $$cap_appname-queue:
         caproverExtra:
             notExposeAsWebApp: 'true'
@@ -189,12 +190,12 @@ caproverOneClickApp:
           validRegex: /.{1,}/
         - id: $$cap_CRATER_AUTO_OPTIMIZE
           label: Automatic Optimizations
-          defaultValue: 'true'
+          defaultValue: 'false'
           description: Optimization and caching of all configs, views and routes.
           validRegex: /^(true|false)$/
         - id: $$cap_CRATER_LINK_STORAGE
           label: Link Storage
-          defaultValue: 'true'
+          defaultValue: 'false'
           description: Symlinks to the storage folder.
           validRegex: /^(true|false)$/
         - id: $$cap_CRATER_AUTO_MIGRATION
