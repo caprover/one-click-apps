@@ -143,7 +143,7 @@ caproverOneClickApp:
             Crater is an open-source web & mobile app that helps you track expenses, payments & create professional invoices & estimates.
             Please note that this is **NOT** the official image.
             We are using the image provided by Shinsenter: https://hub.docker.com/r/shinsenter/crater
-            Please make sure you enter at least the application URL `APP_URL` and `APP_KEY` before proceeding.
+            Please make sure you enter `APP_URL` and `APP_KEY` before proceeding.
         end: |-
             Crater has been successfully deployed! It might take few moments before it's fully started.
             You can access it at `http://$$cap_appname.$$cap_root_domain`
