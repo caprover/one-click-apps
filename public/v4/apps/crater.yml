@@ -210,7 +210,6 @@ caproverOneClickApp:
           validRegex: /^(true|false)$/
         - id: $$cap_CRATER_QUEUE_OPTIONS
           label: Queue Worker Options
-          defaultValue: --timeout=10 --tries=3 redis
           description: Extra arguments for queue worker.
         - id: $$cap_CRATER_SCHEDULE_ENABLED
           label: Enable Schedule Worker
