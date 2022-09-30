@@ -167,7 +167,7 @@ caproverOneClickApp:
         end: |-
             BTCPay Server has been successfully deployed! It might take few moments before it's fully started.
             You can access it at `http://$$cap_appname.$$cap_root_domain`
-            Please enable "Websocket Support" in the settings.
+            Please enable "Websocket Support" and HTTPS in the settings.
             It will take some time to synchronize the Bitcoin full node.
             You should also observe the app logs from time to time.
     displayName: BTCPay Server
