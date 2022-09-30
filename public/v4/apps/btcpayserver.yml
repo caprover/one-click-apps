@@ -166,9 +166,28 @@ caproverOneClickApp:
             Please note that features like SSH access and Onion service have been omitted to keep deployment simple.
             You may need to open the port `9735` in your firewall.
         end: |-
-            BTCPay Server has been successfully deployed! It might take few moments before it's fully started.
-            You can access it at `http://$$cap_appname.$$cap_root_domain`
-            Please enable "Websocket Support" and HTTPS in the settings.
+            BTCPay Server has been successfully deployed!
+            Please change the following settings before using the service:
+            1. Go to the settings for `$$cap_appname`
+            2. Enable **Websocket Support**
+            3. Enable **HTTPS**
+            4. Click on **Edit Default Nginx Configurations** and paste the following content before the last closing bracket "}":
+                ```
+                location ~* ^/(lnrpc|routerrpc)\. {
+                    grpc_read_timeout 6000s;
+                    grpc_send_timeout 6000s;
+                    grpc_pass grpcs://srv-captain--$$cap_appname-lnd:$$cap_LND_LOOP_LISTEN_PORT;
+                }
+                location /lnd-rest/btc/ {
+                    rewrite ^/lnd-rest/btc/(.*) /$1 break;
+                    proxy_pass http://srv-captain--$$cap_appname-lnd:$$cap_LND_REST_LISTEN_PORT/;
+                }
+
+                location /thub {
+                    proxy_pass http://srv-captain--$$cap_appname-thub:3000/thub;
+                }
+                ```
+            Now you can access it at `https://$$cap_appname.$$cap_root_domain`
             It will take some time to synchronize the Bitcoin full node.
             You should also observe the app logs from time to time.
     displayName: BTCPay Server
