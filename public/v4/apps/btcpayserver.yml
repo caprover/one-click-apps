@@ -29,6 +29,7 @@ services:
             - $$cap_appname-nbxplorer-data:/root/.nbxplorer
             - $$cap_appname-plugins:/root/.btcpayserver/Plugins
             - $$cap_appname-lnd-data:/etc/lnd_bitcoin
+            - $$cap_appname-thub-data:/etc/lnd_bitcoin_thub_datadir
 
     $$cap_appname-postgres:
         caproverExtra:
