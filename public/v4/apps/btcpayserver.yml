@@ -17,19 +17,22 @@ services:
             BTCPAY_DOCKERDEPLOYMENT: 'true'
             BTCPAY_CHAINS: $$cap_USED_CHAIN
             BTCPAY_BTCEXPLORERURL: http://srv-captain--$$cap_appname-nbxplorer:$$cap_NBXPLORER_PORT/
-            BTCPAY_BTCLIGHTNING: type=lnd-rest;server=http://srv-captain--$$cap_appname-lnd:$$cap_LND_REST_LISTEN_PORT/;macaroonfilepath=/etc/lnd_bitcoin/admin.macaroon;allowinsecure=true
-            BTCPAY_BTCEXTERNALLNDGRPC: server=/;macaroonfilepath=/etc/lnd_bitcoin/admin.macaroon;macaroondirectorypath=/etc/lnd_bitcoin
-            BTCPAY_BTCEXTERNALLNDREST: server=/lnd-rest/btc/;macaroonfilepath=/etc/lnd_bitcoin/admin.macaroon;macaroondirectorypath=/etc/lnd_bitcoin
-            BTCPAY_BTCEXTERNALLNDSEEDBACKUP: /etc/lnd_bitcoin/data/chain/bitcoin/$$cap_NBITCOIN_NETWORK/walletunlock.json
-            BTCPAY_BTCEXTERNALTHUNDERHUB: server=/thub/sso;cookiefile=/etc/lnd_bitcoin_thub_datadir/.cookie
+            BTCPAY_BTCLIGHTNING: 'type=clightning;server=unix://etc/clightning_bitcoin/lightning-rpc'
+            BTCPAY_BTCEXTERNALSPARK: 'server=/spark/btc/;cookiefile=/etc/clightning_bitcoin_spark/.cookie'
+            BTCPAY_BTCEXTERNALRTL: 'server=/rtl/api/authenticate/cookie;cookiefile=/etc/clightning_bitcoin_rtl/.cookie'
+            BTCPAY_BTCEXTERNALCLIGHTNINGREST: 'server=/clightning-rest/btc;macaroonfilepath=/etc/clightning_bitcoin_rest_certs/access.macaroon;macaroondirectorypath=/etc/clightning_bitcoin_rest_certs'
         depends_on:
             - $$cap_appname-postgres
+            - $$cap_appname-bitcoind
+            - $$cap_appname-lightning
         volumes:
             - $$cap_appname-data:/datadir
             - $$cap_appname-nbxplorer-data:/root/.nbxplorer
             - $$cap_appname-plugins:/root/.btcpayserver/Plugins
-            - $$cap_appname-lnd-data:/etc/lnd_bitcoin
-            - $$cap_appname-thub-data:/etc/lnd_bitcoin_thub_datadir
+            - $$cap_appname-lightning-data:/etc/clightning_bitcoin
+            - $$cap_appname-lightning-spark:/etc/clightning_bitcoin_spark
+            - $$cap_appname-lightning-rtl-data:/etc/clightning_bitcoin_rtl
+            - $$cap_appname-lightning-rest-certificates:/etc/clightning_bitcoin_rest_certs
 
     $$cap_appname-postgres:
         caproverExtra:
@@ -78,78 +81,84 @@ services:
                 whitelist=$$cap_BIND_ADDRESS/$$cap_BITCOIN_IP_ALLOWLIST_CIDR
                 maxmempool=$$cap_BITCOIN_MAX_MEMPOOL
                 prune=$$cap_BITCOIN_PRUNE
-                zmqpubrawblock=tcp://$$cap_BIND_ADDRESS:$$cap_BITCOIN_RAW_BLOCK_PUBLICATION_PORT
-                zmqpubrawtx=tcp://$$cap_BIND_ADDRESS:$$cap_BITCOIN_RAW_TRANSACTION_PUBLICATION_PORT
-                zmqpubhashblock=tcp://$$cap_BIND_ADDRESS:$$cap_BITCOIN_BLOCK_HASH_PUBLICATION_PORT
-                rpcauth=$$cap_LND_BITCOIN_RPC_USER:$$cap_LND_BITCOIN_RPC_HASHED_PASSWORD
                 $$cap_BITCOIN_ADDITIONAL_ARGUMENTS
         volumes:
             - $$cap_appname-bitcoind-wallet-data:/walletdata
             - $$cap_appname-bitcoind-data:/data
 
-    $$cap_appname-lnd:
+    $$cap_appname-lightning:
         caproverExtra:
             notExposeAsWebApp: 'true'
-        image: btcpayserver/lnd:$$cap_LND_VERSION
+        image: btcpayserver/lightning:$$cap_LIGHTNING_VERSION
         environment:
-            LND_CHAIN: $$cap_USED_CHAIN
-            LND_EXTERNALIP: $$cap_appname.$$cap_root_domain
-            LND_PORT: $$cap_LND_PORT
-            LND_ALIAS: $$cap_LND_ALIAS
-            LND_ENVIRONMENT: $$cap_NBITCOIN_NETWORK
-            LND_READY_FILE: $$cap_LND_READY_FILE
-            LND_REST_LISTEN_HOST: http://srv-captain--$$cap_appname-lnd:$$cap_LND_REST_LISTEN_PORT
-            LND_HOST_FOR_LOOP: $$cap_LOOPBACK_ADDRESS:$$cap_LND_LOOP_LISTEN_PORT
-            LND_EXTRA_ARGS: |
-                restlisten=srv-captain--$$cap_appname-lnd:$$cap_LND_REST_LISTEN_PORT
-                rpclisten=$$cap_LOOPBACK_ADDRESS:$$cap_LND_RPC_LISTEN_PORT
-                rpclisten=srv-captain--$$cap_appname-lnd:$$cap_LND_LOOP_LISTEN_PORT
-                rpclisten=$$cap_LOOPBACK_ADDRESS:$$cap_LND_LOOP_LISTEN_PORT
-                bitcoin.node=srv-captain--$$cap_appname-bitcoind
-                bitcoind.rpchost=srv-captain--$$cap_appname-bitcoind:$$cap_BITCOIN_RPC_PORT
-                bitcoind.rpcuser=$$cap_LND_BITCOIN_RPC_USER
-                bitcoind.rpcpass=$$cap_LND_BITCOIN_RPC_PASSWORD
-                bitcoind.zmqpubrawblock=tcp://srv-captain--$$cap_appname-bitcoind:$$cap_BITCOIN_RAW_BLOCK_PUBLICATION_PORT
-                bitcoind.zmqpubrawtx=tcp://srv-captain--$$cap_appname-bitcoind:$$cap_BITCOIN_RAW_TRANSACTION_PUBLICATION_PORT
-                adminmacaroonpath=$$cap_LND_ADMIN_MACAROON_PATH
-                invoicemacaroonpath=$$cap_LND_INVOICE_MACAROON_PATH
-                readonlymacaroonpath=$$cap_LND_READ_ONLY_MACAROON_PATH
-                tlsextradomain=srv-captain--$$cap_appname-lnd
-                no-rest-tls=$$cap_LND_NO_REST_TLS
-                protocol.wumbo-channels=$$cap_LND_WUMBO_CHANNELS
-                autopilot.active=$$cap_LND_AUTOPILOT_ACTIVE
-                autopilot.maxchannels=$$cap_LND_AUTOPILOT_MAXIMUM_CHANNELS
-                autopilot.allocation=$$cap_LND_AUTOPILOT_ALLOCATION
-                $$cap_LND_ADDITIONAL_ARGUMENTS
+            LIGHTNINGD_NETWORK: $$cap_NBITCOIN_NETWORK
+            LIGHTNINGD_CHAIN: $$cap_USED_CHAIN
+            LIGHTNINGD_ALIAS: $$cap_LIGHTNINGD_ALIAS
+            LIGHTNINGD_ANNOUNCEADDR: $$cap_LIGHTNINGD_ANNOUNCEADDR
+            LIGHTNINGD_PORT: $$cap_LIGHTNINGD_PORT
+            LIGHTNINGD_READY_FILE: $$cap_LIGHTNINGD_READY_FILE
+            LIGHTNINGD_OPT: |
+                bitcoin-datadir=$$cap_LIGHTNINGD_BITCOIN_DATA_DIRECTORY
+                bitcoin-rpcconnect=srv-captain--$$cap_appname-bitcoind
+                experimental-offers
+                $$cap_LIGHTNINGD_ADDITIONAL_ARGUMENTS
+        ports:
+            - $$cap_LIGHTNINGD_PORT:$$cap_LIGHTNINGD_PORT
         depends_on:
             - $$cap_appname-bitcoind
-        ports:
-            - $$cap_LND_PORT:$$cap_LND_PORT
         volumes:
-            - $$cap_appname-lnd-data:/data
-            - $$cap_appname-lnd-loop-bitcoin-data:/root/.loop/$$cap_NBITCOIN_NETWORK
-            - $$cap_appname-bitcoind-data:/deps/.bitcoin
+            - $$cap_appname-lightning-data:/root/.lightning
+            - $$cap_appname-bitcoind-data:/etc/bitcoin
             - $$cap_appname-nbxplorer-data:/root/.nbxplorer
 
-    $$cap_appname-thub:
+    $$cap_appname-lightning-spark:
         caproverExtra:
             notExposeAsWebApp: 'true'
-        image: apotdevin/thunderhub:$$cap_THUB_VERSION
+        image: shesek/spark-wallet:$$cap_LIGHTNING_SPARK_VERSION
         environment:
-            NO_VERSION_CHECK: $$cap_THUB_NO_VERSION_CHECK
-            COOKIE_PATH: $$cap_THUB_COOKIE_PATH
-            ACCOUNT_CONFIG_PATH: $$cap_THUB_ACCOUNT_CONFIG_PATH
-            SSO_SERVER_URL: srv-captain--$$cap_appname-lnd:$$cap_LND_LOOP_LISTEN_PORT
-            SSO_MACAROON_PATH: $$cap_THUB_SSO_MACAROON_PATH
-            SSO_CERT_PATH: $$cap_THUB_SSO_CERT_PATH
-            NO_CLIENT_ACCOUNTS: $$cap_THUB_NO_CLIENT_ACCOUNTS
-            LOG_LEVEL: $$cap_THUB_LOG_LEVEL
-            LOGOUT_URL: $$cap_THUB_LOGOUT_URL
+            NETWORK: $$cap_NBITCOIN_NETWORK
+            SPARK_OPT: $$cap_LIGHTNING_SPARK_OPTIONS
         volumes:
-            - $$cap_appname-lnd-data:/etc/lnd
-            - $$cap_appname-thub-data:/data
+            - $$cap_appname-lightning-data:/etc/lightning
+            - $$cap_appname-lightning-spark:/data
         depends_on:
-            - $$cap_appname-lnd
+            - $$cap_appname-lightning
+
+    $$cap_appname-lightning-rest:
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+        image: saubyk/c-lightning-rest:$$cap_LIGHTNING_REST_VERSION
+        environment:
+            PROTOCOL: $$cap_LIGHTNING_REST_PROTOCOL
+            NODE: srv-captain--$$cap_appname-lightning:$$cap_LIGHTNING_REST_LIGHTNINGD_PORT
+            LIGHTNINGD_READY_FILE: $$cap_LIGHTNINGD_READY_FILE
+        depends_on:
+            - $$cap_appname-lightning
+        volumes:
+            - $$cap_appname-lightning-data:/root/.lightning
+            - $$cap_appname-bitcoind-data:/etc/bitcoin
+            - $$cap_appname-lightning-rest-certificates:/usr/src/app/certs
+            - $$cap_appname-nbxplorer-data:/root/.nbxplorer
+
+    $$cap_appname-rtl:
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+        image: shahanafarooqui/rtl:$$cap_RTL_VERSION
+        environment:
+            LN_IMPLEMENTATION: $$cap_RTL_LN_IMPLEMENTATION
+            CONFIG_PATH: $$cap_RTL_LIGHTNING_CONFIG_PATH
+            LN_SERVER_URL: http://srv-captain--$$cap_appname-lightning-rest:$$cap_RTL_LN_SERVER_URL_PORT/v1
+            MACAROON_PATH: $$cap_RTL_MACAROON_PATH
+            RTL_CONFIG_PATH: $$cap_RTL_CONFIG_PATH
+            BITCOIND_CONFIG_PATH: $$cap_RTL_BITCOIND_CONFIG_PATH
+            RTL_SSO: $$cap_RTL_SSO
+            RTL_COOKIE_PATH: $$cap_RTL_COOKIE_PATH
+            LOGOUT_REDIRECT_LINK: $$cap_RTL_LOGOUT_REDIRECT_LINK
+        volumes:
+            - $$cap_appname-lightning-data:/root/.lightning
+            - $$cap_appname-bitcoind-data:/etc/bitcoin
+            - $$cap_appname-lightning-rtl-data:/data
+            - $$cap_appname-lightning-rest-certificates:/etc/clightning_bitcoin_rest_certs
 
 caproverOneClickApp:
     instructions:
@@ -157,13 +166,9 @@ caproverOneClickApp:
             BTCPay Server is a free, open-source & self-hosted bitcoin payment gateway.
             It allows self-sovereign individuals and businesses to accept bitcoin payments online or in person without any fees.
 
-            This will deploy:
-            - BTCPay Server application
-            - `bitcoind` as Bitcoin full node (pruned to 50 GB by default)
-            - `lnd` as Lightning node
-            - `thunderhub` for managing the Lightning node
-
+            This will deploy BTCPay Server with Bitcoin Full Node (with 50 GB pruning), Core Lightning Node, Spark Wallet and Ride The Lightning.
             Please note that features like SSH access and Onion service have been omitted to keep deployment simple.
+
             You may need to open the port `9735` in your firewall.
         end: |-
             BTCPay Server has been successfully deployed!
@@ -173,18 +178,17 @@ caproverOneClickApp:
             3. Enable **HTTPS**
             4. Click on **Edit Default Nginx Configurations** and paste the following content before the last closing bracket "}":
                 ```
-                location ~* ^/(lnrpc|routerrpc)\. {
-                    grpc_read_timeout 6000s;
-                    grpc_send_timeout 6000s;
-                    grpc_pass grpcs://srv-captain--$$cap_appname-lnd:$$cap_LND_LOOP_LISTEN_PORT;
-                }
-                location /lnd-rest/btc/ {
-                    rewrite ^/lnd-rest/btc/(.*) /$1 break;
-                    proxy_pass http://srv-captain--$$cap_appname-lnd:$$cap_LND_REST_LISTEN_PORT/;
+                location /rtl/ {
+                    proxy_pass http://srv-captain--$$cap_appname-rtl:$$cap_RTL_PORT/rtl/;
                 }
 
-                location /thub {
-                    proxy_pass http://srv-captain--$$cap_appname-thub:3000/thub;
+                location /spark/btc/ {
+                    proxy_pass http://srv-captain--$$cap_appname-lightning-spark:$$cap_LIGHTNING_SPARK_PORT/;
+                }
+
+                location /clightning-rest/btc/ {
+                    rewrite ^/clightning-rest/btc/(.*) /$1 break;
+                    proxy_pass http://srv-captain--$$cap_appname-lightning-rest:$$cap_RTL_LN_SERVER_URL_PORT/;
                 }
                 ```
             Now you can access it at `https://$$cap_appname.$$cap_root_domain`
@@ -199,11 +203,6 @@ caproverOneClickApp:
           label: General | Bind Address
           description: Address to bind the services.
           defaultValue: '0.0.0.0'
-          validRegex: /.{1,}/
-        - id: $$cap_LOOPBACK_ADDRESS
-          label: General | Loopback Address
-          description: Loopback address. Should not be changed.
-          defaultValue: '127.0.0.1'
           validRegex: /.{1,}/
         - id: $$cap_BTCPAYSERVER_VERSION
           label: General | BTCPay Server Version
@@ -225,15 +224,25 @@ caproverOneClickApp:
           description: Check out their valid tags at https://hub.docker.com/r/btcpayserver/bitcoin/tags
           defaultValue: '23.0'
           validRegex: /.{1,}/
-        - id: $$cap_LND_VERSION
-          label: General | Lightning Node Version
-          description: Check out their valid tags at https://hub.docker.com/r/btcpayserver/lnd/tags
-          defaultValue: v0.15.0-beta
+        - id: $$cap_LIGHTNING_VERSION
+          label: General | Lightning Version
+          description: Check out their valid tags at https://hub.docker.com/r/btcpayserver/lightning/tags
+          defaultValue: v0.10.2
           validRegex: /.{1,}/
-        - id: $$cap_THUB_VERSION
-          label: General | Thunderhub Version
-          description: Check out their valid tags at https://hub.docker.com/r/apotdevin/thunderhub/tags
-          defaultValue: base-v0.13.11@sha256:248db7508af8d1563f3afdbaec2ffd62e6f1868e30f8f1c3bb514bf8633c44f9
+        - id: $$cap_LIGHTNING_SPARK_VERSION
+          label: General | Lightning Spark Version
+          description: Check out their valid tags at https://hub.docker.com/r/shesek/spark-wallet/tags
+          defaultValue: 0.3.1-standalone
+          validRegex: /.{1,}/
+        - id: $$cap_LIGHTNING_REST_VERSION
+          label: General | Lightning REST Version
+          description: Check out their valid tags at https://hub.docker.com/r/saubyk/c-lightning-rest/tags
+          defaultValue: '0.9.0'
+          validRegex: /.{1,}/
+        - id: $$cap_RTL_VERSION
+          label: General | Ride The Lightning Version
+          description: Check out their valid tags at https://hub.docker.com/r/shahanafarooqui/rtl/tags
+          defaultValue: '0.13.1'
           validRegex: /.{1,}/
         - id: $$cap_NBITCOIN_NETWORK
           label: General | Network Type
@@ -339,145 +348,100 @@ caproverOneClickApp:
         - id: $$cap_BITCOIN_ADDITIONAL_ARGUMENTS
           label: Bitcoin Node | Additional Arguments
           description: Additional Bitcoin node startup arguments.
-        - id: $$cap_BITCOIN_RAW_BLOCK_PUBLICATION_PORT
-          label: Bitcoin Node | Raw Block Publication Port
-          description: Port of raw block information publisher.
-          defaultValue: 28332
+        - id: $$cap_LIGHTNINGD_ANNOUNCEADDR
+          label: Lightning Node | Announced Address
+          description: IP address of your server. E.g. `123.123.123.123`.
           validRegex: /.{1,}/
-        - id: $$cap_BITCOIN_RAW_TRANSACTION_PUBLICATION_PORT
-          label: Bitcoin Node | Raw Transaction Publication Port
-          description: Port of raw transaction information publisher.
-          defaultValue: 28333
-          validRegex: /.{1,}/
-        - id: $$cap_BITCOIN_BLOCK_HASH_PUBLICATION_PORT
-          label: Bitcoin Node | Block Hash Publication Port
-          description: Port of block hash information publisher.
-          defaultValue: 28334
-          validRegex: /.{1,}/
-        - id: $$cap_LND_PORT
-          label: Lightning Node | Port
-          description: Port of the Lightning node.
-          defaultValue: 9735
-          validRegex: /.{1,}/
-        - id: $$cap_LND_ALIAS
+        - id: $$cap_LIGHTNINGD_ALIAS
           label: Lightning Node | Alias
           description: An alias for your Lightning node.
           defaultValue: my-awesome-node-$$cap_gen_random_hex(32)
-        - id: $$cap_LND_READY_FILE
+          validRegex: /.{1,}/
+        - id: $$cap_LIGHTNINGD_PORT
+          label: Lightning Node | Port
+          description: Port of your Lightning node host.
+          defaultValue: 9735
+          validRegex: /.{1,}/
+        - id: $$cap_LIGHTNINGD_READY_FILE
           label: Lightning Node | Ready File
           description: Path to Bitcoin node ready status indicator file in the Lightning node.
           defaultValue: /root/.nbxplorer/btc_fully_synched
           validRegex: /.{1,}/
-        - id: $$cap_LND_REST_LISTEN_PORT
-          label: Lightning Node | REST API Listening Port
-          description: Port of the REST API listener in the Lightning node.
-          defaultValue: 8080
+        - id: $$cap_LIGHTNINGD_BITCOIN_DATA_DIRECTORY
+          label: Lightning Node | Bitcoin Data Directory
+          description: Path to Bitcoin data directory in the Lightning node.
+          defaultValue: /etc/bitcoin
           validRegex: /.{1,}/
-        - id: $$cap_LND_RPC_LISTEN_PORT
-          label: Lightning Node | RPC Listening Port
-          description: Port of the RPC listener in the Lightning node.
-          defaultValue: 10008
-          validRegex: /.{1,}/
-        - id: $$cap_LND_LOOP_LISTEN_PORT
-          label: Lightning Node | Loop Listening Port
-          description: Port of the loop listener in the Lightning node.
-          defaultValue: 10009
-          validRegex: /.{1,}/
-        - id: $$cap_LND_BITCOIN_RPC_USER
-          label: Lightning Node | Bitcoin Node RPC User
-          description: Lightning node RPC user name which talks to the Bitcoin node.
-          defaultValue: lnd
-          validRegex: /.{1,}/
-        - id: $$cap_LND_BITCOIN_RPC_PASSWORD
-          label: Lightning Node | Bitcoin Node RPC Password
-          description: Password of Lightning node RPC user that talks to the Bitcoin node.
-          defaultValue: afixedpasswordbecauselndsuckswithcookiefile
-          validRegex: /.{1,}/
-        - id: $$cap_LND_BITCOIN_RPC_HASHED_PASSWORD
-          label: Lightning Node | Bitcoin Node RPC Hashed Password
-          description: Hashed password of Lightning node RPC user that talks to the Bitcoin node.
-          defaultValue: d031f7567c5b02ba95524170e51c77f4$827ce5412f653d6613c2f480e521eb437c866b999bdeb2ee4f9c41d3b00dff1c
-          validRegex: /.{1,}/
-        - id: $$cap_LND_ADMIN_MACAROON_PATH
-          label: Lightning Node | Administrator Macaroon Path
-          description: Path to administrator macaroon file in the Lightning node.
-          defaultValue: /data/admin.macaroon
-          validRegex: /.{1,}/
-        - id: $$cap_LND_INVOICE_MACAROON_PATH
-          label: Lightning Node | Invoice Macaroon Path
-          description: Path to invoice macaroon file in the Lightning node.
-          defaultValue: /data/invoice.macaroon
-          validRegex: /.{1,}/
-        - id: $$cap_LND_READ_ONLY_MACAROON_PATH
-          label: Lightning Node | Read-Only Macaroon Path
-          description: Path to read-only macaroon file in the Lightning node.
-          defaultValue: /data/readonly.macaroon
-          validRegex: /.{1,}/
-        - id: $$cap_LND_NO_REST_TLS
-          label: Lightning Node | Disable TLS For REST API
-          description: Whether to disable TLS for REST API calls in the Lightning node.
-          defaultValue: 'true'
-          validRegex: /^(true|false)$/
-        - id: $$cap_LND_WUMBO_CHANNELS
-          label: Lightning Node | Wumbo Channels
-          description: Whether to use Wumbo channels in the Lightning node.
-          defaultValue: 'true'
-          validRegex: /^(true|false)$/
-        - id: $$cap_LND_AUTOPILOT_ACTIVE
-          label: Lightning Node | Autopilot
-          description: Whether to use Autopilot in the Lightning node to automatically open and manage channels with peers.
-          defaultValue: 'true'
-          validRegex: /^(true|false)$/
-        - id: $$cap_LND_AUTOPILOT_MAXIMUM_CHANNELS
-          label: Lightning Node | Autopilot Maximum Channels
-          description: Maximum amount of channels managed by Autopilot in the Lightning node. Only used when Autopilot is enabled.
-          defaultValue: 5
-          validRegex: /.{1,}/
-        - id: $$cap_LND_AUTOPILOT_ALLOCATION
-          label: Lightning Node | Autopilot Allocation
-          description: Allocation rate for Autopilot in the Lightning node. For example `0` means 0%, `0.5` means 50% and `1` means 100%. Only used when Autopilot is enabled.
-          defaultValue: 0.6
-          validRegex: /.{1,}/
-        - id: $$cap_LND_ADDITIONAL_ARGUMENTS
+        - id: $$cap_LIGHTNINGD_ADDITIONAL_ARGUMENTS
           label: Lightning Node | Additional Arguments
           description: Additional Lightning node startup arguments.
-        - id: $$cap_THUB_NO_VERSION_CHECK
-          label: Lightning Node Manager | Disable Version Checking
-          description: Whether to skip version checking in the Lightning node manager.
-          defaultValue: 'true'
-          validRegex: /^(true|false)$/
-        - id: $$cap_THUB_COOKIE_PATH
-          label: Lightning Node Manager | Cookie
-          description: Path to the cookie file in the Lightning node manager.
+        - id: $$cap_LIGHTNING_SPARK_OPTIONS
+          label: Lightning Node | Spark | Lightning Network Files
+          description: Additional start up options for Lightning Spark.
+          defaultValue: --no-tls -C /data/.cookie
+          validRegex: /.{1,}/
+        - id: $$cap_LIGHTNING_SPARK_PORT
+          label: Lightning Node | Spark | Port
+          description: Port of Lightning Spark host.
+          defaultValue: 9737
+          validRegex: /.{1,}/
+        - id: $$cap_LIGHTNING_REST_PROTOCOL
+          label: Lightning Node | REST | Protocol
+          description: Which HTTP protocol to use in Lightning REST.
+          defaultValue: http
+          validRegex: /^(http|https)$/
+        - id: $$cap_LIGHTNING_REST_LIGHTNINGD_PORT
+          label: Lightning Node | Spark | Lightning REST API Port
+          description: REST API port of the Lightning node.
+          defaultValue: 9835
+          validRegex: /.{1,}/
+        - id: $$cap_RTL_LN_IMPLEMENTATION
+          label: Ride The Lightning | Lightning Implementation
+          description: Lightning implementation used for Ride The Lightning.
+          defaultValue: CLT
+          validRegex: /.{1,}/
+        - id: $$cap_RTL_LIGHTNING_CONFIG_PATH
+          label: Ride The Lightning | Lightning Configuration
+          description: Path to Lightning configuration for Ride The Lightning.
+          defaultValue: /root/.lightning/config
+          validRegex: /.{1,}/
+        - id: $$cap_RTL_LN_SERVER_URL_PORT
+          label: Ride The Lightning | Lightning REST Server Port
+          description: Port of the Lightning REST server for Ride The Lightning.
+          defaultValue: 3001
+          validRegex: /.{1,}/
+        - id: $$cap_RTL_MACAROON_PATH
+          label: Ride The Lightning | Macaroon Path
+          description: Path to the macaroon file for Ride The Lightning.
+          defaultValue: /etc/clightning_bitcoin_rest_certs
+          validRegex: /.{1,}/
+        - id: $$cap_RTL_CONFIG_PATH
+          label: Ride The Lightning | Configuration Path
+          description: Path to the configuration file for Ride The Lightning.
+          defaultValue: /data/
+          validRegex: /.{1,}/
+        - id: $$cap_RTL_BITCOIND_CONFIG_PATH
+          label: Ride The Lightning | Bitcoin Configuration Path
+          description: Path to the Bitcoin configuration file for Ride The Lightning.
+          defaultValue: /etc/bitcoin/bitcoin.conf
+          validRegex: /.{1,}/
+        - id: $$cap_RTL_SSO
+          label: Ride The Lightning | Single-Sign-On
+          description: Whether to use Single-Sign-On for Ride The Lightning.
+          defaultValue: 1
+          validRegex: /.{1,}/
+        - id: $$cap_RTL_COOKIE_PATH
+          label: Ride The Lightning | Cookie Path
+          description: Path to the cookie file for Ride The Lightning.
           defaultValue: /data/.cookie
           validRegex: /.{1,}/
-        - id: $$cap_THUB_ACCOUNT_CONFIG_PATH
-          label: Lightning Node Manager | Account Configuration
-          description: Path to the account configuration file in the Lightning node manager.
-          defaultValue: /data/thubConfig.yaml
+        - id: $$cap_RTL_LOGOUT_REDIRECT_LINK
+          label: Ride The Lightning | Log-Out Redirect Link
+          description: Log-Out redirect link for Ride The Lightning.
+          defaultValue: /server/services
           validRegex: /.{1,}/
-        - id: $$cap_THUB_SSO_MACAROON_PATH
-          label: Lightning Node Manager | Single-Sign-On Macaroon
-          description: Path to the single-sign-on macaroon file in the Lightning node manager.
-          defaultValue: /etc/lnd
-          validRegex: /.{1,}/
-        - id: $$cap_THUB_SSO_CERT_PATH
-          label: Lightning Node Manager | Single-Sign-On TLS Certificate
-          description: Path to the single-sign-on TLS certificate file in the Lightning node manager.
-          defaultValue: /etc/lnd/tls.cert
-          validRegex: /.{1,}/
-        - id: $$cap_THUB_NO_CLIENT_ACCOUNTS
-          label: Lightning Node Manager | Disable Client Accounts
-          description: Whether to disable client accounts in the Lightning node manager.
-          defaultValue: 'true'
-          validRegex: /^(true|false)$/
-        - id: $$cap_THUB_LOG_LEVEL
-          label: Lightning Node Manager | Log Level
-          description: Log severity in the Lightning node manager.
-          defaultValue: debug
-          validRegex: /.{1,}/
-        - id: $$cap_THUB_LOGOUT_URL
-          label: Lightning Node Manager | Logout URL
-          description: Logout URL in the Lightning node manager.
-          defaultValue: /server/services/thunderhub/BTC
+        - id: $$cap_RTL_PORT
+          label: Ride The Lightning | Port
+          description: Port of Ride The Lightning host.
+          defaultValue: 3000
           validRegex: /.{1,}/
