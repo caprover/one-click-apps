@@ -102,7 +102,7 @@ caproverOneClickApp:
             GlitchTip makes monitoring software easy. Track errors, monitor performance, and check site uptime all in one place. Our app is compatible with Sentry client SDKs, but easier to run.
 
             Recommended system requirements: 1GB RAM, x86 or arm64 CPU
-            
+
             Documentation: https://glitchtip.com/documentation
         end: |-
             GlitchTip instance successfully deployed. It will allow you to register an account, afterwards registrations will be closed by default.
