@@ -46,7 +46,7 @@ caproverOneClickApp:
             3. Go to the **HTTP Settings** and **Edit Default Nginx Configurations**
             4. Search for **last occurrence** of `location /.well-known/acme-challenge/` and replace `root <%-s.staticWebRoot%>;` with `proxy_pass $upstream;`
             5. **Save settings** and wait a minute
-            6. Access your mail server at `https://$$cap_appname.$$cap_root_domain`
+            6. Access your mail server at `http://$$cap_appname.$$cap_root_domain`
             7. Enter `$$cap_POSTE_HOSTNAME` in **Mailserver hostname**
             8. Enter an email address for the admin (you can also use `admin@$$cap_POSTE_HOSTNAME`) and create a password
             9. Navigate to **System Settings** > **TLS Certificate** and **Issue Free Letsencrypt.org Certificate**
@@ -60,7 +60,7 @@ caproverOneClickApp:
             4. Create **MX** record pointing to `$$cap_POSTE_HOSTNAME`
             5. Create **TXT** record with value `v=spf1 mx ~all`
             6. Create **TXT** record with value `v=DMARC1; p=none; rua=mailto:dmarc-reports@$$cap_POSTE_HOSTNAME ruf=dmarc-reports@$$cap_POSTE_HOSTNAME; sp=none; ri=86400` (you may need to change the mail addresses)
-            7. Go to your application navigating to `https://$$cap_appname.$$cap_root_domain/admin/domain`
+            7. Go to your application navigating to `http://$$cap_appname.$$cap_root_domain/admin/domain`
             8. Click **Show** on `$$cap_POSTE_HOSTNAME`
             9. In the line **DKIM Key** click on **Create New Key** and copy the generated value
             10. Go back to the DNS settings
