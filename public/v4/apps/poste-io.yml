@@ -52,7 +52,7 @@ caproverOneClickApp:
             9. Navigate to **System Settings** > **TLS Certificate** and **Issue Free Letsencrypt.org Certificate**
             10. Check **Enabled** and **Save Changes**
 
-            The following steps is a guidance about configuring DNS. Please **consult the documentation** (`https://poste.io/doc/configuring-dns`).
+            The following steps guide you though the DNS configuration. Please **consult the documentation** (`https://poste.io/doc/configuring-dns`).
 
             1. Enter the admin panel of the server hosting or if you are self-hosting locally make sure you have access to the DNS configuration
             2. Create **PTR record** (also known as **Reverse DNS**) pointing to `$$cap_POSTE_HOSTNAME`
