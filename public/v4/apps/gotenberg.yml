@@ -129,9 +129,11 @@ caproverOneClickApp:
     documentation: https://gotenberg.dev/docs/about
     instructions:
         start: |-
-            Test
+            Gotenberg provides a developer-friendly API to interact with powerful tools like Chromium and LibreOffice for converting numerous document formats (HTML, Markdown, Word, Excel, etc.) into PDF files, and more!
         end: |-
-            Test
+            Gotenberg has been successfully deployed! It might take few moments before it's fully started.
+            You can access it at `http://$$cap_appname.$$cap_root_domain`
+            If you prefer not to expose it, you can change it in the **HTTP Settings** of `$$cap_appname`.
     variables:
         - id: $$cap_GOTENBERG_VERSION
           label: General | Version
