@@ -11,14 +11,14 @@ services:
             DISABLE_ROUNDCUBE: $$cap_POSTE_DISABLE_ROUNDCUBE
             VIRTUAL_HOST: $$cap_POSTE_HOSTNAME
         ports:
-            - $$cap_POSTE_PORT_SMTP_UNENCRYPTED:$$cap_POSTE_PORT_SMTP_UNENCRYPTED
-            - $$cap_POSTE_PORT_POP3_UNENCRYPTED:$$cap_POSTE_PORT_POP3_UNENCRYPTED
-            - $$cap_POSTE_PORT_IMAP_UNENCRYPTED:$$cap_POSTE_PORT_IMAP_UNENCRYPTED
-            - $$cap_POSTE_PORT_SMTP_SSL:$$cap_POSTE_PORT_SMTP_SSL
-            - $$cap_POSTE_PORT_SMTP_TLS:$$cap_POSTE_PORT_SMTP_TLS
-            - $$cap_POSTE_PORT_IMAP_TLS:$$cap_POSTE_PORT_IMAP_TLS
-            - $$cap_POSTE_PORT_POP3_ENCRYPTED:$$cap_POSTE_PORT_POP3_ENCRYPTED
-            - $$cap_POSTE_PORT_SIEVE:$$cap_POSTE_PORT_SIEVE
+            - '25:25'
+            - '110:110'
+            - '143:143'
+            - '465:465'
+            - '587:587'
+            - '993:993'
+            - '995:995'
+            - '4190:4190'
         volumes:
             - $$cap_appname:/data
 caproverOneClickApp:
@@ -101,43 +101,3 @@ caproverOneClickApp:
               It's recommended to leave it to `OFF` since CapRover acts as reverse proxy and handles HTTPS.
               If you want to enable it, remove the value and leave it blank and then to change the configuration and ports accordingly.
           defaultValue: 'OFF'
-        - id: $$cap_POSTE_PORT_SMTP_UNENCRYPTED
-          label: Networking | Unencrypted SMTP Port
-          description: Port for unencrypted mail submission. Should not be changed.
-          defaultValue: 25
-          validRegex: /.{1,}/
-        - id: $$cap_POSTE_PORT_POP3_UNENCRYPTED
-          label: Networking | Unencrypted POP3 Port
-          description: Port for unencrypted mail access via POP3. Should not be changed.
-          defaultValue: 110
-          validRegex: /.{1,}/
-        - id: $$cap_POSTE_PORT_IMAP_UNENCRYPTED
-          label: Networking | Unencrypted IMAP Port
-          description: Port for unencrypted mail access via IMAP. Should not be changed.
-          defaultValue: 143
-          validRegex: /.{1,}/
-        - id: $$cap_POSTE_PORT_SMTP_SSL
-          label: Networking | SMTP With SSL Encryption Port
-          description: Port for mail submission using SSL encryption. Should not be changed.
-          defaultValue: 465
-          validRegex: /.{1,}/
-        - id: $$cap_POSTE_PORT_SMTP_TLS
-          label: Networking | SMTP With TLS/STARTTLS Encryption Port
-          description: Port for mail submission using TLS/STARTTLS encryption. Should not be changed.
-          defaultValue: 587
-          validRegex: /.{1,}/
-        - id: $$cap_POSTE_PORT_IMAP_TLS
-          label: Networking | IMAP With SSL/TLS Encryption Port
-          description: Port for SSL/TLS encrypted mail access via IMAP. Should not be changed.
-          defaultValue: 993
-          validRegex: /.{1,}/
-        - id: $$cap_POSTE_PORT_POP3_ENCRYPTED
-          label: Networking | POP3 With SSL/TLS Encryption Port
-          description: Port for SSL/TLS encrypted mail access via POP3. Should not be changed.
-          defaultValue: 995
-          validRegex: /.{1,}/
-        - id: $$cap_POSTE_PORT_SIEVE
-          label: Networking | Sieve Port
-          description: Port for remote Sieve settings. Should not be changed.
-          defaultValue: 4190
-          validRegex: /.{1,}/
