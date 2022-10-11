@@ -69,9 +69,9 @@ caproverOneClickApp:
             Before you can start using it, you need to perform some steps:
 
             1. Go to the **HTTP Settings** of `$$cap_appname` and **Enable WebSocket Support**
-            2. Fix language files permission by running the following command on your server `docker exec -u root -it $(docker ps --filter name=srv-captain--$$cap_appname-lang -q) chown -R botpress:botpress /botpress/lang`
+            2. Fix language files permissions by running the following command on your server `docker exec -u root -it $(docker ps --filter name=srv-captain--$$cap_appname-lang -q) chown -R botpress:botpress /botpress/lang`
 
-            Now you can access Botpress at `http://$$cap_appname.$$cap_root_domain`.
+            You can now access Botpress at `http://$$cap_appname.$$cap_root_domain`.
     variables:
         - id: $$cap_BOTPRESS_VERSION
           label: Version | Botpress
