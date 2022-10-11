@@ -13,7 +13,7 @@ caproverOneClickApp:
   variables:
     - id: $$cap_transmission_version
       label: Transfer SH Version
-      defaultValue: latest
+      defaultValue: v1.4.0
       description: Check out their Docker page for the valid tags https://hub.docker.com/r/dutchcoders/transfer.sh/tags
       validRegex: /^([^\s^\/])+$/
   instructions:
