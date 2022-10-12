@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: dutchcoders/transfer.sh:$$cap_transmission_version
+        image: dutchcoders/transfer.sh:$$cap_transfersh_version
         environment:
             LISTENER: '8080'
             FORCE_HTTPS: 'false'
@@ -11,7 +11,7 @@ services:
             containerHttpPort: '8080'
 caproverOneClickApp:
     variables:
-        - id: $$cap_transmission_version
+        - id: $$cap_transfersh_version
           label: Transfer SH Version
           defaultValue: v1.4.0
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/dutchcoders/transfer.sh/tags
