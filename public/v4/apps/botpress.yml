@@ -68,8 +68,17 @@ caproverOneClickApp:
             The platform puts together the boilerplate code and infrastructure you need to get a chatbot up and running and gives a complete dev-friendly platform that ships with all the tools you need to build, deploy, and manage production-grade chat bots in record time.
         end: |-
             Botpress has been successfully deployed! It might take few moments before it's fully started.
-            Please go to the **HTTP Settings** of `$$cap_appname` and **Enable WebSocket Support**.
-            You can now access Botpress at `http://$$cap_appname.$$cap_root_domain`.
+
+            Please perform the following steps:
+
+            1. Go to the **HTTP Settings** of `$$cap_appname` and **Enable WebSocket Support**
+            2. Visit your Botpress instance at `http://$$cap_appname.$$cap_root_domain` and create your account
+            3. Go to **Code Editor** and select **Configurations** > **Module Configurations** > `nlu.json` in the side bar
+            4. Replace value for `ducklingURL` with `http://srv-captain--$$cap_appname-lang:8000`
+            5. Replace value for `languageSources` > `endpoint` with `http://srv-captain--$$cap_appname-lang:3100`
+            6. Restart `$$cap_appname` in CapRover by clicking on **Save & Update**
+
+            Have fun with Botpress!
     variables:
         - id: $$cap_BOTPRESS_VERSION
           label: Version | Botpress
