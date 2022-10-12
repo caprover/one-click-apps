@@ -30,6 +30,9 @@ services:
             notExposeAsWebApp: 'true'
             dockerfileLines:
                 - FROM botpress/server:$$cap_BOTPRESS_VERSION
+                - USER root
+                - RUN mkdir /botpress/lang && chown -R botpress:botpress /botpress/lang
+                - USER botpress
                 - CMD bash -c "./duckling -p 8000 & ./bp lang --langDir /botpress/lang --port 3100"
         volumes:
             - $$cap_appname-lang:/botpress/lang
@@ -65,12 +68,7 @@ caproverOneClickApp:
             The platform puts together the boilerplate code and infrastructure you need to get a chatbot up and running and gives a complete dev-friendly platform that ships with all the tools you need to build, deploy, and manage production-grade chat bots in record time.
         end: |-
             Botpress has been successfully deployed! It might take few moments before it's fully started.
-
-            Before you can start using it, you need to perform some steps:
-
-            1. Go to the **HTTP Settings** of `$$cap_appname` and **Enable WebSocket Support**
-            2. Fix language files permissions by running the following command on your server `docker exec -u root -it $(docker ps --filter name=srv-captain--$$cap_appname-lang -q) chown -R botpress:botpress /botpress/lang`
-
+            Please go to the **HTTP Settings** of `$$cap_appname` and **Enable WebSocket Support**.
             You can now access Botpress at `http://$$cap_appname.$$cap_root_domain`.
     variables:
         - id: $$cap_BOTPRESS_VERSION
