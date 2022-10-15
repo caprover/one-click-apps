@@ -191,6 +191,9 @@ caproverOneClickApp:
         start: >-
             iRedMail is a free, open-source and full-featured mail server that allows you to host your own mail server at no cost.
             SMTP + IMAP + POP3 + Antispam & Antivirus + Web administration.
+            
+            **Requirements**: At least 4GB of ram and 5GB of rom.
+            
             Recommended: Use 'mail' as the App Name.
         end: >-
             You **should** enable https to access the Admin panel and the Webmail safely.
