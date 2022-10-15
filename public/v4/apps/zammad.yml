@@ -20,7 +20,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_zammad_VERSION
           label: Zammad Version
-          defaultValue: '5.0.1-5'
+          defaultValue: '5.1.0-48'
           description: Check out their docker page for the valid tags https://hub.docker.com/r/zammad/zammad-docker-compose/tags
           validRegex: /^([^\s^\/])+$/
 

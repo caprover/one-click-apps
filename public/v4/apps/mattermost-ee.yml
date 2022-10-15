@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname-db:
-        image: mattermost/mattermost-prod-db:$$cap_mattermost_version
+        image: postgres:$$cap_postgres_version
         volumes:
             - $$cap_appname-db-data:/var/lib/postgresql/data
         restart: always
@@ -12,7 +12,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname:
-        image: mattermost/mattermost-prod-app:$$cap_mattermost_version
+        image: mattermost/mattermost-enterprise-edition:$$cap_mattermost_version
         depends_on:
             - $$cap_appname-db
         volumes:
@@ -28,14 +28,19 @@ services:
             MM_DBNAME: mattermost
             DB_HOST: srv-captain--$$cap_appname-db
             MM_SERVICESETTINGS_SITEURL: https://$$cap_appname.$$cap_root_domain
+            MM_SQLSETTINGS_DATASOURCE: postgres://mmuser:$$cap_pg_pass@srv-captain--$$cap_appname-db:5432/mattermost?sslmode=disable&connect_timeout=10
         caproverExtra:
-            containerHttpPort: '8000'
+            containerHttpPort: '8065'
 caproverOneClickApp:
     variables:
         - id: $$cap_mattermost_version
-          label: mattermost Docker Image tag
-          defaultValue: v5.31.1
+          label: mattermost Docker Image tag. Use 'latest' for updated images.
+          defaultValue: release-6.7
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/mattermost/mattermost-prod-app/tags
+        - id: $$cap_postgres_version
+          label: postgres database Docker Image tag. Use 'latest' for updated images.
+          defaultValue: 14.3
+          description: Check out their Docker page for the valid tags https://hub.docker.com/_/postgres?tab=tags
         - id: $$cap_pg_pass
           label: Database Password
           description: Password must be at least 30 characters.  Please use a random string.

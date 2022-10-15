@@ -44,7 +44,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_n8n_version
           label: n8n.io Version
-          defaultValue: 0.147.1
+          defaultValue: 0.183.0
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/n8nio/n8n/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_postgres_version
@@ -86,7 +86,7 @@ caproverOneClickApp:
 
             IMPORTANT!! You need to enable https and websocket support.
 
-            Also, make sure you do not activate basic auth manually.
+            Also, make sure you DO NOT activate basic auth manually.
     displayName: n8n.io
     isOfficial: true
     description: n8n is a free and open node based Workflow Automation Tool.

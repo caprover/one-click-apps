@@ -16,7 +16,6 @@ caproverOneClickApp:
         - id: $$cap_db_host
           label: Database Host
           description: 'Database host ex. srv-captain--mydbsrv:3306'
-          validRegex: /^([a-zA-Z0-9])+$/
         - id: $$cap_db_user
           label: Database user
           description: 'Inform the database user'
