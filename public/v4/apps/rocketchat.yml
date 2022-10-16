@@ -50,7 +50,11 @@ caproverOneClickApp:
     variables:
         - id: $$cap_app_version
           label: Rocket.Chat Version
+          description: >-
+              See version numbers at https://hub.docker.com/r/rocketchat/rocket.chat/tags or https://github.com/RocketChat/Rocket.Chat/releases.
+              Version must be at least `5.0.0`.
           defaultValue: '5.2.0'
+          validRegex: /.{1,}/
 
         - id: $$cap_admin_name
           label: Rocket.Chat Admin Real Name
@@ -77,7 +81,12 @@ caproverOneClickApp:
 
         - id: $$cap_app_db_version
           label: MongoDB Version
+          description: >-
+              See https://docs.rocket.chat/quick-start/installing-and-updating/manual-installation/mongo-versions for supported MongoDB versions.
+              See https://hub.docker.com/r/bitnami/mongodb/tags/ for MongoDB image tags.
+              Version must be at least `4.0.0`.
           defaultValue: '5.0'
+          validRegex: /.{1,}/
 
         - id: $$cap_mongodb_root_username
           label: MongoDB root user's username
