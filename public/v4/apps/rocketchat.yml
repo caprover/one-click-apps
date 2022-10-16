@@ -50,10 +50,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_app_version
           label: Rocket.Chat Version
-          description: See version numbers at https://hub.docker.com/r/rocketchat/rocket.chat/tags or https://github.com/RocketChat/Rocket.Chat/releases. Version must be >=5.x.y
-          defaultValue: '5.0.4'
-          # enforcing deployment of v5.0.4+
-          validRegex: /^[5-9](\.[0-9](\.[4-9])?)?$/
+          defaultValue: '5.2.0'
 
         - id: $$cap_admin_name
           label: Rocket.Chat Admin Real Name
