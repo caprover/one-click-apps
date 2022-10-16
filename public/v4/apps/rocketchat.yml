@@ -50,10 +50,11 @@ caproverOneClickApp:
     variables:
         - id: $$cap_app_version
           label: Rocket.Chat Version
-          description: See version numbers at https://hub.docker.com/r/rocketchat/rocket.chat/tags or https://github.com/RocketChat/Rocket.Chat/releases. Version must be >=5.x.y
-          defaultValue: '5.0.4'
-          # enforcing deployment of v5.0.4+
-          validRegex: /^[5-9](\.[0-9](\.[4-9])?)?$/
+          description: >-
+              See version numbers at https://hub.docker.com/r/rocketchat/rocket.chat/tags or https://github.com/RocketChat/Rocket.Chat/releases.
+              Version must be at least `5.0.0`.
+          defaultValue: '5.2.0'
+          validRegex: /.{1,}/
 
         - id: $$cap_admin_name
           label: Rocket.Chat Admin Real Name
@@ -80,10 +81,12 @@ caproverOneClickApp:
 
         - id: $$cap_app_db_version
           label: MongoDB Version
-          description: See https://docs.rocket.chat/quick-start/installing-and-updating/manual-installation/mongo-versions for supported MongoDB versions. See https://hub.docker.com/r/bitnami/mongodb/tags/ for MongoDB image tags. Version must be >=4.x.y but please prefer >=4.4.z
-          defaultValue: '4.4'
-          # ensuring v4+ is used
-          validRegex: /^[4-9](\.[0-9](\.[0-9])?)?(-debian-[0-9]+-r[0-9]+)?$/
+          description: >-
+              See https://docs.rocket.chat/quick-start/installing-and-updating/manual-installation/mongo-versions for supported MongoDB versions.
+              See https://hub.docker.com/r/bitnami/mongodb/tags/ for MongoDB image tags.
+              Version must be at least `4.0.0`.
+          defaultValue: '5.0'
+          validRegex: /.{1,}/
 
         - id: $$cap_mongodb_root_username
           label: MongoDB root user's username
@@ -119,7 +122,8 @@ caproverOneClickApp:
             For more information see https://github.com/RocketChat/Rocket.Chat
         end: |-
             Your Rocket.Chat instance is now available at http://$$cap_appname.$$cap_root_domain
-            Log in to your newly deployed Rocket.Chat instance with the default admin account, username: "$$cap_admin_username" and password: "$$cap_admin_password"
+            Log in to your newly deployed Rocket.Chat instance with the default admin account, username: "$$cap_admin_username" and password: "$$cap_admin_password".
+            Please enable WebSocket Support.
             If you face any issues, you can reach out at,
             Forum: https://forums.rocket.chat
             Open Community Server: https://open.rocket.chat/channel/support
