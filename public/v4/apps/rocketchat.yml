@@ -122,7 +122,8 @@ caproverOneClickApp:
             For more information see https://github.com/RocketChat/Rocket.Chat
         end: |-
             Your Rocket.Chat instance is now available at http://$$cap_appname.$$cap_root_domain
-            Log in to your newly deployed Rocket.Chat instance with the default admin account, username: "$$cap_admin_username" and password: "$$cap_admin_password"
+            Log in to your newly deployed Rocket.Chat instance with the default admin account, username: "$$cap_admin_username" and password: "$$cap_admin_password".
+            Please enable WebSocket Support.
             If you face any issues, you can reach out at,
             Forum: https://forums.rocket.chat
             Open Community Server: https://open.rocket.chat/channel/support
