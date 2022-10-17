@@ -21,6 +21,7 @@ caproverOneClickApp:
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_pg_user
           label: Postgres Username
+          defaultValue: postgres
           description: ''
           validRegex: /.{1,}/
         - id: $$cap_pg_pass
@@ -29,6 +30,7 @@ caproverOneClickApp:
           validRegex: /.{1,}/
         - id: $$cap_pg_db
           label: Postgres Default Database
+          defaultValue: postgres
           description: ''
           validRegex: /.{1,}/
         - id: $$cap_pg_initdb_args
