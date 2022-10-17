@@ -1,9 +1,9 @@
 captainVersion: 4
 services:
-    $$cap_appname-db:
+    $$cap_appname:
         image: postgres:$$cap_postgres_version
         volumes:
-            - $$cap_appname-db-data:/var/lib/postgresql/data
+            - $$cap_appname-data:/var/lib/postgresql/data
         restart: always
         environment:
             POSTGRES_USER: $$cap_pg_user
@@ -44,7 +44,7 @@ caproverOneClickApp:
             After installation on CapRover, it will be available as srv-captain--YOUR_CONTAINER_NAME at port 5432 to other CapRover apps.
 
             Enter your Postgres Configuration parameters and click on next. It will take about a minute for the process to finish.
-        end: "Postgres is deployed and available as srv-captain--$$cap_appname-db:5432 to other apps. For example with NodeJS: 'const client = new Client({ user: '$$cap_pg_user', host: 'srv-captain--$$cap_appname', database: '$$cap_pg_db', password: '********', port: 5432})'"
+        end: "Postgres is deployed and available as srv-captain--$$cap_appname:5432 to other apps. For example with NodeJS: 'const client = new Client({ user: '$$cap_pg_user', host: 'srv-captain--$$cap_appname', database: '$$cap_pg_db', password: '********', port: 5432})'"
     displayName: PostgreSQL
     isOfficial: true
     description: The PostgreSQL object-relational database system provides reliability and data integrity
