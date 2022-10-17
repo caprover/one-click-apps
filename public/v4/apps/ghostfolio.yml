@@ -58,7 +58,7 @@ caproverOneClickApp:
         - id: $$cap_REDIS_VERSION
           label: Redis Version
           description: Check out their valid tags at https://hub.docker.com/_/redis/tags
-          defaultValue: '7.0.5'
+          defaultValue: '7.0-alpine'
           validRegex: /.{1,}/
         - id: $$cap_NODE_ENV
           label: Application Environment
