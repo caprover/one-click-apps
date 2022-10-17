@@ -76,7 +76,7 @@ caproverOneClickApp:
           defaultValue: USD
           validRegex: /.{1,}/
         - id: $$cap_JWT_SECRET_KEY
-          label: Base Currency
+          label: JWT Secret Key
           description: A random string used for JSON Web Tokens (JWT).
           defaultValue: $$cap_gen_random_hex(32)
           validRegex: /.{1,}/
