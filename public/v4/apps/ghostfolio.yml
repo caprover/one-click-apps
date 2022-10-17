@@ -53,7 +53,7 @@ caproverOneClickApp:
         - id: $$cap_POSTGRES_VERSION
           label: Postgres Version
           description: Check out their valid tags at https://hub.docker.com/_/postgres/tags
-          defaultValue: '14.5'
+          defaultValue: '15.0-alpine'
           validRegex: /.{1,}/
         - id: $$cap_REDIS_VERSION
           label: Redis Version
