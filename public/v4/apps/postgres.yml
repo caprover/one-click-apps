@@ -16,7 +16,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_postgres_version
           label: Postgres Version
-          defaultValue: '14.1'
+          defaultValue: '14.5'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_pg_user
