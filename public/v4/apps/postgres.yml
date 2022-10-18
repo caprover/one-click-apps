@@ -15,27 +15,26 @@ services:
 caproverOneClickApp:
     variables:
         - id: $$cap_postgres_version
-          label: Postgres Version
+          label: Version
           defaultValue: '14.5'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_pg_user
-          label: Postgres Username
+          label: Username
           defaultValue: postgres
           description: ''
           validRegex: /.{1,}/
         - id: $$cap_pg_pass
-          label: Postgres Password
+          label: Password
           description: ''
           validRegex: /.{1,}/
         - id: $$cap_pg_db
-          label: Postgres Default Database
+          label: Default Database
           defaultValue: postgres
           description: ''
           validRegex: /.{1,}/
         - id: $$cap_pg_initdb_args
-          label: "OPTIONAL: Arguments for 'postgres initdb'"
-          description: For example, --data-checksums
+          label: Optional Arguments
           validRegex: /.{0,}/
     instructions:
         start: >-
