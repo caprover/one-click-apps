@@ -26,7 +26,7 @@ caproverOneClickApp:
           validRegex: /.{1,}/
         - id: $$cap_pg_pass
           label: Password
-          description: ''
+          defaultValue: $$cap_gen_random_hex(16)
           validRegex: /.{1,}/
         - id: $$cap_pg_db
           label: Default Database
