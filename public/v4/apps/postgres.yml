@@ -38,13 +38,13 @@ caproverOneClickApp:
               Example: `--data-checksums`.
           validRegex: /.{0,}/
     instructions:
-        start: >-
-            PostgreSQL, often simply Postgres, is an object-relational database management system (ORDBMS) with an emphasis on extensibility and standards-compliance. As a database server, its primary function is to store data, securely and supporting best practices, and retrieve it later, as requested by other software applications, be it those on the same computer or those running on another computer across a network (including the Internet). It can handle workloads ranging from small single-machine applications to large Internet-facing applications with many concurrent users.
-
-            After installation on CapRover, it will be available as srv-captain--YOUR_CONTAINER_NAME at port 5432 to other CapRover apps.
-
-            Enter your Postgres Configuration parameters and click on next. It will take about a minute for the process to finish.
-        end: "Postgres is deployed and available as srv-captain--$$cap_appname:5432 to other apps. For example with NodeJS: 'const client = new Client({ user: '$$cap_pg_user', host: 'srv-captain--$$cap_appname', database: '$$cap_pg_db', password: '********', port: 5432})'"
+        start: |-
+            PostgreSQL, often simply Postgres, is an object-relational database management system (ORDBMS) with an emphasis on extensibility and standards-compliance.
+            As a database server, its primary function is to store data, securely and supporting best practices, and retrieve it later, as requested by other software applications, be it those on the same computer or those running on another computer across a network (including the Internet).
+            It can handle workloads ranging from small single-machine applications to large Internet-facing applications with many concurrent users.
+        end: |-
+            Postgres is deployed and available as `srv-captain--$$cap_appname:5432` to other apps.
+            For example with Node.js: `const client = new Client({ user: '$$cap_pg_user', host: 'srv-captain--$$cap_appname', database: '$$cap_pg_db', password: '$$cap_pg_pass', port: 5432})`
     displayName: PostgreSQL
     isOfficial: true
     description: The PostgreSQL object-relational database system provides reliability and data integrity
