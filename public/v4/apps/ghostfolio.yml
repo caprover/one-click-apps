@@ -48,17 +48,17 @@ caproverOneClickApp:
         - id: $$cap_GHOSTFOLIO_VERSION
           label: Ghostfolio Version
           description: Check out their valid tags at https://hub.docker.com/r/ghostfolio/ghostfolio/tags
-          defaultValue: '1.199.1'
+          defaultValue: '1.205.1'
           validRegex: /.{1,}/
         - id: $$cap_POSTGRES_VERSION
           label: Postgres Version
           description: Check out their valid tags at https://hub.docker.com/_/postgres/tags
-          defaultValue: '14.5'
+          defaultValue: '15.0-alpine'
           validRegex: /.{1,}/
         - id: $$cap_REDIS_VERSION
           label: Redis Version
           description: Check out their valid tags at https://hub.docker.com/_/redis/tags
-          defaultValue: '7.0.5'
+          defaultValue: '7.0-alpine'
           validRegex: /.{1,}/
         - id: $$cap_NODE_ENV
           label: Application Environment
@@ -76,7 +76,7 @@ caproverOneClickApp:
           defaultValue: USD
           validRegex: /.{1,}/
         - id: $$cap_JWT_SECRET_KEY
-          label: Base Currency
+          label: JWT Secret Key
           description: A random string used for JSON Web Tokens (JWT).
           defaultValue: $$cap_gen_random_hex(32)
           validRegex: /.{1,}/
