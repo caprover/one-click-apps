@@ -48,4 +48,4 @@ caproverOneClickApp:
     displayName: PostgreSQL
     isOfficial: true
     description: The PostgreSQL object-relational database system provides reliability and data integrity
-    documentation: Taken from https://hub.docker.com/_/postgres
+    documentation: https://hub.docker.com/_/postgres
