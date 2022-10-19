@@ -22,8 +22,7 @@ caproverOneClickApp:
     documentation: https://docs.budibase.com
     isOfficial: true
     instructions:
-        start: |-
-            Build apps, forms, and workflows that perfectly fit your business - so you can move forward, faster.
+        start: Build apps, forms, and workflows that perfectly fit your business - so you can move forward, faster.
         end: |-
             Budibase has been successfully deployed! It might take few moments before it's fully started.
             You can access it at `http://$$cap_appname.$$cap_root_domain`.
