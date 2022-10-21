@@ -79,7 +79,7 @@ services:
             POSTGRES_USER: $$cap_POSTGRES_USER
             POSTGRES_PASSWORD: $$cap_POSTGRES_PASSWORD
         volumes:
-            - $$cap_appname-db-data:/data/postgres
+            - $$cap_appname-db-data:/var/lib/postgresql/data
 
 caproverOneClickApp:
     instructions:
