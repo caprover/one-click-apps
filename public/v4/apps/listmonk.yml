@@ -70,9 +70,10 @@ caproverOneClickApp:
           defaultValue: $$cap_gen_random_hex(32)
           validRegex: /.{1,}/
         - id: $$cap_listmonk_flags
-          label: Listmonk flags
+          label: Optional Listmonk flags
           defaultValue: ''
           validRegex: /.{1,}/
+          description: If you use `--static-dir=your/folder`, remember to add a persistent directory.
     instructions:
         start: |-
             High performance, self-hosted newsletter and mailing list manager with a modern dashboard
