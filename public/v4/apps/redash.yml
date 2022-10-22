@@ -32,6 +32,8 @@ services:
         environment:
             QUEUES: celery
             WORKERS_COUNT: $$cap_REDASH_SCHEDULER_WORKERS
+            REDASH_COOKIE_SECRET: $$cap_REDASH_COOKIE_SECRET
+            REDASH_REDIS_URL: redis://srv-captain--$$cap_appname-queue
         depends_on:
             - $$cap_appname-db
             - $$cap_appname-queue
@@ -44,6 +46,8 @@ services:
         environment:
             QUEUES: scheduled_queries,schemas
             WORKERS_COUNT: $$cap_REDASH_SCHEDULED_WORKERS
+            REDASH_COOKIE_SECRET: $$cap_REDASH_COOKIE_SECRET
+            REDASH_REDIS_URL: redis://srv-captain--$$cap_appname-queue
         depends_on:
             - $$cap_appname-db
             - $$cap_appname-queue
@@ -56,6 +60,8 @@ services:
         environment:
             QUEUES: queries
             WORKERS_COUNT: $$cap_REDASH_ADHOC_WORKERS
+            REDASH_COOKIE_SECRET: $$cap_REDASH_COOKIE_SECRET
+            REDASH_REDIS_URL: redis://srv-captain--$$cap_appname-queue
         depends_on:
             - $$cap_appname-db
             - $$cap_appname-queue
