@@ -72,7 +72,7 @@ caproverOneClickApp:
         - id: $$cap_listmonk_flags
           label: Optional Listmonk flags
           description: |-
-            If you use `--static-dir=your/folder`, remember to add a persistent directory.
+              If you use `--static-dir=your/folder`, remember to add a persistent directory.
     instructions:
         start: |-
             High performance, self-hosted newsletter and mailing list manager with a modern dashboard
