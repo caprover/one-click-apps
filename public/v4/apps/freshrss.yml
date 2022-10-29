@@ -26,21 +26,21 @@ services:
             DB_PASSWORD: $$cap_freshrss_POSTGRESQL_PASS
             DB_USER: $$cap_freshrss_POSTGRESQL_USER
             FRESHRSS_INSTALL: |-
-              --api_enabled
-              --base_url https://$$cap_appname.$$cap_root_domain
-              --db-base $$cap_freshrss_POSTGRESQL_DB
-              --db-host srv-captain--$$cap_appname-postgresql
-              --db-password $$cap_freshrss_POSTGRESQL_PASS
-              --db-type pgsql
-              --db-user $$cap_freshrss_POSTGRESQL_USER
-              --default_user admin
-              --language en
+                --api_enabled
+                --base_url https://$$cap_appname.$$cap_root_domain
+                --db-base $$cap_freshrss_POSTGRESQL_DB
+                --db-host srv-captain--$$cap_appname-postgresql
+                --db-password $$cap_freshrss_POSTGRESQL_PASS
+                --db-type pgsql
+                --db-user $$cap_freshrss_POSTGRESQL_USER
+                --default_user admin
+                --language en
             FRESHRSS_USER: |-
-              --api_password $$cap_api_pass
-              --email $$cap_admin_email
-              --language en
-              --password $$cap_admin_pass
-              --user admin
+                --api_password $$cap_api_pass
+                --email $$cap_admin_email
+                --language en
+                --password $$cap_admin_pass
+                --user admin
         volumes:
             - '$$cap_appname-data:/var/www/FreshRSS/data'
             - '$$cap_appname-extensions:/var/www/FreshRSS/extensions'
