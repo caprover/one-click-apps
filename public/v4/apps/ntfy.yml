@@ -6,7 +6,7 @@ captainVersion: 4
 caproverOneClickApp:
 
     # App name
-    displayName: ntfy.sh (nico-kow)
+    displayName: ntfy.sh
 
     # Description displayed on the app list
     description: |-
@@ -17,7 +17,7 @@ caproverOneClickApp:
 
         # Displayed one the app config page, where you enter all variable values
         start: |-
-            ![ntfy Logo](https://github.com/binwiederhier/ntfy/raw/main/web/public/static/img/ntfy.png)
+            ![ntfy Logo](https://raw.githubusercontent.com/binwiederhier/ntfy/48523a22693a59054c15d14e24565cd25fa1bf4c/web/public/static/img/ntfy.png)
 
             📖 [Documentation](https://ntfy.sh/docs/)
             📁 [GitHub](https://github.com/binwiederhier/ntfy)
@@ -32,7 +32,8 @@ caproverOneClickApp:
             🎉🎉🎉 Successfully deployed!  
             Check it out at: http://$$cap_appname.$$cap_root_domain
 
-            > *NOTE*: Enable HTTPS Support in the app's HTTP settings.
+            > *NOTE*: Enable HTTPS Support in the app's HTTP settings. You also need to activate websocket support in html settings!
+
             
 
     # Documentation Link
