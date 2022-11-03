@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: portainer/portainer-ce:$$cap_portainer_version
+        image: portainer/portainer-$$cap_portainer_edition:$$cap_portainer_version
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
             - $$cap_appname-data:/data
@@ -15,6 +15,11 @@ caproverOneClickApp:
           defaultValue: 2.0.0
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/portainer/portainer-ce/tags
           validRegex: /^([^\s^\/])+$/
+        - id: $$cap_portainer_edition
+          label: Portainer Edition
+          defaultValue: 'ce'
+          description: 'Community edition (ce) or Enterprise edition (ee)'
+          validRegex: /^(?:ce|ee)$/
     instructions:
         start: >-
             Portainer is a lightweight management UI which allows you to easily manage your Docker host or Swarm cluster. 
