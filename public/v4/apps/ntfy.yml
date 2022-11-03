@@ -1,10 +1,8 @@
 # Use schema version 4
 captainVersion: 4
 
-
 # One-click-app options
 caproverOneClickApp:
-
     # App name
     displayName: ntfy.sh
 
@@ -14,7 +12,6 @@ caproverOneClickApp:
 
     # Define instructions
     instructions:
-
         # Displayed one the app config page, where you enter all variable values
         start: |-
             ![ntfy Logo](https://raw.githubusercontent.com/binwiederhier/ntfy/48523a22693a59054c15d14e24565cd25fa1bf4c/web/public/static/img/ntfy.png)
@@ -34,8 +31,6 @@ caproverOneClickApp:
 
             > *NOTE*: Enable HTTPS Support in the app's HTTP settings. You also need to activate websocket support in html settings!
 
-            
-
     # Documentation Link
     documentation: https://ntfy.sh/docs/
 
@@ -44,24 +39,19 @@ caproverOneClickApp:
 
     # Define variables
     variables:
-
         # Variable for version
-        -   id: $$cap_appversion
-            label: App Version
-            description: |-
-                Specify the version tag to install.  
-                Click [here](https://hub.docker.com/r/binwiederhier/ntfy/tags) for a list of available tags.
-            defaultValue: v1.28.0
-            validRegex: /^([^\s^\/])+$/
-
-
+        - id: $$cap_appversion
+          label: App Version
+          description: |-
+              Specify the version tag to install.  
+              Click [here](https://hub.docker.com/r/binwiederhier/ntfy/tags) for a list of available tags.
+          defaultValue: v1.28.0
+          validRegex: /^([^\s^\/])+$/
 
 # Define services
 services:
-
     # ntfy service
     $$cap_appname:
-
         # CapRover's special options
         caproverExtra:
             dockerfileLines:
@@ -74,5 +64,3 @@ services:
             - $$cap_appname-cache:/var/cache/ntfy
             # Volume containing database data and config
             - $$cap_appname-etc:/etc/ntfy
-        
-            
