@@ -21,7 +21,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_invoiceninja_VERSION
           label: Invoice Ninja Version
-          defaultValue: '5'
+          defaultValue: '5.5.37'
           description: It's a good idea to check for breaking changes between versions
           validRegex: /^([^\s^\/])+$/
 
@@ -117,7 +117,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: true
 
-    $$cap_appname-server:
+    $$cap_appname:
         restart: always
         depends_on:
             - $$cap_appname-app
@@ -129,7 +129,7 @@ services:
             # Workaround for hard-coded container name in nginx config
             dockerfileLines:
                 - FROM nginx:1.21
-                - ADD https://raw.githubusercontent.com/invoiceninja/dockerfiles/5.3.34/config/nginx/in-vhost.conf /etc/nginx/templates/in-vhost.conf.template
+                - ADD https://raw.githubusercontent.com/invoiceninja/dockerfiles/$$cap_invoiceninja_VERSION/config/nginx/in-vhost.conf /etc/nginx/templates/in-vhost.conf.template
                 - RUN sed -i 's/app:9000/${APP_CONTAINER}/g' /etc/nginx/templates/in-vhost.conf.template
 
     $$cap_appname-db-backup:
