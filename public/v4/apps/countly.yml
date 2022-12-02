@@ -16,7 +16,7 @@ caproverOneClickApp:
     instructions:
         start: Countly will only work over HTTPS, so please enable it. | Product Analytics for Mobile, Web, Desktop and IoT | https://count.ly
         end: Countly is deployed and available as $$cap_appname
-    displayName: ''
+    displayName: 'Countly'
     isOfficial: true
     description: Countly helps you get insights from your application
     documentation: Taken from https://hub.docker.com/r/countly/countly-server

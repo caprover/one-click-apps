@@ -29,7 +29,7 @@ caproverOneClickApp:
 
             Enter your Redis container name and click on next. It will take about a minute for the process to finish.
         end: "Redis is deployed and available as srv-captain--$$cap_appname:6379 to other apps. For example with NodeJS: const client = redis.createClient(6379, 'srv-captain--$$cap_appname' , {password: '$$cap_redis_password'})"
-    displayName: ''
+    displayName: 'Redis'
     isOfficial: true
     description: Redis is an in-memory data structure store, used as a database, cache and message broker
     documentation: Taken from https://hub.docker.com/_/redis

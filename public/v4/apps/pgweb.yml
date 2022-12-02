@@ -15,6 +15,6 @@ caproverOneClickApp:
     instructions:
         start: pgweb is a web-based database browser for PostgreSQL, written in Go.
         end: pgweb is deployed.
-    displayName: ''
+    displayName: 'pgweb'
     description: Pgweb is a web-based database browser for PostgreSQL, written in Go
     documentation: See https://hub.docker.com/r/sosedoff/pgweb for details

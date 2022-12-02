@@ -31,7 +31,7 @@ caproverOneClickApp:
 
             Enter your portainer Configuration parameters and click on next. It will take about a minute for the process to finish.
         end: Portainer is deployed and available. The next step is to turn on Websocket Support and use the local connection option via websockets from the Portainer user interface.
-    displayName: ''
+    displayName: 'Portainer'
     isOfficial: true
     description: Portainer is a lightweight management UI which allows you to easily manage your different Docker environments
     documentation: Taken from https://hub.docker.com/r/portainer/portainer-ce/
