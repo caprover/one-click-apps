@@ -56,7 +56,7 @@ caproverOneClickApp:
     instructions:
         start: Nightscout acts as a web-based CGM (Continuous Glucose Monitor) to allow multiple caregivers to remotely view a patient's glucose data in real time.
         end: Nightscout is deployed and available as $$cap_appname-nightscout.
-    displayName: ''
+    displayName: 'Nightscout'
     isOfficial: true
     description: Nightscout is a free and open-source project, and associated social movement, that enables accessing and working with continuous glucose monitor data
     documentation: Built from scratch (https://github.com/nightscout/cgm-remote-monitor)

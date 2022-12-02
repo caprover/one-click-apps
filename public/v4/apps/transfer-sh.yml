@@ -5,7 +5,7 @@ services:
         environment:
             LISTENER: '8080'
             FORCE_HTTPS: 'false'
-            BASEDIR: '/tmp'
+            BASEDIR: '/tmp.js'
             PROVIDER: 'local'
         caproverExtra:
             containerHttpPort: '8080'

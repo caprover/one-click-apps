@@ -173,7 +173,7 @@ services:
             - /var/run/docker.sock:/var/run/docker.sock
             - $$cap_appname-functions:/storage/functions
             - $$cap_appname-builds:/storage/builds
-            - /tmp:/tmp
+            - /tmp.js:/tmp.js
         environment:
             _APP_ENV: $$cap_APP_ENV
             _APP_VERSION: $$cap_APP_VERSION

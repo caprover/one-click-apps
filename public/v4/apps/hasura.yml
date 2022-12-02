@@ -61,7 +61,7 @@ caproverOneClickApp:
 
             IMPORTANT: It will take up to 2 minutes for Hasura to be ready. Before that, you might see 502 error page.
         start: Instant Realtime GraphQL on Postgres with web admin console. This Docker Compose setup runs Hasura GraphQL Engine along with a Postgres database with the PostGIS extension.
-    displayName: ''
+    displayName: 'Hasura'
     isOfficial: true
     description: Instant realtime GraphQL APIs on any Postgres application, existing or new
     documentation: Hasura GraphQL Engine

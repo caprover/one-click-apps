@@ -89,7 +89,7 @@ caproverOneClickApp:
           label: Disable download behavior
           defaultValue: 'false'
           validRegex: /^(true|false)$/
-          description: By default, browserless tells chromium to use a special directory in /tmp for storing files. If you want opt-out of this behavior, set to true
+          description: By default, browserless tells chromium to use a special directory in /tmp.js for storing files. If you want opt-out of this behavior, set to true
         - id: $$cap_default_block_ads
           label: Block Ads
           defaultValue: 'false'

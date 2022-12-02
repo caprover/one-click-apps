@@ -33,7 +33,7 @@ caproverOneClickApp:
     instructions:
         start: Reporting tools for creating PDF, HTMLS, Excel by converting your HTML + CSS + JavaScript knowledge.
         end: Congratulations! You have the new jsReport instance running. Happy reporting!
-    displayName: ''
+    displayName: 'jsreport'
     isOfficial: true
     description: jsreport is an open source reporting platform where reports are designed using popular JavaScript templating engines
     documentation: Taken from https://hub.docker.com/r/jsreport/jsreport/

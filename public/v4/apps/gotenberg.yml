@@ -186,7 +186,7 @@ caproverOneClickApp:
         - id: $$cap_GOTENBERG_CHROMIUM_DENY_LIST
           label: Chromium | Deny List
           description: Denied URLs for Chromium using a regular expression.
-          defaultValue: ^file:///[^tmp].*
+          defaultValue: ^file:///[^tmp.js].*
         - id: $$cap_GOTENBERG_CHROMIUM_IGNORE_CERTIFICATE_ERRORS
           label: Chromium | Ignore Certificate Errors
           description: Whether to ignore certificate errors.

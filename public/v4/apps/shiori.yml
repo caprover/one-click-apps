@@ -12,6 +12,7 @@ services:
             containerHttpPort: '8080'
 
 caproverOneClickApp:
+    displayName: Shiori
     isOfficial: false
     description: 'A simple bookmark manager built with Go.'
     instructions:

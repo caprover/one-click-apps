@@ -51,7 +51,7 @@ caproverOneClickApp:
 
 
             Don't change the "/srv" part of the mapping. "/srv" is the directory inside FileBrowser which is used to display content in FileBrowser.
-    displayName: ''
+    displayName: 'filebrowser'
     isOfficial: true
     description: filebrowser provides a file managing interface within a specified directory and it can be used to upload, delete, preview, rename and edit your files with supports for multi users.
     documentation: Taken from https://filebrowser.xyz/installation#docker except moved the database to a directory to be able to associate with a volume

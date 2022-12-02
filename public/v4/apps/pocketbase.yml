@@ -6,8 +6,8 @@ services:
             dockerfileLines:
                 - FROM alpine:3.16.2
                 - RUN apk add --no-cache unzip openssh
-                - ADD https://github.com/pocketbase/pocketbase/releases/download/v$$cap_version/pocketbase_$$cap_version_linux_amd64.zip /tmp/pb.zip
-                - RUN unzip /tmp/pb.zip -d /pb/
+                - ADD https://github.com/pocketbase/pocketbase/releases/download/v$$cap_version/pocketbase_$$cap_version_linux_amd64.zip /tmp.js/pb.zip
+                - RUN unzip /tmp.js/pb.zip -d /pb/
                 - EXPOSE 8080
                 - CMD ["/pb/pocketbase", "serve", "--http=0.0.0.0:8080"]
             containerHttpPort: '8080'

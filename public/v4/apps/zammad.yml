@@ -73,7 +73,7 @@ services:
             ZAMMAD_RAILSSERVER_HOST: srv-captain--$$cap_appname-railsserver
             ZAMMAD_RAILSSERVER_PORT: 3000
         volumes:
-            - $$cap_appname-backup:/var/tmp/zammad
+            - $$cap_appname-backup:/var/tmp.js/zammad
             - $$cap_appname-data:/opt/zammad
         caproverExtra:
             notExposeAsWebApp: true

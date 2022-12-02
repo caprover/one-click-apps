@@ -23,6 +23,6 @@ caproverOneClickApp:
             Rainloop is deployed and available as $$cap_appname. 
 
             It will take about a minute for Rainloop to be ready. Before that, you might see 502 error page.
-    displayName: ''
+    displayName: 'RainLoop'
     description: RainLoop Webmail - Simple, modern & fast web-based email client
     documentation: Taken from https://hub.docker.com/r/hardware/rainloop

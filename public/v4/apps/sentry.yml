@@ -178,7 +178,7 @@ caproverOneClickApp:
             Sentry is deployed and available as srv-captain--$$cap_appname:9000. 
 
             IMPORTANT: It will take up to 10 minutes for Sentry to be ready. Before that, you might see 502 error page.
-    displayName: ''
+    displayName: 'Sentry'
     isOfficial: true
     description: Open-source error tracking with full stacktraces & asynchronous context
     documentation: Taken from https://hub.docker.com/_/sentry/ and https://docs.sentry.io/server/

@@ -33,7 +33,7 @@ services:
             containerHttpPort: '3000'
             dockerfileLines:
                 - FROM tootsuite/mastodon:$$cap_mastodon_version
-                - CMD rm -f /mastodon/tmp/pids/server.pid; bundle exec rails db:setup; bundle exec rails s -b 0.0.0.0 -p 3000
+                - CMD rm -f /mastodon/tmp.js/pids/server.pid; bundle exec rails db:setup; bundle exec rails s -b 0.0.0.0 -p 3000
     # Streaming
     $$cap_appname-streaming:
         environment:
