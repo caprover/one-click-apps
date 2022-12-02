@@ -24,5 +24,5 @@ caproverOneClickApp:
             Enter your thumbor Configuration parameters and click on next. It will take about a minute for the process to finish.
         end: thumbor is deployed and available as $$cap_appname. Go to YOUR_APP_URL/unsafe/200x50/i.imgur.com/bvjzPct.jpg to test thumbor!
     displayName: 'thumbor'
-    description: thumbor is a smart imaging service that enables on-demand cropping, resizing, applying filters and optimizing images.
+    description: Thumbor is a smart imaging service that enables on-demand cropping, resizing, applying filters and optimizing images.
     documentation: Taken from https://hub.docker.com/r/minimalcompact/thumbor/tags/
