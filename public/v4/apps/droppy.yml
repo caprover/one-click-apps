@@ -20,6 +20,6 @@ caproverOneClickApp:
             droppy is deployed and available as $$cap_appname.
 
             IMPORTANT: It will take up to 2 minutes for droppy to be ready. Before that, you might see 502 error page.
-    displayName: 'droppy [archived]'
+    displayName: 'droppy'
     description: droppy is a self-hosted file storage server with a web interface
     documentation: Read the documentation @ https://github.com/droppyjs/droppy
