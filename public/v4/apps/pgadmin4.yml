@@ -31,7 +31,7 @@ caproverOneClickApp:
 
             Enter your Configuration parameters and click on next. It will take about a minute for the process to finish.
         end: Your pgAdmin is deployed and being started. Please wait one minute before accessing your pgAdmin!
-    displayName: ''
+    displayName: 'pgAdmin'
     isOfficial: true
     description: pgAdmin 4 is a complete rewrite of pgAdmin, built using Python and Javascript/jQuery
     documentation: 'Taken from https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html '

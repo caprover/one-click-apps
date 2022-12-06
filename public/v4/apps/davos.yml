@@ -1,5 +1,6 @@
 captainVersion: 4
 caproverOneClickApp:
+    displayName: Davos
     description: 'Davos is an FTP automation tool that periodically scans given host locations for new files.'
     documentation: 'https://github.com/linuxserver/davos'
     instructions:
