@@ -55,7 +55,7 @@ caproverOneClickApp:
     instructions:
         end: Prisma 1 is deployed and available as $$cap_appname.
         start: Prisma 1 - Database tools for modern application development. This setup runs Prisma 1 along with a MySQL Database.
-    displayName: ''
+    displayName: 'Prisma'
     isOfficial: true
     description: Prisma 1 is a database abstraction layer that turns your databases into GraphQL APIs with CRUD operations and realtime capabilities
     documentation: Taken from https://hub.docker.com/r/prismagraphql/prisma/

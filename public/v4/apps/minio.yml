@@ -49,7 +49,7 @@ caproverOneClickApp:
             **Important**: Make sure to enable HTTPS for both $$cap_appname and $$cap_appname-s3
             You can access the dashboard at https://$$cap_appname.$$cap_root_domain
             And, you can access the S3 API Endpoint at https://$$cap_appname-s3.$$cap_root_domain
-    displayName: ''
+    displayName: 'MinIO'
     isOfficial: true
     description: MinIO is a cloud storage server compatible with Amazon S3
     documentation: Taken from https://docs.min.io/docs/minio-docker-quickstart-guide.html
