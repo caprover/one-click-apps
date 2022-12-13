@@ -10,7 +10,7 @@ services:
         caproverExtra:
             containerHttpPort: '8888'
             dockerfileLines:
-                - FROM jupyter/tensorflow-notebook:36d857bb0121
+                - FROM jupyter/tensorflow-notebook:08d6f2287049
                 - RUN pip install lxml
                 - RUN jupyter notebook --generate-config -y
                 - RUN echo 'c.NotebookApp.token = "$$cap_jupyter_default_token"' >> /home/jovyan/.jupyter/jupyter_notebook_config.py

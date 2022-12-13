@@ -37,7 +37,7 @@ caproverOneClickApp:
         # Redis
         - id: $$cap_redis_version
           label: Bitnami's redis Version
-          defaultValue: '7.0.4'
+          defaultValue: '7.0.6'
           description: Check the tag version on https://hub.docker.com/r/bitnami/redis
         - id: $$cap_redis_password
           label: Redis password
@@ -46,15 +46,15 @@ caproverOneClickApp:
         # Airflow
         - id: $$cap_airflow_version
           label: Bitnami's airflow Version
-          defaultValue: '2.3.3'
+          defaultValue: '2.5.0'
           description: Check the tag version on https://hub.docker.com/r/bitnami/airflow
         - id: $$cap_airflow_worker_version
           label: Bitnami's airflow worker Version
-          defaultValue: '2.3.3'
+          defaultValue: '2.5.0'
           description: Check the tag version on https://hub.docker.com/r/bitnami/airflow-worker
         - id: $$cap_airflow_scheduler_version
           label: Bitnami's airflow scheduler Version
-          defaultValue: '2.3.3'
+          defaultValue: '2.5.0'
           description: Check the tag version on https://hub.docker.com/r/bitnami/airflow-scheduler
         - id: $$cap_airflow_user
           label: Airflow user

@@ -13,7 +13,7 @@ caproverOneClickApp:
         - id: $$cap_adminer_version
           label: Adminer Version Tag
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/adminer/tags/
-          defaultValue: '4'
+          defaultValue: '4.8.1'
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_adminer_design
           label: 'OPTIONAL: Adminer Design'

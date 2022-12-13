@@ -17,7 +17,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_archivebox_version
           label: archivebox Version
-          defaultValue: sha-5940dd6
+          defaultValue: sha-f17f4c6
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/archivebox/archivebox/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_max_size_in_mo

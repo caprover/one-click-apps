@@ -93,17 +93,17 @@ caproverOneClickApp:
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_penpot_frontend_version
           label: Penpot Frontend Version
-          defaultValue: '1.15.2-beta'
+          defaultValue: '1.16.1-beta'
           description: Checkout their docker page for the valid tags https://hub.docker.com/r/penpotapp/frontend/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_penpot_backend_version
           label: Penpot Backend Version
-          defaultValue: '1.15.2-beta'
+          defaultValue: '1.16.1-beta'
           description: Checkout their docker page for the valid tags https://hub.docker.com/r/penpotapp/backend/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_penpot_exporter_version
           label: Penpot Exporter Version
-          defaultValue: '1.15.2-beta'
+          defaultValue: '1.16.1-beta'
           description: Checkout their docker page for the valid tags https://hub.docker.com/r/penpotapp/exporter/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_flags

@@ -13,7 +13,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_apprise_version
           label: Apprise Version
-          defaultValue: 'v0.7.0'
+          defaultValue: 'v1.2.0'
           description: Check out their docker page for the valid tags https://hub.docker.com/r/caronc/apprise/tags
           validRegex: /^([^\s^\/])+$/
 

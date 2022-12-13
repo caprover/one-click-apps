@@ -12,7 +12,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap__version
           label: Version
-          defaultValue: 3.15.2
+          defaultValue: 3.43.0
           description: 'Additional tags can be found here: https://hub.docker.com/r/sonatype/nexus3/tags'
     instructions:
         start: >-

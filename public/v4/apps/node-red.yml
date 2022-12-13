@@ -14,7 +14,7 @@ caproverOneClickApp:
         - id: $$cap_node-red_version
           label: node-red version tag
           description: Check out their docker page for the valid tags @ https://hub.docker.com/r/nodered/node-red/tags
-          defaultValue: 1.1.3-12-minimal
+          defaultValue: 2.2.3-12-minimal
         - id: $$cap_node-red_timezone
           label: timezone
           description: Check out this list and use tz database name as value @ https://en.wikipedia.org/wiki/List_of_tz_database_time_zones

@@ -17,7 +17,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_bazarr_version
           label: Bazarr Version
-          defaultValue: '1.0.1'
+          defaultValue: '1.1.3'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/bazarr/tags
           validRegex: /^([^\s^\/])+$/
 
