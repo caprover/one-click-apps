@@ -18,7 +18,7 @@ caproverOneClickApp:
     variables:
         - id: '$$cap_version'
           label: PocketBase Version
-          defaultValue: '0.7.9'
+          defaultValue: '0.10.0'
           description: Check out their Docker page for the valid tags https://github.com/pocketbase/pocketbase/releases
           validRegex: "/^([^\\s^\\/])+$/"
     instructions:
