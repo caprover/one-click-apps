@@ -9,7 +9,7 @@ services:
         caproverExtra:
             dockerfileLines:
                 - FROM redis:$$cap_redis_version
-                - CMD exec redis-server --requirepass "$$cap_redis_password"
+                - CMD exec redis-server --requirepass "$REDIS_PASSWORD"
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
