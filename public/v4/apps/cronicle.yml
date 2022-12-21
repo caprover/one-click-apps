@@ -6,7 +6,6 @@ services:
         volumes:
             - /etc/localtime:/etc/localtime:ro
             - /etc/timezone:/etc/timezone:ro
-            - /mnt/backup-server:/backup-server
         environment:
             - TZ=$$cap_timezone
         logging:
