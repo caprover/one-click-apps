@@ -1,0 +1,53 @@
+captainVersion: 4
+services:
+  $$cap_appname:
+    image: tiredofit/db-backup:$$cap_version
+    volumes:
+      - $$cap_backup_path:/backup
+    environment:
+      DB_TYPE: mongo
+      MONGO_CUSTOM_URI: $$cap_custom_uri
+      DB_NAME: $$cap_db_name
+      DB_PORT: $$cap_db_port
+      DB_DUMP_FREQ: $$cap_dump_frequency
+      DB_CLEANUP_TIME: $$cap_dump_cleanup_time
+      COMPRESSION: GZ
+      ENABLE_CHECKSUM: FALSE
+      CONTAINER_ENABLE_MONITORING: FALSE
+    restart: always
+    caproverExtra:
+      notExposeAsWebApp: 'true'
+caproverOneClickApp:
+  variables:
+    - id: $$cap_version
+      label: Version
+      defaultValue: '3.7.3'
+      description: Check out their Docker page for the valid tags https://hub.docker.com/r/tiredofit/db-backup/tags
+      validRegex: "/^([^\\s^\\/])+$/"
+    - id: $$cap_backup_path
+      label: Backup path
+      defaultValue: '/backups'
+      description: The place where you want to store the backups
+    - id: $$cap_custom_uri
+      label: DB Custom URI
+      description: i.e. `mongodb://<user>:<password>@<host>` or `mongodb+srv://<user>:<password>@<host>`
+    - id: $$cap_db_name
+      label: DB Name
+      defaultValue: 'ALL'
+    - id: $$cap_db_port
+      label: DB Port
+      defaultValue: 27017
+    - id: $$cap_dump_frequency
+      label: Dump frequency
+      defaultValue: '1440'
+      description: How often to do a dump, in minutes after the first backup. Defaults to 1440 minutes, or once per day.
+    - id: $$cap_dump_cleanup_time
+      label: Dump cleanup time
+      description: Value in minutes to delete old backups (only fired when dump freqency fires). 1440 would delete anything above 1 day old. You don't need to set this variable if you want to hold onto everything.
+  instructions:
+    start: Backup a MongoDB database on a scheduled basis with many customizable options
+    end: Your scheduled backup has started!
+  displayName: MongoDB local backup
+  isOfficial: true
+  description: Backup a MongoDB database on a scheduled basis with many customizable options
+  documentation: See https://github.com/tiredofit/docker-db-backup
