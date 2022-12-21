@@ -48,24 +48,6 @@ services:
             - $$cap_appname-postgresql
         caproverExtra:
             containerHttpPort: '80'
-    $$cap_appname-autopgbackup:
-        image: rogersik/autopostgresqlbackup:latest
-        environment:
-            - DBHOST=srv-captain--$$cap_appname-postgresql
-            - USERNAME=$$cap_freshrss_POSTGRESQL_USER
-            - PASSWORD=$$cap_freshrss_POSTGRESQL_PASS
-            - CRON_LOG_LEVEL=0
-            - CRON_SCHEDULE=$$cap_backup_cron
-            - LATEST=yes
-        volumes:
-            - $$cap_appname-postgresql-backup:/backups
-            - /etc/localtime:/etc/localtime:ro
-        depends_on:
-            - $$cap_appname-postgresql
-        links:
-            - $$cap_appname-postgresql
-        caproverExtra:
-            notExposeAsWebApp: true
 caproverOneClickApp:
     variables:
         - id: '$$cap_version'
@@ -122,22 +104,15 @@ caproverOneClickApp:
           label: POSTGRESQL_DB
           defaultValue: freshrss_production
           validRegex: /^([a-zA-Z0-9\-\.\_])+$/
-
-        - id: '$$cap_backup_cron'
-          label: DB Cron Backup
-          defaultValue: '5 4 * * *'
-          description: a valid cron definition such as '5 4 * * *' when the database backup should be started
     instructions:
         start: |-
             FreshRSS is a self-hosted RSS feed aggregator like Leed or Kriss Feed.
             It is lightweight, easy to work with, powerful, and customizable.
-            This one-click install comes with automated postgresql backups,
-            see https://hub.docker.com/r/rogersik/autopostgresqlbackup for details regarding backup
 
             More details: https://github.com/FreshRSS/FreshRSS
         end: |-
             FreshRSS has been successfully deployed!
     displayName: FreshRSS
     isOfficial: true
-    description: FreshRSS is a self-hosted RSS feed aggregator like Leed or Kriss Feed. Backups included in this one-click install.
+    description: FreshRSS is a self-hosted RSS feed aggregator like Leed or Kriss Feed.
     documentation: See https://github.com/FreshRSS/FreshRSS
