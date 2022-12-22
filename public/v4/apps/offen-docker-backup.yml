@@ -48,11 +48,11 @@ caproverOneClickApp:
           description: Define this value to enable automatic rotation of old backups. The value declares the number of days for which a backup is kept.
     instructions:
         start: >-
-            Backup Docker volumes to any S3 compatible storage
+            Backup Docker volumes to any S3 compatible storage. See https://github.com/offen/docker-volume-backup
         end: >-
             Aaaand you're done! 😄
             Your service is up and running
-    displayName: Docker volume backup to S3
+    displayName: Offen Docker Backup
     isOfficial: true
     description: Backup Docker volumes to any S3 compatible storage
     documentation: Taken from https://github.com/offen/docker-volume-backup
