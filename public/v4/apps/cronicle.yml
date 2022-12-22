@@ -6,6 +6,8 @@ services:
         volumes:
             - /etc/localtime:/etc/localtime:ro
             - /etc/timezone:/etc/timezone:ro
+            - $$cap_appname:/opt/cronicle/data:rw
+            - $$cap_appname-plugins:/opt/cronicle/plugins:rw
         environment:
             - TZ=$$cap_timezone
         logging:
