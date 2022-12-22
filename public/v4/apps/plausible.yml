@@ -89,7 +89,6 @@ caproverOneClickApp:
         - description: This is the username for logging into the SMTP host. Please change it according to your host.
           id: $$cap_RELAY_USERNAME
           label: RELAY_USERNAME
-          validRegex: /^([^\s^\/])+$/
         - description: This is the password for logging into the SMTP host. Please change it according to your host.
           id: $$cap_RELAY_PASSWORD
           label: RELAY_PASSWORD
