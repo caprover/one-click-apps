@@ -41,7 +41,7 @@ caproverOneClickApp:
           description: Define this value to enable automatic rotation of old backups. The value declares the number of days for which a backup is kept.
     instructions:
         start: >-
-            Backup Docker volumes locally
+            Backup Docker volumes locally. See https://github.com/offen/docker-volume-backup.
         end: >-
             Aaaand you're done! 😄
             Your service is up and running
