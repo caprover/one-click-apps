@@ -45,7 +45,7 @@ caproverOneClickApp:
         end: >-
             Aaaand you're done! 😄
             Your service is up and running
-    displayName: Docker volume backup
+    displayName: Offen Docker Backup (Local)
     isOfficial: true
     description: Backup Docker volumes locally
     documentation: Taken from https://github.com/offen/docker-volume-backup
