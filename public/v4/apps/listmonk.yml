@@ -27,7 +27,7 @@ services:
             containerHttpPort: 9000
             dockerfileLines:
                 - FROM listmonk/listmonk:$$cap_listmonk_version
-                - CMD yes | ./listmonk --install --idempotent && ./listmonk
+                - CMD yes | ./listmonk --install --idempotent && ./listmonk $$cap_listmonk_flags
         volumes:
             - $$cap_appname-data:/listmonk
         depends_on:
@@ -42,7 +42,7 @@ caproverOneClickApp:
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_listmonk_version
           label: Listmonk Version
-          defaultValue: 'v2.0.0'
+          defaultValue: 'v2.2.0'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/listmonk/listmonk/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_postgres_db_name
@@ -69,6 +69,10 @@ caproverOneClickApp:
           label: Listmonk Admin Password
           defaultValue: $$cap_gen_random_hex(32)
           validRegex: /.{1,}/
+        - id: $$cap_listmonk_flags
+          label: Optional Listmonk flags
+          description: |-
+              If you use `--static-dir=your/folder`, remember to add a persistent directory.
     instructions:
         start: |-
             High performance, self-hosted newsletter and mailing list manager with a modern dashboard

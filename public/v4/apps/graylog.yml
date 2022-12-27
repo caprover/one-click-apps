@@ -104,7 +104,7 @@ caproverOneClickApp:
 
             IMPORTANT! Do not forget to map port 12201 and 12202 in your app config. Without port mapping, Graylog will not work.
 
-    displayName: ''
+    displayName: 'Graylog'
     isOfficial: true
     description: Graylog is used for log management of both structured and unstructured data along with debugging applications.
     documentation: Taken from https://hub.docker.com/r/graylog/graylog

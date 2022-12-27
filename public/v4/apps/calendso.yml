@@ -2,7 +2,7 @@ captainVersion: 4
 services:
     # Calendso
     $$cap_appname:
-        image: ctadeu/calendso:$$cap_app_version
+        image: calendso/calendso:$$cap_app_version
         depends_on:
             - $$cap_appname-db
         restart: always

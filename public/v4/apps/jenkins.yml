@@ -28,7 +28,7 @@ caproverOneClickApp:
 
             It will take about a minute for the process to finish.
         end: Jenkins is deployed and available as $$cap_appname
-    displayName: ''
+    displayName: 'Jenkins'
     isOfficial: true
     description: Jenkins helps to automate the non-human part of the software development process, with continuous integration and facilitating technical aspects of continuous delivery
     documentation: 'Taken from https://hub.docker.com/r/jenkins/jenkins/ '

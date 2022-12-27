@@ -63,7 +63,7 @@ caproverOneClickApp:
 
             It will take about a minute for the process to finish.
         end: SonarQube is deployed and available as srv-captain--$$cap_appname:9000 to other apps.
-    displayName: ''
+    displayName: 'sonarqube'
     isOfficial: true
     description: Catch bugs and vulnerabilities in your app, with thousands of automated Static Code Analysis rules
     documentation: Taken from https://hub.docker.com/_/sonarqube

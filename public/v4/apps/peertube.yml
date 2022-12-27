@@ -101,7 +101,7 @@ caproverOneClickApp:
             Peertube is deployed and available as $$cap_appname.
 
             IMPORTANT: It will take up to 2 minutes for PeerTube to be ready. Before that, you might see 502 error page.
-    displayName: ''
+    displayName: 'PeerTube'
     isOfficial: true
     description: PeerTube is a decentralized video hosting network, based on free/libre software
     documentation: Taken from https://github.com/Chocobozzz/PeerTube/blob/develop/support/docker/production/docker-compose.yml

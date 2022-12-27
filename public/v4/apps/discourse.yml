@@ -5,7 +5,10 @@ services:
         image: docker.io/bitnami/postgresql:$$cap_postgresql_version
         restart: always
         environment:
-            ALLOW_EMPTY_PASSWORD: yes
+            POSTGRESQL_DATABASE: $$cap_db_name
+            POSTGRESQL_USERNAME: $$cap_db_user
+            POSTGRESQL_PASSWORD: $$cap_db_pass
+            POSTGRESQL_POSTGRES_PASSWORD: $$cap_db_pass
         volumes:
             - $$cap_appname-postgresql-data:/bitnami/postgresql
         caproverExtra:
@@ -34,6 +37,7 @@ services:
             POSTGRESQL_CLIENT_CREATE_DATABASE_NAME: $$cap_db_name
             POSTGRESQL_CLIENT_CREATE_DATABASE_USERNAME: $$cap_db_user
             POSTGRESQL_CLIENT_CREATE_DATABASE_PASSWORD: $$cap_db_pass
+            POSTGRESQL_CLIENT_POSTGRES_PASSWORD: $$cap_db_pass
             DISCOURSE_USERNAME: $$cap_admin_user
             DISCOURSE_PASSWORD: $$cap_admin_pass
             DISCOURSE_EMAIL: $$cap_admin_email
@@ -71,18 +75,18 @@ services:
         caproverExtra:
             dockerfileLines:
                 - FROM docker.io/bitnami/discourse:$$cap_discourse_version
-                - CMD ["nami" , "start" , "--foreground" , "discourse-sidekiq"]
+                - CMD ["/opt/bitnami/scripts/discourse-sidekiq/run.sh"]
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
         - id: $$cap_discourse_version
           label: Discourse Version
-          defaultValue: 2.4.4
+          defaultValue: 2.8.11
           description: Version of Discourse
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_postgresql_version
           label: Postgresql (database) version
-          defaultValue: '11'
+          defaultValue: 15.1.0
           description: Version of Postgresql
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_sitename

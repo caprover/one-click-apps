@@ -125,7 +125,7 @@ caproverOneClickApp:
 
             IMPORTANT: It will take up to 2 minutes for Ghost to be ready. Before that, you might see 502 error page.
         start: Ghost is a fully open source, adaptable platform for building and running a modern online publication. We power blogs, magazines and journalists from Zappos to Sky News.
-    displayName: ''
+    displayName: 'Ghost'
     isOfficial: true
     description: Ghost is a free and open source blogging platform written in JavaScript and distributed under the MIT License
     documentation: Taken from https://docs.ghost.org/

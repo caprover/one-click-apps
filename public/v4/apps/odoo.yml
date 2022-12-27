@@ -31,6 +31,7 @@ services:
         caproverExtra:
             containerHttpPort: '8069'
 caproverOneClickApp:
+    displayName: 'Odoo'
     variables:
         - id: $$cap_postgres_version
           label: Postgres Version
