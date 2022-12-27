@@ -5,7 +5,7 @@ services:
         image: getfider/fider:$$cap_fider_version
         restart: always
         environment:
-            HOST_DOMAIN: '$$cap_appname.$$cap_root_domain'
+            BASE_URL: '$$cap_appname.$$cap_root_domain'
             DATABASE_URL: $$cap_db_url
             JWT_SECRET: $$cap_gen_random_hex(16)
             EMAIL_NOREPLY: $$cap_email_noreply
@@ -22,7 +22,7 @@ caproverOneClickApp:
           description: Postgres database connection URL for Fider, for example "postgres://username:password@srv-captain--mypostgres:5432/fider?sslmode=disable"
         - id: $$cap_fider_version
           label: Fider Version
-          defaultValue: 0.18.1
+          defaultValue: 0.21.1
           description: https://hub.docker.com/r/getfider/fider/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_email_noreply
