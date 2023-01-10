@@ -11,7 +11,7 @@ caproverOneClickApp:
     variables:
         - id: '$$cap_openspeedtest_version'
           label: OpenSpeedTest Version
-          defaultValue: 'latest'
+          defaultValue: 'speedtest'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/openspeedtest/latest/tags
     instructions:
         start: |-
