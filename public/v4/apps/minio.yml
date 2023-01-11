@@ -46,7 +46,7 @@ caproverOneClickApp:
             It is API compatible with Amazon S3 cloud storage service.
         end: >-
             Minio is deployed and available as $$cap_appname. 
-            **Important**: Make sure to enable HTTPS for both $$cap_appname and $$cap_appname-s3
+            **Important**: Make sure to enable HTTPS and WEBSOCKETS for both $$cap_appname and $$cap_appname-s3
             You can access the dashboard at https://$$cap_appname.$$cap_root_domain
             And, you can access the S3 API Endpoint at https://$$cap_appname-s3.$$cap_root_domain
     displayName: 'MinIO'
