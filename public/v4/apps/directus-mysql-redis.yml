@@ -12,13 +12,13 @@ services:
             MYSQL_PASSWORD: $$cap_mysql_password
             MYSQL_DATABASE: $$cap_mysql_database_name
         caproverExtra:
-            notExposeAsWebApp: "true"
+            notExposeAsWebApp: 'true'
 
     # Redis
     $$cap_appname-redis:
         image: redis:$$cap_redis_tag
         caproverExtra:
-            notExposeAsWebApp: "true"
+            notExposeAsWebApp: 'true'
 
     # Directus
     $$cap_appname:
@@ -34,28 +34,28 @@ services:
             KEY: $$cap_directus_auth_public_key
             SECRET: $$cap_directus_auth_secret_key
             PUBLIC_URL: https://$$cap_appname.$$cap_root_domain
-            DB_CLIENT: "mysql"
+            DB_CLIENT: 'mysql'
             DB_HOST: srv-captain--$$cap_appname-mysql
-            DB_PORT: "3306"
+            DB_PORT: '3306'
             DB_DATABASE: $$cap_mysql_database_name
             DB_USER: $$cap_mysql_user
             DB_PASSWORD: $$cap_mysql_password
-            CACHE_ENABLED: "true"
-            CACHE_STORE: "redis"
+            CACHE_ENABLED: 'true'
+            CACHE_STORE: 'redis'
             CACHE_REDIS: redis://srv-captain--$$cap_appname-redis:6379
             CACHE_AUTO_PURGE: $$cap_redis_auto_purge
             CACHE_TTL: $$cap_redis_ttl
             ADMIN_EMAIL: $$cap_admin_email
             ADMIN_PASSWORD: $$cap_admin_password
-            TELEMETRY: "false"
+            TELEMETRY: 'false'
         caproverExtra:
-            containerHttpPort: "8055"
+            containerHttpPort: '8055'
 
 caproverOneClickApp:
     variables:
         - label: Directus image tag
           id: $$cap_directus_tag
-          defaultValue: "9.22.1"
+          defaultValue: '9.22.1'
           validRegex: /.{1,}/
           description: Tag of Directus image on https://hub.docker.com/r/directus/directus/tags
 
@@ -85,9 +85,9 @@ caproverOneClickApp:
 
         - label: MySQL image tag
           id: $$cap_mysql_tag
-          defaultValue: "5.7"
+          defaultValue: '5.7'
           validRegex: /.{1,}/
-          description: "Tag of MySQL image on https://hub.docker.com/_/mysql/tags. NOTE: Not working with MySQL version 8 or higher!"
+          description: 'Tag of MySQL image on https://hub.docker.com/_/mysql/tags. NOTE: Not working with MySQL version 8 or higher!'
 
         - label: MySQL root password
           id: $$cap_mysql_root_password
@@ -115,19 +115,19 @@ caproverOneClickApp:
 
         - label: Redis image tag
           id: $$cap_redis_tag
-          defaultValue: "7.0-alpine"
+          defaultValue: '7.0-alpine'
           validRegex: /.{1,}/
           description: Tag of redis image on https://hub.docker.com/_/redis/tags
 
         - label: Redis CACHE_AUTO_PURGE (true or false)
           id: $$cap_redis_auto_purge
-          defaultValue: "true"
+          defaultValue: 'true'
           validRegex: /.{1,}/
           description: Automatically purge the data cache on create, update, and delete actions. (https://docs.directus.io/self-hosted/config-options.html#cache)
 
         - label: Redis CACHE_TTL
           id: $$cap_redis_ttl
-          defaultValue: "1d"
+          defaultValue: '1d'
           validRegex: /.{1,}/
           description: How long the data cache is persisted. (https://docs.directus.io/self-hosted/config-options.html#cache)
 
@@ -137,7 +137,7 @@ caproverOneClickApp:
         start: >-
             Directus is an open-source headless CMS and an Open Data Platform built to democratize the database. It provides a dynamic API and intuitive Admin Panel App. For more information and available options, see https://github.com/directus or the official documentation at https://docs.directus.io
 
-    displayName: "Directus + MySQL + Redis"
+    displayName: 'Directus + MySQL + Redis'
 
     isOfficial: true
 
