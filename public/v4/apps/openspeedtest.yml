@@ -2,23 +2,23 @@ captainVersion: 4
 
 services:
     '$$cap_appname':
-        image: index.docker.io/openspeedtest/latest:$$cap_openspeedtest_version
+        image: index.docker.io/test/latest:$$cap_test_version
         caproverExtra:
             containerHttpPort: '3001'
         restart: always
 
 caproverOneClickApp:
     variables:
-        - id: '$$cap_openspeedtest_version'
-          label: OpenSpeedTest Version
+        - id: '$$cap_test_version'
+          label: Test Version
           defaultValue: 'speedtest'
-          description: Check out their Docker page for the valid tags https://hub.docker.com/r/openspeedtest/latest/tags
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/test/latest/tags
     instructions:
         start: |-
-            OpenSpeedTest is a self-hosted speedtest. You can read more about this on https://openspeedtest.com/selfhosted-speedtest.
+            Test is a self-hosted speedtest. You can read more about this on https://test.com/selfhosted-speedtest.
         end: |-
-            OpenSpeedTest has been successfully deployed! You must enable https for the app to work. Go to the app setting and enable https.
-    displayName: OpenSpeedTest
+            Test has been successfully deployed! You must enable https for the app to work. Go to the app setting and enable https.
+    displayName: Test
     isOfficial: true
     description: |-
-        OpenSpeedTest is a self-hosted network speedtest written in vanilla Javascript. 
+        Test is a self-hosted network speedtest written in vanilla Javascript.
