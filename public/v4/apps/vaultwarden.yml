@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: vaultwarden/server:$$cap_bitwardenrs_version
+        image: vaultwarden/server:$$cap_vaultwarden_version
         environment:
             DOMAIN: https://$$cap_appname.$$cap_root_domain
             WEBSOCKET_ENABLED: true
@@ -14,9 +14,9 @@ services:
         restart: unless-stopped
 caproverOneClickApp:
     variables:
-        - id: $$cap_bitwardenrs_version
+        - id: $$cap_vaultwarden_version
           label: vaultwarden Version
-          defaultValue: 1.21.0
+          defaultValue: 1.26.0
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/vaultwarden/server/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_register_enabled
@@ -36,12 +36,12 @@ caproverOneClickApp:
 
             if you want more details please go to https://www.reddit.com/r/selfhosted/comments/fvld0n/bitwarden_vs_bitwarden_rs/
         end: >-
-            Bitwarden_rs is deployed and available as $$cap_appname. Please give it a few minutes to boot, otherwise you will see a 502 error (even if the logs say it's working).
+            Vaultwarden is deployed and available as $$cap_appname. Please give it a few minutes to boot, otherwise you will see a 502 error (even if the logs say it's working).
 
             Please activate https and https redirect otherwise you will have an error on account creation. You need to enable websocket too.
 
             If you enabled the admin token please go to https://$$cap_appname.$$cap_root_domain/admin to begin
     displayName: vaultwarden
     isOfficial: true
-    description: Lightweight fully featured Rust implementation of Bitwarden.
+    description: Alternative fully featured lightweight rust implementation of the Bitwarden server API.
     documentation: Taken from https://hub.docker.com/r/vaultwarden/server
