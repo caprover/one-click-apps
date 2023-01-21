@@ -44,7 +44,7 @@ caproverOneClickApp:
           defaultValue: password
         - id: $$cap_pb_version
           label: Passbolt Version
-          defaultValue: 2.12.1-debian
+          defaultValue: 3.9.0-2
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/passbolt/passbolt/tags/
         - id: $$cap_maria_version
           label: MariaDB Version
