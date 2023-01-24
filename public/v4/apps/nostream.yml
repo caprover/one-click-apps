@@ -18,6 +18,7 @@ services:
       - $$cap_appname-redis-data:/data
     restart: always
     environment:
+      REDIS_USER: default
       REDIS_PASSWORD: $$cap_redis_password
     caproverExtra:
       dockerfileLines:
@@ -39,6 +40,7 @@ services:
       DB_PASSWORD: $$cap_pg_password
       REDIS_HOST: srv-captain--$$cap_appname-redis
       REDIS_PORT: 6379
+      REDIS_USER: default
       REDIS_PASSWORD: $$cap_redis_password
       NOSTR_CONFIG_DIR: /.nostr/
     caproverExtra:
