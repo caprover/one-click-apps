@@ -1,0 +1,124 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        build: .
+        image: ghcr.io/brettmayson/arma3server/arma3server
+        platform: linux/amd64
+        container_name: arma3
+        network_mode: host
+        volumes:
+            - '$$cap_appname-missions:/arma3/mpmissions'
+            - '$$cap_appname-configs:/arma3/configs'
+            - '$$cap_appname-mods:/arma3/mods'
+            - '$$cap_appname-servermods:/arma3/servermods'
+        environment:
+            ARMA_BINARY: $$cap_binary
+            ARMA_CDLC: $$cap_cdlc
+            ARMA_CONFIG: $$cap_config
+            ARMA_LIMITFPS: $$cap_limitFPS
+            ARMA_PARAMS: $$cap_params
+            ARMA_PROFILE: $$cap_profile
+            ARMA_WORLD: $$cap_world
+            HEADLESS_CLIENTS: $$cap_headlessClients
+            HEADLESS_CLIENTS_PROFILE: $profile-hc-$i
+            MODS_LOCAL: $$cap_modsLocal
+            MODS_PRESET: $$cap_modsPreset
+            PORT: 2302
+            STEAM_BRANCH: $$cap_steamBranch
+            STEAM_BRANCH_PASSWORD: $$cap_branchPassword
+            STEAM_USER: $$cap_steamUser
+            STEAM_PASSWORD: $$cap_steamPassword
+        restart: unless-stopped
+        ports:
+            - $$cap_A3port:2302
+            - $$cap_SteamQuery:2303
+            - $$cap_SteamPort:2304
+            - $$cap_VONPort:2305
+            - $$cap_BEPort:2306
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+caproverOneClickApp:
+    variables:
+        - label: Binary
+          description: Arma 3 server binary to use
+          defaultValue: ./arma3server_x64
+          id: $$cap_binary
+        - label: cDLC
+          description: cDLCs to load
+          id: $$cap_cdlc
+        - label: Config
+          description: Config file to load from /arma3/configs
+          defaultValue: main.cfg
+          id: $$cap_config
+        - label: Limit fps
+          description: Maximum FPS
+          defaultValue: 50
+          id: $$cap_limitFPS
+        - label: Params
+          description: Additional Arma CLI parameters
+          id: $$cap_params
+        - label: Profile
+          description: Profile name, stored in /arma3/configs/profiles
+          defaultValue: main
+          id: $$cap_profile
+        - label: World
+          description: World to load on startup
+          defaultValue: empty
+          id: $$cap_world
+        - label: Headless clients
+          description: Launch n number of headless clients
+          defaultValue: '0'
+          id: $$cap_headlessClients
+        - label: Mods local
+          description: Should the mods folder be loaded
+          defaultValue: true
+          id: $$cap_modsLocal
+        - label: Mods preset
+          description: An Arma 3 Launcher preset to load
+          id: $$cap_modsPreset
+        - label: Arma 3 port
+          description: Default Arma 3 Game port + (VON is now part of main gameport due to NAT issues)
+          defaultValue: 2302
+          id: $$cap_A3port
+        - label: Steam port
+          description: Steam query, +1
+          defaultValue: 2303
+          id: $$cap_SteamQuery
+        - label: Steam port
+          description: Steam port, +2
+          defaultValue: 2304
+          id: $$cap_SteamPort
+        - label: VON port
+          description: VON port, +3 - not used atm. but allocated
+          defaultValue: 2305
+          id: $$cap_VONPort
+        - label: BattlEye port
+          description: BattlEye traffic, +4
+          defaultValue: 2306
+          id: $$cap_BEPort
+        - label: Steam branch
+          description: Steam branch used by steamcmd
+          defaultValue: public
+          id: $$cap_steamBranch
+        - label: Steam branch password
+          description: Steam branch password used by steamcmd
+          id: $$cap_branchPassword
+        - label: Steam user
+          description: Steam username used to login to steamcmd
+          defaultValue: id-not-email
+          id: $$cap_steamUser
+        - label: Steam password
+          description: Steam user password
+          defaultValue: mypassword
+          id: $$cap_steamPassword
+    instructions:
+        start: |-
+            An Arma 3 Dedicated Server. Updates to the latest version every time it is restarted.
+        end: |-
+            Wait a few minutes before A3 download and fully install.
+            Missions and server cfg need to be loaded in /var/lib/docker/volumes/ folder named captain--$$cap_appname*
+            You can also define a custom location under Persistent Directories section in App Configs menu.
+    displayName: Arma 3 Dedicated Server
+    isOfficial: false ## Only if all images used here are official or from a trusted source.
+    description: An Arma 3 Dedicated Server. Updates to the latest version every time it is restarted.
+    documentation: This docker-compose is taken from https://github.com/BrettMayson/Arma3Server
