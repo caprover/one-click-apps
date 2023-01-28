@@ -27,6 +27,8 @@ services:
         restart: always
         volumes:
             - $$cap_appname-data:/usr/src/redmine/files
+            - $$cap_appname-themes:/usr/src/redmine/public/themes
+            - $$cap_appname-plugins:/usr/src/redmine/plugins
         caproverExtra:
             containerHttpPort: '3000'
 
@@ -34,11 +36,11 @@ caproverOneClickApp:
     variables:
         - id: $$cap_redmine_version
           label: Redmine Version
-          defaultValue: '4.2.3'
+          defaultValue: '5.0.4'
           description: 'Check out their Docker page for the valid tags https://hub.docker.com/_/redmine?tab=tags'
         - id: $$cap_postgres_version
           label: PostgreSQL Version
-          defaultValue: '9.6'
+          defaultValue: '15.1'
           description: 'Check out their Docker page for the valid tags https://hub.docker.com/_/postgres?tab=tags'
         - id: $$cap_postgres_user
           label: PostgreSQL username
@@ -51,26 +53,32 @@ caproverOneClickApp:
           defaultValue: $$cap_gen_random_hex(64)
 
     instructions:
-        start: >-
+        start: |
             Redmine is a flexible project management web application written using Ruby on Rails framework. For more info visit https://www.redmine.org/projects/redmine.
 
-                        
-            After installation, login to Redmine using the default credentials [admin:admin].
-        end: >-
+            --------------------------------------------
+            Following the installation, login with the default credentials:
+
+            Username: `admin`
+            Password: `admin`
+
+        end: |
             ✅  Redmine has been successfully deployed and is now available at http://$$cap_appname.$$cap_root_domain!
 
+            🔐 The default login credentials are:
 
-            🔐  The default login credentials are:
+            Username: `admin`
+            Password: `admin`
 
-                Username: admin
-                Password: admin
             --------------------------------------------
+            📂 Access to the required folder for uploading files, plugins, and themes is provided using Caprover managed persistent directories by default (`/var/lib/docker/volumes/$$cap_appname-data`).
 
-            More information on initial configuration can be found at https://www.redmine.org/projects/redmine/wiki/RedmineInstall#Configuration.
+            -------------------------------------------- 
+            🔰 More information on initial configuration can be found at https://www.redmine.org/projects/redmine/wiki/RedmineInstall#Configuration.
 
     displayName: Redmine (PostgreSQL)
     isOfficial: true
     description: >-
         Redmine is a flexible project management web application written using Ruby on Rails framework. This app is packaged with PostgreSQL.
     documentation: >-
-        This docker-compose is taken from https://hub.docker.com/_/redmine?tab=description
+        More information on initial configuration can be found at https://www.redmine.org/projects/redmine/wiki/RedmineInstall#Configuration. This template was developed using variables from https://hub.docker.com/_/redmine?tab=description.
