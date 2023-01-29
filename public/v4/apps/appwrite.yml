@@ -133,6 +133,9 @@ services:
             _APP_MAINTENANCE_RETENTION_AUDIT: $$cap_APP_MAINTENANCE_RETENTION_AUDIT
             _APP_SMS_PROVIDER: $$cap_APP_SMS_PROVIDER
             _APP_SMS_FROM: $$cap_APP_SMS_FROM
+            _APP_GRAPHQL_MAX_BATCH_SIZE: $$cap_APP_GRAPHQL_MAX_BATCH_SIZE
+            _APP_GRAPHQL_MAX_COMPLEXITY: $$cap_APP_GRAPHQL_MAX_COMPLEXITY
+            _APP_GRAPHQL_MAX_DEPTH: $$cap_APP_GRAPHQL_MAX_DEPTH
 
     $$cap_appname-realtime:
         caproverExtra:
@@ -599,7 +602,7 @@ caproverOneClickApp:
         - label: Version Tag
           id: $$cap_APP_VERSION
           description: Check out their valid tags at https://hub.docker.com/r/appwrite/appwrite/tags
-          defaultValue: '1.0.1'
+          defaultValue: '1.2.0'
           validRegex: "/^([^\\s^\\/])+$/"
         - label: General | _APP_ENV
           id: $$cap_APP_ENV
@@ -927,4 +930,19 @@ caproverOneClickApp:
           id: $$cap_APP_MAINTENANCE_RETENTION_ABUSE
           description: The maximum duration (in seconds) upto which to retain abuse logs. The default value is 86400 seconds (1 day).
           defaultValue: 86400
+          validRegex: /.{1,}/
+        - label: GraphQL | _APP_GRAPHQL_MAX_BATCH_SIZE
+          id: $$cap_APP_GRAPHQL_MAX_BATCH_SIZE
+          description: Maximum number of batched queries per request. The default value is 10.
+          defaultValue: 10
+          validRegex: /.{1,}/
+        - label: GraphQL | _APP_GRAPHQL_MAX_COMPLEXITY
+          id: $$cap_APP_GRAPHQL_MAX_COMPLEXITY
+          description: Maximum complexity of a GraphQL query. One field adds one to query complexity. Lists multiply the complexity by the number of items requested. The default value is 250.
+          defaultValue: 250
+          validRegex: /.{1,}/
+        - label: GraphQL | _APP_GRAPHQL_MAX_DEPTH
+          id: $$cap_APP_GRAPHQL_MAX_DEPTH
+          description: Maximum depth of a GraphQL query. One nested field level adds one to query depth. The default value is 3.
+          defaultValue: 3
           validRegex: /.{1,}/
