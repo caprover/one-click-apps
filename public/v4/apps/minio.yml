@@ -10,7 +10,7 @@ services:
             MINIO_ROOT_PASSWORD: $$cap_secret_key
             MINIO_REGION_NAME: 'eu-east-1'
             MINIO_BROWSER_REDIRECT_URL: https://$$cap_appname.$$cap_root_domain
-            MINIO_SERVER_URL: https://$$cap_appname-s3.$$cap_root_domain # MinIO S3 API
+            MINIO_SERVER_URL: https://$$cap_appname-api.$$cap_root_domain # MinIO S3 API
         caproverExtra:
             containerHttpPort: '9001'
             dockerfileLines:
