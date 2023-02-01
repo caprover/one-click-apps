@@ -23,6 +23,7 @@ services:
             - $$cap_appname
         environment:
             UPSTREAM_HTTP_ADDRESS: http://srv-captain--$$cap_appname:9000
+            CLIENT_MAX_BODY_SIZE: 0
 caproverOneClickApp:
     variables:
         - id: $$cap_minio_version
