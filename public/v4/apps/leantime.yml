@@ -43,7 +43,7 @@ caproverOneClickApp:
     instructions:
         start: |-
             Leantime is an open source project management system for small teams and startups written in PHP, Javascript using MySQL. Designed to help you manage your projects from ideation to delivery.
-            
+
             See more details here at https://leantime.io
         end: |-
             ✅  Leantime has been successfully deployed and will soon be available at https://$$cap_appname.$$cap_root_domain!
