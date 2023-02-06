@@ -24,6 +24,7 @@ services:
             LEAN_DEFAULT_TIMEZONE: $$cap_timezone
             LEAN_SESSION_PASSWORD: $$cap_gen_random_hex(32)
             LEAN_SESSION_EXPIRATION: 28800
+
 caproverOneClickApp:
     variables:
         - id: $$cap_mysql_passwd
@@ -40,10 +41,11 @@ caproverOneClickApp:
           label: Timezone
           description: This is the timezone for the application, find yours at https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
           defaultValue: Europe/London
+
     instructions:
         start: |-
             Leantime is an open source project management system for small teams and startups written in PHP, Javascript using MySQL. Designed to help you manage your projects from ideation to delivery.
-            
+
             See more details here at https://leantime.io
         end: |-
             ✅  Leantime has been successfully deployed and will soon be available at https://$$cap_appname.$$cap_root_domain!
@@ -57,5 +59,7 @@ caproverOneClickApp:
             🔰 More information on initial configuration can be found at https://docs.leantime.io/#/.
     displayName: Leantime
     isOfficial: true
-    description: Leantime is an open source project management system for small teams and startups written in PHP, Javascript using MySQL.
-    documentation: More information on initial configuration can be found at https://docs.leantime.io/#/. This template was developed using variables from https://github.com/Leantime/docker-leantime/blob/master/docker-compose.yml
+    description: >-
+        Leantime is an open source project management system for small teams and startups written in PHP, Javascript using MySQL.
+    documentation: >-
+        More information on initial configuration can be found at https://docs.leantime.io/#/. This template was developed using variables from https://github.com/Leantime/docker-leantime/blob/master/docker-compose.yml
