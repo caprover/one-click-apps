@@ -1,0 +1,37 @@
+captainVersion: 4
+services:
+  $$cap_appname:
+    image: ghcr.io/advplyr/audiobookshelf:$$cap_version
+    ports:
+      - 13378:80
+    volumes:
+      - $$cap_path_to_audiobookshelf/config:/config
+      - $$cap_path_to_audiobookshelf/audiobooks:/audiobooks
+      - $$cap_path_to_audiobookshelf/podcasts:/podcasts
+      - $$cap_path_to_audiobookshelf/metadata:/metadata
+    restart: always
+
+caproverOneClickApp:
+  variables:
+    - id: "$$cap_version"
+      label: Audiobookshelf Version
+      defaultValue: "2.2.14"
+      description: Check out their Docker page for the valid tags https://hub.docker.com/r/advplyr/audiobookshelf/tags
+      validRegex: "/.{1,}/"
+
+    - id: $$cap_path_to_audiobookshelf
+      label: Location of app folder in host
+      description: path to base folder that will contain your audiobooks, podcasts, metadata and config.
+      validRegex: /\/[^\s-][a-zA-Z0-9_\/-]*[^\/][^\s-]/
+
+  instructions:
+    start: |-
+      Audiobookshelf is a self-hosted audiobook and podcast server. Official Docker image.
+    end: |-
+      Audiobookshelf has been succesfully deployed!
+      It is available at http://$$cap_appname.$$cap_root_domain or at 123.123.123.123:13378
+
+  displayName: Audiobookshelf
+  isOfficial: true
+  description: Audiobookshelf is a self-hosted audiobook and podcast server.
+  documentation: See https://www.audiobookshelf.org/docs
