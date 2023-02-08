@@ -19,16 +19,20 @@ caproverOneClickApp:
 
         - id: $$cap_path_to_audiobooks
           label: Location of audiobooks directory
+          label: Audiobookshelf Version
+          defaultValue: 'audiobooks-volume-placeholder'
           description: full path to the directory where the audiobooks are stored. Path on host MUST exist for the app to start!
           validRegex: /\/[^\s-][a-zA-Z0-9_\/-]*[^\/][^\s-]/
 
         - id: $$cap_path_to_podcasts
           label: Location of podcasts directory
+          defaultValue: 'podcasts-volume-placeholder'
           description: full path to the directory where the podcasts are stored. Path on host MUST exist for the app to start!
           validRegex: /\/[^\s-][a-zA-Z0-9_\/-]*[^\/][^\s-]/
 
         - id: $$cap_path_to_metadata
           label: Location of metadata directory
+          defaultValue: 'metadata-volume-placeholder'
           description: full path to the directory where the metadata is stored. Path on host MUST exist for the app to start!
           validRegex: /\/[^\s-][a-zA-Z0-9_\/-]*[^\/][^\s-]/
 
@@ -37,7 +41,7 @@ caproverOneClickApp:
             Audiobookshelf is a self-hosted audiobook and podcast server. Official Docker image.
         end: |-
             Audiobookshelf has been succesfully deployed!
-            It is available at http://$$cap_appname.$$cap_root_domain or at 123.123.123.123:13378
+            It is available at http://$$cap_appname.$$cap_root_domain
 
     displayName: Audiobookshelf
     isOfficial: true
