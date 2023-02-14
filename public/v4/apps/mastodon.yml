@@ -104,7 +104,7 @@ services:
             notExposeAsWebApp: 'true'
     # PostgreSQL
     $$cap_appname-postgres:
-        image: postgres:12
+        image: postgres:14-alpine
         volumes:
             - $$cap_appname-postgres-data:/var/lib/postgresql/data
         environment:
@@ -129,7 +129,7 @@ caproverOneClickApp:
         - id: $$cap_mastodon_version
           label: Mastodon Version Tag
           description: You can use latest tag or check version builds on https://hub.docker.com/r/tootsuite/mastodon/tags
-          defaultValue: v3.3.0
+          defaultValue: v4.1
 
         - id: $$cap_secret_key_base
           defaultValue: $$cap_gen_random_hex(64)
@@ -189,30 +189,35 @@ caproverOneClickApp:
           validRegex: /^([^\s^\/])+$/
     instructions:
         start: >-
+            Your self-hosted, globally interconnected microblogging community 
+
+        end: >-
             Before you proceed keep a note of the following.
 
             --------------------------------------------------
-
 
             After you deploy mastodon and created your fist user in the browser, you will need to use the command line to give your newly created account admin privileges.
 
 
             Step 1: From your terminal run the following command.
 
-            docker exec -it $(docker ps --filter name='srv-captain--{appname}.1' -q) /bin/bash
+            `docker exec -it $(docker ps --filter name='srv-captain--$$cap_appname.1' -q) /bin/bash`
 
 
             Step 2: Now that you are inside your mastodon container: run the following command assuming your username is alice:
 
-            "RAILS_ENV=production bin/tootctl accounts modify alice --role admin"
+            `RAILS_ENV=production bin/tootctl accounts modify alice --role Admin`
 
 
             Step 3: Now we have to give our persistent directory the correct user rights
 
             From your terminal run the following assuming your app name is mastodon
 
-            chown -R 991:991 /var/lib/docker/volumes/captain--{appname}-system
-        end: >-
+            `chown -R 991:991 /var/lib/docker/volumes/captain--$$cap_appname-system`
+
+
+            --------------------------------------------------
+
             Aaaand you're done! 😄
 
             Your service is available at http://$$cap_appname.$$cap_root_domain
@@ -221,6 +226,7 @@ caproverOneClickApp:
             You can add more environment variables to use with aws s3 for example
 
             Check out https://docs.joinmastodon.org/admin/config/ for more env vars
+
     displayName: Mastodon
     isOfficial: true
     description: Social networking, back in your hands.
