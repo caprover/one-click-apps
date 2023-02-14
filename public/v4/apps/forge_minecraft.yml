@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
   $$cap_appname:
-    image: itzg/minecraft-server:latest
+    image: itzg/minecraft-server:java19
     environment:
       EULA: "true"
       TYPE: "FORGE"
@@ -24,7 +24,7 @@ services:
     caproverExtra:
       notExposeAsWebApp: 'true'
   $$cap_appname-web:
-    image: itzg/rcon
+    image: itzg/rcon:multiarch
     environment:
       RWA_USERNAME: $$cap_web_username
       RWA_PASSWORD: $$cap_web_password
@@ -32,11 +32,11 @@ services:
       RWA_RCON_HOST: srv-captain--$$cap_appname
       RWA_RCON_PASSWORD: $$cap_rcon_password
     ports:
-      - $$cap_web_port:4326
+      - 4326:4326
       - 4327:4327
     caproverExtra:
       #set http port
-      containerHttpPort: '$$cap_web_port'
+      containerHttpPort: '4326'
 caproverOneClickApp:
     variables:
         - id: $$cap_appname
@@ -53,10 +53,6 @@ caproverOneClickApp:
           label: Service port
           defaultValue: 25575
           validRegex: /.{1,}/
-        - id: $$cap_web_port
-          label: admin portal port
-          defaultValue: 4326
-          validRegex: /.{1,}/
         - id: $$cap_web_username
           label: admin portal username
           defaultValue: "admin"
@@ -67,7 +63,7 @@ caproverOneClickApp:
           label: Rcon cli password
           defaultValue: $$cap_gen_random_hex(8)
         - id: $$cap_max_ram
-          label: Max RAM
+          label: Max RAM (GB)
           defaultValue: 2
           validRegex: /.{1,}/
         - id: $$cap_display_name
