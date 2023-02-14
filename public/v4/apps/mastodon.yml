@@ -189,7 +189,7 @@ caproverOneClickApp:
           validRegex: /^([^\s^\/])+$/
     instructions:
         start: >-
-            Your self-hosted, globally interconnected microblogging community 
+            Your self-hosted, globally interconnected microblogging community
 
         end: >-
             Before you proceed keep a note of the following.
