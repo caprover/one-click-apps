@@ -1,42 +1,40 @@
 captainVersion: 4
 services:
-  $$cap_appname:
-    image: itzg/minecraft-server:java19
-    environment:
-      EULA: "true"
-      TYPE: "FORGE"
-      VERSION: "$$cap_minecraft_version"
-      FORGE_VERSION: "$$cap_forge_version"
-      MAX_PLAYERS: "$$cap_max_players"
-      MODE: "$$cap_game_mode"
-      MAX_MEMORY: "$$cap_max_ramG"
-      SERVER_NAME: "$$cap_display_name"
-      MOTD: "$$cap_display_description"
-      ONLINE_MODE: "$$cap_online_mode"
-      RCON_PASSWORD: "$$cap_rcon_password"
-    ports:
-      - "$$cap_mc_port:25565"
-    volumes:
-      - $$cap_appname-data:/data
-    stdin_open: true
-    tty: true
-    restart: unless-stopped
-    caproverExtra:
-      notExposeAsWebApp: 'true'
-  $$cap_appname-web:
-    image: itzg/rcon:multiarch
-    environment:
-      RWA_USERNAME: $$cap_web_username
-      RWA_PASSWORD: $$cap_web_password
-      RWA_ADMIN: "TRUE"
-      RWA_RCON_HOST: srv-captain--$$cap_appname
-      RWA_RCON_PASSWORD: $$cap_rcon_password
-    ports:
-      - 4326:4326
-      - 4327:4327
-    caproverExtra:
-      #set http port
-      containerHttpPort: '4326'
+    $$cap_appname:
+        image: itzg/minecraft-server:java19
+        environment:
+            EULA: 'true'
+            TYPE: 'FORGE'
+            VERSION: '$$cap_minecraft_version'
+            FORGE_VERSION: '$$cap_forge_version'
+            MAX_PLAYERS: '$$cap_max_players'
+            MODE: '$$cap_game_mode'
+            MAX_MEMORY: '$$cap_max_ramG'
+            SERVER_NAME: '$$cap_display_name'
+            MOTD: '$$cap_display_description'
+            ONLINE_MODE: '$$cap_online_mode'
+            RCON_PASSWORD: '$$cap_rcon_password'
+        ports:
+            - '$$cap_mc_port:25565'
+        volumes:
+            - $$cap_appname-data:/data
+        stdin_open: true
+        tty: true
+        restart: unless-stopped
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname-web:
+        image: itzg/rcon:multiarch
+        environment:
+            RWA_USERNAME: $$cap_web_username
+            RWA_PASSWORD: $$cap_web_password
+            RWA_ADMIN: 'TRUE'
+            RWA_RCON_HOST: srv-captain--$$cap_appname
+            RWA_RCON_PASSWORD: $$cap_rcon_password
+        ports:
+            - 4327:4327
+        caproverExtra:
+            containerHttpPort: '4326'
 caproverOneClickApp:
     variables:
         - id: $$cap_appname
@@ -47,7 +45,7 @@ caproverOneClickApp:
           defaultValue: 1.19.3
         - id: $$cap_forge_version
           label: forge server version
-          description: "choose the version that works with your mc version , see: https://files.minecraftforge.net/"
+          description: 'choose the version that works with your mc version , see: https://files.minecraftforge.net/'
           defaultValue: 44.1.16
         - id: $$cap_mc_port
           label: Service port
@@ -55,7 +53,7 @@ caproverOneClickApp:
           validRegex: /.{1,}/
         - id: $$cap_web_username
           label: admin portal username
-          defaultValue: "admin"
+          defaultValue: 'admin'
         - id: $$cap_web_password
           label: admin portal password.
           defaultValue: $$cap_gen_random_hex(8)
@@ -85,10 +83,9 @@ caproverOneClickApp:
           defaultValue: 20
           validRegex: /.{1,}/
     instructions:
-        start: Minecraft server with dynamic version, server types, and modpack support, this oneclickapp in the Forge version of itzg's Minecraft server. 
+        start: Minecraft server with dynamic version, server types, and modpack support, this oneclickapp in the Forge version of itzg's Minecraft server.
         end: minecraft is deployed and available as srv-captain--$$cap_appname. Note that the application may take up to ten minutes to become available.
     displayName: Minecraft forge server
     isOfficial: false
-    description: Minecraft server with dynamic version, server types, and modpack support, this oneclickapp in the Forge version of itzg's Minecraft server. 
+    description: Minecraft server with dynamic version, server types, and modpack support, this oneclickapp in the Forge version of itzg's Minecraft server.
     documentation: https://github.com/itzg/docker-minecraft-server
-
