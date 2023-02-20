@@ -68,7 +68,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_outline_version
           label: Outline Version
-          defaultValue: 0.66.3
+          defaultValue: 0.68.1
           description: Check out their page for the valid tags https://hub.docker.com/r/outlinewiki/outline/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_postgres_version
