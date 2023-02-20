@@ -211,7 +211,7 @@ caproverOneClickApp:
 
               const service = api.dockerode.getService(dockerUpdateObject.Name);
               await setServiceInstances(service, 0);
-              await run(["yarn", "sequelize:migrate", "--env=production-ssl-disabled"]);
+              await run(["yarn", "db:migrate", "--env=production-ssl-disabled"]);
               dockerUpdateObject.version = (await service.inspect()).Version.Index;
 
               return dockerUpdateObject;
