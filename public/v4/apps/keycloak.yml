@@ -35,7 +35,7 @@ services:
                 - ENV KC_DB_URL=jdbc:postgresql://srv-captain--$$cap_appname-db/keycloak
                 - ENV KC_DB_USERNAME=keycloak
                 - ENV KC_DB_PASSWORD=$$cap_pg_pass
-                - ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start", "--hostname=$$cap_appname.$$cap_root_domain", "--proxy=edge"]
+                - ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start", "--optimized --hostname=$$cap_appname.$$cap_root_domain", "--proxy=edge"]
 
 caproverOneClickApp:
     variables:
@@ -46,8 +46,8 @@ caproverOneClickApp:
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_keycloak_version
           label: Keycloak Version
-          defaultValue: 18.0.2
-          description: v18.0.2 current as of 2022-07-04.  Check out their Docker page for the valid tags https://quay.io/repository/keycloak/keycloak?tab=tags
+          defaultValue: 20.0.3
+          description: v20.0.3 current as of 2023-01-13.  Check out their Docker page for the valid tags https://quay.io/repository/keycloak/keycloak?tab=tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_pg_pass
           label: Postgres Password
@@ -85,7 +85,7 @@ caproverOneClickApp:
 
 
             IMPORTANT: It will take up to 1 minutes for Keycloak to be ready. Before that, you might see 502 error page.
-    displayName: ''
+    displayName: 'Keycloack'
     isOfficial: true
     description: Keycloak is an open source identity and access management solution
     documentation: Taken from https://github.com/keycloak/keycloak-containers/blob/main/docker-compose-examples/keycloak-postgres.yml

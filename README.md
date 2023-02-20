@@ -14,7 +14,7 @@ caproverOneClickApp:
           label: Awesome App Version
           defaultValue: '1.2.3'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/....../tags
-          validRegex: "/.{1,}/"
+          validRegex: '/.{1,}/'
     instructions:
         start: |-
             A description that will be displayed to the user when they
@@ -72,7 +72,8 @@ To create your own repository:
 - Fork this repository
 - Delete all existing apps (to avoid duplicate apps), and add your own apps.
 - Run `npm i`
-- Run `npm run validate_apps` 
+- Run `npm run validate_apps`
+- Run `npm run formatter-write`
 - Run `npm run build` 
 - Now you can host the static content placed in `./dist` directory anywhere you want, the official repo uses github pages to publish the content. Make sure to update [CNAME](https://github.com/caprover/one-click-apps/blob/master/public/CNAME) to your own URL if you decide to do so.
 

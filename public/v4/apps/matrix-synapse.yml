@@ -100,7 +100,7 @@ caproverOneClickApp:
 
             If you set public registration to false, you can create new users with the following command:
 
-            sudo docker exec -it $(sudo docker ps | grep -o srv-captain--$$cap_appname.*) register_new_matrix_user http://localhost:8008 -c /data/homeserver.yaml
+            sudo docker exec -it $(sudo docker ps | grep -o srv-captain--$$cap_appname\..*) register_new_matrix_user http://localhost:8008 -c /data/homeserver.yaml
 
 
             You can always change the config file located in /var/lib/docker/volumes/srv-captain--$$cap_appname-data/_data/homeserver.yaml
