@@ -1,0 +1,32 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: ghcr.io/alf1e/breadcord-docker-build:$$cap_BREADCORD_VERSION
+        volumes:
+            - $$cap_appname-config:/app/config
+            - $$cap_appname-storage:/app/storage
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+
+caproverOneClickApp:
+    displayName: Breadcord
+    isOfficial: false
+    description: The modular self-hostable Discord bot framework with customisability that doesn't go against the grain.
+    documentation: https://github.com/Breadcord/Breadcord
+    instructions:
+        start: |-
+            Breadcord, the modular self-hostable Discord bot framework with customisability that doesn't go against the grain.
+        end: |-
+            Breadcord has been successfully deployed! It might take few moments before it's fully started.
+
+            Please perform the following steps:
+
+            1. Go into the Breadcord configuration file ($$cap_appname-config/settings.toml).
+            2. Set the 'token' variable to a discord bot token.
+
+            Have fun with Breadcord!
+    variables:
+        - id: $$cap_BREADCORD_VERSION
+          label: Version | Breadcord.
+          description: Version of Breadcord. Find versions here https://github.com/alf1e/Breadcord-docker-build/pkgs/container/breadcord-docker-build
+          defaultValue: main
