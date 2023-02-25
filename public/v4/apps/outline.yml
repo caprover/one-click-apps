@@ -72,7 +72,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_outline_version
           label: Outline Version
-          defaultValue: 0.66.3
+          defaultValue: 0.68.1
           description: Check out their page for the valid tags https://hub.docker.com/r/outlinewiki/outline/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_postgres_version
@@ -187,6 +187,41 @@ caproverOneClickApp:
              1) Enable HTTPS 
              2) Force HTTPS 
              3) Enable Websocket in $$cap_appname. 
+             4) Run database migration `npm run sequelize:migrate` within the $$cap_appname docker container.  
+
+             
+            ```
+            var preDeployFunction = async function (captainAppObj, dockerUpdateObject) {
+              const DockerApi = require("./built/docker/DockerApi");
+              const api = new DockerApi.default();
+
+              const setServiceInstances = async (service, count) => {
+                  const inspection = await service.inspect();
+                  const updateObject = { ...inspection.Spec, Mode: { Replicated: { Replicas: count } }, version: inspection.Version.Index };
+                  await service.update(updateObject);
+              };
+
+              const run = async args => {
+                  const imageName = dockerUpdateObject.TaskTemplate.ContainerSpec.Image;
+                  const env = captainAppObj.envVars.map(kv => kv.key + "=" + kv.value);
+                  const config = { Env: env, HostConfig: { AutoRemove: true, NetworkMode: captainAppObj.networks[0] } };
+
+                  const [output] = await api.dockerode.run(imageName, args, process.stdout, config);
+
+                  if (output.StatusCode !== 0) {
+                      throw new Error(`Failed to run image ${imageName} with args ${args} (status code ${output.StatusCode}).`);
+                  }
+              };
+
+              const service = api.dockerode.getService(dockerUpdateObject.Name);
+              await setServiceInstances(service, 0);
+              await run(["yarn", "db:migrate", "--env=production-ssl-disabled"]);
+              dockerUpdateObject.version = (await service.inspect()).Version.Index;
+
+              return dockerUpdateObject;
+            };
+            ```
+
 
             You can customize more settings by environmental variables described here: https://github.com/outline/outline/blob/0deecfac446c37545e0787b3d32062e608a950ab/.env.sample 
 
