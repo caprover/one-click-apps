@@ -40,16 +40,6 @@ services:
             AWS_S3_UPLOAD_MAX_SIZE: '26214400'
             AWS_S3_FORCE_PATH_STYLE: true
             AWS_S3_ACL: private
-            OIDC_CLIENT_ID: $$cap_oidc_client_id
-            OIDC_CLIENT_SECRET: $$cap_oidc_client_secret
-            OIDC_AUTH_URI: $$cap_oidc_auth_uri
-            OIDC_TOKEN_URI: $$cap_oidc_token_uri
-            OIDC_USERINFO_URI: $$cap_oidc_userinfo_uri
-            OIDC_USERNAME_CLAIM: preferred_username
-            OIDC_DISPLAY_NAME: OpenID
-            OIDC_SCOPES: 'openid profile email'
-            SLACK_KEY: $$cap_slack_key
-            SLACK_SECRET: $$cap_slack_secret
             GOOGLE_CLIENT_ID: $$cap_google_client_id
             GOOGLE_CLIENT_SECRET: $$cap_google_client_secret
             FORCE_HTTPS: 'false'
@@ -121,29 +111,6 @@ caproverOneClickApp:
         - id: $$cap_s3_storage_secret_access_key
           label: S3 storage Secret Access Key
           description: 'For instance in your Minio instance it correponds to the password/secret of above outline_user'
-        - id: $$cap_oidc_client_id
-          label: Client ID created in your Generic OIDC server (e.g. in Keycloak)
-          description: 'E.g. for Keycloak: In the Clients section, create a new client application. Name the app outline_app for simplicity. Also, provide the Root URL where you have installed/planned to install Outline. After that, make sure `Access Type` is set to `confidential` and `Direct Access Grants Enabled` is `OFF` so the Oauth flow initiated by Outline can work as expected.'
-          defaultValue: outline_app
-        - id: $$cap_oidc_client_secret
-          label: Secret for the corresponding Client ID
-          description: 'Found in the Credentials tab in Keycloak'
-        - id: $$cap_oidc_auth_uri
-          label: Authorization Endpoint
-          description: 'In the recent version of Keycloak, the path /auth/ is optional, and the default master realm is not recommended for anything else except managing Keycloak itself. For example you could name the realm `outline`: http://localhost:8080/realms/outline/protocol/openid-connect/auth'
-          defaultValue: 'https://YOUR_IAM_PROVIDER_URL/realms/outline/protocol/openid-connect/auth'
-        - id: $$cap_oidc_token_uri
-          label: Token Management Endpoint
-          description: 'For example with the realm named `outline`: http://localhost:8080/realms/outline/protocol/openid-connect/token'
-          defaultValue: 'https://YOUR_IAM_PROVIDER_URL/realms/outline/protocol/openid-connect/token'
-        - id: $$cap_oidc_userinfo_uri
-          label: User Informations Endpoint
-          description: 'For example with the realm named `outline`: http://localhost:8080/realms/outline/protocol/openid-connect/userinfo'
-          defaultValue: 'https://YOUR_IAM_PROVIDER_URL/realms/outline/protocol/openid-connect/userinfo'
-        - id: $$cap_slack_key
-          label: Slack Key
-        - id: $$cap_slack_secret
-          label: Slack Secret
         - id: $$cap_google_client_id
           label: Google Client ID
         - id: $$cap_google_client_secret
