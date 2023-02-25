@@ -22,7 +22,7 @@ services:
         caproverExtra:
             containerHttpPort: '3000'
 caproverOneClickApp:
-    variables:    
+    variables:
         - id: $$cap_version
           label: Cal.com Version
           defaultValue: 'v2.5.4'
@@ -72,7 +72,7 @@ caproverOneClickApp:
             Please change the following settings before using the service: 
             1. Go to the settings for `$$cap_appname`
             2. Enable **Websocket Support**
-  
+
             Remember that this app will not create a Database by itself. You need to provide all that information.
     displayName: 'Cal.com - No Database'
     isOfficial: true
