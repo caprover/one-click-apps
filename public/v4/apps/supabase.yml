@@ -213,7 +213,7 @@ caproverOneClickApp:
         # studio variables
         - id: $$cap_studio_version
           label: Studio version
-          defaultValue: '20221214-4eecc99'
+          defaultValue: '20230216-e731b77'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/supabase/studio/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_studio_http_port
@@ -262,7 +262,7 @@ caproverOneClickApp:
         # auth variables
         - id: $$cap_auth_version
           label: Auth Version
-          defaultValue: 'v2.40.1'
+          defaultValue: 'v2.47.0'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/supabase/gotrue/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_gotrue_api_host
@@ -327,7 +327,7 @@ caproverOneClickApp:
         # postgrest variables
         - id: $$cap_postgrest_version
           label: Postgrest Version
-          defaultValue: 'v9.0.1.20220717'
+          defaultValue: 'v10.1.2'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/postgrest/postgrest/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_postgrest_db_schemas
@@ -338,14 +338,14 @@ caproverOneClickApp:
         # realtime variables
         - id: $$cap_realtime_version
           label: Storage Realtime Version
-          defaultValue: 'v2.0.2'
+          defaultValue: 'v2.5.1'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/supabase/realtime/tags
           validRegex: /^([^\s^\/])+$/
 
         # storage variables
         - id: $$cap_storage_version
           label: Storage API Version
-          defaultValue: 'v0.26.1'
+          defaultValue: 'v0.28.2'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/supabase/gotrue/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_storage_file_size_limit
@@ -356,7 +356,7 @@ caproverOneClickApp:
         # postgres variables
         - id: $$cap_db_version
           label: Postgres Version
-          defaultValue: '14.1.0.89'
+          defaultValue: '15.1.0.42-rc2'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/supabase/postgres/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_pg_user
@@ -375,7 +375,7 @@ caproverOneClickApp:
         # pg-meta variables
         - id: $$cap_pg_meta_version
           label: Postgres Meta Version
-          defaultValue: 'v0.52.1'
+          defaultValue: 'v0.60.7'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/supabase/postgres-meta/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_pg_meta_port
