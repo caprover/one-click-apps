@@ -181,7 +181,10 @@ services:
         volumes:
             - $$cap_appname-db-realtime:/docker-entrypoint-initdb.d/realtime.sql
             - $$cap_appname-db-roles:/docker-entrypoint-initdb.d/roles.sql
+            # Must be superuser to enable pg_net extension
+            - $$cap_appname-db-webhooks:/etc/postgresql.schema.sql
             - $$cap_appname-db-data:/var/lib/postgresql/data
+
         restart: unless-stopped
         environment:
             POSTGRES_HOST: /var/run/postgresql
