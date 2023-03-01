@@ -16,11 +16,12 @@ caproverOneClickApp:
     variables:
         - id: $$cap_version
           label: Chatwoot Botpress Bridge Version
-          defaultValue: '0'
+          defaultValue: '1'
           description: Check out their docker page for the valid tags https://hub.docker.com/r/douglara/chatwoot-botpress-bridge/tags
         - id: $$cap_secret_key_base
           label: Secret Key Base
           description: The randomized string which is used to verify the integrity of signed cookies. Use `openssl rand -hex 64` to generate a key
+          validRegex: /.{1,}/
         - id: $$cap_chatwoot_endpoint
           label: Chatwoot endpoint
           description: 'Chawoot url example: https://app.chatwoot.com'
