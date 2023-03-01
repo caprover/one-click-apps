@@ -41,6 +41,6 @@ caproverOneClickApp:
 
             Get all instructions to use in https://github.com/douglara/chatwoot-botpress-bridge
     displayName: 'Chatwoot Botpress Bridge'
-    isOfficial: true
+    isOfficial: false
     description: 'Bridge to connect chatwoot and botpress.'
     documentation: 'Read more at: https://github.com/douglara/chatwoot-botpress-bridge'
