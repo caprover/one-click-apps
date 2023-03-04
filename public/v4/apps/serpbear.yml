@@ -4,7 +4,7 @@ services:
         restart: always
         image: 'towfiqi/serpbear:$$cap_serpbear_version'
         environment:
-            NEXT_PUBLIC_BASE_URL: 'http://$$cap_appname.$$cap_root_domain'
+            NEXT_PUBLIC_APP_URL: 'http://$$cap_appname.$$cap_root_domain'
             USER: $$cap_serpbear_user
             PASSWORD: $$cap_serpbear_password
             SECRET: $$cap_serpbear_secret
@@ -14,8 +14,6 @@ services:
             containerHttpPort: '3000'
         volumes:
             - '$$cap_appname-serpbear-data:/app/data/serpbear'
-        networks:
-            - serpbear-net
 caproverOneClickApp:
     variables:
         - id: $$cap_serpbear_version
