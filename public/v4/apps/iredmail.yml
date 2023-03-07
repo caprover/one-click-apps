@@ -172,7 +172,7 @@ caproverOneClickApp:
           label: iRedMail version tag
           description: >-
               Check out their Docker page for the valid tags
-              https://hub.docker.com/r/iredmail/mariadb/tag
+              https://hub.docker.com/r/iredmail/mariadb/tags
           defaultValue: stable
         - id: $$cap_iredmail_admin_version
           label: iRedMail Admin version tag
@@ -180,7 +180,7 @@ caproverOneClickApp:
               Set 'NoChange' to stay by the docker image version
               OR
               Check out their GitHub page for the newest version
-              https://github.com/iredmail/iRedAdmin/releases
+              https://github.com/iredmail/iRedAdmin/tags
           defaultValue: NoChange
         - id: $$cap_iredmail_default_password
           label: First Password
