@@ -410,7 +410,7 @@ caproverOneClickApp:
               # clone supabase repo to extract migrations
               `git clone https://github.com/supabase/supabase`
               # copy migrations required for supabase
-              `cp supabase/docker/volumes/db/init/* /var/lib/docker/volumes/captain--$$cap_appname-db-init/_data/ && rm -rf supabase`
+              `cp -r supabase/docker/volumes/db/* /var/lib/docker/volumes/captain--$$cap_appname-db-data/_data/ && rm -rf supabase`
               # now set instance count for $$cap_appname-db back to 1
               `docker service scale srv-captain--$$cap_appname-db=1`
               # once database is started, set wal_level to logical and restart database again
