@@ -13,7 +13,6 @@ services:
             DEFAULT_CHANNEL_SLUG: default-channel
             ALLOWED_HOSTS: $$cap_appname-api.$$cap_root_domain
             ALLOWED_CLIENT_HOSTS: $$cap_appname-api.$$cap_root_domain
-            RSA_PRIVATE_KEY: $$cap_SALEOR_RSA_PRIVATE_KEY
             ENABLE_ACCOUNT_CONFIRMATION_BY_EMAIL: $$cap_ENABLE_ACCOUNT_CONFIRMATION_BY_EMAIL
         depends_on:
             - $$cap_appname-db
@@ -54,7 +53,6 @@ services:
             DEFAULT_CHANNEL_SLUG: default-channel
             ALLOWED_HOSTS: $$cap_appname-api.$$cap_root_domain
             ALLOWED_CLIENT_HOSTS: $$cap_appname-api.$$cap_root_domain
-            RSA_PRIVATE_KEY: $$cap_SALEOR_RSA_PRIVATE_KEY
             ENABLE_ACCOUNT_CONFIRMATION_BY_EMAIL: $$cap_ENABLE_ACCOUNT_CONFIRMATION_BY_EMAIL
         depends_on:
             - $$cap_appname-cache
@@ -85,8 +83,8 @@ caproverOneClickApp:
 
             That's it!
 
-            You can access the dashboard at http://$$cap_appname.$$cap_root_domain
-            You can access the API at http://$$cap_appname-api.$$cap_root_domain
+            You can access the dashboard at `http://$$cap_appname.$$cap_root_domain`
+            You can access the API at `http://$$cap_appname-api.$$cap_root_domain`
     variables:
         - id: $$cap_SALEOR_CORE_VERSION
           label: Core | Version
@@ -138,9 +136,3 @@ caproverOneClickApp:
           description: Secret key.
           defaultValue: $$cap_gen_random_hex(16)
           validRegex: /.{1,}/
-        - id: $$cap_SALEOR_RSA_PRIVATE_KEY
-          label: Security | RSA Private Key
-          description: >-
-              Optional RSA private key.
-              This is required for production environment.
-              You can create one running `openssl genrsa 2048` in the terminal.
