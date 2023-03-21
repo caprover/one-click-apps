@@ -13,7 +13,7 @@ services:
         caproverExtra:
             containerHttpPort: '3000'
         volumes:
-            - '$$cap_appname-serpbear-data:/app/data/serpbear'
+            - '$$cap_appname-serpbear-data:/app/data'
 caproverOneClickApp:
     variables:
         - id: $$cap_serpbear_version
