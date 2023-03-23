@@ -41,7 +41,7 @@ caproverOneClickApp:
       Helper has been successfully deployed!
 
       IMPORTANT: before you start using Helper, you need to 
-      
+
         1) Enable HTTPS 
         2) Force HTTPS 
 
@@ -50,7 +50,7 @@ caproverOneClickApp:
       IMPORTANT: It will take up to 2 minutes for it to be ready. Before that, you might see a 502 error page.
   displayName: Helper
   isOfficial: true
-  description: 
+  description: An open source Project management tool based on Laravel and Filament
   documentation: See https://devaslanphp.github.io/project-management/#/
 services:
   $$cap_appname-db:
