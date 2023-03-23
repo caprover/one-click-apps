@@ -1,0 +1,94 @@
+captainVersion: 4
+caproverOneClickApp:
+  variables:
+    - id: $$cap_helper_version
+      label: Helper Version
+      defaultValue: '1.2.3'
+      description: Check out their Docker page for the valid tags https://hub.docker.com/r/eloufirhatim/helper/tags
+      validRegex: "/^([^\\s^\\/])+$/"
+    - id: $$cap_mysql_version  
+      label: SQL Version
+      defaultValue: '5.7'
+      description: Check out their project https://github.com/devaslanphp/project-management/blob/master/docker-compose.yml
+      validRegex: "/^([^\\s^\\/])+$/"
+    - id: $$cap_db_pass
+      label: Database password
+      defaultValue: $$cap_gen_random_hex(20)
+      validRegex: /.{8,}/
+    - id: $$cap_mail_host
+      label: Mail host
+      description: To support sending outgoing emails you'll need to provide authentication for an SMTP server
+    - id: $$cap_mail_port
+      label: Mail port
+      defaultValue: '587'
+    - id: $$cap_mail_username
+      label: Mail username
+    - id: $$cap_mail_from_address
+      label: Mail From Address
+    - id: $$cap_mail_password
+      label: Mail password
+    - id: $$cap_mail_tls_encryption
+      label: Mail Encryption
+      defaultValue: "TLS"
+  instructions:
+    start: |-
+      Helper (Project Manager), is a great tool if you want to manage your projects, tickets and be here for your clients
+
+      It comes also with more than 60 languages ready to use.
+
+      All this made with the best technologies.
+    end: |-
+      Helper has been successfully deployed!
+
+      IMPORTANT: before you start using Helper, you need to 
+      
+        1) Enable HTTPS 
+        2) Force HTTPS 
+
+      You can customize more settings by environmental variables described here: https://github.com/devaslanphp/project-management/blob/master/.env.example
+
+      IMPORTANT: It will take up to 2 minutes for it to be ready. Before that, you might see a 502 error page.
+  displayName: Helper
+  isOfficial: true
+  description: 
+  documentation: See https://devaslanphp.github.io/project-management/#/
+services:
+  $$cap_appname-db:
+    volumes:
+      - $$cap_appname-db-data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: helper
+      MYSQL_USER: helper
+      MYSQL_PASSWORD: $$cap_db_pass
+      MYSQL_ROOT_PASSWORD: $$cap_db_pass
+    restart: unless-stopped
+    caproverExtra:
+      notExposeAsWebApp: 'true'
+      dockerfileLines:
+        - FROM mysql:$$cap_mysql_version
+        - CMD ["mysqld", "--default-storage-engine", "innodb"]
+  $$cap_appname:
+    image: eloufirhatim/helper:$$cap_helper_version
+    environment:
+      APP_URL: https://$$cap_appname.$$cap_root_domain
+      APP_FORCE_HTTPS: true
+      DB_CONNECTION: mysql
+      DB_HOST: srv-captain--$$cap_appname-db
+      DB_PORT: 3306
+      DB_DATABASE: helper
+      DB_USERNAME: helper
+      DB_PASSWORD: $$cap_db_pass
+      MAIL_MAILER: smtp
+      MAIL_HOST: $$cap_mail_host
+      MAIL_PORT: $$cap_mail_port
+      MAIL_USERNAME: $$cap_mail_username
+      MAIL_FROM_ADDRESS: $$cap_mail_from_address
+      MAIL_PASSWORD: $$cap_mail_password
+      MAIL_ENCRYPTION: $$cap_mail_tls_encryption
+    depends_on:
+      - $$cap_appname-db
+    restart: "no"
+    volumes:
+      - /etc/localtime:/etc/localtime
+    caproverExtra:
+      containerHttpPort: '8000'
