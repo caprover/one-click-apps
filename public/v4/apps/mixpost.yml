@@ -77,8 +77,7 @@ caproverOneClickApp:
           label: Application | Key
           description: |-
               Base64 encoded application key for encryption.
-              Run `openssl rand -base64 32` in the terminal to generate a key.
-              Prepend `base64:` and paste it here.
+              Use `https://generate-random.org/laravel-key-generator?count=1` to generate a key.
           defaultValue: base64:d3p4OHptbnFvZXA4bjlieW5wa284MmdlaTY3NjMxa3E=
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_MIXPOST_APP_ENV
