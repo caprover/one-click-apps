@@ -1,0 +1,73 @@
+#!/bin/bash
+
+# This script prepares and deploys SvelteKit for Node servers. See: https://kit.svelte.dev/docs/adapter-node#deploying for details.
+
+APP_NAME="<replace_with_app_name>"
+APP_TOKEN="<replace_with_token>"
+CAPROVER_URL="https://root-domain.com"
+
+if ! [ -x "$(command -v caprover)" ]; then
+  echo "Installing CapRover globally."
+  npm install --quiet -g caprover
+fi
+
+# Check if @sveltejs/adapter-node is present in package.json
+if ! grep -q "@sveltejs/adapter-node" package.json; then
+  echo "This script prepares and deploys SvelteKit for Node servers. See: https://kit.svelte.dev/docs/adapter-node#deploying for details."
+  echo "This script can add @sveltejs/adapter-node to your package.json and update svelte.config.js. If you would like to do this, please enter 'y' and press enter."
+
+  # Prompt user to enter y and press enter, or CTRL+C to exit
+  read -r -p "Continue? [y/N] " response
+  case "$response" in
+      [yY][eE][sS]|[yY])
+          ;;
+      *)
+          exit
+          ;;
+  esac
+  npm remove @sveltejs/adapter-auto
+  npm install --save-dev @sveltejs/adapter-node
+  sed -i 's/@sveltejs\/adapter-auto/@sveltejs\/adapter-node/g' svelte.config.js
+  exit;
+fi
+
+# Create a temporary directory
+temp_dir=$(mktemp -d)
+
+echo "Copying files to $temp_dir. This could take a while..."
+
+# Copy the files to the temporary directory
+cp -r node_modules/ build/ package*.json "$temp_dir"
+
+# Change to the temporary directory
+cd "$temp_dir" || exit
+
+# Run npm ci --omit dev against the copied files
+echo "Prepping SvelteKit for Node servers. See: https://kit.svelte.dev/docs/adapter-node#deploying for details."
+npm ci --omit dev
+
+# Adding a Dockerfile. If including any ENV variables in CapRover, they must be added here using ENV as well.
+cat <<EOF > Dockerfile
+FROM node:18-alpine
+USER nobody
+COPY . .
+ENV PORT 80
+EXPOSE 80
+ENV NODE_ENV production
+ENTRYPOINT ["node", "build/index.js"]
+EOF
+
+# Create a deploy.tar file with the updated files
+tar -cf deploy.tar .
+
+# Use CapRover to Deploy
+caprover deploy --tarFile deploy.tar \
+    --appName ${APP_NAME} \
+    --appToken  ${APP_TOKEN} \
+    --caproverUrl ${CAPROVER_URL} \
+
+# Change back to the original directory
+cd "$OLDPWD" || exit
+
+# Remove the temporary directory
+rm -rf "$temp_dir"
