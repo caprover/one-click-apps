@@ -124,7 +124,7 @@ services:
     $$cap_appname:
         caproverExtra:
             containerHttpPort: 8080
-        image: ghcr.io/immich-app/immich-proxy:release
+        image: ghcr.io/immich-app/immich-proxy:v1.52.1
         environment:
             IMMICH_SERVER_URL: http://srv-captain--$$cap_appname-server:3001
             IMMICH_WEB_URL: http://srv-captain--$$cap_appname-web:3000
@@ -148,7 +148,7 @@ caproverOneClickApp:
         - label: Immich version
           id: $$cap_version
           description: Check out their valid tags at https://hub.docker.com/r/immich-app/immich/tags
-          defaultValue: release
+          defaultValue: v1.52.1
         - label: Immich redis version
           id: $$cap_redis_ver
           defaultValue: 6.2
@@ -179,5 +179,5 @@ caproverOneClickApp:
           defaultValue: 14
         - label: Upload directory
           id: $$cap_app_upload_location
-          description: Full path to the directory where you plan to store all your files. It should be created beforehand.
-          defaultValue: /home/user/immich/
+          description: Full path to the directory where you plan to store all your files. It should be created beforehand. If you want caprover to create it for you just leave the default 'immich-data'
+          defaultValue: immich-data
