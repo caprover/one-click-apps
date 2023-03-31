@@ -1,183 +1,183 @@
 captainVersion: 4
 
 services:
-    $$cap_appname-server:
-        caproverExtra:
-            notExposeAsWebApp: 'true'
-            dockerfileLines:
-                - FROM ghcr.io/immich-app/immich-server:$$cap_version
-                - ENTRYPOINT ["/bin/sh", "./start-server.sh"]
-        environment:
-            NODE_ENV: production
-            DB_PASSWORD: $$cap_app_db_pass
-            DB_USERNAME: $$cap_app_db_user
-            DB_DATABASE_NAME: $$cap_app_db_name
-            DB_HOSTNAME: srv-captain--$$cap_appname-db
-            TYPESENSE_API_KEY: $$cap_typesense_api_key
-            TYPESENSE_HOST: srv-captain--$$cap_appname-typesense
-            REDIS_HOSTNAME: srv-captain--$$cap_appname-redis
-            UPLOAD_LOCATION: $$cap_app_upload_location
-            IMMICH_WEB_URL: http://srv-captain--$$cap_appname-web
-            IMMICH_SERVER_URL: http://srv-captain--$$cap_appname-server:3001
-            IMMICH_MACHINE_LEARNING_URL: http://srv-captain--$$cap_appname-machine-learning:3003
-        volumes:
-            - $$cap_app_upload_location:/usr/src/app/upload
-        depends_on:
-            - $$cap_appname-redis
-            - $$cap_appname-db
-            - $$cap_appname-typesense
+  $$cap_appname-server:
+    caproverExtra:
+      notExposeAsWebApp: 'true'
+      dockerfileLines:
+        - FROM ghcr.io/immich-app/immich-server:$$cap_version
+        - ENTRYPOINT ["/bin/sh", "./start-server.sh"]
+    environment:
+      NODE_ENV: production
+      DB_PASSWORD: $$cap_app_db_pass
+      DB_USERNAME: $$cap_app_db_user
+      DB_DATABASE_NAME: $$cap_app_db_name
+      DB_HOSTNAME: srv-captain--$$cap_appname-db
+      TYPESENSE_API_KEY: $$cap_typesense_api_key
+      TYPESENSE_HOST: srv-captain--$$cap_appname-typesense
+      REDIS_HOSTNAME: srv-captain--$$cap_appname-redis
+      UPLOAD_LOCATION: $$cap_app_upload_location
+      IMMICH_WEB_URL: http://srv-captain--$$cap_appname-web
+      IMMICH_SERVER_URL: http://srv-captain--$$cap_appname-server:3001
+      IMMICH_MACHINE_LEARNING_URL: http://srv-captain--$$cap_appname-machine-learning:3003
+    volumes:
+      - $$cap_app_upload_location:/usr/src/app/upload
+    depends_on:
+      - $$cap_appname-redis
+      - $$cap_appname-db
+      - $$cap_appname-typesense
 
-    $$cap_appname-microservices:
-        caproverExtra:
-            notExposeAsWebApp: 'true'
-            dockerfileLines:
-                - FROM ghcr.io/immich-app/immich-server:$$cap_version
-                - ENTRYPOINT ["/bin/sh", "./start-microservices.sh"]
-        environment:
-            NODE_ENV: production
-            DB_PASSWORD: $$cap_app_db_pass
-            DB_USERNAME: $$cap_app_db_user
-            DB_DATABASE_NAME: $$cap_app_db_name
-            DB_HOSTNAME: srv-captain--$$cap_appname-db
-            TYPESENSE_API_KEY: $$cap_typesense_api_key
-            TYPESENSE_HOST: srv-captain--$$cap_appname-typesense
-            REDIS_HOSTNAME: srv-captain--$$cap_appname-redis
-            UPLOAD_LOCATION: $$cap_app_upload_location
-            IMMICH_WEB_URL: http://srv-captain--$$cap_appname-web
-            IMMICH_SERVER_URL: http://srv-captain--$$cap_appname-server:3001
-            IMMICH_MACHINE_LEARNING_URL: http://srv-captain--$$cap_appname-machine-learning:3003
-        volumes:
-            - $$cap_app_upload_location:/usr/src/app/upload
-        depends_on:
-            - $$cap_appname-redis
-            - $$cap_appname-db
-            - $$cap_appname-typesense
+  $$cap_appname-microservices:
+    caproverExtra:
+      notExposeAsWebApp: 'true'
+      dockerfileLines:
+        - FROM ghcr.io/immich-app/immich-server:$$cap_version
+        - ENTRYPOINT ["/bin/sh", "./start-microservices.sh"]
+    environment:
+      NODE_ENV: production
+      DB_PASSWORD: $$cap_app_db_pass
+      DB_USERNAME: $$cap_app_db_user
+      DB_DATABASE_NAME: $$cap_app_db_name
+      DB_HOSTNAME: srv-captain--$$cap_appname-db
+      TYPESENSE_API_KEY: $$cap_typesense_api_key
+      TYPESENSE_HOST: srv-captain--$$cap_appname-typesense
+      REDIS_HOSTNAME: srv-captain--$$cap_appname-redis
+      UPLOAD_LOCATION: $$cap_app_upload_location
+      IMMICH_WEB_URL: http://srv-captain--$$cap_appname-web
+      IMMICH_SERVER_URL: http://srv-captain--$$cap_appname-server:3001
+      IMMICH_MACHINE_LEARNING_URL: http://srv-captain--$$cap_appname-machine-learning:3003
+    volumes:
+      - $$cap_app_upload_location:/usr/src/app/upload
+    depends_on:
+      - $$cap_appname-redis
+      - $$cap_appname-db
+      - $$cap_appname-typesense
 
-    $$cap_appname-machine-learning:
-        caproverExtra:
-            notExposeAsWebApp: 'true'
-        image: ghcr.io/immich-app/immich-machine-learning:$$cap_version
-        environment:
-            NODE_ENV: production
-            DB_PASSWORD: $$cap_app_db_pass
-            DB_USERNAME: $$cap_app_db_user
-            DB_DATABASE_NAME: $$cap_app_db_name
-            DB_HOSTNAME: srv-captain--$$cap_appname-db
-            TYPESENSE_API_KEY: $$cap_typesense_api_key
-            TYPESENSE_HOST: srv-captain--$$cap_appname-typesense
-            REDIS_HOSTNAME: srv-captain--$$cap_appname-redis
-            UPLOAD_LOCATION: $$cap_app_upload_location
-            IMMICH_WEB_URL: http://srv-captain--$$cap_appname-web
-            IMMICH_SERVER_URL: http://srv-captain--$$cap_appname-server:3001
-            IMMICH_MACHINE_LEARNING_URL: http://srv-captain--$$cap_appname-machine-learning:3003
-        volumes:
-            - $$cap_app_upload_location:/usr/src/app/upload
-            - $$cap_appname-mlcache:/cache
+  $$cap_appname-machine-learning:
+    caproverExtra:
+      notExposeAsWebApp: 'true'
+    image: ghcr.io/immich-app/immich-machine-learning:$$cap_version
+    environment:
+      NODE_ENV: production
+      DB_PASSWORD: $$cap_app_db_pass
+      DB_USERNAME: $$cap_app_db_user
+      DB_DATABASE_NAME: $$cap_app_db_name
+      DB_HOSTNAME: srv-captain--$$cap_appname-db
+      TYPESENSE_API_KEY: $$cap_typesense_api_key
+      TYPESENSE_HOST: srv-captain--$$cap_appname-typesense
+      REDIS_HOSTNAME: srv-captain--$$cap_appname-redis
+      UPLOAD_LOCATION: $$cap_app_upload_location
+      IMMICH_WEB_URL: http://srv-captain--$$cap_appname-web
+      IMMICH_SERVER_URL: http://srv-captain--$$cap_appname-server:3001
+      IMMICH_MACHINE_LEARNING_URL: http://srv-captain--$$cap_appname-machine-learning:3003
+    volumes:
+      - $$cap_app_upload_location:/usr/src/app/upload
+      - $$cap_appname-mlcache:/cache
 
-    $$cap_appname-web:
-        caproverExtra:
-            dockerfileLines:
-                - FROM ghcr.io/immich-app/immich-web:$$cap_version
-                - ENTRYPOINT ["/bin/sh", "./entrypoint.sh"]
-            notExposeAsWebApp: 'true'
-        environment:
-            NODE_ENV: production
-            DB_PASSWORD: $$cap_app_db_pass
-            DB_USERNAME: $$cap_app_db_user
-            DB_DATABASE_NAME: $$cap_app_db_name
-            DB_HOSTNAME: srv-captain--$$cap_appname-db
-            TYPESENSE_API_KEY: $$cap_typesense_api_key
-            TYPESENSE_HOST: srv-captain--$$cap_appname-typesense
-            REDIS_HOSTNAME: srv-captain--$$cap_appname-redis
-            UPLOAD_LOCATION: $$cap_app_upload_location
-            IMMICH_WEB_URL: http://srv-captain--$$cap_appname-web
-            IMMICH_SERVER_URL: http://srv-captain--$$cap_appname-server:3001
-            IMMICH_MACHINE_LEARNING_URL: http://srv-captain--$$cap_appname-machine-learning:3003
+  $$cap_appname-web:
+    caproverExtra:
+      dockerfileLines:
+        - FROM ghcr.io/immich-app/immich-web:$$cap_version
+        - ENTRYPOINT ["/bin/sh", "./entrypoint.sh"]
+      notExposeAsWebApp: 'true'
+    environment:
+      NODE_ENV: production
+      DB_PASSWORD: $$cap_app_db_pass
+      DB_USERNAME: $$cap_app_db_user
+      DB_DATABASE_NAME: $$cap_app_db_name
+      DB_HOSTNAME: srv-captain--$$cap_appname-db
+      TYPESENSE_API_KEY: $$cap_typesense_api_key
+      TYPESENSE_HOST: srv-captain--$$cap_appname-typesense
+      REDIS_HOSTNAME: srv-captain--$$cap_appname-redis
+      UPLOAD_LOCATION: $$cap_app_upload_location
+      IMMICH_WEB_URL: http://srv-captain--$$cap_appname-web
+      IMMICH_SERVER_URL: http://srv-captain--$$cap_appname-server:3001
+      IMMICH_MACHINE_LEARNING_URL: http://srv-captain--$$cap_appname-machine-learning:3003
 
-    $$cap_appname-typesense:
-        caproverExtra:
-            notExposeAsWebApp: 'true'
-        image: typesense/typesense:$$cap_typesense_ver
-        environment:
-            TYPESENSE_API_KEY: $$cap_typesense_api_key
-            TYPESENSE_DATA_DIR: '/data'
-        volumes:
-            - $$cap_appname-typesense:/data
+  $$cap_appname-typesense:
+    caproverExtra:
+      notExposeAsWebApp: 'true'
+    image: typesense/typesense:$$cap_typesense_ver
+    environment:
+      TYPESENSE_API_KEY: $$cap_typesense_api_key
+      TYPESENSE_DATA_DIR: '/data'
+    volumes:
+      - $$cap_appname-typesense:/data
 
-    $$cap_appname-redis:
-        caproverExtra:
-            notExposeAsWebApp: 'true'
-        image: redis:$$cap_redis_ver
+  $$cap_appname-redis:
+    caproverExtra:
+      notExposeAsWebApp: 'true'
+    image: redis:$$cap_redis_ver
 
-    $$cap_appname-db:
-        caproverExtra:
-            notExposeAsWebApp: 'true'
-        image: postgres:$$cap_app_db_ver
-        environment:
-            POSTGRES_PASSWORD: $$cap_app_db_pass
-            POSTGRES_USER: $$cap_app_db_user
-            POSTGRES_DB: $$cap_app_db_name
-            PG_DATA: /var/lib/postgresql/data
-        volumes:
-            - $$cap_appname-db:/var/lib/postgresql/data
+  $$cap_appname-db:
+    caproverExtra:
+      notExposeAsWebApp: 'true'
+    image: postgres:$$cap_app_db_ver
+    environment:
+      POSTGRES_PASSWORD: $$cap_app_db_pass
+      POSTGRES_USER: $$cap_app_db_user
+      POSTGRES_DB: $$cap_app_db_name
+      PG_DATA: /var/lib/postgresql/data
+    volumes:
+      - $$cap_appname-db:/var/lib/postgresql/data
 
-    $$cap_appname:
-        caproverExtra:
-            containerHttpPort: 8080
-        image: ghcr.io/immich-app/immich-proxy:v1.52.1
-        environment:
-            IMMICH_SERVER_URL: http://srv-captain--$$cap_appname-server:3001
-            IMMICH_WEB_URL: http://srv-captain--$$cap_appname-web:3000
-        depends_on:
-            - $$cap_appname-server
+  $$cap_appname:
+    caproverExtra:
+      containerHttpPort: 8080
+    image: ghcr.io/immich-app/immich-proxy:v1.52.1
+    environment:
+      IMMICH_SERVER_URL: http://srv-captain--$$cap_appname-server:3001
+      IMMICH_WEB_URL: http://srv-captain--$$cap_appname-web:3000
+    depends_on:
+      - $$cap_appname-server
 
 caproverOneClickApp:
-    displayName: Immich
-    description: Open source (MIT License) Google Photos alternative. Backup your phone's photos and videos to your private server.
-    isOfficial: false
-    documentation: https://immich.app
-    instructions:
-        start: |-
-            Please provide a full path to where you want to save your media. The directory must exist. You can use Immich via the browser and with an app, available in the Play Store
-        end: |-
-            On your first visit it will ask for email and password for the admin user.
-    variables:
-        - label: App name
-          id: $$cap_appname
-          defaultValue: 'immich'
-        - label: Immich version
-          id: $$cap_version
-          description: Check out their valid tags at https://hub.docker.com/r/immich-app/immich/tags
-          defaultValue: v1.52.1
-        - label: Immich redis version
-          id: $$cap_redis_ver
-          defaultValue: 6.2
-          description: Check out their valid tags at https://hub.docker.com/_/redis/tags
-        - label: Typesense version
-          id: $$cap_typesense_ver
-          description: Check out their valid tags at https://hub.docker.com/r/typesense/typesense/tags
-          defaultValue: 0.24.0
-        - label: Typesense API key
-          id: $$cap_typesense_api_key
-          description: A big enough string to be used to authenticate against Typesense. A random one is generated for you.
-          defaultValue: $$cap_gen_random_hex(32)
-        - label: Database password
-          id: $$cap_app_db_pass
-          description: Password for accessing the database. A random one has been generated for you.
-          defaultValue: $$cap_gen_random_hex(32)
-        - label: Database username
-          id: $$cap_app_db_user
-          description: Username to access the database
-          defaultValue: 'immich'
-        - label: Database name
-          id: $$cap_app_db_name
-          description: A name for the database used by Immich
-          defaultValue: 'immich'
-        - label: PostgreSQL database version
-          id: $$cap_app_db_ver
-          description: Immich uses PostgreSQL as a database. Check out their valid tags at https://hub.docker.com/_/postgres/tags
-          defaultValue: 14
-        - label: Upload directory
-          id: $$cap_app_upload_location
-          description: Full path to the directory where you plan to store all your files. It should be created beforehand. If you want caprover to create it for you just leave the default 'immich-data'
-          defaultValue: immich-data
+  displayName: Immich
+  description: Open source (MIT License) Google Photos alternative. Backup your phone's photos and videos to your private server.
+  isOfficial: false
+  documentation: https://immich.app
+  instructions:
+    start: |-
+      Leave every default value as is for a working and simple installation. You can specify the (full) path to the directory you want to save your media, in that case the directory must exist beforehand. Immich can be accessed via browser and with an app (Immich). If you have big media files (bigger than 500MB) in your phone, update your Nginx configuration to increase your `client_max_body_size`.
+    end: |-
+      On your first visit it will ask for email and password for the admin user. Remember to change the default Nginx configuration and increasing the 'client_max_body_size' value if you expect to upload files bigger than 500MB.
+  variables:
+    - label: App name
+      id: $$cap_appname
+      defaultValue: 'immich'
+    - label: Immich version
+      id: $$cap_version
+      description: Check out their valid tags at https://hub.docker.com/r/immich-app/immich/tags
+      defaultValue: v1.52.1
+    - label: Immich redis version
+      id: $$cap_redis_ver
+      defaultValue: 6.2
+      description: Check out their valid tags at https://hub.docker.com/_/redis/tags
+    - label: Typesense version
+      id: $$cap_typesense_ver
+      description: Check out their valid tags at https://hub.docker.com/r/typesense/typesense/tags
+      defaultValue: 0.24.0
+    - label: Typesense API key
+      id: $$cap_typesense_api_key
+      description: A big enough string to be used to authenticate against Typesense. A random one is generated for you.
+      defaultValue: $$cap_gen_random_hex(32)
+    - label: Database password
+      id: $$cap_app_db_pass
+      description: Password for accessing the database. A random one has been generated for you.
+      defaultValue: $$cap_gen_random_hex(32)
+    - label: Database username
+      id: $$cap_app_db_user
+      description: Username to access the database
+      defaultValue: 'immich'
+    - label: Database name
+      id: $$cap_app_db_name
+      description: A name for the database used by Immich
+      defaultValue: 'immich'
+    - label: PostgreSQL database version
+      id: $$cap_app_db_ver
+      description: Immich uses PostgreSQL as a database. Check out their valid tags at https://hub.docker.com/_/postgres/tags
+      defaultValue: 14
+    - label: Upload directory
+      id: $$cap_app_upload_location
+      description: Full path to the directory where you plan to store all your files. It should be created beforehand. If you want caprover to create it for you just leave the default 'immich-data'
+      defaultValue: immich-data
