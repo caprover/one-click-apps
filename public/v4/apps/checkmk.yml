@@ -2,12 +2,9 @@ captainVersion: 4
 services:
     '$$cap_appname':
         image: checkmk/check-mk-raw:$$cap_version
-        environment:
-            TZ: '$$cap_tz'
-            PHP_TZ: '$$cap_tz'
         volumes:
             - '$$cap_appname-data:/omd/sites'
-            - /etc/localtime:/etc/localtime:ro
+            - /etc/localtime:/etc/localtime
         ports:
             - 8000:8000
         caproverExtra:
