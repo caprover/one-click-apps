@@ -20,16 +20,16 @@ caproverOneClickApp:
     variables:
         - id: '$$cap_version'
           label: Litestream Version
-          defaultValue: 'sha-1dbd8615908b1d3cebbfc44eb40a35056e15ba4c'
+          defaultValue: '0.3'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/litestream/litestream/tags
           validRegex: "/^([^\\s^\\/])+$/"
         - id: '$$cap_access_key_id'
           label: Access key ID
-          defaultValue: ''
+          defaultValue: $$cap_gen_random_hex(20)
           description: Enter your replica-specific authentication key
         - id: '$$cap_secret_access_key'
           label: Secret access key
-          defaultValue: ''
+          defaultValue: $$cap_gen_random_hex(40)
           description: Enter your replica-specific secret key
         - id: '$$cap_db_path'
           label: Database path within container
