@@ -23,13 +23,8 @@ services:
             PAPERLESS_SECRET_KEY: $$cap_secret_key
             PAPERLESS_ADMIN_USER: $$cap_admin_user
             PAPERLESS_ADMIN_PASSWORD: $$cap_admin_password
-            PAPERLESS_ADMIN_MAIL: $$cap_admin_mail
             PAPERLESS_URL: $$cap_paperless_url
 	 
-    	depends_on:
-		- $$srv-captain--gotenberg
-	
-
     $$cap_appname-postgres:
         image: postgres:13
         volumes:
@@ -44,10 +39,10 @@ services:
 
 caproverOneClickApp:
     variables:
-	    - id: $$cap_paperless_version
-		  label: Version
-		  default: 1.13
-		  description: Choose your Paperless-NGX Version. See https://hub.docker.com/r/paperlessngx/paperless-ngx/tags 
+        - id: $$cap_paperless_version
+	  label: Version
+	  default: 1.13 
+	  description: Choose your Paperless-NGX version. See https://hub.docker.com/r/paperlessngx/paperless-ngx/tags for valid tags.
         - id: $$cap_appname
           label: App Name
           defaultValue: paperless-ngx
@@ -75,11 +70,11 @@ caproverOneClickApp:
         - id: $$cap_admin_user
           label: Adminuser
           defaultValue: Admin
-          description: adminname
+          description: Set a Name for the Admin account
         - id: $$cap_admin_password
           label: Adminpassword
           defaultValue: Adminpassword
-          description: Adminpassword
+          description: Set a Password for the User "Admin"
         - id: $$cap_paperless_url
           label: paperlessurl
           defaultValue: https://domaintopaperless.com
