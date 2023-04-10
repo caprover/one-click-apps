@@ -2,20 +2,22 @@ captainVersion: 4
 services:
     $$cap_appname:
         image: ghcr.io/paperless-ngx/paperless-ngx:$$cap_paperless_version
+        depends_on:
+            - $$cap_appname-postgres
+            - $$cap_appname-redis
         volumes:
             - $$cap_appname-data:/usr/src/paperless/data
             - $$cap_appname-media:/usr/src/paperless/media
             - $$cap_appname-export:/usr/src/paperless/export
             - $$cap_appname-consume:/consume
-
         environment:
             USERMAP_UID: 1000
             USERMAP_GID: 1000
             PAPERLESS_OCR_THREADS: 2
             PAPERLESS_CONVERT_DENSITY: 300
             PAPERLESS_OCR_LANGUAGE: $$cap_ocr_language
-            PAPERLESS_REDIS: redis://srv-captain--$$cap_appname-redis:6379
-            PAPERLESS_DBHOST: srv-captain--$$cap_appname-postgres
+            PAPERLESS_REDIS: redis://$$cap_appname-redis:6379
+            PAPERLESS_DBHOST: $$cap_appname-postgres
             PAPERLESS_DBPORT: 5432
             PAPERLESS_DBUSER: $$cap_dbuser
             PAPERLESS_DBPASS: $$cap_dbpass
@@ -23,8 +25,13 @@ services:
             PAPERLESS_SECRET_KEY: $$cap_secret_key
             PAPERLESS_ADMIN_USER: $$cap_admin_user
             PAPERLESS_ADMIN_PASSWORD: $$cap_admin_password
-            PAPERLESS_URL: $$cap_paperless_url
-	 
+            PAPERLESS_ADMIN_MAIL: $$cap_admin_mail
+            PAPERLESS_URL: http://$$cap_appname.$$cap_root_domain
+            PAPERLESS_TIKA_ENABLED: 1
+            PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://srv-captain--$$cap_appname-gotenberg:3000
+            PAPERLESS_TIKA_ENDPOINT: http://srv-captain--$$cap_appname-tika:9998
+            
+
     $$cap_appname-postgres:
         image: postgres:13
         volumes:
@@ -37,16 +44,32 @@ services:
     $$cap_appname-redis:
         image: redis:alpine
 
+    # gotenberg
+    $$cap_appname-gotenberg:
+        image: thecodingmachine/gotenberg:7.8
+        restart: unless-stopped
+        environment:
+            DISABLE_GOOGLE_CHROME: 1
+        caproverExtra:
+            containerHttpPort: '3000'
+
+    # tika
+    $$cap_appname-tika:
+        image: apache/tika
+        restart: unless-stopped
+        caproverExtra:
+            containerHttpPort: '9998'
+
 caproverOneClickApp:
     variables:
-        - id: $$cap_paperless_version
-	  label: Version
-	  defaultValue: 1.13 
-	  description: Choose your Paperless-NGX version. See https://hub.docker.com/r/paperlessngx/paperless-ngx/tags for valid tags.
         - id: $$cap_appname
           label: App Name
           defaultValue: paperless-ngx
           description: The name of the app in CapRover. You can keep the default value or choose a different name.
+        - id: $$cap_paperless_version
+          label: Version
+          defaultValue: 1.13
+          description: Use a valid tag 
         - id: $$cap_dbuser
           label: PostgreSQL Username
           defaultValue: paperless
@@ -65,26 +88,23 @@ caproverOneClickApp:
           description: The OCR language used by Paperless-NGX. You can provide a single language code (e.g., eng) or multiple language codes separated by + (e.g., eng+deu)
         - id: $$cap_secret_key
           label: Secret-key
-          defaultValue: rxasshe2RZfCGc1959xZMngMVDGofrMmyX
+          defaultValue: r0she2RZfCGc1959xZMngMVDGofrMmyX
           description: Just smash your face on the keyboard
         - id: $$cap_admin_user
           label: Adminuser
           defaultValue: Admin
-          description: Set a Name for the Admin account
+          description: adminname
         - id: $$cap_admin_password
           label: Adminpassword
           defaultValue: Adminpassword
-          description: Set a Password for the User "Admin"
+          description: Adminpassword
         - id: $$cap_paperless_url
           label: paperlessurl
-          defaultValue: https://domaintopaperless.com
-          description: Set the URL pointing to Paperless-NGX
- 
-
+          defaultValue: ''
+          description: Set url
 
     instructions:
         start: >-
             This will deploy the Paperless-NGX One-Click-App. Please provide the required information below.
         end: >-
-            The Paperless-NGX app has been successfully deployed. Please give it a few minutes to start, and then you can access the web interface by navigating to the app URL. The default username is "admin" and the default password is "Adminpassword". Make sure to change the default credentials after logging in for the first time.
-			Please note that you have to change the Container HTTP Port to '8000' under the HTTP-Settings tab.
+            The Paperless-NGX app has been successfully deployed. Please give it a few minutes to start, and then you can access the web interface by navigating to the app URL. The default username is "admin" and the default password is "admin". Make sure to change the default credentials after logging in for the first time.
