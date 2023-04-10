@@ -16,8 +16,8 @@ services:
             PAPERLESS_OCR_THREADS: 2
             PAPERLESS_CONVERT_DENSITY: 300
             PAPERLESS_OCR_LANGUAGE: $$cap_ocr_language
-            PAPERLESS_REDIS: redis://$$cap_appname-redis:6379
-            PAPERLESS_DBHOST: $$cap_appname-postgres
+            PAPERLESS_REDIS: redis://srv-captain--$$cap_appname-redis:6379
+            PAPERLESS_DBHOST: srv-captain--$$cap_appname-postgres
             PAPERLESS_DBPORT: 5432
             PAPERLESS_DBUSER: $$cap_dbuser
             PAPERLESS_DBPASS: $$cap_dbpass
@@ -30,6 +30,9 @@ services:
             PAPERLESS_TIKA_ENABLED: 1
             PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://srv-captain--$$cap_appname-gotenberg:3000
             PAPERLESS_TIKA_ENDPOINT: http://srv-captain--$$cap_appname-tika:9998
+            
+		 caproverExtra:
+            containerHttpPort: '8000'
             
 
     $$cap_appname-postgres:
@@ -101,10 +104,11 @@ caproverOneClickApp:
         - id: $$cap_paperless_url
           label: paperlessurl
           defaultValue: ''
-          description: Set url
+          description: Set the URL pointing to Paperless
 
     instructions:
         start: >-
             This will deploy the Paperless-NGX One-Click-App. Please provide the required information below.
         end: >-
-            The Paperless-NGX app has been successfully deployed. Please give it a few minutes to start, and then you can access the web interface by navigating to the app URL. The default username is "admin" and the default password is "admin". Make sure to change the default credentials after logging in for the first time.
+            The Paperless-NGX app has been successfully deployed. Please give it a few minutes to start, and then you can access the web interface by navigating to the app URL. The default username is "admin" and the default password is "Adminpassword". Make sure to change the default credentials after logging in for the first time.
+            Please make sure that the HTTP Port is set to 8000 under the HTTP-Settings tab.
