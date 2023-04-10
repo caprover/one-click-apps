@@ -31,7 +31,7 @@ services:
             PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://srv-captain--$$cap_appname-gotenberg:3000
             PAPERLESS_TIKA_ENDPOINT: http://srv-captain--$$cap_appname-tika:9998
             
-		 caproverExtra:
+            caproverExtra:
             containerHttpPort: '8000'
             
 
