@@ -41,7 +41,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_paperless_version
 	  label: Version
-	  default: 1.13 
+	  defaultValue: 1.13 
 	  description: Choose your Paperless-NGX version. See https://hub.docker.com/r/paperlessngx/paperless-ngx/tags for valid tags.
         - id: $$cap_appname
           label: App Name
