@@ -54,7 +54,7 @@ caproverOneClickApp:
           validRegex: /^([^\s^\/])+$/
     instructions:
         start: Guacamole is an HTML5 Remote Desktop application.
-        end: Guacamole is deployed and available as srv-captain--$$cap_appname. In order to use Guacamole, you must enable websockets and setup the MySQL database. For instructions on how to setup the database, check out https://github.com/christopher-kapic/caprover-guacamole
+        end: For instructions on how to setup the database, check out https://github.com/christopher-kapic/caprover-guacamole. Guacamole is deployed and available as srv-captain--$$cap_appname. In order to use Guacamole, you must enable websockets and setup the MySQL database.
     displayName: Guacamole
     isOfficial: false
     description: An HTML5 remote access application.
