@@ -57,17 +57,17 @@ caproverOneClickApp:
     variables:
         - id: $$cap_GLITCHTIP_VERSION
           label: GlitchTip Version
-          defaultValue: 'v2.0.5'
+          defaultValue: 'v3.1.2'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/glitchtip/glitchtip/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_POSTGRES_VERSION
           label: Postgres Version
-          defaultValue: '14'
+          defaultValue: '15'
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/postgres/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_REDIS_VERSION
           label: Redis Version
-          defaultValue: '7.0.5-alpine'
+          defaultValue: '7.0-alpine'
           description: Check out their docker page for the valid tags https://hub.docker.com/_/redis?tab=tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_CELERY_WORKER_CONCURRENCY
@@ -105,7 +105,7 @@ caproverOneClickApp:
 
             Documentation: https://glitchtip.com/documentation
         end: |-
-            GlitchTip instance successfully deployed. It will allow you to register an account, afterwards registrations will be closed by default.
+            GlitchTip instance successfully deployed. It will allow you to register an account, afterwards you can set ENABLE_USER_REGISTRATION=false to disable further registrations.
             If you want to use a different domain change the `GLITCHTIP_DOMAIN` variable.
             See https://glitchtip.com/documentation/install for additional environment variables available.
     displayName: GlitchTip
