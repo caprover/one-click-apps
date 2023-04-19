@@ -11,3 +11,4 @@ Please note that this repo is mostly for popular apps with thousands of stars an
 - [ ] I have made sure that instructions.start and instructions.end are clear and self-explanatory.
 - [ ] Icon is added as a png file to the logos directory.
 - [ ] I've executed the checks if necessary by running `npm ci && npm run validate_apps && npm run formatter`
+- [ ] I will take resposibility addressing any issues that arises as a result of this PR (maintaining this app).
