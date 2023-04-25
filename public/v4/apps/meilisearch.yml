@@ -6,6 +6,7 @@ services:
             - $$cap_appname-data:/data.ms
             - $$cap_appname-snapshot:/snapshot
             - $$cap_appname-dump:/dumps
+            - $$cap_appname-meili-data:/meili_data
         restart: always
         environment:
             MEILI_MASTER_KEY: $$cap_master_key
@@ -25,7 +26,7 @@ caproverOneClickApp:
         - id: $$cap_app_version
           label: MeiliSearch Version
           description: 'Check out their Docker page for the valid tags: https://hub.docker.com/r/getmeili/meilisearch/tags'
-          defaultValue: 'v0.25.2'
+          defaultValue: 'v1.1'
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_master_key
           label: MeiliSearch Master Key
