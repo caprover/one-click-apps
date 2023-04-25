@@ -65,14 +65,9 @@ caproverOneClickApp:
           description: MeiliSearch use Sentry to get bug reports and diagnostics, and improve MeiliSearch experience. To deactivate Sentry, set this value to true.
         - id: $$cap_schedule_snapshot
           label: Schedule Snapshot Creation
-          defaultValue: 'false'
-          validRegex: /^(true|false)$/
-          description: To activate scheduled snapshots, set this value to true. Disabled by default.
-        - id: $$cap_snapshot_interval
-          label: Snapshot Interval
-          defaultValue: '86400'
-          validRegex: /^\d[\d.]*$/
-          description: Defines the time gap in seconds between each snapshot creation.
+          defaultValue: ''
+          validRegex: /^[\d.]*$/
+          description: Defines the time gap in seconds between each snapshot creation in seconds. Disabled if empty.
         - id: $$cap_dump_batchsize
           label: Dump Batch Size
           defaultValue: '1024'
