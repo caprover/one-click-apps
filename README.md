@@ -59,7 +59,7 @@ caproverOneClickApp:
 After creating your One-Click app yaml file, you need to test it before creating a Pull Request. Here is how you test it:
 - Login to your CapRover dashboard
 - Go to **apps** and click on **One-Click Apps/Databases**
-- Select **>> TEMPLATE <<** at the bottom of the dropdown list 
+- Select **>> TEMPLATE <<** at the bottom of the dropdown list
 - Copy and paste your YAML into the text area, and click **NEXT**.
 - Enter values and make sure it's working as expected.
 
@@ -74,7 +74,18 @@ To create your own repository:
 - Run `npm i`
 - Run `npm run validate_apps`
 - Run `npm run formatter-write`
-- Run `npm run build` 
+- Run `npm run build`
 - Now you can host the static content placed in `./dist` directory anywhere you want, the official repo uses github pages to publish the content. Make sure to update [CNAME](https://github.com/caprover/one-click-apps/blob/master/public/CNAME) to your own URL if you decide to do so.
 
-Here is a good example: [Awes0meHub's CapRover One-Click-Apps](https://github.com/Awes0meHub/caprover-one-click-apps)
+### Community One Click Apps
+
+#### How to add this repo:
+
+-   Login to your CapRover dashboard
+-   Go to **apps** and click on **One-Click Apps/Databases** and scrolldown to the bottom
+-   Under **3rd party repositories:** copy `https://Awes0meHub.github.io/caprover-one-click-apps` and paste it in to the text box
+-   Click the **_Connect New Repository_** button
+
+#### 3rd party repositorie
+-   Awes0meHub: [Github](https://github.com/Awes0meHub/caprover-one-click-apps) repository: https://Awes0meHub.github.io/caprover-one-click-apps
+-   Jordan-hall: [Github](https://github.com/Jordan-Hall/caprover-one-click-apps) repository: https://oneclickapps.libertyware.io
