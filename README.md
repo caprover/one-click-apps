@@ -77,7 +77,7 @@ To create your own repository:
 - Run `npm run build`
 - Now you can host the static content placed in `./dist` directory anywhere you want, the official repo uses github pages to publish the content. Make sure to update [CNAME](https://github.com/caprover/one-click-apps/blob/master/public/CNAME) to your own URL if you decide to do so.
 
-### Community One Click Apps
+### Third party One Click Apps
 
 In order to add a third party repository:
 -   Login to your CapRover dashboard
