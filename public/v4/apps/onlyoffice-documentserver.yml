@@ -3,6 +3,11 @@ version: '2.0'
 services:
     $$cap_appname:
         image: onlyoffice/documentserver:$$cap_app_version
+        environment:
+            JWT_ENABLED: $$cap_secret_enable
+            JWT_SECRET: $$cap_secret_pass
+            JWT_HEADER: $$cap_header
+            JWT_IN_BODY: $$cap_body
         volumes:
             - $$cap_appname-logs:/app/onlyoffice/DocumentServer/logs
             - $$cap_appname-data:/app/onlyoffice/DocumentServer/data
@@ -15,8 +20,25 @@ caproverOneClickApp:
         - id: '$$cap_app_version'
           label: Document Server Version
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/onlyoffice/documentserver/tags
-          defaultValue: '6.2.2'
+          defaultValue: '7.3.3.50'
           validRegex: '/.{1,}/'
+        - id: $$cap_secret_enable
+          label: Enable secret key
+          description: Specifies the enabling the JSON web token validation by ONLYOFFICE Docs.
+          defaultValue: true
+        - id: $$cap_secret_pass
+          label: Secret key
+          description: Defines the secret key to validate the JSON web token in the request to ONLYOFFICE Docs. 
+          validRegex: /.{1,}/
+          defaultValue: $$cap_gen_random_hex(12)
+        - id: $$cap_header
+          label: Header
+          description: Defines the HTTP header that will be used to send the JSON web token.
+          defaultValue: Authorization
+        - id: $$cap_body
+          label: Body
+          description: Specifies the enabling the token validation in the request body to the ONLYOFFICE Docs. 
+          defaultValue: true
     instructions:
         start: |-
             ONLYOFFICE Document Server is an online office suite comprising viewers and editors for texts, 
