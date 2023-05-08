@@ -28,7 +28,7 @@ caproverOneClickApp:
           defaultValue: true
         - id: $$cap_secret_pass
           label: Secret key
-          description: Defines the secret key to validate the JSON web token in the request to ONLYOFFICE Docs. 
+          description: Defines the secret key to validate the JSON web token in the request to ONLYOFFICE Docs.
           validRegex: /.{1,}/
           defaultValue: $$cap_gen_random_hex(12)
         - id: $$cap_header
@@ -37,7 +37,7 @@ caproverOneClickApp:
           defaultValue: Authorization
         - id: $$cap_body
           label: Body
-          description: Specifies the enabling the token validation in the request body to the ONLYOFFICE Docs. 
+          description: Specifies the enabling the token validation in the request body to the ONLYOFFICE Docs.
           defaultValue: true
     instructions:
         start: |-
