@@ -35,7 +35,7 @@ services:
             BASE_URL: $$cap_wm_base_url
             BASE_INTERNAL_URL: 'http://srv-captain--$$cap_appname:8000'
             RUST_LOG: 'info'
-            NUM_WORKERS: '$$cap_num_workers'
+            NUM_WORKERS: '1'
             DISABLE_SERVER: 'true'
             KEEP_JOB_DIR: 'false'
             DENO_PATH: '/usr/bin/deno'
@@ -87,10 +87,6 @@ caproverOneClickApp:
           defaultValue: '1.99'
           description: Checkout their github page for the valid tags https://github.com/windmill-labs/windmill/releases
           validRegex: /^([^\s^\/])+$/
-        - id: $$cap_num_workers
-          label: Number of Workers
-          defaultValue: '2'
-          description: Number of Workers
         - id: $$cap_wm_base_url
           label: WM Base URL
           defaultValue: https://$$cap_appname.$$cap_root_domain
