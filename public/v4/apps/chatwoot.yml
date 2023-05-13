@@ -48,6 +48,7 @@ services:
         environment:
             RAILS_ENV: production
             RAILS_LOG_TO_STDOUT: 'true'
+            FRONTEND_URL: http://$$cap_appname.$$cap_root_domain
             SECRET_KEY_BASE: $$cap_chatwoot_secret_key_base
             POSTGRES_HOST: srv-captain--$$cap_appname-postgres
             POSTGRES_DATABASE: chatwoot
@@ -68,7 +69,7 @@ caproverOneClickApp:
         - id: $$cap_chatwoot_version
           label: Chatwoot Version Tag
           description: Choose the latest version from https://hub.docker.com/r/chatwoot/chatwoot/tags
-          defaultValue: v2.7.0
+          defaultValue: v2.16.0
         - id: $$cap_chatwoot_secret_key_base
           label: Chatwoot Secret Key Base
           description: The randomized string which is used to verify the integrity of signed cookies. Please use a string with more than 26 characters
