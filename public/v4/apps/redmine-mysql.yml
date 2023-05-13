@@ -70,7 +70,7 @@ caproverOneClickApp:
             -------------------------------------------- 
             🔰 More information on initial configuration can be found at https://www.redmine.org/projects/redmine/wiki/RedmineInstall#Configuration.
 
-    displayName: Redmine (PostgreSQL)
+    displayName: Redmine (MySQL)
     isOfficial: true
     description: >-
         Redmine is a flexible project management web application written using Ruby on Rails framework. This app is packaged with MySQL.
