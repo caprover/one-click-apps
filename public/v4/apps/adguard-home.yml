@@ -18,7 +18,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_adguard_version
           label: AdGuard Home Version
-          defaultValue: 'v0.104.3'
+          defaultValue: 'v0.107.29'
           description: Check out their docker page for the valid tags https://hub.docker.com/r/adguard/adguardhome/tags
     instructions:
         start: >-
