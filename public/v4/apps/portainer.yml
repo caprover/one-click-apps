@@ -12,7 +12,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_portainer_version
           label: Portainer Version
-          defaultValue: 2.0.0
+          defaultValue: 2.16.2
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/portainer/portainer-ce/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_portainer_edition
