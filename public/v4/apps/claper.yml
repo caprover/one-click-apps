@@ -17,7 +17,7 @@ services:
         environment:
             DATABASE_URL: postgres://claper:$$cap_postgres_passwd@srv-captain--$$cap_appname-postgres:5432/claper
             MAIL_TRANSPORT: local
-            ENDPOINT_HOST: $$cap_appname.$$cap_root_domain/
+            ENDPOINT_HOST: $$cap_appname.$$cap_root_domain
             ENDPOINT_PORT: 443
             SECRET_KEY_BASE: $$cap_gen_random_hex(64)
         caproverExtra:
