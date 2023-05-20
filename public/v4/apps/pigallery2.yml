@@ -7,7 +7,7 @@ services:
         volumes:
             - $$cap_appname-config:/app/data/config
             - $$cap_appname-db:/app/data/db
-            - $$cap_appname-images:/app/data/images
+            - $$cap_images:/app/data/images
             - $$cap_appname-tmp:/app/data/tmp
         restart: always
 volumes:
@@ -19,24 +19,18 @@ caproverOneClickApp:
           defaultValue: '1.9.5'
           description: Check out their docker page for the valid tags https://hub.docker.com/r/bpatrik/pigallery2/tags
           validRegex: /^([^\s^\/])+$/
+        - id: $$cap_images
+          label: Set path to images
+          defaultValue: /home/User/MyPictures
+          description: Path containing your pictures library.
     instructions:
         start: >-
             This is a **fast** (like faster than your PC fast) **directory-first photo gallery website**, optimised for running on low resource servers (especially on raspberry pi).
-
-            ✔️ Strengths:
-             * ⚡ Fast, like for real.
-             * ✔️ Simple. Point to your photos folder and to a temp folder and you are good to go.
-
-            ⛔ Weakness:
-             * 😥 Its simple. Shows what you have that's it. No gallery changes (photo delete, rotate, enhance, tag, organize, etc), your gallery folder is read-only.
-             * 📁 Optimized for galleries with <100K photos with <5k photos/folder.
-                  * It will work on bigger galleries, but it will start to slow down.
         end: >-
             You're done! 😄
 
-            ⚠️ Default user: admin pass: admin. (It is not possible to change the admin password, you need to create another user and delete the default admin user).
-            Then reboot.
-
+            ⚠️ Default user: `admin` pass: `admin`. (It is not possible to change the admin password, you need to create another user and delete the default admin user).
+            Then restart the container.
     displayName: 'PiGallery2'
     isOfficial: true
     description: A fast directory-first photo gallery website, with rich UI, optimized for running on low resource servers (especially on raspberry pi)
