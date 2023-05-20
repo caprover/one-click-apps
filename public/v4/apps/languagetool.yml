@@ -6,9 +6,9 @@ services:
         ports:
             - $$cap_port:8010
         environment:
-            langtool_languageModel: /ngrams  # OPTIONAL: Using ngrams data
-            Java_Xms: $$cap_min_size  # OPTIONAL: Setting a minimal Java heap size of 512 mib
-            Java_Xmx: $$cap_max_size  # OPTIONAL: Setting a maximum Java heap size of 1 Gib
+            langtool_languageModel: /ngrams # OPTIONAL: Using ngrams data
+            Java_Xms: $$cap_min_size # OPTIONAL: Setting a minimal Java heap size of 512 mib
+            Java_Xmx: $$cap_max_size # OPTIONAL: Setting a maximum Java heap size of 1 Gib
             #langtool_pipelinePrewarming: true
         volumes:
             - $$cap_appname-data:/ngrams
@@ -35,7 +35,7 @@ caproverOneClickApp:
           id: $$cap_max_size
     instructions:
         start: >-
-            Style and Grammar Checker for 25+ Languages
+            LanguageTool is an Open Source proofreading software for English, Spanish, French, German, Portuguese, Polish, Dutch, and more than 20 other languages. It finds many errors that a simple spell checker cannot detect.
         end: >-
             You're done! 😄
 
@@ -46,5 +46,5 @@ caproverOneClickApp:
             To configure your LanguageTool client use this link in other server section: http://$$cap_appname.$$cap_root_domain:$$cap_port/v2/
     displayName: 'LanguageTool'
     isOfficial: false
-    description: LanguageTool is an Open Source proofreading software for English, Spanish, French, German, Portuguese, Polish, Dutch, and more than 20 other languages. It finds many errors that a simple spell checker cannot detect.
+    description: Style and Grammar Checker for 25+ Languages.
     documentation: Taken from https://hub.docker.com/r/erikvl87/languagetool
