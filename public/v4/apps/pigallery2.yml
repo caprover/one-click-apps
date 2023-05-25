@@ -10,8 +10,6 @@ services:
             - $$cap_images:/app/data/images
             - $$cap_appname-tmp:/app/data/tmp
         restart: always
-volumes:
-    $$cap_appname-db:
 caproverOneClickApp:
     variables:
         - id: $$cap_version
@@ -21,8 +19,9 @@ caproverOneClickApp:
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_images
           label: Set path to images
-          defaultValue: /home/User/MyPictures
-          description: Path containing your pictures library.
+          description: 
+            Path containing your pictures library. IMPORTANT, this must be an existing directory on your host, otherwise the app crashes.
+          validRegex: /^/(?!/)/
     instructions:
         start: >-
             This is a **fast** (like faster than your PC fast) **directory-first photo gallery website**, optimised for running on low resource servers (especially on raspberry pi).
