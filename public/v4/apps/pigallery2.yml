@@ -19,8 +19,7 @@ caproverOneClickApp:
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_images
           label: Set path to images
-          description: 
-            Path containing your pictures library. IMPORTANT, this must be an existing directory on your host, otherwise the app crashes.
+          description: Path containing your pictures library. IMPORTANT, this must be an existing directory on your host, otherwise the app crashes.
           validRegex: /^/(?!/)/
     instructions:
         start: >-
