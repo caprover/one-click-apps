@@ -4,7 +4,7 @@ services:
         image: erikvl87/languagetool:$$cap_version
         restart: always
         ports:
-            - $$cap_port:8010
+            - 8010:8010
         environment:
             langtool_languageModel: /ngrams # OPTIONAL: Using ngrams data
             Java_Xms: $$cap_min_size # OPTIONAL: Setting a minimal Java heap size of 512 mib
@@ -13,7 +13,7 @@ services:
         volumes:
             - $$cap_appname-data:/ngrams
         caproverExtra:
-            notExposeAsWebApp: 'true'
+            containerHttpPort: 8010
 caproverOneClickApp:
     variables:
         - id: $$cap_version
@@ -21,10 +21,6 @@ caproverOneClickApp:
           defaultValue: '6.1'
           description: Check out their docker page for the valid tags https://hub.docker.com/r/erikvl87/languagetool/tags
           validRegex: /^([^\s^\/])+$/
-        - label: LanguageTool port
-          description: Port use by LanguageTool
-          defaultValue: 8081
-          id: $$cap_port
         - label: Minimal heap size
           description: Setting a minimal Java heap size
           defaultValue: 512m
@@ -39,11 +35,9 @@ caproverOneClickApp:
         end: >-
             You're done! 😄
 
-            Don't forget to open port ($$cap_port) of your server: `sudo ufw allow $$cap_port`
+            You can test your configuration here: http://$$cap_appname.$$cap_root_domain/v2/check?language=en-US&text=my+text
 
-            You can test your configuration here: http://$$cap_appname.$$cap_root_domain:$$cap_port/v2/check?language=en-US&text=my+text
-
-            To configure your LanguageTool client use this link in other server section: http://$$cap_appname.$$cap_root_domain:$$cap_port/v2/
+            To configure your LanguageTool client use this link in _other server_ section: http://$$cap_appname.$$cap_root_domain/v2/
     displayName: 'LanguageTool'
     isOfficial: false
     description: Style and Grammar Checker for 25+ Languages.
