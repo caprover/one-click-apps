@@ -3,8 +3,6 @@ services:
     $$cap_appname:
         image: erikvl87/languagetool:$$cap_version
         restart: always
-        ports:
-            - 8010:8010
         environment:
             langtool_languageModel: /ngrams # OPTIONAL: Using ngrams data
             Java_Xms: $$cap_min_size # OPTIONAL: Setting a minimal Java heap size of 512 mib
