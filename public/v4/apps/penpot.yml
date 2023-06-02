@@ -66,6 +66,7 @@ services:
 
     # Frontend
     $$cap_appname:
+        image: penpotapp/frontend:$$cap_penpot_frontend_version
         volumes:
             - $$cap_appname-assets-data:/opt/data
         environment:
