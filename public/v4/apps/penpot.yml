@@ -90,7 +90,7 @@ caproverOneClickApp:
           description: Checkout their docker description page for the valid tags https://hub.docker.com/_/redis?tab=description
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_penpot_version
-          label: Penpot Frontend Version
+          label: Penpot version for frontend, backend and exporter
           defaultValue: '1.18.4'
           description: Checkout their docker page for the valid tags https://hub.docker.com/r/penpotapp/frontend/tags
           validRegex: /^([^\s^\/])+$/
