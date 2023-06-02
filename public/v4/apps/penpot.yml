@@ -70,11 +70,8 @@ services:
             - $$cap_appname-assets-data:/opt/data
         environment:
             PENPOT_FLAGS: $$cap_flags
-        caproverExtra:
-            dockerfileLines:
-                - FROM penpotapp/frontend:$$cap_penpot_frontend_version
-                - RUN sed -i 's/penpot-backend/srv-captain--$$cap_appname-backend/g' /etc/nginx/nginx.conf
-                - RUN sed -i 's/penpot-exporter/srv-captain--$$cap_appname-exporter/g' /etc/nginx/nginx.conf
+            PENPOT_BACKEND_URI: http://srv-captain--$$cap_appname-backend:6060
+            PENPOT_EXPORTER_URI: http://srv-captain--$$cap_appname-exporter:6061
         depends_on:
             - $$cap_appname-backend
             - $$cap_appname-exporter
