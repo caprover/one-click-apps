@@ -40,7 +40,6 @@ services:
         environment:
             PENPOT_PUBLIC_URI: $$cap_public_uri
             PENPOT_TELEMETRY_ENABLED: $$cap_enable_telemetry
-            PENPOT_SMTP_ENABLED: 'true'
             PENPOT_SMTP_DEFAULT_FROM: $$cap_smtp_from
             PENPOT_SMTP_DEFAULT_REPLY_TO: $$cap_smtp_reply_to
             PENPOT_SMTP_HOST: $$cap_smtp_host
@@ -96,7 +95,7 @@ caproverOneClickApp:
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_flags
           label: Penpot Flags
-          defaultValue: enable-registration enable-login
+          defaultValue: enable-registration enable-login enable-smtp
           description: Add "disable-secure-session-cookies" if you are going to serve it without HTTPS. Checkout option on their documentation https://help.penpot.app/technical-guide/configuration
         - id: $$cap_registration_domain_whitelist
           label: Penpot Registration Domain Whitelist
@@ -104,6 +103,7 @@ caproverOneClickApp:
         - id: $$cap_postgres_pass
           label: Postgres Database password
           description: 'Password for postgres'
+          defaultValue: $$cap_gen_random_hex(16)
           validRegex: /.{1,}/
         - id: $$cap_public_uri
           label: Public URI
@@ -130,7 +130,6 @@ caproverOneClickApp:
           defaultValue: user@example.com
         - id: $$cap_smtp_password
           label: SMTP password
-          defaultValue:
           validRegex: /.{1,}/
         - id: $$cap_smtp_tls
           label: SMTP TLS support
