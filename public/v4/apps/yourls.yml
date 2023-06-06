@@ -17,7 +17,6 @@ services:
             - $$cap_appname-db
         image: yourls:$$cap_yourls_version
         volumes:
-            - $$cap_appname-logs:/usr/src/yourls/logs
             - $$cap_appname-plugins:/usr/src/yourls/plugins
         restart: always
         environment:
@@ -77,6 +76,6 @@ caproverOneClickApp:
 
             Have fun!
     displayName: yourls
-    isOfficial: false
+    isOfficial: true
     description: YOURLS is a set of PHP scripts that will allow you to run Your Own URL Shortener.
     documentation: Taken from https://hub.docker.com/_/yourls.
