@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: libreddit/libreddit@$$cap_libreddit_version
+        image: libreddit/libreddit:$$cap_libreddit_version
         restart: always
         caproverExtra:
             containerHttpPort: '8080'
@@ -19,7 +19,7 @@ caproverOneClickApp:
         end: >-
             Aaaand you're done! 😄
             Your service is available at http://$$cap_appname.$$cap_root_domain
-    displayName: Libreddit-test
+    displayName: Libreddit
     isOfficial: true
     description: Alternative private front-end to Reddit. Libreddit hopes to provide an easier way to browse Reddit, without the ads, trackers, and bloat.
     documentation: 'Taken from https://github.com/libreddit/libreddit '
