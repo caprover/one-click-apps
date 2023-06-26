@@ -56,7 +56,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_nextcloud_version
           label: NextCloud Version
-          defaultValue: 25.0.6
+          defaultValue: 26.0.3
           description: >-
               Check out their Docker page for the valid tags https://hub.docker.com/_/nextcloud?tab=tags
 
@@ -70,7 +70,7 @@ caproverOneClickApp:
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_mariadb_version
           label: MariaDB (database) version
-          defaultValue: 10.6.12
+          defaultValue: 10.6.14
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/mariadb?tab=tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_db_user
