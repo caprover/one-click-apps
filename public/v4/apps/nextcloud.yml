@@ -90,6 +90,7 @@ caproverOneClickApp:
           validRegex: /^([a-zA-Z0-9\@\.])+$/
         - id: $$cap_admin_pass
           label: admin password
+          defaultValue: $$cap_gen_random_hex(10)
           description: Password for the Nextcloud admin user.
           validRegex: /.{8,}/
         - id: $$cap_http_https_cors
