@@ -112,8 +112,11 @@ caproverOneClickApp:
             For better performances and compliance, click on "edit default nginx configuration" button then
             below `proxy_set_header X-Forwarded-Proto $scheme;`
             add `add_header Strict-Transport-Security "max-age=15552000; includeSubDomains" always;`  into the nginx configuration.
+
             For DAV add after `/.well-known/captain-identifier` section 
-            ```
+
+
+            `
             location /.well-known/carddav {    
                 return 301 $scheme://$host/remote.php/dav;
             }
@@ -121,12 +124,12 @@ caproverOneClickApp:
             location /.well-known/caldav {    
                 return 301 $scheme://$host/remote.php/dav;
             }
-            ```
+            `
 
-            You can see HSTS parts of the nextcloud security documentation https://docs.nextcloud.com/server/21/admin_manual/installation/harden_server.html for further informations
+            You can see HSTS parts of the nextcloud security documentation [https://docs.nextcloud.com/server/21/admin_manual/installation/harden_server.html](https://docs.nextcloud.com/server/21/admin_manual/installation/harden_server.html) for further informations
 
 
-            You can also scan your nextcloud instance on https://scan.nextcloud.com/
+            You can also scan your nextcloud instance on [https://scan.nextcloud.com/](https://scan.nextcloud.com/)
     displayName: nextcloud
     isOfficial: true
     description: Nextcloud is a suite of client-server software for creating and using file hosting services
