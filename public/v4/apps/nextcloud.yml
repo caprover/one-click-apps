@@ -115,22 +115,15 @@ caproverOneClickApp:
 
             For DAV add after `/.well-known/captain-identifier` section 
 
+            `location /.well-known/carddav {return 301 $scheme://$host/remote.php/dav;}`
 
-            `
-            location /.well-known/carddav {    
-                return 301 $scheme://$host/remote.php/dav;
-            }
-
-            location /.well-known/caldav {    
-                return 301 $scheme://$host/remote.php/dav;
-            }
-            `
+            `location /.well-known/caldav {return 301 $scheme://$host/remote.php/dav;}`
 
             You can see HSTS parts of the nextcloud security documentation [https://docs.nextcloud.com/server/21/admin_manual/installation/harden_server.html](https://docs.nextcloud.com/server/21/admin_manual/installation/harden_server.html) for further informations
 
 
             You can also scan your nextcloud instance on [https://scan.nextcloud.com/](https://scan.nextcloud.com/)
-    displayName: nextcloud
+    displayName: Nextcloud
     isOfficial: true
     description: Nextcloud is a suite of client-server software for creating and using file hosting services
     documentation: Taken from https://hub.docker.com/_/nextcloud
