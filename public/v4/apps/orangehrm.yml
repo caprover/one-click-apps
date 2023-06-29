@@ -14,12 +14,12 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname:
-        documentation: Taken from https://hub.docker.com/r/bitnami/orangehrm
+        documentation: Taken from https://hub.docker.com/r/orangehrm/orangehrm
         depends_on:
             - $$cap_appname-db
-        image: bitnami/orangehrm:$$cap_orangehrm_version
+        image: orangehrm/orangehrm:$$cap_orangehrm_version
         volumes:
-            - $$cap_appname-data:/bitnami
+            - $$cap_appname-data:/orangehrm
         restart: always
         environment:
             ORANGEHRM_USERNAME: $$cap_admin_name
@@ -32,6 +32,8 @@ services:
             SMTP_PORT: $$cap_smtp_port
             SMTP_USER: $$cap_smtp_user
             SMTP_PASSWORD: $$cap_smtp_pass
+            PUID: 998
+            PGID: 100
 caproverOneClickApp:
     variables:
         - id: $$cap_admin_name
@@ -45,12 +47,12 @@ caproverOneClickApp:
           validRegex: /.{1,}/
         - id: $$cap_orangehrm_version
           label: OrangeHRM Version
-          defaultValue: '4.6.0-0'
+          defaultValue: '5.4'
           description: https://hub.docker.com/r/bitnami/orangehrm/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_mariadb_version
           label: MariaDB (database) version
-          defaultValue: 10.5.3
+          defaultValue: 10.11.4
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/mariadb?tab=tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_db_pass
