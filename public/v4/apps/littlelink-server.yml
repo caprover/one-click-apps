@@ -1,0 +1,253 @@
+captainVersion: 4
+caproverOneClickApp:
+  variables:
+    - id: $$cap_littlelink_version
+      label: littlelink-server version
+      defaultValue: latest
+      description: Check out their Docker page for the valid tags https://github.com/techno-tim/littlelink-server/pkgs/container/littlelink-server
+      validRegex: /^([^\s^\/])+$/
+            - META_TITLE=Techno Tim
+    - id: $$META_DESCRIPTION
+      label: Meta Description
+      defaultValue: Techno Tim Link page
+    - id: $$META_AUTHOR
+      defaultValue: Techno Tim
+    - id: $$META_KEYWORDS
+      defaultValue: HomeLab, CSS, HTML, Engineering
+    - id: $$LANG
+      defaultValue: en
+    - id: $$META_INDEX_STATUS
+      defaultValue: all
+    - id: $$THEME
+      defaultValue: Dark
+    - id: $$FAVICON_URL
+      defaultValue: https://pbs.twimg.com/profile_images/1286144221217316864/qIAsKOpB_200x200.jpg
+    - id: $$AVATAR_URL
+      defaultValue: https://pbs.twimg.com/profile_images/1286144221217316864/qIAsKOpB_200x200.jpg
+    - id: $$AVATAR_2X_URL
+      defaultValue: https://pbs.twimg.com/profile_images/1286144221217316864/qIAsKOpB_400x400.jpg
+    - id: $$AVATAR_ALT
+      defaultValue: Techno Tim Profile Pic
+    - id: $$NAME
+      defaultValue: TechnoTim
+    - id: $$BIO
+      defaultValue: Hey! Just a place where you can connect with me!
+    - id: $$FOOTER
+      defaultValue: Thanks for stopping by!
+    - id: $$GITHUB
+      defaultValue: https://github.com/timothystewart6
+    - id: $$TWITTER
+      defaultValue: https://twitter.com/TechnoTimLive
+    - id: $$INSTAGRAM
+      defaultValue: https://www.instagram.com/techno.tim
+    - id: $$YOUTUBE
+      defaultValue: https://www.youtube.com/channel/UCOk-gHyjcWZNj3Br4oxwh0A
+    - id: $$TWITCH
+      defaultValue: https://www.twitch.tv/technotim/
+    - id: $$DISCORD
+      defaultValue: https://l.technotim.live/discord
+    - id: $$TIKTOK
+      defaultValue: https://www.tiktok.com/@technotim
+    - id: $$KIT
+      defaultValue: https://kit.co/TechnoTim
+    - id: $$FACEBOOK
+      defaultValue: https://facebook.com
+    - id: $$FACEBOOK_MESSENGER
+      defaultValue: https://facebook.com
+    - id: $$LINKED_IN
+      defaultValue: https://linkedin.com
+    - id: $$PRODUCT_HUNT
+      defaultValue: https://www.producthunt.com/
+    - id: $$SNAPCHAT
+      defaultValue: https://www.snapchat.com/
+    - id: $$SPOTIFY
+      defaultValue: https://www.spotify.com/
+    - id: $$REDDIT
+      defaultValue: https://www.reddit.com/
+    - id: $$MEDIUM
+      defaultValue: https://medium.com
+    - id: $$PINTEREST
+      defaultValue: https://www.pinterest.com/
+    - id: $$EMAIL
+      defaultValue: you@example.com
+    - id: $$EMAIL_TEXT
+      defaultValue: Email Me!
+    - id: $$EMAIL_ALT
+      defaultValue: you@example.com
+    - id: $$EMAIL_ALT_TEXT
+      defaultValue: Email me!
+    - id: $$SOUND_CLOUD
+      defaultValue: https://soundcloud.com
+    - id: $$FIGMA
+      defaultValue: https://figma.com
+    - id: $$TELEGRAM
+      defaultValue: https://telegram.org/
+    - id: $$TUMBLR
+      defaultValue: https://www.tumblr.com/
+    - id: $$STEAM
+      defaultValue: https://steamcommunity.com/
+    - id: $$VIMEO
+      defaultValue: https://vimeo.com/
+    - id: $$WORDPRESS
+      defaultValue: https://wordpress.com/
+    - id: $$GOODREADS
+      defaultValue: https://www.goodreads.com/
+    - id: $$SKOOB
+      defaultValue: https://www.skoob.com.br/
+    - id: $$LETTERBOXD
+      defaultValue: https://letterboxd.com/
+    - id: $$MASTODON
+      defaultValue: https://mastodon.social/
+    - id: $$MICRO_BLOG
+      defaultValue: https://micro.blog/
+    - id: $$WHATSAPP
+      defaultValue: https://www.whatsapp.com/
+    - id: $$STRAVA
+      defaultValue: https://www.strava.com/
+    - id: $$BUYMEACOFFEE
+      defaultValue: https://www.buymeacoffee.com/
+    - id: $$GITLAB
+      defaultValue: https://www.gitlab.com/
+    - id: $$PATREON
+      defaultValue: https://www.patreon.com/technotim
+    - id: $$DEVTO
+      defaultValue: https://dev.to/
+    - id: $$UMAMI_WEBSITE_ID
+      defaultValue: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+    - id: $$UMAMI_APP_URL
+      defaultValue: https://your-umami-app.com
+    - id: $$UMAMI_SCRIPT_NAME
+      defaultValue: script.js
+    - id: $$BUTTON_ORDER
+      defaultValue: YOUTUBE,TWITCH,TWITTER,GITHUB,INSTAGRAM,DISCORD,FACEBOOK,TIKTOK,KIT,PATREON
+    - id: $$PAYPAL
+      defaultValue: https://www.paypal.me/user
+    - id: $$SLACK
+      defaultValue: https://slack.com/
+    - id: $$STACKOVERFLOW
+      defaultValue: https://stackoverflow.com/
+    - id: $$LASTFM
+      defaultValue: https://last.fm/
+    - id: $$GITEA
+      defaultValue: https://gitea.io/
+    - id: $$POLYWORK
+      defaultValue: https://www.polywork.com/
+    - id: $$SIGNAL
+      defaultValue: https://signal.org/
+    - id: $$UNTAPPD
+      defaultValue: https://untappd.com/
+    - id: $$BUTTON_TARGET
+      defaultValue: _blank
+    - id: $$INSTANTGAMING
+      defaultValue: https://www.instant-gaming.com/
+    - id: $$GHOST
+      defaultValue: https://ghost.org/
+    - id: $$TRAKT
+      defaultValue: https://trakt.tv
+    - id: $$CASHAPP
+      defaultValue: https://cash.app/
+    - id: $$TEESPRING
+      defaultValue: https://teespring.com/
+    - id: $$XING
+      defaultValue: https://www.xing.com/en
+    - id: $$KEYBASE
+      defaultValue: https://keybase.io/
+    - id: $$ONLYFANS
+      defaultValue: https://onlyfans.com/
+    - id: $$SESSION
+      defaultValue: https://getsession.org/
+    - id: $$THREEMA
+      defaultValue: https://threema.ch/en/
+    - id: $$STREAMLABS
+      defaultValue: https://streamlabs.com/
+    - id: $$PRIVATEBIN
+      defaultValue: https://privatebin.net/
+    - id: $$AMAZON_AFFILIATE
+      defaultValue: https://affiliate-program.amazon.co.uk/
+    - id: $$AMAZON_WISHLIST
+      defaultValue: https://www.amazon.co.uk/b?node
+      defaultValue: 22758010031
+    - id: $$APPLE_MUSIC
+      defaultValue: https://www.apple.com/uk/apple-music/
+    - id: $$YOUTUBE_MUSIC
+      defaultValue: https://music.youtube.com/playlist?list
+      defaultValue: 
+    - id: $$VENMO
+      defaultValue: https://venmo.com/
+    - id: $$STATUS
+      defaultValue: https://status.im/
+    - id: $$MATRIX
+      defaultValue: https://matrix.to/
+    - id: $$ANILIST
+      defaultValue: https://anilist.co/
+    - id: $$GITBUCKET
+      defaultValue: https://gitbucket.github.io/
+    - id: $$SHAZAM
+      defaultValue: https://www.shazam.com/myshazam
+    - id: $$TPDB
+      defaultValue: https://theposterdb.com/
+    - id: $$FLICKR
+      defaultValue: https://www.flickr.com/
+    - id: $$OSU
+      defaultValue: https://osu.ppy.sh/users/
+    - id: $$LINE
+      defaultValue: https://line.me/en/
+    - id: $$KAKAOTALK
+      defaultValue: https://www.kakaocorp.com/page/service/service/KakaoTalk?lang
+      defaultValue: ko
+    - id: $$DESIGNBYHUMANS
+      defaultValue: https://www.designbyhumans.com/
+    - id: $$DOCKERHUB
+      defaultValue: https://hub.docker.com/
+    - id: $$VERO
+      defaultValue: https://vero.co/
+    - id: $$MYANIMELIST
+      defaultValue: https://myanimelist.net/
+    - id: $$OG_SITE_NAME
+      defaultValue: Techno Tim Live (OG)
+    - id: $$OG_TITLE
+      defaultValue: Techno Tim (OG)
+    - id: $$OG_DESCRIPTION
+      defaultValue: Techno Tim Link page (OG)
+    - id: $$OG_URL
+      defaultValue: https://technotim.live/
+    - id: $$OG_IMAGE
+      defaultValue: https://pbs.twimg.com/profile_images/1286144221217316864/qIAsKOpB_400x400.jpg
+    - id: $$OG_IMAGE_WIDTH
+      defaultValue: 400
+    - id: $$OG_IMAGE_HEIGHT
+      defaultValue: 400
+    - id: $$TWITTER_CARD
+      defaultValue: summary_large_image
+    - id: $$TWITTER_IMAGE
+      defaultValue: https://pbs.twimg.com/profile_images/1286144221217316864/qIAsKOpB_400x400.jpg
+    - id: $$TWITTER_SITE
+      defaultValue: @TechnoTimLive
+    - id: $$TWITTER_CREATOR
+      defaultValue: @TechnoTimLive
+    - id: $$SHARE
+      defaultValue: https://technotim.live
+    - id: $$FIVEHUNDREDPX
+      defaultValue: https://500px.com/
+    - id: $$PRINTABLES
+      defaultValue: https://www.printables.com
+    - id: $$SERIALIZD
+      defaultValue: https://www.serializd.com/
+
+  instructions:
+    start: |-
+      starting installation
+    end: >
+      Installed!
+  
+  displayName: littlelink-server
+  isOfficial: false
+  description: A linktree alternative
+  documentation: https://littlelink.io/
+services:
+  $$cap_appname:
+    image: ghcr.io/techno-tim/littlelink-server:$$cap_littlelink_version
+    restart: unless-stopped
+    caproverExtra:
+      containerHttpPort: '3000'
+    
