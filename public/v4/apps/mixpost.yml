@@ -52,6 +52,7 @@ caproverOneClickApp:
             Mixpost has been successfully deployed! It might take few moments before it's fully started.
             You can access the application at `http://$$cap_appname.$$cap_root_domain`.
             Find the administrator login details in the logs.
+            If you enabled HTTPS, you should adjust the `APP_URL` environment variable accordingly.
     variables:
         - id: $$cap_MIXPOST_VERSION
           label: Application | Version
