@@ -29,15 +29,31 @@ services:
     $$cap_appname-worker:
         image: ghcr.io/windmill-labs/windmill:$$cap_app_version
         volumes:
-            - $$cap_appname-worker-dependency-cache:/tmp/windmill/cache
             - /var/run/docker.sock:/var/run/docker.sock
         environment:
             DATABASE_URL: postgres://postgres:$$cap_postgres_pass@srv-captain--$$cap_appname-postgres/windmill?sslmode=disable
             BASE_URL: $$cap_wm_base_url
-            BASE_INTERNAL_URL: 'http://srv-captain--$$cap_appname:8000'
             RUST_LOG: info
             NUM_WORKERS: 1
             DISABLE_SERVER: 'true'
+            WORKER_TAGS: deno,python3,go,bash,dependency,flow,hub,other,bun
+        depends_on:
+            - $$cap_appname-postgres
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+
+    $$cap_appname-worker-native:
+        image: ghcr.io/windmill-labs/windmill:$$cap_app_version
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        environment:
+            DATABASE_URL: postgres://postgres:$$cap_postgres_pass@srv-captain--$$cap_appname-postgres/windmill?sslmode=disable
+            BASE_URL: $$cap_wm_base_url
+            RUST_LOG: info
+            NUM_WORKERS: 1
+            DISABLE_SERVER: 'true'
+            PARALLEL_NATIVE_JOBS: 12
+            WORKER_TAGS: nativets,postgresql,mysql,graphql
         depends_on:
             - $$cap_appname-postgres
         caproverExtra:
@@ -45,6 +61,8 @@ services:
 
     $$cap_appname-lsp:
         image: ghcr.io/windmill-labs/windmill-lsp:$$cap_app_version
+        volumes:
+            - $$cap_appname-lsp-cache:/root/.cache
         expose:
             - 3001
         caproverExtra:
@@ -81,7 +99,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_app_version
           label: Windmill Version
-          defaultValue: '1.109.1'
+          defaultValue: '1.135.1'
           description: Checkout their github page for the valid tags https://github.com/windmill-labs/windmill/releases
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_wm_base_url
