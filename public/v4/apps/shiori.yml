@@ -11,7 +11,6 @@ services:
             SHIORI_MYSQL_ADDRESS: tcp(srv-captain--$$cap_appname-mariadb)
         volumes:
             - $$cap_appname-data:/shiori
-        restart: unless-stopped
         caproverExtra:
             containerHttpPort: '8080'
     # MariaDB
@@ -49,6 +48,7 @@ caproverOneClickApp:
         - id: $$cap_mariadb-pass
           label: MariaDB database user password
           description: Super secret database user password
+          defaultValue: $$cap_gen_random_hex(16)
     displayName: 'Shiori'
     isOfficial: true
     description: 'A simple bookmark manager built with Go.'
