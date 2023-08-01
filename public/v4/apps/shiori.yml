@@ -11,7 +11,6 @@ services:
             SHIORI_MYSQL_ADDRESS: tcp(srv-captain--$$cap_appname-mariadb)
         volumes:
             - $$cap_appname-data:/shiori
-        restart: unless-stopped
         caproverExtra:
             containerHttpPort: '8080'
     # MariaDB
