@@ -1,0 +1,57 @@
+captainVersion: 4
+
+services:
+    $$cap_appname-db:
+        image: postgres:$$cap_postgres_version
+        volumes:
+            - '$$cap_appname-db-data:/var/lib/postgresql/data'
+        restart: unless-stopped
+        environment:
+            POSTGRES_USER: formbricks
+            POSTGRES_PASSWORD: $$cap_postgres_password
+            POSTGRES_DB: $$cap_postgres_db
+        caproverExtra:
+            notExposeAsWebApp: true
+
+    $$cap_appname:
+        image: formbricks/formbricks:$$cap_formbricks_tag
+        depends_on:
+            - $$cap_appname-db
+        restart: unless-stopped
+        environment:
+            DATABASE_URL: postgres://formbricks:$$cap_postgres_password@srv-captain--$$cap_appname-db/$$cap_postgres_db?sslmode=disable
+            WEBAPP_URL: https://$$cap_appname.$$cap_root_domain/
+            NEXTAUTH_SECRET: $$cap_gen_random_hex(32)
+        caproverExtra:
+            containerHttpPort: '3000'
+
+caproverOneClickApp:
+    variables:
+        - id: $$cap_postgres_version
+          label: Postgres Version
+          defaultValue: '13.1'
+        - id: $$cap_postgres_db
+          label: Postgres DB
+          defaultValue: 'formbricks'
+        - id: $$cap_postgres_password
+          label: Postgres Password
+          defaultValue: $$cap_gen_random_hex(16)
+          validRegex: /^(?=.*\d).{10,}$/
+        - id: $$cap_formbricks_tag
+          label: Formbricks Version
+          defaultValue: '1.0.2'
+          description: Check out our docker page for the valid tags https://hub.docker.com/r/formbricks/formbricks/tags
+    instructions:
+        start: >-
+            Formbricks - The Open Source Survey & Experience Management solution for fast growing companies
+            For more info visit https://formbricks.com/
+        end: |-
+            Formbricks has been successfully deployed!
+            App is available as http://$$cap_appname.$$cap_root_domain
+
+    displayName: Formbricks
+    isOfficial: true
+    description: >-
+        Formbricks - The Open Source Survey & Experience Management solution for fast growing companies
+    documentation: >-
+        This docker-compose reference is at https://github.com/formbricks/formbricks/blob/main/docker/docker-compose.yml
