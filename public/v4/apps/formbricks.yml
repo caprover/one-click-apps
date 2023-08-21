@@ -22,6 +22,7 @@ services:
             DATABASE_URL: postgres://formbricks:$$cap_postgres_password@srv-captain--$$cap_appname-db/$$cap_postgres_db?sslmode=disable
             WEBAPP_URL: https://$$cap_appname.$$cap_root_domain/
             NEXTAUTH_SECRET: $$cap_gen_random_hex(32)
+            NEXTAUTH_URL: https://$$cap_appname.$$cap_root_domain/
         caproverExtra:
             containerHttpPort: '3000'
 
