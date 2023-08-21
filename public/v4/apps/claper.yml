@@ -1,4 +1,5 @@
 captainVersion: 4
+
 services:
     $$cap_appname-postgres:
         image: postgres:$$cap_POSTGRES_VERSION
@@ -9,10 +10,11 @@ services:
             - $$cap_appname-postgres-data:/var/lib/postgresql/data
         caproverExtra:
             notExposeAsWebApp: 'true'
+
     $$cap_appname:
         image: ghcr.io/claperco/claper:$$cap_claper_ver
         container_name: claper
-        volumes:  
+        volumes:
             - $$cap_appname-uploads:/app/priv/static/uploads
         environment:
             DATABASE_URL: postgres://claper:$$cap_postgres_passwd@srv-captain--$$cap_appname-postgres:5432/claper
@@ -22,6 +24,7 @@ services:
             SECRET_KEY_BASE: $$cap_gen_random_hex(64)
         caproverExtra:
             containerHttpPort: '4000'
+
 caproverOneClickApp:
     variables:
         - id: $$cap_postgres_passwd
@@ -40,7 +43,7 @@ caproverOneClickApp:
           defaultValue: 15-alpine
     instructions:
         start: |-
-            Claper turns your presentations into an interactive, engaging and exciting experience. 
+            Claper turns your presentations into an interactive, engaging and exciting experience.
         end: |-
             Please enable websocket and HTTPS after the installation.
     displayName: Claper
