@@ -23,9 +23,9 @@ services:
             - $$cap_appname-extensions:/opt/sonarqube/extensions
         restart: always
         environment:
-            sonar.jdbc.username: sonarqube
-            sonar.jdbc.password: $$cap_pg_pass
-            sonar.jdbc.url: jdbc:postgresql://srv-captain--$$cap_appname-db/sonarqube
+            SONAR_JDBC_USERNAME: sonarqube
+            SONAR_JDBC_PASSWORD: $$cap_pg_pass
+            SONAR_JDBC_URL: jdbc:postgresql://srv-captain--$$cap_appname-db/sonarqube
         caproverExtra:
             containerHttpPort: '9000'
 caproverOneClickApp:
