@@ -47,7 +47,7 @@ caproverOneClickApp:
     - `dockerfileLines` which is a multiline variable, and can be used instead of `image` property in the service. You must delete the `image` property if you want to use this parameter.
     - `containerHttpPort` is useful when the underlying service uses a custom port for HTTP. If not provided, the default will be `"80"`
     - `notExposeAsWebApp` can be set to `"true"` when the underlying service is not an HTTP app. This is useful for databases and other internally used services.
-    - `websocketSupport` can be set to `"true"` to automatically enable Websocket Support.
+    - `websocketSupport` can be set to `"true"` to automatically enable Websocket Support. Only supported in versions 1.12+
 
 ### Icon
 - Make sure you add an app icon to the logos directory!
