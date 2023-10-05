@@ -8,6 +8,7 @@ services:
             - $$cap_appname-data:/app/data
         caproverExtra:
             containerHttpPort: '3001'
+            websocketSupport: 'true'
 caproverOneClickApp:
     variables:
         - id: $$cap_kuma_version
