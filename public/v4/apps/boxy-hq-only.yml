@@ -224,7 +224,7 @@ caproverOneClickApp:
 
         - id: $$cap_appname
           label: App Name
-          defaultValue: hoxy-hq
+          defaultValue: boxy-hq
           description: This is your app name. Pick a name such as hoxy-hq
         - id: $$cap_boxyhq_jackson_version
           label: BoxyHQ Jackson Version
