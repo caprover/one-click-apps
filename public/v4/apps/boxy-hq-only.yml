@@ -222,10 +222,6 @@ caproverOneClickApp:
           label: Next Telemetry disabled
           defaultValue: 1
 
-        - id: $$cap_appname
-          label: App Name
-          defaultValue: boxy-hq
-          description: This is your app name. Pick a name such as hoxy-hq
         - id: $$cap_boxyhq_jackson_version
           label: BoxyHQ Jackson Version
           defaultValue: 1.13.0
