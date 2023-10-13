@@ -3,7 +3,7 @@ services:
     $$cap_appname-db:
         image: bitnami/supabase-postgres:$$cap_app_version
         volumes:
-            - $$cap_appname-db-data:/var/lib/postgresql/data
+            - $$cap_appname-db-persistence:/bitnami/postgresql
         restart: always
         environment:
             POSTGRES_USER: $$cap_pg_user
