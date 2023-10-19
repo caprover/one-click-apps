@@ -1,0 +1,125 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        caproverExtra:
+            containerHttpPort: $$cap_WIREGUARD_PORT
+        image: linuxserver/wireguard:$$cap_WIREGUARD_VERSION
+        hostname: $$cap_appname.$$cap_root_domain
+        environment:
+            PUID: $$cap_WIREGUARD_PUID
+            PGID: $$cap_WIREGUARD_GUID
+            TZ: $$cap_WIREGUARD_TZ
+            SERVERURL: $$cap_WIREGUARD_SERVERURL
+            SERVERPORT: $$cap_WIREGUARD_SERVERPORT
+            PEERS: $$cap_WIREGUARD_PEERS
+            PEERDNS: $$cap_WIREGUARD_PEERDNS
+            INTERNAL_SUBNET: $$cap_WIREGUARD_INTERNAL_SUBNET
+            ALLOWEDIPS: $$cap_WIREGUARD_ALLOWEDIPS
+            PERSISTENTKEEPALIVE_PEERS: $$cap_WIREGUARD_PERSISTENTKEEPALIVe_PEERS
+            LOG_CONFS: $$cap_WIREGUARD_LOG_CONFS
+        volumes:
+            - $$cap_appname:/config
+            - /lib/modules:/lib/modules
+        ports:
+            - $$cap_WIREGUARD_PORT_UDP:$$cap_WIREGUARD_PORT_UDP
+        cap_add:
+            - NET_ADMIN
+            - SYS_MODULE
+
+caproverOneClickApp:
+    displayName: WireGuard
+    isOfficial: false
+    description: Fast, modern, secure VPN tunnel
+    documentation: https://www.wireguard.com/
+    instructions:
+        start: |-
+            WireGuard is a fast, modern, and secure VPN tunnel.
+            This app is based on the LinuxServer.io image.
+            **Important notes:**
+            - Update your CapRover installation to latest version
+            - You may need to **override CapRover's configuration** to use the newer Docker API version `1.4.1` (this can be done manually or by running `echo "{\"dockerApiVersion\":\"v1.41\"}" > /captain/data/config-override.json` and restarting CapRover with `docker service update captain-captain --force`)
+            - You need **access via SSH** to your server after deployment to modify a file (only once)
+            - You may need to **open the port** `51820` on your firewall
+        end: |-
+            WireGuard has been deployed **successfully**!
+            Before you can start using it, you need to perform some steps.
+            You only need to do this once.
+            **Please screenshot/copy the following instructions before proceeding:**
+            1. Go to the **HTTP Settings** of your deployment `$$cap_appname` here in CapRover
+            2. **Enable HTTPS**
+            3. Go to **App Configs** and paste the following snippet into **Service Update Override**: `{"TaskTemplate": { "ContainerSpec": { "CapabilityAdd": ["CAP_NET_ADMIN", "CAP_SYS_MODULE"], "Sysctls": { "net.ipv4.conf.all.src_valid_mark": "1" } } } }`
+            4. **Save & Update** and wait a minute
+            5. Access via SSH to your server and execute one of the following commands to get a peer config:
+            - `docker exec -it $(docker ps --filter name=srv-captain--$$cap_appname -q) cat /config/peer1/peer1.conf` (for the first peer)
+            - `docker exec -it $(docker ps --filter name=srv-captain--$$cap_appname -q) /app/show-peer 1 4 5` (for the QR code of the peers 1, 4 and 5)
+    variables:
+        - id: $$cap_WIREGUARD_VERSION
+          label: General | Version Tag
+          description: Check out their valid tags at https://hub.docker.com/r/linuxserver/wireguard/tags
+          defaultValue: 1.0.20210914
+          validRegex: /.{1,}/
+        - id: $$cap_WIREGUARD_PORT
+            label: General | Port
+            description: The port to expose the WireGuard service on
+            defaultValue: 80
+            validRegex: /.{1,}/
+        - id: $$cap_WIREGUARD_PORT_UDP
+            label: General | Port UDP
+            description: Port of the UDP connections. Should not be changed.
+            defaultValue: 51820
+            validRegex: /^[0-9]{1,5}$/
+        - id: $$cap_WIREGUARD_TZ
+            label: General | Timezone
+            description: The timezone to use for the container
+            defaultValue: Europe/London
+            validRegex: /.{1,}/
+        - id: $$cap_WIREGUARD_PUID
+            label: General | PUID
+            description: The user ID to run the container as
+            defaultValue: 1000
+            validRegex: /^[0-9]{1,5}$/
+        - id: $$cap_WIREGUARD_GUID
+            label: General | PGID
+            description: The group ID to run the container as
+            defaultValue: 1000
+            validRegex: /^[0-9]{1,5}$/
+        - id: $$cap_WIREGUARD_SERVERURL
+            label: WireGuard | Server URL
+            description: The public IP address or domain name of your server
+            defaultValue: $$cap_appname.$$cap_root_domain
+            validRegex: /.{1,}/
+        - id: $$cap_WIREGUARD_SERVERPORT
+            label: WireGuard | Server Port
+            description: The port to expose the WireGuard service on
+            defaultValue: 51820
+            validRegex: /^[0-9]{1,5}$/
+        - id: $$cap_WIREGUARD_PEERS
+            label: WireGuard | Peers
+            description: The number of peers to allow (concurrent connections)
+            defaultValue: 1
+            validRegex: /^[0-9]{1,5}$/
+        - id: $$cap_WIREGUARD_PEERDNS
+            label: WireGuard | Peer DNS
+            description: The DNS server to use for the peers
+            defaultValue: auto
+            validRegex: /.{1,}/
+        - id: $$cap_WIREGUARD_INTERNAL_SUBNET
+            label: WireGuard | Internal Subnet
+            description: The internal subnet to use for the peers
+            defaultValue:
+            validRegex: /.{1,}/
+        - id: $$cap_WIREGUARD_ALLOWEDIPS
+            label: WireGuard | Allowed IPs
+            description: The allowed IPs to use for the peers
+            defaultValue:
+            validRegex: /.{1,}/
+        - id: $$cap_WIREGUARD_PERSISTENTKEEPALIVe_PEERS
+            label: WireGuard | Persistent Keepalive Peers
+            description: The persistent keepalive peers to use for the peers
+            defaultValue:
+            validRegex: /.{1,}/
+        - id: $$cap_WIREGUARD_LOG_CONFS
+            label: WireGuard | Log Confs
+            description: The log confs to use for the peers
+            defaultValue:
+            validRegex: /.{1,}/
