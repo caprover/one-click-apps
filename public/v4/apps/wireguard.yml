@@ -106,14 +106,14 @@ caproverOneClickApp:
         - id: $$cap_WIREGUARD_INTERNAL_SUBNET
             label: WireGuard | Internal Subnet
             description: The internal subnet to use for the peers
-            defaultValue:
+            defaultValue: 10.13.13.0
             validRegex: /.{1,}/
         - id: $$cap_WIREGUARD_ALLOWEDIPS
             label: WireGuard | Allowed IPs
             description: The allowed IPs to use for the peers
-            defaultValue:
+            defaultValue: 0.0.0.0/0
             validRegex: /.{1,}/
-        - id: $$cap_WIREGUARD_PERSISTENTKEEPALIVe_PEERS
+        - id: $$cap_WIREGUARD_PERSISTENTKEEPALIVE_PEERS
             label: WireGuard | Persistent Keepalive Peers
             description: The persistent keepalive peers to use for the peers
             defaultValue:
@@ -121,5 +121,5 @@ caproverOneClickApp:
         - id: $$cap_WIREGUARD_LOG_CONFS
             label: WireGuard | Log Confs
             description: The log confs to use for the peers
-            defaultValue:
+            defaultValue: true
             validRegex: /.{1,}/
