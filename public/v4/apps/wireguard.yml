@@ -59,67 +59,67 @@ caproverOneClickApp:
           defaultValue: 1.0.20210914
           validRegex: /.{1,}/
         - id: $$cap_WIREGUARD_PORT
-            label: General | Port
-            description: The port to expose the WireGuard service on
-            defaultValue: 80
-            validRegex: /.{1,}/
+          label: General | Port
+          description: The port to expose the WireGuard service on
+          defaultValue: 80
+          validRegex: /.{1,}/
         - id: $$cap_WIREGUARD_PORT_UDP
-            label: General | Port UDP
-            description: Port of the UDP connections. Should not be changed.
-            defaultValue: 51820
-            validRegex: /^[0-9]{1,5}$/
+          label: General | Port UDP
+          description: Port of the UDP connections. Should not be changed.
+          defaultValue: 51820
+          validRegex: /^[0-9]{1,5}$/
         - id: $$cap_WIREGUARD_TZ
-            label: General | Timezone
-            description: The timezone to use for the container
-            defaultValue: Europe/London
-            validRegex: /.{1,}/
+          label: General | Timezone
+          description: The timezone to use for the container
+          defaultValue: Europe/London
+          validRegex: /.{1,}/
         - id: $$cap_WIREGUARD_PUID
-            label: General | PUID
-            description: The user ID to run the container as
-            defaultValue: 1000
-            validRegex: /^[0-9]{1,5}$/
+          label: General | PUID
+          description: The user ID to run the container as
+          defaultValue: 1000
+          validRegex: /^[0-9]{1,5}$/
         - id: $$cap_WIREGUARD_GUID
-            label: General | PGID
-            description: The group ID to run the container as
-            defaultValue: 1000
-            validRegex: /^[0-9]{1,5}$/
+          label: General | PGID
+          description: The group ID to run the container as
+          defaultValue: 1000
+          validRegex: /^[0-9]{1,5}$/
         - id: $$cap_WIREGUARD_SERVERURL
-            label: WireGuard | Server URL
-            description: The public IP address or domain name of your server
-            defaultValue: $$cap_appname.$$cap_root_domain
-            validRegex: /.{1,}/
+          label: WireGuard | Server URL
+          description: The public IP address or domain name of your server
+          defaultValue: $$cap_appname.$$cap_root_domain
+          validRegex: /.{1,}/
         - id: $$cap_WIREGUARD_SERVERPORT
-            label: WireGuard | Server Port
-            description: The port to expose the WireGuard service on
-            defaultValue: 51820
-            validRegex: /^[0-9]{1,5}$/
+          label: WireGuard | Server Port
+          description: The port to expose the WireGuard service on
+          defaultValue: 51820
+          validRegex: /^[0-9]{1,5}$/
         - id: $$cap_WIREGUARD_PEERS
-            label: WireGuard | Peers
-            description: The number of peers to allow (concurrent connections)
-            defaultValue: 1
-            validRegex: /^[0-9]{1,5}$/
+          label: WireGuard | Peers
+          description: The number of peers to allow (concurrent connections)
+          defaultValue: 1
+          validRegex: /^[0-9]{1,5}$/
         - id: $$cap_WIREGUARD_PEERDNS
-            label: WireGuard | Peer DNS
-            description: The DNS server to use for the peers
-            defaultValue: auto
-            validRegex: /.{1,}/
+          label: WireGuard | Peer DNS
+          description: The DNS server to use for the peers
+          defaultValue: auto
+          validRegex: /.{1,}/
         - id: $$cap_WIREGUARD_INTERNAL_SUBNET
-            label: WireGuard | Internal Subnet
-            description: The internal subnet to use for the peers
-            defaultValue: 10.13.13.0
-            validRegex: /.{1,}/
+          label: WireGuard | Internal Subnet
+          description: The internal subnet to use for the peers
+          defaultValue: 10.13.13.0
+          validRegex: /.{1,}/
         - id: $$cap_WIREGUARD_ALLOWEDIPS
-            label: WireGuard | Allowed IPs
-            description: The allowed IPs to use for the peers
-            defaultValue: 0.0.0.0/0
-            validRegex: /.{1,}/
+          label: WireGuard | Allowed IPs
+          description: The allowed IPs to use for the peers
+          defaultValue: 0.0.0.0/0
+          validRegex: /.{1,}/
         - id: $$cap_WIREGUARD_PERSISTENTKEEPALIVE_PEERS
-            label: WireGuard | Persistent Keepalive Peers
-            description: The persistent keepalive peers to use for the peers
-            defaultValue:
-            validRegex: /.{1,}/
+          label: WireGuard | Persistent Keepalive Peers
+          description: The persistent keepalive peers to use for the peers
+          defaultValue:
+          validRegex: /.{1,}/
         - id: $$cap_WIREGUARD_LOG_CONFS
-            label: WireGuard | Log Confs
-            description: The log confs to use for the peers
-            defaultValue: true
-            validRegex: /.{1,}/
+          label: WireGuard | Log Confs
+          description: The log confs to use for the peers
+          defaultValue: true
+          validRegex: /.{1,}/
