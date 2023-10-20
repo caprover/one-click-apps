@@ -14,7 +14,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_version
           label: PiGallery2 Version
-          defaultValue: '1.9.5'
+          defaultValue: '2.0.0'
           description: Check out their docker page for the valid tags https://hub.docker.com/r/bpatrik/pigallery2/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_images
