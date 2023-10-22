@@ -50,6 +50,7 @@ caproverOneClickApp:
             For larger newsletter projects, AWS SES, Sendgrid, and Mailgun are supported in addition to SMTP.
         end: |-
             Keila has been successfully deployed! It might take few moments before it's fully started.
+            You need to **turn on Websocket Support** in the app's HTTP settings
             You can access it at `http://$$cap_appname.$$cap_root_domain`.
             Root user is `$$cap_KEILA_USER` with password `$$cap_KEILA_PASSWORD`.
     displayName: Keila
