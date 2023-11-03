@@ -2,7 +2,8 @@ captainVersion: 4
 services:
     $$cap_appname:
         caproverExtra:
-            containerHttpPort: 80
+            containerHttpPort: "80"
+            websocketSupport: "true"
         image: ghcr.io/azuracast/azuracast:$$cap_AZURACAST_VERSION
         hostname: $$cap_appname.$$cap_root_domain
         restart: unless-stopped
@@ -158,8 +159,9 @@ services:
         environment:
             AZURACAST_VERSION: $$cap_AZURACAST_VERSION
             AZURACAST_SFTP_PORT: $$cap_AZURACAST_SFTP_PORT
-            PUID: $$cap_PUID
-            PGID: $$cap_PGID
+            MYSQL_ROOT_PASSWORD: $$cap_AZURACAST_DB_PASSWORD
+            PUID: $$cap_AZURACAST_PUID
+            PGID: $$cap_AZURACAST_PGID
         volumes:
             - $$cap_appname-stations:/var/azuracast/stations
             - $$cap_appname-backups:/var/azuracast/backups
@@ -183,12 +185,16 @@ caproverOneClickApp:
           label: Version
           description: Valid values include "latest" for Rolling Release, "stable" for Stable release channel, and any specific version.
           defaultValue: 'latest'
-        - id: $$cap_PUID
+        - id: $$cap_AZURACAST_DB_PASSWORD
+          label: MariaDB Root Password
+          description: Specify a password for the root user of the built-in MariaDB database.
+          validRegex: /.{1,}/
+        - id: $$cap_AZURACAST_PUID
           label: User ID for AzuraCast User (Advanced)
           defaultValue: '1000'
           description: User ID that the process uses; changing this is only necessary if you're using custom file mounts.
           validRegex: /.{1,}/
-        - id: $$cap_PGID
+        - id: $$cap_AZURACAST_PGID
           label: Group ID for AzuraCast User (Advanced)
           defaultValue: '1000'
           description: Group ID that the process uses; changing this is only necessary if you're using custom file mounts.
