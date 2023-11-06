@@ -2,8 +2,8 @@ captainVersion: 4
 services:
     $$cap_appname:
         caproverExtra:
-            containerHttpPort: "80"
-            websocketSupport: "true"
+            containerHttpPort: '80'
+            websocketSupport: 'true'
         image: ghcr.io/azuracast/azuracast:$$cap_AZURACAST_VERSION
         hostname: $$cap_appname.$$cap_root_domain
         restart: unless-stopped
@@ -173,6 +173,13 @@ caproverOneClickApp:
             AzuraCast is a "web radio station in a box". We include everything you need to broadcast your own Internet
             radio station, along with a powerful web interface to manage your stations, let live DJs connect to your stream,
             and view detailed reports about your audience.
+
+            Note: This one-click app exposes all the ports in the range from 8000-8500 that are needed to run your first 
+            50 stations, both for outgoing broadcasting and incoming DJ connections. If you're solely using the AzuraCast
+            AutoDJ, these ports aren't necessary as you can just enable the "Use Web Proxy" setting inside AzuraCast. If you
+            plan to use direct ports or accept incoming DJ connections, ensure the ports in the range from 8000 to 8500
+            (excluding port 8080, as it's commonly used for other applications) are not used by other applications and are cleared
+            through your firewall.
         end: |-
             AzuraCast is up and running! You should now complete the web setup in your browser at
             http://$$cap_appname.$$cap_root_domain/
