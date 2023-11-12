@@ -40,7 +40,7 @@ caproverOneClickApp:
         - id: $$cap_supertokens_version
           label: SuperTokens Version
           description: Choose the latest version of SuperTokens from https://hub.docker.com/r/supertokens/supertokens-postgresql/tags
-          defaultValue: "7.0"
+          defaultValue: '7.0'
         - id: $$cap_supertokens_api_keys
           label: API Keys
           validRegex: '/.{1,}/'
@@ -59,7 +59,7 @@ caproverOneClickApp:
           label: Postgres User Password
           description: User password for the database instance.
           defaultValue: $$cap_gen_random_hex(16)
-          validRegex: /^(?=.*\d).{10,}$/        
+          validRegex: /^(?=.*\d).{10,}$/
         - id: $$cap_pg_db
           label: Postgres database name
           description: Name of the databse
