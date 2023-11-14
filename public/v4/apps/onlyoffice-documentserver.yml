@@ -10,7 +10,7 @@ services:
             JWT_IN_BODY: $$cap_body
         volumes:
             - $$cap_appname-logs:/var/log/onlyoffice
-            - $$cap_appname-data:/var/www/onlyoffice/Data 
+            - $$cap_appname-data:/var/www/onlyoffice/Data
             - $$cap_appname-lib:/var/lib/onlyoffice
             - $$cap_appname-rabbitmq:/var/lib/rabbitmq
             - $$cap_appname-redis:/var/lib/redis
