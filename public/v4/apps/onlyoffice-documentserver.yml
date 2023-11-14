@@ -9,12 +9,13 @@ services:
             JWT_HEADER: $$cap_header
             JWT_IN_BODY: $$cap_body
         volumes:
-            - $$cap_appname-logs:/app/onlyoffice/DocumentServer/logs
-            - $$cap_appname-data:/app/onlyoffice/DocumentServer/data
-            - $$cap_appname-lib:/app/onlyoffice/DocumentServer/lib
-            - $$cap_appname-rabbitmq:/app/onlyoffice/DocumentServer/rabbitmq
-            - $$cap_appname-redis:/app/onlyoffice/DocumentServer/redis
-            - $$cap_appname-db:/app/onlyoffice/DocumentServer/db
+            - $$cap_appname-logs:/var/log/onlyoffice
+            - $$cap_appname-data:/var/www/onlyoffice/Data 
+            - $$cap_appname-lib:/var/lib/onlyoffice
+            - $$cap_appname-rabbitmq:/var/lib/rabbitmq
+            - $$cap_appname-redis:/var/lib/redis
+            - $$cap_appname-postgresql:/var/lib/postgresql
+            - $$cap_appname-fonts:/usr/share/fonts/truetype/custom
 caproverOneClickApp:
     variables:
         - id: '$$cap_app_version'
