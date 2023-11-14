@@ -17,6 +17,8 @@ services:
         documentation: Taken from https://github.com/nextcloud/docker/blob/master/.examples/docker-compose/with-nginx-proxy/mariadb-cron-redis/apache/docker-compose.yml
         image: redis:$$cap_redis_version
         restart: always
+        volumes:
+            - $$cap_appname-redis-data:/data
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname:
