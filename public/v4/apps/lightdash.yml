@@ -15,22 +15,22 @@ services:
       TRUST_PROXY: false
       LIGHTDASH_SECRET: $$cap_gen_random_hex(16)
       PORT: 8080
-      LIGHTDASH_LOG_LEVEL: INFO
+      LIGHTDASH_LOG_LEVEL: info
       LIGHTDASH_INSTALL_ID:
       LIGHTDASH_INSTALL_TYPE: docker_image
       AUTH_DISABLE_PASSWORD_AUTHENTICATION: false
       AUTH_GOOGLE_ENABLED: false
       AUTH_GOOGLE_OAUTH2_CLIENT_ID:
       AUTH_GOOGLE_OAUTH2_CLIENT_SECRET:
-      SITE_URL: http://srv-captain--$$cap_appname
-      EMAIL_SMTP_HOST:
-      EMAIL_SMTP_PORT:
-      EMAIL_SMTP_SECURE:
+      SITE_URL: http://$$cap_appname.$$cap_root_domain
+      EMAIL_SMTP_HOST: smtp.mailtrap.io
+      EMAIL_SMTP_PORT: 2525
+      EMAIL_SMTP_SECURE: true
       EMAIL_SMTP_USER:
       EMAIL_SMTP_PASSWORD:
-      EMAIL_SMTP_ALLOW_INVALID_CERT:
-      EMAIL_SMTP_SENDER_NAME:
-      EMAIL_SMTP_SENDER_EMAIL:
+      EMAIL_SMTP_ALLOW_INVALID_CERT: false
+      EMAIL_SMTP_SENDER_NAME: Lightdash
+      EMAIL_SMTP_SENDER_EMAIL: $$cap_appname@$$cap_root_domain
       ALLOW_MULTIPLE_ORGS: false
       LIGHTDASH_QUERY_MAX_LIMIT: 5000
       LIGHTDASH_MAX_PAYLOAD: 5mb
