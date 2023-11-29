@@ -6,7 +6,7 @@ services:
     depends_on:
       - $$cap_appname-db
     environment:
-      PGHOST: $$cap_appname-db
+      PGHOST: srv-captain--$$cap_appname-db
       PGPORT: 5432
       PGUSER: lightdash
       PGPASSWORD: $$cap_db_pass
@@ -15,14 +15,14 @@ services:
       TRUST_PROXY: false
       LIGHTDASH_SECRET: $$cap_gen_random_hex(16)
       PORT: 8080
-      LIGHTDASH_LOG_LEVEL:
+      LIGHTDASH_LOG_LEVEL: INFO
       LIGHTDASH_INSTALL_ID:
       LIGHTDASH_INSTALL_TYPE: docker_image
       AUTH_DISABLE_PASSWORD_AUTHENTICATION: false
       AUTH_GOOGLE_ENABLED: false
       AUTH_GOOGLE_OAUTH2_CLIENT_ID:
       AUTH_GOOGLE_OAUTH2_CLIENT_SECRET:
-      SITE_URL:
+      SITE_URL: http://srv-captain--$$cap_appname
       EMAIL_SMTP_HOST:
       EMAIL_SMTP_PORT:
       EMAIL_SMTP_SECURE:
@@ -32,7 +32,7 @@ services:
       EMAIL_SMTP_SENDER_NAME:
       EMAIL_SMTP_SENDER_EMAIL:
       ALLOW_MULTIPLE_ORGS: false
-      LIGHTDASH_QUERY_MAX_LIMIT:
+      LIGHTDASH_QUERY_MAX_LIMIT: 5000
       LIGHTDASH_MAX_PAYLOAD: 5mb
       HEADLESS_BROWSER_HOST: srv-captain--$$cap_appname-headless-browser
       HEADLESS_BROWSER_PORT: 3000
@@ -40,6 +40,8 @@ services:
       SCHEDULER_ENABLED: true
     volumes:
       - "$$cap_appname-dbt:/usr/app/dbt"
+    caproverExtra:
+      containerHttpPort: '8080'
 
   $$cap_appname-db:
     image: postgres:15.4
@@ -73,7 +75,7 @@ caproverOneClickApp:
 
   instructions:
     start: |-
-      LightdEnable everybody in your company to answer their own questions using dataash
+      Enable everybody in your company to answer their own questions using dataash
     end: |-
       Done! 😄
       Lightdash is available at http://$$cap_appname.$$cap_root_domain
