@@ -1,0 +1,83 @@
+captainVersion: 4
+version: "3.8"
+services:
+  $$cap_appname:
+    image: lightdash/lightdash:$$cap_app_version
+    depends_on:
+      - $$cap_appname-db
+    environment:
+      PGHOST: $$cap_appname-db
+      PGPORT: 5432
+      PGUSER: lightdash
+      PGPASSWORD: $$cap_db_pass
+      PGDATABASE: lightdash
+      SECURE_COOKIES: false
+      TRUST_PROXY: false
+      LIGHTDASH_SECRET: $$cap_gen_random_hex(16)
+      PORT: 8080
+      LIGHTDASH_LOG_LEVEL:
+      LIGHTDASH_INSTALL_ID:
+      LIGHTDASH_INSTALL_TYPE: docker_image
+      AUTH_DISABLE_PASSWORD_AUTHENTICATION: false
+      AUTH_GOOGLE_ENABLED: false
+      AUTH_GOOGLE_OAUTH2_CLIENT_ID:
+      AUTH_GOOGLE_OAUTH2_CLIENT_SECRET:
+      SITE_URL:
+      EMAIL_SMTP_HOST:
+      EMAIL_SMTP_PORT:
+      EMAIL_SMTP_SECURE:
+      EMAIL_SMTP_USER:
+      EMAIL_SMTP_PASSWORD:
+      EMAIL_SMTP_ALLOW_INVALID_CERT:
+      EMAIL_SMTP_SENDER_NAME:
+      EMAIL_SMTP_SENDER_EMAIL:
+      ALLOW_MULTIPLE_ORGS: false
+      LIGHTDASH_QUERY_MAX_LIMIT:
+      LIGHTDASH_MAX_PAYLOAD: 5mb
+      HEADLESS_BROWSER_HOST: srv-captain--$$cap_appname-headless-browser
+      HEADLESS_BROWSER_PORT: 3000
+      RUDDERSTACK_WRITE_KEY:
+      SCHEDULER_ENABLED: true
+    volumes:
+      - "$$cap_appname-dbt:/usr/app/dbt"
+
+  $$cap_appname-db:
+    image: postgres:15.4
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: $$cap_db_pass
+      POSTGRES_USER: lightdash
+      POSTGRES_DB: lightdash
+    volumes:
+      - $$cap_appname-db-data:/var/lib/postgresql/data
+
+  $$cap_appname-headless-browser:
+    image: browserless/chrome
+    restart: always
+    ports:
+      - "3001:3000"
+
+volumes:
+  db-data:
+
+caproverOneClickApp:
+  variables:
+    - id: $$cap_app_version
+      label: Lightdash
+      defaultValue: '0.885.0'
+      description: Check out Lightdash Docker page for the valid tags https://hub.docker.com/r/lightdash/lightdash/tags
+      validRegex: '/.{1,}/'
+    - id: $$cap_db_pass
+      label: Database Password
+      defaultValue: $$cap_gen_random_hex(16)
+
+  instructions:
+    start: |-
+      LightdEnable everybody in your company to answer their own questions using dataash
+    end: |-
+      Done! 😄
+      Lightdash is available at http://$$cap_appname.$$cap_root_domain
+  displayName: Lightdash
+  isOfficial: true
+  description: Open source BI for teams that move fast ⚡️
+  documentation: This docker-compose is taken from https://github.com/lightdash/lightdash/blob/main/docker-compose.yml
