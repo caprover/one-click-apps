@@ -91,5 +91,4 @@ caproverOneClickApp:
     displayName: wakapi
     isOfficial: true
     description: Wakapi is an open-source tool that helps you keep track of the time you have spent coding on different projects in different programming languages and more.
-                 Ideal for statistics freaks and anyone else.
     documentation: Official docs are [here](https://github.com/muety/wakapi#%EF%B8%8F-how-to-use)
