@@ -12,12 +12,12 @@ services:
         volumes:
             - $$cap_appname:/etc/linkding/data
 caproverOneClickApp:
-    displayName: n8n.io (SQLite)
-    description: Node based workflow automation tool
-    isOfficial: false
+    displayName: Linkding
+    description: Self-hosted bookmark manager that is designed be to be minimal, fast, and easy to set up
+    isOfficial: true
     instructions:
         start: |-
-            Self-hosted bookmark manager that is designed be to be minimal, fast, and easy to set up
+            Self-hosted bookmark manager that is designed be to be minimal, fast, and easy to set up.
         end: |-
             linkding has been successfully deployed! It might take few moments before it's fully started.
             You can access it at `http://$$cap_appname.$$cap_root_domain` and set up your account.
@@ -28,9 +28,8 @@ caproverOneClickApp:
           defaultValue: '1.23.0'
           validRegex: /.+/
         - id: $$cap_LD_SUPERUSER_NAME
-          label: Application | Superuser name
+          label: Superuser name
           description: Username of the initial superuser to create, leave empty to not create one
-          defaultValue: 'admin'
         - id: $$cap_LD_SUPERUSER_PASSWORD
-          label: Application | Superuser password
-          description: Password for the initial superuser, leave empty to disable credentials authentication and rely on proxy authentication instead
+          label: Superuser password
+          description: Password for the initial superuser, leave empty to disable authentication and rely on proxy authentication instead
