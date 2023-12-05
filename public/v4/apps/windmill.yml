@@ -12,15 +12,13 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
 
-    $$cap_appname:
+    $$cap_appname-server:
         image: ghcr.io/windmill-labs/windmill:$$cap_app_version
         expose:
             - 8000
         environment:
             DATABASE_URL: postgres://postgres:$$cap_postgres_pass@srv-captain--$$cap_appname-postgres/windmill?sslmode=disable
-            BASE_URL: $$cap_wm_base_url
-            RUST_LOG: info
-            NUM_WORKERS: 0
+            MODE: server
         depends_on:
             - $$cap_appname-postgres
         caproverExtra:
@@ -30,13 +28,11 @@ services:
         image: ghcr.io/windmill-labs/windmill:$$cap_app_version
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
+            - $$cap_appname-worker-dependency-cache:/tmp/windmill/cache
         environment:
             DATABASE_URL: postgres://postgres:$$cap_postgres_pass@srv-captain--$$cap_appname-postgres/windmill?sslmode=disable
-            BASE_URL: $$cap_wm_base_url
-            RUST_LOG: info
-            NUM_WORKERS: 1
-            DISABLE_SERVER: 'true'
-            WORKER_TAGS: deno,python3,go,bash,dependency,flow,hub,other,bun
+            MODE: worker
+            WORKER_GROUP: default
         depends_on:
             - $$cap_appname-postgres
         caproverExtra:
@@ -44,16 +40,10 @@ services:
 
     $$cap_appname-worker-native:
         image: ghcr.io/windmill-labs/windmill:$$cap_app_version
-        volumes:
-            - /var/run/docker.sock:/var/run/docker.sock
         environment:
             DATABASE_URL: postgres://postgres:$$cap_postgres_pass@srv-captain--$$cap_appname-postgres/windmill?sslmode=disable
-            BASE_URL: $$cap_wm_base_url
-            RUST_LOG: info
-            NUM_WORKERS: 1
-            DISABLE_SERVER: 'true'
-            PARALLEL_NATIVE_JOBS: 12
-            WORKER_TAGS: nativets,postgresql,mysql,graphql
+            MODE: worker
+            WORKER_GROUP: native
         depends_on:
             - $$cap_appname-postgres
         caproverExtra:
@@ -99,14 +89,9 @@ caproverOneClickApp:
     variables:
         - id: $$cap_app_version
           label: Windmill Version
-          defaultValue: '1.135.1'
+          defaultValue: '1.219.1'
           description: Checkout their github page for the valid tags https://github.com/windmill-labs/windmill/releases
           validRegex: /^([^\s^\/])+$/
-        - id: $$cap_wm_base_url
-          label: WM Base URL
-          description: |-
-              Server fully qualified url of the user-facing URL.
-              Example: https://windmill.example.com
         - id: $$cap_postgres_version
           label: Postgres Version
           defaultValue: '15-alpine'
