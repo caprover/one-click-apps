@@ -4,7 +4,6 @@ services:
         caproverExtra:
             containerHttpPort: $$cap_KEILA_PORT
         image: pentacent/keila:$$cap_KEILA_VERSION
-        hostname: $$cap_appname.$$cap_root_domain
         environment:
             DB_URL: postgres://$$cap_POSTGRES_USER:$$cap_POSTGRES_PASSWORD@srv-captain--$$cap_appname-db/$$cap_POSTGRES_DATABASE
             DB_ENABLE_SSL: $$cap_KEILA_DB_ENABLE_SSL
@@ -23,11 +22,14 @@ services:
             MAILER_SMTP_PORT: $$cap_KEILA_MAILER_SMTP_PORT
             MAILER_SMTP_USER: $$cap_KEILA_MAILER_SMTP_USER
             MAILER_SMTP_PASSWORD: $$cap_KEILA_MAILER_SMTP_PASSWORD
-            HCAPTCHA_SITE_KEY: $$cap_KEILA_HCAPTCHA_SITE_KEY
-            HCAPTCHA_SECRET_KEY: $$cap_KEILA_HCAPTCHA_SECRET_KEY
-            HCAPTCHA_URL: $$cap_KEILA_HCAPTCHA_URL
+            CAPTCHA_PROVIDER: $$cap_KEILA_CAPTCHA_PROVIDER
+            CAPTCHA_SITE_KEY: $$cap_KEILA_CAPTCHA_SITE_KEY
+            CAPTCHA_SECRET_KEY: $$cap_KEILA_CAPTCHA_SECRET_KEY
+            CAPTCHA_URL: $$cap_KEILA_CAPTCHA_URL
         depends_on:
             - $$cap_appname-db
+        volumes:
+            - $$cap_appname-upload:/opt/app/uploads
 
     $$cap_appname-db:
         caproverExtra:
@@ -48,6 +50,7 @@ caproverOneClickApp:
             For larger newsletter projects, AWS SES, Sendgrid, and Mailgun are supported in addition to SMTP.
         end: |-
             Keila has been successfully deployed! It might take few moments before it's fully started.
+            You need to **turn on Websocket Support** in the app's HTTP settings
             You can access it at `http://$$cap_appname.$$cap_root_domain`.
             Root user is `$$cap_KEILA_USER` with password `$$cap_KEILA_PASSWORD`.
     displayName: Keila
@@ -58,7 +61,7 @@ caproverOneClickApp:
         - id: $$cap_KEILA_VERSION
           label: Keila | Version Tag
           description: Check out their valid tags at https://hub.docker.com/r/pentacent/keila/tags
-          defaultValue: '0.9'
+          defaultValue: '0.12.2'
           validRegex: /.{1,}/
         - id: $$cap_KEILA_PORT
           label: Keila | Port
@@ -132,15 +135,20 @@ caproverOneClickApp:
           label: Keila | SMTP Password
           description: Password for the SMTP server.
           validRegex: /.{1,}/
-        - id: $$cap_KEILA_HCAPTCHA_SITE_KEY
-          label: Keila | hCaptcha Site Key
-          description: Site key for hCaptcha.
-        - id: $$cap_KEILA_HCAPTCHA_SECRET_KEY
-          label: Keila | hCaptcha Secret Key
-          description: Secret key for hCaptcha.
-        - id: $$cap_KEILA_HCAPTCHA_URL
-          label: Keila | hCaptcha Verification URL
-          description: Verification URL for hCaptcha.
+        - id: $$cap_KEILA_CAPTCHA_PROVIDER
+          label: Keila | Captcha Provider
+          description: Provider that serves the Captcha.
+          defaultValue: 'hcaptcha'
+          validRegex: /^(hcaptcha|friendly_captcha)$/
+        - id: $$cap_KEILA_CAPTCHA_SITE_KEY
+          label: Keila | Captcha Site Key
+          description: Site key for captcha provider.
+        - id: $$cap_KEILA_CAPTCHA_SECRET_KEY
+          label: Keila | Captcha Secret Key
+          description: Secret key for captcha provider.
+        - id: $$cap_KEILA_CAPTCHA_URL
+          label: Keila | Captcha Verification URL
+          description: Verification URL for captcha provider.
         - id: $$cap_POSTGRES_VERSION
           label: PostgreSQL | Version Tag
           description: Check out their valid tags at https://hub.docker.com/_/postgres/tags
