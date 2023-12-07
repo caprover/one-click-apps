@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname-db:
-        image: lscr.io/linuxserver/mariadb
+        image: lscr.io/linuxserver/mariadb:$$cap_mariadb_version
         environment:
             PGID: 1000
             PUID: 1000
@@ -19,7 +19,7 @@ services:
             PUID: 1000
             PGID: 1000
             APP_URL: http://$$cap_appname.$$cap_root_domain
-            DB_HOST: srv-captain--$$cap_appname-db  
+            DB_HOST: srv-captain--$$cap_appname-db
             DB_PORT: 3306
             DB_USER: bookstack
             DB_PASS: $$cap_DB_PASS
@@ -42,6 +42,10 @@ caproverOneClickApp:
           label: Version Tag
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/bookstack/tags
           defaultValue: 'v23.10.4-ls118'
+        - id: $$cap_mariadb_version
+          label: MariaDB Version Tag
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/mariadb/tags
+          defaultValue: '10.11.5-r0-ls122'
     instructions:
         start: |-
             A platform to create documentation/wiki content built with PHP & Laravel.
