@@ -54,10 +54,8 @@ services:
             - $$cap_appname-db-data:/var/lib/postgresql/data
 
     $$cap_appname-headless-browser:
-        image: browserless/chrome
+        image: browserless/chrome:1-puppeteer-21.4.1
         restart: always
-        ports:
-            - '3001:3000'
 
 volumes:
     db-data:
@@ -75,11 +73,20 @@ caproverOneClickApp:
 
     instructions:
         start: |-
-            Enable everybody in your company to answer their own questions using Lightdash
+            Open source BI for teams that move fast ⚡️
+
+            Lightdash instantly turns your dbt project into a full-stack BI platform.
+
+            Analysts write metrics and Lightdash enables self-serve for the entire business.
+
+            Enable everybody in your company to answer their own questions using Lightdash.
         end: |-
             Done! 😄
+
             Lightdash is available at http://$$cap_appname.$$cap_root_domain
+
+            More information can be found at https://docs.lightdash.com/get-started/intro
     displayName: Lightdash
     isOfficial: true
-    description: Open source BI for teams that move fast ⚡️
+    description: Open source BI. Lightdash instantly turns your dbt project into a full-stack BI platform.
     documentation: This docker-compose is taken from https://github.com/lightdash/lightdash/blob/main/docker-compose.yml
