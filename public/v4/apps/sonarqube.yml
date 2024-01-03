@@ -13,7 +13,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             ports:
-            - 5432:5432
+                - 5432:5432
     $$cap_appname:
         image: sonarqube:$$cap_sonar_version
         depends_on:
