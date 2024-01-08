@@ -27,7 +27,7 @@ services:
             PAPERLESS_ADMIN_USER: $$cap_admin_user
             PAPERLESS_ADMIN_PASSWORD: $$cap_admin_password
             PAPERLESS_ADMIN_MAIL: $$cap_admin_email
-            PAPERLESS_COOKIE_PREFIX: $$cap_cookie_prefix
+            PAPERLESS_COOKIE_PREFIX: $$cap_appname
             # OCR settings (https://paperless-ng.readthedocs.io/en/latest/configuration.html#ocr-settings)
             PAPERLESS_OCR_LANGUAGE: $$cap_ocr_language
             PAPERLESS_OCR_MODE: $$cap_ocr_mode
@@ -180,11 +180,6 @@ caproverOneClickApp:
           label: Admin Email
           defaultValue: root@localhost
           validRegex: /^([^\s^\/])+$/
-
-        - id: $$cap_cookie_prefix
-          label: Cookie Prefix
-          defaultValue: $$cap_appname
-          description: Specify a prefix that is added to the cookies used by paperless to identify the currently logged in user. This is useful for when you’re running two instances of paperless on the same host.
 
         - id: $$cap_ocr_language
           label: OCR Language
