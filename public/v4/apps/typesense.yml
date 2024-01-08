@@ -3,8 +3,6 @@ services:
     $$cap_appname:
         image: typesense/typesense:$$cap_version
         restart: on-failure
-        ports:
-            - '8108:8108'
         volumes:
             - $$cap_appname-data:/data
         caproverExtra:
