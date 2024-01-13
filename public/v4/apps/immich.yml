@@ -107,7 +107,7 @@ caproverOneClickApp:
           defaultValue: 'immich'
         - label: PostgreSQL database version
           id: $$cap_app_db_ver
-          description: Immich uses a special version of PostgreSQL so I wouldn't touch this.
+          description: Immich uses PostgreSQL with the pgvecto.rs extension. Check the valid tags at https://hub.docker.com/r/tensorchord/pgvecto-rs/tags
           defaultValue: pg14-v0.1.11@sha256:0335a1a22f8c5dd1b697f14f079934f5152eaaa216c09b61e293be285491f8ee
         - label: Upload directory
           id: $$cap_app_upload_location
