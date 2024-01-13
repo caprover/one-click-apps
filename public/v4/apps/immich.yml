@@ -36,6 +36,7 @@ services:
             DB_HOSTNAME: srv-captain--$$cap_appname-db
             REDIS_HOSTNAME: srv-captain--$$cap_appname-redis
             UPLOAD_LOCATION: $$cap_app_upload_location
+            IMMICH_MACHINE_LEARNING_URL: http://srv-captain--$$cap_appname-machine-learning:3003
         volumes:
             - $$cap_app_upload_location:/usr/src/app/upload
             - /etc/localtime:/etc/localtime:ro
