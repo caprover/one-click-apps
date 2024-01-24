@@ -14,4 +14,4 @@ jobs:
           node-version: 14
       - run: npm ci && npm run publish
         env:
-          GITHUB_PERSONAL_TOKEN: ${{secrets.GITHUB_PERSONAL_TOKEN}}
+          GITHUB_PERSONAL_TOKEN: ${{secrets.GH_PERSONAL_TOKEN}}
