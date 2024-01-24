@@ -1,0 +1,75 @@
+captainVersion: 4
+services:
+    $$cap_appname-redis:
+        image: redis:$$cap_redis_version
+        container_name: $$cap_appname-redis
+        restart: always
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname:
+        image: ghcr.io/gramps-project/grampsweb:$$cap_version
+        restart: always
+        environment:
+            GRAMPSWEB_TREE: 'Gramps Web' # will create a new tree if not exists
+            GRAMPSWEB_CELERY_CONFIG__broker_url: 'redis://srv-captain--$$cap_appname-redis:6379/0'
+            GRAMPSWEB_CELERY_CONFIG__result_backend: 'redis://srv-captain--$$cap_appname-redis:6379/0'
+            GRAMPSWEB_RATELIMIT_STORAGE_URI: redis://srv-captain--$$cap_appname-redis:6379/1
+        depends_on:
+            - $$cap_appname-redis
+        volumes:
+            - $$cap_appname-users:/app/users # persist user database
+            - $$cap_appname-index:/app/indexdir # persist search index
+            - $$cap_appname-thumbcache:/app/thumbnail_cache # persist thumbnails
+            - $$cap_appname-secret:/app/secret # persist flask secret
+            - $$cap_appname-db:/root/.gramps/grampsdb # persist Gramps database
+            - $$cap_appname-media:/app/media # persist media files
+            - $$cap_appname-tmp:/tmp
+        caproverExtra:
+            containerHttpPort: '5000'
+    $$cap_appname-celery:
+        restart: always
+        environment:
+            GRAMPSWEB_TREE: 'Gramps Web' # will create a new tree if not exists
+            GRAMPSWEB_CELERY_CONFIG__broker_url: 'redis://srv-captain--$$cap_appname-redis:6379/0'
+            GRAMPSWEB_CELERY_CONFIG__result_backend: 'redis://srv-captain--$$cap_appname-redis:6379/0'
+            GRAMPSWEB_RATELIMIT_STORAGE_URI: redis://srv-captain--$$cap_appname-redis:6379/1
+        volumes:
+            - $$cap_appname-users:/app/users # persist user database
+            - $$cap_appname-index:/app/indexdir # persist search index
+            - $$cap_appname-thumbcache:/app/thumbnail_cache # persist thumbnails
+            - $$cap_appname-secret:/app/secret # persist flask secret
+            - $$cap_appname-db:/root/.gramps/grampsdb # persist Gramps database
+            - $$cap_appname-media:/app/media # persist media files
+            - $$cap_appname-tmp:/tmp
+        ports: []
+        container_name: $$cap_appname-celery
+        depends_on:
+            - $$cap_appname-redis
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+            dockerfileLines:
+                - FROM ghcr.io/gramps-project/grampsweb:$$cap_version
+                - CMD exec celery -A gramps_webapi.celery worker --loglevel=INFO
+
+caproverOneClickApp:
+    variables:
+        - id: $$cap_version
+          label: Version Tag
+          description: Check out their GitHub page for the valid tags https://github.com/gramps-project/Gramps.js/pkgs/container/grampsweb
+          defaultValue: 'v0.22.0'
+        - id: $$cap_redis_version
+          label: Redis Version
+          defaultValue: 7.0.10-alpine
+          description: Check out their Docker page for the valid tags https://hub.docker.com/_/redis?tab=tags
+          validRegex: /^([^\s^\/])+$/
+    instructions:
+        start: |-
+            Gramps Web is a web app for collaborative genealogy. It is based on and interoperable with Gramps, the leading open source genealogy desktop application.
+            Gramps Web is open source software and puts your privacy and your control of your research data first.
+        end: |-
+            Done! 🚀
+            ⚠️ The web API must be served to the public internet over HTTPS.
+    displayName: Gramps Web
+    isOfficial: true
+    description: Web frontend for the Gramps genealogical research system.
+    documentation: Taken from https://gramps-project.github.io/web/Deployment/
