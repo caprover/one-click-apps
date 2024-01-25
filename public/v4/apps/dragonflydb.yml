@@ -20,8 +20,9 @@ caproverOneClickApp:
           validRegex: ''
         - id: $$cap_dragonflydb_maxmem
           label: Dragonfly Max Memory
+          description: 'Dragonfly recommends at least 4GB to take advantage of its full power, however you can run with smaller amounts if necessary.'
           validRegex: /^[1-9]\d*GB$/
-          defaultValue: 2GB
+          defaultValue: 4GB
     instructions:
         start: >-
             Dragonfly is a simple, performant, and cost-efficient in-memory data store. Dragonfly is fully compatible with Redis APIs but without the Redis management complexity.
