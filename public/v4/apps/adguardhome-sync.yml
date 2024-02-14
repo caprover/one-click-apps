@@ -43,13 +43,13 @@ caproverOneClickApp:
       label: Adguard Password
       description: The password you use to log into all your AdGuardHome instances
     - id: $$cap_origin_url
-      label: Origin AdGuardHome URL
-      defaultValue: http://172.16.1.51:8080
+      label: AdGuardHome Origin URL
+      defaultValue: http://srv-captain--adguard
       description: The URL you use to log into your primary instance of AdGuardHome.
     - id: $$cap_replica_url
-      label: Replica1 AdGuardHome URL
+      label: AdGuardHome Replica URL
       defaultValue: http://172.16.1.50:8080
-      description: The URL you use to log into your replica instance of AdGuardHome.
+      description: The URL you use to log into your replica instance of AdGuardHome.  You can add additional replicas after the installation by adding environment variables.
   instructions:
     start: >-
       AdGuardHome Sync keeps one (or more) AdGuardHome replicas synced from an origin instance of AdGuardHome.
@@ -58,7 +58,7 @@ caproverOneClickApp:
 
       Note, the apps behaviour can be adjusted via [environment variables](https://github.com/bakito/adguardhome-sync). You can add additional replicas (eg. `REPLICA2_*`). You can change authentication details for each replica.  You can disable some types of data from syncing.
       
-      You can log into the [web interface]( http://$$cap_appname.$$cap_root_domain) with the username and password your provided above.
+      You can log into the [web interface](http://$$cap_appname.$$cap_root_domain) with the username and password your provided above.
   displayName: AdGuardHome Sync
   isOfficial: true
   description: AdGuardHome Sync is a way to keep two or more copies of AdGuardHome syncronised.
