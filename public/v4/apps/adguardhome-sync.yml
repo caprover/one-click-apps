@@ -1,65 +1,63 @@
 captainVersion: 4
 services:
-  $$cap_appname:
-    image: linuxserver/adguardhome-sync:$$cap_version
-    restart: always
-    environment:
-      LOG_LEVEL: info
-      ORIGIN_URL: $$cap_origin_url
-      ORIGIN_USERNAME: $$cap_user
-      ORIGIN_PASSWORD: $$cap_pass
-      REPLICA1_URL: $$cap_replica_url
-      REPLICA1_USERNAME: $$cap_user
-      REPLICA1_PASSWORD: $$cap_pass
-      REPLICA1_AUTO_SETUP: true
-      REPLICA1_DHCP_SERVER_ENABLED: 'false'
-      API_DARK_MODE: true
-      API_USERNAME: $$cap_user
-      API_PASSWORD: $$cap_pass
-      CONTINUE_ON_ERROR: true
-      CRON: '*/5 * * * *'
-      FEATURES_DHCP_SERVER_CONFIG: true
-      FEATURES_DHCP_STATIC_LEASES: true
-      FEATURES_DNS_ACCESS_LISTS: true
-      FEATURES_DNS_SERVER_CONFIG: true
-      FEATURES_GENERAL_SETTINGS: true
-      FEATURES_QUERY_LOG_CONFIG: true
-      FEATURES_STATS_CONFIG: true
-      FEATURES_CLIENT_SETTINGS: true
-      RUN_ON_START: true
-      TZ: UTC
-    caproverExtra:
-      containerHttpPort: '8080'
+    $$cap_appname:
+        image: linuxserver/adguardhome-sync:$$cap_version
+        restart: always
+        environment:
+            LOG_LEVEL: info
+            ORIGIN_URL: $$cap_origin_url
+            ORIGIN_USERNAME: $$cap_user
+            ORIGIN_PASSWORD: $$cap_pass
+            REPLICA1_URL: $$cap_replica_url
+            REPLICA1_USERNAME: $$cap_user
+            REPLICA1_PASSWORD: $$cap_pass
+            REPLICA1_AUTO_SETUP: true
+            REPLICA1_DHCP_SERVER_ENABLED: 'false'
+            API_DARK_MODE: true
+            API_USERNAME: $$cap_user
+            API_PASSWORD: $$cap_pass
+            CONTINUE_ON_ERROR: true
+            CRON: '*/5 * * * *'
+            FEATURES_DHCP_SERVER_CONFIG: true
+            FEATURES_DHCP_STATIC_LEASES: true
+            FEATURES_DNS_ACCESS_LISTS: true
+            FEATURES_DNS_SERVER_CONFIG: true
+            FEATURES_GENERAL_SETTINGS: true
+            FEATURES_QUERY_LOG_CONFIG: true
+            FEATURES_STATS_CONFIG: true
+            FEATURES_CLIENT_SETTINGS: true
+            RUN_ON_START: true
+            TZ: UTC
+        caproverExtra:
+            containerHttpPort: '8080'
 caproverOneClickApp:
-  variables:
-    - id: $$cap_version
-      label: AdGuardHome Sync Version
-      defaultValue: 0.6.5
-      description: Check out their docker page for the valid tags https://hub.docker.com/r/linuxserver/adguardhome-sync/tags
-    - id: $$cap_user
-      label: Adguard Username
-      description: The username you use to log into all your AdGuardHome instances
-    - id: $$cap_pass
-      label: Adguard Password
-      description: The password you use to log into all your AdGuardHome instances
-    - id: $$cap_origin_url
-      label: AdGuardHome Origin URL
-      defaultValue: http://srv-captain--adguard
-      description: The URL you use to log into your primary instance of AdGuardHome.
-    - id: $$cap_replica_url
-      label: AdGuardHome Replica URL
-      defaultValue: http://172.16.1.50:8080
-      description: The URL you use to log into your replica instance of AdGuardHome.  You can add additional replicas after the installation by adding environment variables.
-  instructions:
-    start: >-
-      AdGuardHome Sync keeps one (or more) AdGuardHome replicas synced from an origin instance of AdGuardHome.
-    end: >-
-      Aaaand you're done! 😄  
-
-      Note, the apps behaviour can be adjusted via [environment variables](https://github.com/bakito/adguardhome-sync). You can add additional replicas (eg. `REPLICA2_*`). You can change authentication details for each replica.  You can disable some types of data from syncing.
-      
-      You can log into the [web interface](http://$$cap_appname.$$cap_root_domain) with the username and password your provided above.
-  displayName: AdGuardHome Sync
-  isOfficial: true
-  description: AdGuardHome Sync is a way to keep two or more copies of AdGuardHome syncronised.
-  documentation: Taken from https://github.com/bakito/adguardhome-sync/
+    variables:
+        - id: $$cap_version
+          label: AdGuardHome Sync Version
+          defaultValue: 0.6.5
+          description: Check out their docker page for the valid tags https://hub.docker.com/r/linuxserver/adguardhome-sync/tags
+        - id: $$cap_user
+          label: Adguard Username
+          description: The username you use to log into all your AdGuardHome instances
+        - id: $$cap_pass
+          label: Adguard Password
+          description: The password you use to log into all your AdGuardHome instances
+        - id: $$cap_origin_url
+          label: AdGuardHome Origin URL
+          defaultValue: http://srv-captain--adguard
+          description: The URL you use to log into your primary instance of AdGuardHome.
+        - id: $$cap_replica_url
+          label: AdGuardHome Replica URL
+          defaultValue: http://172.16.1.50:8080
+          description: The URL you use to log into your replica instance of AdGuardHome.  You can add additional replicas after the installation by adding environment variables.
+    instructions:
+        start: >-
+            AdGuardHome Sync keeps one (or more) AdGuardHome replicas synced from an origin instance of AdGuardHome.
+        end: >-
+            Aaaand you're done! 😄
+            Note, the apps behaviour can be adjusted via [environment variables](https://github.com/bakito/adguardhome-sync). You can add additional replicas (eg. `REPLICA2_*`). You can change authentication details for each replica.  You can disable some types of data from syncing.
+            You can log into the [web interface](http://$$cap_appname.$$cap_root_domain) with the username and password your provided above.
+    displayName: AdGuardHome Sync
+    isOfficial: true
+    description: AdGuardHome Sync is a way to keep two or more copies of AdGuardHome syncronised.
+    documentation: Taken from https://github.com/bakito/adguardhome-sync/
