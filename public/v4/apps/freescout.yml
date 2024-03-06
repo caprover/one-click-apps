@@ -31,7 +31,6 @@ services:
 
 caproverOneClickApp:
     variables:
-
         - id: $$cap_db_user
           label: Database user
           defaultValue: freescout
