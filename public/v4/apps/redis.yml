@@ -16,7 +16,7 @@ caproverOneClickApp:
         - id: $$cap_redis_version
           label: Redis Version Tag
           description: 'Check out their Docker page for the valid tags: https://hub.docker.com/_/redis?tab=tags'
-          defaultValue: '6.2'
+          defaultValue: '7.2.4'
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_redis_password
           label: Redis Password
