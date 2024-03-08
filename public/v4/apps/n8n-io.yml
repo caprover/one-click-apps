@@ -13,6 +13,7 @@ services:
     $$cap_appname:
         caproverExtra:
             containerHttpPort: 5678
+            websocketSupport: 'true'
         image: n8nio/n8n:$$cap_N8N_VERSION
         environment:
             DB_TYPE: postgresdb

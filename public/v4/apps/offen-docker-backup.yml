@@ -52,7 +52,7 @@ caproverOneClickApp:
         end: >-
             Aaaand you're done! 😄
             Your service is up and running
-    displayName: Offen Docker Backup
+    displayName: Offen Docker Backup (S3)
     isOfficial: true
     description: Backup Docker volumes to any S3 compatible storage
     documentation: Taken from https://github.com/offen/docker-volume-backup

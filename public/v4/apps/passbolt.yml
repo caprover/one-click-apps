@@ -1,7 +1,8 @@
 captainVersion: 4
 services:
     $$cap_appname-db:
-        image: mariadb:10.3
+        image: mariadb:$$cap_maria_version
+        restart: unless-stopped
         environment:
             MYSQL_ROOT_PASSWORD: $$cap_db_root_pass
             MYSQL_DATABASE: passbolt_oca
@@ -11,6 +12,7 @@ services:
             - $$cap_appname-db:/var/lib/mysql
     $$cap_appname-pb:
         image: passbolt/passbolt:$$cap_pb_version
+        restart: unless-stopped
         depends_on:
             - $$cap_appname-db
         environment:
@@ -26,8 +28,9 @@ services:
             EMAIL_TRANSPORT_DEFAULT_PASSWORD: $$cap_email_pass
             EMAIL_TRANSPORT_DEFAULT_TLS: $$cap_email_tls
         volumes:
-            - $$cap_appname-gpg:/var/www/passbolt/config/gpg
-            - $$cap_appname-images:/var/www/passbolt/webroot/img/public
+            - $$cap_appname-gpg:/etc/passbolt/gpg
+            - $$cap_appname-jwt:/etc/passbolt/jwt
+            - $$cap_appname-images:/usr/share/php/passbolt/webroot/img/public/images
 caproverOneClickApp:
     variables:
         - id: $$cap_db_root_pass
@@ -41,8 +44,12 @@ caproverOneClickApp:
           defaultValue: password
         - id: $$cap_pb_version
           label: Passbolt Version
-          defaultValue: 2.12.1-debian
+          defaultValue: 3.9.0-2
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/passbolt/passbolt/tags/
+        - id: $$cap_maria_version
+          label: MariaDB Version
+          defaultValue: 10.10
+          description: Check out their Docker page for the valid tags https://hub.docker.com/_/mariadb
         - id: $$cap_url
           label: Passbolt URL
           description: "This is VERY IMPORTANT, if you won't use a custom domain (ex: km.yourdomain.com), after deployed you will need to go into the App Configs and update the ENV APP_FULL_BASE_URL with the external URL that CapRover assigned to your App, otherwhise it won't work"
@@ -77,11 +84,11 @@ caproverOneClickApp:
             Note: Once the container is running create your first admin user running the following command in the terminal:
 
 
-            $ docker exec <containerID> su -m -c '/var/www/passbolt/bin/cake passbolt register_user -u your@email.com -f yourname -l surname -r admin' -s /bin/sh www-data
+            $ docker exec <containerID> su -m -c '/usr/share/php/passbolt/bin/cake passbolt register_user -u your@email.com -f yourname -l surname -r admin' -s /bin/sh www-data
 
 
             This registration command will return a single use url required to continue the web browser setup and finish the registration. Your passbolt instance should be available browsing https://yourdomain.com
-    displayName: Passbolt
+    displayName: Passbolt (MariaDB)
     isOfficial: true
     description: Passbolt is a free and open source password manager that allows team members to store and share credentials securely.
     documentation: Taken from https://hub.docker.com/r/passbolt/passbolt.

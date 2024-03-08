@@ -33,7 +33,7 @@ caproverOneClickApp:
         - id: $$cap_openvscode_server_version
           label: Version Tag
           description: Check out their documentation for the valid tags https://github.com/linuxserver/docker-openvscode-server/#version-tags
-          defaultValue: '1.71.2'
+          defaultValue: '1.74.3'
           validRegex: "/^([^\\s^\\/])+$/"
         - id: $$cap_openvscode_server_timezone
           label: Timezone
@@ -52,7 +52,7 @@ caproverOneClickApp:
           validRegex: /.{1,}/
         - id: $$cap_openvscode_server_connection_token
           label: Connection Token
-          description: Security token for accessing the Web UI. Leave empty to disable.
+          description: Security token for accessing the Web UI. Should only contain alphanumeric characters or _, -. Leave empty to disable.
           defaultValue: $$cap_gen_random_hex(16)
         - id: $$cap_openvscode_server_connection_secret
           label: Connection Secret

@@ -47,6 +47,7 @@ caproverOneClickApp:
     - `dockerfileLines` which is a multiline variable, and can be used instead of `image` property in the service. You must delete the `image` property if you want to use this parameter.
     - `containerHttpPort` is useful when the underlying service uses a custom port for HTTP. If not provided, the default will be `"80"`
     - `notExposeAsWebApp` can be set to `"true"` when the underlying service is not an HTTP app. This is useful for databases and other internally used services.
+    - `websocketSupport` can be set to `"true"` to automatically enable Websocket Support. Only supported in versions 1.12+
 
 ### Icon
 - Make sure you add an app icon to the logos directory!
@@ -59,7 +60,7 @@ caproverOneClickApp:
 After creating your One-Click app yaml file, you need to test it before creating a Pull Request. Here is how you test it:
 - Login to your CapRover dashboard
 - Go to **apps** and click on **One-Click Apps/Databases**
-- Select **>> TEMPLATE <<** at the bottom of the dropdown list 
+- Select **>> TEMPLATE <<** at the bottom of the dropdown list
 - Copy and paste your YAML into the text area, and click **NEXT**.
 - Enter values and make sure it's working as expected.
 
@@ -74,7 +75,17 @@ To create your own repository:
 - Run `npm i`
 - Run `npm run validate_apps`
 - Run `npm run formatter-write`
-- Run `npm run build` 
-- Now you can host the static content placed in `./dist` directory anywhere you want, the official repo uses github pages to publish the content. Make sure to update [CNAME](https://github.com/caprover/one-click-apps/blob/master/public/CNAME) to your own URL if you decide to do so.
+- Run `npm run build`
+- Now you can host the static content placed in `./dist` directory anywhere you want, the official repo uses [github pages](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site) to publish the content. Make sure to update [CNAME](https://github.com/caprover/one-click-apps/blob/master/public/CNAME) to your own URL if you decide to do so.
 
-Here is a good example: [Skayo's CapRover One-Click-Apps](https://github.com/Skayo/CapRover-One-Click-Apps)
+### Third party One Click Apps
+
+In order to add a third party repository:
+-   Login to your CapRover dashboard
+-   Go to **apps** and click on **One-Click Apps/Databases** and scrolldown to the bottom
+-   Under **3rd party repositories:** copy  the URL, (for example: `https://Awes0meHub.github.io/caprover-one-click-apps`) and paste it in to the text box
+-   Click the **_Connect New Repository_** button
+
+#### 3rd party repositories
+-   Awes0meHub: [Github](https://github.com/caproverhub/caprover-one-click-apps) repository: `https://caproverhub.github.io/caprover-one-click-apps`
+-   Jordan-hall: [Github](https://github.com/Jordan-Hall/caprover-one-click-apps) repository: `https://oneclickapps.libertyware.io`
