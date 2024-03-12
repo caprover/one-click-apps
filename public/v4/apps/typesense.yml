@@ -1,0 +1,42 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: typesense/typesense:$$cap_version
+        restart: on-failure
+        volumes:
+            - $$cap_appname-data:/data
+        caproverExtra:
+            containerHttpPort: '8108'
+        environment:
+            TYPESENSE_DATA_DIR: /data
+            TYPESENSE_API_KEY: $$cap_apikey
+            TYPESENSE_ENABLE_SEARCH_ANALYTICS: $$cap_enable_search_analytics
+            TYPESENSE_ANALYTICS_FLUSH_INTERVAL: 60
+caproverOneClickApp:
+    variables:
+        - id: '$$cap_version'
+          label: Version
+          defaultValue: '0.25.1'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/typesense/typesense/tags
+          validRegex: '/.{1,}/'
+        - id: '$$cap_apikey'
+          label: API key
+          defaultValue: $$cap_gen_random_hex(16)
+          description: bootstrap API key
+          validRegex: '/.{1,}/'
+        - id: '$$cap_enable_search_analytics'
+          label: Enable search analytics
+          defaultValue: 'false'
+          description: Enable search analytics
+          validRegex: '/^(true|false)$/'
+    instructions:
+        start: |-
+            Typesense is an open source, typo tolerant search engine that is optimized for instant sub-50ms searches, while providing an intuitive developer experience.
+        end: |-
+            Your service is available at http://$$cap_appname.$$cap_root_domain
+
+            To check your service staus, follow this url: http://$$cap_appname.$$cap_root_domain/health
+    displayName: Typesense
+    isOfficial: true
+    description: Typesense is an open source, typo tolerant search engine that is optimized for instant sub-50ms searches, while providing an intuitive developer experience.
+    documentation: https://typesense.org/
