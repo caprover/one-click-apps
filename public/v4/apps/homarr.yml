@@ -34,7 +34,6 @@ caproverOneClickApp:
           label: Timezone
           description: This is the timezone for the application, find yours at https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
           defaultValue: UTC
-          validRegex: "/^([^\\s^\\/])+$/"
         - id: $$cap_homarr_password
           label: Password
           description: Password to protect the dashboard (leave empty to disable password protection)
