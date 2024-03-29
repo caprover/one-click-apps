@@ -4,7 +4,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM cloudflare/cloudflared:latest
+                - FROM cloudflare/cloudflared:$$cap_cloudflared_version
                 - ENTRYPOINT ["cloudflared"]
                 - CMD ["tunnel", "--no-autoupdate", "run", "--token", "$$cap_cloudflared_token"]
         restart: always
@@ -14,6 +14,10 @@ caproverOneClickApp:
           label: Cloudflare Tunnel Token
           defaultValue: ''
           description: 'Your Cloudflare tunnel token. This is required to authenticate the tunnel with Cloudflare.'
+        - id: $$cap_cloudflared_version
+          label: Cloudflare Cloudflared Version
+          defaultValue: '1517-bb29a0e19437'
+          description: 'The version of Cloudflare Cloudflared to use.'
     instructions:
         start: >-
             This CapRover app deploys a Cloudflare tunnel, allowing you to securely expose your services to the internet. Make sure to provide the Cloudflare Tunnel Token when you deploy this app.
