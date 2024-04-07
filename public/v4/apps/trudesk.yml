@@ -6,22 +6,21 @@ services:
             - $$cap_appname-data:/usr/src/trudesk/public/uploads
             - $$cap_appname-plugins:/usr/src/trudesk/plugins
             - $$cap_appname-backups:/usr/src/trudesk/backups
-            - $$cap_appname-logs:/usr/src/trudesk/logs
         depends_on:
             - $$cap_appname-mongodb
             - $$cap_appname-elasticsearch
         restart: always
         environment:
             NODE_ENV: $$cap_node_env
-            TRUDESK_DOCKER: "true"
+            TRUDESK_DOCKER: 'true'
             TD_MONGODB_SERVER: srv-captain--$$cap_appname-mongodb
             TD_MONGODB_PORT: $$cap_appname-mongodb-port
             TD_MONGODB_USERNAME: root
             TD_MONGODB_PASSWORD: $$cap_mongo_password
             TD_MONGODB_DATABASE: trudesk
-            TD_MONGODB_URI: "mongodb://root:$$cap_mongo_password@srv-captain--$$cap_appname-mongodb:27017/trudesk?authSource=admin"
+            TD_MONGODB_URI: 'mongodb://root:$$cap_mongo_password@srv-captain--$$cap_appname-mongodb:27017/trudesk?authSource=admin'
             ELATICSEARCH_URI: http://srv-captain--$$cap_appname-elasticsearch:9200
-            USE_XFORWARDIP: "true"
+            USE_XFORWARDIP: 'true'
         caproverExtra:
             containerHttpPort: '8118'
     $$cap_appname-mongodb:
@@ -46,7 +45,7 @@ services:
             discovery.type: single-node
             node.name: estrudesk01
             bootstrap.memory_lock: true
-            ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+            ES_JAVA_OPTS: '-Xms512m -Xmx512m'
         caproverExtra:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
@@ -90,8 +89,8 @@ caproverOneClickApp:
         start: |-
             Trudesk is built with nodejs and mongodb and can run on any cloud provider, docker, bare-metal, or even a raspberry pi.
         end: |-
-            Trudesk has been successfully deployed! 
-            
+            Trudesk has been successfully deployed!
+
             **IMPORTANT**: The intial setup process may take a few minutes. Please be patient.
 
             Please perform the following steps:
