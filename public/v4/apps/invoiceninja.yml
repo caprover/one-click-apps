@@ -50,7 +50,7 @@ caproverOneClickApp:
         - id: $$cap_invoiceninja_DB_PASSWORD
           label: DB_PASSWORD
           defaultValue: $$cap_gen_random_hex(10)
-          description: 'The password of Invoice Ninja's database user.'
+          description: 'The password of the Invoice Ninja database user.'
           validRegex: /.{1,}/
 
         - id: $$cap_invoiceninja_DB_DATABASE
