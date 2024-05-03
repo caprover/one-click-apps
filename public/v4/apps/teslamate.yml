@@ -15,7 +15,7 @@ services:
         caproverExtra:
             containerHttpPort: 3000
             websocketSupport: 'true'
-        image: teslamate/grafana:latest
+        image: teslamate/grafana:$$cap_GRAFANA_VERSION
         restart: always
         environment:
             DATABASE_USER: $$cap_DATABASE_USER
@@ -39,7 +39,7 @@ services:
         caproverExtra:
             containerHttpPort: 4000
             websocketSupport: 'true'
-        image: teslamate/teslamate:latest
+        image: teslamate/teslamate:$$cap_TESLAMATE_VERSION
         environment:
             ENCRYPTION_KEY: $$cap_SECRET_KEY
             DATABASE_USER: $$cap_DATABASE_USER
@@ -60,10 +60,24 @@ caproverOneClickApp:
             TeslaMate is a powerful self-hosted data logger for your Tesla.
         end: |-
             TeslaMate has been successfully deployed! It might take few moments before it's fully started.
-            You can access it at `http://$$cap_appname.$$cap_root_domain` and set up your account.
+            You can access it at `http://$$cap_appname.$$cap_root_domain` and connect your Tesla account.
+            Visit `http://$$cap_appname-grafana.$$cap_root_domain` to access Grafana dashboard. (You can log in with the default login/password of admin/admin)
+
             Read more at `https://docs.teslamate.org/docs/installation/docker#usage` for further instructions and usage.
-            **Important:** Please enable **HTTPS** and **WebSocket Support**.
+
+            **Important:** Please enable **HTTPS** and **WebSocket Support** before use.
+            **Recommended:** Protect your `TeslaMate` app with **HTTP Basic Auth** in CapRover to prevent public access.
     variables:
+        - id: $$cap_GRAFANA_VERSION
+          label: Grafana | Version
+          defaultValue: latest
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/teslamate/grafana/tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_TESLAMATE_VERSION
+          label: Application | Version
+          defaultValue: latest
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/teslamate/teslamate/tags
+          validRegex: /^([^\s^\/])+$/
         - id: $$cap_SECRET_KEY
           label: Application | Encryption
           defaultValue: $$cap_gen_random_hex(8)
