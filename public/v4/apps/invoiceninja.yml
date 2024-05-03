@@ -104,7 +104,7 @@ services:
             # These can be removed after initial login
             IN_USER_EMAIL: $$cap_invoiceninja_admin_user_email
             IN_PASSWORD: $$cap_invoiceninja_admin_pass
-            
+
         volumes:
             - $$cap_appname-app-public:/var/www/app/public
             - $$cap_appname-app-storage:/var/www/app/storage
