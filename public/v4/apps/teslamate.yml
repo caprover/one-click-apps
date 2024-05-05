@@ -27,14 +27,15 @@ services:
         depends_on:
             - $$cap_appname-db
     $$cap_appname-mqtt:
-        caproverExtra:
-            notExposeAsWebApp: 'true'
-        image: eclipse-mosquitto:2
-        restart: always
-        command: mosquitto -c /mosquitto-no-auth.conf
         volumes:
             - $$cap_appname-mosquitto-conf:/mosquitto/config
             - $$cap_appname-mosquitto-data:/mosquitto/data
+        restart: always
+        caproverExtra:
+            dockerfileLines:
+                - FROM eclipse-mosquitto:2
+                - CMD exec mosquitto -c /mosquitto-no-auth.conf
+            notExposeAsWebApp: 'true'
     $$cap_appname:
         caproverExtra:
             containerHttpPort: 4000
@@ -70,12 +71,12 @@ caproverOneClickApp:
     variables:
         - id: $$cap_GRAFANA_VERSION
           label: Grafana | Version
-          defaultValue: latest
+          defaultValue: '1.28'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/teslamate/grafana/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_TESLAMATE_VERSION
           label: Application | Version
-          defaultValue: latest
+          defaultValue: '1.28'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/teslamate/teslamate/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_SECRET_KEY
