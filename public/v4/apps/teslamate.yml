@@ -34,7 +34,7 @@ services:
         caproverExtra:
             dockerfileLines:
                 - FROM eclipse-mosquitto:2
-                - CMD exec mosquitto -c /mosquitto-no-auth.conf
+                - CMD ["mosquitto", "-c", "/mosquitto-no-auth.conf"]
             notExposeAsWebApp: 'true'
     $$cap_appname:
         caproverExtra:
