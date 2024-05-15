@@ -81,14 +81,14 @@ caproverOneClickApp:
     documentation: https://immich.app
     instructions:
         start: |-
-            Leave every default value as is for a working and simple installation. You can specify the (full) path to the directory you want to save your media, in that case the directory must exist beforehand. Immich can be accessed via browser and with an app (Immich). If you have big media files (bigger than 500MB) in your phone, update your Nginx configuration to increase your `client_max_body_size`.
+            Leave every default value as is for a working and simple installation. You can specify the (full) path to the directory you want to save your media at. The directory must exist beforehand. Immich can be used from a browser but kind of requires you to install the Immich app on your phone. If you have big media files (bigger than 500MB) that you want to backup, update your Nginx configuration file in caprover to increase your `client_max_body_size`.
         end: |-
-            On your first visit it will ask for email and password for the admin user. Remember to change the default Nginx configuration and increasing the 'client_max_body_size' value if you expect to upload files bigger than 500MB.
+            On your first visit it will ask for email and password to set up the admin user. Remember to change the default Nginx configuration and increasing the 'client_max_body_size' value if you expect to backup files bigger than 500MB. They will fail to upload if you don't.
     variables:
         - label: Immich version
           id: $$cap_version
           description: Check out their valid tags at https://github.com/immich-app/immich/releases
-          defaultValue: v1.99.0
+          defaultValue: v1.105.1
         - label: Immich redis version
           id: $$cap_redis_ver
           defaultValue: 6.2-alpine@sha256:c5a607fb6e1bb15d32bbcf14db22787d19e428d59e31a5da67511b49bb0f1ccc
