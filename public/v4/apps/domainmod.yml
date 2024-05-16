@@ -1,0 +1,66 @@
+captainVersion: 4
+services:
+    $$cap_appname-db:
+        image: ghcr.io/linuxserver/mariadb:$$cap_database_version
+        volumes:
+            - $$cap_appname-db-data:/config
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: $$cap_db_pass
+            MYSQL_DATABASE: $$cap_database
+            MYSQL_USER: $$cap_db_user
+            MYSQL_PASSWORD: $$cap_db_pass
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname:
+        depends_on:
+            - $$cap_appname-db
+        image: domainmod/domainmod:$$cap_image_version
+        volumes:
+            - $$cap_appname-app-data:/var/www/html
+        restart: always
+        environment:
+            DOMAINMOD_DATABASE_HOST: srv-captain--$$cap_appname-db
+            DOMAINMOD_DATABASE: $$cap_database
+            DOMAINMOD_USER: $$cap_db_user
+            DOMAINMOD_PASSWORD: $$cap_db_pass
+            DOMAINMOD_WEB_ROOT: ''
+caproverOneClickApp:
+    variables:
+        - id: $$cap_image_version
+          label: DomainMOD Version
+          defaultValue: 4
+          description: Check out the Docker page for the valid tags https://hub.docker.com/r/domainmod/domainmod/tags/
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_db_user
+          label: Database user
+          defaultValue: domainmod
+          validRegex: /^([a-zA-Z0-9])+$/
+        - id: $$cap_db_pass
+          label: Database password
+          description: ''
+          validRegex: /^(\w|[^\s"'\\])+$/
+          defaultValue: $$cap_gen_random_hex(16)
+        - id: $$cap_database
+          label: Database
+          description: ''
+          validRegex: /^([a-zA-Z0-9])+$/
+          defaultValue: domainmod
+        - id: $$cap_database_version
+          label: Database Version
+          defaultValue: '11.0.2'
+          description: Check out the Docker page for the valid tags https://hub.docker.com/r/library/mariadb/tags/
+          validRegex: /^([^\s^\/])+$/
+    instructions:
+        start: >-
+            DomainMOD is an open source application written in PHP & MySQL used to manage your domains and other internet assets in a central location. DomainMOD also includes a Data Warehouse framework that allows you to import your web server data so that you can view, export, and report on your live data.
+
+            Enter your DomainMOD Configuration parameters and click on next. A MariaDB (database) and a DomainMOD container will be created for you. The process will take about a minute for the process to finish.
+        end: >
+            DomainMOD is deployed and available as $$cap_appname. 
+
+            IMPORTANT: It will take up to 2 minutes for DomainMOD to be ready. Before that, you might see a 502 error page.
+    displayName: DomainMOD
+    isOfficial: true
+    description: DomainMOD is a domain and internet asset management tool written in PHP and MySQL
+    documentation: Taken from https://domainmod.org/docs/userguide/getting-started/
