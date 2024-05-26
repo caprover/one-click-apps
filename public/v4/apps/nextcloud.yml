@@ -29,6 +29,7 @@ services:
         image: nextcloud:$$cap_nextcloud_version
         volumes:
             - $$cap_appname-data:/var/www/html
+            - $$cap_appname-conf:/usr/local/etc/php/conf.d
         restart: always
         environment:
             OVERWRITEPROTOCOL: $$cap_http_https_cors
