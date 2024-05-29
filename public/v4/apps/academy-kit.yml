@@ -5,11 +5,11 @@ services:
         image: academykit/academy:$$cap_app_version
         restart: always
         environment:
-            ConnectionStrings__DefaultConnection: 'Server=srv-captain--$$cap_appname-db;Database=$$cap_appname;User=dev;Password=$$cap_db_pass;Convert Zero Datetime=True;Allow User Variables=True;'
+            ConnectionStrings__DefaultConnection: 'Server=srv-captain--$$cap_appname-db;Database=$$cap_appname;User=$$cap_appname;Password=$$cap_db_pass;Convert Zero Datetime=True;Allow User Variables=True;'
             JWT__DurationInMinutes: $$cap_auth_expiry_duration
-            ConnectionStrings__HangfireConnection: 'Server=srv-captain--$$cap_appname-db;Database=$$cap_appname;User=dev;Password=$$cap_db_pass;Convert Zero Datetime=True;Allow User Variables=True;'
-            Hangfire__User: $$cap_system_admin_username
-            Hangfire__Password: $$cap_system_admin_password
+            ConnectionStrings__HangfireConnection: 'Server=srv-captain--$$cap_appname-db;Database=$$cap_appname;User=$$cap_appname;Password=$$cap_db_pass;Convert Zero Datetime=True;Allow User Variables=True;'
+            Hangfire__User: $$cap_gen_random_hex(6)
+            Hangfire__Password: $$cap_gen_random_hex(16)
             AppUrls__App: http://$$cap_appname.$$cap_root_domain
         caproverExtra:
             containerHttpPort: '80'
@@ -42,25 +42,27 @@ caproverOneClickApp:
           label: Authentication JWT token expiry duration in minutes
           defaultValue: 60
 
-        - id: $$cap_system_admin_username
-          label: System Admin username
-          defaultValue: 'sysAdmin'
-          description: This will be your default login username for system to access background jobs dasbhoard
+        # - id: $$cap_system_admin_username
+        #   label: System Admin username
+        #   defaultValue: '$$cap_gen_random_hex(16)'
+        #   description: This will be your default login username for system to access background jobs dasbhoard
 
-        - id: $$cap_system_admin_password
-          label: System Admin Password
-          defaultValue: $$cap_gen_random_hex(16)
-          description: This will be your default login password for system to access background jobs dasbhoard
+        # - id: $$cap_system_admin_password
+        #   label: System Admin Password
+        #   defaultValue: $$cap_gen_random_hex(16)
+        #   description: This will be your default login password for system to access background jobs dasbhoard
         
     instructions:
         start: |-
-            🔥 🔥 👋 🚀 AI-driven Lightweight fresh alternative Thinkific, Teachable, and Moodle. 
+            🔥 🔥 👋 🚀 AI-driven Lightweight fresh alternative to Thinkific, Teachable, and Moodle. 
             AcademyKit helps you build your academy for your team or customer in the simplest way possible.
 
             More details: https://academykit.co
         end: |-
-            AcademyKit has been successfully deployed!
+            AcademyKit has been successfully deployed! Follow [https://docs.academykit.co/app-documentation/post-deployment/general](https://docs.academykit.co/app-documentation/post-deployment/general) for documenation on further configuration
+            Your service is available at [http://$$cap_appname.$$cap_root_domain](http://$$cap_appname.$$cap_root_domain)
+            Admin credentials are `academykit@yopmail.com / P@ssw0rd`
     displayName: AcademyKit
     isOfficial: true
-    description: A sleek alternative to Moodle LMS for your organization.
+    description: A sleek AI-driven Lightweight fresh LMS for your organization.
     documentation: See https://docs.academykit.co
