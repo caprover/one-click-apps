@@ -1,0 +1,58 @@
+captainVersion: 4
+services:
+    # academy
+    $$cap_appname:
+        image: academykit/academy:$$cap_app_version
+        restart: always
+        environment:
+            ConnectionStrings__DefaultConnection: 'Server=srv-captain--$$cap_appname-db;Database=$$cap_appname;User=$$cap_appname;Password=$$cap_db_pass;Convert Zero Datetime=True;Allow User Variables=True;'
+            JWT__DurationInMinutes: $$cap_auth_expiry_duration
+            ConnectionStrings__HangfireConnection: 'Server=srv-captain--$$cap_appname-db;Database=$$cap_appname;User=$$cap_appname;Password=$$cap_db_pass;Convert Zero Datetime=True;Allow User Variables=True;'
+            Hangfire__User: $$cap_gen_random_hex(6)
+            Hangfire__Password: $$cap_gen_random_hex(16)
+            AppUrls__App: http://$$cap_appname.$$cap_root_domain
+        caproverExtra:
+            containerHttpPort: '80'
+    # Database
+    $$cap_appname-db:
+        image: mariadb:11.2.4
+        volumes:
+            - $$cap_appname-db:/var/lib/mysql/data
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: $$cap_db_pass
+            MYSQL_USER: $$cap_appname
+            MYSQL_PASSWORD: $$cap_db_pass
+            MYSQL_DATABASE: $$cap_appname
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+caproverOneClickApp:
+    variables:
+        - id: '$$cap_app_version'
+          label: AcademyKit Version
+          defaultValue: 'latest'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/academykit/academy/tags
+          validRegex: "/^([^\\s^\\/])+$/"
+
+        - id: $$cap_db_pass
+          label: Database Password
+          defaultValue: $$cap_gen_random_hex(16)
+
+        - id: $$cap_auth_expiry_duration
+          label: Authentication JWT token expiry duration in minutes
+          defaultValue: 60
+
+    instructions:
+        start: |-
+            🔥 🔥 👋 🚀 AI-driven Lightweight fresh alternative to Thinkific, Teachable, and Moodle. 
+            AcademyKit helps you build your academy for your team or customer in the simplest way possible.
+
+            More details: https://academykit.co
+        end: |-
+            AcademyKit has been successfully deployed! Follow [https://docs.academykit.co/app-documentation/post-deployment/general](https://docs.academykit.co/app-documentation/post-deployment/general) for documenation on further configuration
+            Your service is available at [http://$$cap_appname.$$cap_root_domain](http://$$cap_appname.$$cap_root_domain)
+            Admin credentials are `academykit@yopmail.com / P@ssw0rd`
+    displayName: AcademyKit
+    isOfficial: true
+    description: A sleek AI-driven Lightweight fresh LMS for your organization.
+    documentation: See https://docs.academykit.co
