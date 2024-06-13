@@ -78,6 +78,17 @@ To create your own repository:
 - Run `npm run build`
 - Now you can host the static content placed in `./dist` directory anywhere you want, the official repo uses [github pages](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site) to publish the content. Make sure to update [CNAME](https://github.com/caprover/one-click-apps/blob/master/public/CNAME) to your own URL if you decide to do so.
 
+### Hosting your own repository on a CapRover instance
+Your own private repository can be hosted on a CapRover instance with the newly-added [captain-definition](/captain-definition) file.
+
+To set up your private repository on CapRover:
+- Follow the above steps to create your own repository. Update your fork from the upstream master branch if you don't have `captain-definition` in your fork's root directory
+- In your CapRover dashboard, go to **apps**. Under **Create A New App**, name it something relevant such as `caprover-apps`, leave the **Has Persistent Data** checkbox unchecked, and click Create New App.
+- In the new app, go to **Deployment**, scroll down to **Method 3: Deploy from Github/Bitbucket/Gitlab**, put the Git url for your forked repository and other requested data, click **Save and Update**, and then **Force Build**.
+  - Alternatively, an instance of your private repository can be created by making a tarball (`.tar`) of the contents of the one-click-apps repo and uploading it under **Method 2: Tarball**.
+- Check that the domain listed under HTTP Settings shows the `Welcome to nginx!` page.
+- You should be able to add another domain to this CapRover site, and add it as a third party repository using the below instructions.
+
 ### Third party One Click Apps
 
 In order to add a third party repository:
