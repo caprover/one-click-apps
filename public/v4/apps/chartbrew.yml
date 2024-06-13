@@ -1,0 +1,79 @@
+captainVersion: 4
+services:
+    # database container
+    $$cap_appname-db:
+        image: mysql:5.7
+        restart: always
+        caproverExtra:
+          notExposeAsWebApp: true
+        volumes:
+          - $$cap_appname-db-data:/var/lib/mysql
+        environment:
+            MYSQL_DATABASE: 'chartbrew'
+            MYSQL_USER: 'chartbrew'
+            MYSQL_PASSWORD: $$cap_mysql_password
+            MYSQL_ROOT_PASSWORD: $$cap_mysql_root_password
+
+    # Chartbrew container 
+    $$cap_appname:
+        image: razvanilin/chartbrew
+        restart: always
+        ports:
+          - 4018:4018
+          - 4019:4019
+        caproverExtra:
+          containerHttpPort: $$cap_container_port
+        volume:
+          - $$cap_appname-uploads:/code/server/uploads
+          - $$cap_appname-settings:/code/server/settings.js
+        environment:
+            # Use a stronger, environment variable-based secret for security (replace with your actual secret)
+            CB_ENCRYPTION_KEY: $$cap_strong_secret
+            NODE_ENV: production
+            CB_API_HOST: 0.0.0.0
+            CB_API_PORT: 4019
+            CB_DB_HOST: srv-captain--$$cap_appname-db # Use a service name instead of specific hostname (more secure)
+            CB_DB_PORT: 3306
+            CB_DB_NAME: chartbrew
+            CB_DB_PASSWORD: $$cap_mysql_password
+            CB_DB_USERNAME: chartbrew
+            VITE_APP_CLIENT_HOST: http://$$cap_appname.$$cap_root_domain:4018
+            VITE_APP_API_HOST: http://$$cap_appname.$$cap_root_domain:4019
+
+caproverOneClickApp:
+    variables:
+        - id: $$cap_strong_secret
+          label: Chartbrew Secret
+          defaultValue:  $$cap_gen_random_hex(64)
+          description: A strong, random secret for Chartbrew. Never store sensitive information directly in the YAML file. Use environment variables instead.
+
+        - id: $$cap_mysql_root_password
+          label: Root password for mysql
+          defaultValue: $$cap_gen_random_hex(32)
+          description: Add strong  password for root user in database
+
+        - id: $$cap_mysql_password
+          label: MySQL Password
+          defaultValue: $$cap_gen_random_hex(64)
+          description: User password mysql
+
+        - id: $$cap_container_port
+          label: HTTP Port
+          defaultValue: 4018
+          description: The port where the Chartbrew application will be available
+
+    instructions:
+        start: >-
+            Chartbrew
+
+            Chartbrew is a tool for creating live reporting dashboards. It requires a MySQL database to store the data.
+
+        end: >
+            Chartbrew is deployed and available at $$cap_appname.
+
+            Before starting Chartbrew, it's recommended to wait for 3-4 minute for the application to be ready. During this time, you might see a 502 error page.
+
+    displayName: 'Chartbrew'
+    isOfficial: false # Set to false as it's not an official CapRover app
+    description: Chartbrew is a tool for creating live reporting dashboards.
+    documentation: https://docs.chartbrew.com/deployment/#run-the-application-with-docker
