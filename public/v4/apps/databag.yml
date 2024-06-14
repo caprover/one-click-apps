@@ -13,7 +13,7 @@ caproverOneClickApp:
     variables:
         - id: '$$cap_version'
           label: Databag Version
-          defaultValue: '0.1.14'
+          defaultValue: '0.1.15'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/balzack/databag/tags
           validRegex: "/^([^\\s^\\/])+$/"
         - id: '$$cap_tz'
