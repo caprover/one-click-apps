@@ -66,7 +66,7 @@ caproverOneClickApp:
             2. Redirect all domains to your newly connected domain
             3. **Do not** enable **Force HTTPS**
             4. If CapRover version is not 1.12+, check the **Websocket Support** box, otherwise it's automatically checked by the app installer
-    displayName: GOST - GO Simple Tunnel
+    displayName: GOST v2 - GO Simple Tunnel
     isOfficial: false
     description: A simple security tunnel written in Go lang
     documentation: Read their official docs at https://v2.gost.run/en/
