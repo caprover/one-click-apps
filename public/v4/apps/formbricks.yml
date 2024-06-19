@@ -23,6 +23,8 @@ services:
             WEBAPP_URL: https://$$cap_appname.$$cap_root_domain/
             NEXTAUTH_SECRET: $$cap_gen_random_hex(32)
             NEXTAUTH_URL: https://$$cap_appname.$$cap_root_domain/
+            ENCRYPTION_KEY: $$cap_gen_random_hex(64)
+            EMAIL_VERIFICATION_DISABLED: 0
         caproverExtra:
             containerHttpPort: '3000'
 
@@ -40,7 +42,7 @@ caproverOneClickApp:
           validRegex: /^(?=.*\d).{10,}$/
         - id: $$cap_formbricks_tag
           label: Formbricks Version
-          defaultValue: '1.0.2'
+          defaultValue: '2.1.1'
           description: Check out our docker page for the valid tags https://hub.docker.com/r/formbricks/formbricks/tags
     instructions:
         start: >-
@@ -48,6 +50,7 @@ caproverOneClickApp:
             For more info visit https://formbricks.com/
         end: |-
             Formbricks has been successfully deployed!
+            Email verification has been enabled by default. You can disable it by setting EMAIL_VERIFICATION_DISABLED to 1 in the environment variables.
             App is available as http://$$cap_appname.$$cap_root_domain
 
     displayName: Formbricks
