@@ -22,27 +22,6 @@ services:
             - $$cap_appname-redis
             - $$cap_appname-db
 
-    $$cap_appname-microservices:
-        caproverExtra:
-            notExposeAsWebApp: 'true'
-            dockerfileLines:
-                - FROM ghcr.io/immich-app/immich-server:$$cap_version
-                - CMD ["start.sh", "microservices"]
-        environment:
-            DB_PASSWORD: $$cap_app_db_pass
-            DB_USERNAME: $$cap_app_db_user
-            DB_DATABASE_NAME: $$cap_app_db_name
-            DB_HOSTNAME: srv-captain--$$cap_appname-db
-            REDIS_HOSTNAME: srv-captain--$$cap_appname-redis
-            UPLOAD_LOCATION: $$cap_app_upload_location
-            IMMICH_MACHINE_LEARNING_URL: http://srv-captain--$$cap_appname-machine-learning:3003
-        volumes:
-            - $$cap_app_upload_location:/usr/src/app/upload
-            - /etc/localtime:/etc/localtime:ro
-        depends_on:
-            - $$cap_appname-redis
-            - $$cap_appname-db
-
     $$cap_appname-machine-learning:
         caproverExtra:
             notExposeAsWebApp: 'true'
@@ -88,7 +67,7 @@ caproverOneClickApp:
         - label: Immich version
           id: $$cap_version
           description: Check out their valid tags at https://github.com/immich-app/immich/releases
-          defaultValue: v1.105.1
+          defaultValue: v1.106.4
         - label: Immich redis version
           id: $$cap_redis_ver
           defaultValue: 6.2-alpine@sha256:c5a607fb6e1bb15d32bbcf14db22787d19e428d59e31a5da67511b49bb0f1ccc
