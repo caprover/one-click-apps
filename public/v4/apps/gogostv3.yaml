@@ -78,7 +78,11 @@ caproverOneClickApp:
             WebUI: https://ui.gost.run
             GUI: https://github.com/go-gost/gostctl/releases
 
-            Note: If CapRover version is not 1.12+, check the **Websocket Support** box in **HTTP Settings**, otherwise it's automatically checked by the app installer
+            **Important Note**:
+            If you want to change the Mapped Port (`$$cap_gost_api_port`) you need to edit `/configuration/gost.yaml` too otherwise the WebAPI will break, also you can change other values or add GOST services into that file manually.
+
+            **Post Install Instruction**:
+            If CapRover version is not 1.12+, check the **Websocket Support** box in **HTTP Settings**, otherwise it's automatically checked by the app installer
     displayName: GOST v3 - GO Simple Tunnel
     isOfficial: false
     description: A simple security tunnel written in Go lang
