@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        restart: on-failure
+        restart: always
         ports:
             - $$cap_gost_api_port:$$cap_gost_api_port
         volumes:
