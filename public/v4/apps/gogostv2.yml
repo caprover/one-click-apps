@@ -12,24 +12,24 @@ services:
             containerHttpPort: 80
             websocketSupport: true
             dockerfileLines:
-                - # Specify the base image for the app
+                -  # Specify the base image for the app
                 - FROM ubuntu:$$cap_gost_ubuntuversion
-                - # Set environment variables
+                -  # Set environment variables
                 - ARG UBUNTU_TIMEZONE
                 - ENV TZ=${UBUNTU_TIMEZONE}
                 - ENV DEBIAN_FRONTEND=noninteractive
-                - # Become Superuser
+                -  # Become Superuser
                 - USER root
-                - # Install necessary packages and download GOST
+                -  # Install necessary packages and download GOST
                 - RUN apt update && apt install -y wget
                 - RUN wget -q https://github.com/ginuerzh/gost/releases/download/v2.11.5/gost-linux-amd64-2.11.5.gz
                 - RUN gunzip -q gost-linux-amd64-2.11.5.gz
                 - RUN mv gost-linux-amd64-2.11.5 /usr/local/bin/gost
                 - RUN chmod +x /usr/local/bin/gost
-                - # Create dynamic start.sh script
+                -  # Create dynamic start.sh script
                 - RUN echo '#!/bin/bash\nprintenv\nexec /usr/local/bin/gost -L=tcp://:80/$TARGET_SERVER_IP:$TARGET_SERVER_NONSSL_PORT -L=tcp://:443/$TARGET_SERVER_IP:$TARGET_SERVER_SSL_PORT' > /start.sh
                 - RUN chmod +x /start.sh
-                - # Make the entrance
+                -  # Make the entrance
                 - ENTRYPOINT ["/bin/bash", "/start.sh"]
 caproverOneClickApp:
     variables:

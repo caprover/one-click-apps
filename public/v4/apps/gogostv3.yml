@@ -11,28 +11,28 @@ services:
             containerHttpPort: 80
             websocketSupport: true
             dockerfileLines:
-              - # Specify the base image for the app
-              - FROM alpine:$$cap_gost_alpineversion
-              - # Install necessary packages
-              - RUN apk update && apk add --no-cache wget tar bash yq-go iptables
-              - # Make directories needed
-              - RUN mkdir -p tmpfiles && mkdir -p /configuration
-              - # Download and prepare GOST binary
-              - RUN wget -q https://github.com/go-gost/gost/releases/download/v3.0.0-nightly.20240618/gost_3.0.0-nightly.20240618_linux_amd64.tar.gz
-              - RUN tar -xzf gost_3.0.0-nightly.20240618_linux_amd64.tar.gz -C tmpfiles && mv tmpfiles/gost /bin/gost && chmod +x /bin/gost
-              - # Remove temp files
-              - RUN rm -rf tmpfiles gost_3.0.0-nightly.20240618_linux_amd64.tar.gz
-              - # Create a base GOST config file
-              - RUN touch /configuration/gost.yaml
-              - RUN yq eval '.api.addr = ":$$cap_gost_api_port"' -i /configuration/gost.yaml
-              - RUN yq eval '.api.pathPrefix = "/$$cap_gost_api_path"' -i /configuration/gost.yaml
-              - RUN yq eval '.api.accesslog = $$cap_gost_api_alog' -i /configuration/gost.yaml
-              - RUN yq eval '.api.auth.username = "$$cap_gost_api_user"' -i /configuration/gost.yaml
-              - RUN yq eval '.api.auth.password = "$$cap_gost_api_password"' -i /configuration/gost.yaml
-              - # Make the entrance
-              - RUN printf '#!/bin/bash\nexec /bin/gost -C /configuration/gost.yaml' > /start.sh
-              - # Set the entrypoint
-              - ENTRYPOINT ["/bin/bash", "/start.sh"]
+                -  # Specify the base image for the app
+                - FROM alpine:$$cap_gost_alpineversion
+                -  # Install necessary packages
+                - RUN apk update && apk add --no-cache wget tar bash yq-go iptables
+                -  # Make directories needed
+                - RUN mkdir -p tmpfiles && mkdir -p /configuration
+                -  # Download and prepare GOST binary
+                - RUN wget -q https://github.com/go-gost/gost/releases/download/v3.0.0-nightly.20240618/gost_3.0.0-nightly.20240618_linux_amd64.tar.gz
+                - RUN tar -xzf gost_3.0.0-nightly.20240618_linux_amd64.tar.gz -C tmpfiles && mv tmpfiles/gost /bin/gost && chmod +x /bin/gost
+                -  # Remove temp files
+                - RUN rm -rf tmpfiles gost_3.0.0-nightly.20240618_linux_amd64.tar.gz
+                -  # Create a base GOST config file
+                - RUN touch /configuration/gost.yaml
+                - RUN yq eval '.api.addr = ":$$cap_gost_api_port"' -i /configuration/gost.yaml
+                - RUN yq eval '.api.pathPrefix = "/$$cap_gost_api_path"' -i /configuration/gost.yaml
+                - RUN yq eval '.api.accesslog = $$cap_gost_api_alog' -i /configuration/gost.yaml
+                - RUN yq eval '.api.auth.username = "$$cap_gost_api_user"' -i /configuration/gost.yaml
+                - RUN yq eval '.api.auth.password = "$$cap_gost_api_password"' -i /configuration/gost.yaml
+                -  # Make the entrance
+                - RUN printf '#!/bin/bash\nexec /bin/gost -C /configuration/gost.yaml' > /start.sh
+                -  # Set the entrypoint
+                - ENTRYPOINT ["/bin/bash", "/start.sh"]
 caproverOneClickApp:
     variables:
         - id: $$cap_gost_alpineversion
@@ -69,7 +69,7 @@ caproverOneClickApp:
             Make GOST service at your exposal using its WebAPI
         end: |-
             GOST service has been successfully deployed!
-            
+
             **API Address**: $$cap_appname.$$cap_root_domain:$$cap_gost_api_port/$$cap_gost_api_path/config
             **Username**: $$cap_gost_api_user
             **Password**: $$cap_gost_api_password
