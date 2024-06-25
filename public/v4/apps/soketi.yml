@@ -1,0 +1,40 @@
+captainVersion: 4
+services:
+    '$$cap_appname':
+        image: quay.io/soketi/soketi:$$cap_version
+        environment:
+            SOKETI_DEFAULT_APP_ID: $$cap_app_id
+            SOKETI_DEFAULT_APP_KEY: $$cap_app_key
+            SOKETI_DEFAULT_APP_SECRET: $$cap_app_secret
+        caproverExtra:
+            containerHttpPort: '6001'
+caproverOneClickApp:
+    variables:
+        - id: '$$cap_version'
+          label: Version
+          defaultValue: 1.0-16-distroless
+          description: Check out this page for the valid tags https://quay.io/repository/soketi/soketi?tab=tags&tag=latest
+          validRegex: '/.{1,}/'
+        - id: $$cap_app_id
+          label: Default app id
+          defaultValue: $$cap_gen_random_hex(16)
+          validRegex: /.{1,}/
+        - id: $$cap_app_key
+          label: Default app key
+          defaultValue: $$cap_gen_random_hex(16)
+          validRegex: /.{1,}/
+        - id: $$cap_app_secret
+          label: Default app secret
+          defaultValue: $$cap_gen_random_hex(16)
+          validRegex: /.{1,}/
+    instructions:
+        start: |-
+            Soketi is your simple, fast, and resilient open-source WebSockets server compatible with Pusher.
+        end: |-
+            Soketi has been successfully deployed!
+    displayName: Soketi
+    isOfficial: false
+    description: >-
+        Soketi is your simple, fast, and resilient open-source WebSockets server compatible with Pusher.
+    documentation: >-
+        More information can be found at https://docs.soketi.app/
