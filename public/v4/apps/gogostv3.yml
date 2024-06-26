@@ -78,7 +78,7 @@ caproverOneClickApp:
             **Password**: $$cap_gost_api_password
 
             **Important Note**:
-            If you want to change the Mapped Port (`$$cap_gost_api_port`) you need to edit API Port at `/configuration/gost.yaml` too otherwise the accessing WebAPI will break, also you can change other values or add GOST services into that file manually.
+            If you want to change the Mapped Port (`$$cap_gost_api_port`) you need to edit API Port at `/configuration/gost.yaml` too otherwise WebAPI access will break, also you can change other values or add GOST services into that file manually.
 
             **Post Install Instruction**:
             If CapRover version is not 1.12+, check the **Websocket Support** box in **HTTP Settings**, otherwise it's automatically checked by the app installer
