@@ -18,10 +18,10 @@ services:
                 -  # Make directories needed
                 - RUN mkdir -p tmpfiles && mkdir -p /configuration
                 -  # Download and prepare GOST binary
-                - RUN wget -q https://github.com/go-gost/gost/releases/download/v3.0.0-nightly.20240618/gost_3.0.0-nightly.20240618_linux_amd64.tar.gz
-                - RUN tar -xzf gost_3.0.0-nightly.20240618_linux_amd64.tar.gz -C tmpfiles && mv tmpfiles/gost /bin/gost && chmod +x /bin/gost
+                - RUN wget -q https://github.com/go-gost/gost/releases/download/v3.0.0-nightly.20240625/gost_3.0.0-nightly.20240625_linux_amd64.tar.gz
+                - RUN tar -xzf gost_3.0.0-nightly.20240625_linux_amd64.tar.gz -C tmpfiles && mv tmpfiles/gost /bin/gost && chmod +x /bin/gost
                 -  # Remove temp files
-                - RUN rm -rf tmpfiles gost_3.0.0-nightly.20240618_linux_amd64.tar.gz
+                - RUN rm -rf tmpfiles gost_3.0.0-nightly.20240625_linux_amd64.tar.gz
                 -  # Create a base GOST config file
                 - RUN touch /configuration/gost.yaml
                 - RUN yq eval '.api.addr = ":$$cap_gost_api_port"' -i /configuration/gost.yaml
@@ -38,7 +38,7 @@ caproverOneClickApp:
         - id: $$cap_gost_alpineversion
           label: Alpine Linux Version
           description: Check out https://hub.docker.com/_/alpine/tags for valid tags.
-          defaultValue: 3.20.0
+          defaultValue: 3.20.1
         - id: $$cap_gost_api_path
           label: Custom prefix path for GOST WebAPI
           description: At least 3 letter all lowercase
@@ -56,8 +56,8 @@ caproverOneClickApp:
           validRegex: /^[a-z]{4,}$/
         - id: $$cap_gost_api_password
           label: Password for GOST WebAPI
-          description: At least 8 char, containing uppercase & lowercase letters, digit, also a special character. **you won't be able to change it**
-          defaultValue: $$cap_gen_random_hex(10)
+          description: At least 8 char, containing uppercase & lowercase letters, digit, also a special character.
+          defaultValue: $$cap_gen_random_hex(8)
           validRegex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s])[ -~]{8,}$/
         - id: $$cap_gost_api_port
           label: Port for GOST WebAPI
@@ -70,16 +70,15 @@ caproverOneClickApp:
         end: |-
             GOST service has been successfully deployed!
 
-            **API Address**: $$cap_appname.$$cap_root_domain:$$cap_gost_api_port/$$cap_gost_api_path/config
+            Review your GOST config at $$cap_appname.$$cap_root_domain:$$cap_gost_api_port/$$cap_gost_api_path/config
+
+            Or start using **GOST API** in either of WebUI (https://ui.gost.run) or GUI (https://github.com/go-gost/gostctl/releases)
+            **API Address**: $$cap_appname.$$cap_root_domain:$$cap_gost_api_port/$$cap_gost_api_path
             **Username**: $$cap_gost_api_user
             **Password**: $$cap_gost_api_password
 
-            You can now use either of GOST's
-            WebUI: https://ui.gost.run
-            GUI: https://github.com/go-gost/gostctl/releases
-
             **Important Note**:
-            If you want to change the Mapped Port (`$$cap_gost_api_port`) you need to edit `/configuration/gost.yaml` too otherwise the WebAPI will break, also you can change other values or add GOST services into that file manually.
+            If you want to change the Mapped Port (`$$cap_gost_api_port`) you need to edit API Port at `/configuration/gost.yaml` too otherwise WebAPI access will break, also you can change other values or add GOST services into that file manually.
 
             **Post Install Instruction**:
             If CapRover version is not 1.12+, check the **Websocket Support** box in **HTTP Settings**, otherwise it's automatically checked by the app installer
