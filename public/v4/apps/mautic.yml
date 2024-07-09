@@ -36,16 +36,17 @@ caproverOneClickApp:
           validRegex: /^([a-zA-Z0-9])+$/
         - id: $$cap_db_pass
           label: Database password
+          defaultValue: $$cap_gen_random_hex(18)
           description: ''
           validRegex: /.{1,}/
         - id: $$cap_mautic_version
           label: Mautic Version
-          defaultValue: v3.0.0-beta
-          description: Check out their Docker page for the valid tags https://hub.docker.com/r/mautic/mautic/tags. Please be aware, this is a beta version.
+          defaultValue: 5.1-apache
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/mautic/mautic/tags. 
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_percona_version
           label: Percona Version (database)
-          defaultValue: '5.7'
+          defaultValue: 8.3.0-1.1-multi
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/percona?tab=tags
           validRegex: /^([^\s^\/])+$/
     instructions:
@@ -62,6 +63,6 @@ caproverOneClickApp:
             IMPORTANT: It will take up to 1-2 minutes for Mautic to be ready. Before that, you might see 502 error page.
 
             If you dont have any SMTP server, I recommend you to install 'poste.io' one click app version.
-    displayName: Mautic beta
+    displayName: Mautic
     isOfficial: true
     description: Mautic is an open source marketing automation platform.
