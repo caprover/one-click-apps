@@ -41,12 +41,12 @@ caproverOneClickApp:
           validRegex: /.{1,}/
         - id: $$cap_mautic_version
           label: Mautic Version
-          defaultValue: 5.1-apache
+          defaultValue: '5.1-apache'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/mautic/mautic/tags. 
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_percona_version
           label: Percona Version (database)
-          defaultValue: 8.3.0-1.1-multi
+          defaultValue: '8.3.0-1.1-multi'
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/percona?tab=tags
           validRegex: /^([^\s^\/])+$/
     instructions:
