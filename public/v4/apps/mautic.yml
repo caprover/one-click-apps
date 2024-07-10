@@ -42,7 +42,7 @@ caproverOneClickApp:
         - id: $$cap_mautic_version
           label: Mautic Version
           defaultValue: '5.1-apache'
-          description: Check out their Docker page for the valid tags https://hub.docker.com/r/mautic/mautic/tags. 
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/mautic/mautic/tags.
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_percona_version
           label: Percona Version (database)
