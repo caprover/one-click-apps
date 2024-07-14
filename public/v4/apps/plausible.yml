@@ -91,7 +91,8 @@ caproverOneClickApp:
         - description: This new key is used to encrypt TOTP secrets at rest. Generate by running $ openssl rand -base64 32
           id: $$cap_TOTP_VAULT_KEY
           label: TOTP_VAULT_KEY
-          defaultValue: aihU7k+GSBKbcVFuX9VEPyUhuwlKEomqA94/SQQ0NR4=
+          validRegex: /^([^\s]{44})$/
+          defaultValue:
     instructions:
         start: >-
             Plausible is a lightweight and open-source website analytics tool.
