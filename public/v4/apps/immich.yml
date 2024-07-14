@@ -5,7 +5,6 @@ services:
         caproverExtra:
             dockerfileLines:
                 - FROM ghcr.io/immich-app/immich-server:$$cap_version
-                - CMD ["start.sh", "immich"]
             containerHttpPort: 3001
         environment:
             DB_PASSWORD: $$cap_app_db_pass
@@ -67,7 +66,7 @@ caproverOneClickApp:
         - label: Immich version
           id: $$cap_version
           description: Check out their valid tags at https://github.com/immich-app/immich/releases
-          defaultValue: v1.106.4
+          defaultValue: v1.108.0
         - label: Immich redis version
           id: $$cap_redis_ver
           defaultValue: 6.2-alpine@sha256:c5a607fb6e1bb15d32bbcf14db22787d19e428d59e31a5da67511b49bb0f1ccc
