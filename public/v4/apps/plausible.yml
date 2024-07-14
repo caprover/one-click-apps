@@ -36,7 +36,7 @@ services:
         caproverExtra:
             containerHttpPort: '8000'
             dockerfileLines:
-                - FROM plausible/analytics:$$cap_PLAUSIBLE_VERSION
+                - FROM ghcr.io/plausible/community-edition:$$cap_PLAUSIBLE_VERSION
                 - CMD ["sh", "-c", "sleep 10 && /entrypoint.sh db createdb && /entrypoint.sh db migrate && /entrypoint.sh run"]
         environment:
             BASE_URL: http://$$cap_appname.$$cap_root_domain
@@ -47,6 +47,7 @@ services:
             MAILER_EMAIL: $$cap_RELAY_USERNAME
             SMTP_HOST_ADDR: srv-captain--$$cap_appname-mail
             SMTP_HOST_PORT: '25'
+            TOTP_VAULT_KEY: $$cap_TOTP_VAULT_KEY
 
 caproverOneClickApp:
     variables:
@@ -72,27 +73,31 @@ caproverOneClickApp:
           id: $$cap_RELAY_PASSWORD
           label: RELAY_PASSWORD
           validRegex: /^([^\s^\/])+$/
-        - description: The version of Plausible docker image (from https://hub.docker.com/r/plausible/analytics/tags e.g. v2.0)
+        - description: The version of Plausible docker image (from https://github.com/plausible/analytics/pkgs/container/community-edition e.g. v2.1.1)
           id: $$cap_PLAUSIBLE_VERSION
           label: PLAUSIBLE_VERSION
-          defaultValue: v2.0
+          defaultValue: v2.1.1
           validRegex: /^([^\s^\/])+$/
-        - description: Clickhouse version (from https://hub.docker.com/r/clickhouse/clickhouse-server/tags, e.g. 23.3.7.5-alpine)
+        - description: Clickhouse version (from https://hub.docker.com/r/clickhouse/clickhouse-server/tags, e.g. 24.3.3.102-alpine)
           id: $$cap_CLICKHOUSE_VERSION
           label: CLICKHOUSE_VERSION
-          defaultValue: 23.3.7.5-alpine
+          defaultValue: 24.3.3.102-alpine
           validRegex: /^([^\s^\/])+$/
-        - description: Postgres version (from https://hub.docker.com/_/postgres?tab=tags, supported versions are 12, 13, and 14)
+        - description: Postgres version (from https://hub.docker.com/_/postgres?tab=tags, Plausible v2.1.1 was tested against PostgreSQL versions 15 and 16)
           id: $$cap_POSTGRES_VERSION
           label: POSTGRES_VERSION
-          defaultValue: 14-alpine
+          defaultValue: 16-alpine
           validRegex: /^([^\s^\/])+$/
+        - description: This new key is used to encrypt TOTP secrets at rest. Generate by running $ openssl rand -base64 32
+          id: $$cap_TOTP_VAULT_KEY
+          label: TOTP_VAULT_KEY
+          defaultValue: aihU7k+GSBKbcVFuX9VEPyUhuwlKEomqA94/SQQ0NR4=
     instructions:
         start: >-
             Plausible is a lightweight and open-source website analytics tool.
             It doesn't use cookies and is fully compliant with GDPR, CCPA and PECR. Made and hosted in the EU.
             This one click app uses the:
-            - official image from https://hub.docker.com/r/plausible/analytics
+            - official image from https://github.com/plausible/analytics/pkgs/container/community-edition
             - https://hub.docker.com/r/bytemark/smtp, that allows linked containers to send outgoing email
             - official PostgreSQL image based on Alpine Linux and
             - ClickHouse image https://hub.docker.com/r/clickhouse/clickhouse-server.
@@ -102,12 +107,13 @@ caproverOneClickApp:
         end: >-
             Plausible.io is deployed and available as $$cap_appname.
             In case you add a new domain to your application, remember to set the environment variable BASE_URL accordingly.
+            You need enable Websocket Support!
 
             See https://github.com/plausible/analytics/blob/master/config/runtime.exs for all configurable
             environment variables, for features like Google search, Postmark, and Slack integrations.
 
             IMPORTANT: It will take up to 2 minutes for Plausible to be ready. Before that, you might see 502 error page.
-    displayName: Plausible v2
+    displayName: Plausible v2.1.1
     isOfficial: false
     description: Plausible is a lightweight and open-source website analytics tool.
     documentation: Taken from https://plausible.io/.
