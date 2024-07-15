@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: lscr.io/linuxserver/openssh-server:version-8.6_p1-r3
+        image: lscr.io/linuxserver/openssh-server:version-9.7_p1-r4
         environment:
             PUID: 1001
             PGID: 1001
