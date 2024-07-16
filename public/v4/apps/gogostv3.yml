@@ -18,10 +18,10 @@ services:
                 -  # Make directories needed
                 - RUN mkdir -p tmpfiles && mkdir -p /configuration
                 -  # Download and prepare GOST binary
-                - RUN wget -q https://github.com/go-gost/gost/releases/download/v3.0.0-nightly.$$cap_gost_nightly/gost_3.0.0-nightly.$$cap_gost_nightly_linux_amd64.tar.gz
-                - RUN tar -xzf gost_3.0.0-nightly.$$cap_gost_nightly_linux_amd64.tar.gz -C tmpfiles && mv tmpfiles/gost /bin/gost && chmod +x /bin/gost
+                - RUN wget -q https://github.com/go-gost/gost/releases/download/v3.0.0-nightly.'$$cap_gost_nightly'/gost_3.0.0-nightly.'$$cap_gost_nightly'_linux_amd64.tar.gz
+                - RUN tar -xzf gost_3.0.0-nightly.'$$cap_gost_nightly'_linux_amd64.tar.gz -C tmpfiles && mv tmpfiles/gost /bin/gost && chmod +x /bin/gost
                 -  # Remove temp files
-                - RUN rm -rf tmpfiles gost_3.0.0-nightly.$$cap_gost_nightly_linux_amd64.tar.gz
+                - RUN rm -rf tmpfiles gost_3.0.0-nightly.'$$cap_gost_nightly'_linux_amd64.tar.gz
                 -  # Create a base GOST config file
                 - RUN touch /configuration/gost.yaml
                 - RUN yq eval '.api.addr = ":$$cap_gost_api_port"' -i /configuration/gost.yaml
