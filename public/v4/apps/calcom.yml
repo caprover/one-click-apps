@@ -11,6 +11,7 @@ services:
             CALCOM_TELEMETRY_DISABLED: $$cap_CALCOM_TELEMETRY_DISABLED
             NODE_TLS_REJECT_UNAUTHORIZED: $$cap_CALCOM_NODE_TLS_REJECT_UNAUTHORIZED
             DATABASE_URL: postgresql://$$cap_POSTGRES_USER:$$cap_POSTGRES_PASSWORD@srv-captain--$$cap_appname-db/$$cap_POSTGRES_DATABASE
+            DATABASE_DIRECT_URL: postgresql://$$cap_POSTGRES_USER:$$cap_POSTGRES_PASSWORD@srv-captain--$$cap_appname-db/$$cap_POSTGRES_DATABASE
             EMAIL_FROM: $$cap_CALCOM_EMAIL_FROM
             EMAIL_SERVER_HOST: $$cap_CALCOM_EMAIL_SERVER_HOST
             EMAIL_SERVER_PORT: $$cap_CALCOM_EMAIL_SERVER_PORT
