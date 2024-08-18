@@ -44,6 +44,8 @@ services:
             PEERTUBE_SMTP_TLS: $$cap_smtp_tls
             PEERTUBE_SMTP_DISABLE_STARTTLS: $$cap_smtp_starttls
             PEERTUBE_ADMIN_EMAIL: $$cap_admin_email
+            PT_INITIAL_ROOT_PASSWORD: $$cap_admin_password
+            PEERTUBE_SECRET: $$cap_secret
         caproverExtra:
             containerHttpPort: '9000'
 caproverOneClickApp:
@@ -54,21 +56,22 @@ caproverOneClickApp:
           validRegex: /^([a-zA-Z0-9])+$/
         - id: $$cap_db_pass
           label: Database password
+          defaultValue: $$cap_gen_random_hex(32)
           description: ''
           validRegex: /.{1,}/
         - id: $$cap_postgres_version
-          label: Postgress Version
-          defaultValue: 10-alpine
-          description: Check out their docker page for the valid tags https://hub.docker.com/r/library/postgress/tags/
+          label: Postgres Version
+          defaultValue: 13.10-alpine
+          description: Check out their docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_redis_version
           label: Redis Version
-          defaultValue: 4-alpine
+          defaultValue: 6.2.11-alpine
           description: Check out their docker page for the valid tags https://hub.docker.com/r/library/redis/tags/
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_peertube_version
           label: Peertube Version
-          defaultValue: production-stretch
+          defaultValue: v5.1.0-bullseye
           description: Check out their docker page for the valid tags https://hub.docker.com/r/chocobozzz/peertube/tags/
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_smtp_username
@@ -93,15 +96,25 @@ caproverOneClickApp:
           label: SMTP STARTTLS
           defaultValue: 'false'
         - id: $$cap_admin_email
-          label: administrator email
+          label: Administrator email
           defaultValue: ''
+        - id: $$cap_admin_password
+          label: Administrator password
+          description: Password use to connect as administrator under `root` username
+          defaultValue: $$cap_gen_random_hex(10)
+          validRegex: /.{1,}/
+        - id: $$cap_secret
+          label: Secret string
+          defaultValue: $$cap_gen_random_hex(32)
+          validRegex: /.{1,}/
     instructions:
-        start: 'PeerTube is a free, decentralized and federated video platform. (Github : https://github.com/Chocobozzz/PeerTube/)'
+        start: 'ActivityPub-federated video streaming platform using P2P directly in your web browser. (Github : https://github.com/Chocobozzz/PeerTube/)'
         end: >
             Peertube is deployed and available as $$cap_appname.
+            The administrator username is `root` and the password is `$$cap_admin_password`
 
             IMPORTANT: It will take up to 2 minutes for PeerTube to be ready. Before that, you might see 502 error page.
-    displayName: ''
+    displayName: 'PeerTube'
     isOfficial: true
-    description: PeerTube is a decentralized video hosting network, based on free/libre software
+    description: PeerTube is a decentralized video hosting network, based on free/libre software.
     documentation: Taken from https://github.com/Chocobozzz/PeerTube/blob/develop/support/docker/production/docker-compose.yml

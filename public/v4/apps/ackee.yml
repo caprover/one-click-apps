@@ -26,7 +26,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_ackee_version
           label: Ackee Version
-          defaultValue: '2.3.0'
+          defaultValue: '3.4.2'
           description: Check out their docker page for the valid tags https://hub.docker.com/r/electerious/ackee/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_ackee_username
@@ -35,7 +35,7 @@ caproverOneClickApp:
           description: 'Username for Ackee'
         - id: $$cap_ackee_passwd
           label: Ackee Admin Password
-          defaultValue: ''
+          defaultValue: $$cap_gen_random_hex(10)
           description: 'Your super secret Password for Ackee'
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_ackee_access_origin

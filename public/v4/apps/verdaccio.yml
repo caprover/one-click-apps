@@ -26,7 +26,7 @@ caproverOneClickApp:
 
             Enter your verdaccio Configuration parameters and click on next. It will take about a minute for the process to finish.
         end: Verdaccio is deployed and available as srv-captain--$$cap_appname:4873 to other apps..
-    displayName: ''
+    displayName: 'Verdaccio'
     isOfficial: true
     description: Verdaccio is a lightweight private npm proxy registry that allows you to have your own npm registry for free
     documentation: Taken from https://hub.docker.com/r/verdaccio/verdaccio/

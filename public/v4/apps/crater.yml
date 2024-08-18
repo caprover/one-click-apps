@@ -39,6 +39,8 @@ services:
                 - ARG MAIL_USERNAME
                 - ARG MAIL_PASSWORD
                 - ARG MAIL_ENCRYPTION
+                - ARG MAIL_FROM_ADDRESS
+                - ARG MAIL_FROM_NAME
                 - ARG PUSHER_APP_ID
                 - ARG PUSHER_KEY
                 - ARG PUSHER_SECRET
@@ -55,9 +57,10 @@ services:
                     DB_DATABASE DB_USERNAME DB_PASSWORD BROADCAST_DRIVER
                     CACHE_DRIVER QUEUE_DRIVER SESSION_DRIVER SESSION_LIFETIME
                     REDIS_HOST REDIS_PORT MAIL_DRIVER MAIL_HOST MAIL_PORT
-                    MAIL_USERNAME MAIL_PASSWORD MAIL_ENCRYPTION PUSHER_APP_ID
-                    PUSHER_KEY PUSHER_SECRET SANCTUM_STATEFUL_DOMAINS
-                    SESSION_DOMAIN TRUSTED_PROXIES CRON_JOB_AUTH_TOKEN"
+                    MAIL_USERNAME MAIL_PASSWORD MAIL_ENCRYPTION MAIL_FROM_ADDRESS
+                    MAIL_FROM_NAME PUSHER_APP_ID PUSHER_KEY PUSHER_SECRET
+                    SANCTUM_STATEFUL_DOMAINS SESSION_DOMAIN TRUSTED_PROXIES
+                    CRON_JOB_AUTH_TOKEN"
                 - ARG COMMAND_CLEAN_ENVIRONMENT_FILE="> $ENVIRONMENT_FILE"
                 - ARG COMMAND_ADD_TO_ENVIRONMENT_FILE="for name in $ENVIRONMENT_VARIABLE_NAMES; do printf \"\$name=\${!name}\\\n\" >> $ENVIRONMENT_FILE; done"
                 - ARG COMMAND_NOTIFY="echo; echo 'Created environment file'"
@@ -109,6 +112,8 @@ services:
             MAIL_USERNAME: $$cap_MAIL_USERNAME
             MAIL_PASSWORD: $$cap_MAIL_PASSWORD
             MAIL_ENCRYPTION: $$cap_MAIL_ENCRYPTION
+            MAIL_FROM_ADDRESS: $$cap_MAIL_FROM_ADDRESS
+            MAIL_FROM_NAME: $$cap_MAIL_FROM_NAME
             PUSHER_APP_ID: $$cap_PUSHER_APP_ID
             PUSHER_KEY: $$cap_PUSHER_KEY
             PUSHER_SECRET: $$cap_PUSHER_SECRET
@@ -315,7 +320,7 @@ caproverOneClickApp:
           label: Mail Host
           description: Host of mail server.
         - id: $$cap_MAIL_PORT
-          label: Mail Host
+          label: Mail Port
           description: Port of mail server.
         - id: $$cap_MAIL_USERNAME
           label: Mail User Name
@@ -326,6 +331,16 @@ caproverOneClickApp:
         - id: $$cap_MAIL_ENCRYPTION
           label: Mail Server Encryption
           description: Mail server's encryption type (e.g. ssl or tls).
+        - id: $$cap_MAIL_FROM_ADDRESS
+          label: Mail From Address
+          description: Sender mail address for system mails.
+          defaultValue: admin@crater.in
+          validRegex: /.{1,}/
+        - id: $$cap_MAIL_FROM_NAME
+          label: Mail From Name
+          description: Sender name for system mails.
+          defaultValue: Crater
+          validRegex: /.{1,}/
         - id: $$cap_PUSHER_APP_ID
           label: Pusher Application ID
           description: If using Pusher, insert application ID here.

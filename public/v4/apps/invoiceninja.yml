@@ -2,17 +2,18 @@ captainVersion: 4
 caproverOneClickApp:
     instructions:
         start: |-
-            You will need your own "Invoice App Key", you can get new one with
+            You will need your own "Invoice Ninja App Key", you can generate a new one with
             `docker run --rm invoiceninja/invoiceninja php artisan key:generate --show`
-            Detailed instructions in [Invoice Ninja Repo](https://github.com/invoiceninja/dockerfiles#alternatively-get-started-with-docker-compose)
-            Some variables have default values and can be set in App Config of AppName-app. Check https://github.com/invoiceninja/invoiceninja/blob/master/.env.example
+            Detailed instructions in the official [Invoice Ninja Repo](https://github.com/invoiceninja/dockerfiles#alternatively-get-started-with-docker-compose)
+            Some variables have default values and others need to be manually added into the App Config of AppName-app. Check the sample [env file](https://github.com/invoiceninja/invoiceninja/blob/master/.env.example) from the official repo.
         end: >
             Invoice Ninja is deployed, it might take few moments before it's fully started.
             Initial user is: $$cap_invoiceninja_admin_user_email with password $$cap_invoiceninja_admin_pass.
-            Some variables have default values and can be set in App Config of $$cap_appname-app
+            Some variables have default values and can/must be set in App Config of $$cap_appname-app.
+            Make sure to enable the email service by adding the neccesary values in in App Config of $$cap_appname-app.
 
     displayName: Invoice Ninja
-    isOfficial: false
+    isOfficial: true
     description: Small Business Invoicing & Payments.
     documentation: |-
         Based on https://github.com/invoiceninja/dockerfiles
@@ -21,13 +22,13 @@ caproverOneClickApp:
     variables:
         - id: $$cap_invoiceninja_VERSION
           label: Invoice Ninja Version
-          defaultValue: '5'
-          description: It's a good idea to check for breaking changes between versions
+          defaultValue: '5.8.52'
+          description: It's a good idea to check for breaking changes between versions. Check current version [on GitHub](https://github.com/invoiceninja/dockerfiles/releases)
           validRegex: /^([^\s^\/])+$/
 
         - id: $$cap_invoiceninja_APP_KEY
           label: Invoice App Key
-          description: Your own App Key by Invoice Ninja. See description above.
+          description: Your own App Key by Invoice Ninja generated from the terminal. See description above.
           validRegex: /^base64\:[A-Za-z0-9+\/]+={0,2}$/
         - id: $$cap_invoiceninja_admin_user_email
           label: ADMIN_USER_EMAIL
@@ -38,7 +39,7 @@ caproverOneClickApp:
         - id: $$cap_invoiceninja_admin_pass
           label: ADMIN_USER_PASS
           defaultValue: $$cap_gen_random_hex(10)
-          description: 'Admin pass for Invoice Ninja'
+          description: 'Admin password for Invoice Ninja'
           validRegex: /.{1,}/
 
         - id: $$cap_invoiceninja_DB_USERNAME
@@ -49,7 +50,7 @@ caproverOneClickApp:
         - id: $$cap_invoiceninja_DB_PASSWORD
           label: DB_PASSWORD
           defaultValue: $$cap_gen_random_hex(10)
-          description: 'The password of Invoice Ninjas database user.'
+          description: 'The password of the Invoice Ninja database user.'
           validRegex: /.{1,}/
 
         - id: $$cap_invoiceninja_DB_DATABASE
@@ -88,10 +89,22 @@ services:
             DB_DATABASE: $$cap_invoiceninja_DB_DATABASE
             DB_USERNAME: $$cap_invoiceninja_DB_USERNAME
             DB_PASSWORD: $$cap_invoiceninja_DB_PASSWORD
-            # TODO defined as variables
+            MAIL_DRIVER: ''
+            MAIL_PORT: ''
+            MAIL_ENCRYPTION: ''
+            MAIL_HOST: ''
+            MAIL_USERNAME: ''
+            MAIL_FROM_ADDRESS: ''
+            MAIL_FROM_NAME: ''
+            MAIL_PASSWORD: ''
+            TRUSTED_PROXIES: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+            # GoCardless/Nordigen API key for banking integration
+            NORDIGEN_SECRET_ID: ''
+            NORDIGEN_SECRET_KEY: ''
+            # These can be removed after initial login
             IN_USER_EMAIL: $$cap_invoiceninja_admin_user_email
             IN_PASSWORD: $$cap_invoiceninja_admin_pass
-            TRUSTED_PROXIES: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+
         volumes:
             - $$cap_appname-app-public:/var/www/app/public
             - $$cap_appname-app-storage:/var/www/app/storage
@@ -117,7 +130,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: true
 
-    $$cap_appname-server:
+    $$cap_appname:
         restart: always
         depends_on:
             - $$cap_appname-app
@@ -129,7 +142,7 @@ services:
             # Workaround for hard-coded container name in nginx config
             dockerfileLines:
                 - FROM nginx:1.21
-                - ADD https://raw.githubusercontent.com/invoiceninja/dockerfiles/5.3.34/config/nginx/in-vhost.conf /etc/nginx/templates/in-vhost.conf.template
+                - ADD https://raw.githubusercontent.com/invoiceninja/dockerfiles/$$cap_invoiceninja_VERSION/config/nginx/in-vhost.conf /etc/nginx/templates/in-vhost.conf.template
                 - RUN sed -i 's/app:9000/${APP_CONTAINER}/g' /etc/nginx/templates/in-vhost.conf.template
 
     $$cap_appname-db-backup:

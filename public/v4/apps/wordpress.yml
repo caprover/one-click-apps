@@ -33,6 +33,7 @@ caproverOneClickApp:
           label: Database password
           description: ''
           validRegex: /^(\w|[^\s"'\\])+$/
+          defaultValue: $$cap_gen_random_hex(16)
         - id: $$cap_wp_version
           label: WordPress Version
           defaultValue: '6.0.1'

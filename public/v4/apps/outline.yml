@@ -22,7 +22,6 @@ services:
         depends_on:
             - $$cap_appname-redis
             - $$cap_appname-db
-        image: outlinewiki/outline:$$cap_outline_version
         environment:
             SECRET_KEY: $$cap_secret_key
             UTILS_SECRET: $$cap_utils_secret
@@ -31,7 +30,7 @@ services:
             PGSSLMODE: disable
             REDIS_URL: redis://srv-captain--$$cap_appname-redis:6379
             URL: https://$$cap_appname.$$cap_root_domain
-            PORT: '80'
+            PORT: '3000'
             AWS_S3_UPLOAD_BUCKET_URL: $$cap_s3_storage_url
             AWS_REGION: $$cap_s3_storage_region
             AWS_S3_UPLOAD_BUCKET_NAME: $$cap_s3_storage_bucket_name
@@ -40,16 +39,6 @@ services:
             AWS_S3_UPLOAD_MAX_SIZE: '26214400'
             AWS_S3_FORCE_PATH_STYLE: true
             AWS_S3_ACL: private
-            OIDC_CLIENT_ID: $$cap_oidc_client_id
-            OIDC_CLIENT_SECRET: $$cap_oidc_client_secret
-            OIDC_AUTH_URI: $$cap_oidc_auth_uri
-            OIDC_TOKEN_URI: $$cap_oidc_token_uri
-            OIDC_USERINFO_URI: $$cap_oidc_userinfo_uri
-            OIDC_USERNAME_CLAIM: preferred_username
-            OIDC_DISPLAY_NAME: OpenID
-            OIDC_SCOPES: 'openid profile email'
-            SLACK_KEY: $$cap_slack_key
-            SLACK_SECRET: $$cap_slack_secret
             GOOGLE_CLIENT_ID: $$cap_google_client_id
             GOOGLE_CLIENT_SECRET: $$cap_google_client_secret
             FORCE_HTTPS: 'false'
@@ -64,11 +53,17 @@ services:
             SMTP_TLS_CIPHERS: $$cap_smtp_tls_ciphers
             SMTP_SECURE: $$cap_smtp_secure
             DEFAULT_LANGUAGE: $$cap_default_language
+        caproverExtra:
+            containerHttpPort: '3000'
+            dockerfileLines:
+                - FROM outlinewiki/outline:$$cap_outline_version
+                - EXPOSE 3000
+                - CMD yarn db:migrate --env production-ssl-disabled; yarn start
 caproverOneClickApp:
     variables:
         - id: $$cap_outline_version
           label: Outline Version
-          defaultValue: 0.64.3
+          defaultValue: 0.68.1
           description: Check out their page for the valid tags https://hub.docker.com/r/outlinewiki/outline/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_postgres_version
@@ -117,29 +112,6 @@ caproverOneClickApp:
         - id: $$cap_s3_storage_secret_access_key
           label: S3 storage Secret Access Key
           description: 'For instance in your Minio instance it correponds to the password/secret of above outline_user'
-        - id: $$cap_oidc_client_id
-          label: Client ID created in your Generic OIDC server (e.g. in Keycloak)
-          description: 'E.g. for Keycloak: In the Clients section, create a new client application. Name the app outline_app for simplicity. Also, provide the Root URL where you have installed/planned to install Outline. After that, make sure `Access Type` is set to `confidential` and `Direct Access Grants Enabled` is `OFF` so the Oauth flow initiated by Outline can work as expected.'
-          defaultValue: outline_app
-        - id: $$cap_oidc_client_secret
-          label: Secret for the corresponding Client ID
-          description: 'Found in the Credentials tab in Keycloak'
-        - id: $$cap_oidc_auth_uri
-          label: Authorization Endpoint
-          description: 'In the recent version of Keycloak, the path /auth/ is optional, and the default master realm is not recommended for anything else except managing Keycloak itself. For example you could name the realm `outline`: http://localhost:8080/realms/outline/protocol/openid-connect/auth'
-          defaultValue: 'https://YOUR_IAM_PROVIDER_URL/realms/outline/protocol/openid-connect/auth'
-        - id: $$cap_oidc_token_uri
-          label: Token Management Endpoint
-          description: 'For example with the realm named `outline`: http://localhost:8080/realms/outline/protocol/openid-connect/token'
-          defaultValue: 'https://YOUR_IAM_PROVIDER_URL/realms/outline/protocol/openid-connect/token'
-        - id: $$cap_oidc_userinfo_uri
-          label: User Informations Endpoint
-          description: 'For example with the realm named `outline`: http://localhost:8080/realms/outline/protocol/openid-connect/userinfo'
-          defaultValue: 'https://YOUR_IAM_PROVIDER_URL/realms/outline/protocol/openid-connect/userinfo'
-        - id: $$cap_slack_key
-          label: Slack Key
-        - id: $$cap_slack_secret
-          label: Slack Secret
         - id: $$cap_google_client_id
           label: Google Client ID
         - id: $$cap_google_client_secret
@@ -182,42 +154,8 @@ caproverOneClickApp:
 
              1) Enable HTTPS 
              2) Force HTTPS 
-             3) Enable Websocket in $$cap_appname. 
-             4) Run database migration `npm run sequelize:migrate` within the $$cap_appname docker container.  
-
-             
-            ```
-            var preDeployFunction = async function (captainAppObj, dockerUpdateObject) {
-              const DockerApi = require("./built/docker/DockerApi");
-              const api = new DockerApi.default();
-
-              const setServiceInstances = async (service, count) => {
-                  const inspection = await service.inspect();
-                  const updateObject = { ...inspection.Spec, Mode: { Replicated: { Replicas: count } }, version: inspection.Version.Index };
-                  await service.update(updateObject);
-              };
-
-              const run = async args => {
-                  const imageName = dockerUpdateObject.TaskTemplate.ContainerSpec.Image;
-                  const env = captainAppObj.envVars.map(kv => kv.key + "=" + kv.value);
-                  const config = { Env: env, HostConfig: { AutoRemove: true, NetworkMode: captainAppObj.networks[0] } };
-
-                  const [output] = await api.dockerode.run(imageName, args, process.stdout, config);
-
-                  if (output.StatusCode !== 0) {
-                      throw new Error(`Failed to run image ${imageName} with args ${args} (status code ${output.StatusCode}).`);
-                  }
-              };
-
-              const service = api.dockerode.getService(dockerUpdateObject.Name);
-              await setServiceInstances(service, 0);
-              await run(["yarn", "sequelize:migrate", "--env=production-ssl-disabled"]);
-              dockerUpdateObject.version = (await service.inspect()).Version.Index;
-
-              return dockerUpdateObject;
-            };
-            ```
-
+             3) Enable Websocket in $$cap_appname.
+             4) Configure your authentication method following instructions: https://wiki.generaloutline.com/s/hosting/doc/authentication-7ViKRmRY5o
 
             You can customize more settings by environmental variables described here: https://github.com/outline/outline/blob/0deecfac446c37545e0787b3d32062e608a950ab/.env.sample 
 

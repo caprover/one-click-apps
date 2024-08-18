@@ -1,12 +1,13 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: lscr.io/linuxserver/openssh-server:version-8.6_p1-r3
+        image: lscr.io/linuxserver/openssh-server:version-9.7_p1-r4
         environment:
             PUID: 1001
             PGID: 1001
             TZ: Europe/London
             PUBLIC_KEY: $$cap_sshd_public_key
+            DOCKER_MODS: linuxserver/mods:openssh-server-ssh-tunnel
             # USER_PASSWORD: $$cap_sshd_public_key
             # - PUBLIC_KEY_FILE=/path/to/file #optional
             # - PUBLIC_KEY_DIR=/path/to/directory/containing/_only_/pubkeys #optional
@@ -48,8 +49,6 @@ caproverOneClickApp:
 
             ssh -i /path/to/private.key $$cap_sshd_username@$$cap_appname.$$cap_root_domain -p $$cap_sshd_port
 
-
-            ** SSH Port Forwarding Rules ** might need to be manually added, see [here](https://github.com/caprover/caprover/issues/960#issuecomment-1027826772)
     displayName: SSH Container
     isOfficial: true
     description: Just a simple container that has sshd installed so you can SSH directly into this container.

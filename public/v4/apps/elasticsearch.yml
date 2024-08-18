@@ -44,7 +44,7 @@ caproverOneClickApp:
     instructions:
         start: 'Elasticsearch is a distributed, RESTful search and analytics engine. This image can be used for single nodes and cluster setups. IMPORTANT: Be sure to extend the virtual memory on all your hosts! (increase "echo ''vm.max_map_count=262144'' >> /etc/sysctl.conf" and restart "sysctl -p")'
         end: 'Deployment of Elasticsearch is finished. You might see 502 errors for the next 2 minutes. Goto <YOUR-APP-URL>/_cat/health to check the health of your cluster. IMPORTANT: Be sure to extend the virtual memory on all your hosts! (increase "echo ''vm.max_map_count=262144'' >> /etc/sysctl.conf" and restart "sysctl -p")'
-    displayName: ''
+    displayName: 'elasticsearch'
     isOfficial: true
     description: Elasticsearch is a search engine based on the Lucene library
     documentation: Look at https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html for further assistance using Elasticsearch with docker.

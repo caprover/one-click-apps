@@ -17,6 +17,8 @@ services:
         documentation: Taken from https://github.com/nextcloud/docker/blob/master/.examples/docker-compose/with-nginx-proxy/mariadb-cron-redis/apache/docker-compose.yml
         image: redis:$$cap_redis_version
         restart: always
+        volumes:
+            - $$cap_appname-redis-data:/data
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname:
@@ -27,6 +29,7 @@ services:
         image: nextcloud:$$cap_nextcloud_version
         volumes:
             - $$cap_appname-data:/var/www/html
+            - $$cap_appname-conf:/usr/local/etc/php/conf.d
         restart: always
         environment:
             OVERWRITEPROTOCOL: $$cap_http_https_cors
@@ -55,8 +58,8 @@ services:
 caproverOneClickApp:
     variables:
         - id: $$cap_nextcloud_version
-          label: NextCloud Version
-          defaultValue: 21.0.1
+          label: Nextcloud Version
+          defaultValue: 28.0.6
           description: >-
               Check out their Docker page for the valid tags https://hub.docker.com/_/nextcloud?tab=tags
 
@@ -65,12 +68,12 @@ caproverOneClickApp:
           validRegex: /^((?!fpm)\S)+$/
         - id: $$cap_redis_version
           label: Redis Version
-          defaultValue: 6.2.2
+          defaultValue: 6.2.14
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/redis?tab=tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_mariadb_version
           label: MariaDB (database) version
-          defaultValue: 10.5.9
+          defaultValue: 10.6.18
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/mariadb?tab=tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_db_user
@@ -90,6 +93,7 @@ caproverOneClickApp:
           validRegex: /^([a-zA-Z0-9\@\.])+$/
         - id: $$cap_admin_pass
           label: admin password
+          defaultValue: $$cap_gen_random_hex(10)
           description: Password for the Nextcloud admin user.
           validRegex: /.{8,}/
         - id: $$cap_http_https_cors
@@ -103,20 +107,37 @@ caproverOneClickApp:
     instructions:
         start: A safe home for all your data. Access & share your files, calendars, contacts, mail & more from any device, on your terms. http://Nextcloud.com
         end: >-
-            NextCloud is deployed and will be available on few minutes as $$cap_appname.
+            Nextcloud is deployed and will be available on few minutes as $$cap_appname.
 
             If you set the cors sections to https, please enable https on your app. If you do not activate it you will have an error.
 
 
+            Fix Nextcloud warning:
+
             For better performances and compliance, click on "edit default nginx configuration" button then
-            below "proxy_set_header X-Forwarded-Proto $scheme;"
-            add "add_header Strict-Transport-Security "max-age=15552000; includeSubDomains" always;"  into the nginx configuration.
+            below `proxy_set_header X-Forwarded-Proto $scheme;`
+            add `add_header Strict-Transport-Security "max-age=15552000; includeSubDomains" always;`  into the nginx configuration.
 
-            You can see HSTS parts of the nextcloud security documentation https://docs.nextcloud.com/server/21/admin_manual/installation/harden_server.html for further informations
+            For DAV add after `/.well-known/captain-identifier` section 
+
+            `location /.well-known/carddav {return 301 $scheme://$host/remote.php/dav;}`
+
+            `location /.well-known/caldav {return 301 $scheme://$host/remote.php/dav;}`
+
+            You can define the `default_phone_region` by executing:
+
+            `sudo docker exec -u www-data $(sudo docker ps --filter name='srv-captain--$$cap_appname.1' -q) php occ config:system:set default_phone_region --value="FR"`
+
+            You can define the `maintenance_window_start` by executing:
+
+            `sudo docker exec -u www-data $(sudo docker ps --filter name='srv-captain--$$cap_appname.1' -q) php occ config:system:set maintenance_window_start --type=integer --value=3`
 
 
-            You can also scan your nextcloud instance on https://scan.nextcloud.com/
-    displayName: nextcloud
+            You can see HSTS parts of the Nextcloud security documentation [https://docs.nextcloud.com/server/21/admin_manual/installation/harden_server.html](https://docs.nextcloud.com/server/21/admin_manual/installation/harden_server.html) for further informations
+
+
+            You can also scan your Nextcloud instance on [https://scan.nextcloud.com/](https://scan.nextcloud.com/)
+    displayName: Nextcloud
     isOfficial: true
     description: Nextcloud is a suite of client-server software for creating and using file hosting services
     documentation: Taken from https://hub.docker.com/_/nextcloud

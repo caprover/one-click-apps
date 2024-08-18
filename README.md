@@ -14,7 +14,7 @@ caproverOneClickApp:
           label: Awesome App Version
           defaultValue: '1.2.3'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/....../tags
-          validRegex: "/.{1,}/"
+          validRegex: '/.{1,}/'
     instructions:
         start: |-
             A description that will be displayed to the user when they
@@ -47,6 +47,7 @@ caproverOneClickApp:
     - `dockerfileLines` which is a multiline variable, and can be used instead of `image` property in the service. You must delete the `image` property if you want to use this parameter.
     - `containerHttpPort` is useful when the underlying service uses a custom port for HTTP. If not provided, the default will be `"80"`
     - `notExposeAsWebApp` can be set to `"true"` when the underlying service is not an HTTP app. This is useful for databases and other internally used services.
+    - `websocketSupport` can be set to `"true"` to automatically enable Websocket Support. Only supported in versions 1.12+
 
 ### Icon
 - Make sure you add an app icon to the logos directory!
@@ -59,7 +60,7 @@ caproverOneClickApp:
 After creating your One-Click app yaml file, you need to test it before creating a Pull Request. Here is how you test it:
 - Login to your CapRover dashboard
 - Go to **apps** and click on **One-Click Apps/Databases**
-- Select **>> TEMPLATE <<** at the bottom of the dropdown list 
+- Select **>> TEMPLATE <<** at the bottom of the dropdown list
 - Copy and paste your YAML into the text area, and click **NEXT**.
 - Enter values and make sure it's working as expected.
 
@@ -72,8 +73,30 @@ To create your own repository:
 - Fork this repository
 - Delete all existing apps (to avoid duplicate apps), and add your own apps.
 - Run `npm i`
-- Run `npm run validate_apps` 
-- Run `npm run build` 
-- Now you can host the static content placed in `./dist` directory anywhere you want, the official repo uses github pages to publish the content. Make sure to update [CNAME](https://github.com/caprover/one-click-apps/blob/master/public/CNAME) to your own URL if you decide to do so.
+- Run `npm run validate_apps`
+- Run `npm run formatter-write`
+- Run `npm run build`
+- Now you can host the static content placed in `./dist` directory anywhere you want, the official repo uses [github pages](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site) to publish the content. Make sure to update [CNAME](https://github.com/caprover/one-click-apps/blob/master/public/CNAME) to your own URL if you decide to do so.
+ 
+### Hosting your own repository on a CapRover instance
+Your own private repository can be hosted on a CapRover instance with the newly-added [captain-definition](/captain-definition) file.
 
-Here is a good example: [Skayo's CapRover One-Click-Apps](https://github.com/Skayo/CapRover-One-Click-Apps)
+To set up your private repository on CapRover:
+- Follow the above steps to create your own repository. Update your fork from the upstream master branch if you don't have `captain-definition` in your fork's root directory
+- In your CapRover dashboard, go to **apps**. Under **Create A New App**, name it something relevant such as `caprover-apps`, leave the **Has Persistent Data** checkbox unchecked, and click Create New App.
+- In the new app, go to **Deployment**, scroll down to **Method 3: Deploy from Github/Bitbucket/Gitlab**, put the Git url for your forked repository and other requested data, click **Save and Update**, and then **Force Build**.
+  - Alternatively, an instance of your private repository can be created by making a tarball (`.tar`) of the contents of the one-click-apps repo and uploading it under **Method 2: Tarball**.
+- Check that the domain listed under HTTP Settings shows the `Welcome to nginx!` page.
+- You should be able to add another domain to this CapRover site, and add it as a third party repository using the below instructions.
+
+### Third party One Click Apps
+
+In order to add a third party repository:
+-   Login to your CapRover dashboard
+-   Go to **apps** and click on **One-Click Apps/Databases** and scrolldown to the bottom
+-   Under **3rd party repositories:** copy  the URL, (for example: `https://Awes0meHub.github.io/caprover-one-click-apps`) and paste it in to the text box
+-   Click the **_Connect New Repository_** button
+
+#### 3rd party repositories
+-   Awes0meHub: [Github](https://github.com/caproverhub/caprover-one-click-apps) repository: `https://caproverhub.github.io/caprover-one-click-apps`
+-   Jordan-hall: [Github](https://github.com/Jordan-Hall/caprover-one-click-apps) repository: `https://oneclickapps.libertyware.io`
