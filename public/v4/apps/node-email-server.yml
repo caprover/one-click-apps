@@ -15,7 +15,7 @@ caproverOneClickApp:
     variables:
         - id: '$$cap_version'
           label: App version
-          defaultValue: 'latest'
+          defaultValue: '1.0.0'
           description: Check out their Docker page for the valid tags idopluto/node-email-server
           validRegex: "/^([^\\s^\\/])+$/"
         - id: '$$cap_dashboard_password'
