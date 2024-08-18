@@ -1,0 +1,39 @@
+captainVersion: 4
+services:
+    '$$cap_appname':
+        image: idopluto/node-email-server:$$cap_version
+        restart: always
+        environment:
+            PASSWORD: '$$cap_dashboard_password'
+        volumes:
+            - '$$cap_appname-storage:/app/storage'
+        ports:
+            - '25:25'
+        caproverExtra:
+            containerHttpPort: '4321'
+caproverOneClickApp:
+    variables:
+        - id: '$$cap_version'
+          label: App version
+          defaultValue: 'latest'
+          description: Check out their Docker page for the valid tags idopluto/node-email-server
+          validRegex: "/^([^\\s^\\/])+$/"
+        - id: '$$cap_dashboard_password'
+          label: Dashboard password
+          defaultValue: '$$cap_gen_random_hex(12)'
+          description: 'If absent: A Random secret will be generated'
+    instructions:
+        start: >-
+            All the other configurations available in the dashboard.
+
+            For more information about this project goto https://github.com/ido-pluto/node-email-server
+
+
+            If you like this project, please star us on GitHub :)
+        end: >-
+            Node Email Server has been successfully deployed! It might take a minute or two to boot though, during which time you might get a 502
+            Dashboard password: $$cap_dashboard_password
+    displayName: Node Email Server
+    isOfficial: true
+    description: Open source Email server with API over HTTP(s), all in one container, easy to configure and secure by default.
+    documentation: See https://github.com/ido-pluto/node-email-server
