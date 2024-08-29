@@ -1,6 +1,6 @@
 captainVersion: 4
 services:
-    cyberchef:
+    $$cap_appname:
         image: ghcr.io/gchq/cyberchef:$$cap_cyberchef_version
 caproverOneClickApp:
     variables:
