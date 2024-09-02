@@ -40,7 +40,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM andremoura/helper AS helper
+                - FROM andremoura/helper:1.0 AS helper
                 - RUN sed -i "s|<host>zookeeper</host>|<host>srv-captain--$$cap_appname-zookeeper</host>|" /docker/clickhouse/config.xml
                 - FROM clickhouse/clickhouse-server:23.11.2.11-alpine
                 - COPY --from=helper /docker/clickhouse/config.xml /etc/clickhouse-server/config.xml
