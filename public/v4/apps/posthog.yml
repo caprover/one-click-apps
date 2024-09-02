@@ -207,7 +207,7 @@ services:
 
     $$cap_appname-temporal-ui:
         caproverExtra:
-            containerHttpPort: '8081'
+            containerHttpPort: '8080'
         environment:
             TEMPORAL_ADDRESS: srv-captain--$$cap_appname-temporal:7233
             TEMPORAL_CORS_ORIGINS: http://localhost:3000
@@ -321,6 +321,8 @@ caproverOneClickApp:
     instructions:
         start: >-
             Enter your PostHog Configuration parameters and click on next. The process will take a just a few minutes to finish.
+
+            **Note**: This One Click App deploys a **total of 16 different apps** and it requires at least 8GB of RAM with a a Quad-Core CPU.
         end: >
             Posthog is deployed and available as $$cap_appname-web. Migrations from Clickhouse and Postgres have now started.
 
