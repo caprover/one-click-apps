@@ -12,8 +12,9 @@ services:
             AKAUNTING_SETUP: true
             DB_HOST: srv-captain--$$cap_appname-db
             DB_PORT: 3306
-            DB_USERNAME: akaunting
-            DB_DATABASE: akaunting
+            DB_USERNAME: $$cap_appname
+            DB_DATABASE: $$cap_appname
+            DB_NAME: $$cap_appname # Dublicated for v2 and v3 compatibility
             DB_PASSWORD: $$cap_db_pass
             DB_PREFIX: $$cap_db_prefix
             COMPANY_NAME: $$cap_company_name
@@ -31,16 +32,16 @@ services:
         restart: always
         environment:
             MYSQL_ROOT_PASSWORD: $$cap_db_pass
-            MYSQL_USER: akaunting
+            MYSQL_USER: $$cap_appname
             MYSQL_PASSWORD: $$cap_db_pass
-            MYSQL_DATABASE: akaunting
+            MYSQL_DATABASE: $$cap_appname
         caproverExtra:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
         - id: $$cap_app_version
           label: Akaunting Version
-          defaultValue: '2.1.8'
+          defaultValue: '3'
           description: Check out their docker page for the valid tags https://hub.docker.com/r/akaunting/akaunting/tags
 
         - id: $$cap_db_pass
@@ -74,7 +75,8 @@ caproverOneClickApp:
             From invoicing to expense tracking to accounting, Akaunting has all the tools you need to manage your money online, for free.
         end: >-
             Done! 😄
-            Your service is available at http://$$cap_appname.$$cap_root_domain
+            Your service is available at [http://$$cap_appname.$$cap_root_domain](http://$$cap_appname.$$cap_root_domain)
+            Admin credentials are `$$cap_admin_email / $$cap_admin_password`
     displayName: 'Akaunting'
     isOfficial: true
     description: From invoicing to expense tracking to accounting, Akaunting has all the tools you need to manage your money online, for free.

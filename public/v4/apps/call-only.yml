@@ -13,6 +13,7 @@ services:
             POSTGRES_DB: $$cap_postgres_db
             DATABASE_HOST: $$cap_postgres_host
             DATABASE_URL: postgresql://$$cap_postgres_user:$$cap_postgres_password@$$cap_postgres_host/$$cap_postgres_db
+            DATABASE_DIRECT_URL: postgresql://$$cap_postgres_user:$$cap_postgres_password@$$cap_postgres_host/$$cap_postgres_db
             GOOGLE_API_CREDENTIALS: '{}'
             EMAIL_FROM: $$cap_email_from
             EMAIL_SERVER_HOST: $$cap_email_host
