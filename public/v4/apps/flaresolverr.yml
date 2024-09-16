@@ -22,7 +22,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_flaresolverr_version
           label: FlareSolverr Version
-          defaultValue: latest
+          defaultValue: v3.3.21
           description: Check out their Docker page for the valid tags https://github.com/FlareSolverr/FlareSolverr/pkgs/container/flaresolverr
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_log_level
