@@ -14,8 +14,6 @@ services:
             TEST_URL: $$cap_test_url
             PROMETHEUS_ENABLED: $$cap_prometheus_enabled
             PROMETHEUS_PORT: $$cap_prometheus_port
-        ports:
-            - $$cap_port:8191
         caproverExtra:
             containerHttpPort: '8191'
 caproverOneClickApp:
@@ -75,11 +73,6 @@ caproverOneClickApp:
           defaultValue: '8192'
           description: Listening port for Prometheus exporter.
           validRegex: /\d+/
-        - id: $$cap_port
-          label: FlareSolverr Port
-          defaultValue: '8191'
-          description: The port FlareSolverr will listen on.
-          validRegex: /\d+/
     instructions:
         start: |-
             FlareSolverr is a proxy server to bypass Cloudflare and DDoS-GUARD protection.
@@ -94,6 +87,7 @@ caproverOneClickApp:
             To use FlareSolverr, send POST requests to http://$$cap_appname.$$cap_root_domain/v1
 
             Example curl request:
+            ```
             curl -L -X POST 'http://$$cap_appname.$$cap_root_domain/v1' \
             -H 'Content-Type: application/json' \
             --data-raw '{
@@ -101,6 +95,7 @@ caproverOneClickApp:
               "url": "http://www.google.com/",
               "maxTimeout": 60000
             }'
+            ```
 
             For more information and detailed usage instructions, please visit:
             https://github.com/FlareSolverr/FlareSolverr
