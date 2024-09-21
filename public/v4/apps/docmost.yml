@@ -91,7 +91,8 @@ caproverOneClickApp:
         - description: The endpoint URL for your S3 service (optional).
           id: $$cap_aws_s3_endpoint
           label: '[OPTIONAL] S3 service endpoint URL'
-        - description: The mail driver to use for sending emails, can be "smtp" or "postmark".
+        - defaultValue: smtp
+          description: The mail driver to use for sending emails, can be "smtp" or "postmark".
           id: $$cap_mail_driver
           label: '[OPTIONAL] Mail driver'
         - description: The token for Postmark, if using Postmark as the mail driver.
