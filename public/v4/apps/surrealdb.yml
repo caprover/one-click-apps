@@ -7,7 +7,7 @@ services:
         environment:
             SURREAL_USER: $$cap_db_user
             SURREAL_PASS: $$cap_db_pass
-            SURREAL_UNAUTHENTICATED: false
+            SURREAL_UNAUTHENTICATED: 'false'
             SURREAL_LOG: info
             SURREAL_CLIENT_IP: X-Real-IP
         caproverExtra:
