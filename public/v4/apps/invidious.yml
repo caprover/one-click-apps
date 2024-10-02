@@ -4,54 +4,82 @@ services:
         image: postgres:$$db_version
         restart: always
         volumes:
-            - $$cap_appname-data:/var/lib/postgresql/data
+            - $$cap_appname-db-data:/var/lib/postgresql/data
         environment:
-            POSTGRES_DB: invidious
-            POSTGRES_PASSWORD: kemal
-            POSTGRES_USER: kemal
+            POSTGRES_DB: $$db_name
+            POSTGRES_PASSWORD: $$db_pass
+            POSTGRES_USER: $$db_user
         healthcheck:
             test: ['CMD', 'pg_isready', '-U', 'postgres']
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname:
-        image: quay.io/invidious/invidious$$cap_version
+        image: quay.io/invidious/invidious:$$cap_version
         restart: always
+        volumes:
+            - $$cap_appname-data:/config
         environment:
-            # Adapted from ./config/config.yml
             INVIDIOUS_CONFIG: |
                 channel_threads: 1
                 check_tables: true
                 feed_threads: 1
                 db:
-                  user: kemal
-                  password: kemal
+                  user: $$db_user
+                  password: $$db_pass
                   host: srv-captain--$$cap_appname-db
                   port: 5432
-                  dbname: invidious
+                  dbname: $$db_name
                 full_refresh: false
                 https_only: false
-                domain:
+                domain: $$cap_appname.$$cap_root_domain
+                hmac_key: $$hmac_key
         caproverExtra:
             containerHttpPort: '3000'
-
 caproverOneClickApp:
     variables:
         - id: '$$cap_version'
           label: Invidious Version
-          defaultValue: '@sha256:38d9630df74d77e9b704c0dbac10c626ef0f8ccb75fa0457e546018e7227b215'
-          description: Check out their Quay.io page for the valid tags https://quay.io/repository/invidious/invidious?tab=tags. If you want to use the latest tag (or a versioned release, if available), start with a colon (e.g. :latest).
-          validRegex: "/^([^\\s^\\/])+$/"
+          defaultValue: '2024.01.10-1c0b420'
+          description: Check out their Quay.io page for the valid tags https://quay.io/repository/invidious/invidious?tab=tags.
         - id: '$$db_version'
           label: Postgres Version
-          defaultValue: '14' # there is no other tag provided
-          description: Check out their Docker page for the valid tags https://hub.docker.com/_/postgres?tab=tags
+          defaultValue: '14'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/_/postgres?tab=tags. Default value was taken from https://github.com/iv-org/invidious/blob/master/config/config.example.yml.
+          validRegex: "/^([^\\s^\\/])+$/"
+        - id: '$$db_name'
+          label: Database Name
+          defaultValue: 'invidious'
+          description: Name of Postgres database to use. Default value was taken from https://github.com/iv-org/invidious/blob/master/config/config.example.yml.
+          validRegex: "/^([^\\s^\\/])+$/"
+        - id: '$$db_user'
+          label: Database Username
+          defaultValue: 'kemal'
+          description: Username for Postgres database. Default value was taken from https://github.com/iv-org/invidious/blob/master/config/config.example.yml.
+          validRegex: "/^([^\\s^\\/])+$/"
+        - id: '$$db_pass'
+          label: Database Password
+          defaultValue: $$cap_gen_random_hex(20)
+          description: Password for Postgres database. Default value is randomly generated.
+          validRegex: "/^([^\\s^\\/])+$/"
+        - id: '$$hmac_key'
+          label: HMAC Key
+          defaultValue: $$cap_gen_random_hex(20)
+          description: Required HMAC_KEY. Default value is randomly generated per official documentation.
           validRegex: "/^([^\\s^\\/])+$/"
     instructions:
         start: |-
-            Invidious is an alternative front-end to YouTube. 
+            Invidious is an alternative front-end to YouTube.
+
+            **NOTE**: Running Invidious requires at least 20GB disk space, 512MB of free RAM (so ~2G installed on the system), as long as it is restarted regularly, as recommended in the post-install configuration (https://docs.invidious.io/installation/#post-install-configuration).
+
             More details: https://github.com/iv-org/invidious
         end: |-
-            Invidious has been successfully deployed! It may take a couple of minutes until the web frontend can be reached.
+            Invidious has been successfully deployed!
+
+            It may take a couple of minutes until the web frontend can be reached at http://$$cap_appname.$$cap_root_domain.
+
+            ---
+            🔰 Please see https://docs.invidious.io/installation/#post-install-configuration for additional steps.
     displayName: Invidious
     isOfficial: true
     description: Invidious is an alternative front-end to YouTube.
