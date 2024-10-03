@@ -8,7 +8,7 @@ services:
         environment:
             VALKEY_EXTRA_FLAGS: $$cap_valkey_extra_flags
         caproverExtra:
-            notExposeAsWebApp: "true"
+            notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
         - id: $$cap_valkey_version
@@ -28,8 +28,8 @@ caproverOneClickApp:
             After installation on CapRover, it will be available as srv-captain--YOUR_CONTAINER_NAME at port 6379 to other CapRover apps.
 
             Enter your Valkey container name and click on next. It will take about a minute for the process to finish.
-        end: "Valkey is deployed and available as srv-captain--$$cap_appname:6379 to other apps."
-    displayName: "Valkey"
+        end: 'Valkey is deployed and available as srv-captain--$$cap_appname:6379 to other apps.'
+    displayName: 'Valkey'
     isOfficial: true
     description: Valkey is a flexible distributed key-value datastore that supports both caching and beyond caching workloads.
     documentation: Taken from https://hub.docker.com/valkey/valkey
