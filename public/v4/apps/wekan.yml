@@ -1,0 +1,40 @@
+captainVersion: 4
+services:
+    $$cap_appname-db:
+        image: mongo:6
+        volumes:
+            - $$cap_appname-mongo:/data/db
+            - $$cap_appname-db-data-dump:/dump
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname:
+        depends_on:
+            - $$cap_appname-db
+        image: wekanteam/wekan:$$cap_myapp_version
+        hostname: $$cap_appname.$$cap_root_domain
+        restart: always
+        environment:
+            ROOT_URL: https://$$cap_appname.$$cap_root_domain
+            MONGO_URL: mongodb://srv-captain--$$cap_appname-db:27017/wekan
+        volumes:
+            - $$cap_appname-data:/data
+        caproverExtra:
+            containerHttpPort: '8080'
+            websocketSupport: 'true'
+
+caproverOneClickApp:
+    variables:
+        - id: '$$cap_myapp_version'
+          label: WeKan version
+          defaultValue: 'v7.60'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/wekanteam/wekan/tags
+    instructions:
+        start: |-
+            WeKan will be installed
+        end: |-
+            WeKan is deployed
+            please enable https and websocket to start using it.
+    displayName: WeKan
+    isOfficial: true
+    description: WeKan ® is an completely Open Source and Free software collaborative kanban board application with MIT license.
+    documentation: This docker-compose is taken from https://github.com/wekan/wekan/blob/main/docker-compose.yml
