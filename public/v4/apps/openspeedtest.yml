@@ -4,7 +4,7 @@ services:
     '$$cap_appname':
         image: index.docker.io/openspeedtest/latest:$$cap_openspeedtest_version
         caproverExtra:
-            containerHttpPort: '3001'
+            containerHttpPort: '3000'
         restart: always
 
 caproverOneClickApp:
