@@ -1,16 +1,6 @@
 captainVersion: 4
 
 services:
-    $$cap_appname-mail:
-        image: navanchauhan/smtp
-        environment:
-            RELAY_HOST: $$cap_RELAY_HOST
-            RELAY_PORT: $$cap_RELAY_PORT
-            RELAY_USERNAME: $$cap_RELAY_USERNAME
-            RELAY_PASSWORD: $$cap_RELAY_PASSWORD
-        caproverExtra:
-            notExposeAsWebApp: 'true'
-
     $$cap_appname-postgres:
         image: postgres:$$cap_POSTGRES_VERSION
         volumes:
@@ -32,7 +22,6 @@ services:
         depends_on:
             - $$cap_appname-postgres
             - $$cap_appname-clickhouse
-            - $$cap_appname-mail
         caproverExtra:
             containerHttpPort: '8000'
             dockerfileLines:
@@ -44,10 +33,13 @@ services:
             DATABASE_URL: postgres://plausible:$$cap_POSTGRES_PASSWORD@srv-captain--$$cap_appname-postgres:5432/plausible
             CLICKHOUSE_DATABASE_URL: http://srv-captain--$$cap_appname-clickhouse:8123/plausible
             DISABLE_REGISTRATION: 'true'
-            MAILER_EMAIL: $$cap_RELAY_USERNAME
-            SMTP_HOST_ADDR: srv-captain--$$cap_appname-mail
-            SMTP_HOST_PORT: '25'
+            MAILER_EMAIL: $$cap_MAILER_EMAIL
+            SMTP_HOST_ADDR: $$cap_RELAY_HOST
+            SMTP_HOST_PORT: $$cap_RELAY_PORT
+            SMTP_USER_NAME: $$cap_RELAY_USERNAME
+            SMTP_USER_PWD: $$cap_RELAY_PASSWORD
             TOTP_VAULT_KEY: $$cap_TOTP_VAULT_KEY
+            MAILER_ADAPTER: 'Bamboo.Mua'
 
 caproverOneClickApp:
     variables:
@@ -66,6 +58,9 @@ caproverOneClickApp:
           id: $$cap_RELAY_PORT
           label: RELAY_PORT
           validRegex: /^([^\s^\/])+$/
+        - description: This is the email which will be used to send mail from often same as the username for logging into the SMTP host.
+          id: $$cap_MAILER_EMAIL
+          label: MAILER_EMAIL
         - description: This is the username for logging into the SMTP host. Please change it according to your host.
           id: $$cap_RELAY_USERNAME
           label: RELAY_USERNAME
@@ -99,13 +94,12 @@ caproverOneClickApp:
             It doesn't use cookies and is fully compliant with GDPR, CCPA and PECR. Made and hosted in the EU.
             This one click app uses the:
             - official image from https://github.com/plausible/analytics/pkgs/container/community-edition
-            - https://hub.docker.com/r/navanchauhan/smtp/tags uses this because of both arm64 and amd64 support instead of https://hub.docker.com/r/bytemark/smtp which does not support arm, that allows linked containers to send outgoing email
-            - For more on this view - https://github.com/plausible/analytics/discussions/903#discussioncomment-2619074
             - official PostgreSQL image based on Alpine Linux and
             - ClickHouse image https://hub.docker.com/r/clickhouse/clickhouse-server.
             This version includes an open source geoip database (db-ip). If you would like to use Maxmind db,
             You will need to mount a volume and an additional container to update the database. You can use this docker
             compose file for reference: https://github.com/plausible/hosting/blob/master/geoip/docker-compose.geoip.yml
+            This uses Plausible's inbuilt smtp Bamboo.Mua for sending emails instead of an extra SMTP container.
         end: >-
             Plausible.io is deployed and available as $$cap_appname.
             In case you add a new domain to your application, remember to set the environment variable BASE_URL accordingly.
@@ -115,7 +109,7 @@ caproverOneClickApp:
             environment variables, for features like Google search, Postmark, and Slack integrations.
 
             IMPORTANT: It will take up to 2 minutes for Plausible to be ready. Before that, you might see 502 error page.
-    displayName: Plausible v2.1.1
+    displayName: Plausible v2.1.4
     isOfficial: false
     description: Plausible is a lightweight and open-source website analytics tool.
     documentation: Taken from https://plausible.io/.
