@@ -6,7 +6,6 @@ services:
     command:
       ['sh', '-c', 'node ./scripts/self-host-predeploy && node ./dist/index.js']
     ports:
-      - '3010:3010'
       - '5555:5555'
     depends_on:
       $$cap_appname-redis:
@@ -32,7 +31,6 @@ services:
       AFFINE_ADMIN_EMAIL: $$cap_affine_admin_email
       AFFINE_ADMIN_PASSWORD: $$cap_affine_admin_password
       AFFINE_SERVER_HOST: $$cap_affine_server_host
-      AFFINE_SERVER_PORT: $$cap_affine_server_port
       AFFINE_SERVER_HTTPS: $$cap_affine_server_https
       AFFINE_SERVER_EXTERNAL_URL: $$cap_affine_server_external_url
       MAILER_HOST: $$cap_mailer_host
@@ -43,6 +41,9 @@ services:
       # Telemetry allows us to collect data on how you use the affine. This data will helps us improve the app and provide better features.
       # Uncomment next line if you wish to quit telemetry.
       # - TELEMETRY_ENABLE=false
+    caproverExtra:
+      containerHttpPort: '3010'
+      websocketSupport: true
   $$cap_appname-redis:
     image: redis
     restart: unless-stopped
@@ -53,6 +54,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    caproverExtra:
+      notExposeAsWebApp: 'true'
   $$cap_appname-postgres:
     image: postgres
     restart: unless-stopped
@@ -68,28 +71,26 @@ services:
       POSTGRES_USER: affine
       POSTGRES_PASSWORD: $$cap_db_affine_password
       PGDATA: /var/lib/postgresql/data/pgdata
+    caproverExtra:
+      notExposeAsWebApp: 'true'
 caproverOneClickApp:
   variables:
-    - defaultValue: stable
+    - defaultValue: stable-4b9e2ab
       description: Check out their Docker page for the valid tags https://github.com/toeverything/AFFiNE/pkgs/container/affine-graphql
       id: $$cap_affine_version
       label: Affine version
       validRegex: /^([^\s^\/])+$/
 
-    - description: Default access domain of AFFiNE. Make sure this matches the URL in browser.	localhost
+    - description: Default access domain of AFFiNE. Make sure this matches the URL in browser. (eg. yourdomain.com)
       id: $$cap_affine_server_host
       label: AFFINE_SERVER_HOST
 
-    - defaultValue: 3010
-      description: Default access port of AFFiNE. Make sure this matches the URL in browser.	3010
-      id: $$cap_affine_server_port
-      label: AFFINE_SERVER_PORT
-
-    - description: Use https prefix in url. - Make sure this matches the URL in browser.	false
+    - defaultValue: true
+      description: Use https prefix in url. Make sure this matches the URL in browser.	(eg. true|false)
       id: $$cap_affine_server_https
       label: AFFINE_SERVER_HTTPS
 
-    - description: Used to factor url to server resources	(default to [protocol]://[host][:port])
+    - description: Used to factor url to server resources	(eg. https://yourdomain.com)
       id: $$cap_affine_server_external_url
       label: AFFINE_SERVER_EXTERNAL_URL
 
@@ -124,12 +125,14 @@ caproverOneClickApp:
     end: >-
       🎉 It's done! Affine is deployed and available as $$cap_appname. 🎉
 
-      Please enable HTTPS before starting using Affine.
+      1. Go to your caprover Affine settings page and enable HTTPS
+
+      2. Enable "Force HTTPS by redirecting all HTTP traffic to HTTPS"
 
       Your service is available at http://$$cap_appname.$$cap_root_domain
       Go there to create your admin account
 
-      IMPORTANT: It will take up to 2 minutes for Docmost to be ready. Before that, you might see 502 error page.
+      IMPORTANT: It will take up to 2 minutes for Affine to be ready. Before that, you might see 502 error page.
   displayName: 'Affine'
   isOfficial: false
   description: Affine - There can be more than Notion and Miro. AFFiNE(pronounced [ə'fain]) is a next-gen knowledge base that brings planning.
