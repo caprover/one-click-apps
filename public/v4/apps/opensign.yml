@@ -1,0 +1,78 @@
+captainVersion: 4
+services:
+  $$cap_appname-server:
+    image: opensign/opensignserver:main
+    container_name: $$cap_appname-server
+    volumes:
+      - $$cap_appname-files:/usr/src/app/files
+    depends_on:
+      - $$cap_appname-mongo
+    environment:
+      NODE_ENV: production
+      SERVER_URL: https://$$cap_host/app
+      MONGODB_URI: mongodb://$$cap_db_user:$$cap_db_pass@srv-captain--$$cap_appname-mongo:27017
+      APP_URL: http://$$cap_appname.$$cap_root_domain
+    caproverExtra:
+      containerHttpPort: 8080
+  $$cap_appname-mongo:
+    image: mongo:latest
+    container_name: $$cap_appname-mongo
+    volumes:
+      - $$cap_appname-data:/data/db
+  $$cap_appname-client:
+    image: opensign/opensign:main
+    container_name: $$cap_appname-client
+    depends_on:
+      - $$cap_appname-server
+    caproverExtra:
+      containerHttpPort: 3000
+
+caproverOneClickApp:
+  variables:
+    - id: $$cap_host
+      label: Host URL
+      defaultValue: localhost
+      description: Base URL for the app.
+    - id: $$cap_db_user
+      label: MongoDB User
+      defaultValue: opensignuser
+      description: Username for the MongoDB connection.
+    - id: $$cap_db_pass
+      label: MongoDB Password
+      defaultValue: $$cap_gen_random_hex(16)
+      description: Password for the MongoDB connection.
+    - id: $$cap_root_domain
+      label: Root Domain
+      defaultValue: example.com
+      description: Root domain for generating the app URL.
+    - id: $$cap_app_id
+      label: App ID
+      defaultValue: opensign
+      description: Unique 12-character app identifier, same for front and backend.
+    - id: $$cap_master_key
+      label: Master Key
+      defaultValue: $$cap_gen_random_hex(12)
+      description: 12-character secret key for accessing all app data.
+    - id: $$cap_mailgun_api_key
+      label: Mailgun API Key
+      defaultValue: XXXXXX
+      description: API key for Mailgun email service.
+
+  instructions:
+    start: >-
+      This is OpenSign, an app for document signing and management. Enter your configuration parameters and click "next" to deploy the app. 
+    end: >-
+      OpenSign is successfully deployed and accessible at http://$$cap_appname.$$cap_root_domain.
+
+  displayName: OpenSign
+  isOfficial: false
+  description: OpenSign is an open-source document signing platform based on NodeJS and MongoDB.
+  documentation: OpenSign's Docker Compose setup is adapted for CapRover one-click deployment.
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  $$cap_appname-data:
+  $$cap_appname-files:
