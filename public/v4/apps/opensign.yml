@@ -1,163 +1,157 @@
 captainVersion: 4
 services:
-  $$cap_appname-server:
+  '$$cap_appname-server':
     image: opensign/opensignserver:main
-    container_name: $$cap_appname-server
+    container_name: '$$cap_appname-server'
     volumes:
-      - $$cap_appname-files:/usr/src/app/files
+      - '$$cap_appname-files:/usr/src/app/files'
     depends_on:
-      - $$cap_appname-mongo
+      - '$$cap_appname-mongo'
     environment:
       NODE_ENV: production
-      APP_ID: $$cap_app_id
-      appName: $$cap_appname
-      MASTER_KEY: $$cap_master_key
-      MONGODB_URI: mongodb://$$cap_db_user:$$cap_db_pass@srv-captain--$$cap_appname-mongo:27017
+      APP_ID: '$$cap_app_id'
+      appName: '$$cap_appname'
+      MASTER_KEY: '$$cap_master_key'
+      MONGODB_URI: 'mongodb://$$cap_db_user:$$cap_db_pass@srv-captain--$$cap_appname-mongo:27017'
       PARSE_MOUNT: /app
-      SERVER_URL: http://$$cap_appname.$$cap_root_domain/api/app
-      DO_SPACE: $$cap_do_space
-      DO_ENDPOINT: $$cap_do_endpoint
-      DO_BASEURL: $$cap_do_baseurl
-      DO_ACCESS_KEY_ID: $$cap_do_access_key_id
-      DO_SECRET_ACCESS_KEY: $$cap_do_secret_access_key
-      DO_REGION: $$cap_do_region
-      MAILGUN_API_KEY: $$cap_mailgun_api_key
-      MAILGUN_DOMAIN: $$cap_mailgun_domain
-      MAILGUN_SENDER: $$cap_mailgun_sender
-      SMTP_ENABLE: $$cap_smtp_enable
-      SMTP_HOST: $$cap_smtp_host
-      SMTP_PORT: $$cap_smtp_port
-      SMTP_USER_EMAIL: $$cap_smtp_user_email
-      SMTP_PASS: $$cap_smtp_pass
-      PFX_BASE64: $$cap_pfx_base64
-      PASS_PHRASE: $$cap_pass_phrase
+      SERVER_URL: 'http://$$cap_appname.$$cap_root_domain/api/app'
+      DO_SPACE: '$$cap_do_space'
+      DO_ENDPOINT: '$$cap_do_endpoint'
+      DO_BASEURL: '$$cap_do_baseurl'
+      DO_ACCESS_KEY_ID: '$$cap_do_access_key_id'
+      DO_SECRET_ACCESS_KEY: '$$cap_do_secret_access_key'
+      DO_REGION: '$$cap_do_region'
+      MAILGUN_API_KEY: '$$cap_mailgun_api_key'
+      MAILGUN_DOMAIN: '$$cap_mailgun_domain'
+      MAILGUN_SENDER: '$$cap_mailgun_sender'
+      SMTP_ENABLE: '$$cap_smtp_enable'
+      SMTP_HOST: '$$cap_smtp_host'
+      SMTP_PORT: '$$cap_smtp_port'
+      SMTP_USER_EMAIL: '$$cap_smtp_user_email'
+      SMTP_PASS: '$$cap_smtp_pass'
+      PFX_BASE64: '$$cap_pfx_base64'
+      PASS_PHRASE: '$$cap_pass_phrase'
     caproverExtra:
       containerHttpPort: 8080
-  $$cap_appname-mongo:
+  '$$cap_appname-mongo':
     image: mongo:latest
-    container_name: $$cap_appname-mongo
+    container_name: '$$cap_appname-mongo'
     volumes:
-      - $$cap_appname-data:/data/db
-  $$cap_appname-client:
+      - '$$cap_appname-data:/data/db'
+  '$$cap_appname-client':
     image: opensign/opensign:main
-    container_name: $$cap_appname-client
+    container_name: '$$cap_appname-client'
     depends_on:
-      - $$cap_appname-server
+      - '$$cap_appname-server'
     environment:
-      PUBLIC_URL: http://$$cap_appname.$$cap_root_domain/
+      PUBLIC_URL: 'http://$$cap_appname.$$cap_root_domain/'
       GENERATE_SOURCEMAP: false
-      REACT_APP_SERVERURL: http://$$cap_appname.$$cap_root_domain/api/app
-      REACT_APP_APPID: $$cap_app_id
-      REACT_APP_GTM: $$cap_gtm_id
+      REACT_APP_SERVERURL: 'http://$$cap_appname.$$cap_root_domain/api/app'
+      REACT_APP_APPID: '$$cap_app_id'
+      REACT_APP_GTM: '$$cap_gtm_id'
     caproverExtra:
       containerHttpPort: 3000
 
 caproverOneClickApp:
   variables:
-    - id: $$cap_root_domain
+    - id: '$$cap_root_domain'
       label: Root Domain
       defaultValue: example.com
       description: Root domain for generating the app URL.
-    - id: $$cap_db_user
+    - id: '$$cap_db_user'
       label: MongoDB User
       defaultValue: opensignuser
       description: Username for the MongoDB connection.
-    - id: $$cap_db_pass
+    - id: '$$cap_db_pass'
       label: MongoDB Password
       defaultValue: $$cap_gen_random_hex(16)
       description: Password for the MongoDB connection.
-    - id: $$cap_app_id
+    - id: '$$cap_app_id'
       label: App ID
       defaultValue: opensign
       description: Unique 12-character app identifier, same for front and backend.
-    - id: $$cap_master_key
+    - id: '$$cap_master_key'
       label: Master Key
       defaultValue: $$cap_gen_random_hex(12)
       description: 12-character secret key for accessing all app data.
-    - id: $$cap_do_space
+    - id: '$$cap_do_space'
       label: DO Space Name
       defaultValue: DOSPACENAME
       description: DigitalOcean or S3-compatible storage space name.
-    - id: $$cap_do_endpoint
+    - id: '$$cap_do_endpoint'
       label: DO Endpoint
       defaultValue: ams3.digitaloceanspaces.com
       description: Endpoint for DigitalOcean or S3-compatible storage.
-    - id: $$cap_do_baseurl
+    - id: '$$cap_do_baseurl'
       label: DO Base URL
-      defaultValue: https://DOSPACENAME.ams3.digitaloceanspaces.com
+      defaultValue: 'https://DOSPACENAME.ams3.digitaloceanspaces.com'
       description: Base URL for DigitalOcean or S3-compatible storage.
-    - id: $$cap_do_access_key_id
+    - id: '$$cap_do_access_key_id'
       label: DO Access Key ID
       defaultValue: ""
       description: Access key ID for DigitalOcean or S3-compatible storage.
-    - id: $$cap_do_secret_access_key
+    - id: '$$cap_do_secret_access_key'
       label: DO Secret Access Key
       defaultValue: ""
       description: Secret access key for DigitalOcean or S3-compatible storage.
-    - id: $$cap_do_region
+    - id: '$$cap_do_region'
       label: DO Region
       defaultValue: us-west
       description: Region for DigitalOcean or S3-compatible storage.
-    - id: $$cap_mailgun_api_key
+    - id: '$$cap_mailgun_api_key'
       label: Mailgun API Key
       defaultValue: XXXXX
       description: API key for Mailgun email service.
-    - id: $$cap_mailgun_domain
+    - id: '$$cap_mailgun_domain'
       label: Mailgun Domain
       defaultValue: mail.yourdomain.com
       description: Domain for Mailgun email service.
-    - id: $$cap_mailgun_sender
+    - id: '$$cap_mailgun_sender'
       label: Mailgun Sender Email
       defaultValue: postmaster@mail.yourdomain.com
       description: Sender email for Mailgun.
-    - id: $$cap_smtp_enable
+    - id: '$$cap_smtp_enable'
       label: Enable SMTP
       defaultValue: ""
       description: Enable SMTP for email configuration.
-    - id: $$cap_smtp_host
+    - id: '$$cap_smtp_host'
       label: SMTP Host
       defaultValue: ""
       description: SMTP server host.
-    - id: $$cap_smtp_port
+    - id: '$$cap_smtp_port'
       label: SMTP Port
       defaultValue: ""
       description: SMTP server port.
-    - id: $$cap_smtp_user_email
+    - id: '$$cap_smtp_user_email'
       label: SMTP User Email
       defaultValue: ""
       description: User email for SMTP authentication.
-    - id: $$cap_smtp_pass
+    - id: '$$cap_smtp_pass'
       label: SMTP Password
       defaultValue: ""
       description: Password for SMTP authentication.
-    - id: $$cap_pfx_base64
+    - id: '$$cap_pfx_base64'
       label: PFX Base64
       defaultValue: ""
       description: Base64-encoded PFX or p12 document signing certificate file.
-    - id: $$cap_pass_phrase
+    - id: '$$cap_pass_phrase'
       label: PFX Passphrase
       defaultValue: ""
       description: Passphrase for the PFX or p12 document signing certificate file.
-    - id: $$cap_gtm_id
+    - id: '$$cap_gtm_id'
       label: Google Tag Manager ID
       defaultValue: GTM-123N7LD
       description: Google Tag Manager container ID for tracking.
 
   instructions:
-    start: >-
-      This is OpenSign, an app for document signing and management. Enter your configuration parameters and click "next" to deploy the app. 
-    end: >-
+    start: |-
+      OpenSign is an open-source application for document signing and management. Enter your configuration parameters and click "Next" to deploy.
+      The setup includes MongoDB for data storage and DigitalOcean Spaces or compatible S3 storage.
+    end: |-
       OpenSign is successfully deployed and accessible at http://$$cap_appname.$$cap_root_domain.
+      For more information, visit https://github.com/OpenSignLabs/OpenSign.
 
   displayName: OpenSign
   isOfficial: false
   description: OpenSign is an open-source document signing platform based on NodeJS and MongoDB.
-  documentation: OpenSign's Docker Compose setup is adapted for CapRover one-click deployment.
-
-networks:
-  app-network:
-    driver: bridge
-
-volumes:
-  $$cap_appname-data:
-  $$cap_appname-files:
+  documentation: See https://github.com/OpenSignLabs/OpenSign for documentation.
