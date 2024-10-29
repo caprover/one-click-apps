@@ -270,7 +270,7 @@ caproverOneClickApp:
 
         - id: $$cap_posthog_version
           label: PostHog's version
-          defaultValue: 577f7abaec6cdf6e162bc51096c4f774e21f29ee
+          defaultValue: e2f4b4a8b46667f75ad9bdacf4a487a5dd2d5dbf
 
         - id: $$cap_secret_key
           label: PostHog-LLM Secret Key
