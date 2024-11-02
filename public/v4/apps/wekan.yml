@@ -32,8 +32,8 @@ caproverOneClickApp:
         start: |-
             WeKan will be installed
         end: |-
-            WeKan is deployed
-            please enable https and websocket to start using it.
+            WeKan is Deployed!
+            Please enable HTTPS and websocket before using it.
     displayName: WeKan
     isOfficial: true
     description: WeKan ® is an completely Open Source and Free software collaborative kanban board application with MIT license.
