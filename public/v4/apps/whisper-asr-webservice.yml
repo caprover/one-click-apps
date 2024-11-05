@@ -21,12 +21,14 @@ caproverOneClickApp:
             Enter your configuration parameters and click on next. A Whisper ASR Webservice container will be created for you. The process will take about a minute for the process to finish.
         end: |-
             Whisper ASR Webservice is deployed and available as `$$cap_appname`.
-            I suggest you to increase the max size of the request body in the Nginx configuration file.
+            It is recommended to increase the max size of the request body in the Nginx configuration file.
+                    ```
                     client_max_body_size 500m;
                     proxy_read_timeout 1800;
                     proxy_connect_timeout 1800;
                     proxy_send_timeout 1800;
                     send_timeout 1800;
+                    ```
             Be careful with the max size of the request body. It can cause a DoS attack if it is too high.
             Be careful with the timeout values. It can cause a timeout error if it is too low.
             Be careful with the default setup your service is not secure. You should add a security layer to your service.
