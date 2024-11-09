@@ -15,7 +15,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_jf_version
           label: Jellyfin Version
-          defaultValue: '10.8.11'
+          defaultValue: '10.10.1'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/jellyfin/tags
           validRegex: /^([^\s^\/])+$/
         - id: '$$cap_puid'
