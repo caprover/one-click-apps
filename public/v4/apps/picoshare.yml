@@ -22,9 +22,10 @@ caproverOneClickApp:
     instructions:
         start: |-
             PicoShare is a minimalist service that allows you to share files easily.
+            See https://github.com/mtlynch/picoshare for more information.
         end: |-
             PicoShare has been successfully deployed!
     displayName: PicoShare
     isOfficial: true
-    description: A minimalist, open source that allows you to share fiels easily
+    description: A minimalist, easy-to-host service for sharing images and other files
     documentation: See https://github.com/mtlynch/picoshare/releases
