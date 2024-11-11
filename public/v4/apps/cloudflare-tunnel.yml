@@ -17,7 +17,7 @@ caproverOneClickApp:
         - id: $$cap_app_version
           label: Cloudflare Cloudflared Version
           defaultValue: '1517-bb29a0e19437'
-          description: 'The version of Cloudflare Cloudflared to use.'
+          description: cloudflare-tunnel version to use. Check https://hub.docker.com/r/cloudflare/cloudflared/tags for available versions.
     instructions:
         start: >-
             This CapRover app deploys a Cloudflare tunnel, allowing you to securely expose your services to the internet. Make sure to provide the Cloudflare Tunnel Token when you deploy this app.

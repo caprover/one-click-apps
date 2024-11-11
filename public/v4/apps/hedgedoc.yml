@@ -31,7 +31,7 @@ caproverOneClickApp:
         - id: $$cap_app_version
           label: HedgeDoc Version
           defaultValue: '1.7.2'
-          description: Make sure to use the latest release from https://hedgedoc.org/latest-release
+          description: Make sure to use the latest release tag from the tags of https://hedgedoc.org/latest-release
           validRegex: '/^([^\\s^\\/])+$/'
           # db variables
         - id: '$$cap_pgversion'

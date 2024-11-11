@@ -39,8 +39,8 @@ caproverOneClickApp:
           validRegex: /.{1,}/
         - id: $$cap_app_version
           label: Filerun Version.
-          defaultValue: 'latest'
-          description: Use 'latest' tag for normal installation. Check out their Docker page for the valid tags https://hub.docker.com/r/filerun/filerun/tags
+          defaultValue: '8.1'
+          description: Use '8.1' tag for normal installation. Check out their Docker page for the valid tags https://hub.docker.com/r/filerun/filerun/tags
           validRegex: /^([^\s^\/])+$/
     instructions:
         start: >-

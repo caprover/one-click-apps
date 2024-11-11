@@ -17,7 +17,7 @@ caproverOneClickApp:
     variables:
         - label: TeamSpeak Docker Version
           defaultValue: 3.13.7
-          description: It's highly recommended that you don't use the latest tag but instead the major version you need, e.g. teamspeak:3.12.0
+          description: It's highly recommended that you don't use the latest tag but instead the major version you need. For example, 3.13.7 in https://hub.docker.com/r/teamspeak/teamspeak/tags
           id: $$cap_app_version
         - label: Voice Port (UDP)
           description: Port for voice (UDP)

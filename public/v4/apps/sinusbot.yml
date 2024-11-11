@@ -15,7 +15,7 @@ caproverOneClickApp:
     variables:
         - label: SinusBot Docker Version
           defaultValue: 1.0.0-beta.10-202ee4d
-          description: It's highly recommended that you don't use the latest tag but instead the major version you need.
+          description: It's highly recommended that you don't use the latest tag but instead the major version you need. You can find the latest version at https://hub.docker.com/r/sinusbot/docker/tags
           id: $$cap_app_version
         - label: UID
           description: User ID to run the service as (using root is not recommended), see https://github.com/SinusBot/docker#unprivileged-user

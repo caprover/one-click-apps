@@ -16,7 +16,7 @@ caproverOneClickApp:
         - id: $$cap_app_version
           label: Version
           defaultValue: '5.1.23'
-          description: Version of TiddlyWiki to use
+          description: Version of TiddlyWiki to use. You can find the latest version at https://hub.docker.com/r/nicolaw/tiddlywiki/tags
         - id: $$cap_wikusername
           label: Username
           defaultValue: anonymous

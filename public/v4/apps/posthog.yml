@@ -271,6 +271,7 @@ caproverOneClickApp:
         - id: $$cap_app_version
           label: PostHog's version
           defaultValue: e2f4b4a8b46667f75ad9bdacf4a487a5dd2d5dbf
+          description: 'You can find the latest version at https://hub.docker.com/r/posthog/posthog/tags'
 
         - id: $$cap_secret_key
           label: PostHog-LLM Secret Key

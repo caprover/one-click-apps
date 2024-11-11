@@ -9,7 +9,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_app_version
           label: Image Version
-          defaultValue: latest
+          defaultValue: 1-14d89df
           description: The version of the image to use. You can find the available versions at https://hub.docker.com/r/caprover/nginx-redirect/tags
         - id: $$cap_redirect_url
           label: Redirect address

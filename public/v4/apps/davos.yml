@@ -12,6 +12,7 @@ caproverOneClickApp:
           id: $$cap_app_version
           label: Davos Version
           validRegex: /^([^\s^\/])+$/
+          description: 'Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/davos/tags'
         - defaultValue: '1000'
           id: $$cap_davos_puid
           label: Puid

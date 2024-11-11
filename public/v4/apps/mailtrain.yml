@@ -69,6 +69,7 @@ caproverOneClickApp:
         - id: $$cap_mariadb_password
           label: Mariadb User password
           description: ''
+          defaultValue: $$cap_gen_random_hex(16)
           validRegex: /.{1,}/
         - id: $$cap_redis_version
           label: Redis Version
@@ -82,7 +83,7 @@ caproverOneClickApp:
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_app_version
           label: Mailtrain Version
-          defaultValue: latest
+          defaultValue: 'v2.20210609.0'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/mailtrain/mailtrain/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_mailtrain_sandbox-appname

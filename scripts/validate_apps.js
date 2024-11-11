@@ -58,6 +58,16 @@
                  if (!content.caproverOneClickApp.variables.find((v) => v.id === '$$cap_app_version')) {
                      throw new Error(`Cannot find version for ${apps[i]}`);
                  }
+                 const versionApp = content.caproverOneClickApp.variables.find((v) => v.id === '$$cap_app_version')
+                 if(versionApp.defaultValue === 'latest'){
+                     throw new Error(`"latest" tag is not allowed as it can change and break the setup, see ${apps[i]}`);
+                 }
+                 if(!versionApp.description) {
+                        throw new Error(`Version description must included here, see ${apps[i]}`);
+                 }
+                 if(!versionApp.description.match('tags') && !versionApp.description.match('github') && !versionApp.description.match('gitlab')) {
+                     throw new Error(`Version description must contain a link to the tags page, see ${apps[i]}`);
+                 }
 
                  Object.keys(content.services).forEach(
                      (serviceName) => { // jshint ignore:line

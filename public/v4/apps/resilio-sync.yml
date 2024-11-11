@@ -13,7 +13,7 @@ caproverOneClickApp:
     variables:
         - label: Resilio Sync Docker Version
           defaultValue: 2.6.4
-          description: It's highly recommended that you don't use the latest tag but instead the major version you need.
+          description: It's highly recommended that you don't use the latest tag but instead the major version you need. You can find the latest version at https://hub.docker.com/r/resilio/sync/tags
           id: $$cap_app_version
         - label: Listening port for Sync traffic
           description: Port that Sync listens on for data synchronization (TCP & UDP).

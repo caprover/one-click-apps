@@ -18,7 +18,7 @@ caproverOneClickApp:
         - id: $$cap_app_version
           label: Smokeping Version
           defaultValue: '2.7.3'
-          description: Smokeping Image Version
+          description: Smokeping Image Version. Check out their docker page for the valid tags https://hub.docker.com/r/linuxserver/smokeping/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_puid
           label: PUID

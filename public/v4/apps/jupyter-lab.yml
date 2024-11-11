@@ -19,7 +19,7 @@ caproverOneClickApp:
         - id: $$cap_app_version
           label: Version
           defaultValue: '9f9e5ca8fe5a'
-          description: The version of the Jupyter image to use. Defaults to 9f9e5ca8fe5a.
+          description: The version of the Jupyter image to use. Defaults to 9f9e5ca8fe5a. For more information, see https://hub.docker.com/r/jupyter/datascience-notebook/tags
           validRegex: /.{1,}/
         - id: $$cap_jupyter_default_token
           label: Jupyter default token

@@ -29,7 +29,8 @@ caproverOneClickApp:
           description: Starts with 'sha256:'.  Find on https://gitlab.com/commento/commento/container_registry/337942
         - id: $$cap_commento_postgres_password
           label: Postgres Password
-          description: Password must be at least 12 characters.  Please use a random string.
+          defaultValue: $$cap_gen_random_string(16)
+          description: Password must be at least 12 characters. Please use a random string.
           validRegex: /^[^\@]{12,}$/
     instructions:
         start: >-

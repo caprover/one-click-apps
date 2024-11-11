@@ -16,7 +16,7 @@ caproverOneClickApp:
         - id: $$cap_app_version
           label: App Version
           defaultValue: 'sha-c8305ce'
-          description: The version of the app to deploy.
+          description: The version of the app to deploy. You can find the latest version at https://github.com/byo-software/steam-openid-connect-provider/pkgs/container/steam-openid-connect-provider
         - id: $$cap_client_id
           label: OAuth Client ID
           defaultValue: 'steamidp'

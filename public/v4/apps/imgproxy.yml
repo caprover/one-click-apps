@@ -16,6 +16,7 @@ caproverOneClickApp:
           id: $$cap_app_version
           label: imgproxy Version
           validRegex: /^(?:2|3)(?:\.[0-9]+){0,2}$/
+          description: 'Please check https://hub.docker.com/r/darthsim/imgproxy/tags for available versions.'
         - defaultValue: $$cap_gen_random_hex(128)
           id: $$cap_imgproxy_key
           label: Signature Key

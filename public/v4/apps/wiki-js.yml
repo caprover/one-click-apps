@@ -24,7 +24,7 @@ caproverOneClickApp:
     variables:
         - label: Wiki.js Version
           defaultValue: '2.5'
-          description: It's highly recommended that you don't use the latest tag but instead the major version you need, e.g. requarks/wiki:2
+          description: It's highly recommended that you don't use the latest tag but instead the major version you need, e.g. requarks/wiki:2. you can find the latest version at https://hub.docker.com/r/requarks/wiki/tags
           id: $$cap_app_version
         - label: Postgres Version
           defaultValue: 14.1-alpine

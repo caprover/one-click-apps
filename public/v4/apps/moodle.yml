@@ -55,7 +55,7 @@ caproverOneClickApp:
           validRegex: /.{1,}/
         - id: $$cap_app_version
           label: Moodle Version
-          defaultValue: latest
+          defaultValue: '3.11.7-debian-10-r3'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/bitnami/moodle/tags/
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_md_sitename

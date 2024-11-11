@@ -40,7 +40,7 @@ caproverOneClickApp:
         - id: $$cap_app_version
           label: Browserless Version
           defaultValue: 1-chrome-stable
-          description: Browserless Image Version
+          description: Check out the Browserless Docker page for the valid tags https://hub.docker.com/r/browserless/chrome/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_demo_mode
           label: Demo Mode

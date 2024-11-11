@@ -21,7 +21,7 @@ caproverOneClickApp:
         - id: $$cap_postgresql_version
           label: Bitnami's Posgresql Version
           defaultValue: '12.12.0'
-          description: Check the tag version on https://hub.docker.com/r/bitnami/postgresql
+          description: Check the tag version on https://hub.docker.com/r/bitnami/postgresql/tags
         - id: $$cap_postgresql_name
           label: Postresql database name
           defaultValue: airflow_db
@@ -38,7 +38,7 @@ caproverOneClickApp:
         - id: $$cap_redis_version
           label: Bitnami's redis Version
           defaultValue: '7.0.4'
-          description: Check the tag version on https://hub.docker.com/r/bitnami/redis
+          description: Check the tag version on https://hub.docker.com/r/bitnami/redis/tags
         - id: $$cap_redis_password
           label: Redis password
           defaultValue: $$cap_gen_random_hex(16)
@@ -47,15 +47,15 @@ caproverOneClickApp:
         - id: $$cap_app_version
           label: Bitnami's airflow Version
           defaultValue: '2.3.3'
-          description: Check the tag version on https://hub.docker.com/r/bitnami/airflow
+          description: Check the tag version on https://hub.docker.com/r/bitnami/airflow/tags
         - id: $$cap_airflow_worker_version
           label: Bitnami's airflow worker Version
           defaultValue: '2.3.3'
-          description: Check the tag version on https://hub.docker.com/r/bitnami/airflow-worker
+          description: Check the tag version on https://hub.docker.com/r/bitnami/airflow-worker/tags
         - id: $$cap_airflow_scheduler_version
           label: Bitnami's airflow scheduler Version
           defaultValue: '2.3.3'
-          description: Check the tag version on https://hub.docker.com/r/bitnami/airflow-scheduler
+          description: Check the tag version on https://hub.docker.com/r/bitnami/airflow-scheduler/tags
         - id: $$cap_airflow_user
           label: Airflow user
           defaultValue: 'airflow_user'

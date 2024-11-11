@@ -18,7 +18,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_app_version
           label: 'Elasticsearch Version Tag'
-          description: 'Check out the releases overview: https://hub.docker.com/_/elasticsearch'
+          description: 'Check out the releases overview: https://hub.docker.com/_/elasticsearch/tags'
           defaultValue: 8.4.1
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_elasticsearch_cluster_name

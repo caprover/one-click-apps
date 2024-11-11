@@ -13,7 +13,7 @@ caproverOneClickApp:
     variables:
         - label: Syncthing Docker Version
           defaultValue: 1.5.0
-          description: It's highly recommended that you don't use the latest tag but instead the major version you need.
+          description: It's highly recommended that you don't use the latest tag but instead the major version you need. See https://hub.docker.com/r/syncthing/syncthing/tags for a list of versions.
           id: $$cap_app_version
         - label: Sync Protocol Listening Port
           description: Port that Syncthing listens on for data synchronization (TCP).

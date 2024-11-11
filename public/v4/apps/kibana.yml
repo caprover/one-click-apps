@@ -15,7 +15,7 @@ caproverOneClickApp:
     variables:
         - label: Kibana version
           defaultValue: 8.4.1
-          description: It's highly recommended that you don't use the latest tag but instead the major version you need. See https://hub.docker.com/_/kibana for a list of versions.
+          description: It's highly recommended that you don't use the latest tag but instead the major version you need. See https://hub.docker.com/_/kibana/tags for a list of versions.
           id: $$cap_app_version
         - label: Default App id
           defaultValue: home

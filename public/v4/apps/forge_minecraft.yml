@@ -52,7 +52,7 @@ caproverOneClickApp:
           defaultValue: 1.20.1
         - id: $$cap_app_version
           label: forge server version
-          description: 'Choose the version that works with your mc version , see: https://files.minecraftforge.net/'
+          description: 'Choose the version tag from the tags that works with your mc version , see: https://files.minecraftforge.net/'
           defaultValue: 47.0.46
         - id: $$server_type
           label: Server type

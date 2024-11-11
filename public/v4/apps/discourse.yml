@@ -82,7 +82,7 @@ caproverOneClickApp:
         - id: $$cap_app_version
           label: Discourse Version
           defaultValue: 2.8.11
-          description: Version of Discourse
+          description: Version of Discourse to use. Check https://hub.docker.com/r/bitnami/discourse/tags for available versions.
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_postgresql_version
           label: Postgresql (database) version

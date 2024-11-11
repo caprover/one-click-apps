@@ -35,7 +35,7 @@ caproverOneClickApp:
         - id: $$cap_app_version
           label: Version
           defaultValue: '1.6.0-ls44'
-          description: The version of the CodiMD image to use. Defaults to 1.6.0-ls44.
+          description: The version of the CodiMD image to use. Check https://hub.docker.com/r/linuxserver/codimd/tags for available versions.
           validRegex: /.{1,}/
         - label: Database Password
           description: Password to connect to the database
