@@ -55,6 +55,10 @@
                      throw new Error(`Cannot find services for ${apps[i]}`);
                  }
 
+                 if (!content.caproverOneClickApp.variables.find((v) => v.id === '$$cap_app_version')) {
+                     throw new Error(`Cannot find version for ${apps[i]}`);
+                 }
+
                  Object.keys(content.services).forEach(
                      (serviceName) => { // jshint ignore:line
                          const s = content.services[serviceName];
