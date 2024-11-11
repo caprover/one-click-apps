@@ -14,7 +14,7 @@ services:
             notExposeAsWebApp: 'true'
 
     $$cap_appname:
-        image: 'thomascenni/alpine-invoiceplane:v1.5.11'
+        image: thomascenni/alpine-invoiceplane:$$cap_app_version
         volumes:
             - $$cap_appname-storage:/storage
             - $$cap_appname-config:/config
@@ -28,6 +28,11 @@ services:
 
 caproverOneClickApp:
     variables:
+        - id: $$cap_app_version
+          label: Version
+          defaultValue: 'v1.5.11'
+          description: The version of the InvoicePlane image to use. Defaults to v1.5.11.
+          validRegex: /.{1,}/
         - defaultValue: $$cap_gen_random_hex(20)
           description: This is the MySQL root password. Randomly generated. Can be changed also.
           id: $$cap_MYSQL_ROOT_PWD

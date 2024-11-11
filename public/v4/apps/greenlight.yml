@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname-greenlight:
-        image: bigbluebutton/greenlight:v2
+        image: bigbluebutton/greenlight:$$cap_app_version
         volumes:
             - $$cap_appname-greenlight-log:/usr/src/app/log
             - $$cap_appname-greenlight-storage:/usr/src/app/storage
@@ -50,6 +50,11 @@ services:
             WEB_CONCURRENCY: $$cap_WEB_CONCURRENCY
 caproverOneClickApp:
     variables:
+        - id: $$cap_app_version
+          label: Version
+          defaultValue: 'v2'
+          description: The version of the Greenlight image to use. Defaults to v2.
+          validRegex: /.{1,}/
         - id: $$cap_SECRET_KEY_BASE
           description: Create a Secret Key for Rails
           label: SECRET_KEY_BASE

@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: ghcr.io/byo-software/steam-openid-connect-provider:sha-c8305ce
+        image: ghcr.io/byo-software/steam-openid-connect-provider:$$cap_app_version
         restart: always
         environment:
             OpenID__RedirectUri: $$cap_redirect_uri
@@ -13,6 +13,10 @@ services:
             containerHttpPort: '80'
 caproverOneClickApp:
     variables:
+        - id: $$cap_app_version
+          label: App Version
+          defaultValue: 'sha-c8305ce'
+          description: The version of the app to deploy.
         - id: $$cap_client_id
           label: OAuth Client ID
           defaultValue: 'steamidp'

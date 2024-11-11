@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: nicolaw/tiddlywiki
+        image: nicolaw/tiddlywiki:$$cap_app_version
         restart: always
         volumes:
             - $$cap_appname-data:/var/lib/tiddlywiki
@@ -13,6 +13,10 @@ services:
             containerHttpPort: '8080'
 caproverOneClickApp:
     variables:
+        - id: $$cap_app_version
+          label: Version
+          defaultValue: '5.1.23'
+          description: Version of TiddlyWiki to use
         - id: $$cap_wikusername
           label: Username
           defaultValue: anonymous

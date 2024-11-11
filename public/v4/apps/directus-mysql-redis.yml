@@ -25,7 +25,7 @@ services:
         depends_on:
             - $$cap_appname-mysql
             - $$cap_appname-redis
-        image: directus/directus:$$cap_directus_tag
+        image: directus/directus:$$cap_app_version
         volumes:
             - $$cap_appname-uploads:/directus/uploads
             - $$cap_appname-extensions:/directus/extensions
@@ -57,7 +57,7 @@ services:
 caproverOneClickApp:
     variables:
         - label: Directus image tag
-          id: $$cap_directus_tag
+          id: $$cap_app_version
           defaultValue: '9.22.1'
           validRegex: /.{1,}/
           description: Tag of Directus image on https://hub.docker.com/r/directus/directus/tags

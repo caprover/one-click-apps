@@ -23,7 +23,7 @@ services:
         depends_on:
             - $$cap_appname-postgres
             - $$cap_appname-redis
-        image: directus/directus:$$cap_directus_tag
+        image: directus/directus:$$cap_app_version
         volumes:
             - $$cap_appname-uploads:/directus/uploads
             - $$cap_appname-extensions:/directus/extensions
@@ -49,7 +49,7 @@ caproverOneClickApp:
     variables:
         - description: Tag of Directus image on https://hub.docker.com/r/directus/directus/tags
           defaultValue: 10.4.3
-          id: $$cap_directus_tag
+          id: $$cap_app_version
           label: Directus image tag
           validRegex: /.{1,}/
         - description: Name of the Directus database instance.

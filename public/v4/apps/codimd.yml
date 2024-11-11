@@ -24,7 +24,7 @@ services:
             PGID: 1000
             PUID: 1000
             TZ: $$cap_timezone
-        image: linuxserver/codimd:1.6.0-ls44
+        image: linuxserver/codimd:$$cap_app_version
         restart: always
         volumes:
             - $$cap_appname-config:/config
@@ -32,6 +32,11 @@ services:
             containerHttpPort: '3000'
 caproverOneClickApp:
     variables:
+        - id: $$cap_app_version
+          label: Version
+          defaultValue: '1.6.0-ls44'
+          description: The version of the CodiMD image to use. Defaults to 1.6.0-ls44.
+          validRegex: /.{1,}/
         - label: Database Password
           description: Password to connect to the database
           defaultValue: $$cap_gen_random_hex(16)

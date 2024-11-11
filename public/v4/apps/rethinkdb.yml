@@ -1,13 +1,17 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: rethinkdb:2.3.6
+        image: rethinkdb:$$cap_app_version
         volumes:
             - $$cap_appname-data:/data/rethinkdb_data/
         caproverExtra:
             containerHttpPort: '8080'
 caproverOneClickApp:
-    variables: []
+    variables:
+        - id: $$cap_app_version
+          label: RethinkDB Version
+          defaultValue: 2.3.6
+          description: The version of the image to use. You can find the available versions at https://hub.docker.com/r/rethinkdb/tags
     instructions:
         end: >
             RethinkDB is deployed and available as http://$$cap_appname.$$cap_root_domain/.

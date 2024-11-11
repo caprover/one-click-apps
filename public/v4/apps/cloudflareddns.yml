@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: oznu/cloudflare-ddns:latest
+        image: oznu/cloudflare-ddns:$$cap_app_version
         environment:
             API_KEY: $$cap_api_key
             ZONE: $$cap_zone
@@ -14,6 +14,11 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
+        - id: $$cap_app_version
+          label: Version
+          defaultValue: 'latest'
+          description: The version of the CloudFlare DDNS image to use. Defaults to latest.
+          validRegex: /.{1,}/
         - id: $$cap_api_key
           label: Cloudflare API token
           defaultValue: ''

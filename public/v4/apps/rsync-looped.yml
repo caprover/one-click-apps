@@ -4,7 +4,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM alpine:3.15.0
+                - FROM alpine:$$cap_app_version
                 - RUN apk update && apk add openssh rsync nano openssl bash
                 - ADD https://gist.githubusercontent.com/githubsaturn/b092f0f784263ebf2696c5613e9144e5/raw/0bd25d5bf7970e518bcfcfd58ca156e74b343afe/rsync-looper.sh /
                 - RUN chmod +x /rsync-looper.sh
@@ -20,6 +20,10 @@ services:
             - $$cap_appname-target-directory:/target-dir
 caproverOneClickApp:
     variables:
+        - id: $$cap_app_version
+          label: App Version
+          description: The version of the app
+          defaultValue: '3.15.0'
         - id: $$cap_REMOTE_SOURCE_DIRECTORY
           label: Remote source location
           description: The remote directory from which the content will be downloaded

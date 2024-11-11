@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: lscr.io/linuxserver/openssh-server:version-9.7_p1-r4
+        image: lscr.io/linuxserver/openssh-server:$$cap_app_version
         environment:
             PUID: 1001
             PGID: 1001
@@ -25,6 +25,10 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
+        - id: $$cap_app_version
+          label: App Version
+          defaultValue: 'version-9.7_p1-r4'
+          description: The version of the app
         - id: $$cap_sshd_public_key
           label: Your SSH public key
           description: Enter your public key

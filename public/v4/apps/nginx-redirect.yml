@@ -1,12 +1,16 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: caprover/nginx-redirect:latest
+        image: caprover/nginx-redirect:$$cap_app_version
         restart: always
         environment:
             RETURN_LOCATION: return 301 $$cap_redirect_url$request_uri;
 caproverOneClickApp:
     variables:
+        - id: $$cap_app_version
+          label: Image Version
+          defaultValue: latest
+          description: The version of the image to use. You can find the available versions at https://hub.docker.com/r/caprover/nginx-redirect/tags
         - id: $$cap_redirect_url
           label: Redirect address
           description: For example use https://caprover.com to redirect all request to CapRover.

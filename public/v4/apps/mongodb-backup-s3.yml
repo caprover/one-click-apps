@@ -18,10 +18,14 @@ services:
             INIT_BACKUP: $$cap_init_backup
             INIT_RESTORE: $$cap_init_restore
             DISABLE_CRON: $$cap_disable_cron
-        image: halvves/mongodb-backup-s3@sha256:e709db5e0fe5d44873ac5a385af214e951f2a0366a7c02b515ebf7c983658b0c
+        image: halvves/mongodb-backup-s3@$$cap_app_version
         restart: always
 caproverOneClickApp:
     variables:
+        - description: The version of the image to use. You can find the available versions at https://hub.docker.com/r/halvves/mongodb-backup-s3/tags
+          id: $$cap_app_version
+          label: Image Version
+          defaultValue: sha256:e709db5e0fe5d44873ac5a385af214e951f2a0366a7c02b515ebf7c983658b0c
         - description: Your aws access key id (for your s3 bucket)
           id: $$cap_aws_access_key_id
           label: AWS ACCESS KEY ID

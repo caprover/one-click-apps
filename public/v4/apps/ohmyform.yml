@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: ohmyform/ohmyform:0.9.9
+        image: ohmyform/ohmyform:$$cap_app_version
         volumes:
             - $$cap_appname-data:/data
         environment:
@@ -26,6 +26,10 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
+        - id: $$cap_app_version
+          label: Image Version
+          defaultValue: 0.9.9
+          description: The version of the image to use. You can find the available versions at https://hub.docker.com/r/ohmyform/ohmyform/tags
         - id: $$cap_ohmyform_email
           label: Admin E-Mail
           description: E-Mail for the OhMyForm admin user
