@@ -4,7 +4,7 @@ services:
     $$cap_appname:
         depends_on:
             - $$cap_appname-mariadb
-        image: monica:$$cap_monica_version
+        image: monica:$$cap_app_version
         restart: 'always'
         environment:
             APP_KEY: $$cap_gen_random_hex(32)
@@ -30,7 +30,7 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_monica_version
+        - id: $$cap_app_version
           label: Monica Docker version
           defaultValue: '3.7'
           description: Check out this page for the valid tags Find on https://hub.docker.com/_/monica?tab=tags. Use the Apache tag otherwise it won't work.

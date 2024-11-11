@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: linuxserver/qbittorrent:$$cap_qbittorrent_version
+        image: linuxserver/qbittorrent:$$cap_app_version
         environment:
             TZ: $$cap_tz
             UMASK: 022
@@ -17,7 +17,7 @@ services:
             containerHttpPort: $$cap_webui_port
 caproverOneClickApp:
     variables:
-        - id: $$cap_qbittorrent_version
+        - id: $$cap_app_version
           label: qBittorrent Version
           defaultValue: version-14.3.5.99202105022253-7365-063844ed4ubuntu20.04.1
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/qbittorrent/tags

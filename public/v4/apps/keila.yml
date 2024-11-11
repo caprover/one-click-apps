@@ -3,7 +3,7 @@ services:
     $$cap_appname:
         caproverExtra:
             containerHttpPort: $$cap_KEILA_PORT
-        image: pentacent/keila:$$cap_KEILA_VERSION
+        image: pentacent/keila:$$cap_app_version
         environment:
             DB_URL: postgres://$$cap_POSTGRES_USER:$$cap_POSTGRES_PASSWORD@srv-captain--$$cap_appname-db/$$cap_POSTGRES_DATABASE
             DB_ENABLE_SSL: $$cap_KEILA_DB_ENABLE_SSL
@@ -58,7 +58,7 @@ caproverOneClickApp:
     description: Free and open source email newsletter tool.
     documentation: https://www.keila.io/docs
     variables:
-        - id: $$cap_KEILA_VERSION
+        - id: $$cap_app_version
           label: Keila | Version Tag
           description: Check out their valid tags at https://hub.docker.com/r/pentacent/keila/tags
           defaultValue: '0.12.2'

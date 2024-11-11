@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: inovector/mixpost:$$cap_MIXPOST_VERSION
+        image: inovector/mixpost:$$cap_app_version
         environment:
             APP_NAME: $$cap_MIXPOST_APP_NAME
             APP_KEY: $$cap_MIXPOST_APP_KEY
@@ -54,7 +54,7 @@ caproverOneClickApp:
             Find the administrator login details in the logs.
             If you enabled HTTPS, you should adjust the `APP_URL` environment variable accordingly.
     variables:
-        - id: $$cap_MIXPOST_VERSION
+        - id: $$cap_app_version
           label: Application | Version
           description: Mixpost version. Check out their valid tags at https://hub.docker.com/r/inovector/mixpost
           defaultValue: 'v1.1.3'

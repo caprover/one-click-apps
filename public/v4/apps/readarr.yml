@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: lscr.io/linuxserver/readarr:$$cap_readarr_version
+        image: lscr.io/linuxserver/readarr:$$cap_app_version
         environment:
             TZ: $$cap_tz
             PUID: $$cap_puid
@@ -14,7 +14,7 @@ services:
             containerHttpPort: 8787
 caproverOneClickApp:
     variables:
-        - id: $$cap_readarr_version
+        - id: $$cap_app_version
           label: Overseerr Version
           defaultValue: 0.3.12-nightly
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/readarr/tags

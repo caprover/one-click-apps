@@ -13,7 +13,7 @@ caproverOneClickApp:
             You can your configuration if necessary. For more info visit https://docs.imgproxy.net/.
     variables:
         - defaultValue: 3.6.0
-          id: $$cap_imgproxy_version
+          id: $$cap_app_version
           label: imgproxy Version
           validRegex: /^(?:2|3)(?:\.[0-9]+){0,2}$/
         - defaultValue: $$cap_gen_random_hex(128)
@@ -32,5 +32,5 @@ services:
             IMGPROXY_BIND: 0.0.0.0:5000
             IMGPROXY_KEY: $$cap_imgproxy_key
             IMGPROXY_SALT: $$cap_imgproxy_salt
-        image: darthsim/imgproxy:v$$cap_imgproxy_version
+        image: darthsim/imgproxy:v$$cap_app_version
         restart: unless-stopped

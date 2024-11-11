@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: 'photoprism/photoprism:$$app_version'
+        image: 'photoprism/photoprism:$$cap_app_version'
         depends_on:
             - $$cap_appname-db
         environment:
@@ -49,7 +49,7 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$app_version
+        - id: $$cap_app_version
           label: Photoprism Version
           defaultValue: 220901-bullseye
           description: >-

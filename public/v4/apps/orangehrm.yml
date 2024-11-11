@@ -17,7 +17,7 @@ services:
         documentation: Taken from https://hub.docker.com/r/orangehrm/orangehrm
         depends_on:
             - $$cap_appname-db
-        image: orangehrm/orangehrm:$$cap_orangehrm_version
+        image: orangehrm/orangehrm:$$cap_app_version
         volumes:
             - $$cap_appname-data:/orangehrm
         restart: always
@@ -45,7 +45,7 @@ caproverOneClickApp:
           label: admin password
           description: Password for the admin user.
           validRegex: /.{1,}/
-        - id: $$cap_orangehrm_version
+        - id: $$cap_app_version
           label: OrangeHRM Version
           defaultValue: '5.4'
           description: https://hub.docker.com/r/bitnami/orangehrm/tags

@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: lscr.io/linuxserver/overseerr:$$cap_overseerr_version
+        image: lscr.io/linuxserver/overseerr:$$cap_app_version
         environment:
             TZ: $$cap_tz
             PUID: $$cap_puid
@@ -12,7 +12,7 @@ services:
             containerHttpPort: 5055
 caproverOneClickApp:
     variables:
-        - id: $$cap_overseerr_version
+        - id: $$cap_app_version
           label: Overseerr Version
           defaultValue: 1.33.2
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/overseerr/tags

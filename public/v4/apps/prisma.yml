@@ -10,7 +10,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname:
-        image: prismagraphql/prisma:$$cap_prisma_version
+        image: prismagraphql/prisma:$$cap_app_version
         restart: always
         ports:
             - 4466:4466
@@ -34,7 +34,7 @@ services:
             containerHttpPort: '4466'
 caproverOneClickApp:
     variables:
-        - id: $$cap_prisma_version
+        - id: $$cap_app_version
           label: Prisma 1 Version
           defaultValue: '1.29'
           description: Check out their GitHub page for their latest version https://github.com/prisma/prisma1

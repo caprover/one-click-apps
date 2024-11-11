@@ -18,7 +18,7 @@ services:
             - $$cap_appname-fonts:/usr/share/fonts/truetype/custom
 caproverOneClickApp:
     variables:
-        - id: '$$cap_app_version'
+        - id: $$cap_app_version
           label: Document Server Version
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/onlyoffice/documentserver/tags
           defaultValue: '7.3.3.50'

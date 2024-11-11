@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: ibmcom/couchdb3:$$cap_couchdb_version
+        image: ibmcom/couchdb3:$$cap_app_version
         volumes:
             - $$cap_appname-db-data:/opt/couchdb/data
             - $$cap_appname-db-etc:/opt/couchdb/etc
@@ -13,7 +13,7 @@ services:
             containerHttpPort: '5984'
 caproverOneClickApp:
     variables:
-        - id: $$cap_couchdb_version
+        - id: $$cap_app_version
           label: CouchDB Version Tag
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/couchdb/tags/
           defaultValue: '3.2.1'

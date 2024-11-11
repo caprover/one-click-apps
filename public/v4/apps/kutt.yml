@@ -3,7 +3,7 @@ services:
     $$cap_appname:
         caproverExtra:
             containerHttpPort: $$cap_KUTT_PORT
-        image: kutt/kutt:$$cap_KUTT_VERSION
+        image: kutt/kutt:$$cap_app_version
         environment:
             PORT: $$cap_KUTT_PORT
             SITE_NAME: $$cap_KUTT_SITE_NAME
@@ -69,7 +69,7 @@ caproverOneClickApp:
             Kutt has been successfully deployed! It might take few moments before it's fully started.
             You can access it at `http://$$cap_appname.$$cap_root_domain`.
     variables:
-        - id: $$cap_KUTT_VERSION
+        - id: $$cap_app_version
           label: Version | Application
           description: Kutt's version. Check out their valid tags at https://hub.docker.com/r/kutt/kutt/tags
           defaultValue: v2.7.3

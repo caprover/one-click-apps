@@ -22,7 +22,7 @@ services:
         caproverExtra:
             containerHttpPort: '8008'
             dockerfileLines:
-                - FROM matrixdotorg/synapse:$$cap_synapse_version
+                - FROM matrixdotorg/synapse:$$cap_app_version
                 - RUN mkdir /data/
                 - ENV SYNAPSE_SERVER_NAME=$$cap_appname.$$cap_root_domain
                 - ENV SYNAPSE_REPORT_STATS=$$cap_synapse_stats
@@ -36,7 +36,7 @@ services:
 
 caproverOneClickApp:
     variables:
-        - id: '$$cap_synapse_version'
+        - id: '$$cap_app_version'
           label: Synapse Version
           defaultValue: 'v1.63.1'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/matrixdotorg/synapse/tags

@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: mongo-express:$$cap_mongoexpress_version
+        image: mongo-express:$$cap_app_version
         restart: always
         environment:
             ME_CONFIG_MONGODB_SERVER: $$cap_me_server_address
@@ -16,7 +16,7 @@ services:
             containerHttpPort: '8081'
 caproverOneClickApp:
     variables:
-        - id: $$cap_mongoexpress_version
+        - id: $$cap_app_version
           label: Mongo Express Version Tag
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/mongo-express/tags/
           defaultValue: '0.54'

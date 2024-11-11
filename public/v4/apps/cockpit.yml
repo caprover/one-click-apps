@@ -1,12 +1,12 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: cockpithq/cockpit:core-$$cap_COCKPIT_VERSION
+        image: cockpithq/cockpit:core-$$cap_app_version
         volumes:
             - $$cap_appname:/var/www/html
 caproverOneClickApp:
     variables:
-        - id: $$cap_COCKPIT_VERSION
+        - id: $$cap_app_version
           label: Version
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/cockpithq/cockpit/tags
           defaultValue: 2.5.2

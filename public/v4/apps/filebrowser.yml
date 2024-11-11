@@ -11,11 +11,11 @@ services:
                 - FROM alpine:latest as helper
                 - '# Similar to the original file, except, /database.db is inside a directory now so that we can assign a volume to it.'
                 - RUN echo "{'port':80,'baseURL':'','address':'','log':'stdout','database':'/database/database.db','root':'/srv'}" | sed "s/\'/\"/g" >/.edited.json
-                - FROM filebrowser/filebrowser:$$cap_filebrowser_version
+                - FROM filebrowser/filebrowser:$$cap_app_version
                 - COPY --from=helper /.edited.json /.filebrowser.json
 caproverOneClickApp:
     variables:
-        - id: $$cap_filebrowser_version
+        - id: $$cap_app_version
           label: File Browser Version Tag
           description: 'Check out their Docker page for the valid tags: https://hub.docker.com/r/filebrowser/filebrowser/tags'
           defaultValue: v2.22.4

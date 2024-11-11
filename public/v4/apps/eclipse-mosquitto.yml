@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: eclipse-mosquitto:$$cap_eclipse_version
+        image: eclipse-mosquitto:$$cap_app_version
         volumes:
             - $$cap_appname-eclipse-config:/mosquitto/config/
             - $$cap_appname-eclipse-data:/mosquitto/data/
@@ -12,7 +12,7 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_eclipse_version
+        - id: $$cap_app_version
           label: Eclipes-Mosquitto Image Version
           defaultValue: latest
           validRegex: /^([^\s^\/])+$/

@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: soulteary/cronicle:$$cap_version
+        image: soulteary/cronicle:$$cap_app_version
         restart: always
         volumes:
             - /etc/localtime:/etc/localtime
@@ -18,7 +18,7 @@ services:
             containerHttpPort: '3012'
 caproverOneClickApp:
     variables:
-        - id: $$cap_version
+        - id: $$cap_app_version
           label: Cronicle Version
           defaultValue: '0.9.17'
           description: Check out their docker page for the valid tags https://hub.docker.com/r/soulteary/cronicle/tags

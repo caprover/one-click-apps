@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     '$$cap_appname':
-        image: kanboard/kanboard:$$cap_version
+        image: kanboard/kanboard:$$cap_app_version
         environment:
             PLUGIN_INSTALLER: $$cap_plugin_installer
         volumes:
@@ -10,7 +10,7 @@ services:
             - '$$cap_appname-ssl:/etc/nginx/ssl'
 caproverOneClickApp:
     variables:
-        - id: '$$cap_version'
+        - id: $$cap_app_version
           label: Kanboard Version
           defaultValue: 'v1.2.15'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/kanboard/kanboard/tags

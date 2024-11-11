@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: filerun/filerun:$$cap_wp_version
+        image: filerun/filerun:$$cap_app_version
         volumes:
             - $$cap_appname-html:/var/www/html
             - $$cap_appname-userfiles:/user-files
@@ -37,7 +37,7 @@ caproverOneClickApp:
           label: Database password
           description: ''
           validRegex: /.{1,}/
-        - id: $$cap_wp_version
+        - id: $$cap_app_version
           label: Filerun Version.
           defaultValue: 'latest'
           description: Use 'latest' tag for normal installation. Check out their Docker page for the valid tags https://hub.docker.com/r/filerun/filerun/tags

@@ -2,7 +2,7 @@ captainVersion: 4
 services:
     # HealthChecks
     $$cap_appname:
-        image: healthchecks/healthchecks:$$cap_hc_version
+        image: healthchecks/healthchecks:$$cap_app_version
         restart: always
         environment:
             DB: postgres
@@ -32,7 +32,7 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_hc_version
+        - id: $$cap_app_version
           label: hc Manifest digest
           defaultValue: 'v1.25.0'
           description: Find on https://hub.docker.com/r/healthchecks/healthchecks/tags

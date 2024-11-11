@@ -2,7 +2,7 @@ captainVersion: 4
 services:
     # Uptime Kuma
     $$cap_appname:
-        image: louislam/uptime-kuma:$$cap_kuma_version
+        image: louislam/uptime-kuma:$$cap_app_version
         restart: unless-stopped
         volumes:
             - $$cap_appname-data:/app/data
@@ -11,7 +11,7 @@ services:
             websocketSupport: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_kuma_version
+        - id: $$cap_app_version
           label: Uptime Kuma Version
           defaultValue: 1.23.11
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/louislam/uptime-kuma/tags

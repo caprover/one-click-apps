@@ -14,7 +14,7 @@ services:
     $$cap_appname-parse:
         depends_on:
             - $$cap_appname-mongodb
-        image: parseplatform/parse-server:$$cap_parse_version
+        image: parseplatform/parse-server:$$cap_app_version
         restart: always
         volumes:
             - $$cap_appname-parse-cloud:/parse-server/cloud
@@ -61,7 +61,7 @@ caproverOneClickApp:
         - id: $$cap_parse_dashboard_password
           label: Parse Dashboard Password
           validRegex: /^\S{8,}$/
-        - id: $$cap_parse_version
+        - id: $$cap_app_version
           label: Parse Version
           defaultValue: 3.1.3
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/parseplatform/parse-server/tags

@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname-db:
-        image: neo4j:$$cap_neo4j_version
+        image: neo4j:$$cap_app_version
         volumes:
             - $$cap_appname-db-data:/data
         restart: unless-stopped
@@ -11,7 +11,7 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_neo4j_version
+        - id: $$cap_app_version
           label: Neo4j Version
           defaultValue: '4.1.9'
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/neo4j?tab=tags

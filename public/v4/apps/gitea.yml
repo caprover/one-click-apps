@@ -15,7 +15,7 @@ services:
     $$cap_appname:
         depends_on:
             - $$cap_appname-db
-        image: gitea/gitea:$$cap_gitea_version
+        image: gitea/gitea:$$cap_app_version
         volumes:
             - $$cap_appname-data:/data
         restart: always
@@ -34,7 +34,7 @@ caproverOneClickApp:
           defaultValue: $$cap_gen_random_hex(10)
           description: ''
           validRegex: /.{1,}/
-        - id: $$cap_gitea_version
+        - id: $$cap_app_version
           label: Gitea Version
           defaultValue: '1.21.1'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/gitea/gitea/tags

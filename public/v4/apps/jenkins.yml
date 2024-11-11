@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: jenkins/jenkins:$$cap_jenkins_version
+        image: jenkins/jenkins:$$cap_app_version
         restart: always
         volumes:
             - $$cap_appname-jenkins-home:/var/jenkins_home
@@ -9,7 +9,7 @@ services:
             containerHttpPort: '8080'
 caproverOneClickApp:
     variables:
-        - id: $$cap_jenkins_version
+        - id: $$cap_app_version
           label: Jenkins Version
           defaultValue: lts-jdk11
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/jenkins/jenkins/tags

@@ -20,7 +20,7 @@ caproverOneClickApp:
         - Changed the db backup system to use automysqlbackup
 
     variables:
-        - id: $$cap_invoiceninja_VERSION
+        - id: $$cap_app_version
           label: Invoice Ninja Version
           defaultValue: '5.8.52'
           description: It's a good idea to check for breaking changes between versions. Check current version [on GitHub](https://github.com/invoiceninja/dockerfiles/releases)
@@ -111,7 +111,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: true
             dockerfileLines:
-                - FROM invoiceninja/invoiceninja:$$cap_invoiceninja_VERSION
+                - FROM invoiceninja/invoiceninja:$$cap_app_version
                 - USER root
                 - RUN mkdir -p /var/www/app/public /var/www/app/storage
                 - RUN chown 1500:1500 /var/www/app/*
@@ -142,7 +142,7 @@ services:
             # Workaround for hard-coded container name in nginx config
             dockerfileLines:
                 - FROM nginx:1.21
-                - ADD https://raw.githubusercontent.com/invoiceninja/dockerfiles/$$cap_invoiceninja_VERSION/config/nginx/in-vhost.conf /etc/nginx/templates/in-vhost.conf.template
+                - ADD https://raw.githubusercontent.com/invoiceninja/dockerfiles/$$cap_app_version/config/nginx/in-vhost.conf /etc/nginx/templates/in-vhost.conf.template
                 - RUN sed -i 's/app:9000/${APP_CONTAINER}/g' /etc/nginx/templates/in-vhost.conf.template
 
     $$cap_appname-db-backup:

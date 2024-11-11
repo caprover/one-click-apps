@@ -26,7 +26,7 @@ services:
             - $$cap_appname-db
             - $$cap_appname-redis
         documentation: Taken from https://hub.docker.com/_/nextcloud
-        image: nextcloud:$$cap_nextcloud_version
+        image: nextcloud:$$cap_app_version
         volumes:
             - $$cap_appname-data:/var/www/html
             - $$cap_appname-conf:/usr/local/etc/php/conf.d
@@ -52,12 +52,12 @@ services:
             - $$cap_appname-data:/var/www/html
         caproverExtra:
             dockerfileLines:
-                - FROM nextcloud:$$cap_nextcloud_version
+                - FROM nextcloud:$$cap_app_version
                 - 'ENTRYPOINT [ "/cron.sh" ] '
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_nextcloud_version
+        - id: $$cap_app_version
           label: Nextcloud Version
           defaultValue: 28.0.6
           description: >-

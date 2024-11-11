@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: lscr.io/linuxserver/webtop:$$cap_WEBTOP_VERSION
+        image: lscr.io/linuxserver/webtop:$$cap_app_version
         hostname: $$cap_appname.$$cap_root_domain
         environment:
             TZ: $$cap_WEBTOP_TZ
@@ -28,7 +28,7 @@ caproverOneClickApp:
             Please turn on "Websocket Support" in the settings.
             You can access it at http://$$cap_appname.$$cap_root_domain with login user `$$cap_WEBTOP_CUSTOM_USER` and password `$$cap_WEBTOP_PASSWORD`
     variables:
-        - id: $$cap_WEBTOP_VERSION
+        - id: $$cap_app_version
           label: Version Tag
           description: Check out their documentation for the valid tags https://docs.linuxserver.io/images/docker-webtop#version-tags
           defaultValue: ubuntu-xfce

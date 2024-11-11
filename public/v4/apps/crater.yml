@@ -77,7 +77,7 @@ services:
                 - ENV WEBHOME=$PROJECT_DIRECTORY
                 - RUN printf "\n$COMMAND_CLEAN_ENVIRONMENT_FILE\n$COMMAND_ADD_TO_ENVIRONMENT_FILE\n$COMMAND_NOTIFY" >> $STARTUP_COMMANDS_FILE
         environment:
-            CRATER_PHP_VERSION: $$cap_PHP_VERSION
+            CRATER_PHP_VERSION: $$cap_app_version
             TZ: $$cap_TZ
             PUID: $$cap_PUID
             PGID: $$cap_PGID
@@ -163,7 +163,7 @@ caproverOneClickApp:
     description: Open Source Invoicing Solution for Individuals & Businesses
     documentation: See https://docs.craterapp.com/developer-guide.html
     variables:
-        - id: $$cap_PHP_VERSION
+        - id: $$cap_app_version
           label: PHP Image Version Tag
           description: Without "php" prefix. Check out their valid tags at https://hub.docker.com/r/shinsenter/crater/tags
           defaultValue: '8.1'

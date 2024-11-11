@@ -7,7 +7,7 @@ services:
             - $$cap_port_query:10011
         environment:
             TS3SERVER_LICENSE: accept
-        image: teamspeak:$$cap_version
+        image: teamspeak:$$cap_app_version
         restart: always
         volumes:
             - $$cap_appname-data:/var/ts3server/
@@ -18,7 +18,7 @@ caproverOneClickApp:
         - label: TeamSpeak Docker Version
           defaultValue: 3.13.7
           description: It's highly recommended that you don't use the latest tag but instead the major version you need, e.g. teamspeak:3.12.0
-          id: $$cap_version
+          id: $$cap_app_version
         - label: Voice Port (UDP)
           description: Port for voice (UDP)
           defaultValue: '9987'

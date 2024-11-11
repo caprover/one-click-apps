@@ -3,7 +3,7 @@ services:
     $$cap_appname:
         caproverExtra:
             containerHttpPort: $$cap_OWNCAST_HTTP_PORT
-        image: gabekangas/owncast:$$cap_OWNCAST_VERSION
+        image: gabekangas/owncast:$$cap_app_version
         hostname: $$cap_appname.$$cap_root_domain
         ports:
             - $$cap_OWNCAST_RMTP_PORT:$$cap_OWNCAST_RMTP_PORT
@@ -27,7 +27,7 @@ caproverOneClickApp:
     description: Self-hosted live video and web chat server
     documentation: https://owncast.online/docs
     variables:
-        - id: $$cap_OWNCAST_VERSION
+        - id: $$cap_app_version
           label: General | Version Tag
           description: Check out their valid tags at https://hub.docker.com/r/gabekangas/owncast/tags
           defaultValue: '0.0.12'

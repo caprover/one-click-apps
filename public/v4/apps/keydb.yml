@@ -8,12 +8,12 @@ services:
             KEYDB_PASSWORD: $$cap_keydb_password
         caproverExtra:
             dockerfileLines:
-                - FROM eqalpha/keydb:$$cap_keydb_architecture_v$$cap_keydb_version
+                - FROM eqalpha/keydb:$$cap_keydb_architecture_v$$cap_app_version
                 - CMD exec keydb-server /etc/keydb/keydb.conf --server-threads 4 --requirepass "$KEYDB_PASSWORD"
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_keydb_version
+        - id: $$cap_app_version
           label: KeyDB Version
           description: 'Check out their Docker page for the valid tags: https://hub.docker.com/r/eqalpha/keydb/tags'
           defaultValue: '6.3.2'

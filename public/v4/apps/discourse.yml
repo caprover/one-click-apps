@@ -25,7 +25,7 @@ services:
             notExposeAsWebApp: 'true'
     $$cap_appname:
         documentation: Taken from https://hub.docker.com/r/bitnami/discourse
-        image: docker.io/bitnami/discourse:$$cap_discourse_version
+        image: docker.io/bitnami/discourse:$$cap_app_version
         depends_on:
             - $$cap_appname-postgresql
             - $$cap_appname-redis
@@ -74,12 +74,12 @@ services:
             SMTP_PASSWORD: $$cap_smtp_pass
         caproverExtra:
             dockerfileLines:
-                - FROM docker.io/bitnami/discourse:$$cap_discourse_version
+                - FROM docker.io/bitnami/discourse:$$cap_app_version
                 - CMD ["/opt/bitnami/scripts/discourse-sidekiq/run.sh"]
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_discourse_version
+        - id: $$cap_app_version
           label: Discourse Version
           defaultValue: 2.8.11
           description: Version of Discourse

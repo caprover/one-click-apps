@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: ghcr.io/gethomepage/homepage:$$cap_homepage_version
+        image: ghcr.io/gethomepage/homepage:$$cap_app_version
         environment:
             - PUID=$$cap_puid
             - PGID=$$cap_guid
@@ -27,7 +27,7 @@ caproverOneClickApp:
           defaultValue: '1000'
           description: Group ID that the process uses, run (id $group) in your instance to see the id.
           validRegex: /.{1,}/
-        - id: $$cap_homepage_version
+        - id: $$cap_app_version
           label: Homepage Version
           defaultValue: v0.8.7
           description: Check out their GitHub packages page for the valid tags https://github.com/gethomepage/homepage/releases

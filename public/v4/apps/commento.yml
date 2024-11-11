@@ -2,7 +2,7 @@ captainVersion: 4
 services:
     # Commento
     $$cap_appname:
-        image: registry.gitlab.com/commento/commento@$$cap_commento_version
+        image: registry.gitlab.com/commento/commento@$$cap_app_version
         restart: always
         environment:
             COMMENTO_ORIGIN: https://$$cap_appname.$$cap_root_domain
@@ -23,7 +23,7 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_commento_version
+        - id: $$cap_app_version
           label: Commento Manifest digest
           defaultValue: 'sha256:e792ac5c384ca7d45bfc228ef6ec3084a54af98847ee75a8aac7aa720f4f87a2'
           description: Starts with 'sha256:'.  Find on https://gitlab.com/commento/commento/container_registry/337942

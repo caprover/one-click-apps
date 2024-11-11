@@ -4,7 +4,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM cloudflare/cloudflared:$$cap_cloudflared_version
+                - FROM cloudflare/cloudflared:$$cap_app_version
                 - ENTRYPOINT ["cloudflared"]
                 - CMD ["tunnel", "--no-autoupdate", "run", "--token", "$$cap_cloudflared_token"]
         restart: always
@@ -14,7 +14,7 @@ caproverOneClickApp:
           label: Cloudflare Tunnel Token
           defaultValue: ''
           description: 'Your Cloudflare tunnel token. This is required to authenticate the tunnel with Cloudflare.'
-        - id: $$cap_cloudflared_version
+        - id: $$cap_app_version
           label: Cloudflare Cloudflared Version
           defaultValue: '1517-bb29a0e19437'
           description: 'The version of Cloudflare Cloudflared to use.'

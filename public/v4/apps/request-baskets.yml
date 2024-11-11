@@ -1,12 +1,12 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: darklynx/request-baskets:$$cap_version
+        image: darklynx/request-baskets:$$cap_app_version
         caproverExtra:
             containerHttpPort: '55555'
 caproverOneClickApp:
     variables:
-        - id: $$cap_version
+        - id: $$cap_app_version
           label: Request Baskets Version Tag
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/darklynx/request-baskets/tags/
           defaultValue: 'v1.1.0'

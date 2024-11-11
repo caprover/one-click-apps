@@ -24,7 +24,7 @@ services:
             DB_USER: bookstack
             DB_PASS: $$cap_DB_PASS
             DB_DATABASE: bookstackapp
-        image: lscr.io/linuxserver/bookstack:$$cap_bookstack_version
+        image: lscr.io/linuxserver/bookstack:$$cap_app_version
         restart: always
         volumes:
             - $$cap_appname-config:/config
@@ -38,7 +38,7 @@ caproverOneClickApp:
           description: This is the timezone for the application, find yours at https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
           defaultValue: Europe/London
           id: $$cap_timezone
-        - id: $$cap_bookstack_version
+        - id: $$cap_app_version
           label: Version Tag
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/bookstack/tags
           defaultValue: 'v23.10.4-ls118'

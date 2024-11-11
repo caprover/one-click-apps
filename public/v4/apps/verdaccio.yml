@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: verdaccio/verdaccio:$$cap__verdaccio_version
+        image: verdaccio/verdaccio:$$cap_app_version
         volumes:
             - $$cap_appname-storage:/verdaccio/storage
             - $$cap_appname-conf:/verdaccio/conf
@@ -12,7 +12,7 @@ services:
             containerHttpPort: '4873'
 caproverOneClickApp:
     variables:
-        - id: $$cap__verdaccio_version
+        - id: $$cap_app_version
           label: Verdaccio Version
           defaultValue: 3.11.6
           description: 'Additional tags can be found here: https://hub.docker.com/r/verdaccio/verdaccio/tags'

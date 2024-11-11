@@ -9,7 +9,7 @@ caproverOneClickApp:
     isOfficial: true
     variables:
         - defaultValue: 2.2.1
-          id: $$cap_davos_version
+          id: $$cap_app_version
           label: Davos Version
           validRegex: /^([^\s^\/])+$/
         - defaultValue: '1000'
@@ -28,7 +28,7 @@ services:
         environment:
             PGID: $$cap_davos_pgid
             PUID: $$cap_davos_puid
-        image: lscr.io/linuxserver/davos:$$cap_davos_version
+        image: lscr.io/linuxserver/davos:$$cap_app_version
         restart: unless-stopped
         volumes:
             - $$cap_appname-config:/config

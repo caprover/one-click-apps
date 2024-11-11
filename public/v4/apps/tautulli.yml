@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: tautulli/tautulli:$$cap_version
+        image: tautulli/tautulli:$$cap_app_version
         restart: always
         volumes:
             - $$cap_appname-config:/config
@@ -13,7 +13,7 @@ services:
             containerHttpPort: '8181'
 caproverOneClickApp:
     variables:
-        - id: $$cap_version
+        - id: $$cap_app_version
           label: Tautulli Version Tag
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/tautulli/tautulli/tags?page=1&ordering=last_updated
           defaultValue: 'v2.7.5'

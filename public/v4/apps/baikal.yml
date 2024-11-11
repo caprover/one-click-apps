@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     '$$cap_appname':
-        image: ckulka/baikal:$$cap_version
+        image: ckulka/baikal:$$cap_app_version
         volumes:
             - '$$cap_appname-data:/var/www/baikal/Specific'
             - '$$cap_appname-config:/var/www/baikal/config'
@@ -9,7 +9,7 @@ services:
             containerHttpPort: '80'
 caproverOneClickApp:
     variables:
-        - id: '$$cap_version'
+        - id: $$cap_app_version
           label: Baikal Version
           defaultValue: '0.9.2-nginx'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/ckulka/baikal/tags

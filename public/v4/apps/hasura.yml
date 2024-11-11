@@ -13,7 +13,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname:
-        image: hasura/graphql-engine:$$cap_hasura_version
+        image: hasura/graphql-engine:$$cap_app_version
         depends_on:
             - $$cap_appname-db
         restart: always
@@ -28,7 +28,7 @@ caproverOneClickApp:
     variables:
         - defaultValue: v1.2.2
           description: Check out their GitHub page for their latest version https://github.com/hasura/graphql-engine
-          id: $$cap_hasura_version
+          id: $$cap_app_version
           label: Hasura Version
           validRegex: /^([^\s^\/])+$/
         - defaultValue: '12'

@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: mumblevoip/mumble-server:$$cap_version
+        image: mumblevoip/mumble-server:$$cap_app_version
         container_name: mumble-server
         hostname: mumble-server
         restart: on-failure
@@ -17,7 +17,7 @@ caproverOneClickApp:
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/mumblevoip/mumble-server/tags
           defaultValue: v1.4.230
           validRegex: '/.{1,}/'
-          id: $$cap_version
+          id: $$cap_app_version
         - label: Voice Port (UDP)
           description: Port for voice
           defaultValue: '64738'

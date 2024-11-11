@@ -3,7 +3,7 @@ services:
     $$cap_appname:
         ports:
             - $$cap_port_sync:55555
-        image: resilio/sync:$$cap_version
+        image: resilio/sync:$$cap_app_version
         restart: always
         volumes:
             - $$cap_appname-data:/mnt/sync
@@ -14,7 +14,7 @@ caproverOneClickApp:
         - label: Resilio Sync Docker Version
           defaultValue: 2.6.4
           description: It's highly recommended that you don't use the latest tag but instead the major version you need.
-          id: $$cap_version
+          id: $$cap_app_version
         - label: Listening port for Sync traffic
           description: Port that Sync listens on for data synchronization (TCP & UDP).
           defaultValue: '55555'

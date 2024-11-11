@@ -12,7 +12,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname:
-        image: miniflux/miniflux:$$cap_miniflux_version
+        image: miniflux/miniflux:$$cap_app_version
         depends_on:
             - $$cap_appname-db
         restart: always
@@ -26,7 +26,7 @@ services:
             containerHttpPort: '8080'
 caproverOneClickApp:
     variables:
-        - id: $$cap_miniflux_version
+        - id: $$cap_app_version
           label: Miniflux version
           defaultValue: 2.0.22
           description: Check out valid tags at https://hub.docker.com/r/miniflux/miniflux/tags

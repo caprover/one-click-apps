@@ -2,7 +2,7 @@ captainVersion: 4
 
 services:
     $$cap_appname:
-        image: cortezaproject/corteza:$$corteza_version
+        image: cortezaproject/corteza:$$cap_app_version
         restart: always
         depends_on:
             - $$cap_appname-db
@@ -13,7 +13,7 @@ services:
             DB_DSN: postgres://$$cap_postgre_username:$$cap_postgre_password@srv-captain--$$cap_appname-db:5432/$$cap_postgre_db_name?sslmode=disable
             HTTP_WEBAPP_ENABLED: true
             DOMAIN: $$cap_appname.$$cap_root_domain
-            VERSION: $$corteza_version
+            VERSION: $$cap_app_version
             LETSENCRYPT_HOST: $$cap_lets_encrypt
     $$cap_appname-db:
         image: postgres:13
@@ -29,7 +29,7 @@ services:
 
 caproverOneClickApp:
     variables:
-        - id: '$$corteza_version'
+        - id: $$cap_app_version
           label: Corteza Version
           defaultValue: '2021.9.5'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/cortezaproject/corteza/tags

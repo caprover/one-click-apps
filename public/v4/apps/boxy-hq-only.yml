@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: boxyhq/jackson:$$cap_boxyhq_jackson_version
+        image: boxyhq/jackson:$$cap_app_version
         restart: always
         caproverExtra:
             containerHttpPort: '5225'
@@ -222,7 +222,7 @@ caproverOneClickApp:
           label: Next Telemetry disabled
           defaultValue: 1
 
-        - id: $$cap_boxyhq_jackson_version
+        - id: $$cap_app_version
           label: BoxyHQ Jackson Version
           defaultValue: 1.13.0
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/boxyhq/jackson/tags/

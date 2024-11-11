@@ -4,7 +4,7 @@ services:
         caproverExtra:
             containerHttpPort: $$cap_PLANKA_PORT
             dockerfileLines:
-                - FROM ghcr.io/plankanban/planka:$$cap_PLANKA_VERSION
+                - FROM ghcr.io/plankanban/planka:$$cap_app_version
                 - CMD ["bash", "-c", "for i in `seq 1 30`; do ./start.sh && s=$$? && break || s=$$?; echo \"Tried $$i times. Waiting 5 seconds...\"; sleep 5; done; (exit $$s)"]
         environment:
             BASE_URL: http://$$cap_appname.$$cap_root_domain
@@ -47,7 +47,7 @@ caproverOneClickApp:
     description: Realtime Kanban Board for Workgroups
     documentation: https://github.com/plankanban/planka#deploy
     variables:
-        - id: $$cap_PLANKA_VERSION
+        - id: $$cap_app_version
           label: General | Planka Version
           description: Check out their valid tags at https://github.com/orgs/plankanban/packages/container/package/planka
           defaultValue: '1.8.4'

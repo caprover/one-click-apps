@@ -4,7 +4,7 @@ services:
         environment:
             UID: $$cap_uid
             GID: $$cap_gid
-        image: sinusbot/docker:$$cap_version
+        image: sinusbot/docker:$$cap_app_version
         restart: always
         volumes:
             - $$cap_appname-data:/opt/sinusbot/data
@@ -16,7 +16,7 @@ caproverOneClickApp:
         - label: SinusBot Docker Version
           defaultValue: 1.0.0-beta.10-202ee4d
           description: It's highly recommended that you don't use the latest tag but instead the major version you need.
-          id: $$cap_version
+          id: $$cap_app_version
         - label: UID
           description: User ID to run the service as (using root is not recommended), see https://github.com/SinusBot/docker#unprivileged-user
           defaultValue: '1000'

@@ -27,7 +27,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname:
-        image: mailtrain/mailtrain:$$cap_mailtrain_version
+        image: mailtrain/mailtrain:$$cap_app_version
         depends_on:
             - $$cap_appname-db
             - $$cap_appname-redis
@@ -80,7 +80,7 @@ caproverOneClickApp:
           defaultValue: 4.4.0-rc11
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/mongo?tab=tags
           validRegex: /^([^\s^\/])+$/
-        - id: $$cap_mailtrain_version
+        - id: $$cap_app_version
           label: Mailtrain Version
           defaultValue: latest
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/mailtrain/mailtrain/tags

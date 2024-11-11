@@ -3,7 +3,7 @@ services:
     $$cap_appname:
         depends_on:
             - $$cap_appname-db
-        image: 'squidex/squidex:$$cap_squidex_version'
+        image: 'squidex/squidex:$$cap_app_version'
         volumes:
             - '$$cap_appname-data:/app/Assets'
         restart: always
@@ -37,7 +37,7 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_squidex_version
+        - id: $$cap_app_version
           label: Squidex Version
           defaultValue: 4.6.0
           description: >-

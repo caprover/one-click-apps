@@ -11,7 +11,7 @@ services:
         volumes:
             - $$cap_appname-db:/var/lib/mysql
     $$cap_appname-pb:
-        image: passbolt/passbolt:$$cap_pb_version
+        image: passbolt/passbolt:$$cap_app_version
         restart: unless-stopped
         depends_on:
             - $$cap_appname-db
@@ -42,7 +42,7 @@ caproverOneClickApp:
         - id: $$cap_db_pass
           label: Database Password
           defaultValue: password
-        - id: $$cap_pb_version
+        - id: $$cap_app_version
           label: Passbolt Version
           defaultValue: 3.9.0-2
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/passbolt/passbolt/tags/

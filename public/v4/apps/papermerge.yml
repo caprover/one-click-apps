@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: linuxserver/papermerge:$$cap_papermerge_version
+        image: linuxserver/papermerge:$$cap_app_version
         environment:
             TZ: $$cap_tz
             PUID: '1000'
@@ -15,7 +15,7 @@ services:
             containerHttpPort: '8000'
 caproverOneClickApp:
     variables:
-        - id: $$cap_papermerge_version
+        - id: $$cap_app_version
           label: Paper Merge Version
           defaultValue: v2.0.1-ls10
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/papermerge/tags.

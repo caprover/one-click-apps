@@ -3,7 +3,7 @@ services:
     $$cap_appname:
         depends_on:
             - $$cap_appname-mongo
-        image: naskio/strapi:$$cap_strapi_version
+        image: naskio/strapi:$$cap_app_version
         volumes:
             - $$cap_appname-data:/srv/app
         restart: always
@@ -32,7 +32,7 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_strapi_version
+        - id: $$cap_app_version
           label: Strapi Version
           defaultValue: 4.3.2
           description: Check out the Docker page for the valid tags https://hub.docker.com/r/strapi/strapi/tags

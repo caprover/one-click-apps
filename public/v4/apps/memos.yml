@@ -2,7 +2,7 @@ captainVersion: 4
 
 services:
     '$$cap_appname':
-        image: neosmemo/memos:$$cap_version
+        image: neosmemo/memos:$$cap_app_version
         volumes:
             - '$$cap_appname-data:/var/opt/memos'
         caproverExtra:
@@ -10,7 +10,7 @@ services:
 
 caproverOneClickApp:
     variables:
-        - id: '$$cap_version'
+        - id: $$cap_app_version
           label: App Version
           defaultValue: '0.8.3'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/neosmemo/memos/tags

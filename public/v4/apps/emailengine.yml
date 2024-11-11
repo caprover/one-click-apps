@@ -4,7 +4,7 @@ services:
     $$cap_appname:
         depends_on:
             - $$cap_appname-redis
-        image: postalsys/emailengine:$$cap_emailengine_version
+        image: postalsys/emailengine:$$cap_app_version
         restart: always
         environment:
             WAIT_HOSTS: srv-captain--$$cap_appname-redis:6379
@@ -22,7 +22,7 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_emailengine_version
+        - id: $$cap_app_version
           label: EmailEngine Version
           defaultValue: 'v2'
           description: Check out their docker page for the valid tags https://hub.docker.com/r/postalsys/emailengine/tags

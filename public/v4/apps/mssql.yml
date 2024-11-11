@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname-db:
-        image: mcr.microsoft.com/mssql/server:$$cap_server_version
+        image: mcr.microsoft.com/mssql/server:$$cap_app_version
         volumes:
             - $$cap_appname-db-data:/var/opt/mssql
         restart: always
@@ -16,7 +16,7 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_server_version
+        - id: $$cap_app_version
           label: Version
           defaultValue: 2017-CU12-ubuntu
           description: Check out this page for the valid tags https://mcr.microsoft.com/v2/mssql/server/tags/list

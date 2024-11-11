@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     '$$cap_appname':
-        image: checkmk/check-mk-raw:$$cap_version
+        image: checkmk/check-mk-raw:$$cap_app_version
         volumes:
             - '$$cap_appname-data:/omd/sites'
             - /etc/localtime:/etc/localtime
@@ -11,7 +11,7 @@ services:
             containerHttpPort: '5000'
 caproverOneClickApp:
     variables:
-        - id: '$$cap_version'
+        - id: $$cap_app_version
           label: CheckMK Version
           defaultValue: '2023.04.07'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/checkmk/check-mk-raw/tags

@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: collabora/code:$$cap_collabora_version
+        image: collabora/code:$$cap_app_version
         restart: always
         environment:
             domain: $$cap_wopihost_domain
@@ -23,7 +23,7 @@ caproverOneClickApp:
           label: Admin password
           description: admin password
           validRegex: /.{1,}/
-        - id: $$cap_collabora_version
+        - id: $$cap_app_version
           label: Collabora CODE Version
           defaultValue: 4.2.4.4
           description: Check out their docker page for the valid tags https://hub.docker.com/r/collabora/code/tags/

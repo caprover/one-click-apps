@@ -3,7 +3,7 @@ services:
     $$cap_appname:
         ports:
             - $$cap_port_sync:22000
-        image: syncthing/syncthing:$$cap_version
+        image: syncthing/syncthing:$$cap_app_version
         restart: always
         volumes:
             - $$cap_appname-data:/var/syncthing
@@ -14,7 +14,7 @@ caproverOneClickApp:
         - label: Syncthing Docker Version
           defaultValue: 1.5.0
           description: It's highly recommended that you don't use the latest tag but instead the major version you need.
-          id: $$cap_version
+          id: $$cap_app_version
         - label: Sync Protocol Listening Port
           description: Port that Syncthing listens on for data synchronization (TCP).
           defaultValue: '22000'

@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: kiliandeca/excalidraw@$$cap_excalidraw_version
+        image: kiliandeca/excalidraw@$$cap_app_version
         restart: always
         environment:
             BACKEND_V2_GET_URL: https://$$cap_appname-storage.$$cap_root_domain/api/v2/scenes/
@@ -37,7 +37,7 @@ services:
 
 caproverOneClickApp:
     variables:
-        - id: $$cap_excalidraw_version
+        - id: $$cap_app_version
           label: Excalidraw version
           defaultValue: 'sha256:2fe5a14cc0aab940dcf6144a6a5e73b9d044bdf0148762f9c7bc0ceea424c872'
           description: Check out this Docker page for any valid tags https://hub.docker.com/r/kiliandeca/excalidraw/tags

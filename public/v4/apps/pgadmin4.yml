@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: dpage/pgadmin4:$$cap_pgadmin4_version
+        image: dpage/pgadmin4:$$cap_app_version
         restart: always
         environment:
             PGADMIN_DEFAULT_EMAIL: $$cap_email
@@ -10,7 +10,7 @@ services:
             - $$cap_appname-data:/var/lib/pgadmin
 caproverOneClickApp:
     variables:
-        - id: $$cap_pgadmin4_version
+        - id: $$cap_app_version
           label: Version Tag
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/dpage/pgadmin4/tags/
           defaultValue: '4.27'

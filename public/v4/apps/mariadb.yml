@@ -8,12 +8,12 @@ services:
             MYSQL_ROOT_PASSWORD: $$cap_db_pass
         caproverExtra:
             dockerfileLines:
-                - FROM mariadb:$$cap_mysql_version
+                - FROM mariadb:$$cap_app_version
                 - CMD ["--character-set-server=$$cap_charset", "--collation-server=$$cap_collation", "--skip-character-set-client-handshake"]
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_mysql_version
+        - id: $$cap_app_version
           label: MariaDB Version
           defaultValue: '10.4'
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/mariadb?tab=tags

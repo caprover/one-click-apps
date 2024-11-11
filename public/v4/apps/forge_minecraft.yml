@@ -6,7 +6,7 @@ services:
             EULA: 'true'
             TYPE: '$$server_type'
             VERSION: '$$cap_minecraft_version'
-            FORGE_VERSION: '$$cap_forge_version'
+            FORGE_VERSION: '$$cap_app_version'
             MAX_PLAYERS: '$$cap_max_players'
             MODE: '$$cap_game_mode'
             MAX_MEMORY: '$$cap_max_ramG'
@@ -50,7 +50,7 @@ caproverOneClickApp:
         - id: $$cap_minecraft_version
           label: Minecraft version
           defaultValue: 1.20.1
-        - id: $$cap_forge_version
+        - id: $$cap_app_version
           label: forge server version
           description: 'Choose the version that works with your mc version , see: https://files.minecraftforge.net/'
           defaultValue: 47.0.46

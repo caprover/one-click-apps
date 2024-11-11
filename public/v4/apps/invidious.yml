@@ -14,7 +14,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname:
-        image: quay.io/invidious/invidious$$cap_version
+        image: quay.io/invidious/invidious$$cap_app_version
         restart: always
         environment:
             # Adapted from ./config/config.yml
@@ -36,7 +36,7 @@ services:
 
 caproverOneClickApp:
     variables:
-        - id: '$$cap_version'
+        - id: $$cap_app_version
           label: Invidious Version
           defaultValue: '@sha256:38d9630df74d77e9b704c0dbac10c626ef0f8ccb75fa0457e546018e7227b215'
           description: Check out their Quay.io page for the valid tags https://quay.io/repository/invidious/invidious?tab=tags. If you want to use the latest tag (or a versioned release, if available), start with a colon (e.g. :latest).

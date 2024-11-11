@@ -15,7 +15,7 @@ services:
     $$cap_appname-vvveb:
         depends_on:
             - $$cap_appname-db
-        image: vvveb/vvvebcms:$$cap_vvveb_version
+        image: vvveb/vvvebcms:$$cap_app_version
         volumes:
             - $$cap_appname-vvveb-data:/var/www/html
         restart: always
@@ -35,7 +35,7 @@ caproverOneClickApp:
           description: ''
           validRegex: /^(\w|[^\s"'\\])+$/
           defaultValue: $$cap_gen_random_hex(16)
-        - id: $$cap_vvveb_version
+        - id: $$cap_app_version
           label: Vvveb Version
           defaultValue: 'php8.3-fpm-alpine'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/vvveb/vvvebcms/tags

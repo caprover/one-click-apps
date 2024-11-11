@@ -12,7 +12,7 @@ services:
         documentation: Taken from https://hub.docker.com/r/calipseo/formio
         depends_on:
             - $$cap_appname-mongodb
-        image: calipseo/formio:$$cap_formio_version
+        image: calipseo/formio:$$cap_app_version
         volumes:
             - $$cap_appname-data:/app
         restart: always
@@ -39,7 +39,7 @@ caproverOneClickApp:
           label: admin password
           description: Password for the admin user.
           validRegex: /.{1,}/
-        - id: $$cap_formio_version
+        - id: $$cap_app_version
           label: Formio Version
           defaultValue: 1.90.7
           description: https://hub.docker.com/r/calipseo/formio/tags

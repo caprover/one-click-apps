@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: fireflyiii/core:$$cap_firefly_version
+        image: fireflyiii/core:$$cap_app_version
         volumes:
             - $$cap_appname-export:/var/www/firefly-iii/storage/export
             - $$cap_appname-upload:/var/www/firefly-iii/storage/upload
@@ -44,7 +44,7 @@ caproverOneClickApp:
           label: Mariadb Password
           description: The password of the Mariadb Database"
           validRegex: /.{1,}/
-        - id: $$cap_firefly_version
+        - id: $$cap_app_version
           label: Firefly Version Tag
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/fireflyiii/core/tags
           defaultValue: version-5.5.13

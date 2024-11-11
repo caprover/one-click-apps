@@ -40,7 +40,7 @@ services:
             _APP_INFLUXDB_PORT: $$cap_APP_INFLUXDB_PORT
 
     $$cap_appname:
-        image: appwrite/appwrite:$$cap_APP_VERSION
+        image: appwrite/appwrite:$$cap_app_version
         volumes:
             - $$cap_appname-uploads:/storage/uploads
             - $$cap_appname-cache:/storage/cache
@@ -149,7 +149,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - FROM appwrite/appwrite:$$cap_app_version
                 - ENTRYPOINT ["realtime"]
         depends_on:
             - $$cap_appname-redis
@@ -216,7 +216,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - FROM appwrite/appwrite:$$cap_app_version
                 - ENTRYPOINT ["worker-databases"]
         depends_on:
             - $$cap_appname-redis
@@ -241,7 +241,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - FROM appwrite/appwrite:$$cap_app_version
                 - ENTRYPOINT ["worker-builds"]
         depends_on:
             - $$cap_appname-redis
@@ -301,7 +301,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - FROM appwrite/appwrite:$$cap_app_version
                 - ENTRYPOINT ["worker-audits"]
         depends_on:
             - $$cap_appname-redis
@@ -325,7 +325,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - FROM appwrite/appwrite:$$cap_app_version
                 - ENTRYPOINT ["worker-webhooks"]
         depends_on:
             - $$cap_appname-redis
@@ -346,7 +346,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - FROM appwrite/appwrite:$$cap_app_version
                 - ENTRYPOINT ["worker-deletes"]
         depends_on:
             - $$cap_appname-redis
@@ -400,7 +400,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - FROM appwrite/appwrite:$$cap_app_version
                 - ENTRYPOINT ["worker-functions"]
         depends_on:
             - $$cap_appname-redis
@@ -435,7 +435,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - FROM appwrite/appwrite:$$cap_app_version
                 - ENTRYPOINT ["worker-mails"]
         depends_on:
             - $$cap_appname-redis
@@ -461,7 +461,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - FROM appwrite/appwrite:$$cap_app_version
                 - ENTRYPOINT ["worker-messaging"]
         depends_on:
             - $$cap_appname-redis
@@ -481,7 +481,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - FROM appwrite/appwrite:$$cap_app_version
                 - ENTRYPOINT ["worker-certificates"]
         depends_on:
             - $$cap_appname-redis
@@ -513,7 +513,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - FROM appwrite/appwrite:$$cap_app_version
                 - ENTRYPOINT ["worker-migrations"]
         depends_on:
             - $$cap_appname-mariadb
@@ -549,7 +549,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - FROM appwrite/appwrite:$$cap_app_version
                 - ENTRYPOINT ["maintenance"]
         depends_on:
             - $$cap_appname-redis
@@ -581,7 +581,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - FROM appwrite/appwrite:$$cap_app_version
                 - ENTRYPOINT ["usage"]
         depends_on:
             - $$cap_appname-influxdb
@@ -610,7 +610,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM appwrite/appwrite:$$cap_APP_VERSION
+                - FROM appwrite/appwrite:$$cap_app_version
                 - ENTRYPOINT ["schedule"]
         depends_on:
             - $$cap_appname-redis
@@ -663,7 +663,7 @@ caproverOneClickApp:
             Now you can access Appwrite at http://$$cap_appname.$$cap_root_domain
     variables:
         - label: Appwrite Version Tag
-          id: $$cap_APP_VERSION
+          id: $$cap_app_version
           description: Check out their valid tags at https://hub.docker.com/r/appwrite/appwrite/tags
           defaultValue: '1.4.13'
           validRegex: "/^([^\\s^\\/])+$/"

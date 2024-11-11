@@ -3,7 +3,7 @@ services:
     $$cap_appname:
         caproverExtra:
             containerHttpPort: '8000'
-        image: woodpeckerci/woodpecker-server:$$cap_woodpecker_version
+        image: woodpeckerci/woodpecker-server:$$cap_app_version
         hostname: $$cap_appname.$$cap_root_domain
         volumes:
             - $$cap_appname-server:/var/lib/woodpecker
@@ -80,7 +80,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM woodpeckerci/woodpecker-agent:$$cap_woodpecker_version
+                - FROM woodpeckerci/woodpecker-agent:$$cap_app_version
                 - CMD ["agent"]
         depends_on:
             - $$cap_appname
@@ -117,7 +117,7 @@ caproverOneClickApp:
             Woodpecker has been successfully deployed! It might take few moments before it's fully started.
             You can access it at http://$$cap_appname.$$cap_root_domain
     variables:
-        - id: $$cap_woodpecker_version
+        - id: $$cap_app_version
           label: Version Tag
           description: Check out their Docker Hub page for the valid tags https://hub.docker.com/r/woodpeckerci/woodpecker-server/tags
           defaultValue: pull_1209

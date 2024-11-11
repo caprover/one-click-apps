@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: docker.elastic.co/elasticsearch/elasticsearch:$$cap_elasticsearch_version
+        image: docker.elastic.co/elasticsearch/elasticsearch:$$cap_app_version
         volumes:
             - $$cap_appname-elasticsearch-data:/usr/share/elasticsearch/data
         restart: always
@@ -16,7 +16,7 @@ services:
             containerHttpPort: $$cap_container_port
 caproverOneClickApp:
     variables:
-        - id: $$cap_elasticsearch_version
+        - id: $$cap_app_version
           label: 'Elasticsearch Version Tag'
           description: 'Check out the releases overview: https://hub.docker.com/_/elasticsearch'
           defaultValue: 8.4.1

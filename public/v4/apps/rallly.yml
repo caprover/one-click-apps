@@ -4,7 +4,7 @@ services:
         restart: always
         depends_on:
             - $$cap_appname-postgres
-        image: 'lukevella/rallly:$$cap_rallly_version'
+        image: 'lukevella/rallly:$$cap_app_version'
         environment:
             NEXT_PUBLIC_BASE_URL: 'http://$$cap_appname.$$cap_root_domain'
             DATABASE_URL: >-
@@ -31,7 +31,7 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_rallly_version
+        - id: $$cap_app_version
           label: Rallly Version
           defaultValue: ac55701890cd866ee946deb25e2b2839fb14900e
           description: >-

@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname-appsmith:
-        image: index.docker.io/appsmith/appsmith-ce:$$cap_appsmith_version
+        image: index.docker.io/appsmith/appsmith-ce:$$cap_app_version
         volumes:
             - $$cap_appname-stacks-data:/appsmith-stacks
         restart: always
@@ -11,7 +11,7 @@ services:
             APPSMITH_DISABLE_INTERCOM: true
 caproverOneClickApp:
     variables:
-        - id: $$cap_appsmith_version
+        - id: $$cap_app_version
           label: Appsmith Version
           defaultValue: v1.6.5
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/appsmith/appsmith-ce/tags

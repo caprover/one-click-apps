@@ -13,7 +13,7 @@ services:
                 - FROM mysql:8.0.32
                 - CMD ["--character-set-server=utf8", "--collation-server=utf8_unicode_ci"]
     $$cap_appname:
-        image: leantime/leantime:$$cap_leantime_ver
+        image: leantime/leantime:$$cap_app_version
         container_name: leantime
         environment:
             LEAN_APP_URL: https://$$cap_appname.$$cap_root_domain
@@ -31,7 +31,7 @@ caproverOneClickApp:
           description: User password for the database instance.
           defaultValue: $$cap_gen_random_hex(16)
           validRegex: /^(?=.*\d).{10,}$/
-        - id: $$cap_leantime_ver
+        - id: $$cap_app_version
           label: Leantime Version
           description: 'Check out their Docker page for the valid tags https://hub.docker.com/r/leantime/leantime'
           defaultValue: 2.3.6

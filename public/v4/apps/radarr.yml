@@ -2,7 +2,7 @@ captainVersion: 4
 services:
     # Radarr
     $$cap_appname:
-        image: linuxserver/radarr:$$cap_radarr_version
+        image: linuxserver/radarr:$$cap_app_version
         environment:
             TZ: $$cap_tz
             PUID: $$cap_puid
@@ -15,7 +15,7 @@ services:
             containerHttpPort: 7878
 caproverOneClickApp:
     variables:
-        - id: $$cap_radarr_version
+        - id: $$cap_app_version
           label: Radarr Version
           defaultValue: version-3.0.1.4259
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/radarr/tags

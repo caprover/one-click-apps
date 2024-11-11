@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: linuxserver/heimdall:$$cap_heimdall_version
+        image: linuxserver/heimdall:$$cap_app_version
         environment:
             TZ: $$cap_tz
         hostname: $$cap_appname.$$cap_root_domain
@@ -13,7 +13,7 @@ caproverOneClickApp:
           label: Timezone
           description: This is the timezone for the application, find yours at https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
           defaultValue: Europe/Brussels
-        - id: $$cap_heimdall_version
+        - id: $$cap_app_version
           label: Version Tag
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/heimdall/tags
           defaultValue: 'version-2.2.2'

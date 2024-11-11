@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: prom/prometheus@$$cap_version
+        image: prom/prometheus@$$cap_app_version
         restart: always
         volumes:
             - $$cap_appname-config:/etc/prometheus
@@ -13,7 +13,7 @@ caproverOneClickApp:
         - label: Prometheus Docker Hash
           defaultValue: sha256:43b19072ef98fd0ea5a29ac794fbadf365cca6d5247830034c7b86ae9650126c
           description: Starts with 'sha256:'.  Find on Docker Hub.  Default is latest as of 2020-06-30.
-          id: $$cap_version
+          id: $$cap_app_version
     instructions:
         end: Prometheus is now starting.
         start: 'Read more about Prometheus: https://prometheus.io/'

@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname-db:
-        image: mysql:$$cap_mysql_version
+        image: mysql:$$cap_app_version
         volumes:
             - $$cap_appname-db-data:/var/lib/mysql
         restart: always
@@ -11,7 +11,7 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_mysql_version
+        - id: $$cap_app_version
           label: MySQL Version
           defaultValue: '5.7'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/mysql/tags/

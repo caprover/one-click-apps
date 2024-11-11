@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     '$$cap_appname':
-        image: privatebin/nginx-fpm-alpine:$$cap_version
+        image: privatebin/nginx-fpm-alpine:$$cap_app_version
         environment:
             TZ: '$$cap_tz'
             PHP_TZ: '$$cap_tz'
@@ -12,7 +12,7 @@ services:
             containerHttpPort: '8080'
 caproverOneClickApp:
     variables:
-        - id: '$$cap_version'
+        - id: $$cap_app_version
           label: PrivateBin Version
           defaultValue: '1.5.1'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/privatebin/nginx-fpm-alpine/tags

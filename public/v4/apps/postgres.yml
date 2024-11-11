@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: postgres:$$cap_postgres_version
+        image: postgres:$$cap_app_version
         volumes:
             - $$cap_appname-data:/var/lib/postgresql/data
         restart: always
@@ -14,7 +14,7 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_postgres_version
+        - id: $$cap_app_version
           label: Version
           defaultValue: '14.5'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/postgres/tags

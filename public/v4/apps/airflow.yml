@@ -44,7 +44,7 @@ caproverOneClickApp:
           defaultValue: $$cap_gen_random_hex(16)
           description: Password to redis db
         # Airflow
-        - id: $$cap_airflow_version
+        - id: $$cap_app_version
           label: Bitnami's airflow Version
           defaultValue: '2.3.3'
           description: Check the tag version on https://hub.docker.com/r/bitnami/airflow
@@ -138,7 +138,7 @@ services:
         depends_on:
             - $$cap_appname-db
             - $$cap_appname-redis
-        image: 'bitnami/airflow:$$cap_airflow_version'
+        image: 'bitnami/airflow:$$cap_app_version'
         user:
         environment:
             AIRFLOW_EXECUTOR: CeleryExecutor

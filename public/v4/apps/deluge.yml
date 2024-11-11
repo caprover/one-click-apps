@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     '$$cap_appname':
-        image: linuxserver/deluge:$$cap_version
+        image: linuxserver/deluge:$$cap_app_version
         environment:
             TZ: '$$cap_tz'
             PUID: '$$cap_puid'
@@ -15,7 +15,7 @@ services:
             containerHttpPort: '8112'
 caproverOneClickApp:
     variables:
-        - id: '$$cap_version'
+        - id: $$cap_app_version
           label: Deluge Version
           defaultValue: '2.1.1'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/deluge/tags

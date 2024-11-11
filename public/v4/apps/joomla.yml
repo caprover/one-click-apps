@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname-joomla:
-        image: joomla:$$cap_joomla_version
+        image: joomla:$$cap_app_version
         volumes:
             - $$cap_appname-joomla-data:/var/www/html
         restart: always
@@ -27,7 +27,7 @@ caproverOneClickApp:
           label: Database Password
           description: ''
           validRegex: /.{1,}/
-        - id: $$cap_joomla_version
+        - id: $$cap_app_version
           label: Joomla Version
           defaultValue: php7.3-apache
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/joomla?tab=tags

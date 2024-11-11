@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: phpmyadmin/phpmyadmin:$$cap_pma_version
+        image: phpmyadmin/phpmyadmin:$$cap_app_version
         restart: always
         environment:
             PMA_ARBITRARY: '1'
@@ -13,7 +13,7 @@ caproverOneClickApp:
           description: It will override the default value for apache and php-fpm inside the container. Default size is 2M
           defaultValue: 2M
           validRegex: /^([^\s^\/])+$/
-        - id: $$cap_pma_version
+        - id: $$cap_app_version
           label: PHP My Admin Version Tag
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/phpmyadmin/phpmyadmin/tags/
           defaultValue: 5.0.2

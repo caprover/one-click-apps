@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: felddy/foundryvtt:$$cap_foundry_version
+        image: felddy/foundryvtt:$$cap_app_version
         environment:
             FOUNDRY_USERNAME: $$cap_foundry_username
             FOUNDRY_PASSWORD: $$cap_foundry_password
@@ -16,7 +16,7 @@ services:
             - $$cap_appname:/data
 caproverOneClickApp:
     variables:
-        - id: $$cap_foundry_version
+        - id: $$cap_app_version
           label: Foundry VTT Version
           defaultValue: '0.8.9'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/felddy/foundryvtt/tags

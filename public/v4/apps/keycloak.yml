@@ -22,14 +22,14 @@ services:
         caproverExtra:
             containerHttpPort: '8080'
             dockerfileLines:
-                - FROM quay.io/keycloak/keycloak:$$cap_keycloak_version as builder
+                - FROM quay.io/keycloak/keycloak:$$cap_app_version as builder
                 - ENV KC_HEALTH_ENABLED=true
                 - ENV KC_METRICS_ENABLED=false
                 - ENV KC_FEATURES=token-exchange,recovery-codes
                 - ENV KC_DB=postgres
                 - RUN /opt/keycloak/bin/kc.sh build
 
-                - FROM quay.io/keycloak/keycloak:$$cap_keycloak_version
+                - FROM quay.io/keycloak/keycloak:$$cap_app_version
                 - COPY --from=builder /opt/keycloak/ /opt/keycloak/
                 - WORKDIR /opt/keycloak
                 - ENV KC_DB_URL=jdbc:postgresql://srv-captain--$$cap_appname-db/keycloak
@@ -45,7 +45,7 @@ caproverOneClickApp:
           defaultValue: '16'
           description: Check out Keycloak DB page for any valid major tested https://www.keycloak.org/server/db
           validRegex: /^([^\s^\/])+$/
-        - id: $$cap_keycloak_version
+        - id: $$cap_app_version
           label: Keycloak Version
           defaultValue: '26.0.2'
           description: v26.0.2 current as of 2024-10-24.  Check out Keycloak Docker page for the valid tags https://quay.io/repository/keycloak/keycloak?tab=tags

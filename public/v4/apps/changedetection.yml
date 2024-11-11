@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: dgtlmoon/changedetection.io:$$cap_version
+        image: dgtlmoon/changedetection.io:$$cap_app_version
         environment:
             BASE_URL: http://$$cap_appname.$$cap_root_domain
         volumes:
@@ -10,7 +10,7 @@ services:
             containerHttpPort: '5000'
 caproverOneClickApp:
     variables:
-        - id: $$cap_version
+        - id: $$cap_app_version
           label: ChangeDetection.io version
           defaultValue: 0.40.2
           description: 'Check out their docker page for the valid tags https://hub.docker.com/r/dgtlmoon/changedetection.io/tags'

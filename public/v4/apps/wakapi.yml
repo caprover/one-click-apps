@@ -2,7 +2,7 @@ captainVersion: 4
 services:
     # Wakapi
     $$cap_appname:
-        image: ghcr.io/muety/wakapi:$$cap_wakapi_version
+        image: ghcr.io/muety/wakapi:$$cap_app_version
         restart: always
         volumes:
             - $$cap_appname-data:/data
@@ -42,7 +42,7 @@ caproverOneClickApp:
           defaultValue: '16.1-alpine'
           description: Checkout their page for the valid tags https://hub.docker.com/_/postgres
           validRegex: /^([^\s^\/])+$/
-        - id: $$cap_wakapi_version
+        - id: $$cap_app_version
           label: Wakapi Version
           defaultValue: '2.9.3'
           description: Checkout their github page for the valid tags https://github.com/muety/wakapi/pkgs/container/wakapi

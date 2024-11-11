@@ -43,7 +43,7 @@ services:
             - seatable-net
         caproverExtra:
             dockerfileLines:
-                - FROM seatable/seatable:$$cap_seatable_version
+                - FROM seatable/seatable:$$cap_app_version
                 - EXPOSE 80
                 - RUN apt-get -y install expect
                 - RUN mkdir -p /shared
@@ -52,7 +52,7 @@ services:
 
 caproverOneClickApp:
     variables:
-        - id: $$cap_seatable_version
+        - id: $$cap_app_version
           label: SeaTable Version
           defaultValue: 1.8.0
           description: 'Check out their docker page for the valid tags https://hub.docker.com/r/seatable/seatable/tags?page=1&ordering=last_updated'

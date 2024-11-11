@@ -2,7 +2,7 @@ captainVersion: 4
 services:
     # Mercure
     $$cap_appname:
-        image: dunglas/mercure:$$cap_mercure_version
+        image: dunglas/mercure:$$cap_app_version
         restart: unless-stopped
         environment:
             # Uncomment the following line to disable HTTPS
@@ -18,7 +18,7 @@ services:
             containerHttpPort: '80'
 caproverOneClickApp:
     variables:
-        - id: $$cap_mercure_version
+        - id: $$cap_app_version
           label: Mercure Version
           defaultValue: 'v0.13'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/dunglas/mercure/tags

@@ -4,7 +4,7 @@ services:
         caproverExtra:
             containerHttpPort: '80'
             websocketSupport: 'true'
-        image: ghcr.io/azuracast/azuracast:$$cap_AZURACAST_VERSION
+        image: ghcr.io/azuracast/azuracast:$$cap_app_version
         hostname: $$cap_appname.$$cap_root_domain
         restart: unless-stopped
         ports:
@@ -157,7 +157,7 @@ services:
             - '8495:8495'
             - '8496:8496'
         environment:
-            AZURACAST_VERSION: $$cap_AZURACAST_VERSION
+            AZURACAST_VERSION: $$cap_app_version
             AZURACAST_SFTP_PORT: $$cap_AZURACAST_SFTP_PORT
             MYSQL_ROOT_PASSWORD: $$cap_AZURACAST_DB_PASSWORD
             PUID: $$cap_AZURACAST_PUID
@@ -188,7 +188,7 @@ caproverOneClickApp:
     description: Self-hosted web radio management suite
     documentation: https://www.azuracast.com/docs
     variables:
-        - id: $$cap_AZURACAST_VERSION
+        - id: $$cap_app_version
           label: Version
           description: Valid values include "latest" for Rolling Release, "stable" for Stable release channel, and any specific version.
           defaultValue: 'latest'

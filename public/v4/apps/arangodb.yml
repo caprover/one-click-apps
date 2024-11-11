@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname-db:
-        image: arangodb:$$cap_arango_version
+        image: arangodb:$$cap_app_version
         volumes:
             - $$cap_appname-db-data:/var/lib/arangodb3
             - $$cap_appname-db-apps-data:/var/lib/arangodb3-apps
@@ -12,7 +12,7 @@ services:
             containerHttpPort: '8529'
 caproverOneClickApp:
     variables:
-        - id: $$cap_arango_version
+        - id: $$cap_app_version
           label: ArangoDB Version
           defaultValue: '3.4'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/arangodb/tags/

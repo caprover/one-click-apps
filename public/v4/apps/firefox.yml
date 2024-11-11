@@ -2,7 +2,7 @@ captainVersion: 4
 services:
     $$cap_appname:
         documentation: https://docs.linuxserver.io/images/docker-firefox
-        image: lscr.io/linuxserver/firefox:$$cap_firefox_version
+        image: lscr.io/linuxserver/firefox:$$cap_app_version
         restart: always
         volumes:
             - $$cap_appname-config:/config
@@ -14,7 +14,7 @@ services:
             containerHttpPort: '3000'
 caproverOneClickApp:
     variables:
-        - id: $$cap_firefox_version
+        - id: $$cap_app_version
           label: Firefox Version
           defaultValue: '78.13.0'
           description: firefox Image Version, se more at https://hub.docker.com/r/linuxserver/firefox/tags

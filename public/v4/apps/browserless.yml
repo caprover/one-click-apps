@@ -2,7 +2,7 @@ captainVersion: 4
 services:
     $$cap_appname:
         documentation: https://docs.browserless.io/docs/docker-quickstart.html
-        image: browserless/chrome:$$cap_browserless_version
+        image: browserless/chrome:$$cap_app_version
         restart: always
         volumes:
             - $$cap_appname-workspace:/downloads
@@ -37,7 +37,7 @@ services:
             containerHttpPort: '3000'
 caproverOneClickApp:
     variables:
-        - id: $$cap_browserless_version
+        - id: $$cap_app_version
           label: Browserless Version
           defaultValue: 1-chrome-stable
           description: Browserless Image Version

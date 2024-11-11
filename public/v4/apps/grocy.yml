@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: linuxserver/grocy:$$cap_grocy_version
+        image: linuxserver/grocy:$$cap_app_version
         environment:
             TZ: $$cap_tz
             PUID: $$cap_puid
@@ -10,7 +10,7 @@ services:
             - $$cap_appname-config:/config
 caproverOneClickApp:
     variables:
-        - id: $$cap_grocy_version
+        - id: $$cap_app_version
           label: Grocy Version
           defaultValue: v2.7.1-ls58
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/grocy/tags

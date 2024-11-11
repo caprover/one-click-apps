@@ -16,7 +16,7 @@ services:
     $$cap_appname:
         depends_on:
             - $$cap_appname-db
-        image: mautic/mautic:$$cap_mautic_version
+        image: mautic/mautic:$$cap_app_version
         volumes:
             - $$cap_appname-config:/var/www/html/config
             - $$cap_appname-logs:/var/www/html/var/logs
@@ -45,7 +45,7 @@ caproverOneClickApp:
           defaultValue: $$cap_gen_random_hex(18)
           description: ''
           validRegex: /.{1,}/
-        - id: $$cap_mautic_version
+        - id: $$cap_app_version
           label: Mautic Version
           defaultValue: 5.1.0-apache
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/mautic/mautic/tags.

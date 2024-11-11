@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: microsoft/vsts-agent:$$cap_vsts_version
+        image: microsoft/vsts-agent:$$cap_app_version
         restart: always
         environment:
             VSTS_ACCOUNT: $$cap_vsts_account
@@ -12,7 +12,7 @@ services:
             - /var/run/docker.sock:/var/run/docker.sock
 caproverOneClickApp:
     variables:
-        - id: $$cap_vsts_version
+        - id: $$cap_app_version
           label: VSTS Version Tag
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/microsoft/vsts-agent/tags/
           defaultValue: ubuntu-16.04-standard

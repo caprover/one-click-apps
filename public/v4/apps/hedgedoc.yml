@@ -3,7 +3,7 @@ services:
     '$$cap_appname':
         depends_on:
             - $$cap_appname-db
-        image: quay.io/hedgedoc/hedgedoc:$$cap_version
+        image: quay.io/hedgedoc/hedgedoc:$$cap_app_version
         environment:
             CMD_DB_URL: postgres://$$cap_dbuser:$$cap_dbpass@srv-captain--$$cap_appname-db:5432/$$cap_dbname
             CMD_DOMAIN: $$cap_appname.$$cap_root_domain
@@ -28,7 +28,7 @@ services:
 caproverOneClickApp:
     variables:
         # app variables
-        - id: '$$cap_version'
+        - id: $$cap_app_version
           label: HedgeDoc Version
           defaultValue: '1.7.2'
           description: Make sure to use the latest release from https://hedgedoc.org/latest-release

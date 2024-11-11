@@ -7,7 +7,7 @@ services:
             MONITORING_ENABLED: $$cap_MONITORING_ENABLED
             ELASTICSEARCH_HOSTS: $$cap_ELASTICSEARCH_HOSTS
             SERVER_PUBLICBASEURL: $$cap_SERVER_PUBLICBASEURL
-        image: docker.elastic.co/kibana/kibana:$$cap_version
+        image: docker.elastic.co/kibana/kibana:$$cap_app_version
         restart: always
         caproverExtra:
             containerHttpPort: '5601'
@@ -16,7 +16,7 @@ caproverOneClickApp:
         - label: Kibana version
           defaultValue: 8.4.1
           description: It's highly recommended that you don't use the latest tag but instead the major version you need. See https://hub.docker.com/_/kibana for a list of versions.
-          id: $$cap_version
+          id: $$cap_app_version
         - label: Default App id
           defaultValue: home
           description: The default app that is loaded when you visit Kibana. Defaults to home

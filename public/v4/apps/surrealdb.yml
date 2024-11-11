@@ -10,12 +10,12 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM surrealdb/surrealdb:$$cap_surrealdb_version
+                - FROM surrealdb/surrealdb:$$cap_app_version
                 - EXPOSE 8000
                 - CMD ["start", "--user", "$$cap_db_user", "--pass", "$$cap_db_pass", "--bind","0.0.0.0:8000", "file://data/srdb.db"]
 caproverOneClickApp:
     variables:
-        - id: $$cap_surrealdb_version
+        - id: $$cap_app_version
           label: SurrealDB Version
           defaultValue: '1.0.0-beta.7'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/surrealdb/surrealdb/tags

@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: linuxserver/bazarr:$$cap_bazarr_version
+        image: linuxserver/bazarr:$$cap_app_version
         environment:
             TZ: $$cap_tz
             PUID: $$cap_puid
@@ -15,7 +15,7 @@ services:
             containerHttpPort: 6767
 caproverOneClickApp:
     variables:
-        - id: $$cap_bazarr_version
+        - id: $$cap_app_version
           label: Bazarr Version
           defaultValue: '1.0.1'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/bazarr/tags

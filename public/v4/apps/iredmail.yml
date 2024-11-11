@@ -159,7 +159,7 @@ services:
                 - EXPOSE 80 443 25 465 587 110 995 143 993
             containerHttpPort: '80'
         environment:
-            VERSION: $$cap_iredmail_version
+            VERSION: $$cap_app_version
             MLMMJADMIN_API_TOKEN: $$cap_gen_random_hex(32)
             ROUNDCUBE_DES_KEY: $$cap_gen_random_hex(24)
             FIRST_MAIL_DOMAIN: $$cap_root_domain
@@ -168,7 +168,7 @@ services:
             FIRST_MAIL_DOMAIN_ADMIN_PASSWORD: $$cap_iredmail_default_password
 caproverOneClickApp:
     variables:
-        - id: $$cap_iredmail_version
+        - id: $$cap_app_version
           label: iRedMail version tag
           description: >-
               Check out their Docker page for the valid tags

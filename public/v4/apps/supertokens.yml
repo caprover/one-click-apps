@@ -16,7 +16,7 @@ services:
     $$cap_appname:
         depends_on:
             - $$cap_appname-postgres
-        image: supertokens/supertokens-postgresql:$$cap_supertokens_version
+        image: supertokens/supertokens-postgresql:$$cap_app_version
         restart: always
         environment:
             API_KEYS: $$cap_supertokens_api_keys
@@ -37,7 +37,7 @@ caproverOneClickApp:
     description: Auth Provider solution alternative to Auth0 / Firebase Auth / AWS Cognito
     documentation: For more information, https://supertokens.com/docs/guides
     variables:
-        - id: $$cap_supertokens_version
+        - id: $$cap_app_version
           label: SuperTokens Version
           description: Choose the latest version of SuperTokens from https://hub.docker.com/r/supertokens/supertokens-postgresql/tags
           defaultValue: '7.0'

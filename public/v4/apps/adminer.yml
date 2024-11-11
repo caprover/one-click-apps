@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: adminer:$$cap_adminer_version
+        image: adminer:$$cap_app_version
         restart: always
         environment:
             ADMINER_PLUGINS: $$cap_adminer_plugins
@@ -10,7 +10,7 @@ services:
             containerHttpPort: '8080'
 caproverOneClickApp:
     variables:
-        - id: $$cap_adminer_version
+        - id: $$cap_app_version
           label: Adminer Version Tag
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/adminer/tags/
           defaultValue: '4'

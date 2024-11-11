@@ -2,7 +2,7 @@ captainVersion: 4
 services:
     $$cap_appname:
         documentation: https://docs.linuxserver.io/images/docker-smokeping
-        image: linuxserver/smokeping:$$cap_smokeping_version
+        image: linuxserver/smokeping:$$cap_app_version
         restart: always
         volumes:
             - $$cap_appname-config:/config
@@ -15,7 +15,7 @@ services:
             containerHttpPort: '80'
 caproverOneClickApp:
     variables:
-        - id: $$cap_smokeping_version
+        - id: $$cap_app_version
           label: Smokeping Version
           defaultValue: '2.7.3'
           description: Smokeping Image Version

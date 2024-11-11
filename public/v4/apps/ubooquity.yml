@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: lscr.io/linuxserver/ubooquity:$$cap_ubooquity_version
+        image: lscr.io/linuxserver/ubooquity:$$cap_app_version
         environment:
             PUID: '1000'
             PGID: '1000'
@@ -19,7 +19,7 @@ services:
             containerHttpPort: '2202'
 caproverOneClickApp:
     variables:
-        - id: $$cap_ubooquity_version
+        - id: $$cap_app_version
           label: Ubooquity Version
           defaultValue: 2.1.2
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/ubooquity/tags

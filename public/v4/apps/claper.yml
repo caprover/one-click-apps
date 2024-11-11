@@ -12,7 +12,7 @@ services:
             notExposeAsWebApp: 'true'
 
     $$cap_appname:
-        image: ghcr.io/claperco/claper:$$cap_claper_ver
+        image: ghcr.io/claperco/claper:$$cap_app_version
         container_name: claper
         volumes:
             - $$cap_appname-uploads:/app/priv/static/uploads
@@ -32,7 +32,7 @@ caproverOneClickApp:
           description: User password for the database instance.
           defaultValue: $$cap_gen_random_hex(16)
           validRegex: /^(?=.*\d).{10,}$/
-        - id: $$cap_claper_ver
+        - id: $$cap_app_version
           label: Claper Version
           description: Check out their page for the valid tags https://github.com/ClaperCo/Claper/pkgs/container/claper
           defaultValue: 1.4.0

@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname-wordpress:
-        image: wordpress:$$cap_wp_version
+        image: wordpress:$$cap_app_version
         volumes:
             - $$cap_appname-wp-data:/var/www/html
         restart: always
@@ -33,7 +33,7 @@ caproverOneClickApp:
           description: ''
           validRegex: /.{1,}/
           defaultValue: $$cap_gen_random_hex(16)
-        - id: $$cap_wp_version
+        - id: $$cap_app_version
           label: WordPress Version
           defaultValue: 5.4.0
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/wordpress/tags/

@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: ghcr.io/linuxserver/jellyfin:$$cap_jf_version
+        image: ghcr.io/linuxserver/jellyfin:$$cap_app_version
         environment:
             PUID: $$cap_puid
             PGID: $$cap_pgid
@@ -13,7 +13,7 @@ services:
             containerHttpPort: '8096'
 caproverOneClickApp:
     variables:
-        - id: $$cap_jf_version
+        - id: $$cap_app_version
           label: Jellyfin Version
           defaultValue: '10.9.11'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/jellyfin/tags

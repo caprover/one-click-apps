@@ -1,13 +1,13 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: sosedoff/pgweb:$$cap_pgweb_version
+        image: sosedoff/pgweb:$$cap_app_version
         restart: always
         caproverExtra:
             containerHttpPort: '8081'
 caproverOneClickApp:
     variables:
-        - id: $$cap_pgweb_version
+        - id: $$cap_app_version
           label: pgweb Version
           defaultValue: 0.11.2
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/sosedoff/pgweb/tags

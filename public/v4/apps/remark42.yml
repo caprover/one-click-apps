@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: umputun/remark42:$$cap_tag_version
+        image: umputun/remark42:$$cap_app_version
         hostname: $$cap_appname.$$cap_root_domain
         restart: always
         environment:
@@ -115,7 +115,7 @@ services:
             containerHttpPort: '8080'
 caproverOneClickApp:
     variables:
-        - id: $$cap_tag_version
+        - id: $$cap_app_version
           label: Remark42 docker image tag
           defaultValue: 'v1.9.0'
           description: Valid tag from https://hub.docker.com/r/umputun/remark42/tags

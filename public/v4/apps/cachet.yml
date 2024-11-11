@@ -10,7 +10,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname:
-        image: cachethq/docker:$$cap_cachet_version
+        image: cachethq/docker:$$cap_app_version
         environment:
             DB_DRIVER: pgsql
             DB_HOST: srv-captain--$$cap_appname-postgres
@@ -33,7 +33,7 @@ caproverOneClickApp:
           description: Password to connect to the database
           defaultValue: $$cap_gen_random_hex(16)
           id: $$cap_DB_PASS
-        - id: $$cap_cachet_version
+        - id: $$cap_app_version
           label: Version Tag
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/cachethq/docker/tags
           defaultValue: '2.3.15'

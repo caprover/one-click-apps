@@ -18,7 +18,7 @@ caproverOneClickApp:
     description: Zammad is a web-based, open source user support/ticketing solution.
     documentation: Taken from https://hub.docker.com/r/zammad/zammad-docker-compose.
     variables:
-        - id: $$cap_zammad_VERSION
+        - id: $$cap_app_version
           label: Zammad Version
           defaultValue: '5.1.0-48'
           description: Check out their docker page for the valid tags https://hub.docker.com/r/zammad/zammad-docker-compose/tags
@@ -78,13 +78,13 @@ services:
         caproverExtra:
             notExposeAsWebApp: true
             dockerfileLines:
-                - FROM zammad/zammad-docker-compose:zammad-postgresql-$$cap_zammad_VERSION
+                - FROM zammad/zammad-docker-compose:zammad-postgresql-$$cap_app_version
                 - ENTRYPOINT []
                 - CMD /usr/local/bin/backup.sh zammad-backup
 
     $$cap_appname-elasticsearch:
         restart: always
-        image: zammad/zammad-docker-compose:zammad-elasticsearch-$$cap_zammad_VERSION
+        image: zammad/zammad-docker-compose:zammad-elasticsearch-$$cap_app_version
         environment:
             discovery.type: single-node
         volumes:
@@ -127,7 +127,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: true
             dockerfileLines:
-                - FROM zammad/zammad-docker-compose:zammad-$$cap_zammad_VERSION
+                - FROM zammad/zammad-docker-compose:zammad-$$cap_app_version
                 - ENTRYPOINT []
                 - CMD /docker-entrypoint.sh zammad-init && tail -f /dev/null
 
@@ -156,7 +156,7 @@ services:
             notExposeAsWebApp: false
             containerHttpPort: 8080
             dockerfileLines:
-                - FROM zammad/zammad-docker-compose:zammad-$$cap_zammad_VERSION
+                - FROM zammad/zammad-docker-compose:zammad-$$cap_app_version
                 - ENTRYPOINT []
                 - CMD /docker-entrypoint.sh zammad-nginx
 
@@ -165,7 +165,7 @@ services:
             POSTGRES_PORT: 5432
             POSTGRES_USER: $$cap_zammad_POSTGRESQL_USER
             POSTGRES_PASSWORD: $$cap_zammad_POSTGRESQL_PASS
-        image: zammad/zammad-docker-compose:zammad-postgresql-$$cap_zammad_VERSION
+        image: zammad/zammad-docker-compose:zammad-postgresql-$$cap_app_version
         restart: always
         volumes:
             - $$cap_appname-postgresql-data:/var/lib/postgresql/data
@@ -184,7 +184,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: true
             dockerfileLines:
-                - FROM zammad/zammad-docker-compose:zammad-$$cap_zammad_VERSION
+                - FROM zammad/zammad-docker-compose:zammad-$$cap_app_version
                 - ENTRYPOINT []
                 - CMD /docker-entrypoint.sh zammad-railsserver
 
@@ -198,7 +198,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: true
             dockerfileLines:
-                - FROM zammad/zammad-docker-compose:zammad-$$cap_zammad_VERSION
+                - FROM zammad/zammad-docker-compose:zammad-$$cap_app_version
                 - ENTRYPOINT []
                 - CMD /docker-entrypoint.sh zammad-scheduler
 
@@ -214,7 +214,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: false
             dockerfileLines:
-                - FROM zammad/zammad-docker-compose:zammad-$$cap_zammad_VERSION
+                - FROM zammad/zammad-docker-compose:zammad-$$cap_app_version
                 - ENTRYPOINT []
                 - CMD /docker-entrypoint.sh zammad-websocket
 

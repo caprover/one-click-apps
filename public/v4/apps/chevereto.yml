@@ -3,7 +3,7 @@ services:
     $$cap_appname:
         depends_on:
             - $$cap_appname-mariadb
-        image: nmtan/chevereto:$$cap_chevereto_version
+        image: nmtan/chevereto:$$cap_app_version
         restart: 'always'
         environment:
             TZ: $$cap_tz
@@ -34,7 +34,7 @@ caproverOneClickApp:
           label: Timezone
           description: This is the timezone for the application, find yours at https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
           defaultValue: Europe/Brussels
-        - id: $$cap_chevereto_version
+        - id: $$cap_app_version
           label: Version Tag
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/nmtan/chevereto/tags
           defaultValue: '1.2.3'

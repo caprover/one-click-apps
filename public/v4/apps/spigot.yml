@@ -9,7 +9,7 @@ services:
             MC_MAXMEM: $$cap_maxmem
             MC_MINMEM: $$cap_minmem
             SPIGOT_AUTORESTART: $$cap_autorestart
-        image: nimmis/spigot@$$cap_version
+        image: nimmis/spigot@$$cap_app_version
         restart: always
         volumes:
             - $$cap_appname-data:/minecraft
@@ -24,7 +24,7 @@ caproverOneClickApp:
         - label: Docker Image Version
           description: The Docker image used does not offer version tags. Since the use of the latest tag is not recommended, refer to the image version by SHA tag.
           defaultValue: sha256:b968685fadb79e6dacca8efc030ee53f695441b8d6dfde4b86e027ba1f6796db
-          id: $$cap_version
+          id: $$cap_app_version
         - label: Game Server Port (TCP/UDP)
           description: This is the port the server will expose for players to join.
           defaultValue: '25565'

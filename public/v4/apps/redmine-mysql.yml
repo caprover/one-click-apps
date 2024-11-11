@@ -15,7 +15,7 @@ services:
     $$cap_appname:
         depends_on:
             - $$cap_appname-db
-        image: redmine:$$cap_redmine_version
+        image: redmine:$$cap_app_version
         environment:
             REDMINE_DB_MYSQL: srv-captain--$$cap_appname-db
             REDMINE_DB_PORT: 3306
@@ -31,7 +31,7 @@ services:
 
 caproverOneClickApp:
     variables:
-        - id: $$cap_redmine_version
+        - id: $$cap_app_version
           label: Redmine Version
           defaultValue: '5.0.4'
           description: 'Check out their Docker page for the valid tags https://hub.docker.com/_/redmine?tab=tags'

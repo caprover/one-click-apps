@@ -73,7 +73,7 @@ services:
             - $$cap_appname-kafka-data:/bitnami/kafka
 
     $$cap_appname-worker:
-        image: posthog/posthog:$$cap_posthog_version
+        image: posthog/posthog:$$cap_app_version
         command: ./bin/docker-worker-celery --with-scheduler
         caproverExtra:
             notExposeAsWebApp: 'true'
@@ -108,7 +108,7 @@ services:
         command: sh -c 'mkdir -p /data/posthog && minio server --address ":19000" --console-address ":19001" /data'
 
     $$cap_appname-plugin:
-        image: posthog/posthog:$$cap_posthog_version
+        image: posthog/posthog:$$cap_app_version
         depends_on:
             - $$cap_appname-db
             - $$cap_appname-redis
@@ -135,7 +135,7 @@ services:
         command: ./bin/plugin-server
 
     $$cap_appname-web:
-        image: posthog/posthog:$$cap_posthog_version
+        image: posthog/posthog:$$cap_app_version
         caproverExtra:
             containerHttpPort: '8000'
         restart: on-failure
@@ -224,7 +224,7 @@ services:
             - $$cap_appname-db
 
     $$cap_appname-temporal-django-worker:
-        image: posthog/posthog:$$cap_posthog_version
+        image: posthog/posthog:$$cap_app_version
         command: ./bin/temporal-django-worker
         restart: on-failure
         caproverExtra:
@@ -268,7 +268,7 @@ caproverOneClickApp:
           label: Postgres Port
           validRegex: /^\d+$/
 
-        - id: $$cap_posthog_version
+        - id: $$cap_app_version
           label: PostHog's version
           defaultValue: e2f4b4a8b46667f75ad9bdacf4a487a5dd2d5dbf
 

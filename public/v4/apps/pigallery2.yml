@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: bpatrik/pigallery2:$$cap_version
+        image: bpatrik/pigallery2:$$cap_app_version
         environment:
             NODE_ENV: production # set to 'debug' for full debug logging
         volumes:
@@ -12,7 +12,7 @@ services:
         restart: always
 caproverOneClickApp:
     variables:
-        - id: $$cap_version
+        - id: $$cap_app_version
           label: PiGallery2 Version
           defaultValue: '2.0.0'
           description: Check out their docker page for the valid tags https://hub.docker.com/r/bpatrik/pigallery2/tags

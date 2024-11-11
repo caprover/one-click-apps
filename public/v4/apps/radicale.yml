@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: tomsquest/docker-radicale:$$cap_image_tag
+        image: tomsquest/docker-radicale:$$cap_app_version
         volumes:
             - $$cap_appname-data:/data
         restart: always
@@ -10,7 +10,7 @@ services:
             containerHttpPort: '5232'
 caproverOneClickApp:
     variables:
-        - id: $$cap_image_tag
+        - id: $$cap_app_version
           label: What version/tag do you want?
           description: Go here to see all versions https://hub.docker.com/r/tomsquest/docker-radicale/tags
           defaultValue: 2.1.12.1

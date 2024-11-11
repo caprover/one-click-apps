@@ -17,7 +17,7 @@ services:
     $$cap_appname:
         depends_on:
             - $$cap_appname-db
-        image: matomo:$$cap_matomo_version
+        image: matomo:$$cap_app_version
         restart: always
         volumes:
             - $$cap_appname-data:/var/www/html
@@ -31,7 +31,7 @@ services:
             MATOMO_DATABASE_DBNAME: matomo
 caproverOneClickApp:
     variables:
-        - id: $$cap_matomo_version
+        - id: $$cap_app_version
           label: Matomo Version
           defaultValue: 4.2.1
           description: Check out their docker page for the valid tags https://hub.docker.com/_/matomo?tab=tags

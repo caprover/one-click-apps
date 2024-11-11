@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: etherpad/etherpad:$$cap_etherpad_version
+        image: etherpad/etherpad:$$cap_app_version
         depends_on:
             - $$cap_appname-db
         environment:
@@ -30,7 +30,7 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_etherpad_version
+        - id: $$cap_app_version
           label: Etherpad Docker Image
           defaultValue: 1.8.0
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/etherpad/etherpad/tags - default is 1.8.0 as of 2020-04-09

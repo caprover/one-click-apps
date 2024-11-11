@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: docker.dragonflydb.io/dragonflydb/dragonfly:$$cap_dragonflydb_version
+        image: docker.dragonflydb.io/dragonflydb/dragonfly:$$cap_app_version
         volumes:
             - $$cap_appname-dragonflydb-data:/data
         restart: always
@@ -10,7 +10,7 @@ services:
             DFLY_maxmemory: $$cap_dragonflydb_maxmem
 caproverOneClickApp:
     variables:
-        - id: $$cap_dragonflydb_version
+        - id: $$cap_app_version
           label: Dragonfly Version Tag
           description: 'Check out their Github page for the valid tags: https://github.com/dragonflydb/dragonfly/releases'
           defaultValue: 'v1.14.0'
