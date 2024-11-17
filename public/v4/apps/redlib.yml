@@ -10,7 +10,7 @@ caproverOneClickApp:
         - id: $$cap_redlib_version
           label: Redlib Docker Image SHA Hash
           defaultValue: sha-6c64ebd
-          description: Check out their Docker page for the valid tags https://hub.docker.com/r/redlib/redlib/tags
+          description: Check out their Docker page for the valid tags https://quay.io/repository/redlib/redlib?tab=tags
     instructions:
         start: >-
             Alternative private front-end to Reddit. Redlib hopes to provide an easier way to browse Reddit, without the ads, trackers, and bloat.
