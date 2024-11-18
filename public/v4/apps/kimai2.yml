@@ -4,7 +4,7 @@ services:
     $$cap_appname-fpm:
         depends_on:
             - $$cap_appname-db
-        image: kimai/kimai2:$$cap_kimai_version
+        image: kimai/kimai2:$$cap_app_version
         restart: 'always'
         environment:
             ADMINMAIL: $$cap_kimai-adminmail
@@ -41,7 +41,7 @@ services:
         restart: unless-stopped
 caproverOneClickApp:
     variables:
-        - id: $$cap_kimai_version
+        - id: $$cap_app_version
           label: Version Tag
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/kimai/kimai2/tags
           defaultValue: 'fpm-1.15.2-prod'

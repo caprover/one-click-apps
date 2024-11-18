@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: hardware/rainloop:$$cap_rainloop_version
+        image: hardware/rainloop:$$cap_app_version
         restart: always
         volumes:
             - $$cap_appname-data:/rainloop/data
@@ -9,7 +9,7 @@ services:
             containerHttpPort: '8888'
 caproverOneClickApp:
     variables:
-        - id: $$cap_rainloop_version
+        - id: $$cap_app_version
           label: Rainloop Version
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/hardware/rainloop/tags
           defaultValue: 1.12.0

@@ -29,7 +29,7 @@ services:
             SENTRY_REDIS_HOST: srv-captain--$$cap_appname-redis
         caproverExtra:
             dockerfileLines:
-                - FROM sentry:$$cap_sentry_version
+                - FROM sentry:$$cap_app_version
                 - RUN groupadd -r $$cap_appname-cron && useradd -r -g $$cap_appname-cron $$cap_appname-cron
                 - USER $$cap_appname-cron
                 - CMD sentry run cron
@@ -48,7 +48,7 @@ services:
             SENTRY_DB_PASSWORD: $$cap_pg_pass
         caproverExtra:
             dockerfileLines:
-                - FROM sentry:$$cap_sentry_version
+                - FROM sentry:$$cap_app_version
                 - RUN groupadd -r $$cap_appname-worker && useradd -r -g $$cap_appname-worker $$cap_appname-worker
                 - USER $$cap_appname-worker
                 - CMD sentry run worker
@@ -61,7 +61,7 @@ services:
             - $$cap_appname-data:/var/lib/sentry/files
         restart: always
         environment:
-            CAP_SENTRY_VERSION: $$cap_sentry_version
+            CAP_SENTRY_VERSION: $$cap_app_version
             CAP_SENTRY_SUPERUSER_EMAIL: $$cap_sentry_superuser_email
             CAP_SENTRY_SUPERUSER_PASSWORD: $$cap_sentry_superuser_password
             SENTRY_POSTGRES_HOST: srv-captain--$$cap_appname-postgres
@@ -81,7 +81,7 @@ services:
         caproverExtra:
             containerHttpPort: '9000'
             dockerfileLines:
-                - FROM sentry:$$cap_sentry_version
+                - FROM sentry:$$cap_app_version
                 - "RUN echo 'auth.allow-registration: false' > /etc/sentry/config.yml"
                 - "RUN echo 'beacon.anonymous: true' >> /etc/sentry/config.yml"
                 - 'RUN echo ''mail.from: ""'' >> /etc/sentry/config.yml'
@@ -97,7 +97,7 @@ services:
                 - "RUN echo 'echo 1 of 4 : running upgrade' >> ./init.sh"
                 - RUN echo 'sentry upgrade --noinput --traceback --no-repair' >> ./init.sh
                 - "RUN echo 'echo 2 of 4 : set sentry:version-configured' >> ./init.sh"
-                - RUN echo 'sentry config set sentry:version-configured ${CAP_SENTRY_VERSION}' >> ./init.sh
+                - RUN echo 'sentry config set sentry:version-configured ${CAP_APP_VERSION}' >> ./init.sh
                 - "RUN echo 'echo 3 of 4 : creating user' >> ./init.sh"
                 - RUN echo 'sentry createuser --email=${CAP_SENTRY_SUPERUSER_EMAIL} --password=${CAP_SENTRY_SUPERUSER_PASSWORD} --superuser --no-input' >> ./init.sh
                 - RUN echo 'echo Configuration completed!' >> ./init.sh
@@ -119,7 +119,7 @@ caproverOneClickApp:
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/redis/tags/
           defaultValue: 3.2-alpine
           validRegex: /^([^\s^\/])+$/
-        - id: $$cap_sentry_version
+        - id: $$cap_app_version
           label: Sentry Version Tag
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/sentry/
           defaultValue: 9.1.0

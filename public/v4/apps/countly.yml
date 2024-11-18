@@ -1,14 +1,14 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: countly/countly-server:$$cap_countly_version
+        image: countly/countly-server:$$cap_app_version
         volumes:
             - $$cap_appname-data:/var/lib/mongodb
         restart: always
         environment: {}
 caproverOneClickApp:
     variables:
-        - id: $$cap_countly_version
+        - id: $$cap_app_version
           label: What version/tag do you want?
           description: Go here to see all versions https://hub.docker.com/r/countly/countly-server/tags
           defaultValue: 19.08.1

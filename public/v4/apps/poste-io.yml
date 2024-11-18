@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: analogic/poste.io:$$cap_POSTE_VERSION
+        image: analogic/poste.io:$$cap_app_version
         hostname: $$cap_POSTE_HOSTNAME
         environment:
             TZ: $$cap_POSTE_TZ
@@ -71,7 +71,7 @@ caproverOneClickApp:
 
             Enjoy your self-hosted mail server!
     variables:
-        - id: $$cap_POSTE_VERSION
+        - id: $$cap_app_version
           label: General | Version
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/analogic/poste.io/tags
           defaultValue: '2'

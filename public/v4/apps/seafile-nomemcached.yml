@@ -12,7 +12,7 @@ services:
             notExposeAsWebApp: true
 
     $$cap_appname:
-        image: seafileltd/seafile-mc:$$cap_seafile_version
+        image: seafileltd/seafile-mc:$$cap_app_version
         volumes:
             - $$cap_appname-data:/shared # Requested, specifies the path to Seafile data persistent store.
         environment:
@@ -27,7 +27,7 @@ services:
 
 caproverOneClickApp:
     variables:
-        - id: '$$cap_seafile_version'
+        - id: '$$cap_app_version'
           label: Seafile Version
           defaultValue: '8.0.7'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/seafileltd/seafile-mc/tags

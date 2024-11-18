@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: linuxserver/plex:$$cap_plex_version
+        image: linuxserver/plex:$$cap_app_version
         environment:
             TZ: $$cap_tz
             PLEX_CLAIM: $$cap_plex_token
@@ -26,7 +26,7 @@ services:
             containerHttpPort: '32400'
 caproverOneClickApp:
     variables:
-        - id: $$cap_plex_version
+        - id: $$cap_app_version
           label: Plex Version
           defaultValue: 1.25.8
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/plex/tags

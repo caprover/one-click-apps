@@ -3,7 +3,7 @@ services:
     $$cap_appname-api:
         caproverExtra:
             containerHttpPort: 8000
-        image: ghcr.io/saleor/saleor:$$cap_SALEOR_CORE_VERSION
+        image: ghcr.io/saleor/saleor:$$cap_app_version
         environment:
             DASHBOARD_URL: http://$$cap_appname.$$cap_root_domain
             DATABASE_URL: postgresql://$$cap_POSTGRES_USER:$$cap_POSTGRES_PASSWORD@srv-captain--$$cap_appname-db/$$cap_POSTGRES_DB
@@ -43,7 +43,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM ghcr.io/saleor/saleor:$$cap_SALEOR_CORE_VERSION
+                - FROM ghcr.io/saleor/saleor:$$cap_app_version
                 - CMD celery -A saleor --app=saleor.celeryconf:app worker --loglevel=info -B
         environment:
             DATABASE_URL: postgresql://$$cap_POSTGRES_USER:$$cap_POSTGRES_PASSWORD@srv-captain--$$cap_appname-db/$$cap_POSTGRES_DB
@@ -86,7 +86,7 @@ caproverOneClickApp:
             You can access the dashboard at `http://$$cap_appname.$$cap_root_domain`
             You can access the API at `http://$$cap_appname-api.$$cap_root_domain`
     variables:
-        - id: $$cap_SALEOR_CORE_VERSION
+        - id: $$cap_app_version
           label: Core | Version
           description: Saleor core version. Check out their valid tags at https://github.com/saleor/saleor/pkgs/container/saleor
           defaultValue: '3.12.5'

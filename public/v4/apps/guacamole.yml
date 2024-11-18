@@ -13,7 +13,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname-guacd:
-        image: guacamole/guacd:$$cap_guacd_version
+        image: guacamole/guacd:$$cap_app_version
         restart: always
         caproverExtra:
             notExposeAsWebApp: 'true'
@@ -42,7 +42,7 @@ caproverOneClickApp:
           defaultValue: '1.3.0'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/guacamole/guacamole/tags
           validRegex: /^([^\s^\/])+$/
-        - id: $$cap_guacd_version
+        - id: $$cap_app_version
           label: Guacd Version
           defaultValue: '1.3.0'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/guacamole/guacd/tags

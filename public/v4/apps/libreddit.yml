@@ -1,13 +1,13 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: libreddit/libreddit@$$cap_libreddit_version
+        image: libreddit/libreddit@$$cap_app_version
         restart: always
         caproverExtra:
             containerHttpPort: '8080'
 caproverOneClickApp:
     variables:
-        - id: $$cap_libreddit_version
+        - id: $$cap_app_version
           label: Libreddit Docker Image SHA Hash
           defaultValue: sha256:e79a5d6f6836b5a9351340433b1c26e8571ded943a5318f41ae939d314434c84
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/libreddit/libreddit/tags

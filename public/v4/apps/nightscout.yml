@@ -29,7 +29,7 @@ services:
                 - RUN mkdir -p /opt/app
                 - WORKDIR /opt/app
                 - RUN git clone git://github.com/nightscout/cgm-remote-monitor.git /opt/app
-                - RUN cd /opt/app &&  git checkout $$cap_nighscout_version && rm -rf .git
+                - RUN cd /opt/app &&  git checkout $$cap_app_version && rm -rf .git
                 - RUN cd /opt/app && npm install && npm run postinstall && npm run env
                 - EXPOSE 1337
                 - CMD ["node", "server.js"]
@@ -44,7 +44,7 @@ caproverOneClickApp:
           label: MongoDB password
           description: Only use alphanumeric chars.
           validRegex: /^([a-zA-Z0-9])+$/
-        - id: $$cap_nighscout_version
+        - id: $$cap_app_version
           label: Nighscout Version
           defaultValue: 0.11.1
           description: Check out their page for the valid tags https://github.com/nightscout/cgm-remote-monitor/releases

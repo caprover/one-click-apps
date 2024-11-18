@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: lscr.io/linuxserver/pyload-ng:$$cap_pyload_version
+        image: lscr.io/linuxserver/pyload-ng:$$cap_app_version
         environment:
             TZ: $$cap_tz
             PUID: $$cap_puid
@@ -16,7 +16,7 @@ services:
             containerHttpPort: '8000'
 caproverOneClickApp:
     variables:
-        - id: $$cap_pyload_version
+        - id: $$cap_app_version
           label: Pyload Version
           defaultValue: 0.5.0
           description: Check out their Docker page for the valid tags https://github.com/linuxserver/docker-pyload-ng/pkgs/container/pyload-ng

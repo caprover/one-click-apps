@@ -14,7 +14,7 @@ services:
             notExposeAsWebApp: 'true'
 
     $$cap_appname:
-        image: viktorstrate/photoview:$$cap_photoview_version
+        image: viktorstrate/photoview:$$cap_app_version
         depends_on:
             - $$cap_appname-mariadb
         environment:
@@ -49,7 +49,7 @@ caproverOneClickApp:
             Finish the setup at http://$$cap_appname.$$cap_root_domain.
 
     variables:
-        - id: $$cap_photoview_version
+        - id: $$cap_app_version
           label: Photoview Version
           defaultValue: '2.3.9'
           description: Check out their docker page for the valid tags https://hub.docker.com/r/viktorstrate/photoview/tags

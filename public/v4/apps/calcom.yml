@@ -3,7 +3,7 @@ services:
     $$cap_appname:
         caproverExtra:
             containerHttpPort: 3000
-        image: calcom/cal.com:$$cap_CALCOM_VERSION
+        image: calcom/cal.com:$$cap_app_version
         environment:
             NEXT_PUBLIC_WEBAPP_URL: http://$$cap_appname.$$cap_root_domain
             NEXTAUTH_SECRET: $$cap_CALCOM_NEXTAUTH_SECRET
@@ -45,7 +45,7 @@ caproverOneClickApp:
     description: Scheduling Infrastructure For Everyone
     documentation: https://cal.com/docs
     variables:
-        - id: $$cap_CALCOM_VERSION
+        - id: $$cap_app_version
           label: Application | Version
           description: Cal.com version. Check out their valid tags at https://hub.docker.com/r/calcom/cal.com/tags
           defaultValue: 'v3.1.3'

@@ -1,7 +1,8 @@
+
 captainVersion: 4
 services:
     $$cap_appname:
-        image: getlago/front:$$cap_LAGO_VERSION
+        image: getlago/front:$$cap_app_version
         hostname: $$cap_appname.$$cap_root_domain
         environment:
             API_URL: http://$$cap_appname-api.$$cap_root_domain
@@ -15,7 +16,7 @@ services:
         caproverExtra:
             containerHttpPort: $$cap_LAGO_API_PORT
             dockerfileLines:
-                - FROM getlago/api:$$cap_LAGO_VERSION
+                - FROM getlago/api:$$cap_app_version
                 - CMD ["./scripts/start.sh"]
         hostname: $$cap_appname-api.$$cap_root_domain
         environment:
@@ -52,7 +53,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM getlago/api:$$cap_LAGO_VERSION
+                - FROM getlago/api:$$cap_app_version
                 - CMD ["./scripts/start.worker.sh"]
         environment:
             LAGO_API_URL: http://$$cap_appname-api.$$cap_root_domain
@@ -85,7 +86,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM getlago/api:$$cap_LAGO_VERSION
+                - FROM getlago/api:$$cap_app_version
                 - CMD ["./scripts/start.clock.sh"]
         environment:
             LAGO_API_URL: http://$$cap_appname-api.$$cap_root_domain
@@ -141,7 +142,7 @@ caproverOneClickApp:
     description: Open source billing API for product-led SaaS
     documentation: https://doc.getlago.com/docs/guide/intro/welcome
     variables:
-        - id: $$cap_LAGO_VERSION
+        - id: $$cap_app_version
           label: General | Lago Version
           description: Check out their valid tags at https://hub.docker.com/r/getlago/api/tags
           defaultValue: v0.11.0-alpha

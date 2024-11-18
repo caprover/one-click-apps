@@ -30,7 +30,7 @@ services:
         depends_on:
             - $$cap_appname-db
             - $$cap_appname-redis
-        image: lscr.io/linuxserver/netbox:$$cap_netbox_version
+        image: lscr.io/linuxserver/netbox:$$cap_app_version
         volumes:
             - $$cap_appname-data:/config
             - $$cap_appname-scripts:/app/netbox/scripts
@@ -81,7 +81,7 @@ caproverOneClickApp:
           label: Redis Password
           validRegex: /^(\w|[^\s"])+$/
           defaultValue: $$cap_gen_random_hex(12)
-        - id: $$cap_netbox_version
+        - id: $$cap_app_version
           label: Netbox Version Tag
           description: 'Check out the Docker page for valid tags: https://hub.docker.com/r/linuxserver/netbox/tags.'
           defaultValue: 3.1.6

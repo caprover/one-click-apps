@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: grburst/etesync:$$cap_version
+        image: grburst/etesync:$$cal
         volumes:
             - $$cap_appname-data:/data
         restart: always
@@ -13,7 +13,7 @@ services:
             containerHttpPort: '3735'
 caproverOneClickApp:
     variables:
-        - id: $$cap_version
+        - id: $$cap_app_version
           label: version tag
           description: Check out their docker page for the valid tags @ https://hub.docker.com/r/grburst/etesync
           defaultValue: alpine

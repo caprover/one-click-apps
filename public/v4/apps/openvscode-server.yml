@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: lscr.io/linuxserver/openvscode-server:$$cap_openvscode_server_version
+        image: lscr.io/linuxserver/openvscode-server:$$cap_app_version
         volumes:
             - $$cap_appname-config:/config
         environment:
@@ -30,7 +30,7 @@ caproverOneClickApp:
             You can access it at http://$$cap_appname.$$cap_root_domain
             If you are using a connection secret or connection token, append ?tkn=$$cap_openvscode_server_connection_token to the URL.
     variables:
-        - id: $$cap_openvscode_server_version
+        - id: $$cap_app_version
           label: Version Tag
           description: Check out their documentation for the valid tags https://github.com/linuxserver/docker-openvscode-server/#version-tags
           defaultValue: '1.74.3'

@@ -83,7 +83,7 @@ services:
                     --log-level=$LOG_LEVEL
                     --gotenberg-graceful-shutdown-duration=$GRACEFUL_SHUTDOWN_DURATION
         environment:
-            VERSION: $$cap_GOTENBERG_VERSION
+            VERSION: $$cap_app_version
             API_PORT: $$cap_GOTENBERG_API_PORT
             API_TIMEOUT: $$cap_GOTENBERG_API_TIMEOUT
             API_ROOT_PATH: $$cap_GOTENBERG_API_ROOT_PATH
@@ -135,7 +135,7 @@ caproverOneClickApp:
             You can access it at `http://$$cap_appname.$$cap_root_domain`
             If you prefer not to expose it, you can change it in the **HTTP Settings** of `$$cap_appname`.
     variables:
-        - id: $$cap_GOTENBERG_VERSION
+        - id: $$cap_app_version
           label: General | Version
           description: Check out their valid tags at https://hub.docker.com/r/gotenberg/gotenberg/tags
           defaultValue: 7

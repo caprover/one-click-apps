@@ -2,7 +2,7 @@ captainVersion: 4
 services:
     # Pydio
     $$cap_appname:
-        image: pydio/cells:$$cap_pydio_version
+        image: pydio/cells:$$cap_app_version
         environment:
             CELLS_LOG_LEVEL: 'production'
             CELLS_BIND: ':8811'
@@ -27,7 +27,7 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_pydio_version
+        - id: $$cap_app_version
           label: Pydio Version
           defaultValue: '2.2.8'
           description: Checkout their docker page for the valid tags https://hub.docker.com/r/pydio/cells/tags

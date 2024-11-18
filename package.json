@@ -24,5 +24,8 @@
     "gh-pages": "^3.1.0",
     "prettier": "^2.0.5",
     "yaml": "^1.10.0"
+  },
+  "devDependencies": {
+    "js-yaml": "^4.1.0"
   }
 }

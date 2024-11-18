@@ -2,7 +2,7 @@ captainVersion: 4
 services:
     # Umami mysql
     $$cap_appname:
-        image: ghcr.io/umami-software/umami:mysql-$$cap_umami_version
+        image: ghcr.io/umami-software/umami:mysql-$$cap_app_version
         restart: always
         environment:
             DATABASE_URL: mysql://umami:$$cap_mysql_pass@srv-captain--$$cap_appname-mysql/umami
@@ -30,7 +30,7 @@ caproverOneClickApp:
           defaultValue: '8'
           description: Checkout their page for the valid tags https://hub.docker.com/_/mysql
           validRegex: /^([^\s^\/])+$/
-        - id: $$cap_umami_version
+        - id: $$cap_app_version
           label: Caprover Umami Version
           defaultValue: 'v1.38.0'
           description: Checkout their github page for the valid tags https://github.com/umami-software/umami/pkgs/container/umami

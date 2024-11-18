@@ -4,7 +4,7 @@ services:
     $$cap_appname:
         caproverExtra:
             dockerfileLines:
-                - FROM ghcr.io/immich-app/immich-server:$$cap_version
+                - FROM ghcr.io/immich-app/immich-server:$$cap_app_version
             containerHttpPort: 3001
         environment:
             DB_PASSWORD: $$cap_app_db_pass
@@ -24,7 +24,7 @@ services:
     $$cap_appname-machine-learning:
         caproverExtra:
             notExposeAsWebApp: 'true'
-        image: ghcr.io/immich-app/immich-machine-learning:$$cap_version
+        image: ghcr.io/immich-app/immich-machine-learning:$$cap_app_version
         environment:
             DB_PASSWORD: $$cap_app_db_pass
             DB_USERNAME: $$cap_app_db_user
@@ -64,7 +64,7 @@ caproverOneClickApp:
             On your first visit it will ask for email and password to set up the admin user. Remember to change the default Nginx configuration and increasing the 'client_max_body_size' value if you expect to backup files bigger than 500MB. They will fail to upload if you don't.
     variables:
         - label: Immich version
-          id: $$cap_version
+          id: $$cap_app_version
           description: Check out their valid tags at https://github.com/immich-app/immich/releases
           defaultValue: v1.108.0
         - label: Immich redis version

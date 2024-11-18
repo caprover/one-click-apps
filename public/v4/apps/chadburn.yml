@@ -2,7 +2,7 @@ captainVersion: 4
 version: 3.3
 services:
     '$$cap_appname':
-        image: ghcr.io/premoweb/chadburn:$$cap_version
+        image: ghcr.io/premoweb/chadburn:$$cap_app_version
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
         environment:
@@ -11,7 +11,7 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: '$$cap_version'
+        - id: $$cap_app_version
           label: Chadburn version
           defaultValue: '1.0.1'
           description: See https://github.com/PremoWeb/Chadburn/releases for a list of versions and changelog details.

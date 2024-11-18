@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: calcom/cal.com:$$cap_version
+        image: calcom/cal.com:$$cap_app_version
         restart: always
         environment:
             NODE_ENV: production
@@ -24,7 +24,7 @@ services:
             containerHttpPort: '3000'
 caproverOneClickApp:
     variables:
-        - id: $$cap_version
+        - id: $$cap_app_version
           label: Cal.com Version
           defaultValue: 'v2.5.4'
           description: Check out their docker page for the valid tags https://hub.docker.com/r/calcom/cal.com/tags

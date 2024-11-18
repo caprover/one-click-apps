@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname-db:
-        image: influxdb:$$cap_influx_version
+        image: influxdb:$$cap_app_version
         volumes:
             - $$cap_appname-db-data:/var/lib/influxdb
         restart: always
@@ -23,7 +23,7 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_influx_version
+        - id: $$cap_app_version
           label: InfluxDb Version
           defaultValue: '1.8'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/influxdb/tags/

@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: nodered/node-red:$$cap_node-red_version
+        image: nodered/node-red:$$cap_app_version
         volumes:
             - $$cap_appname-data:/data
         restart: always
@@ -11,7 +11,7 @@ services:
             containerHttpPort: '1880'
 caproverOneClickApp:
     variables:
-        - id: $$cap_node-red_version
+        - id: $$cap_app_version
           label: node-red version tag
           description: Check out their docker page for the valid tags @ https://hub.docker.com/r/nodered/node-red/tags
           defaultValue: 3.1.8-18-minimal

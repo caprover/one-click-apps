@@ -40,7 +40,7 @@ caproverOneClickApp:
     # Define variables
     variables:
         # Variable for version
-        - id: $$cap_appversion
+        - id: $$cap_app_version
           label: App Version
           description: |-
               Specify the version tag to install.  
@@ -55,7 +55,7 @@ services:
         # CapRover's special options
         caproverExtra:
             dockerfileLines:
-                - FROM binwiederhier/ntfy:$$cap_appversion
+                - FROM binwiederhier/ntfy:$$cap_app_version
                 - CMD ["serve"]
 
         # Define volumes

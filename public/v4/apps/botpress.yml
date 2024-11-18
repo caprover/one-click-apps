@@ -4,7 +4,7 @@ services:
         caproverExtra:
             containerHttpPort: 3000
             dockerfileLines:
-                - FROM botpress/server:$$cap_BOTPRESS_VERSION
+                - FROM botpress/server:$$cap_app_version
                 - CMD /botpress/bp
         environment:
             DATABASE_URL: postgres://$$cap_POSTGRES_USER:$$cap_POSTGRES_PASSWORD@srv-captain--$$cap_appname-db/$$cap_POSTGRES_DB
@@ -29,7 +29,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM botpress/server:$$cap_BOTPRESS_VERSION
+                - FROM botpress/server:$$cap_app_version
                 - USER root
                 - RUN mkdir /botpress/lang && chown -R botpress:botpress /botpress/lang
                 - USER botpress
@@ -80,7 +80,7 @@ caproverOneClickApp:
 
             Have fun with Botpress!
     variables:
-        - id: $$cap_BOTPRESS_VERSION
+        - id: $$cap_app_version
           label: Version | Botpress
           description: Version of Botpress. Check out their Docker page for the valid tags https://hub.docker.com/r/botpress/server/tags
           defaultValue: v12_30_2

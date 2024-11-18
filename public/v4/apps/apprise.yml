@@ -2,7 +2,7 @@ captainVersion: 4
 services:
     # Apprise
     $$cap_appname:
-        image: caronc/apprise:$$cap_apprise_version
+        image: caronc/apprise:$$cap_app_version
         restart: always
         volume:
             - $$cap_appname-data:/config
@@ -11,7 +11,7 @@ services:
 
 caproverOneClickApp:
     variables:
-        - id: $$cap_apprise_version
+        - id: $$cap_app_version
           label: Apprise Version
           defaultValue: 'v0.7.0'
           description: Check out their docker page for the valid tags https://hub.docker.com/r/caronc/apprise/tags

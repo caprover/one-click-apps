@@ -35,7 +35,7 @@ services:
         caproverExtra:
             containerHttpPort: '4000'
             dockerfileLines:
-                - FROM papercups/papercups:$$cap_papercups_tag
+                - FROM papercups/papercups:$$cap_app_version
                 - ENTRYPOINT sh -c "sleep 10 && /entrypoint.sh db createdb && /entrypoint.sh db migrate && echo 'running' && /entrypoint.sh run"
 
     $$cap_appname-db:
@@ -49,7 +49,7 @@ services:
 
 caproverOneClickApp:
     variables:
-        - id: $$cap_papercups_tag
+        - id: $$cap_app_version
           label: Papercups Tag
           defaultValue: 1.1.0
           description: 'Check out their docker page for the valid tags https://hub.docker.com/r/papercups/papercups/tags'

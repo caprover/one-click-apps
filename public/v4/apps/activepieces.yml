@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: index.docker.io/activepieces/activepieces:$$cap_activepieces_version
+        image: index.docker.io/activepieces/activepieces:$$cap_app_version
         environment:
             AP_QUEUE_MODE: MEMORY
             AP_DB_TYPE: SQLITE3
@@ -9,11 +9,9 @@ services:
         volumes:
             - $$cap_appname-data:/root/.activepieces
         restart: always
-        caproverExtra:
-            containerHttpPort: '80'
 caproverOneClickApp:
     variables:
-        - id: $$cap_activepieces_version
+        - id: $$cap_app_version
           label: Activepieces Version
           defaultValue: '0.12.2'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/activepieces/activepieces/tags

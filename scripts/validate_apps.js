@@ -6,7 +6,6 @@
  const PUBLIC = `public`;
  const pathOfPublic = path.join(__dirname, '..', PUBLIC);
 
-
  // validating version 4
  function validateV4() {
 
@@ -15,55 +14,66 @@
      const pathOfApps = path.join(pathOfVersion, 'apps');
 
      return fs.readdir(pathOfApps)
-         .then(function (items) {
+         .then(function (files) {
 
-             const apps = items.filter(v => v.includes('.yml'));
+             const apps = files.filter(v => v.includes('.yml'));
 
-             if (items.length !== apps.length) {
+             if (files.length !== apps.length) {
                  throw new Error('All files in v4 must end with .yml');
              }
 
-             for (var i = 0; i < apps.length; i++) {
-                 const contentString = fs.readFileSync(path.join(pathOfApps, apps[i]), 'utf-8');
+             for (const app of apps) {
+                 const contentString = fs.readFileSync(path.join(pathOfApps, app), 'utf-8');
                  const content = yaml.parse(contentString);
                  const captainVersion = (content.captainVersion + '');
                  const versionString = (version + '');
-                 if (versionString !== captainVersion)
-                     throw new Error(`unmatched versions   ${versionString}  ${captainVersion} for ${apps[i]}`);
+                 const appName = app.replace('.yml', '');
 
-                 apps[i] = apps[i].replace('.yml', '');
+                 if (versionString !== captainVersion){
+                     throw new Error(`unmatched versions   ${versionString}  ${captainVersion} for ${appName}`);
+                 }
 
                  if (!content.caproverOneClickApp) {
-                     throw new Error(`Cannot find caproverOneClickApp for ${apps[i]}`);
+                     throw new Error(`Cannot find caproverOneClickApp for ${appName}`);
                  }
 
                  if (!content.caproverOneClickApp.description) {
-                     throw new Error(`Cannot find description for ${apps[i]}`);
+                     throw new Error(`Cannot find description for ${appName}`);
                  }
 
                  if (content.caproverOneClickApp.description.length > 200) {
-                     throw new Error(`Description too long for ${apps[i]}  - keep it below 200 chars`);
+                     throw new Error(`Description too long for ${appName}  - keep it below 200 chars`);
                  }
 
                  if (!content.caproverOneClickApp.instructions ||
                      !content.caproverOneClickApp.instructions.start ||
                      !content.caproverOneClickApp.instructions.end) {
-                     throw new Error(`Cannot find instructions.start or instructions.end for ${apps[i]}`);
+                     throw new Error(`Cannot find instructions.start or instructions.end for ${appName}`);
                  }
 
                  if (!content.services) {
-                     throw new Error(`Cannot find services for ${apps[i]}`);
+                     throw new Error(`Cannot find services for ${appName}`);
                  }
 
-                 Object.keys(content.services).forEach(
-                     (serviceName) => { // jshint ignore:line
-                         const s = content.services[serviceName];
-                         if (s.image && s.image.endsWith(':latest')) {
-                             // throw new Error(`"latest" tag is not allowed as it can change and break the setup, see ${apps[i]}`);
-                         }
-                     });
+                 if (!content.caproverOneClickApp.variables.find((v) => v.id === '$$cap_app_version')) {
+                     throw new Error(`Cannot find version for ${appName}`);
+                 }
 
-                 const logoFileName = apps[i] + '.png';
+                 const versionApp = content.caproverOneClickApp.variables.find((v) => v.id === '$$cap_app_version')
+
+                 if(versionApp.defaultValue === 'latest'){
+                     throw new Error(`"latest" tag is not allowed as it can change and break the setup, see ${appName}`);
+                 }
+
+                 if(!versionApp.description) {
+                        throw new Error(`Version description must included here, see ${appName}`);
+                 }
+
+                 if(!versionApp.description.match('tags') && !versionApp.description.match('github') && !versionApp.description.match('gitlab')) {
+                     throw new Error(`Version description must contain a link to the tags page, see ${appName}`);
+                 }
+
+                 const logoFileName = appName + '.png';
 
                  const logoFullPath = path.join(pathOfVersion, 'logos', logoFileName);
 
@@ -71,75 +81,15 @@
                      !fs.statSync(logoFullPath).isFile()) {
                      let printablePath = logoFullPath;
                      printablePath = printablePath.substr(printablePath.indexOf(`/${PUBLIC}`));
-                     throw new Error(`Cannot find logo for ${apps[i]} ${printablePath}`);
+                     throw new Error(`Cannot find logo for ${appName} ${printablePath}`);
                  }
 
-                 console.log(`Validated ${apps[i]}`);
-
+                 console.log(`Validated ${appName}`);
              }
-
-         });
- }
-
- // validating version 2
- function validateV2() {
-
-     const version = '2';
-     const pathOfVersion = path.join(pathOfPublic, 'v' + version);
-     const pathOfApps = path.join(pathOfVersion, 'apps');
-
-     if (!fs.existsSync(pathOfApps)) {
-         return;
-     }
-
-     return fs.readdir(pathOfApps)
-         .then(function (items) {
-
-             const apps = items.filter(v => v.includes('.json'));
-
-             if (items.length !== apps.length) {
-                 throw new Error('All files in v2 must end with .json');
-             }
-
-             for (var i = 0; i < apps.length; i++) {
-                 const contentString = fs.readFileSync(path.join(pathOfApps, apps[i]));
-                 const content = JSON.parse(contentString);
-                 const captainVersion = (content.captainVersion + '');
-                 const versionString = (version + '');
-                 if (versionString !== captainVersion)
-                     throw new Error(`unmatched versions   ${versionString}  ${captainVersion} for ${apps[i]}`);
-
-                 apps[i] = apps[i].replace('.json', '');
-
-                 if (!content.description) {
-                     throw new Error(`Cannot find description for ${apps[i]}`);
-                 }
-                 if (content.description.length > 200) {
-                     throw new Error(`Description too long for ${apps[i]}  - keep it below 200 chars`);
-                 }
-
-                 const logoFileName = apps[i] + '.png';
-
-                 const logoFullPath = path.join(pathOfVersion, 'logos', logoFileName);
-
-                 if (!fs.existsSync(logoFullPath) ||
-                     !fs.statSync(logoFullPath).isFile()) {
-                     let printablePath = logoFullPath;
-                     printablePath = printablePath.substr(printablePath.indexOf(`/${PUBLIC}`));
-                     throw new Error(`Cannot find logo for ${apps[i]} ${printablePath}`);
-                 }
-
-                 console.log(`Validated ${apps[i]}`);
-
-             }
-
          });
  }
 
  Promise.resolve()
-     .then(function () {
-         return validateV2();
-     })
      .then(function () {
          return validateV4();
      })

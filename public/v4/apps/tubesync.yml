@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: ghcr.io/meeb/tubesync:$$cap_tubesync_version
+        image: ghcr.io/meeb/tubesync:$$cap_app_version
         volumes:
             - $$cap_appname-config:/config
             - $$cap_appname-downloads:/downloads
@@ -16,7 +16,7 @@ services:
             containerHttpPort: '4848'
 caproverOneClickApp:
     variables:
-        - id: $$cap_tubesync_version
+        - id: $$cap_app_version
           label: TubeSync Version
           defaultValue: 'v0.12.0'
           description: Check out their docker page for the valid tags https://github.com/meeb/tubesync/tags

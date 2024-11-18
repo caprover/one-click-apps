@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: linuxserver/projectsend:$$cap_projectsend_version
+        image: linuxserver/projectsend:$$cap_app_version
         environment:
             TZ: $$cap_tz
             PUID: '1000'
@@ -15,7 +15,7 @@ services:
             containerHttpPort: '80'
 caproverOneClickApp:
     variables:
-        - id: $$cap_projectsend_version
+        - id: $$cap_app_version
           label: ProjectSend Version
           defaultValue: version-r1295
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/projectsend/tags. If you want MSSQL support please use the tag r1053-ls27

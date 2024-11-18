@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: linuxserver/raneto:$$cap_raneto_version
+        image: linuxserver/raneto:$$cap_app_version
         environment:
             TZ: $$cap_tz
             PUID: '1000'
@@ -13,7 +13,7 @@ services:
             containerHttpPort: '3000'
 caproverOneClickApp:
     variables:
-        - id: $$cap_raneto_version
+        - id: $$cap_app_version
           label: Raneto Version
           defaultValue: 0.17.0-ls49
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/raneto/tags

@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: mongo:$$cap_mongo_version
+        image: mongo:$$cap_app_version
         volumes:
             - $$cap_appname-db-data:/data/db
             - $$cap_appname-db-config:/data/configdb
@@ -13,7 +13,7 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_mongo_version
+        - id: $$cap_app_version
           label: MongoDB Version
           defaultValue: '4'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/mongo/tags/

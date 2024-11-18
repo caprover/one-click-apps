@@ -12,7 +12,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname:
-        image: mattermost/mattermost-enterprise-edition:$$cap_mattermost_version
+        image: mattermost/mattermost-enterprise-edition:$$cap_app_version
         depends_on:
             - $$cap_appname-db
         volumes:
@@ -33,7 +33,7 @@ services:
             containerHttpPort: '8065'
 caproverOneClickApp:
     variables:
-        - id: $$cap_mattermost_version
+        - id: $$cap_app_version
           label: mattermost Docker Image tag. Use 'latest' for updated images.
           defaultValue: release-6.7
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/mattermost/mattermost-prod-app/tags

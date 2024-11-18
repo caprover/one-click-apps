@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: percona:$$cap_percona_version
+        image: percona:$$cap_app_version
         volumes:
             - $$cap_appname-data:/var/lib/mysql
         restart: always
@@ -9,12 +9,12 @@ services:
             MYSQL_ROOT_PASSWORD: $$cap_db_pass
         caproverExtra:
             dockerfileLines:
-                - FROM percona:$$cap_percona_version
+                - FROM percona:$$cap_app_version
                 - CMD ["--character-set-server=$$cap_charset", "--collation-server=$$cap_collation", "--skip-character-set-client-handshake"]
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_percona_version
+        - id: $$cap_app_version
           label: Percona Version
           defaultValue: 'ps-8.0'
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/percona

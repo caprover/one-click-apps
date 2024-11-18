@@ -18,7 +18,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname:
-        image: weblate/weblate:$$cap_weblate_version
+        image: weblate/weblate:$$cap_app_version
         depends_on:
             - $$cap_appname-postgres
             - $$cap_appname-redis
@@ -55,7 +55,7 @@ caproverOneClickApp:
           label: Redis Docker version
           defaultValue: 7-alpine
           description: Check out their Docker page for the valid versions https://hub.docker.com/r/library/redis/tags
-        - id: $$cap_weblate_version
+        - id: $$cap_app_version
           label: weblate Docker Image tag
           defaultValue: 4.14.1-1
           description: latest, edge, bleeding, or version - Check out their Docker page for the valid tags https://hub.docker.com/r/weblate/weblate/tags

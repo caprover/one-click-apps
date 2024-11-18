@@ -15,7 +15,7 @@ services:
             notExposeAsWebApp: true
 
     $$cap_appname:
-        image: joplin/server:$$cap_joplin_tag
+        image: joplin/server:$$cap_app_version
         depends_on:
             - $$cap_appname-db
         restart: unless-stopped
@@ -43,7 +43,7 @@ caproverOneClickApp:
         - id: $$cap_postgres_password
           label: Postgres Password
           defaultValue: cA3rS2oK
-        - id: $$cap_joplin_tag
+        - id: $$cap_app_version
           label: Joplin Version
           defaultValue: '1.7.2'
           description: Check out their docker page for the valid tags https://hub.docker.com/r/joplin/server/tags

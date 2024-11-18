@@ -48,7 +48,7 @@ services:
         caproverExtra:
             containerHttpPort: '3000'
             dockerfileLines:
-                - FROM chaskiq/chaskiq:$$cap_chaskiq_version
+                - FROM chaskiq/chaskiq:$$cap_app_version
                 - EXPOSE 3000
                 - CMD bundle exec rails db:setup; bundle exec rails admin_generator; bundle exec rails s -b 0.0.0.0 -p 3000
     $$cap_appname-worker:
@@ -75,12 +75,12 @@ services:
 
         caproverExtra:
             dockerfileLines:
-                - FROM chaskiq/chaskiq:$$cap_chaskiq_version
+                - FROM chaskiq/chaskiq:$$cap_app_version
                 - CMD bundle exec sidekiq -C config/sidekiq.yml
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_chaskiq_version
+        - id: $$cap_app_version
           label: Chaskiq Version Tag
           description: You can use latest tag or check version builds on https://hub.docker.com/r/chaskiq/chaskiq/tags
           defaultValue: 9009088

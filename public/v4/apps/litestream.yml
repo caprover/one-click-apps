@@ -3,7 +3,7 @@ services:
     $$cap_appname:
         caproverExtra:
             dockerfileLines:
-                - FROM litestream/litestream:$$cap_version
+                - FROM litestream/litestream:$$cap_app_version
                 - RUN mkdir /config
                 - |-
                     RUN test -f /config/litestream.yml || echo -e "dbs:\n  - path: $$cap_db_path\n    replicas:\n      - type: s3\n        bucket: $$cap_bucket\n        path: $$cap_dest_path\n        endpoint: $$cap_endpoint_url\n        access-key-id: $$cap_access_key_id\n        secret-access-key: $$cap_secret_access_key" > /config/litestream.yml
@@ -18,7 +18,7 @@ services:
             LITESTREAM_SECRET_ACCESS_KEY: $$cap_secret_access_key
 caproverOneClickApp:
     variables:
-        - id: '$$cap_version'
+        - id: $$cap_app_version
           label: Litestream Version
           defaultValue: '0.3'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/litestream/litestream/tags

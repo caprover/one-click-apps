@@ -3,7 +3,7 @@ services:
     $$cap_appname-core:
         depends_on:
             - $$cap_appname-postgres
-        image: strapi/strapi:$$cap_strapi_version
+        image: strapi/strapi:$$cap_app_version
         volumes:
             - $$cap_appname-data:/srv/app
         restart: always
@@ -29,7 +29,7 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_strapi_version
+        - id: $$cap_app_version
           label: Strapi Version
           defaultValue: 3.3.3
           description: Check out their page for the valid versions https://hub.docker.com/r/strapi/strapi/tags

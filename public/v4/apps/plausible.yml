@@ -25,7 +25,7 @@ services:
         caproverExtra:
             containerHttpPort: '8000'
             dockerfileLines:
-                - FROM ghcr.io/plausible/community-edition:$$cap_PLAUSIBLE_VERSION
+                - FROM ghcr.io/plausible/community-edition:$$cap_app_version
                 - CMD ["sh", "-c", "sleep 10 && /entrypoint.sh db createdb && /entrypoint.sh db migrate && /entrypoint.sh run"]
         environment:
             BASE_URL: http://$$cap_appname.$$cap_root_domain
@@ -69,7 +69,7 @@ caproverOneClickApp:
           label: RELAY_PASSWORD
           validRegex: /^([^\s^\/])+$/
         - description: The version of Plausible docker image (from https://github.com/plausible/analytics/pkgs/container/community-edition e.g. v2.1.4)
-          id: $$cap_PLAUSIBLE_VERSION
+          id: $$cap_app_version
           label: PLAUSIBLE_VERSION
           defaultValue: v2.1.4
           validRegex: /^([^\s^\/])+$/

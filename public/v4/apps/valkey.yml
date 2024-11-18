@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: valkey/valkey:$$cap_valkey_version
+        image: valkey/valkey:$$cap_app_version
         volumes:
             - $$cap_appname-valkey-data:/data
         restart: always
@@ -11,7 +11,7 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_valkey_version
+        - id: $$cap_app_version
           label: Valkey Version Tag
           description: 'Check out their Docker page for the valid tags: https://hub.docker.com/valkey/valkey?tab=tags'
           defaultValue: '8.0.1-alpine'

@@ -22,7 +22,7 @@ services:
         depends_on:
             - $$cap_appname-db
             - $$cap_appname-redis
-        image: chocobozzz/peertube:$$cap_peertube_version
+        image: chocobozzz/peertube:$$cap_app_version
         volumes:
             - $$cap_appname-peertube-data:/data
             - $$cap_appname-peertube-config:/config
@@ -69,7 +69,7 @@ caproverOneClickApp:
           defaultValue: 6.2.11-alpine
           description: Check out their docker page for the valid tags https://hub.docker.com/r/library/redis/tags/
           validRegex: /^([^\s^\/])+$/
-        - id: $$cap_peertube_version
+        - id: $$cap_app_version
           label: Peertube Version
           defaultValue: v5.1.0-bullseye
           description: Check out their docker page for the valid tags https://hub.docker.com/r/chocobozzz/peertube/tags/

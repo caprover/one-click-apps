@@ -24,7 +24,7 @@ services:
 
     # Exporter
     $$cap_appname-exporter:
-        image: penpotapp/exporter:$$cap_penpot_version
+        image: penpotapp/exporter:$$cap_app_version
         restart: always
         environment:
             PENPOT_PUBLIC_URI: $$cap_public_uri
@@ -34,7 +34,7 @@ services:
 
     # Backend
     $$cap_appname-backend:
-        image: penpotapp/backend:$$cap_penpot_version
+        image: penpotapp/backend:$$cap_app_version
         volumes:
             - $$cap_appname-assets-data:/opt/data
         environment:
@@ -65,7 +65,7 @@ services:
 
     # Frontend
     $$cap_appname:
-        image: penpotapp/frontend:$$cap_penpot_version
+        image: penpotapp/frontend:$$cap_app_version
         volumes:
             - $$cap_appname-assets-data:/opt/data
         environment:
@@ -88,7 +88,7 @@ caproverOneClickApp:
           defaultValue: '7'
           description: Checkout their docker description page for the valid tags https://hub.docker.com/_/redis?tab=description
           validRegex: /^([^\s^\/])+$/
-        - id: $$cap_penpot_version
+        - id: $$cap_app_version
           label: Penpot version for frontend, backend and exporter
           defaultValue: '1.18.4'
           description: Checkout their docker page for the valid tags https://hub.docker.com/r/penpotapp/frontend/tags

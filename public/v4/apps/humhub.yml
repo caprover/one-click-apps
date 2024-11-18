@@ -23,7 +23,7 @@ services:
             HUMHUB_DB_PASSWORD: $$cap_mysql_passwd
             HUMHUB_HOST: $$cap_appname.$$cap_root_domain
             HUMHUB_PROTO: https
-        image: mriedmann/humhub:$$cap_humhub_version
+        image: mriedmann/humhub:$$cap_app_version
         restart: always
         volumes:
             - '$$cap_appname-config:/var/www/localhost/htdocs/protected/config'
@@ -47,7 +47,7 @@ caproverOneClickApp:
           description: Password to connect to the database
           defaultValue: $$cap_gen_random_hex(16)
           id: $$cap_mysql_passwd
-        - id: $$cap_humhub_version
+        - id: $$cap_app_version
           label: Version Tag
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/mriedmann/humhub/tags
           defaultValue: '1.6.2'

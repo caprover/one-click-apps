@@ -14,7 +14,7 @@ services:
         caproverExtra:
             containerHttpPort: '9001'
             dockerfileLines:
-                - FROM minio/minio:$$cap_minio_version
+                - FROM minio/minio:$$cap_app_version
                 - CMD ["server", "/data", "--console-address", ":9001"]
     $$cap_appname-api:
         image: caprover/nginx-reverse-proxy:1-ef5ffcb
@@ -26,7 +26,7 @@ services:
             CLIENT_MAX_BODY_SIZE: '0'
 caproverOneClickApp:
     variables:
-        - id: $$cap_minio_version
+        - id: $$cap_app_version
           label: MinIO Version
           defaultValue: RELEASE.2023-01-18T04-36-38Z
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/minio/minio/tags/

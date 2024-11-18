@@ -24,7 +24,7 @@ services:
             SMTP_SECURE: $$cap_smtp_secure
             MAIL_FROM_ADDRESS: $$cap_mail_from_address
             MAIL_FROM_NAME: $$cap_mail_from_name
-        image: docmost/docmost:$$cap_docmost_version
+        image: docmost/docmost:$$cap_app_version
         restart: always
         volumes:
             - $$cap_appname-data:/app/data/storage
@@ -55,7 +55,7 @@ caproverOneClickApp:
     variables:
         - defaultValue: 0.3.1
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/docmost/docmost/tags
-          id: $$cap_docmost_version
+          id: $$cap_app_version
           label: Dockmost version
           validRegex: /^([^\s^\/])+$/
         - defaultValue: $$cap_gen_random_hex(32)

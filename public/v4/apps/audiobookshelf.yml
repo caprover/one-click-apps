@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: ghcr.io/advplyr/audiobookshelf:$$cap_version
+        image: ghcr.io/advplyr/audiobookshelf:$$cap_app_version
         volumes:
             - $$cap_appname-config:/config
             - $$cap_path_to_audiobooks:/audiobooks
@@ -11,7 +11,7 @@ services:
 
 caproverOneClickApp:
     variables:
-        - id: '$$cap_version'
+        - id: $$cap_app_version
           label: Audiobookshelf Version
           defaultValue: '2.2.14'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/advplyr/audiobookshelf/tags

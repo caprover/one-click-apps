@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: hasura/graphql-engine:$$cap_hasura_version
+        image: hasura/graphql-engine:$$cap_app_version
         restart: always
         environment:
             HASURA_GRAPHQL_DATABASE_URL: $$cap_database_url
@@ -14,7 +14,7 @@ caproverOneClickApp:
     variables:
         - defaultValue: v1.2.2
           description: Check out their GitHub page for their latest version https://github.com/hasura/graphql-engine
-          id: $$cap_hasura_version
+          id: $$cap_app_version
           label: Hasura Version
           validRegex: /^([^\s^\/])+$/
         - description: The admin secret gives you access to the console.

@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: linuxserver/ombi:$$cap_ombi_version
+        image: linuxserver/ombi:$$cap_app_version
         environment:
             TZ: $$cap_tz
             PUID: '1000'
@@ -13,7 +13,7 @@ services:
             containerHttpPort: '3579'
 caproverOneClickApp:
     variables:
-        - id: $$cap_ombi_version
+        - id: $$cap_app_version
           label: Ombi Version
           defaultValue: development-v4.0.1446-ls143
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/ombi/tags

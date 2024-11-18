@@ -33,7 +33,7 @@ services:
         caproverExtra:
             containerHttpPort: '8000'
             dockerfileLines:
-                - FROM glitchtip/glitchtip:$$cap_GLITCHTIP_VERSION
+                - FROM glitchtip/glitchtip:$$cap_app_version
                 - CMD ./manage.py migrate && ./bin/start.sh
     $$cap_appname-worker:
         depends_on:
@@ -50,12 +50,12 @@ services:
             CELERY_WORKER_CONCURRENCY: $$cap_CELERY_WORKER_CONCURRENCY
         caproverExtra:
             dockerfileLines:
-                - FROM glitchtip/glitchtip:$$cap_GLITCHTIP_VERSION
+                - FROM glitchtip/glitchtip:$$cap_app_version
                 - CMD ./bin/run-celery-with-beat.sh
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_GLITCHTIP_VERSION
+        - id: $$cap_app_version
           label: GlitchTip Version
           defaultValue: 'v3.1.2'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/glitchtip/glitchtip/tags

@@ -1,10 +1,10 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: ghcr.io/gchq/cyberchef:$$cap_cyberchef_version
+        image: ghcr.io/gchq/cyberchef:$$cap_app_version
 caproverOneClickApp:
     variables:
-        - id: '$$cap_cyberchef_version'
+        - id: $$cap_app_version
           label: CyberChef App Version
           defaultValue: '10'
           description: Check out their Docker page for the valid tags https://github.com/gchq/CyberChef/pkgs/container/cyberchef

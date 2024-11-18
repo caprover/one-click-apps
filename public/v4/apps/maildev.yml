@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: maildev/maildev:$$cap_maildev_version
+        image: maildev/maildev:$$cap_app_version
         ports:
             - $$cap_maildev_smtp_port:1025
         volumes:
@@ -17,7 +17,7 @@ services:
             containerHttpPort: '1080'
 caproverOneClickApp:
     variables:
-        - id: $$cap_maildev_version
+        - id: $$cap_app_version
           label: MailDev Version
           defaultValue: 2.1.0
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/maildev/maildev/tags

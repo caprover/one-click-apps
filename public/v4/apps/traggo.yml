@@ -10,10 +10,10 @@ services:
         caproverExtra:
             containerHttpPort: '3030'
             dockerfileLines:
-                - FROM traggo/server:$$cap_traggo_version
+                - FROM traggo/server:$$cap_app_version
 caproverOneClickApp:
     variables:
-        - id: $$cap_traggo_version
+        - id: $$cap_app_version
           label: Traggo Version Tag
           description: 'Check out their Docker page for the valid tags: https://hub.docker.com/r/traggo/server/tags'
           defaultValue: '0.2.1'

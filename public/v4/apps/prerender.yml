@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: tvanro/prerender-alpine:6.4.0
+        image: tvanro/prerender-alpine:$$cap_app_version
         restart: always
         environment:
             MEMORY_CACHE: $$cap_memory_cache
@@ -12,6 +12,10 @@ services:
             containerHttpPort: '3000'
 caproverOneClickApp:
     variables:
+        - id: $$cap_app_version
+          label: Prerender Version
+          defaultValue: 6.4.0
+          description: 'Check out their docker page for the valid tags https://hub.docker.com/r/tvanro/prerender-alpine/tags'
         - id: $$cap_memory_cache
           label: Enable memory cache?
           defaultValue: 1

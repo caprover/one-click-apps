@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     '$$cap_appname':
-        image: 'thingsboard/tb-postgres:$$cap_version'
+        image: 'thingsboard/tb-postgres:$$cap_app_version'
         ports:
             - '$$mqtt_port:1883'
             - '$$coap_port:5683'
@@ -14,7 +14,7 @@ services:
             containerHttpPort: '9090'
 caproverOneClickApp:
     variables:
-        - id: '$$cap_version'
+        - id: $$cap_app_version
           label: ThingsBoard Version
           defaultValue: '3.2.2'
           description: Check out their Docker page for the valid tags hhttps://hub.docker.com/r/thingsboard/tb-postgres/tags

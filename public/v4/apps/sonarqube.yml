@@ -15,7 +15,7 @@ services:
             ports:
                 - 5432:5432
     $$cap_appname:
-        image: sonarqube:$$cap_sonar_version
+        image: sonarqube:$$cap_app_version
         depends_on:
             - $$cap_appname-db
         volumes:
@@ -37,7 +37,7 @@ caproverOneClickApp:
           defaultValue: '9.6'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/
           validRegex: /^([^\s^\/])+$/
-        - id: $$cap_sonar_version
+        - id: $$cap_app_version
           label: Sonarqube Version
           defaultValue: 10.2.1-community
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/sonarqube?tab=tags/

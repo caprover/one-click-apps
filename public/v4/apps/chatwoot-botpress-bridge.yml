@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: douglara/chatwoot-botpress-bridge:$$cap_version
+        image: douglara/chatwoot-botpress-bridge:$$cap_app_version
         restart: always
         environment:
             RAILS_ENV: production
@@ -14,7 +14,7 @@ services:
             containerHttpPort: '3000'
 caproverOneClickApp:
     variables:
-        - id: $$cap_version
+        - id: $$cap_app_version
           label: Chatwoot Botpress Bridge Version
           defaultValue: '1'
           description: Check out their docker page for the valid tags https://hub.docker.com/r/douglara/chatwoot-botpress-bridge/tags

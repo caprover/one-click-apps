@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: machines/filestash:$$cap_filestash_version
+        image: machines/filestash:$$cap_app_version
         volumes:
             - $$cap_appname-app-data-state:/app/data/state
         restart: always
@@ -9,7 +9,7 @@ services:
             containerHttpPort: '8334'
 caproverOneClickApp:
     variables:
-        - id: $$cap_filestash_version
+        - id: $$cap_app_version
           label: Filestash Version
           defaultValue: b7b45f2
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/machines/filestash/tags

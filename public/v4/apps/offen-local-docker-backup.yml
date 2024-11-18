@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: offen/docker-volume-backup:$$cap_version
+        image: offen/docker-volume-backup:$$cap_app_version
         environment:
             BACKUP_FILENAME: $$cap_backup_filename
             BACKUP_ARCHIVE: /archive
@@ -15,7 +15,7 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_version
+        - id: $$cap_app_version
           label: Docker volume backup version
           defaultValue: 'v2'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/offen/docker-volume-backup/tags

@@ -8,12 +8,12 @@ services:
             REDIS_PASSWORD: $$cap_redis_password
         caproverExtra:
             dockerfileLines:
-                - FROM redis:$$cap_redis_version
+                - FROM redis:$$cap_app_version
                 - CMD exec redis-server --requirepass "$REDIS_PASSWORD"
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_redis_version
+        - id: $$cap_app_version
           label: Redis Version Tag
           description: 'Check out their Docker page for the valid tags: https://hub.docker.com/_/redis?tab=tags'
           defaultValue: '7.2.4'
@@ -21,6 +21,7 @@ caproverOneClickApp:
         - id: $$cap_redis_password
           label: Redis Password
           validRegex: /^(\w|[^\s"])+$/
+          defaultValue: $$cap_gen_random_hex(16)
     instructions:
         start: >-
             Redis is an open source key-value store that functions as a data structure server.

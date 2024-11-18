@@ -13,7 +13,7 @@ services:
             websocketSupport: true
             dockerfileLines:
                 -  # Specify the base image for the app
-                - FROM ubuntu:$$cap_gost_ubuntuversion
+                - FROM ubuntu:$$cap_app_version
                 -  # Set environment variables
                 - ARG UBUNTU_TIMEZONE
                 - ENV TZ=${UBUNTU_TIMEZONE}
@@ -33,7 +33,7 @@ services:
                 - ENTRYPOINT ["/bin/bash", "/start.sh"]
 caproverOneClickApp:
     variables:
-        - id: $$cap_gost_ubuntuversion
+        - id: $$cap_app_version
           label: Ubuntu Version
           description: Check out https://hub.docker.com/_/ubuntu/tags for valid tags.
           defaultValue: 22.04

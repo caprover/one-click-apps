@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname-db:
-        image: databack/mysql-backup:$$cap_mysql_backup_version
+        image: databack/mysql-backup:$$cap_app_version
         restart: always
         environment:
             DB_SERVER: $$cap_db_server
@@ -12,7 +12,7 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_mysql_backup_version
+        - id: $$cap_app_version
           label: Mysql Backup Version
           defaultValue: 'v0.11.0'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/databack/mysql-backup/tags

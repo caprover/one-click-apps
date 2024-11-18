@@ -15,7 +15,7 @@ services:
     $$cap_appname:
         depends_on:
             - $$cap_appname-db
-        image: yourls:$$cap_yourls_version
+        image: yourls:$$cap_app_version
         volumes:
             - $$cap_appname-plugins:/usr/src/yourls/plugins
         restart: always
@@ -62,7 +62,7 @@ caproverOneClickApp:
           defaultValue: '5.7'
           description: Check out the Docker pages for the valid tags https://hub.docker.com/r/library/mysql/tags/
           validRegex: /^([^\s^\/])+$/
-        - id: $$cap_yourls_version
+        - id: $$cap_app_version
           label: yourls Version
           defaultValue: '1.9.2'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/yourls/tags/

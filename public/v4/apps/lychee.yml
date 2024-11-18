@@ -4,7 +4,7 @@ services:
     $$cap_appname:
         depends_on:
             - $$cap_appname-mariadb
-        image: lycheeorg/lychee:$$cap_lychee_version
+        image: lycheeorg/lychee:$$cap_app_version
         restart: unless-stopped
         environment:
             TZ: $$cap_tz
@@ -40,7 +40,7 @@ caproverOneClickApp:
           label: Timezone
           description: This is the timezone for the application, find yours at https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
           defaultValue: Europe/Brussels
-        - id: $$cap_lychee_version
+        - id: $$cap_app_version
           label: Lychee Version
           defaultValue: 'v4.0.7'
           description: Check out their docker page for the valid tags https://hub.docker.com/r/lycheeorg/lychee/tags

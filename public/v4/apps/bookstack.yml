@@ -23,8 +23,9 @@ services:
             DB_HOST: srv-captain--$$cap_appname-db
             DB_PORT: 3306
             DB_USERNAME: $$cap_database_user
-            DB_PASSWORD: $$cap_DB_PASS
+            DB_PASS: $$cap_DB_PASS
             DB_DATABASE: $$cap_database_name
+            DB_PASSWORD: $$cap_DB_PASS
         image: lscr.io/linuxserver/bookstack:$$cap_bookstack_version
         restart: always
         volumes:
@@ -50,7 +51,7 @@ caproverOneClickApp:
           description: This is the timezone for the application, find yours at https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
           defaultValue: Etc/UTC
           id: $$cap_timezone
-        - id: $$cap_bookstack_version
+        - id: $$cap_app_version
           label: Version Tag
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/bookstack/tags
           defaultValue: 'v24.10-ls172'

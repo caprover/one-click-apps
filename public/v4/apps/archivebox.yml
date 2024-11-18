@@ -10,12 +10,12 @@ services:
         restart: always
         caproverExtra:
             dockerfileLines:
-                - FROM archivebox/archivebox:$$cap_archivebox_version
+                - FROM archivebox/archivebox:$$cap_app_version
                 - CMD ["server", "--quick-init", "0.0.0.0:8000"]
             containerHttpPort: '8000'
 caproverOneClickApp:
     variables:
-        - id: $$cap_archivebox_version
+        - id: $$cap_app_version
           label: archivebox Version
           defaultValue: sha-5940dd6
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/archivebox/archivebox/tags

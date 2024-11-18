@@ -19,12 +19,12 @@ services:
         caproverExtra:
             containerHttpPort: '8000'
             dockerfileLines:
-                - FROM mattermost/focalboard:$$cap_focalboard_version
+                - FROM mattermost/focalboard:$$cap_app_version
                 - CMD printenv CONFIG_JSON > /opt/focalboard/config.json && /opt/focalboard/bin/focalboard-server
 
 caproverOneClickApp:
     variables:
-        - id: $$cap_focalboard_version
+        - id: $$cap_app_version
           label: Focalboard Version
           defaultValue: 0.6.5
           description: 'Check out their docker page for the valid tags https://hub.docker.com/r/mattermost/focalboard/tags'

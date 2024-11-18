@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: linuxserver/sonarr:$$cap_sonarr_version
+        image: linuxserver/sonarr:$$cap_app_version
         environment:
             TZ: $$cap_tz
             PUID: $$cap_puid
@@ -15,7 +15,7 @@ services:
             containerHttpPort: 8989
 caproverOneClickApp:
     variables:
-        - id: $$cap_sonarr_version
+        - id: $$cap_app_version
           label: Sonarr Version
           defaultValue: preview
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/sonarr/tags

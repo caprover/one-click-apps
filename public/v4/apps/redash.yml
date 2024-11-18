@@ -4,7 +4,7 @@ services:
         caproverExtra:
             containerHttpPort: 5000
             dockerfileLines:
-                - FROM redash/redash:$$cap_REDASH_VERSION
+                - FROM redash/redash:$$cap_app_version
                 - CMD ["server"]
         environment:
             REDASH_WEB_WORKERS: $$cap_REDASH_WEB_WORKERS
@@ -27,7 +27,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM redash/redash:$$cap_REDASH_VERSION
+                - FROM redash/redash:$$cap_app_version
                 - CMD ["scheduler"]
         environment:
             QUEUES: celery
@@ -41,7 +41,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM redash/redash:$$cap_REDASH_VERSION
+                - FROM redash/redash:$$cap_app_version
                 - CMD ["worker"]
         environment:
             QUEUES: scheduled_queries,schemas
@@ -55,7 +55,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
             dockerfileLines:
-                - FROM redash/redash:$$cap_REDASH_VERSION
+                - FROM redash/redash:$$cap_app_version
                 - CMD ["worker"]
         environment:
             QUEUES: queries
@@ -98,7 +98,7 @@ caproverOneClickApp:
 
             You can access your Redash instance at `http://$$cap_appname.$$cap_root_domain`.
     variables:
-        - id: $$cap_REDASH_VERSION
+        - id: $$cap_app_version
           label: Application | Version
           description: Redash version. Check out their valid tags at https://hub.docker.com/r/redash/redash/tags
           defaultValue: '10.1.0.b50633'

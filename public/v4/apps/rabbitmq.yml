@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: rabbitmq:$$cap_rabbitmq_version
+        image: rabbitmq:$$cap_app_version
         volumes:
             - $$cap_appname-rabbitmq-data:/var/lib/rabbitmq
         restart: always
@@ -13,7 +13,7 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_rabbitmq_version
+        - id: $$cap_app_version
           label: RabbitMQ Version Tag
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/rabbitmq/tags/
           defaultValue: '3.7'

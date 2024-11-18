@@ -2,7 +2,7 @@ captainVersion: 4
 services:
     $$cap_appname:
         restart: always
-        image: 'towfiqi/serpbear:$$cap_serpbear_version'
+        image: 'towfiqi/serpbear:$$cap_app_version'
         environment:
             NEXT_PUBLIC_APP_URL: 'http://$$cap_appname.$$cap_root_domain'
             USER: $$cap_serpbear_user
@@ -16,7 +16,7 @@ services:
             - '$$cap_appname-serpbear-data:/app/data'
 caproverOneClickApp:
     variables:
-        - id: $$cap_serpbear_version
+        - id: $$cap_app_version
           label: SerpBear Version
           description: >-
               Check out the docker page for valid tags

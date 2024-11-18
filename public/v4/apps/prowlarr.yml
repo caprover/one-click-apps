@@ -2,7 +2,7 @@ captainVersion: 4
 services:
     # Prowlarr
     $$cap_appname:
-        image: ghcr.io/linuxserver/prowlarr:$$cap_pr_version
+        image: ghcr.io/linuxserver/prowlarr:$$cap_app_version
         restart: unless-stopped
         environment:
             TZ: $$cap_tz
@@ -14,7 +14,7 @@ services:
             containerHttpPort: '9696'
 caproverOneClickApp:
     variables:
-        - id: $$cap_pr_version
+        - id: $$cap_app_version
           label: Prowlarr Version
           defaultValue: 'amd64-nightly-version-0.1.0.718'
           description: Check out their Docker page for the valid tags https://github.com/linuxserver/docker-prowlarr/pkgs/container/prowlarr/versions

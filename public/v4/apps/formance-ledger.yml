@@ -3,7 +3,7 @@ services:
     $$cap_appname:
         caproverExtra:
             containerHttpPort: 3068
-        image: ghcr.io/formancehq/ledger:$$cap_FORMANCE_LEDGER_VERSION
+        image: ghcr.io/formancehq/ledger:$$cap_app_version
         environment:
             NUMARY_STORAGE_DRIVER: postgres
             NUMARY_STORAGE_POSTGRES_CONN_STRING: postgresql://$$cap_POSTGRES_USER:$$cap_POSTGRES_PASSWORD@srv-captain--$$cap_appname-db/$$cap_POSTGRES_DB
@@ -29,7 +29,7 @@ services:
         caproverExtra:
             containerHttpPort: 3078
             dockerfileLines:
-                - FROM ghcr.io/formancehq/ledger:$$cap_FORMANCE_LEDGER_VERSION
+                - FROM ghcr.io/formancehq/ledger:$$cap_app_version
                 - CMD ["ui"]
         environment:
             NUMARY_UI_HTTP_BIND_ADDRESS: '0.0.0.0:3078'
@@ -48,7 +48,7 @@ caproverOneClickApp:
     description: Programmable Financial Ledger To Build Money-Moving Applications
     documentation: https://docs.formance.com
     variables:
-        - id: $$cap_FORMANCE_LEDGER_VERSION
+        - id: $$cap_app_version
           label: Application | Version
           description: Version of Formance. Check out their valid tags at https://github.com/formancehq/ledger/pkgs/container/ledger
           defaultValue: v1.8.0

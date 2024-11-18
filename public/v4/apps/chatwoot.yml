@@ -38,7 +38,7 @@ services:
         caproverExtra:
             containerHttpPort: '3000'
             dockerfileLines:
-                - FROM chatwoot/chatwoot:$$cap_chatwoot_version
+                - FROM chatwoot/chatwoot:$$cap_app_version
                 - RUN chmod +x docker/entrypoints/rails.sh
                 - ENTRYPOINT ["docker/entrypoints/rails.sh"]
                 - EXPOSE 3000
@@ -59,14 +59,14 @@ services:
             INSTALLATION_ENV: caprover
         caproverExtra:
             dockerfileLines:
-                - FROM chatwoot/chatwoot:$$cap_chatwoot_version
+                - FROM chatwoot/chatwoot:$$cap_app_version
                 - RUN chmod +x docker/entrypoints/rails.sh
                 - ENTRYPOINT ["docker/entrypoints/rails.sh"]
                 - CMD bundle exec sidekiq -C config/sidekiq.yml
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_chatwoot_version
+        - id: $$cap_app_version
           label: Chatwoot Version Tag
           description: Choose the latest version from https://hub.docker.com/r/chatwoot/chatwoot/tags
           defaultValue: v3.1.1

@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: bitnami/dokuwiki:$$cap_dokuwiki_version
+        image: bitnami/dokuwiki:$$cap_app_version
         environment:
             DOKUWIKI_USERNAME: $$DOKUWIKI_USERNAME
             DOKUWIKI_EMAIL: $$DOKUWIKI_EMAIL
@@ -14,7 +14,7 @@ services:
             - $$cap_appname:/bitnami/dokuwiki
 caproverOneClickApp:
     variables:
-        - id: $$cap_dokuwiki_version
+        - id: $$cap_app_version
           label: DokuWiki Version
           defaultValue: 20200729-debian-10
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/bitnami/dokuwiki/tags

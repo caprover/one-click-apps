@@ -3,7 +3,7 @@ services:
     $$cap_appname:
         caproverExtra:
             containerHttpPort: 9090
-        image: sissbruecker/linkding:$$cap_N8N_VERSION
+        image: sissbruecker/linkding:$$cap_app_version
         environment:
             LD_SUPERUSER_NAME: $$cap_LD_SUPERUSER_NAME
             LD_SUPERUSER_PASSWORD: $$cap_LD_SUPERUSER_PASSWORD
@@ -22,7 +22,7 @@ caproverOneClickApp:
             linkding has been successfully deployed! It might take few moments before it's fully started.
             You can access it at `http://$$cap_appname.$$cap_root_domain` and set up your account.
     variables:
-        - id: $$cap_N8N_VERSION
+        - id: $$cap_app_version
           label: Application | linkding
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/sissbruecker/linkding/tags
           defaultValue: '1.23.0'

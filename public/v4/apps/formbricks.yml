@@ -14,7 +14,7 @@ services:
             notExposeAsWebApp: true
 
     $$cap_appname:
-        image: formbricks/formbricks:$$cap_formbricks_tag
+        image: formbricks/formbricks:$$cap_app_version
         depends_on:
             - $$cap_appname-db
         restart: unless-stopped
@@ -49,7 +49,7 @@ caproverOneClickApp:
           label: Postgres Password
           defaultValue: $$cap_gen_random_hex(16)
           validRegex: /^(?=.*\d).{10,}$/
-        - id: $$cap_formbricks_tag
+        - id: $$cap_app_version
           label: Formbricks Version
           defaultValue: 2.1.1
           description: Check out our docker page for the valid tags https://hub.docker.com/r/formbricks/formbricks/tags

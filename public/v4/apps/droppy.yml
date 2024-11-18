@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: ghcr.io/droppyjs/droppy:$$cap_droppy_version
+        image: ghcr.io/droppyjs/droppy:$$cap_app_version
         volumes:
             - $$cap_appname-config:/config
             - $$cap_appname-files:/files
@@ -10,7 +10,7 @@ services:
             containerHttpPort: '8989'
 caproverOneClickApp:
     variables:
-        - id: $$cap_droppy_version
+        - id: $$cap_app_version
           label: droppy version tag
           description: Check out their docker page for the valid tags @ https://github.com/orgs/droppyjs/packages/container/package/droppy
           defaultValue: v0.0.6

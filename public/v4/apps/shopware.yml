@@ -15,7 +15,7 @@ services:
     $$cap_appname-shopware:
         depends_on:
             - $$cap_appname-db
-        image: shyim/shopware:$$cap_sw_version
+        image: shyim/shopware:$$cap_app_version
         restart: always
         environment:
             DATABASE_HOST: srv-captain--$$cap_appname-db:3306
@@ -56,7 +56,7 @@ caproverOneClickApp:
         - id: $$cap_db_pass
           label: Database password
           description: ''
-        - id: $$cap_sw_version
+        - id: $$cap_app_version
           label: Shopware Version
           defaultValue: 6.2.0
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/shyim/shopware/tags/

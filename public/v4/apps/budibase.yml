@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: budibase/budibase:$$cap_BUDIBASE_VERSION
+        image: budibase/budibase:$$cap_app_version
         environment:
             ENABLE_ANALYTICS: $$cap_BUDIBASE_ENABLE_ANALYTICS
             JWT_SECRET: $$cap_BUDIBASE_JWT_SECRET
@@ -28,7 +28,7 @@ caproverOneClickApp:
             You can access it at `http://$$cap_appname.$$cap_root_domain`.
             Administrator user is `$$cap_BUDIBASE_ADMIN_USER_EMAIL` with password `$$cap_BUDIBASE_ADMIN_USER_PASSWORD`.
     variables:
-        - id: $$cap_BUDIBASE_VERSION
+        - id: $$cap_app_version
           label: Application | Version
           description: Budibase version. Check out their valid tags at https://hub.docker.com/r/budibase/budibase/tags
           defaultValue: v2.0.31

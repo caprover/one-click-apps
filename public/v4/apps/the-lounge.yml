@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: thelounge/thelounge:$$cap_lounge_version
+        image: thelounge/thelounge:$$cap_app_version
         restart: always
         volumes:
             - $$cap_appname-data:/var/opt/thelounge
@@ -9,7 +9,7 @@ services:
             containerHttpPort: '9000'
 caproverOneClickApp:
     variables:
-        - id: $$cap_lounge_version
+        - id: $$cap_app_version
           label: The Lounge Version Tag
           defaultValue: 4.1.0
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/thelounge/thelounge/tags

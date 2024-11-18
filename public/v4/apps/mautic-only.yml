@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: mautic/mautic:$$cap_mautic_version
+        image: mautic/mautic:$$cap_app_version
         volumes:
             - $$cap_appname-data:/var/www/html
         restart: always
@@ -24,7 +24,7 @@ caproverOneClickApp:
           label: Database password
           description: 'Inform the database password'
           validRegex: /.{1,}/
-        - id: $$cap_mautic_version
+        - id: $$cap_app_version
           label: Mautic Version
           defaultValue: 'v3'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/mautic/mautic/tags

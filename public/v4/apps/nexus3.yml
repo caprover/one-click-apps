@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: sonatype/nexus3:$$cap__version
+        image: sonatype/nexus3:$$cap_app_version
         volumes:
             - $$cap_appname-data:/nexus-data
         restart: always
@@ -10,7 +10,7 @@ services:
             containerHttpPort: '8081'
 caproverOneClickApp:
     variables:
-        - id: $$cap__version
+        - id: $$cap_app_version
           label: Version
           defaultValue: 3.15.2
           description: 'Additional tags can be found here: https://hub.docker.com/r/sonatype/nexus3/tags'

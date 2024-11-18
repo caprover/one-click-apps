@@ -16,7 +16,7 @@ services:
         depends_on:
             - $$cap_appname-mongo
             - $$cap_appname-redis
-        image: coralproject/talk:$$cap_talk_version
+        image: coralproject/talk:$$cap_app_version
         restart: always
         caproverExtra:
             containerHttpPort: '5000'
@@ -31,7 +31,7 @@ caproverOneClickApp:
           defaultValue: $$cap_gen_random_hex(32)
           description: ''
           validRegex: /.{1,}/
-        - id: $$cap_talk_version
+        - id: $$cap_app_version
           label: Coral Talk Version
           defaultValue: '6'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/coralproject/talk/tags

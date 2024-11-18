@@ -40,7 +40,7 @@ services:
         caproverExtra:
             containerHttpPort: 4000
             websocketSupport: 'true'
-        image: teslamate/teslamate:$$cap_TESLAMATE_VERSION
+        image: teslamate/teslamate:$$cap_app_version
         environment:
             ENCRYPTION_KEY: $$cap_SECRET_KEY
             DATABASE_USER: $$cap_DATABASE_USER
@@ -74,7 +74,7 @@ caproverOneClickApp:
           defaultValue: '1.28'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/teslamate/grafana/tags
           validRegex: /^([^\s^\/])+$/
-        - id: $$cap_TESLAMATE_VERSION
+        - id: $$cap_app_version
           label: Application | Version
           defaultValue: '1.28'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/teslamate/teslamate/tags

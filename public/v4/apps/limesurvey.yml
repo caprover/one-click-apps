@@ -17,13 +17,13 @@ services:
         documentation: Taken from https://registry.hub.docker.com/r/crramirez/limesurvey
         depends_on:
             - $$cap_appname-db
-        image: crramirez/limesurvey:$$cap_limesurvey_version
+        image: crramirez/limesurvey:$$cap_app_version
         volumes:
             - $$cap_appname-data:/app/upload
         restart: always
 caproverOneClickApp:
     variables:
-        - id: $$cap_limesurvey_version
+        - id: $$cap_app_version
           label: Limesurvey Version
           defaultValue: '3'
           description: https://registry.hub.docker.com/r/crramirez/limesurvey/tags

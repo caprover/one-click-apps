@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: eclipse-mosquitto:$$cap_eclipse_version
+        image: eclipse-mosquitto:$$cap_app_version
         volumes:
             - $$cap_appname-eclipse-config:/mosquitto/config/
             - $$cap_appname-eclipse-data:/mosquitto/data/
@@ -12,10 +12,11 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_eclipse_version
+        - id: $$cap_app_version
           label: Eclipes-Mosquitto Image Version
-          defaultValue: latest
+          defaultValue: '2'
           validRegex: /^([^\s^\/])+$/
+          description: The version of the Eclipes-Mosquitto image to use. Check https://hub.docker.com/_/eclipse-mosquitto/tags for available versions.
     instructions:
         start: Eclipse Mosquitto is an open source message broker which implements MQTT version 5, 3.1.1 and 3.1. Enter Parameters below
         end: Eclipes-Mosquitto is deployed and available as srv-captain--$$cap_appname:1883 to other apps and srv-captain--$$cap_appname:9001 as a websocket.

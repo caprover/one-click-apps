@@ -56,12 +56,12 @@ services:
         caproverExtra:
             containerHttpPort: '3000'
             dockerfileLines:
-                - FROM outlinewiki/outline:$$cap_outline_version
+                - FROM outlinewiki/outline:$$cap_app_version
                 - EXPOSE 3000
                 - CMD yarn db:migrate --env production-ssl-disabled; yarn start
 caproverOneClickApp:
     variables:
-        - id: $$cap_outline_version
+        - id: $$cap_app_version
           label: Outline Version
           defaultValue: 0.68.1
           description: Check out their page for the valid tags https://hub.docker.com/r/outlinewiki/outline/tags

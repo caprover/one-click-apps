@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: frooodle/s-pdf:$$cap_stirling_version
+        image: frooodle/s-pdf:$$cap_app_version
         environment:
             - DOCKER_ENABLE_SECURITY=false
         volumes:
@@ -14,7 +14,7 @@ services:
             containerHttpPort: '8080'
 caproverOneClickApp:
     variables:
-        - id: $$cap_stirling_version
+        - id: $$cap_app_version
           label: stirling version tag
           description: Check out their docker page for the valid tags @ https://hub.docker.com/r/frooodle/s-pdf
           defaultValue: 0.19.1

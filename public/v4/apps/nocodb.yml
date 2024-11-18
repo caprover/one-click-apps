@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     '$$cap_appname':
-        image: nocodb/nocodb:$$cap_version
+        image: nocodb/nocodb:$$cap_app_version
         restart: always
         environment:
             NC_DB: '$$cap_nc_db'
@@ -17,7 +17,7 @@ services:
             containerHttpPort: '8080'
 caproverOneClickApp:
     variables:
-        - id: '$$cap_version'
+        - id: $$cap_app_version
           label: NocoDB Version
           defaultValue: '0.83.8'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/nocodb/nocodb/tags

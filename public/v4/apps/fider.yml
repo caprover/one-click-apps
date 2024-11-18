@@ -2,7 +2,7 @@ captainVersion: 4
 services:
     $$cap_appname:
         documentation: Taken from https://hub.docker.com/r/getfider/fider/
-        image: getfider/fider:$$cap_fider_version
+        image: getfider/fider:$$cap_app_version
         restart: always
         environment:
             BASE_URL: '$$cap_appname.$$cap_root_domain'
@@ -20,7 +20,7 @@ caproverOneClickApp:
         - id: $$cap_db_url
           label: Fider database URL
           description: Postgres database connection URL for Fider, for example "postgres://username:password@srv-captain--mypostgres:5432/fider?sslmode=disable"
-        - id: $$cap_fider_version
+        - id: $$cap_app_version
           label: Fider Version
           defaultValue: 0.21.1
           description: https://hub.docker.com/r/getfider/fider/tags

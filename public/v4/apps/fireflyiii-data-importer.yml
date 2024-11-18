@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: fireflyiii/data-importer:$$cap_fidi_version
+        image: fireflyiii/data-importer:$$cap_app_version
         environment:
             FIREFLY_III_ACCESS_TOKEN: $$cap_ff_token
             FIREFLY_III_URL: $$cap_ff_url
@@ -14,7 +14,7 @@ services:
             containerHttpPort: '8080'
 caproverOneClickApp:
     variables:
-        - id: $$cap_fidi_version
+        - id: $$cap_app_version
           label: FIDI Version
           defaultValue: version-v1.0.1
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/fireflyiii/data-importer/tags

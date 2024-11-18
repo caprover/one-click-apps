@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: ghcr.io/ajnart/homarr:$$cap_homarr_version
+        image: ghcr.io/ajnart/homarr:$$cap_app_version
         volumes:
             - $$cap_appname-configs:/app/data/configs
             - $$cap_appname-icons:/app/public/icons
@@ -25,7 +25,7 @@ caproverOneClickApp:
             Homarr has been successfully deployed! It might take few moments before it's fully started.
             You can access it at http://$$cap_appname.$$cap_root_domain
     variables:
-        - id: $$cap_homarr_version
+        - id: $$cap_app_version
           label: Version Tag
           description: Check out their GitHub packages page for the valid tags https://github.com/ajnart/homarr/pkgs/container/homarr
           defaultValue: '0.10.1'

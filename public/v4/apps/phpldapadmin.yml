@@ -13,7 +13,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname-admin:
-        image: osixia/phpldapadmin:$$cap_phpldapadmin_version
+        image: osixia/phpldapadmin:$$cap_app_version
         restart: always
         depends_on:
             - $$cap_appname
@@ -38,7 +38,7 @@ caproverOneClickApp:
           label: The admin Password
           description: The admin password of the Openldap
           validRegex: /.{1,}/
-        - id: $$cap_phpldapadmin_version
+        - id: $$cap_app_version
           label: PHPLadapAdmin Version
           defaultValue: 0.9.0
           description: Check out their docker page for the valid tags https://hub.docker.com/r/osixia/phpldapadmin/tags

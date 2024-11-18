@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: polonel/trudesk:$$cap_trudesk_version
+        image: polonel/trudesk:$$cap_app_version
         volumes:
             - $$cap_appname-data:/usr/src/trudesk/public/uploads
             - $$cap_appname-plugins:/usr/src/trudesk/plugins
@@ -50,7 +50,7 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_trudesk_version
+        - id: $$cap_app_version
           label: Trudesk Version
           defaultValue: '1.2.10'
           description: Check out their docker page for the valid tags https://hub.docker.com/r/polonel/trudesk/tags

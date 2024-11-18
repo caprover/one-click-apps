@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: portainer/portainer-$$cap_portainer_edition:$$cap_portainer_version
+        image: portainer/portainer-$$cap_portainer_edition:$$cap_app_version
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
             - $$cap_appname-data:/data
@@ -10,7 +10,7 @@ services:
             containerHttpPort: '9000'
 caproverOneClickApp:
     variables:
-        - id: $$cap_portainer_version
+        - id: $$cap_app_version
           label: Portainer Version
           defaultValue: 2.16.2
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/portainer/portainer-ce/tags

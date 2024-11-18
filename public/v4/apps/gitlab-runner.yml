@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: gitlab/gitlab-runner:$$cap_gitlab-runner_version
+        image: gitlab/gitlab-runner:$$cap_app_version
         volumes:
             - $$cap_appname-data:/etc/gitlab-runner
             - /var/run/docker.sock:/var/run/docker.sock
@@ -10,7 +10,7 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_gitlab-runner_version
+        - id: $$cap_app_version
           label: GitLab-Runner Version
           defaultValue: v11.11.0
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/gitlab/gitlab-runner/tags

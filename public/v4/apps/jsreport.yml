@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: jsreport/jsreport:$$cap_jsreport_version
+        image: jsreport/jsreport:$$cap_app_version
         volumes:
             - $$cap_appname-data:/jsreport
         restart: always
@@ -13,7 +13,7 @@ services:
             containerHttpPort: '5488'
 caproverOneClickApp:
     variables:
-        - id: $$cap_jsreport_version
+        - id: $$cap_app_version
           label: version
           defaultValue: 2.4.0-full
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/jsreport/jsreport/tags

@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     '$$cap_appname':
-        image: balzack/databag:$$cap_version
+        image: balzack/databag:$$cap_app_version
         environment:
             TZ: '$$cap_tz'
             PHP_TZ: '$$cap_tz'
@@ -11,7 +11,7 @@ services:
             containerHttpPort: '7000'
 caproverOneClickApp:
     variables:
-        - id: '$$cap_version'
+        - id: $$cap_app_version
           label: Databag Version
           defaultValue: '0.1.17'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/balzack/databag/tags

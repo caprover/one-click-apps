@@ -3,7 +3,7 @@ services:
     $$cap_appname:
         caproverExtra:
             containerHttpPort: '3333'
-        image: ghostfolio/ghostfolio:$$cap_GHOSTFOLIO_VERSION
+        image: ghostfolio/ghostfolio:$$cap_Gapp_version
         hostname: $$cap_appname.$$cap_root_domain
         environment:
             NODE_ENV: $$cap_NODE_ENV
@@ -45,7 +45,7 @@ caproverOneClickApp:
     description: Open Source Wealth Management Software
     documentation: See https://ghostfol.io
     variables:
-        - id: $$cap_GHOSTFOLIO_VERSION
+        - id: $$cap_app_version
           label: Ghostfolio Version
           description: Check out their valid tags at https://hub.docker.com/r/ghostfolio/ghostfolio/tags
           defaultValue: '1.205.1'

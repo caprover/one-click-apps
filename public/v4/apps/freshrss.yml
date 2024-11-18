@@ -12,7 +12,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: true
     '$$cap_appname':
-        image: freshrss/freshrss:$$cap_version
+        image: freshrss/freshrss:$$cap_app_version
         environment:
             TZ: '$$cap_tz'
             CRON_MIN: '$$cap_cron'
@@ -50,7 +50,7 @@ services:
             containerHttpPort: '80'
 caproverOneClickApp:
     variables:
-        - id: '$$cap_version'
+        - id: $$cap_app_version
           label: FreshRSS Version
           defaultValue: '1.20.0'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/freshrss/freshrss/tags

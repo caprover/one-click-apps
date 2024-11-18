@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: shumc/imagor:$$cap_imagor_version
+        image: shumc/imagor:$$cap_app_version
         volumes:
             - $$cap_appname-data:/mnt/data
         environment:
@@ -14,7 +14,7 @@ services:
         restart: always
 caproverOneClickApp:
     variables:
-        - id: $$cap_imagor_version
+        - id: $$cap_app_version
           label: App Version
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/shumc/imagor/tags
           defaultValue: '0.8.11'

@@ -28,7 +28,7 @@ services:
         caproverExtra:
             containerHttpPort: $$cap_container_search_port
     $$cap_appname-fusionauth:
-        image: fusionauth/fusionauth-app:$$cap_fusionauth_version
+        image: fusionauth/fusionauth-app:$$cap_app_version
         depends_on:
             - $$cap_appname-db
             - $$cap_appname-elasticsearch
@@ -56,7 +56,7 @@ caproverOneClickApp:
           label: Database password
           description: ''
           validRegex: /.{1,}/
-        - id: $$cap_fusionauth_version
+        - id: $$cap_app_version
           label: FusionAuth Version
           defaultValue: 1.7.2
           description: 'See tags at: https://hub.docker.com/r/fusionauth/fusionauth-app/tags'

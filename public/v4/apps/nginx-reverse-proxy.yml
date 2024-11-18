@@ -1,14 +1,14 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: caprover/nginx-reverse-proxy:$$cap__version
+        image: caprover/nginx-reverse-proxy:$$cap_app_version
         restart: always
         environment:
             UPSTREAM_HTTP_ADDRESS: $$cap_upstream_http_address
             CLIENT_MAX_BODY_SIZE: $$cap_max_body_size
 caproverOneClickApp:
     variables:
-        - id: $$cap__version
+        - id: $$cap_app_version
           label: Version
           defaultValue: 1-ef5ffcb
           description: 'Additional tags can be found here: https://hub.docker.com/r/caprover/nginx-reverse-proxy/tags'

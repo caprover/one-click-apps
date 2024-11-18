@@ -3,7 +3,7 @@ services:
     $$cap_appname:
         caproverExtra:
             containerHttpPort: $$cap_BTCPAY_PORT
-        image: btcpayserver/btcpayserver:$$cap_BTCPAYSERVER_VERSION
+        image: btcpayserver/btcpayserver:$$cap_app_version
         hostname: $$cap_appname.$$cap_root_domain
         environment:
             BTCPAY_HOST: $$cap_appname.$$cap_root_domain
@@ -204,7 +204,7 @@ caproverOneClickApp:
           description: Address to bind the services.
           defaultValue: '0.0.0.0'
           validRegex: /.{1,}/
-        - id: $$cap_BTCPAYSERVER_VERSION
+        - id: $$cap_app_version
           label: General | BTCPay Server Version
           description: Check out their valid tags at https://hub.docker.com/r/btcpayserver/btcpayserver/tags
           defaultValue: '1.6.11'

@@ -3,7 +3,7 @@ services:
     $$cap_appname-builder:
         caproverExtra:
             containerHttpPort: 3000
-        image: baptistearno/typebot-builder:$$cap_TYPEBOT_VERSION
+        image: baptistearno/typebot-builder:$$cap_app_version
         environment:
             DATABASE_URL: postgresql://$$cap_POSTGRES_USER:$$cap_POSTGRES_PASSWORD@srv-captain--$$cap_appname-db/$$cap_POSTGRES_DB
             NEXTAUTH_URL: http://$$cap_appname-builder.$$cap_root_domain
@@ -26,7 +26,7 @@ services:
     $$cap_appname-viewer:
         caproverExtra:
             containerHttpPort: 3000
-        image: baptistearno/typebot-viewer:$$cap_TYPEBOT_VERSION
+        image: baptistearno/typebot-viewer:$$cap_app_version
         environment:
             DATABASE_URL: postgresql://$$cap_POSTGRES_USER:$$cap_POSTGRES_PASSWORD@srv-captain--$$cap_appname-db/$$cap_POSTGRES_DB
             NEXTAUTH_URL: http://$$cap_appname-builder.$$cap_root_domain
@@ -90,7 +90,7 @@ caproverOneClickApp:
           description: Password of the database user.
           defaultValue: $$cap_gen_random_hex(16)
           validRegex: /.{1,}/
-        - id: $$cap_TYPEBOT_VERSION
+        - id: $$cap_app_version
           label: TYPEBOT_VERSION
           description: Version of Typebot. Check out their valid tags at https://hub.docker.com/r/baptistearno/typebot-builder/tags
           defaultValue: 2.22.2

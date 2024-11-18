@@ -2,7 +2,7 @@ captainVersion: 4
 services:
     # Elkar
     $$cap_appname:
-        image: elkarbackup/elkarbackup:$$cap_elkar_version
+        image: elkarbackup/elkarbackup:$$cap_app_version
         restart: always
         environment:
             TZ: $$cap_tz
@@ -35,7 +35,7 @@ caproverOneClickApp:
           label: Timezone
           description: This is the timezone for the application, find yours at https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
           defaultValue: Europe/Brussels
-        - id: $$cap_elkar_version
+        - id: $$cap_app_version
           label: Version Tag
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/elkarbackup/elkarbackup/tags
           defaultValue: '2'

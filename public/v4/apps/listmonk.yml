@@ -26,7 +26,7 @@ services:
         caproverExtra:
             containerHttpPort: 9000
             dockerfileLines:
-                - FROM listmonk/listmonk:$$cap_listmonk_version
+                - FROM listmonk/listmonk:$$cap_app_version
                 - CMD yes | ./listmonk --install --idempotent && ./listmonk $$cap_listmonk_flags
         volumes:
             - $$cap_appname-data:/listmonk
@@ -40,7 +40,7 @@ caproverOneClickApp:
           defaultValue: '14.1'
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/postgres?tab=tags
           validRegex: /^([^\s^\/])+$/
-        - id: $$cap_listmonk_version
+        - id: $$cap_app_version
           label: Listmonk Version
           defaultValue: 'v2.2.0'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/listmonk/listmonk/tags

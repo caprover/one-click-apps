@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: sourcegraph/server:$$cap_container_version
+        image: sourcegraph/server:$$cap_app_version
         volumes:
             - $$cap_appname-config:/etc/sourcegraph
             - $$cap_appname-data:/var/opt/sourcegraph
@@ -10,7 +10,7 @@ services:
             containerHttpPort: '7080'
 caproverOneClickApp:
     variables:
-        - id: $$cap_container_version
+        - id: $$cap_app_version
           label: Version
           defaultValue: 3.2.2
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/sourcegraph/server/tags

@@ -16,7 +16,7 @@ services:
             ALLOW_LIST_USERS: $$cap_bs_allowlist_users
             PLAYER_IDLE_TIMEOUT: $$cap_bs_idle
             ALLOW_CHEATS: $$cap_bs_cheats
-        image: itzg/minecraft-bedrock-server:$$cap_version
+        image: itzg/minecraft-bedrock-server:$$cap_app_version
         restart: always
         volumes:
             - $$cap_appname-data:/data
@@ -31,7 +31,7 @@ caproverOneClickApp:
         - label: Docker Image Version
           description: Choose a Tag from https://hub.docker.com/r/itzg/minecraft-bedrock-server/tags
           defaultValue: '2022.1.0'
-          id: $$cap_version
+          id: $$cap_app_version
         - label: Bedrock Server Version
           description: Can be set to a specific server version or the following special values can be used, check https://github.com/itzg/docker-minecraft-bedrock-server#container-specific
           defaultValue: LATEST

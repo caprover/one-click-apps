@@ -2,7 +2,7 @@ captainVersion: 4
 services:
     # Shiori
     $$cap_appname:
-        image: ghcr.io/go-shiori/shiori:$$cap_shiori_version
+        image: ghcr.io/go-shiori/shiori:$$cap_app_version
         environment:
             SHIORI_DBMS: mysql
             SHIORI_MYSQL_USER: $$cap_mariadb-user
@@ -28,7 +28,7 @@ services:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
-        - id: $$cap_shiori_version
+        - id: $$cap_app_version
           label: Shiori Version Tag
           description: Check out their Docker page for the valid tags https://github.com/go-shiori/shiori/pkgs/container/shiori/versions?filters%5Bversion_type%5D=tagged
           defaultValue: 'v1.5.5'

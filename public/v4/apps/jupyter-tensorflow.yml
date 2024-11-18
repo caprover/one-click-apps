@@ -10,13 +10,17 @@ services:
         caproverExtra:
             containerHttpPort: '8888'
             dockerfileLines:
-                - FROM jupyter/tensorflow-notebook:36d857bb0121
+                - FROM jupyter/tensorflow-notebook:$$cap_app_version
                 - RUN pip install lxml
                 - RUN jupyter notebook --generate-config -y
                 - RUN echo 'c.NotebookApp.token = "$$cap_jupyter_default_token"' >> /home/jovyan/.jupyter/jupyter_notebook_config.py
                 - EXPOSE 8888
 caproverOneClickApp:
     variables:
+        - id: $$cap_app_version
+          label: Jupyter Notebook Version
+          defaultValue: 36d857bb0121
+          description: The version of Jupyter Notebook to use. You can find the available versions at https://hub.docker.com/r/jupyter/tensorflow-notebook/tags
         - id: $$cap_jupyter_default_token
           label: Jupyter default token
           description: The default login token allows you to set a password within the application. For better experience leave empty and enable basic auth within the CaprRover dashboard.

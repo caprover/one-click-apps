@@ -14,7 +14,7 @@ services:
             notExposeAsWebApp: true
 
     $$cap_appname:
-        image: flagsmith/flagsmith:$$cap_flagsmith_tag
+        image: flagsmith/flagsmith:$$cap_app_version
         depends_on:
             - $$cap_appname-db
         restart: unless-stopped
@@ -36,7 +36,7 @@ caproverOneClickApp:
           label: Postgres Password
           defaultValue: $$cap_gen_random_hex(16)
           validRegex: /^(?=.*\d).{10,}$/
-        - id: $$cap_flagsmith_tag
+        - id: $$cap_app_version
           label: Flagsmith Version
           defaultValue: '2.14.3'
           description: Check out our docker page for the valid tags https://hub.docker.com/r/flagsmith/flagsmith/tags

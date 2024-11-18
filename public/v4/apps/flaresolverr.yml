@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: ghcr.io/flaresolverr/flaresolverr:$$cap_flaresolverr_version
+        image: ghcr.io/flaresolverr/flaresolverr:$$cap_app_version
         restart: unless-stopped
         environment:
             LOG_LEVEL: $$cap_log_level
@@ -18,7 +18,7 @@ services:
             containerHttpPort: '8191'
 caproverOneClickApp:
     variables:
-        - id: $$cap_flaresolverr_version
+        - id: $$cap_app_version
           label: FlareSolverr Version
           defaultValue: v3.3.21
           description: Specify the version of FlareSolverr to use. Check out their Docker page for other valid tags https://github.com/FlareSolverr/FlareSolverr/pkgs/container/flaresolverr

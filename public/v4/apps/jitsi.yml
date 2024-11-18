@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname-web:
-        image: jitsi/web:$$cap_tag_version
+        image: jitsi/web:$$cap_app_version
         restart: unless-stopped
         ports:
             - $$cap_https_port:443
@@ -50,7 +50,7 @@ services:
             JIBRI_STRIP_DOMAIN_JID: muc
             JIBRI_LOGS_DIR: /config/logs
     $$cap_appname-prosody:
-        image: jitsi/prosody:$$cap_tag_version
+        image: jitsi/prosody:$$cap_app_version
         restart: unless-stopped
         expose:
             - '5222'
@@ -101,7 +101,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname-jicofo:
-        image: jitsi/jicofo:$$cap_tag_version
+        image: jitsi/jicofo:$$cap_app_version
         restart: unless-stopped
         volumes:
             - $$cap_appname-jicofo:/config
@@ -150,7 +150,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname-jvb:
-        image: jitsi/jvb:$$cap_tag_version
+        image: jitsi/jvb:$$cap_app_version
         restart: unless-stopped
         ports:
             - $$cap_jvb_udp:$$cap_jvb_udp
@@ -206,7 +206,7 @@ caproverOneClickApp:
         - label: Docker tag version
           description: 'You can check the version in Docker Hub: https://hub.docker.com/r/jitsi/web/tags'
           defaultValue: '4416'
-          id: $$cap_tag_version
+          id: $$cap_app_version
         - label: HTTP Port
           description: This is the HTTP port to access Jitsi
           defaultValue: '8000'

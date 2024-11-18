@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname-agent:
-        image: drone/drone-runner-docker:$$cap_drone_runner_version
+        image: drone/drone-runner-docker:$$cap_app_version
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
         restart: always
@@ -36,7 +36,7 @@ caproverOneClickApp:
           defaultValue: 1.9.0
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/drone/drone/tags
           validRegex: ''
-        - id: $$cap_drone_runner_version
+        - id: $$cap_app_version
           label: Drone Docker runner Version
           defaultValue: 1.5.1
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/drone/drone-runner-docker/tags

@@ -18,7 +18,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: true
     $$cap_appname:
-        image: 'seafileltd/seafile-mc:$$cap_seafile_version'
+        image: 'seafileltd/seafile-mc:$$cap_app_version'
         volumes:
             - '$$cap_appname-seafile-data:/shared'
         environment:
@@ -37,7 +37,7 @@ services:
             - seafile-net
 caproverOneClickApp:
     variables:
-        - id: $$cap_seafile_version
+        - id: $$cap_app_version
           label: Seafile Version
           defaultValue: 8.0.7
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/seafileltd/seafile-mc/tags

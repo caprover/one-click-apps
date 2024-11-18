@@ -2,7 +2,7 @@ captainVersion: 4
 services:
     #affine:
     $$cap_appname:
-        image: ghcr.io/toeverything/affine-graphql:$$cap_affine_version
+        image: ghcr.io/toeverything/affine-graphql:$$cap_app_version
         command:
             [
                 'sh',
@@ -81,7 +81,7 @@ caproverOneClickApp:
     variables:
         - defaultValue: stable-4b9e2ab
           description: Check out their Docker page for the valid tags https://github.com/toeverything/AFFiNE/pkgs/container/affine-graphql
-          id: $$cap_affine_version
+          id: $$cap_app_version
           label: Affine version
           validRegex: /^([^\s^\/])+$/
 

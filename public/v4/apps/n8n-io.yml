@@ -14,7 +14,7 @@ services:
         caproverExtra:
             containerHttpPort: 5678
             websocketSupport: 'true'
-        image: n8nio/n8n:$$cap_N8N_VERSION
+        image: n8nio/n8n:$$cap_app_version
         environment:
             DB_TYPE: postgresdb
             DB_POSTGRESDB_HOST: srv-captain--$$cap_appname-db
@@ -54,7 +54,7 @@ caproverOneClickApp:
             You can access it at `http://$$cap_appname.$$cap_root_domain` and set up your account.
             **Important:** Please enable **HTTPS** and **WebSocket Support**.
     variables:
-        - id: $$cap_N8N_VERSION
+        - id: $$cap_app_version
           label: Application | n8n.io
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/n8nio/n8n/tags
           defaultValue: '0.198.2'

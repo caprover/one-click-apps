@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: linuxserver/filezilla:$$cap_fz_version
+        image: linuxserver/filezilla:$$cap_app_version
         environment:
             TZ: $$cap_tz
             PUID: '1000'
@@ -13,7 +13,7 @@ services:
             containerHttpPort: '3000'
 caproverOneClickApp:
     variables:
-        - id: $$cap_fz_version
+        - id: $$cap_app_version
           label: Filezilla Version
           defaultValue: 3.51.0-r1-ls6
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/filezilla/tags

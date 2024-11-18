@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: matrixconduit/matrix-conduit:$$cap_conduit_version
+        image: matrixconduit/matrix-conduit:$$cap_app_version
         restart: unless-stopped
         environment:
             CONDUIT_SERVER_NAME: '$$cap_conduit_server_name'
@@ -19,7 +19,7 @@ services:
 
 caproverOneClickApp:
     variables:
-        - id: '$$cap_conduit_version'
+        - id: '$$cap_app_version'
           label: Conduit Version
           defaultValue: 'v0.6.0'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/matrixconduit/matrix-conduit/tags

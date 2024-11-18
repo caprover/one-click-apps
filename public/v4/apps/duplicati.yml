@@ -2,7 +2,7 @@ captainVersion: 4
 services:
     # Duplicati
     $$cap_appname:
-        image: linuxserver/duplicati:$$cap_duplicati_version
+        image: linuxserver/duplicati:$$cap_app_version
         environment:
             TZ: $$cap_tz
             PUID: $$cap_puid
@@ -20,7 +20,7 @@ caproverOneClickApp:
           label: Timezone
           description: Specify a timezone to use EG Europe/London, find yours at https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
           defaultValue: Europe/Brussels
-        - id: $$cap_duplicati_version
+        - id: $$cap_app_version
           label: Version Tag
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/duplicati/tags
           defaultValue: 'version-v2.0.7.1-2.0.7.1_beta_2023-05-25'
