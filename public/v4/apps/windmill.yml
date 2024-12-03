@@ -12,7 +12,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
 
-    $$cap_appname-server:
+    $$cap_appname:
         image: ghcr.io/windmill-labs/windmill:$$cap_app_version
         expose:
             - 8000
