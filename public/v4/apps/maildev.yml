@@ -11,14 +11,15 @@ services:
             MAILDEV_SMTP_PORT: $$cap_maildev_smtp_port
             MAILDEV_MAIL_DIRECTORY: /data
             MAILDEV_WEB_USER: $$cap_maildev_web_user
-            MAILDEV_WEB_PASS:
+            MAILDEV_WEB_PASS: $$cap_maildev_web_pass
+            MAILDEV_IP: '::'
         caproverExtra:
             containerHttpPort: '1080'
 caproverOneClickApp:
     variables:
         - id: $$cap_maildev_version
           label: MailDev Version
-          defaultValue: 2.0.5
+          defaultValue: 2.1.0
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/maildev/maildev/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_maildev_smtp_port
@@ -32,7 +33,7 @@ caproverOneClickApp:
           description: Maildev HTTP user for GUI.
         - id: $$cap_maildev_web_pass
           label: Web Pass
-          defaultValue: $$cap_gen_random_hex(4)
+          defaultValue: $$cap_gen_random_hex(8)
           description: HTTP password for GUI.
     instructions:
         start: >-
