@@ -1,0 +1,134 @@
+captainVersion: 4
+services:
+  $$cap_appname:
+    image: langflowai/langflow:$$cap_langflow_version
+    volumes:
+      - $$cap_appname-data:/data/langflow
+    restart: always
+    environment:
+      LANGFLOW_SUPERUSER: $$cap_langflow_superuser
+      LANGFLOW_SUPERUSER_PASSWORD: $$cap_langflow_superuser_password
+      LANGFLOW_SECRET_KEY: $$cap_langflow_secret_key
+      LANGFLOW_DATABASE_URL: $$cap_langflow_database_url
+      LANGFLOW_SAVE_DB_IN_CONFIG_DIR: true
+      LANGFLOW_AUTO_LOGIN: $$cap_langflow_auto_login
+      LANGFLOW_BACKEND_ONLY: $$cap_langflow_backend_only
+      LANGFLOW_DEV: $$cap_langflow_dev
+      LANGFLOW_OPEN_BROWSER: $$cap_langflow_open_browser
+      LANGFLOW_HOST: 0.0.0.0
+      LANGFLOW_PORT: $$cap_langflow_port
+      LANGFLOW_AUTO_SAVING: true
+      LANGFLOW_AUTO_SAVING_INTERVAL: 1000
+      LANGFLOW_CACHE_TYPE: async
+      LANGFLOW_LOG_LEVEL: critical
+    caproverExtra:
+      containerHttpPort: $$cap_langflow_port
+caproverOneClickApp:
+  variables:
+    - id: $$cap_langflow_version
+      label: LangFlow Version
+      defaultValue: v1.1.1
+      description: Specify the LangFlow version. Check their Docker page for the latest versions https://hub.docker.com/r/langflowai/langflow/tags
+      validRegex: /^([^\s^\/])+$/
+    - id: $$cap_langflow_superuser
+      label: Superuser Username
+      defaultValue: admin
+      description: Username for logging into LangFlow. You can edit this field if needed.
+      validRegex: /.{1,}/
+    - id: $$cap_langflow_superuser_password
+      label: Superuser Password
+      defaultValue: $$cap_gen_random_hex(16)
+      description: Password for the superuser. Edit this if needed.
+      validRegex: /.{1,}/
+    - id: $$cap_langflow_secret_key
+      label: Secret Key
+      defaultValue: $$cap_gen_random_hex(32)
+      description: Secret key used to encrypt sensitive data.
+      validRegex: /.{32,}/
+    - id: $$cap_langflow_port
+      label: LangFlow Port
+      defaultValue: 7860
+      description: Port on which the LangFlow server will run.
+      validRegex: /^\d+$/
+    - id: $$cap_langflow_database_url
+      label: PostgreSQL Database URL
+      defaultValue: postgresql://postgres:password@srv-captain--postgresdb:5432/langflow
+      description: >
+        The connection string for your PostgreSQL database. If you don’t have PostgreSQL installed, 
+        go to the CapRover One-Click App Store, search for PostgreSQL, and install it (tested with vesion 17.0-bookworm) 
+        During Caprover setup, change the database name from `postgres` to `langflow`. 
+        Remember to use the username and password you specify during setup and update this field accordingly with the details.
+      validRegex: /^postgresql:\/\/[^:]+:[^@]+@[^:]+:\d+\/[^\/]+$/
+    - id: $$cap_langflow_auto_login
+      label: Auto Login
+      defaultValue: false
+      description: Disable automatic login and require the login form to log into the LangFlow UI.
+      validRegex: /^(true|false)$/
+    - id: $$cap_langflow_backend_only
+      label: Backend Only
+      defaultValue: false
+      description: Run only the LangFlow backend server, without the frontend.
+      validRegex: /^(true|false)$/
+    - id: $$cap_langflow_dev
+      label: Development Mode
+      defaultValue: false
+      description: Run LangFlow in development mode.
+      validRegex: /^(true|false)$/
+    - id: $$cap_langflow_open_browser
+      label: Open Browser
+      defaultValue: false
+      description: Open the system web browser on startup.
+      validRegex: /^(true|false)$/
+    - id: $$cap_langflow_cache_type
+      label: Cache Type (Optional)
+      defaultValue: async
+      description: Cache type for LangFlow. Options async (default), redis, memory, disk.
+      validRegex: /^(async|redis|memory|disk)?$/
+    - id: $$cap_langflow_redis_host
+      label: Redis Host (Optional)
+      defaultValue: ""
+      description: Required if cache type is set to redis.
+      validRegex: /^.*$/
+    - id: $$cap_langflow_redis_port
+      label: Redis Port (Optional)
+      defaultValue: 6379
+      description: Required if cache type is set to redis.
+      validRegex: /^\d*$/
+    - id: $$cap_langflow_redis_db
+      label: Redis Database Index (Optional)
+      defaultValue: 0
+      description: Redis database index. Required if cache type is set to redis.
+      validRegex: /^\d*$/
+    - id: $$cap_langflow_redis_cache_expire
+      label: Redis Cache Expiry (Optional)
+      defaultValue: 3600
+      description: Cache expiry time in seconds for Redis.
+      validRegex: /^\d*$/
+    - id: $$cap_langflow_prometheus_enabled
+      label: Enable Prometheus Metrics (Optional)
+      defaultValue: false
+      description: Enable Prometheus metrics.
+      validRegex: /^(true|false)?$/
+    - id: $$cap_langflow_prometheus_port
+      label: Prometheus Port (Optional)
+      defaultValue: 9090
+      description: Port for Prometheus metrics.
+      validRegex: /^\d*$/
+  instructions:
+    start: >
+      LangFlow is a UI for creating workflows with LLMs. This One-Click App requires a superuser 
+      username and password for login, ensuring security. The secret key is auto-generated for securing 
+      sensitive data. Ensure you have PostgreSQL installed and configured. If not, you can install PostgreSQL 
+      using the CapRover One-Click App Store and configure it by setting the database name to `langflow` and 
+      using your own username and password.
+
+      Remember to update the PostgreSQL connection string to match your setup.
+    end: >
+      LangFlow is deployed and available at `$$cap_appname`. It might take a few
+      minutes for the service to initialize.
+
+      For further documentation, visit: https://docs.langflow.org
+  displayName: LangFlow
+  isOfficial: false
+  description: Visual playground for creating LLM applications
+  documentation: https://docs.langflow.org
