@@ -1,0 +1,45 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: public.ecr.aws/zinclabs/openobserve:$$cap_version
+        volumes:
+            - $$cap_appname-data:/data
+        environment:
+            ZO_DATA_DIR: /data
+            ZO_ROOT_USER_EMAIL: $$cap_zo_email
+            ZO_ROOT_USER_PASSWORD: $$cap_zo_password
+        ports:
+            - $$cap_port:5080
+        caproverExtra:
+            containerHttpPort: '5080'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_version
+          label: OpenObserve Version
+          defaultValue: v0.14.0
+          description: Version of OpenObserve to deploy
+          validRegex: /^[a-zA-Z0-9.-]+$/
+        - id: $$cap_zo_email
+          label: OpenObserve Root User Email
+          defaultValue: root@example.com
+          description: Email address for the root user
+          validRegex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+        - id: $$cap_zo_password
+          label: OpenObserve Root User Password
+          defaultValue: Complexpass#123
+          description: Password for the root user. Must be complex enough
+          validRegex: /^.{8,}$/
+        - id: $$cap_port
+          label: OpenObserve Port
+          defaultValue: 5080
+          description: The port to access OpenObserve
+          validRegex: /^[0-9]+$/
+    instructions:
+        start: >-
+            OpenObserve is a cloud native observability platform built specifically for logs, metrics, traces and analytics.
+        end: >-
+            OpenObserve has been successfully deployed! You can access it via the specified port.
+    displayName: OpenObserve
+    isOfficial: false
+    description: OpenObserve is a cloud native observability platform
+    documentation: https://openobserve.ai/docs
