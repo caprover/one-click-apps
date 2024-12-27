@@ -1,0 +1,55 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: rustdesk/rustdesk-server:$$cap_rustdesk_version
+        ports:
+            - 21117:21117
+            - 21119:21119
+        volumes:
+            - $$cap_appname-data:/root
+        command: hbbr
+        restart: always
+        environment:
+          DATABASE_URL: $$cap_database_url
+        caproverExtra:
+          notExposeAsWebApp: 'true'
+    $$cap_appname-signal:
+        image: rustdesk/rustdesk-server:$$cap_rustdesk_version
+        depends_on:
+            - $$cap_appname
+        ports:
+            - 21115:21115
+            - 21116:21116
+            - 21118:21118
+        volumes:
+            - $$cap_appname-signal-data:/root
+        command: hbbs -r $$cap_appname.$$cap_root_domain:21117
+        restart: always
+        environment:
+            DATABASE_URL: $$cap_database_url
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_rustdesk_version
+          label: RustDesk Version
+          defaultValue: '1.1.12'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/rustdesk/rustdesk-server/tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_database_url
+          label: Database URL
+          defaultValue: 'sqlite://./db_v2.sqlite3'
+          description: As defined by the Docker Compose specification, changing this is not advised.
+    instructions:
+        start: >-
+          RustDesk is a full-featured open source remote control alternative for self-hosting and security with minimal configuration.
+
+          This template installs the RustDesk signal and rendevous servers to provide E2EE connectivity between clients.
+        end: >-
+          Please wait for 2 minutes. RustDesk is deployed and available as $$cap_appname-rustdesk
+
+          Be sure to enable WebSockets. You can find the public key in the App Logs, or via `/var/lib/docker/volumes/$$cap_appname-signal-data/_data/id25519.pub`
+    displayName: RustDesk Server
+    isOfficial: true
+    description: RustDesk is a full-featured open source remote control alternative for self-hosting and security with minimal configuration.
+    documentation: Taken from https://rustdesk.com/docs/en/
