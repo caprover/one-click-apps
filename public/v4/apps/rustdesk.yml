@@ -10,9 +10,9 @@ services:
         command: hbbr
         restart: always
         environment:
-          DATABASE_URL: $$cap_database_url
+            DATABASE_URL: $$cap_database_url
         caproverExtra:
-          notExposeAsWebApp: 'true'
+            notExposeAsWebApp: 'true'
     $$cap_appname-signal:
         image: rustdesk/rustdesk-server:$$cap_rustdesk_version
         depends_on:
@@ -42,13 +42,13 @@ caproverOneClickApp:
           description: As defined by the Docker Compose specification, changing this is not advised.
     instructions:
         start: >-
-          RustDesk is a full-featured open source remote control alternative for self-hosting and security with minimal configuration.
+            RustDesk is a full-featured open source remote control alternative for self-hosting and security with minimal configuration.
 
-          This template installs the RustDesk signal and rendevous servers to provide E2EE connectivity between clients.
+            This template installs the RustDesk signal and rendezvous servers to provide private E2EE connectivity between clients.
         end: >-
-          Please wait for 2 minutes. RustDesk is deployed and available as $$cap_appname-rustdesk
+            Please wait for 2 minutes. RustDesk is deployed and available as $$cap_appname-rustdesk
 
-          Be sure to enable WebSockets. You can find the public key in the App Logs, or via `/var/lib/docker/volumes/$$cap_appname-signal-data/_data/id25519.pub`
+            Be sure to enable WebSockets. You can find the public key in the App Logs, or via `/var/lib/docker/volumes/$$cap_appname-signal-data/_data/id25519.pub`
     displayName: RustDesk Server
     isOfficial: true
     description: RustDesk is a full-featured open source remote control alternative for self-hosting and security with minimal configuration.
