@@ -48,7 +48,7 @@ caproverOneClickApp:
         end: >-
             Please wait for 2 minutes. RustDesk is deployed and will be available at $$cap_appname.$$cap_root_domain:21117
 
-            Be sure to open ports `21115/tcp`-`21119/tcp`, and `21117/udp` in your firewall. You can find the public key in the App Logs, or via `/var/lib/docker/volumes/$$cap_appname-signal-data/_data/id25519.pub`
+            Be sure to open ports `21115/tcp`-`21119/tcp`, and `21116/udp` in your firewall. You can find the public key in the App Logs, or via `/var/lib/docker/volumes/$$cap_appname-signal-data/_data/id25519.pub`
     displayName: RustDesk Server
     isOfficial: true
     description: RustDesk is a full-featured open source remote control alternative for self-hosting and security with minimal configuration.
