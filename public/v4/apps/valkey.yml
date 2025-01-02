@@ -13,7 +13,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_valkey_version
           label: Valkey Version Tag
-          description: 'Check out their Docker page for the valid tags: https://hub.docker.com/valkey/valkey?tab=tags'
+          description: 'Check out their Docker page for the valid tags: https://hub.docker.com/r/valkey/valkey/tags'
           defaultValue: '8.0.1-alpine'
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_valkey_extra_flags
@@ -32,4 +32,4 @@ caproverOneClickApp:
     displayName: 'Valkey'
     isOfficial: true
     description: Valkey is a flexible distributed key-value datastore that supports both caching and beyond caching workloads.
-    documentation: Taken from https://hub.docker.com/valkey/valkey
+    documentation: Taken from https://hub.docker.com/r/valkey/valkey
