@@ -29,7 +29,7 @@ services:
         environment:
             NODE_OPTIONS: '--import=./scripts/register.js'
             AFFINE_CONFIG_PATH: /root/.affine/config
-            REDIS_SERVER_HOST: srv-captain--$$cap_appname_data-redis
+            REDIS_SERVER_HOST: srv-captain--$$cap_appname-redis
             DATABASE_URL: postgres://affine:$$cap_db_affine_password@srv-captain--$$cap_appname-postgres:5432/affine
             NODE_ENV: production
             AFFINE_ADMIN_EMAIL: $$cap_affine_admin_email
