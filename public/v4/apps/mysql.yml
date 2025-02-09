@@ -13,7 +13,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_mysql_version
           label: MySQL Version
-          defaultValue: '5.7'
+          defaultValue: '8.4.3'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/mysql/tags/
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_db_pass
