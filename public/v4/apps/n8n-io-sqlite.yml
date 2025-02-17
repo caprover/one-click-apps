@@ -40,7 +40,7 @@ caproverOneClickApp:
         - id: $$cap_N8N_VERSION
           label: Application | n8n.io
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/n8nio/n8n/tags
-          defaultValue: '1.18.0'
+          defaultValue: '1.77.0'
           validRegex: /.{1,}/
         - id: $$cap_N8N_TIMEZONE
           label: Application | Timezone
