@@ -18,7 +18,7 @@ caproverOneClickApp:
           validRegex: '/.{1,}/'
     instructions:
         start: |-
-            Open source home automation that puts local control and privacy first. Powered by a worldwide community of tinkerers and DIY enthusiasts. Perfect to run on a Raspberry Pi or a local server.
+            Open source home automation that puts local control and privacy first. Powered by a worldwide community of tinkerers and DIY enthusiasts. Perfect to run on a Raspberry Pi or a local server. Note that HomeAssistant works best as a standalone app. The Docker Container installation method has some limitations. See https://www.home-assistant.io/installation/#advanced-installation-methods
         end: |-
             Done!
 
