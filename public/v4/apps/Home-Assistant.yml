@@ -21,7 +21,7 @@ caproverOneClickApp:
             Open source home automation that puts local control and privacy first. Powered by a worldwide community of tinkerers and DIY enthusiasts. Perfect to run on a Raspberry Pi or a local server.
         end: |-
             Done!
-            
+
             To work properly with reverse proxies edit:
             `nano /var/lib/docker/volumes/captain--$$cap_appname-config/_data/configuration.yaml`
             Add:
