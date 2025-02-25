@@ -6,10 +6,9 @@ services:
         restart: always
         environment:
             REDIS_PASSWORD: $$cap_redis_password
+        image: redis:$$cap_redis_version
+        command: ['sh', '-c', 'redis-server --requirepass $REDIS_PASSWORD']
         caproverExtra:
-            dockerfileLines:
-                - FROM redis:$$cap_redis_version
-                - CMD exec redis-server --requirepass "$REDIS_PASSWORD"
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
