@@ -6,13 +6,9 @@ services:
             - $$cap_appname-files:/srv
         restart: always
         environment: {}
-        caproverExtra:
-            dockerfileLines:
-                - FROM alpine:latest as helper
-                - '# Similar to the original file, except, /database.db is inside a directory now so that we can assign a volume to it.'
-                - RUN echo "{'port':80,'baseURL':'','address':'','log':'stdout','database':'/database/database.db','root':'/srv'}" | sed "s/\'/\"/g" >/.edited.json
-                - FROM filebrowser/filebrowser:$$cap_filebrowser_version
-                - COPY --from=helper /.edited.json /.filebrowser.json
+        # Point filebrowser to our volume mounts for database and files root:
+        command: ['/filebrowser', '-d', '/database/database.db', '-r', '/srv']
+        image: filebrowser/filebrowser:$$cap_filebrowser_version
 caproverOneClickApp:
     variables:
         - id: $$cap_filebrowser_version
