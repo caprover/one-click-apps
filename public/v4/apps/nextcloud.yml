@@ -50,16 +50,15 @@ services:
         restart: always
         volumes:
             - $$cap_appname-data:/var/www/html
+        image: nextcloud:$$cap_nextcloud_version
+        command: ['sh', '-c', '/cron.sh']
         caproverExtra:
-            dockerfileLines:
-                - FROM nextcloud:$$cap_nextcloud_version
-                - 'ENTRYPOINT [ "/cron.sh" ] '
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
         - id: $$cap_nextcloud_version
           label: Nextcloud Version
-          defaultValue: 28.0.6
+          defaultValue: 29.0.12
           description: >-
               Check out their Docker page for the valid tags https://hub.docker.com/_/nextcloud?tab=tags
 
@@ -68,12 +67,12 @@ caproverOneClickApp:
           validRegex: /^((?!fpm)\S)+$/
         - id: $$cap_redis_version
           label: Redis Version
-          defaultValue: 6.2.14
+          defaultValue: 7.2.7
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/redis?tab=tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_mariadb_version
           label: MariaDB (database) version
-          defaultValue: 10.6.18
+          defaultValue: 10.11.11
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/mariadb?tab=tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_db_user
