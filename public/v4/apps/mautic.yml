@@ -21,18 +21,56 @@ services:
             - $$cap_appname-config:/var/www/html/config
             - $$cap_appname-logs:/var/www/html/var/logs
             - $$cap_appname-media:/var/www/html/docroot/media
+            - $$cap_appname-cron:/opt/mautic/cron
         restart: always
         environment:
             MAUTIC_DB_HOST: srv-captain--$$cap_appname-db
             MYSQL_DB_PORT: '3306'
+            MAUTIC_DB_DATABASE: mautic
             MAUTIC_DB_USER: $$cap_db_user
             MAUTIC_DB_PASSWORD: $$cap_db_pass
-            MAUTIC_DB_NAME: mautic
-            MAUTIC_RUN_CRON_JOBS: 'true'
             APACHE_SERVER_NAME: $$cap_apache_server_name
         caproverExtra:
             enableHttp: true
             containerHttpPort: '80'
+    $$cap_appname-cron:
+        depends_on:
+            - $$cap_appname
+        image: mautic/mautic:$$cap_mautic_version
+        volumes:
+            - $$cap_appname-config:/var/www/html/config
+            - $$cap_appname-logs:/var/www/html/var/logs
+            - $$cap_appname-media:/var/www/html/docroot/media
+            - $$cap_appname-cron:/opt/mautic/cron
+        restart: always
+        environment:
+            MAUTIC_DB_HOST: srv-captain--$$cap_appname-db
+            MYSQL_DB_PORT: '3306'
+            MAUTIC_DB_DATABASE: mautic
+            MAUTIC_DB_USER: $$cap_db_user
+            MAUTIC_DB_PASSWORD: $$cap_db_pass
+            DOCKER_MAUTIC_ROLE: mautic_cron
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname-worker:
+        depends_on:
+            - $$cap_appname
+        image: mautic/mautic:$$cap_mautic_version
+        volumes:
+            - $$cap_appname-config:/var/www/html/config
+            - $$cap_appname-logs:/var/www/html/var/logs
+            - $$cap_appname-media:/var/www/html/docroot/media
+            - $$cap_appname-cron:/opt/mautic/cron
+        restart: always
+        environment:
+            MAUTIC_DB_HOST: srv-captain--$$cap_appname-db
+            MYSQL_DB_PORT: '3306'
+            MAUTIC_DB_DATABASE: mautic
+            MAUTIC_DB_USER: $$cap_db_user
+            MAUTIC_DB_PASSWORD: $$cap_db_pass
+            DOCKER_MAUTIC_ROLE: mautic_worker
+        caproverExtra:
+            notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
         - id: $$cap_db_user
