@@ -62,6 +62,7 @@ caproverOneClickApp:
             Leave every default value as is for a working and simple installation. You can specify the (full) path to the directory you want to save your media at. The directory must exist beforehand. Immich can be used from a browser but kind of requires you to install the Immich app on your phone. If you have big media files (bigger than 500MB) that you want to backup, update your Nginx configuration file in caprover to increase your `client_max_body_size`.
         end: |-
             On your first visit it will ask for email and password to set up the admin user. Remember to change the default Nginx configuration and increasing the 'client_max_body_size' value if you expect to backup files bigger than 500MB. They will fail to upload if you don't.
+            Some upgrades take more and to preempt a restart go to **App Configs** and paste the following snippet into **Service Update Override**: `{ "TaskTemplate": { "RestartPolicy": { "Condition": "none", "MaxAttempts": "0" } } }`
     variables:
         - label: Immich version
           id: $$cap_version
