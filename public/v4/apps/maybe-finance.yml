@@ -27,15 +27,6 @@ services:
             POSTGRES_USER: maybe_user
             POSTGRES_DB: maybe_production
             POSTGRES_PASSWORD: $$cap_pg_pass
-        healthcheck:
-            test:
-                [
-                    'CMD-SHELL',
-                    'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}',
-                ]
-            interval: 5s
-            timeout: 5s
-            retries: 5
         caproverExtra:
             notExposeAsWebApp: true
 caproverOneClickApp:
