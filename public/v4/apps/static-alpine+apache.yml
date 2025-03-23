@@ -1,0 +1,35 @@
+captainVersion: 4
+services:
+    $$cap_appname-static:
+        restart: always
+        volumes:
+            - $$cap_appname-data:/var/www/localhost/htdocs
+        caproverExtra:
+            notExposeAsWebApp: false
+            containerHttpPort: 80
+            dockerfileLines:
+                - FROM alpine:$$cap_alpine_version
+                - RUN apk add --no-cache apache2
+                - RUN mkdir -p /var/www/localhost/htdocs
+                - RUN echo '#!/bin/sh' > /entrypoint.sh
+                - RUN echo '[ -f /var/www/localhost/htdocs/index.html ] || echo \"<h1>Welcome to Your Static Site</h1>\" > /var/www/localhost/htdocs/index.html' >> /entrypoint.sh
+                - RUN echo 'httpd -D FOREGROUND' >> /entrypoint.sh
+                - RUN chmod +x /entrypoint.sh
+                - ENTRYPOINT ["/entrypoint.sh"]
+caproverOneClickApp:
+    variables:
+        - id: $$cap_alpine_version
+          label: Alpine Linux Version
+          description: Choose an Alpine Linux version. See https://hub.docker.com/_/alpine for available tags.
+          defaultValue: 3.21.3
+    instructions:
+        start: |-
+            This deploys an Nginx server on Alpine Linux for static site hosting.
+            Your files will be stored persistently in a volume.
+        end: |-
+            Your static site is now deployed!
+            Upload your website files to the persistent volume: $$cap_appname-data.
+    displayName: Static Website (Apache + Alpine)
+    isOfficial: false
+    description: A simple static website hosting solution using Alpine Linux and Apache.
+    documentation: Read official Apache docs at https://httpd.apache.org/docs/
