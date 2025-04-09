@@ -59,6 +59,7 @@ caproverOneClickApp:
           validRegex: '/.{1,}/'
         - id: '$$cap_SUPERUSER_PASSWORD'
           label: Bugsink Admin Password
+          defaultValue: $$cap_gen_random_hex(16)
           description: The password for the Bugsink admin user.
           validRegex: '/.{1,}/'
         
