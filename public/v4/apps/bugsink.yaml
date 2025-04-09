@@ -70,10 +70,12 @@ caproverOneClickApp:
             * Scalable and reliable
             Documentation: https://www.bugsink.com/docs/
         end: |-
-            Bugsink instance successfully deployed. Visit https://$$cap_appname.$$cap_root_domain/ to access your Bugsink instance.
-            Log in with admin/SUPERUSER_PASSWORD.
+            Bugsink instance successfully deployed.
+            You MUST enable HTTPS to use this app.
+            Then, visit https://$$cap_appname.$$cap_root_domain/ to access your Bugsink instance.
+            Log in with admin and the chosen SUPERUSER_PASSWORD.
             Post-install Quickstart: https://www.bugsink.com/docs/quickstart/
     displayName: Bugsink
     isOfficial: true
-    description: A relatively short description, less than 200 characters.
+    description: Bugsink is a self-hosted error tracker. Full control over your data. Compatible with Sentry SDKs, easy to set up, scalable & reliable
     documentation: This docker-compose is taken from https://github.com/bugsink/bugsink/blob/main/compose-sample.yaml
