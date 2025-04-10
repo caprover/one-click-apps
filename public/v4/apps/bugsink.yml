@@ -9,7 +9,11 @@ services:
         volumes:
             - $$cap_appname-mysql-data:/var/lib/mysql
         healthcheck:
-            test: ["CMD-SHELL", "exit | mysql -h localhost -P 3306 -u root -p$$MYSQL_ROOT_PASSWORD" ]
+            test:
+                [
+                    'CMD-SHELL',
+                    'exit | mysql -h localhost -P 3306 -u root -p$$MYSQL_ROOT_PASSWORD',
+                ]
             interval: 1s
             timeout: 20s
             retries: 30
@@ -21,16 +25,20 @@ services:
                 condition: service_healthy
         restart: unless-stopped
         ports:
-            - "8000:8000"
+            - '8000:8000'
         environment:
             SECRET_KEY: $$cap_gen_random_hex(50)
             CREATE_SUPERUSER: admin:$$cap_SUPERUSER_PASSWORD
             PORT: 8000
             DATABASE_URL: mysql://root:$$cap_MYSQL_PASSWORD@srv-captain--$$cap_appname-mysql:3306/bugsink
             BASE_URL: https://$$cap_appname.$$cap_root_domain/
-            BEHIND_HTTPS_PROXY: "true"
+            BEHIND_HTTPS_PROXY: 'true'
         healthcheck:
-            test: ["CMD-SHELL", "python -c 'import requests; requests.get(\"http://localhost:8000/\").raise_for_status()'"]
+            test:
+                [
+                    'CMD-SHELL',
+                    'python -c ''import requests; requests.get("http://localhost:8000/").raise_for_status()''',
+                ]
             interval: 5s
             timeout: 20s
             retries: 10
@@ -62,7 +70,7 @@ caproverOneClickApp:
           defaultValue: $$cap_gen_random_hex(16)
           description: The password for the Bugsink admin user.
           validRegex: '/.{1,}/'
-        
+
     instructions:
         start: |-
             Bugsink offers Error Tracking for your applications with full control through self-hosting: 
