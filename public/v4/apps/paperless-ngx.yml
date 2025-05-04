@@ -116,9 +116,9 @@ services:
         image: gotenberg/gotenberg:$$cap_gotenberg_version
         restart: unless-stopped
         command:
-            - "gotenberg"
-            - "--chromium-disable-javascript=true"
-            - "--chromium-allow-list=file:///tmp/.*"
+            - 'gotenberg'
+            - '--chromium-disable-javascript=true'
+            - '--chromium-allow-list=file:///tmp/.*'
         caproverExtra:
             containerHttpPort: '3000'
 
@@ -278,7 +278,7 @@ caproverOneClickApp:
           label: OCR Pages Count
           defaultValue: '0'
           validRegex: /^\d+$/
-          description: 'Tells paperless to use only the specified amount of pages for OCR. Documents with less than the specified amount of pages get OCR''ed completely. Specifying 1 here will only use the first page. Specifying 0 disables this feature and always use all pages.'
+          description: "Tells paperless to use only the specified amount of pages for OCR. Documents with less than the specified amount of pages get OCR'ed completely. Specifying 1 here will only use the first page. Specifying 0 disables this feature and always use all pages."
 
         - id: $$cap_ocr_image_dpi
           label: OCR Image DPI
@@ -343,7 +343,7 @@ caproverOneClickApp:
 
         - id: $$cap_convert_tempdir
           label: Convert Temporary Directory
-          description: 'Set this to a path that''s on a physical disk, like /home/paperless/tmp or something. ImageMagick will use this as scratch space when crunching through very large documents.'
+          description: "Set this to a path that's on a physical disk, like /home/paperless/tmp or something. ImageMagick will use this as scratch space when crunching through very large documents."
 
         - id: $$cap_optimize_thumbnails
           label: Optimize Thumbnails
