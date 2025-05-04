@@ -121,6 +121,7 @@ services:
             - '--chromium-allow-list=file:///tmp/.*'
         caproverExtra:
             containerHttpPort: '3000'
+            notExposeAsWebApp: 'true'
 
     # tika
     $$cap_appname-tika:
@@ -128,6 +129,7 @@ services:
         restart: unless-stopped
         caproverExtra:
             containerHttpPort: '9998'
+            notExposeAsWebApp: 'true'
 
 caproverOneClickApp:
     variables:
