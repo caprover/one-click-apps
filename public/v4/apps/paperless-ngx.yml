@@ -133,7 +133,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_app_version
           label: Paperless-ngx Version
-          defaultValue: 'latest'
+          defaultValue: '2.15.3'
           description: Check out their docker page for the valid tags https://hub.docker.com/r/paperlessngx/paperless-ngx/tags
 
         - id: $$cap_postgres_version
@@ -155,7 +155,7 @@ caproverOneClickApp:
 
         - id: $$cap_tika_version
           label: Tika version
-          defaultValue: 'latest'
+          defaultValue: '3.1.0.0-full'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/apache/tika/tags
           validRegex: /^([^\s^\/])+$/
 
