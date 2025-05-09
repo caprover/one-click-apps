@@ -1,0 +1,89 @@
+﻿captainVersion: 4
+services:
+    $$cap_appname:
+        image: ghcr.io/gitroomhq/postiz-app:$$cap_POSTIZ_VERSION
+        caproverExtra:
+            containerHttpPort: 5000
+            websocketSupport: 'true'
+        environment:
+            MAIN_URL: 'https://$$cap_appname.$$cap_root_domain'
+            FRONTEND_URL: 'https://$$cap_appname.$$cap_root_domain'
+            NEXT_PUBLIC_BACKEND_URL: 'https://$$cap_appname.$$cap_root_domain/api'
+            JWT_SECRET: $$cap_JWT_SECRET
+            DATABASE_URL: 'postgresql://postiz:$$cap_POSTGRES_PASSWORD@srv-captain--$$cap_appname-postgres:5432/postiz-db'
+            REDIS_URL: 'redis://srv-captain--$$cap_appname-redis:6379'
+            BACKEND_INTERNAL_URL: 'http://localhost:3000'
+            IS_GENERAL: 'true' # Required for self-hosting.
+            DISABLE_REGISTRATION: 'false'
+            STORAGE_PROVIDER: 'local'
+            UPLOAD_DIRECTORY: '/uploads'
+            NEXT_PUBLIC_UPLOAD_DIRECTORY: '/uploads'
+        volumes:
+            - $$cap_appname-config:/config/
+            - $$cap_appname-uploads:/uploads/
+        depends_on:
+            - $$cap_appname-postgres
+            - $$cap_appname-redis
+
+    $$cap_appname-postgres:
+        image: postgres:$$cap_POSTGRES_VERSION
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+        environment:
+            POSTGRES_PASSWORD: $$cap_POSTGRES_PASSWORD
+            POSTGRES_USER: postiz
+            POSTGRES_DB: postiz-db
+        volumes:
+            - $$cap_appname-postgres-data:/var/lib/postgresql/data
+
+    $$cap_appname-redis:
+        image: redis:$$cap_REDIS_VERSION
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+        volumes:
+            - $$cap_appname-redis-data:/data
+
+caproverOneClickApp:
+    variables:
+        - id: $$cap_POSTIZ_VERSION
+          label: Postiz Version
+          defaultValue: 'v1.43.1'
+          description: The version of Postiz docker image (from https://github.com/gitroomhq/postiz-app/pkgs/container/postiz-app)
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_JWT_SECRET
+          label: JWT Secret
+          defaultValue: $$cap_gen_random_hex(64)
+          description: A random string that should be unique for every installation. This is used to secure your JWT auth tokens.
+        - id: $$cap_POSTGRES_VERSION
+          description: Postgres version (from https://hub.docker.com/_/postgres?tab=tags)
+          label: Postgres Version
+          defaultValue: 17-alpine
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_POSTGRES_PASSWORD
+          defaultValue: 'postiz'
+          description: This is the PostgreSQL password for user 'postiz'. Please change it.
+          label: Postgres Password
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_REDIS_VERSION
+          description: Redis version (from https://hub.docker.com/_/redis/tags)
+          label: Postgres Version
+          defaultValue: 8.0.0
+          validRegex: /^([^\s^\/])+$/
+    instructions:
+        start: |-
+            Postiz helps you manage all of your social media accounts.
+
+            - Schedule social media and articles
+            - Generate posts with AI
+            - Exchange or buy posts from other members on the marketplace
+        end: |-
+            Postiz is deployed and available as $$cap_appname. Some additional steps are required:
+              - If running an instance of CapRover older than 1.12, enable WebSocket support!
+              - Postiz requires HTTPS, so you will need to enable it for this app. If using HTTPS is not possible, add the following environment variable to $$cap_appname: NOT_SECURED=true.
+              - You will need to configure your providers. Visit https://docs.postiz.com/providers for more information on how to configure them.
+
+            See https://docs.postiz.com/configuration/reference for a full list of configuration options.
+    displayName: Postiz
+    isOfficial: true
+    description: Postiz helps you manage all of your social media accounts.
+    documentation: Taken from https://docs.postiz.com/installation/docker-compose.
