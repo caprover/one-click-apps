@@ -77,8 +77,6 @@ services:
             VIKUNJA_SERVICE_JWTSECRET: $$cap_JWT_SECRET_KEY
             VIKUNJA_SERVICE_TIMEZONE: $$cap_TIMEZONE
             VIKUNJA_DEFAULTSETTINGS_WEEK_START: $$cap_WEEK_START
-        ports:
-            - 3456:3456
         volumes:
             - $$cap_appname-files:/app/vikunja/files
         depends_on:
