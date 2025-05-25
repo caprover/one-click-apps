@@ -1,0 +1,38 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: onerahmet/openai-whisper-asr-webservice:$$cap_app_version
+        volumes:
+            - $$cap_appname-data:/var/lib/postgresql/data
+        restart: always
+        environment:
+            POSTGRES_USER: $$cap_pg_user
+        caproverExtra:
+            containerHttpPort: '9000'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_app_version
+          label: Version
+          defaultValue: 'v1.6.0'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/onerahmet/openai-whisper-asr-webservice/tags
+    instructions:
+        start: |-
+            Whisper ASR Webservice is a web service that provides an API for the Whisper ASR model. 
+            Enter your configuration parameters and click on next. A Whisper ASR Webservice container will be created for you. The process will take about a minute for the process to finish.
+        end: |-
+            Whisper ASR Webservice is deployed and available as `$$cap_appname`.
+            It is recommended to increase the max size of the request body in the Nginx configuration file.
+                    ```
+                    client_max_body_size 500m;
+                    proxy_read_timeout 1800;
+                    proxy_connect_timeout 1800;
+                    proxy_send_timeout 1800;
+                    send_timeout 1800;
+                    ```
+            Be careful with the max size of the request body. It can cause a DoS attack if it is too high.
+            Be careful with the timeout values. It can cause a timeout error if it is too low.
+            Be careful with the default setup your service is not secure. You should add a security layer to your service.
+    displayName: openai-whisper-asr-webservice
+    isOfficial: false
+    description: The openai-whisper-asr-webservice is a web service that provides an API for the Whisper ASR model.
+    documentation: https://hub.docker.com/r/onerahmet/openai-whisper-asr-webservice/
