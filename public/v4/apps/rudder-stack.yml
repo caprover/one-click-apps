@@ -57,7 +57,7 @@ caproverOneClickApp:
         - id: $$cap_app_version
           label: RudderStack Version
           description: See https://hub.docker.com/r/rudderlabs/rudder-server/tags for supported versions.
-          defaultValue: 'sha256-319b50277fe3c979a9c93f3f0c6cba47cb5ea356499a6e7a07591c15e601d746.sig'
+          defaultValue: '1.49.3'
 
         - id: $$cap_rudder_transformer_version
           label: RudderStack Transformer Version
