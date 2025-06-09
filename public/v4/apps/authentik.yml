@@ -41,11 +41,17 @@ services:
         image: alpine:3.19
         restart: 'no'
         command:
-            [
-                'sh',
-                '-c',
-                'chown -R 1000:1000 /media /templates /certs && chmod -R u+rwX,g+rX /media /templates /certs',
-            ]
+            - 'sh'
+            - '-c'
+            - |
+                set -e
+                echo "Setting up Authentik volume permissions..."
+                chown -R 1000:1000 /media /templates /certs
+                chmod -R u+rwX,g+rX /media /templates /certs
+                echo "Permissions configured successfully"
+
+                echo "Init container entering sleep mode"
+                sleep 100d
         user: root
         volumes:
             - $$cap_appname-media:/media
