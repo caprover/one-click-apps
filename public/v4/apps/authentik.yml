@@ -172,10 +172,19 @@ caproverOneClickApp:
             This deployment includes PostgreSQL, Redis, and the latest Authentik server with worker.
             The deployment typically takes 2-3 minutes.
         end: >-
-            Authentik has been successfully deployed! In 2-3 minutes (!) **complete initial setup** by visiting
-            [http://$$cap_appname-server.$$cap_root_domain/if/flow/initial-setup/](http://$$cap_appname-server.$$cap_root_domain/if/flow/initial-setup/)
-            This will guide you through creating your admin account and basic configuration.
-            Then access admin interface via [http://$$cap_appname-server.$$cap_root_domain/if/admin/](http://$$cap_appname-server.$$cap_root_domain/if/admin/)
+            Authentik has been successfully deployed!
+
+
+            **Next Steps:**
+
+            1. Wait 2-3 minutes for migrations to complete
+
+            2. Complete initial setup: [http://$$cap_appname-server.$$cap_root_domain/if/flow/initial-setup/](http://$$cap_appname-server.$$cap_root_domain/if/flow/initial-setup/)
+
+            3. Access admin interface: [http://$$cap_appname-server.$$cap_root_domain/if/admin/](http://$$cap_appname-server.$$cap_root_domain/if/admin/)
+
+
+            **Optional cleanup:** After successful deployment, you may remove the init container: `docker service rm srv-captain--$$cap_appname-init`
 
     displayName: Authentik
     isOfficial: true
