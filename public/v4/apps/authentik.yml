@@ -60,7 +60,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
 
-    $$cap_appname-server:
+    $$cap_appname:
         image: ghcr.io/goauthentik/server:$$cap_authentik_version
         restart: unless-stopped
         command: ['dumb-init', '--', 'ak', 'server']
@@ -179,9 +179,9 @@ caproverOneClickApp:
 
             1. Wait 2-3 minutes for migrations to complete
 
-            2. Complete initial setup: [http://$$cap_appname-server.$$cap_root_domain/if/flow/initial-setup/](http://$$cap_appname-server.$$cap_root_domain/if/flow/initial-setup/)
+            2. Complete initial setup: [http://$$cap_appname.$$cap_root_domain/if/flow/initial-setup/](http://$$cap_appname.$$cap_root_domain/if/flow/initial-setup/)
 
-            3. Access admin interface: [http://$$cap_appname-server.$$cap_root_domain/if/admin/](http://$$cap_appname-server.$$cap_root_domain/if/admin/)
+            3. Access admin interface: [http://$$cap_appname.$$cap_root_domain/if/admin/](http://$$cap_appname.$$cap_root_domain/if/admin/)
 
 
             **Optional cleanup:** After successful deployment, you may remove the init container: `docker service rm srv-captain--$$cap_appname-init`
