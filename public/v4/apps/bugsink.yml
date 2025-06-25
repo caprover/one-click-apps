@@ -1,0 +1,90 @@
+captainVersion: 4
+services:
+    $$cap_appname-mysql:
+        image: mysql:$$cap_MYSQL_VERSION
+        restart: unless-stopped
+        environment:
+            MYSQL_ROOT_PASSWORD: $$cap_MYSQL_PASSWORD
+            MYSQL_DATABASE: bugsink
+        volumes:
+            - $$cap_appname-mysql-data:/var/lib/mysql
+        healthcheck:
+            test:
+                [
+                    'CMD-SHELL',
+                    'exit | mysql -h localhost -P 3306 -u root -p$$MYSQL_ROOT_PASSWORD',
+                ]
+            interval: 1s
+            timeout: 20s
+            retries: 30
+
+    $$cap_appname:
+        image: bugsink/bugsink:$$cap_BUGSINK_VERSION
+        depends_on:
+            mysql:
+                condition: service_healthy
+        restart: unless-stopped
+        ports:
+            - '8000:8000'
+        environment:
+            SECRET_KEY: $$cap_gen_random_hex(50)
+            CREATE_SUPERUSER: admin:$$cap_SUPERUSER_PASSWORD
+            PORT: 8000
+            DATABASE_URL: mysql://root:$$cap_MYSQL_PASSWORD@srv-captain--$$cap_appname-mysql:3306/bugsink
+            BASE_URL: https://$$cap_appname.$$cap_root_domain/
+            BEHIND_HTTPS_PROXY: 'true'
+        healthcheck:
+            test:
+                [
+                    'CMD-SHELL',
+                    'python -c ''import requests; requests.get("http://localhost:8000/").raise_for_status()''',
+                ]
+            interval: 5s
+            timeout: 20s
+            retries: 10
+        caproverExtra:
+            containerHttpPort: '8000'
+
+volumes:
+    my-datavolume:
+
+caproverOneClickApp:
+    variables:
+        - id: '$$cap_BUGSINK_VERSION'
+          label: Bugsink Version
+          defaultValue: '1.4.2'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/bugsink/bugsink/tags
+          validRegex: '/.{1,}/'
+        - id: $$cap_MYSQL_VERSION
+          label: Database | Version
+          description: MySQL version. Check out their valid tags at https://hub.docker.com/_/mysql/tags
+          defaultValue: '8.4.4'
+          validRegex: /.{1,}/
+        - id: '$$cap_MYSQL_PASSWORD'
+          label: MySQL Password
+          defaultValue: $$cap_gen_random_hex(16)
+          description: The password for the MySQL root user.
+          validRegex: '/.{1,}/'
+        - id: '$$cap_SUPERUSER_PASSWORD'
+          label: Bugsink Admin Password
+          defaultValue: $$cap_gen_random_hex(16)
+          description: The password for the Bugsink admin user.
+          validRegex: '/.{1,}/'
+
+    instructions:
+        start: |-
+            Bugsink offers Error Tracking for your applications with full control through self-hosting: 
+            * Built to self-host
+            * Sentry-SDK compatible
+            * Scalable and reliable
+            Documentation: https://www.bugsink.com/docs/
+        end: |-
+            Bugsink instance successfully deployed.
+            You MUST enable HTTPS to use this app.
+            Then, visit https://$$cap_appname.$$cap_root_domain/ to access your Bugsink instance.
+            Log in with admin and the chosen SUPERUSER_PASSWORD.
+            Post-install Quickstart: https://www.bugsink.com/docs/quickstart/
+    displayName: Bugsink
+    isOfficial: true
+    description: Bugsink is a self-hosted error tracker. Full control over your data. Compatible with Sentry SDKs, easy to set up, scalable & reliable
+    documentation: This docker-compose is taken from https://github.com/bugsink/bugsink/blob/main/compose-sample.yaml
