@@ -7,8 +7,8 @@ services:
             - $$cap_appname-config:/config
         restart: always
         environment:
-            PUID: 0
-            GUID: 0
+            PUID: '0'
+            PGID: '0'
         image: filebrowser/filebrowser:$$cap_filebrowser_version
 caproverOneClickApp:
     variables:
