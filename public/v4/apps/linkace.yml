@@ -49,7 +49,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname-redis:
-        image: bitnami/redis:$$cap_linkace_redis_version
+        image: bitnamilegacy/redis:$$cap_linkace_redis_version
         restart: unless-stopped
         environment:
             REDIS_PASSWORD: $$cap_linkace_redis_pass
