@@ -35,7 +35,7 @@ services:
             MYSQL_ROOT_PASSWORD: $$cap_db_password
             MYSQL_ROOT_USER: $$cap_db_user
             MYSQL_USER: ghost
-        image: bitnami/mysql:8.0
+        image: bitnamilegacy/mysql:8.0
         restart: always
         volumes:
             - $$cap_appname-db-data:/bitnami/mysql
@@ -44,7 +44,7 @@ services:
 caproverOneClickApp:
     variables:
         - defaultValue: 5.2.2
-          description: Check out their Docker page for the valid tags https://hub.docker.com/r/bitnami/ghost/tags
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/bitnamilegacy/ghost/tags
           id: $$cap_ghost_version
           label: Ghost Version
           validRegex: /^([^\s^\/])+$/
