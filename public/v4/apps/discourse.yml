@@ -2,7 +2,7 @@ captainVersion: 4
 services:
     $$cap_appname-postgresql:
         documentation: Taken from https://hub.docker.com/r/bitnamilegacy/postgresql
-        image: docker.io/bitnami/postgresql:$$cap_postgresql_version
+        image: docker.io/bitnamilegacy/postgresql:$$cap_postgresql_version
         restart: always
         environment:
             POSTGRESQL_DATABASE: $$cap_db_name
