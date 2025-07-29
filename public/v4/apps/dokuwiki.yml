@@ -3,9 +3,9 @@ services:
     $$cap_appname:
         image: lscr.io/linuxserver/dokuwiki:$$cap_dokuwiki_version
         environment:
-           PUID: 1000
-           PGID: 1000
-           TZ: 'America/New_York'
+            PUID: 1000
+            PGID: 1000
+            TZ: 'America/New_York'
         caproverExtra:
             containerHttpPort: '80'
         volumes:
