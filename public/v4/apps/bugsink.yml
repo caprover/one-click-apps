@@ -52,7 +52,7 @@ caproverOneClickApp:
     variables:
         - id: '$$cap_BUGSINK_VERSION'
           label: Bugsink Version
-          defaultValue: '1.4.2'
+          defaultValue: '1.7.4'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/bugsink/bugsink/tags
           validRegex: '/.{1,}/'
         - id: $$cap_MYSQL_VERSION
