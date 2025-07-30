@@ -1,8 +1,8 @@
 captainVersion: 4
 services:
     $$cap_appname-postgresql:
-        documentation: Taken from https://hub.docker.com/r/bitnami/postgresql
-        image: docker.io/bitnami/postgresql:$$cap_postgresql_version
+        documentation: Taken from https://hub.docker.com/r/bitnamilegacy/postgresql
+        image: docker.io/bitnamilegacy/postgresql:$$cap_postgresql_version
         restart: always
         environment:
             POSTGRESQL_DATABASE: $$cap_db_name
@@ -14,8 +14,8 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname-redis:
-        documentation: Taken from https://hub.docker.com/r/bitnami/redis
-        image: docker.io/bitnami/redis:$$cap_redis_version
+        documentation: Taken from https://hub.docker.com/r/bitnamilegacy/redis
+        image: docker.io/bitnamilegacy/redis:$$cap_redis_version
         restart: always
         environment:
             ALLOW_EMPTY_PASSWORD: yes
@@ -24,8 +24,8 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname:
-        documentation: Taken from https://hub.docker.com/r/bitnami/discourse
-        image: docker.io/bitnami/discourse:$$cap_discourse_version
+        documentation: Taken from https://hub.docker.com/r/bitnamilegacy/discourse
+        image: docker.io/bitnamilegacy/discourse:$$cap_discourse_version
         depends_on:
             - $$cap_appname-postgresql
             - $$cap_appname-redis
@@ -54,7 +54,7 @@ services:
         caproverExtra:
             containerHttpPort: '3000'
     $$cap_appname-sidekiq:
-        documentaion: Taken from https://hub.docker.com/r/bitnami/discourse
+        documentation: Taken from https://hub.docker.com/r/bitnamilegacy/discourse
         depends_on:
             - $$cap_appname
         volumes:
@@ -74,7 +74,7 @@ services:
             SMTP_PASSWORD: $$cap_smtp_pass
         caproverExtra:
             dockerfileLines:
-                - FROM docker.io/bitnami/discourse:$$cap_discourse_version
+                - FROM docker.io/bitnamilegacy/discourse:$$cap_discourse_version
                 - CMD ["/opt/bitnami/scripts/discourse-sidekiq/run.sh"]
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
@@ -150,4 +150,4 @@ caproverOneClickApp:
     displayName: Discourse
     isOfficial: true
     description: Discourse is the 100% open source discussion platform built for the next decade of the Internet. Use it as a mailing list, discussion forum, long-form chat room, and more!
-    documentation: Taken from https://hub.docker.com/r/bitnami/discourse
+    documentation: Taken from https://hub.docker.com/r/bitnamilegacy/discourse

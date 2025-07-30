@@ -19,7 +19,7 @@ services:
             REDIS_HOST: srv-captain--$$cap_appname-redis
             REDIS_PASSWORD: $$cap_linkace_redis_pass
             REDIS_PORT: 6379
-            MAIL_DRIVER: smtp
+            MAIL_MAILER: smtp
             MAIL_HOST: $$cap_linkace_mail_host
             MAIL_PORT: $$cap_linkace_mail_port
             MAIL_USERNAME: $$cap_linkace_mail_username
@@ -30,7 +30,7 @@ services:
         caproverExtra:
             containerHttpPort: '80'
             dockerfileLines:
-                - FROM linkace/linkace:$$cap_sw_version-simple
+                - FROM linkace/linkace:$$cap_sw_version
                 - RUN chmod 666 /app/.env
         volumes:
             - $$cap_appname-data:/app
@@ -49,7 +49,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname-redis:
-        image: bitnami/redis:$$cap_linkace_redis_version
+        image: bitnamilegacy/redis:$$cap_linkace_redis_version
         restart: unless-stopped
         environment:
             REDIS_PASSWORD: $$cap_linkace_redis_pass
@@ -59,8 +59,8 @@ caproverOneClickApp:
     variables:
         - id: $$cap_sw_version
           label: LinkAce Version
-          defaultValue: 'v1.15.4'
-          description: Check out their Docker Hub page for the valid tags https://hub.docker.com/r/linkace/linkace/tags. Do NOT use `-simple` tags, suffix is added automatically.
+          defaultValue: 'v2.1.0'
+          description: Check out their Docker Hub page for the valid tags https://hub.docker.com/r/linkace/linkace/tags. Use only v2.x tags.
         - id: $$cap_linkace_db_user
           label: Database User
           defaultValue: linkace
@@ -112,6 +112,6 @@ caproverOneClickApp:
     instructions:
         start: LinkAce is a self-hosted tool for effortlessly archiving, organizing, and sharing your favorite web links. With a clean interface, you can save articles, bookmark tools, and preserve important content long-term. Easily categorize and retrieve your links, or share your collection with others.
         end: LinkAce is successfully deployed.
-    displayName: LinkAce
+    displayName: LinkAce (v2)
     description: LinkAce is a self-hosted tool for effortlessly archiving, organizing, and sharing your favorite web links.
     documentation: See https://hub.docker.com/r/linkace/linkace/tags for tags and other variables

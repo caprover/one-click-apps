@@ -1,0 +1,426 @@
+captainVersion: 4
+services:
+    # Paperless-ngx
+    $$cap_appname:
+        depends_on:
+            - $$cap_appname-db
+            - $$cap_appname-redis
+            - $$cap_appname-gotenberg
+            - $$cap_appname-tika
+        image: paperlessngx/paperless-ngx:$$cap_app_version
+        restart: always
+        environment:
+            PAPERLESS_URL: http://$$cap_appname.$$cap_root_domain
+            # Required services
+            PAPERLESS_REDIS: redis://srv-captain--$$cap_appname-redis:6379/0
+            PAPERLESS_REDIS_PREFIX: $$cap_redis_prefix
+            PAPERLESS_DBHOST: srv-captain--$$cap_appname-db
+            PAPERLESS_DBPORT: 5432
+            PAPERLESS_DBNAME: $$cap_dbname
+            PAPERLESS_DBUSER: $$cap_dbuser
+            PAPERLESS_DBPASS: $$cap_dbpass
+            PAPERLESS_DBSSLMODE: $$cap_dbsslmode
+            # Paths and folders
+            PAPERLESS_CONSUMPTION_DIR: /usr/src/paperless/consume
+            PAPERLESS_DATA_DIR: /usr/src/paperless/data
+            PAPERLESS_MEDIA_ROOT: /usr/src/paperless/media
+            PAPERLESS_FILENAME_FORMAT: $$cap_filename_format
+            PAPERLESS_FILENAME_FORMAT_REMOVE_NONE: $$cap_filename_format_remove_none
+            PAPERLESS_LOGGING_DIR: /usr/src/paperless/log
+            # Logging
+            PAPERLESS_LOGROTATE_MAX_SIZE: $$cap_logrotate_max_size
+            PAPERLESS_LOGROTATE_MAX_BACKUPS: $$cap_logrotate_max_backup
+            # Hosting & Security
+            PAPERLESS_SECRET_KEY: $$cap_secret_key
+            PAPERLESS_ALLOWED_HOSTS: $$cap_appname.$$cap_root_domain
+            PAPERLESS_CSRF_TRUSTED_ORIGINS: http://$$cap_appname.$$cap_root_domain,https://$$cap_appname.$$cap_root_domain
+            PAPERLESS_CORS_ALLOWED_HOSTS: http://$$cap_appname.$$cap_root_domain,https://$$cap_appname.$$cap_root_domain
+            PAPERLESS_ADMIN_USER: $$cap_admin_user
+            PAPERLESS_ADMIN_PASSWORD: $$cap_admin_password
+            PAPERLESS_ADMIN_MAIL: $$cap_admin_email
+            PAPERLESS_COOKIE_PREFIX: $$cap_appname
+            # OCR settings
+            PAPERLESS_OCR_LANGUAGE: $$cap_ocr_language
+            PAPERLESS_OCR_MODE: $$cap_ocr_mode
+            PAPERLESS_OCR_SKIP_ARCHIVE_FILE: $$cap_ocr_skip_archive
+            PAPERLESS_OCR_CLEAN: $$cap_ocr_clean
+            PAPERLESS_OCR_DESKEW: $$cap_ocr_deskew
+            PAPERLESS_OCR_ROTATE_PAGES: $$cap_ocr_rotate_pages
+            PAPERLESS_OCR_ROTATE_PAGES_THRESHOLD: $$cap_ocr_rotate_threshold
+            PAPERLESS_OCR_OUTPUT_TYPE: $$cap_ocr_output_type
+            PAPERLESS_OCR_PAGES: $$cap_ocr_pages
+            PAPERLESS_OCR_IMAGE_DPI: $$cap_ocr_image_dpi
+            PAPERLESS_OCR_USER_ARGS: $$cap_ocr_user_args
+            # Tika settings
+            PAPERLESS_TIKA_ENABLED: 1
+            PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://srv-captain--$$cap_appname-gotenberg:3000
+            PAPERLESS_TIKA_ENDPOINT: http://srv-captain--$$cap_appname-tika:9998
+            # Software tweaks
+            PAPERLESS_TASK_WORKERS: $$cap_task_workers
+            PAPERLESS_THREADS_PER_WORKER: $$cap_threads_per_worker
+            PAPERLESS_WORKER_TIMEOUT: $$cap_worker_timeout
+            PAPERLESS_TIME_ZONE: $$cap_timezone
+            PAPERLESS_CONSUMER_POLLING: $$cap_consumer_polling
+            PAPERLESS_CONSUMER_DELETE_DUPLICATES: $$cap_consumer_delete_duplicates
+            PAPERLESS_CONSUMER_RECURSIVE: $$cap_consumer_recursive
+            PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: $$cap_consumer_subdirs_as_tags
+            PAPERLESS_CONVERT_MEMORY_LIMIT: $$cap_convert_memory_limit
+            PAPERLESS_CONVERT_TMPDIR: $$cap_convert_tempdir
+            PAPERLESS_OPTIMIZE_THUMBNAILS: $$cap_optimize_thumbnails
+            PAPERLESS_PRE_CONSUME_SCRIPT: $$cap_pre_consume_script
+            PAPERLESS_POST_CONSUME_SCRIPT: $$cap_post_consume_script
+            PAPERLESS_FILENAME_DATE_ORDER: $$cap_filename_date_order
+            PAPERLESS_THUMBNAIL_FONT_NAME: $$cap_thumbnail_font_name
+            PAPERLESS_IGNORE_DATES: $$cap_paperless_ignore_dates
+            # Barcode support
+            PAPERLESS_CONSUMER_ENABLE_BARCODES: $$cap_enable_barcodes
+            PAPERLESS_CONSUMER_BARCODE_SCANNER: $$cap_barcode_scanner
+            PAPERLESS_CONSUMER_BARCODE_TIFF_SUPPORT: $$cap_barcode_tiff_support
+            # Docker-specific options
+            PAPERLESS_WEBSERVER_WORKERS: $$cap_webserver_workers
+            USERMAP_UID: $$cap_usermap_uid
+            USERMAP_GID: $$cap_usermap_gid
+            PAPERLESS_OCR_LANGUAGES: $$cap_docker_ocr_languages
+        volumes:
+            - $$cap_appname-data:/usr/src/paperless/data
+            - $$cap_appname-media:/usr/src/paperless/media
+            - $$cap_appname-export:/usr/src/paperless/export
+            - $$cap_appname-consume:/usr/src/paperless/consume
+        caproverExtra:
+            containerHttpPort: '8000'
+
+    # Redis
+    $$cap_appname-redis:
+        image: redis:$$cap_redis_version
+        volumes:
+            - $$cap_appname-redis-data:/data
+        restart: always
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+
+    # Database
+    $$cap_appname-db:
+        image: postgres:$$cap_postgres_version
+        volumes:
+            - $$cap_appname-db:/var/lib/postgresql/data
+        restart: always
+        environment:
+            POSTGRES_DB: $$cap_dbname
+            POSTGRES_USER: $$cap_dbuser
+            POSTGRES_PASSWORD: $$cap_dbpass
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+
+    # gotenberg
+    $$cap_appname-gotenberg:
+        image: gotenberg/gotenberg:$$cap_gotenberg_version
+        restart: unless-stopped
+        command:
+            - 'gotenberg'
+            - '--chromium-disable-javascript=true'
+            - '--chromium-allow-list=file:///tmp/.*'
+        caproverExtra:
+            containerHttpPort: '3000'
+            notExposeAsWebApp: 'true'
+
+    # tika
+    $$cap_appname-tika:
+        image: apache/tika:$$cap_tika_version
+        restart: unless-stopped
+        caproverExtra:
+            containerHttpPort: '9998'
+            notExposeAsWebApp: 'true'
+
+caproverOneClickApp:
+    variables:
+        - id: $$cap_app_version
+          label: Paperless-ngx Version
+          defaultValue: '2.15.3'
+          description: Check out their docker page for the valid tags https://hub.docker.com/r/paperlessngx/paperless-ngx/tags
+
+        - id: $$cap_postgres_version
+          label: Postgres Version
+          defaultValue: '17'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/postgres/tags/
+          validRegex: /^([^\s^\/])+$/
+
+        - id: $$cap_redis_version
+          label: Redis version
+          defaultValue: '7'
+          validRegex: /^([^\s^\/])+$/
+
+        - id: $$cap_gotenberg_version
+          label: Gotenberg version
+          defaultValue: '8.19'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/gotenberg/gotenberg/tags
+          validRegex: /^([^\s^\/])+$/
+
+        - id: $$cap_tika_version
+          label: Tika version
+          defaultValue: '3.1.0.0-full'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/apache/tika/tags
+          validRegex: /^([^\s^\/])+$/
+
+        - id: $$cap_redis_prefix
+          label: Redis Prefix
+          description: Prefix to be used in Redis for keys and channels. Useful for sharing one Redis server among multiple Paperless instances.
+
+        - id: $$cap_dbname
+          label: Database Name
+          defaultValue: 'paperless'
+          validRegex: /^([^\s^\/])+$/
+
+        - id: $$cap_dbuser
+          label: Database User
+          defaultValue: 'paperless'
+          validRegex: /^([^\s^\/])+$/
+
+        - id: $$cap_dbpass
+          label: Database Password
+          defaultValue: $$cap_gen_random_hex(64)
+          validRegex: /^([^\s^\/])+$/
+
+        - id: $$cap_dbsslmode
+          label: Database SSL Mode
+          defaultValue: 'prefer'
+          description: SSL mode to use when connecting to PostgreSQL. See the documentation about sslmode for PostgreSQL.
+
+        - id: $$cap_filename_format
+          label: Filename Format
+          defaultValue:
+          description: 'Changes the filenames paperless uses to store documents in the media directory. See File name handling (https://docs.paperless-ngx.com/advanced_usage/#file-name-handling) for details. Default is none, which disables this feature.'
+
+        - id: $$cap_filename_format_remove_none
+          label: Remove None from Filename Format
+          defaultValue: 'false'
+          validRegex: /^(true|false)$/
+          description: 'Tells paperless to replace placeholders in PAPERLESS_FILENAME_FORMAT that would resolve to "none" to be omitted from the filename.'
+
+        - id: $$cap_logrotate_max_size
+          label: Log Rotate Max Size (in bytes)
+          defaultValue: '1048576'
+          validRegex: /^\d+$/
+          description: Maximum file size for log files before they are rotated, in bytes. Defaults to 1MiB.
+
+        - id: $$cap_logrotate_max_backup
+          label: Log Rotate Max Backup Count
+          defaultValue: '20'
+          validRegex: /^\d{0,}$/
+          description: Number of rotated log files to keep.
+
+        - id: $$cap_secret_key
+          label: Paperless Secret Key
+          defaultValue: $$cap_gen_random_hex(64)
+          validRegex: /^([^\s^\/])+$/
+          description: Paperless uses this to make session tokens.
+
+        - id: $$cap_admin_user
+          label: Admin User
+          defaultValue: 'admin'
+          validRegex: /^([^\s^\/])+$/
+
+        - id: $$cap_admin_password
+          label: Admin Password
+          defaultValue: $$cap_gen_random_hex(10)
+          validRegex: /^([^\s^\/])+$/
+
+        - id: $$cap_admin_email
+          label: Admin Email
+          defaultValue: 'root@localhost'
+          validRegex: /^([^\s^\/])+$/
+
+        - id: $$cap_ocr_language
+          label: OCR Language
+          defaultValue: 'eng'
+          description: 'Customize the language that paperless will attempt to use when parsing documents. It should be a 3-letter language code consistent with ISO 639 https://www.loc.gov/standards/iso639-2/php/code_list.php This can be a combination of multiple languages such as deu+eng, in which case tesseract will use whatever language matches best. Keep in mind that tesseract uses much more cpu time with multiple languages enabled.'
+
+        - id: $$cap_ocr_mode
+          label: OCR Mode
+          defaultValue: 'skip'
+          validRegex: /^(skip|redo|force)$/
+          description: 'Tell paperless when and how to perform ocr on your documents. Three modes are available - skip, redo, force. Read more about this in the OCRmyPDF documentation (https://ocrmypdf.readthedocs.io/en/latest/advanced.html#when-ocr-is-skipped).'
+
+        - id: $$cap_ocr_skip_archive
+          label: OCR Skip Archive File
+          defaultValue: 'never'
+          validRegex: /^(never|with_text|always)$/
+          description: 'Specify when to skip creating an archived version (never, with_text, always).'
+
+        - id: $$cap_ocr_clean
+          label: OCR Clean
+          defaultValue: 'clean'
+          validRegex: /^(clean|clean-final|none)$/
+          description: 'Tells paperless to use unpaper to clean any input document before sending it to tesseract. This uses more resources, but generally results in better OCR results. Available mode - clean, clean-final, none'
+
+        - id: $$cap_ocr_deskew
+          label: OCR Deskew
+          defaultValue: 'true'
+          validRegex: /^(true|false)$/
+          description: 'Tells paperless to correct skewing (slight rotation of input images mainly due to improper scanning).'
+
+        - id: $$cap_ocr_rotate_pages
+          label: OCR Rotate Pages
+          defaultValue: 'true'
+          validRegex: /^(true|false)$/
+          description: 'Tells paperless to correct page rotation (90°, 180° and 270° rotation). If you notice that paperless is not rotating incorrectly rotated pages (or vice versa), try adjusting the threshold up or down (see below).'
+
+        - id: $$cap_ocr_rotate_threshold
+          label: OCR Rotate Pages Threshold
+          defaultValue: '12'
+          validRegex: /^\d[\d.]*$/
+          description: 'This is an arbitrary value reported by tesseract. "15" is a very conservative value, whereas "2" is a very aggressive option and will often result in correctly rotated pages being rotated as well.'
+
+        - id: $$cap_ocr_output_type
+          label: OCR Output Type
+          defaultValue: 'pdfa'
+          validRegex: /^(pdf|pdfa|pdfa-1|pdfa-2|pdfa-3)$/
+          description: 'Specify the the type of PDF documents that paperless should produce. Choices - pdf, pdfa, pdfa-1, pdfa-2, pdfa-3'
+
+        - id: $$cap_ocr_pages
+          label: OCR Pages Count
+          defaultValue: '0'
+          validRegex: /^\d+$/
+          description: "Tells paperless to use only the specified amount of pages for OCR. Documents with less than the specified amount of pages get OCR'ed completely. Specifying 1 here will only use the first page. Specifying 0 disables this feature and always use all pages."
+
+        - id: $$cap_ocr_image_dpi
+          label: OCR Image DPI
+          description: 'Set this to the DPI your scanner produces images at. Default is none, which will automatically calculate image DPI so that the produced PDF documents are A4 sized.'
+
+        - id: $$cap_ocr_user_args
+          label: OCR User Args
+          description: 'See https://ocrmypdf.readthedocs.io/en/latest/api.html#reference for valid parameters. Specify arguments as a JSON dictionary. Keep note of lower case booleans and double quoted parameter names and strings.'
+
+        - id: $$cap_task_workers
+          label: Paperless Task Workers
+          defaultValue: '1'
+          validRegex: /^\d{0,2}$/
+          description: 'Number of parallel tasks. Defaults to 1.'
+
+        - id: $$cap_threads_per_worker
+          label: Paperless Threads per Worker
+          defaultValue: '1'
+          validRegex: /^\d{0,2}$/
+          description: 'Number of threads per worker. Ensure that the product PAPERLESS_TASK_WORKERS * PAPERLESS_THREADS_PER_WORKER does not exceed your CPU core count.'
+
+        - id: $$cap_worker_timeout
+          label: Paperless Worker Timeout
+          defaultValue: '1800'
+          validRegex: /^\d{1,}$/
+          description: 'Timeout for worker processes in seconds. Default is 1800.'
+
+        - id: $$cap_timezone
+          label: Timezone
+          defaultValue: 'UTC'
+          description: 'Set the time zone here. See https://docs.djangoproject.com/en/4.1/ref/settings/#std:setting-TIME_ZONE for details on how to set it.'
+
+        - id: $$cap_consumer_polling
+          label: Consumer Polling (seconds)
+          defaultValue: '0'
+          validRegex: /^\d+$/
+          description: 'Defaults to 0, which disables polling and uses filesystem notifications.'
+
+        - id: $$cap_consumer_delete_duplicates
+          label: Consumer Delete Duplicates
+          defaultValue: 'false'
+          validRegex: /^(true|false)$/
+          description: 'When the consumer detects a duplicate document, it will not touch the original document.'
+
+        - id: $$cap_consumer_recursive
+          label: Consumer Recursive
+          defaultValue: 'false'
+          validRegex: /^(true|false)$/
+          description: 'Enable recursive watching of the consumption directory. Paperless will then pickup files from files in subdirectories within your consumption directory as well.'
+
+        - id: $$cap_consumer_subdirs_as_tags
+          label: Consumer Sub Directory as tags
+          defaultValue: 'false'
+          validRegex: /^(true|false)$/
+          description: 'Set the names of subdirectories as tags for consumed files. E.g. <CONSUMPTION_DIR>/foo/bar/file.pdf will add the tags "foo" and "bar" to the consumed file. Paperless will create any tags that don''t exist yet.'
+
+        - id: $$cap_convert_memory_limit
+          label: Convert Memory Limit
+          defaultValue: '0'
+          validRegex: /^\d+$/
+          description: 'On smaller systems, or even in the case of Very Large Documents, the consumer may explode, complaining about how it''s "unable to extend pixel cache". Set this to a reasonable value to limit memory usage during conversion.'
+
+        - id: $$cap_convert_tempdir
+          label: Convert Temporary Directory
+          description: "Set this to a path that's on a physical disk, like /home/paperless/tmp or something. ImageMagick will use this as scratch space when crunching through very large documents."
+
+        - id: $$cap_optimize_thumbnails
+          label: Optimize Thumbnails
+          defaultValue: 'true'
+          validRegex: /^(true|false)$/
+          description: 'This usually reduces the size of thumbnails by about 20%, but uses considerable compute time during consumption.'
+
+        - id: $$cap_pre_consume_script
+          label: Pre Consume Script (path)
+          description: 'Executed after the consumer sees a new document in the consumption folder, but before any processing of the document is performed. For more information, take a look at Pre-consumption script (https://docs.paperless-ngx.com/advanced_usage/#pre-consume-script)'
+
+        - id: $$cap_post_consume_script
+          label: Post Consume Script (path)
+          description: 'Executed after the consumer has successfully processed a document and has moved it into paperless. For more information, take a look at Post-consumption script (https://docs.paperless-ngx.com/advanced_usage/#post-consume-script)'
+
+        - id: $$cap_filename_date_order
+          label: Filename Date Order
+          description: 'Defaults to none, which disables this feature. The date order can be set to any option as specified in https://dateparser.readthedocs.io/en/latest/settings.html#date-order.'
+
+        - id: $$cap_thumbnail_font_name
+          label: Thumbnail Font Name
+          defaultValue: '/usr/share/fonts/liberation/LiberationSerif-Regular.ttf'
+          description: 'Paperless creates thumbnails for plain text files by rendering the content of the file on an image and uses a predefined font for that'
+
+        - id: $$cap_paperless_ignore_dates
+          label: Ignore Dates
+          description: 'You may specify dates in a multitude of formats supported by dateparser (see https://dateparser.readthedocs.io/en/latest/#popular-formats)'
+
+        - id: $$cap_webserver_workers
+          label: Webserver Workers
+          defaultValue: '2'
+          validRegex: /^\d{1,}$/
+          description: 'The number of worker processes the webserver should spawn.'
+
+        - id: $$cap_usermap_uid
+          label: Usermap UID
+          defaultValue: '1000'
+          validRegex: /^\d{1,}$/
+          description: 'Set this to your actual user ID on the host system, which you can get by executing ```id -u```'
+
+        - id: $$cap_usermap_gid
+          label: Usermap GID
+          defaultValue: '1000'
+          validRegex: /^\d{1,}$/
+          description: 'Set this to your actual group ID on the host system, which you can get by executing ```id -g```'
+
+        - id: $$cap_docker_ocr_languages
+          label: OCR Languages to install
+          description: 'Additional OCR languages to install. By default, paperless comes with English, German, Italian, Spanish and French.'
+
+        - id: $$cap_enable_barcodes
+          label: Enable Barcode Detection
+          defaultValue: 'false'
+          validRegex: /^(true|false)$/
+          description: 'Enables the scanning and page separation based on detected barcodes. This allows for scanning and adding multiple documents per uploaded file, which are separated by one or multiple barcode pages.'
+
+        - id: $$cap_barcode_scanner
+          label: Barcode Scanner
+          defaultValue: 'PYZBAR'
+          validRegex: /^(PYZBAR|ZXING)$/
+          description: 'Sets the barcode scanner used for barcode functionality. Currently, "PYZBAR" (the default) or "ZXING" might be selected.'
+
+        - id: $$cap_barcode_tiff_support
+          label: Barcode TIFF Support
+          defaultValue: 'false'
+          validRegex: /^(true|false)$/
+          description: 'Whether TIFF image files should be scanned for barcodes. This will automatically convert any TIFF image(s) to PDFs for later processing.'
+
+    instructions:
+        start: >-
+            Paperless-ngx is a document management system that transforms your physical documents into a searchable archive automatically.
+        end: >-
+            Done! 😄
+            Your service is available at http://$$cap_appname.$$cap_root_domain
+    displayName: 'Paperless-ngx'
+    isOfficial: true
+    description: Paperless-ngx is a community-supported document management system that transforms your physical documents into a searchable online archive so you can keep, well, less paper.
+    documentation: https://docs.paperless-ngx.com/
