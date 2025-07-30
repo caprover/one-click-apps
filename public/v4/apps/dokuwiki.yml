@@ -22,7 +22,7 @@ caproverOneClickApp:
         end: |
             Dokuwiki has been successfully deployed. Please wait about 2 minutes before accessing Dokuwiki.
 
-            **NOTE: For initial setup, edit the configuration files in the `/config/dokuwiki/conf` directory.**
+            **NOTE: Go to `http://$$cap_appname.$$cap_root_domain/install.php` to configure your install then restart your container when finished to remove install.php**
 
     displayName: DokuWiki
     isOfficial: true
