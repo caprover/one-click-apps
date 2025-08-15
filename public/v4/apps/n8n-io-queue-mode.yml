@@ -4,7 +4,6 @@ services:
         caproverExtra:
             containerHttpPort: 5678
             websocketSupport: 'true'
-        container_name: $$cap_appname-editor
         image: n8nio/n8n:$$cap_N8N_VERSION
         restart: always
         environment:
@@ -49,7 +48,6 @@ services:
     $$cap_appname-workers:
         caproverExtra:
             notExposeAsWebApp: 'true'
-        container_name: $$cap_appname-workers
         image: n8nio/n8n:$$cap_N8N_VERSION
         restart: always
         environment:
@@ -96,7 +94,6 @@ services:
         caproverExtra:
             containerHttpPort: 5678
             websocketSupport: 'true'
-        container_name: $$cap_appname-webhooks
         image: n8nio/n8n:$$cap_N8N_VERSION
         restart: always
         environment:
@@ -142,7 +139,7 @@ services:
     $$cap_appname-postgres:
         caproverExtra:
             notExposeAsWebApp: 'true'
-        image: willmagna/postgresql-pgvector:$$cap_POSTGRES_VERSION
+        image: pgvector/pgvector:$$cap_POSTGRES_VERSION
         restart: always
         environment:
             POSTGRES_DB: $$cap_POSTGRES_DB
@@ -197,8 +194,8 @@ caproverOneClickApp:
           label: Application | Timezone
           description: >-
               Timezone used by the server.
-              Please check out this page for valid time zones: https://en.wikipedia.org/wiki/List_of_tz_Postgres_time_zones
-          defaultValue: 'America/Sao_Paulo'
+              Please check out this page for valid time zones: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+          defaultValue: 'UTC'
           validRegex: /.{1,}/
         - id: $$cap_N8N_ENVIRONMENT
           label: Application | Environment
@@ -214,11 +211,6 @@ caproverOneClickApp:
           label: Application | Locale
           description: A locale identifier, compatible with the Accept-Language header. n8n doesn't support regional identifiers, such as de-AT.
           defaultValue: en
-          validRegex: /^([^\s^\/])+$/
-        - id: $$cap_N8N_WEBHOOK_PORT
-          label: Application | Webhook | Port
-          description: Local Machine Port
-          defaultValue: 5677
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_N8N_ENCRYPTION_KEY
           label: Application | Security
@@ -252,8 +244,8 @@ caproverOneClickApp:
           validRegex: /^(true|false)$/
         - id: $$cap_POSTGRES_VERSION
           label: Postgres | Version
-          description: Check out their Docker page for the valid tags https://hub.docker.com/r/willmagna/postgresql-pgvector/tags
-          defaultValue: '14.5'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/pgvector/pgvector/tags
+          defaultValue: 'pg14'
           validRegex: /.{1,}/
         - id: $$cap_POSTGRES_DB
           label: Postgres | Name
