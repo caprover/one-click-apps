@@ -36,6 +36,8 @@ services:
             N8N_SMTP_SSL: $$cap_N8N_SMTP_SSL
             WEBHOOK_URL: https://$$cap_appname.$$cap_root_domain
             N8N_EDITOR_BASE_URL: https://$$cap_appname.$$cap_root_domain
+            N8N_ENCRYPTION_KEY: $$cap_N8N_ENCRYPTION_KEY
+            N8N_RUNNERS_ENABLED: true
         volumes:
             - $$cap_appname:/home/node/.n8n
             - $$cap_appname-files:/files
@@ -57,7 +59,7 @@ caproverOneClickApp:
         - id: $$cap_N8N_VERSION
           label: Application | n8n.io
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/n8nio/n8n/tags
-          defaultValue: '1.77.0'
+          defaultValue: '1.106.3'
           validRegex: /.{1,}/
         - id: $$cap_N8N_TIMEZONE
           label: Application | Timezone
@@ -76,6 +78,11 @@ caproverOneClickApp:
           description: Whether to send telemetry data to n8n.io.
           defaultValue: 'false'
           validRegex: /^(true|false)$/
+        - id: $$cap_N8N_ENCRYPTION_KEY
+          label: Application | Encryption key for credentials
+          description: Password of the PostgreSQL database user.
+          defaultValue: $$cap_gen_random_hex(50)
+          validRegex: /.{1,}/
         - id: $$cap_N8N_SMTP_HOST
           label: Application | SMTP Host
           description: SMTP host used for sending mails.
@@ -114,5 +121,5 @@ caproverOneClickApp:
         - id: $$cap_POSTGRES_PASSWORD
           label: Database | Password
           description: Password of the PostgreSQL database user.
-          defaultValue: $$cap_gen_random_hex(16)
+          defaultValue: $$cap_gen_random_hex(40)
           validRegex: /.{1,}/
