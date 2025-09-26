@@ -1,0 +1,125 @@
+captainVersion: 4
+
+services:
+    $$cap_appname-db:
+        image: mariadb:$$cap_mariadb_version
+        volumes:
+            - $$cap_appname-db-data:/var/lib/mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: $$cap_db_root_password
+            MYSQL_DATABASE: $$cap_wp_db_name
+            MYSQL_USER: $$cap_db_user
+            MYSQL_PASSWORD: $$cap_db_password
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+
+    $$cap_appname-wordpress:
+        depends_on:
+            - $$cap_appname-db
+        # Build a tiny layer to set PHP limits automatically.
+        # NOTE: When using dockerfileLines, do NOT also set "image" per CapRover rules. :contentReference[oaicite:1]{index=1}
+        caproverExtra:
+            dockerfileLines:
+                - FROM wordpress:$$cap_wp_version
+                - RUN printf "upload_max_filesize=$$cap_upload_limit\npost_max_size=$$cap_upload_limit\nmemory_limit=$$cap_php_memory\n" > /usr/local/etc/php/conf.d/uploads.ini
+        volumes:
+            - $$cap_appname-wp-data:/var/www/html
+        restart: always
+        environment:
+            WORDPRESS_DB_HOST: srv-captain--$$cap_appname-db:3306
+            WORDPRESS_DB_USER: $$cap_db_user
+            WORDPRESS_DB_PASSWORD: $$cap_db_password
+            WORDPRESS_DB_NAME: $$cap_wp_db_name
+            # Optional wp-config.php additions on first boot:
+            WORDPRESS_CONFIG_EXTRA: |
+                define('FS_METHOD','direct');
+                define('WP_MEMORY_LIMIT','$$cap_wp_memory_limit');
+
+    $$cap_appname-pma:
+        depends_on:
+            - $$cap_appname-db
+        image: phpmyadmin:$$cap_pma_version
+        restart: always
+        environment:
+            PMA_HOST: srv-captain--$$cap_appname-db
+            PMA_USER: $$cap_db_user
+            PMA_PASSWORD: $$cap_db_password
+            UPLOAD_LIMIT: $$cap_upload_limit
+        caproverExtra:
+            containerHttpPort: '80'
+
+volumes:
+    $$cap_appname-db-data: {}
+    $$cap_appname-wp-data: {}
+
+caproverOneClickApp:
+    displayName: WordPress + MariaDB + phpMyAdmin (Nieto)
+    isOfficial: true
+    description: WordPress with MariaDB and phpMyAdmin; upload limits and memory set automatically.
+    documentation: Based on CapRover one-click format & Docker Hub images.
+
+    variables:
+        - id: $$cap_wp_version
+          label: WordPress image tag
+          defaultValue: latest
+          description: From docker.io/library/wordpress tags
+          validRegex: '/^([^\\s^\\/])+$/'
+
+        - id: $$cap_mariadb_version
+          label: MariaDB image tag
+          defaultValue: '11'
+          description: From docker.io/_/mariadb tags
+          validRegex: '/^([^\\s^\\/])+$/'
+
+        - id: $$cap_pma_version
+          label: phpMyAdmin image tag
+          defaultValue: latest
+          description: From docker.io/_/phpmyadmin tags
+          validRegex: '/^([^\\s^\\/])+$/'
+
+        - id: $$cap_db_user
+          label: DB user
+          defaultValue: wpuser
+          validRegex: '/^([a-zA-Z0-9_])+$/'
+
+        - id: $$cap_db_password
+          label: DB user password
+          defaultValue: $$cap_gen_random_hex(16)
+          validRegex: '/.+/'
+
+        - id: $$cap_db_root_password
+          label: DB root password
+          defaultValue: $$cap_gen_random_hex(20)
+          validRegex: '/.+/'
+
+        - id: $$cap_wp_db_name
+          label: WP database name
+          defaultValue: wordpress
+          validRegex: '/^([a-zA-Z0-9_])+$/'
+
+        - id: $$cap_upload_limit
+          label: Max upload size (PHP)
+          defaultValue: 128M
+          validRegex: '/^[0-9]+[MG]$/'
+
+        - id: $$cap_php_memory
+          label: PHP memory_limit
+          defaultValue: 256M
+          validRegex: '/^[0-9]+[MG]$/'
+
+        - id: $$cap_wp_memory_limit
+          label: WP memory (WP_MEMORY_LIMIT)
+          defaultValue: 256M
+          validRegex: '/^[0-9]+[MG]$/'
+
+    instructions:
+        start: >
+            This template deploys WordPress, MariaDB, and phpMyAdmin.
+            WordPress gets higher PHP upload limits & memory via a tiny custom layer—no manual .htaccess edits.
+            After deploy: assign domains to both WordPress and phpMyAdmin services.
+        end: >
+            Done! Configure domains:
+            - "$$cap_appname-wordpress" → your site domain (e.g. site.apps.nieto.com)
+            - "$$cap_appname-pma" → a locked-down subdomain (e.g. pma.apps.nieto.com)
+            Recommended: enable HTTP Basic Auth on phpMyAdmin in HTTP Settings.
