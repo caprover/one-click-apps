@@ -41,6 +41,8 @@ services:
             NEXTCLOUD_ADMIN_USER: $$cap_admin_user
             NEXTCLOUD_ADMIN_PASSWORD: $$cap_admin_pass
             NEXTCLOUD_TRUSTED_DOMAINS: $$cap_appname.$$cap_root_domain $$cap_hostnames
+            PHP_UPLOAD_LIMIT: $$cap_php_upload
+            PHP_MEMORY_LIMIT: $$cap_php_memory
     $$cap_appname-cron:
         depends_on:
             - $$cap_appname-db
@@ -50,16 +52,15 @@ services:
         restart: always
         volumes:
             - $$cap_appname-data:/var/www/html
+        image: nextcloud:$$cap_nextcloud_version
+        command: ['sh', '-c', '/cron.sh']
         caproverExtra:
-            dockerfileLines:
-                - FROM nextcloud:$$cap_nextcloud_version
-                - 'ENTRYPOINT [ "/cron.sh" ] '
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
         - id: $$cap_nextcloud_version
           label: Nextcloud Version
-          defaultValue: 28.0.6
+          defaultValue: 29.0.14
           description: >-
               Check out their Docker page for the valid tags https://hub.docker.com/_/nextcloud?tab=tags
 
@@ -68,12 +69,12 @@ caproverOneClickApp:
           validRegex: /^((?!fpm)\S)+$/
         - id: $$cap_redis_version
           label: Redis Version
-          defaultValue: 6.2.14
+          defaultValue: 7.2.7
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/redis?tab=tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_mariadb_version
           label: MariaDB (database) version
-          defaultValue: 10.6.18
+          defaultValue: 10.11.11
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/mariadb?tab=tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_db_user
@@ -99,11 +100,21 @@ caproverOneClickApp:
         - id: $$cap_http_https_cors
           label: Protocol of proxy
           defaultValue: https
-          description: Choose either http or https. cors configuration to login are set by the docker image, if you do not set this same as your proxy configuration, login will fail
+          description: Choose either http or https. cors configuration to login are set by the docker image, if you do not set this same as your proxy configuration, login will fail.
           validRegex: /^http[s]?$/
         - id: $$cap_hostnames
           label: hostnames
           description: Add all your additional hostnames where nextcloud will be exposed separated by space char. After first run, this variables are not reloaded by nextcloud and you will have to change the configuration according to the nextcloud's documentation.
+        - id: $$cap_php_upload
+          label: PHP upload limit
+          defaultValue: 512M
+          description: Define the maximum upload limit. You need also to increase the nginx upload limit (`client_max_body_size 1024M` in the server block of nginx config) for WebDav.
+          validRegex: /^([a-zA-Z0-9])+$/
+        - id: $$cap_php_memory
+          label: PHP memory limit
+          defaultValue: 512M
+          description: Define the memory limit.
+          validRegex: /^([a-zA-Z0-9])+$/
     instructions:
         start: A safe home for all your data. Access & share your files, calendars, contacts, mail & more from any device, on your terms. http://Nextcloud.com
         end: >-

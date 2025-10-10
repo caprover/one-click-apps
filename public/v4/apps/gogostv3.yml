@@ -18,10 +18,10 @@ services:
                 -  # Make directories needed
                 - RUN mkdir -p tmpfiles && mkdir -p /configuration
                 -  # Download and prepare GOST binary
-                - RUN wget -q https://github.com/go-gost/gost/releases/download/v3.0.0-nightly.'$$cap_gost_nightly'/gost_3.0.0-nightly.'$$cap_gost_nightly'_linux_amd64.tar.gz
-                - RUN tar -xzf gost_3.0.0-nightly.'$$cap_gost_nightly'_linux_amd64.tar.gz -C tmpfiles && mv tmpfiles/gost /bin/gost && chmod +x /bin/gost
+                - RUN wget -q https://github.com/go-gost/gost/releases/download/v'$$cap_gost_stable'/gost_'$$cap_gost_stable'_linux_amd64.tar.gz
+                - RUN tar -xzf gost_'$$cap_gost_stable'_linux_amd64.tar.gz -C tmpfiles && mv tmpfiles/gost /bin/gost && chmod +x /bin/gost
                 -  # Remove temp files
-                - RUN rm -rf tmpfiles gost_3.0.0-nightly.'$$cap_gost_nightly'_linux_amd64.tar.gz
+                - RUN rm -rf tmpfiles gost_'$$cap_gost_nightly'_linux_amd64.tar.gz
                 -  # Create a base GOST config file
                 - RUN touch /configuration/gost.yaml
                 - RUN yq eval '.api.addr = ":$$cap_gost_api_port"' -i /configuration/gost.yaml
@@ -38,11 +38,11 @@ caproverOneClickApp:
         - id: $$cap_gost_alpineversion
           label: Alpine Linux Version
           description: Check out https://hub.docker.com/_/alpine/tags for valid tags.
-          defaultValue: 3.20.1
-        - id: $$cap_gost_nightly
-          label: GOST Nightly Date
+          defaultValue: 3.22.0
+        - id: $$cap_gost_stable
+          label: GOST Stable Version
           description: Check out https://github.com/go-gost/gost/releases for versions (write down only the date part).
-          defaultValue: 20240715
+          defaultValue: 3.1.0
         - id: $$cap_gost_api_path
           label: Custom prefix path for GOST WebAPI
           description: At least 3 letter all lowercase

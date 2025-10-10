@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname-db:
-        image: bitnami/supabase-postgres:$$cap_app_version
+        image: bitnamilegacy/supabase-postgres:$$cap_app_version
         volumes:
             - $$cap_appname-db-persistence:/bitnami/postgresql
         restart: always
@@ -25,7 +25,7 @@ caproverOneClickApp:
         - id: $$cap_app_version
           label: Postgres Version
           defaultValue: '15.1.0'
-          description: Check out their Docker page for the valid tags https://hub.docker.com/r/bitnami/supabase-postgres/tags
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/bitnamilegacy/supabase-postgres/tags
           validRegex: /^([^\s^\/])+$/
 
         - id: $$cap_pg_user
@@ -95,4 +95,4 @@ caproverOneClickApp:
     displayName: Supabase PostgreSQL
     isOfficial: true
     description: Supabase makes it easy to use Postgres.
-    documentation: Taken from https://hub.docker.com/r/bitnami/supabase-postgres
+    documentation: Taken from https://hub.docker.com/r/bitnamilegacy/supabase-postgres
