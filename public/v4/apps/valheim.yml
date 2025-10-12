@@ -49,7 +49,8 @@ caproverOneClickApp:
 
         - id: '$$cap_server_pass'
           label: Server Password
-          defaultValue: ''
+          defaultValue: $$cap_gen_random_hex(10)
+          validRegex: /.{5,}/
           description: 'Password for your server (minimum 5 characters)'
 
         - id: '$$cap_timezone'
