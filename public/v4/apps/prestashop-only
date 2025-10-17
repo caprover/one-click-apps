@@ -1,0 +1,80 @@
+captainVersion: 4
+
+services:
+  $$cap_appname:
+    image: prestashop/prestashop:$$cap_ps_version
+    restart: always
+    environment:
+      DB_SERVER: $$cap_db_host
+      DB_NAME: $$cap_db_name
+      DB_USER: $$cap_db_user
+      DB_PASSWD: $$cap_db_pass
+      PS_INSTALL_AUTO: $$cap_ps_install_auto
+      PS_DOMAIN: $$cap_appname.$$cap_root_domain
+      PS_DEV_MODE: 0
+      PS_ERASE_DB: 0
+      # Variables opcionales que puedes habilitar si lo deseas:
+      # PS_FOLDER_ADMIN: admin_custom
+      # PS_FOLDER_INSTALL: install_disabled
+      # PS_LANGUAGE: es
+      # PS_COUNTRY: es
+    volumes:
+      - $$cap_appname-data:/var/www/html
+    ports:
+      - "80"
+
+caproverOneClickApp:
+  variables:
+    - id: $$cap_db_host
+      label: "Host de la base de datos"
+      description: "Ejemplo: srv-captain--mysql o la IP/hostname del servidor MySQL."
+      defaultValue: "srv-captain--mysql"
+
+    - id: $$cap_db_name
+      label: "Nombre de la base de datos"
+      defaultValue: "prestashop"
+
+    - id: $$cap_db_user
+      label: "Usuario de MySQL"
+      defaultValue: "psuser"
+
+    - id: $$cap_db_pass
+      label: "Contraseña de MySQL"
+      description: "Debe coincidir con el usuario configurado en tu base de datos."
+      defaultValue: "$$cap_gen_random_hex(16)"
+      validRegex: /.{1,}/
+
+    - id: $$cap_ps_version
+      label: "Versión de PrestaShop"
+      defaultValue: "latest"
+      description: "Ejemplo: 9.0, 8.1, etc. Consulta las etiquetas disponibles en https://hub.docker.com/r/prestashop/prestashop/tags"
+      validRegex: /^([^\s^\/])+$/
+
+    - id: $$cap_ps_install_auto
+      label: "Instalación automática (PS_INSTALL_AUTO)"
+      defaultValue: "1"
+      description: "1 = instalación automática, 0 = instalación manual."
+      validRegex: /^(0|1)$/
+
+  instructions:
+    start: >-
+      Este contenedor desplegará **solo PrestaShop**, sin base de datos incluida.
+
+      Debes tener una base de datos MySQL/MariaDB existente y accesible desde este servidor.
+      Si `PS_INSTALL_AUTO` está en 1, la instalación se completará automáticamente.
+      Si está en 0, deberás terminarla manualmente en el navegador.
+
+      Asegúrate de que los datos de conexión a la base de datos sean correctos.
+    end: >-
+      PrestaShop está desplegado como $$cap_appname.
+
+      Abre: http://$$cap_appname.$$cap_root_domain
+
+      Si la instalación fue automática (`PS_INSTALL_AUTO=1`), tu tienda estará lista.
+      Si no, sigue el asistente de instalación desde el navegador.
+
+      Puede tardar 1–2 minutos en inicializar por completo.
+  displayName: "PrestaShop (sin base de datos)"
+  isOfficial: false
+  description: "Despliega solo la aplicación PrestaShop. Ideal si ya tienes un servicio MySQL separado en CapRover."
+  documentation: "https://devdocs.prestashop-project.org/9/basics/installation/environments/docker/"
