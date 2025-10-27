@@ -14,14 +14,14 @@ services:
 
     $$cap_appname-pictrs:
         image: asonix/pictrs:0.5.0
-        user: '991:991'
+
         volumes:
             - $$cap_appname-pictrs-data:/mnt
         restart: always
         caproverExtra:
             notExposeAsWebApp: true
 
-    $$cap_appname-config-writer:
+    $$cap_appname-config-writer-delete-me:
         image: alpine:3.19
         command: >
             sh -c 'printf "%s\n" "
@@ -48,7 +48,7 @@ services:
                 tls_type: \"$$cap_smtp_tls\"
               }
             }
-            " > /config/config.hjson && chmod 644 /config/config.hjson && chown 1000:1000 /config/config.hjson'
+            " > /config/config.hjson && chmod 644 /config/config.hjson && chown 1000:1000 /config/config.hjson && tail -f /dev/null'
         volumes:
             - $$cap_appname-config:/config
         caproverExtra:
@@ -60,7 +60,7 @@ services:
         depends_on:
             - $$cap_appname-db
             - $$cap_appname-pictrs
-            - $$cap_appname-config-writer
+            - $$cap_appname-config-writer-delete-me
         environment:
             RUST_LOG: 'warn,lemmy_server=info,lemmy_api=info'
         volumes:
@@ -133,12 +133,11 @@ caproverOneClickApp:
             Your instance will be available at: https://$$cap_appname.$$cap_root_domain
 
         end: >
-            The config-writer container creates /config/config.hjson automatically on first deploy,
-            fixes permissions, and ensures Lemmy can read it.
-            The file is persisted in the $$cap_appname-config volume.
-            The UI is pre-configured to run on port 1234 and connect to the backend.
-            The server is public on port 8536 for federation.
-            Visit https://$$cap_appname.$$cap_root_domain to finish setup.
+            In the CapRover dashboard, enable HTTPS and force HTTPS for your Lemmy app to ensure secure access.
+
+            Then visit https://$$cap_appname.$$cap_root_domain to complete setup.
+
+            once setup is complete, delete the $$cap_appname-config-writer-delete-me container from your CapRover dashboard; it is only required for initial configuration.
 
     displayName: Lemmy
     isOfficial: false
