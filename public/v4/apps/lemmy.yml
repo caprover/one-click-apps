@@ -24,31 +24,38 @@ services:
     $$cap_appname-config-writer-delete-me:
         image: alpine:3.19
         command: >
-            sh -c 'printf "%s\n" "
-            {
-              hostname: \"$$cap_appname.$$cap_root_domain\",
-              bind: \"0.0.0.0\",
-              port: 8536,
-              database: {
-                user: \"lemmy\",
-                password: \"$$cap_db_pass\",
-                host: \"srv-captain--$$cap_appname-db\",
-                port: 5432,
-                database: \"lemmy\",
-                pool_size: 5
-              },
-              pictrs: {
-                url: \"http://srv-captain--$$cap_appname-pictrs:8080\"
-              },
-              email: {
-                smtp_server: \"$$cap_smtp_server\",
-                smtp_login: \"$$cap_smtp_login\",
-                smtp_password: \"$$cap_smtp_pass\",
-                smtp_from_address: \"$$cap_smtp_from\",
-                tls_type: \"$$cap_smtp_tls\"
+            sh -c '
+              CONFIG_FILE="/config/config.hjson"
+              CONFIG_CONTENT="
+              {
+                hostname: \"$$cap_appname.$$cap_root_domain\",
+                bind: \"0.0.0.0\",
+                port: 8536,
+                database: {
+                  user: \"lemmy\",
+                  password: \"$$cap_db_pass\",
+                  host: \"srv-captain--$$cap_appname-db\",
+                  port: 5432,
+                  database: \"lemmy\",
+                  pool_size: 5
+                },
+                pictrs: {
+                  url: \"http://srv-captain--$$cap_appname-pictrs:8080\"
+                },
+                email: {
+                  smtp_server: \"$$cap_smtp_server\",
+                  smtp_login: \"$$cap_smtp_login\",
+                  smtp_password: \"$$cap_smtp_pass\",
+                  smtp_from_address: \"$$cap_smtp_from\",
+                  tls_type: \"$$cap_smtp_tls\"
+                }
               }
-            }
-            " > /config/config.hjson && chmod 644 /config/config.hjson && chown 1000:1000 /config/config.hjson && tail -f /dev/null'
+              ";
+              if [ ! -f \"$CONFIG_FILE\" ]; then
+                printf "%s\\n" "$CONFIG_CONTENT" > "$CONFIG_FILE" && chmod 644 "$CONFIG_FILE" && chown 1000:1000 "$CONFIG_FILE"
+              fi
+              tail -f /dev/null
+            '
         volumes:
             - $$cap_appname-config:/config
         caproverExtra:
