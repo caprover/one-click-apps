@@ -144,7 +144,7 @@ caproverOneClickApp:
 
             Then visit https://$$cap_appname.$$cap_root_domain to complete setup.
 
-            once setup is complete, delete the $$cap_appname-config-writer-delete-me container from your CapRover dashboard; it is only required for initial configuration.
+            Once setup is complete, delete the app $$cap_appname-config-writer-delete-me as it is only required for initial configuration.
 
     displayName: Lemmy
     isOfficial: false
