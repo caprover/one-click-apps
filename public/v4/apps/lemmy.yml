@@ -1,0 +1,152 @@
+captainVersion: 4
+services:
+    $$cap_appname-db:
+        image: postgres:15-alpine
+        environment:
+            POSTGRES_USER: lemmy
+            POSTGRES_PASSWORD: $$cap_db_pass
+            POSTGRES_DB: lemmy
+        volumes:
+            - $$cap_appname-db-data:/var/lib/postgresql/data
+        restart: always
+        caproverExtra:
+            notExposeAsWebApp: true
+
+    $$cap_appname-pictrs:
+        image: asonix/pictrs:0.5.0
+
+        volumes:
+            - $$cap_appname-pictrs-data:/mnt
+        restart: always
+        caproverExtra:
+            notExposeAsWebApp: true
+
+    $$cap_appname-config-writer-delete-me:
+        image: alpine:3.19
+        command: >
+            sh -c '
+              CONFIG_FILE="/config/config.hjson"
+              CONFIG_CONTENT="
+              {
+                hostname: \"$$cap_appname.$$cap_root_domain\",
+                bind: \"0.0.0.0\",
+                port: 8536,
+                database: {
+                  user: \"lemmy\",
+                  password: \"$$cap_db_pass\",
+                  host: \"srv-captain--$$cap_appname-db\",
+                  port: 5432,
+                  database: \"lemmy\",
+                  pool_size: 5
+                },
+                pictrs: {
+                  url: \"http://srv-captain--$$cap_appname-pictrs:8080\"
+                },
+                email: {
+                  smtp_server: \"$$cap_smtp_server\",
+                  smtp_login: \"$$cap_smtp_login\",
+                  smtp_password: \"$$cap_smtp_pass\",
+                  smtp_from_address: \"$$cap_smtp_from\",
+                  tls_type: \"$$cap_smtp_tls\"
+                }
+              }
+              ";
+              if [ ! -f \"$CONFIG_FILE\" ]; then
+                printf "%s\\n" "$CONFIG_CONTENT" > "$CONFIG_FILE" && chmod 644 "$CONFIG_FILE" && chown 1000:1000 "$CONFIG_FILE"
+              fi
+              tail -f /dev/null
+            '
+        volumes:
+            - $$cap_appname-config:/config
+        caproverExtra:
+            notExposeAsWebApp: true
+        restart: 'no'
+
+    $$cap_appname-server:
+        image: dessalines/lemmy:$$cap_lemmy_version
+        depends_on:
+            - $$cap_appname-db
+            - $$cap_appname-pictrs
+            - $$cap_appname-config-writer-delete-me
+        environment:
+            RUST_LOG: 'warn,lemmy_server=info,lemmy_api=info'
+        volumes:
+            - $$cap_appname-config:/config
+        restart: always
+        caproverExtra:
+            containerHttpPort: 8536
+
+    $$cap_appname:
+        image: dessalines/lemmy-ui:$$cap_lemmy_ui_version
+        depends_on:
+            - $$cap_appname-server
+        environment:
+            LEMMY_UI_LEMMY_INTERNAL_HOST: srv-captain--$$cap_appname-server:8536
+            LEMMY_UI_LEMMY_EXTERNAL_HOST: $$cap_appname.$$cap_root_domain
+            LEMMY_UI_HTTPS: true
+        restart: always
+        caproverExtra:
+            containerHttpPort: 1234
+
+volumes:
+    $$cap_appname-config: {}
+
+caproverOneClickApp:
+    variables:
+        - id: $$cap_db_pass
+          defaultValue: $$cap_gen_random_hex(16)
+          description: Auto-generated Postgres password
+          label: Postgres Password
+          skipIfDefaultValue: true
+
+        - id: $$cap_lemmy_version
+          label: Lemmy server version
+          description: Version tag (e.g., 0.19.13)
+          defaultValue: '0.19.13'
+
+        - id: $$cap_lemmy_ui_version
+          label: Lemmy UI version
+          description: Version tag (e.g., 0.19.13)
+          defaultValue: '0.19.13'
+
+        - id: $$cap_smtp_server
+          label: SMTP server
+          description: 'SMTP server:port (e.g., smtp.gmail.com:587, mail.example.com:465)'
+          defaultValue: 'smtp.gmail.com:587'
+
+        - id: $$cap_smtp_login
+          label: SMTP login
+          description: Full username or email for SMTP
+          defaultValue: 'user@example.com'
+
+        - id: $$cap_smtp_pass
+          label: SMTP password
+          description: SMTP password or app password (if using Gmail/ProtonMail/etc)
+          defaultValue: ''
+
+        - id: $$cap_smtp_from
+          label: SMTP From address
+          description: Email address shown as sender
+          defaultValue: 'no-reply@example.com'
+
+        - id: $$cap_smtp_tls
+          label: SMTP TLS type
+          description: 'TLS mode for SMTP: use "none", "starttls", or "tls" depending on your server'
+          defaultValue: 'starttls'
+
+    instructions:
+        start: >
+            This one-click app deploys Lemmy (server + UI) with Postgres and Pictrs.
+            Your instance will be available at: https://$$cap_appname.$$cap_root_domain
+
+        end: >
+            In the CapRover dashboard, enable HTTPS and force HTTPS for your Lemmy app to ensure secure access.
+
+            Then visit https://$$cap_appname.$$cap_root_domain to complete setup.
+
+            Once setup is complete, delete the app $$cap_appname-config-writer-delete-me as it is only required for initial configuration.
+
+    displayName: Lemmy
+    isOfficial: false
+    description: Self-hosted Lemmy with persistent config volume auto-populated by a sidecar
+    documentation: https://join-lemmy.org/docs/en/administration/administration.html
