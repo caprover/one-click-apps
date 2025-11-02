@@ -57,7 +57,7 @@ services:
       notExposeAsWebApp: 'true'      
 
   $$cap_appname:
-    image: ghcr.io/linkwarden/linkwarden:v2.13.1
+    image: ghcr.io/linkwarden/linkwarden:latest
     restart: always
     depends_on:
       - $$cap_appname-postgres
