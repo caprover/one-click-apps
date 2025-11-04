@@ -67,9 +67,8 @@ services:
         volumes:
             - $$cap_appname-data:/data/data
         environment:
+            NEXTAUTH_URL: http://$$cap_appname.$$cap_root_domain
             NEXTAUTH_SECRET: $$cap_nextauth_secret
             DATABASE_URL: postgresql://$$cap_pg_user:$$cap_pg_pass@srv-captain--$$cap_appname-postgres:5432/$$cap_pg_db
             MEILISEARCH_URL: http://srv-captain--$$cap_appname-meilisearch:7700
             MEILISEARCH_MASTER_KEY: $$cap_meili_master_key
-volumes: $$cap_appname-pg-data
-    $$cap_appname-data
