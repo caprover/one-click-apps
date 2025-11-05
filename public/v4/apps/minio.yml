@@ -1,6 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
+        image: minio/minio:$$cap_minio_version
         volumes:
             - $$cap_appname-db-data:/data
             - $$cap_appname-config-data:/root/.minio
@@ -11,11 +12,9 @@ services:
             MINIO_REGION_NAME: 'eu-east-1'
             MINIO_BROWSER_REDIRECT_URL: https://$$cap_appname.$$cap_root_domain
             MINIO_SERVER_URL: https://$$cap_appname-api.$$cap_root_domain # MinIO S3 API
+        command: ['server', '/data', '--console-address', ':9001']
         caproverExtra:
             containerHttpPort: '9001'
-            dockerfileLines:
-                - FROM minio/minio:$$cap_minio_version
-                - CMD ["server", "/data", "--console-address", ":9001"]
     $$cap_appname-api:
         image: caprover/nginx-reverse-proxy:1-ef5ffcb
         restart: always
