@@ -22,6 +22,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname-web:
+        image: chatwoot/chatwoot:$$cap_chatwoot_version
         restart: always
         volumes:
             - $$cap_appname-storage:/data/storage
@@ -45,13 +46,11 @@ services:
             RAILS_MAX_THREADS: '5'
             TRUSTED_PROXIES: '*'
             INSTALLATION_ENV: docker
+        command: ['sh', '-c', 'bundle exec rails db:chatwoot_prepare && bundle exec rails s -p 3000 -b 0.0.0.0']
         caproverExtra:
             containerHttpPort: '3000'
-            dockerfileLines:
-                - FROM chatwoot/chatwoot:$$cap_chatwoot_version
-                - EXPOSE 3000
-                - CMD bundle exec rails db:chatwoot_prepare && bundle exec rails s -p 3000 -b 0.0.0.0
     $$cap_appname-worker:
+        image: chatwoot/chatwoot:$$cap_chatwoot_version
         restart: always
         volumes:
             - $$cap_appname-app-storage:/app/storage
@@ -74,10 +73,8 @@ services:
             RAILS_MAX_THREADS: '5'
             TRUSTED_PROXIES: '*'
             INSTALLATION_ENV: docker
+        command: ['bundle', 'exec', 'sidekiq', '-C', 'config/sidekiq.yml']
         caproverExtra:
-            dockerfileLines:
-                - FROM chatwoot/chatwoot:$$cap_chatwoot_version
-                - CMD ["bundle", "exec", "sidekiq", "-C", "config/sidekiq.yml"]
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
