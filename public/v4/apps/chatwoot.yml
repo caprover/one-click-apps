@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname-postgres:
-        image: postgres:15
+        image: pgvector/pgvector:pg17
         volumes:
             - $$cap_appname-postgres-data:/var/lib/postgresql/data
         restart: always
