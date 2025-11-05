@@ -22,6 +22,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname-web:
+        image: chatwoot/chatwoot:$$cap_chatwoot_version
         restart: always
         environment:
             RAILS_ENV: production
@@ -34,13 +35,11 @@ services:
             REDIS_URL: redis://srv-captain--$$cap_appname-redis:6379
             REDIS_PASSWORD: $$cap_chatwoot_redis_password
             INSTALLATION_ENV: caprover
+        command: ['sh', '-c', 'bundle exec rails db:chatwoot_prepare; bundle exec rails s -b 0.0.0.0 -p 3000']
         caproverExtra:
             containerHttpPort: '3000'
-            dockerfileLines:
-                - FROM chatwoot/chatwoot:$$cap_chatwoot_version
-                - EXPOSE 3000
-                - CMD bundle exec rails db:chatwoot_prepare; bundle exec rails s -b 0.0.0.0 -p 3000
     $$cap_appname-worker:
+        image: chatwoot/chatwoot:$$cap_chatwoot_version
         restart: always
         environment:
             RAILS_ENV: production
@@ -54,10 +53,8 @@ services:
             REDIS_URL: redis://srv-captain--$$cap_appname-redis:6379
             REDIS_PASSWORD: $$cap_chatwoot_redis_password
             INSTALLATION_ENV: caprover
+        command: ['bundle', 'exec', 'sidekiq', '-C', 'config/sidekiq.yml']
         caproverExtra:
-            dockerfileLines:
-                - FROM chatwoot/chatwoot:$$cap_chatwoot_version
-                - CMD bundle exec sidekiq -C config/sidekiq.yml
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
