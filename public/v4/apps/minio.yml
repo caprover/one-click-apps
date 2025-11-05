@@ -12,7 +12,7 @@ services:
             MINIO_REGION_NAME: 'eu-east-1'
             MINIO_BROWSER_REDIRECT_URL: https://$$cap_appname.$$cap_root_domain
             MINIO_SERVER_URL: https://$$cap_appname-api.$$cap_root_domain # MinIO S3 API
-        command: ['server', '/data', '--console-address', ':9001']
+        command: ['sh', '-c', 'minio server /data --console-address ":9001"']
         caproverExtra:
             containerHttpPort: '9001'
     $$cap_appname-api:
@@ -27,7 +27,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_minio_version
           label: MinIO Version
-          defaultValue: RELEASE.2024-12-13T20-30-00Z
+          defaultValue: RELEASE.2025-09-07T16-13-09Z
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/minio/minio/tags/
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_access_key
