@@ -32,14 +32,14 @@ caproverOneClickApp:
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_access_key
           label: MinIO Root User Access Key
-          defaultValue: $$cap_gen_random_hex(24)
+          defaultValue: admin
           description: Access key for `MINIO_ROOT_USER`. If unset, minio defaults to `minioadmin`. MinIO strongly recommends specifying a unique, long, and random value for all environments.
-          validRegex: /(.{5,})|(^\s{0}$)/m
+          validRegex: /^(.{5,})?$/
         - id: $$cap_secret_key
           label: Minio Secret Key
-          defaultValue: $$cap_gen_random_hex(38)
-          description: Secret key for `MINIO_ROOT_PASSWORD`. If unset, minio defaults to `minioadmin`. MinIO strongly recommends specifying a unique, long, and random value for all environments.
-          validRegex: /(.{8,})|(^\s{0}$)/m
+          defaultValue: password
+          description: Secret key for `MINIO_ROOT_PASSWORD`. If unset, minio defaults to `minioadmin`. MinIO strongly recommends specifying a unique, long, and random value for all environments. Please change this to a secure password.
+          validRegex: /^(.{8,})?$/
     instructions:
         start: >-
             MinIO is a High Performance Object Storage released under GNU Affero General Public License v3.0. 
