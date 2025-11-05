@@ -12,7 +12,7 @@ services:
             MINIO_REGION_NAME: 'eu-east-1'
             MINIO_BROWSER_REDIRECT_URL: https://$$cap_appname.$$cap_root_domain
             MINIO_SERVER_URL: https://$$cap_appname-api.$$cap_root_domain # MinIO S3 API
-        command: ['sh', '-c', 'minio server /data --console-address ":9001"']
+        command: [minio server /data --console-address ":9001"]
         caproverExtra:
             containerHttpPort: '9001'
     $$cap_appname-api:
