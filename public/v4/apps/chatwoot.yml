@@ -38,8 +38,6 @@ services:
             containerHttpPort: '3000'
             dockerfileLines:
                 - FROM chatwoot/chatwoot:$$cap_chatwoot_version
-                - RUN chmod +x docker/entrypoints/rails.sh
-                - ENTRYPOINT ["docker/entrypoints/rails.sh"]
                 - EXPOSE 3000
                 - CMD bundle exec rails db:chatwoot_prepare; bundle exec rails s -b 0.0.0.0 -p 3000
     $$cap_appname-worker:
@@ -59,8 +57,6 @@ services:
         caproverExtra:
             dockerfileLines:
                 - FROM chatwoot/chatwoot:$$cap_chatwoot_version
-                - RUN chmod +x docker/entrypoints/rails.sh
-                - ENTRYPOINT ["docker/entrypoints/rails.sh"]
                 - CMD bundle exec sidekiq -C config/sidekiq.yml
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
@@ -68,7 +64,7 @@ caproverOneClickApp:
         - id: $$cap_chatwoot_version
           label: Chatwoot Version Tag
           description: Choose the latest version from https://hub.docker.com/r/chatwoot/chatwoot/tags
-          defaultValue: v3.1.1
+          defaultValue: 3.1.1
         - id: $$cap_chatwoot_secret_key_base
           label: Chatwoot Secret Key Base
           description: The randomized string which is used to verify the integrity of signed cookies. Please use a string with more than 26 characters
