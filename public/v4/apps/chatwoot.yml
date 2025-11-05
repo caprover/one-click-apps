@@ -12,15 +12,14 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname-redis:
+        image: redis:alpine
         volumes:
             - $$cap_appname-redis-data:/data
         restart: always
         environment:
             REDIS_PASSWORD: $$cap_chatwoot_redis_password
+        command: ['sh', '-c', 'redis-server --requirepass $REDIS_PASSWORD']
         caproverExtra:
-            dockerfileLines:
-                - FROM redis:alpine
-                - CMD exec redis-server --requirepass "$$cap_chatwoot_redis_password"
             notExposeAsWebApp: 'true'
     $$cap_appname-web:
         restart: always
