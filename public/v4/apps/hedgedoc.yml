@@ -9,6 +9,7 @@ services:
             CMD_DOMAIN: $$cap_appname.$$cap_root_domain
             CMD_URL_ADDPORT: false
             PLUGIN_INSTALLER: $$cap_plugin_installer
+            CMD_PROTOCOL_USESSL: true
         volumes:
             - '$$cap_appname-uploads:/hedgedoc/public/uploads'
         caproverExtra:
