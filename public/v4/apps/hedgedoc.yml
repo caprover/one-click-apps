@@ -9,7 +9,6 @@ services:
             CMD_DOMAIN: $$cap_appname.$$cap_root_domain
             CMD_URL_ADDPORT: false
             PLUGIN_INSTALLER: $$cap_plugin_installer
-            CMD_PROTOCOL_USESSL: true
         volumes:
             - '$$cap_appname-uploads:/hedgedoc/public/uploads'
         caproverExtra:
@@ -58,6 +57,7 @@ caproverOneClickApp:
         end: |-
             HedgeDoc has been successfully deployed!
             App is available as http://$$cap_appname.$$cap_root_domain
+            If you plan to enable HTTPS, make sure to set this environment variable: `CMD_PROTOCOL_USESSL=true`
     displayName: HedgeDoc
     isOfficial: true
     description: HedgeDoc lets you create real-time collaborative markdown notes
