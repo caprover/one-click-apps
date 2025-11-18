@@ -1,6 +1,6 @@
 captainVersion: 4
 services:
-    # Main Affine Application
+    #affine:
     $$cap_appname:
         image: ghcr.io/toeverything/affine:$$cap_affine_version
         # No command is needed, uses the image's default CMD
@@ -12,8 +12,8 @@ services:
             $$cap_appname-migration:
                 condition: service_completed_successfully
         volumes:
-            - $$cap_appname-config:/root/.affine/config
-            - $$cap_appname-storage:/root/.affine/storage
+            - $$cap_appname-db-data:/root/.affine/config
+            - $$cap_appname-db-data:/root/.affine/storage
         logging:
             driver: 'json-file'
             options:
@@ -41,7 +41,7 @@ services:
             websocketSupport: true
 
     # Affine Database Migration Job
-    $$cap_appname-migration:
+    $$cap_appname-migration-delete-me-after-install:
         image: ghcr.io/toeverything/affine:$$cap_affine_version
         command: ['sh', '-c', 'node ./scripts/self-host-predeploy.js']
         depends_on:
@@ -50,8 +50,8 @@ services:
             $$cap_appname-postgres:
                 condition: service_healthy
         volumes:
-            - $$cap_appname-config:/root/.affine/config
-            - $$cap_appname-storage:/root/.affine/storage
+            - $$cap_appname-db-data:/root/.affine/config
+            - $$cap_appname-db-data:/root/.affine/storage
         restart: on-failure # Run as a one-off job
         environment:
             REDIS_SERVER_HOST: srv-captain--$$cap_appname-redis
@@ -65,7 +65,7 @@ services:
         image: redis
         restart: unless-stopped
         volumes:
-            - $$cap_appname-redis-data:/data
+            - $$cap_appname-db-data:/data
         healthcheck:
             test: ['CMD', 'redis-cli', '--raw', 'incr', 'ping']
             interval: 10s
@@ -79,7 +79,7 @@ services:
         image: pgvector/pgvector:pg16 # Updated image
         restart: unless-stopped
         volumes:
-            - $$cap_appname-pgdata:/var/lib/postgresql/data
+            - $$cap_appname-db-data:/var/lib/postgresql/data
         healthcheck:
             test: ['CMD', 'pg_isready', '-U', 'affine', '-d', 'affine'] # Updated healthcheck
             interval: 10s
@@ -89,6 +89,7 @@ services:
             POSTGRES_DB: affine
             POSTGRES_USER: affine
             POSTGRES_PASSWORD: $$cap_db_affine_password
+            PGDATA: /var/lib/postgresql/data/pgdata
             POSTGRES_INITDB_ARGS: '--data-checksums'
             POSTGRES_HOST_AUTH_METHOD: trust # Kept from new GH file for easier setup
         caproverExtra:
@@ -96,7 +97,7 @@ services:
 
 caproverOneClickApp:
     variables:
-        - defaultValue: stable
+        - defaultValue: 0.25.5
           description: Check out their Docker page for valid tags https://github.com/toeverything/AFFiNE/pkgs/container/affine
           id: $$cap_affine_version
           label: Affine Version Tag
