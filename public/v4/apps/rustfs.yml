@@ -14,7 +14,7 @@ services:
         caproverExtra:
             containerHttpPort: '9001'
     $$cap_appname-api:
-        image: caprover/nginx-reverse-proxy:latest
+        image: caprover/nginx-reverse-proxy:1-cc035d1
         restart: always
         depends_on:
             - $$cap_appname
@@ -54,12 +54,12 @@ caproverOneClickApp:
             **Step 2**: Enable **HTTPS**
             **Step 3**: Enable **Websocket Support**
 
-            🔐 Dashboard access uses the keys set during deployment. If left blank, MinIO sets the keys by default to _minioadmin_.
+            🔐 Dashboard access uses the keys set during deployment. If left blank, RustFS sets the keys by default to rustfsadmin.
 
             **Access Key**: $$cap_access_key
             **Secret Key**: $$cap_secret_key
 
-            🌐 After completing the steps above, you can access MinIO at:
+            🌐 After completing the steps above, you can access RustFS at:
 
             **Dashboard**: https://$$cap_appname.$$cap_root_domain
             **S3 API Endpoint**: https://$$cap_appname-api.$$cap_root_domain
