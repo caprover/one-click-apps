@@ -1,0 +1,191 @@
+captainVersion: 4
+
+services:
+  # -------------------------------------------------------------------------
+  # Banco de Dados Interno (PostgreSQL)
+  # -------------------------------------------------------------------------
+  $$cap_appname-db:
+    image: postgres:14-alpine
+    deploy:
+      replicas: $$cap_db_replicas
+    environment:
+      POSTGRES_USER: moodle
+      POSTGRES_PASSWORD: $$cap_db_pass
+      POSTGRES_DB: moodle
+    volumes:
+      - $$cap_appname-db-data:/var/lib/postgresql/data
+    caproverExtra:
+      notExposeAsWebApp: 'true'
+
+  # -------------------------------------------------------------------------
+  # Aplicação Moodle
+  # -------------------------------------------------------------------------
+  $$cap_appname:
+    image: $$cap_docker_image
+    restart: always
+    environment:
+      MOODLE_URL: $$cap_moodle_url
+
+      # Variáveis de Conexão
+      DB_HOST: $$cap_db_host
+      DB_PORT: $$cap_db_port
+      DB_TYPE: $$cap_db_type
+      DB_NAME: $$cap_db_name
+      DB_USER: $$cap_db_user
+      DB_PASS: $$cap_db_pass
+      DB_PREFIX: $$cap_db_prefix
+
+      MOODLE_ADMIN_USER: $$cap_md_admin_user
+      MOODLE_ADMIN_PASS: $$cap_md_admin_pass
+      MOODLE_ADMIN_EMAIL: $$cap_md_admin_email
+
+      MOODLE_EXTRA_PHP: '$$cap_extra_php'
+
+      PHP_MEMORY_LIMIT: $$cap_php_memory_limit
+      PHP_UPLOAD_MAX_FILESIZE: $$cap_php_upload_max
+      PHP_POST_MAX_SIZE: $$cap_php_post_max
+      PHP_MAX_EXECUTION_TIME: $$cap_php_max_exec
+      PHP_MAX_INPUT_VARS: $$cap_php_input_vars
+
+      MOODLE_VERSION: $$cap_moodle_version
+
+      # AQUI ESTÁ ELA: Injeção da lista de plugins como variável de ambiente
+      MOODLE_PLUGINS_JSON: '$$cap_moodle_plugins_json'
+
+    volumes:
+      - $$cap_appname-data:/var/www/moodledata
+    caproverExtra:
+      containerHttpPort: '80'
+
+caproverOneClickApp:
+  variables:
+    - id: $$cap_docker_image
+      label: Docker Image
+      description: Your custom image from Docker Hub.
+      defaultValue: esdrascaleb/moodle-docker-php-production:php8.3
+
+    - id: $$cap_moodle_url
+      label: Moodle URL
+      description: Public URL (https://...).
+      defaultValue: https://moodle.example.com
+
+    # =================================================================
+    # BANCO DE DADOS (Lógica de Réplicas)
+    # =================================================================
+    - id: $$cap_use_external_db
+      label: Use External Database?
+      description: "'no' = Creates a local DB container. 'yes' = You must provide external DB details below."
+      defaultValue: 'no'
+      validRegex: /^(yes|no)$/
+
+    - id: $$cap_db_replicas
+      label: DB Container Status (Auto)
+      description: 1 = Running, 0 = Stopped (External DB mode)
+      defaultValue: '1'
+      validIf:
+        condition: $$cap_use_external_db
+        equals: 'no'
+
+    - id: $$cap_db_replicas
+      label: DB Container Status (Auto)
+      description: 1 = Running, 0 = Stopped (External DB mode)
+      defaultValue: '0'
+      validIf:
+        condition: $$cap_use_external_db
+        equals: 'yes'
+
+    # --- CAMPOS DE CONEXÃO ---
+    - id: $$cap_db_host
+      label: Database Host
+      description: Leave default for Internal DB. Change only if using External DB.
+      defaultValue: srv-captain--$$cap_appname-db
+
+    - id: $$cap_db_port
+      label: Database Port
+      defaultValue: '5432'
+
+    - id: $$cap_db_name
+      label: Database Name
+      defaultValue: 'moodle'
+
+    - id: $$cap_db_user
+      label: Database User
+      defaultValue: 'moodle'
+
+    - id: $$cap_db_pass
+      label: Database Password
+      description: Auto-generated for Internal. Overwrite if using External.
+      defaultValue: $$cap_gen_random_hex(16)
+
+    - id: $$cap_db_type
+      label: Database Type
+      description: "'pgsql' (Recommended) or 'mysqli'"
+      defaultValue: 'pgsql'
+
+    - id: $$cap_db_prefix
+      label: DB Prefix
+      defaultValue: 'mdl_'
+
+    # =================================================================
+    # CONFIGURAÇÕES DO MOODLE
+    # =================================================================
+    - id: $$cap_moodle_version
+      label: Moodle Version (Branch/Tag)
+      defaultValue: MOODLE_405_STABLE
+
+    - id: $$cap_md_admin_user
+      label: Moodle Admin User
+      defaultValue: admin
+
+    - id: $$cap_md_admin_pass
+      label: Moodle Admin Password
+      defaultValue: MoodleAdmin123
+
+    - id: $$cap_md_admin_email
+      label: Moodle Admin Email
+      defaultValue: admin@example.com
+
+    - id: $$cap_moodle_plugins_json
+      label: Plugins JSON
+      description: 'JSON List. Example: [{"giturl":"...","branch":"...","installpath":"..."}]'
+      defaultValue: '[]'
+
+    # =================================================================
+    # PHP & PERFORMANCE
+    # =================================================================
+    - id: $$cap_extra_php
+      label: Extra PHP Config
+      defaultValue: '$CFG->sslproxy = 1;'
+
+    - id: $$cap_php_memory_limit
+      label: PHP Memory Limit
+      defaultValue: 512M
+
+    - id: $$cap_php_upload_max
+      label: PHP Upload Max Filesize
+      defaultValue: 100M
+
+    - id: $$cap_php_post_max
+      label: PHP POST Max Size
+      defaultValue: 100M
+
+    - id: $$cap_php_max_exec
+      label: PHP Max Execution Time
+      defaultValue: '600'
+
+    - id: $$cap_php_input_vars
+      label: PHP Max Input Vars
+      defaultValue: '5000'
+
+  instructions:
+    start: >
+      Moodle Deploy with Custom Docker Image.
+      Supports Internal PostgreSQL (default) or External Database.
+    end: >
+      Deploy Finished!
+      1. Enable HTTPS in App Config.
+      2. If using External DB, ensure connectivity.
+
+  displayName: Moodle Production (Full Custom)
+  isOfficial: false
+  description: Moodle with full External DB support and PHP tuning.
