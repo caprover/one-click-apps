@@ -1,35 +1,40 @@
 captainVersion: 4
 
 caproverOneClickApp:
-  displayName: Databasus
-  description: >
-    Web UI for automated backups of PostgreSQL, MySQL and MongoDB.
-    Stores all state in a local volume and supports S3/MinIO targets.
-    No external database required.
-  isOfficial: false
-  documentation: https://databasus.com
-  instructions:
-    start: >
-      After deployment, access the web interface and configure your
-      databases and storage targets (local or S3/MinIO) through the UI.
-  variables:
-    - id: $$cap_databasus_tag
-      label: Databasus image tag
-      description: >
-        Docker image tag to use.
-        See available tags at:
-        https://hub.docker.com/r/databasus/databasus/tags
-      defaultValue: "v3.4.0"
-      validRegex: /^.+$/
+    variables:
+        - id: '$$cap_databasus_tag'
+          label: Databasus image tag
+          defaultValue: 'latest'
+          description: Check available tags at https://hub.docker.com/r/databasus/databasus/tags
+          validRegex: '/.{1,}/'
+
+    instructions:
+        start: |-
+            After deployment, access the web interface to configure
+            database connections and backup targets (local or S3/MinIO).
+
+        end: |-
+            Databasus has been deployed successfully.
+
+            Access it via:
+            https://$$cap_appname.$$cap_root_domain
+
+            All application data is stored in a persistent volume.
+
+    displayName: Databasus
+    isOfficial: false
+    description: Web UI for automated backups of PostgreSQL, MySQL and MongoDB.
+    documentation: https://databasus.com
 
 services:
-  $$cap_appname:
-    image: databasus/databasus:$$cap_databasus_tag
-    restart: always
-    volumes:
-      - $$cap_appname-data:/databasus-data
-    caproverExtra:
-      containerHttpPort: 4005
+    $$cap_appname:
+        image: databasus/databasus:$$cap_databasus_tag
+        restart: always
+        volumes:
+            - $$cap_appname-data:/databasus-data
+        caproverExtra:
+            containerHttpPort: 4005
+            waitForContainer: false
 
 volumes:
-  $$cap_appname-data:
+    $$cap_appname-data:
