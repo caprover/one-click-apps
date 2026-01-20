@@ -1,0 +1,120 @@
+captainVersion: 4
+services:
+  $$cap_appname-postgres:
+    image: postgres:$$cap_postgres_version
+    volumes:
+      - $$cap_appname-postgres-data:/var/lib/postgresql/data
+    restart: always
+    environment:
+      POSTGRES_DB: nostr_ts_relay
+      POSTGRES_USER: $$cap_pg_user
+      POSTGRES_PASSWORD: $$cap_pg_password
+      POSTGRES_INITDB_ARGS: $$cap_pg_initdb_args
+    caproverExtra:
+      notExposeAsWebApp: true
+
+  $$cap_appname-redis:
+    volumes:
+      - $$cap_appname-redis-data:/data
+    restart: always
+    environment:
+      REDIS_USER: default
+      REDIS_PASSWORD: $$cap_redis_password
+    caproverExtra:
+      dockerfileLines:
+        - FROM redis:$$cap_redis_version
+        - CMD exec redis-server --requirepass "$REDIS_PASSWORD"
+      notExposeAsWebApp: true
+
+  $$cap_appname:
+    volumes:
+      - $$cap_appname-data:/.nostr
+    depends_on:
+      - $$cap_appname-postgres
+    restart: always
+    environment:
+      DB_HOST: srv-captain--$$cap_appname-postgres
+      DB_PORT: 5432
+      DB_USER: $$cap_pg_user
+      DB_NAME: nostr_ts_relay
+      DB_PASSWORD: $$cap_pg_password
+      REDIS_HOST: srv-captain--$$cap_appname-redis
+      REDIS_PORT: 6379
+      REDIS_USER: default
+      REDIS_PASSWORD: $$cap_redis_password
+      NOSTR_CONFIG_DIR: /.nostr/
+    caproverExtra:
+      containerHttpPort: "8008"
+      dockerfileLines:
+        - FROM node:18 AS build
+        - WORKDIR /build
+        - RUN git clone -b v$$cap_nostream_version --single-branch https://github.com/Cameri/nostream.git /build
+        - RUN rm -rf .git
+        - RUN npm install
+        - CMD ["npm", "run", "db:migrate"]
+        - COPY . .
+        - RUN npm run build
+        - FROM node:18-alpine3.16
+        - WORKDIR /app
+        - COPY --from=build /build/dist .
+        - RUN npm install --omit=dev --quiet
+        - RUN mkdir -p /.nostr
+        - CMD ["node", "src/index.js"]
+      notExposeAsWebApp: false
+
+caproverOneClickApp:
+  displayName: nostream
+  isOfficial: true
+  description: A Nostr Relay written in TypeScript
+  documentation: https://github.com/Cameri/nostream
+
+  instructions:
+    start: >-
+      This is a nostr relay, written in Typescript.
+
+      This implementation is production-ready.
+
+      The project master repository is available on GitHub.
+
+      For more info visit https://github.com/Cameri/nostream
+    end: |-
+      nostream has been successfully deployed!
+      --------------------------------------------
+      Before you proceed, please enable Websocket Support and force HTTPS
+      https://$$cap_root_domain/#/apps/details/$$cap_appname
+      --------------------------------------------
+      App is available as http://$$cap_appname.$$cap_root_domain
+
+  variables:
+    - id: $$cap_postgres_version
+      label: Postgres Version
+      defaultValue: "14.5-alpine"
+      description: Checkout their page for the valid tags https://hub.docker.com/_/postgres
+      validRegex: /^([^\s^\/])+$/
+    - id: $$cap_pg_user
+      label: Postgres User
+      defaultValue: nostr_ts_relay
+    - id: $$cap_pg_password
+      label: Password for postgres
+      defaultValue: $$cap_gen_random_hex(16)
+      validRegex: /^([^\s^\/])+$/
+    - id: $$cap_pg_initdb_args
+      label: Optional Arguments
+      description: >-
+        Arguments will be appended to `postgres initdb`.
+        Example: `--data-checksums`.
+      validRegex: /.{0,}/
+    - id: $$cap_redis_version
+      label: Redis Version Tag
+      description: "Check out their Docker page for the valid tags: https://hub.docker.com/_/redis?tab=tags"
+      defaultValue: "7.0"
+      validRegex: /^([^\s^\/])+$/
+    - id: $$cap_redis_password
+      label: Password for redis
+      defaultValue: $$cap_gen_random_hex(16)
+      validRegex: /^(\w|[^\s"])+$/
+    - id: $$cap_nostream_version
+      label: nostream version
+      defaultValue: 1.17.2
+      description: Check out their github page for the valid tags https://github.com/Cameri/nostream/releases
+      validRegex: /(?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.(?<patch>0|[1-9]\d*)(?:-(?<prerelease>(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+(?<buildmetadata>[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?/
