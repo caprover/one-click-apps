@@ -4,7 +4,7 @@ caproverOneClickApp:
     variables:
         - id: '$$cap_databasus_tag'
           label: Databasus image tag
-          defaultValue: 'latest'
+          defaultValue: 'v3.4.0'
           description: Check available tags at https://hub.docker.com/r/databasus/databasus/tags
           validRegex: '/.{1,}/'
 
@@ -34,7 +34,6 @@ services:
             - $$cap_appname-data:/databasus-data
         caproverExtra:
             containerHttpPort: 4005
-            waitForContainer: false
 
 volumes:
     $$cap_appname-data:
