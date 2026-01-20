@@ -17,7 +17,7 @@ caproverOneClickApp:
             Databasus has been deployed successfully.
 
             Access it via:
-            https://$$cap_appname.$$cap_root_domain
+            http://$$cap_appname.$$cap_root_domain
 
             All application data is stored in a persistent volume.
 
