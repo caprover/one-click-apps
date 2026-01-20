@@ -22,7 +22,7 @@ caproverOneClickApp:
             All application data is stored in a persistent volume.
 
     displayName: Databasus
-    isOfficial: false
+    isOfficial: true
     description: Web UI for automated backups of PostgreSQL, MySQL and MongoDB.
     documentation: https://databasus.com
 
