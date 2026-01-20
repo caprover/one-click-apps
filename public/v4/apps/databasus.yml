@@ -2,13 +2,29 @@ captainVersion: 4
 
 caproverOneClickApp:
   displayName: Databasus
-  description: Web UI for automated backups of PostgreSQL, MySQL and MongoDB. Stores all state in a local volume and supports S3/MinIO targets. No external database required.
+  description: >
+    Web UI for automated backups of PostgreSQL, MySQL and MongoDB.
+    Stores all state in a local volume and supports S3/MinIO targets.
+    No external database required.
   isOfficial: false
   documentation: https://databasus.com
+  instructions:
+    start: >
+      After deployment, access the web interface and configure your
+      databases and storage targets (local or S3/MinIO) through the UI.
+  variables:
+    - id: $$cap_databasus_tag
+      label: Databasus image tag
+      description: >
+        Docker image tag to use.
+        See available tags at:
+        https://hub.docker.com/r/databasus/databasus/tags
+      defaultValue: "v3.4.0"
+      validRegex: /^.+$/
 
 services:
   $$cap_appname:
-    image: databasus/databasus:latest
+    image: databasus/databasus:$$cap_databasus_tag
     restart: always
     volumes:
       - $$cap_appname-data:/databasus-data
