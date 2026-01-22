@@ -1,0 +1,179 @@
+captainVersion: 4
+
+services:
+    $$cap_appname-redis:
+        caproverExtra:
+            dockerfileLines:
+                - FROM redis:$$cap_REDIS_VERSION
+                - CMD exec redis-server --requirepass "$$cap_REDIS_PASSWORD"
+            notExposeAsWebApp: 'true'
+        environment:
+            REDIS_PASSWORD: $$cap_REDIS_PASSWORD
+
+    $$cap_appname-clickhouse:
+        image: clickhouse/clickhouse-server:$$cap_CLICKHOUSE_VERSION
+        environment:
+            CLICKHOUSE_DATABASE: analytics
+            CLICKHOUSE_USER: default
+            CLICKHOUSE_PORT: 8123
+            CLICKHOUSE_PASSWORD: $$cap_CLICKHOUSE_PASSWORD
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+        volumes:
+            - $$cap_appname-clickhouse-data:/var/lib/clickhouse
+        cap_add:
+            - SYS_NICE
+
+    $$cap_appname-api:
+        image: swetrix/swetrix-api:$$cap_SWETRIX_API_VERSION
+        depends_on:
+            - $$cap_appname-redis
+            - $$cap_appname-clickhouse
+        environment:
+            SECRET_KEY_BASE: $$cap_gen_random_hex(64)
+            DISABLE_REGISTRATION: $$cap_DISABLE_REGISTRATION
+            IP_GEOLOCATION_DB_PATH: $$cap_IP_GEOLOCATION_DB_PATH
+            DEBUG_MODE: $$cap_DEBUG_MODE
+            CLOUDFLARE_PROXY_ENABLED: $$cap_CLOUDFLARE_PROXY_ENABLED
+            SMTP_HOST: $$cap_SMTP_HOST
+            SMTP_PORT: $$cap_SMTP_PORT
+            SMTP_USER: $$cap_SMTP_USER
+            SMTP_PASSWORD: $$cap_SMTP_PASSWORD
+            FROM_EMAIL: $$cap_FROM_EMAIL
+            SMTP_MOCK: $$cap_SMTP_MOCK
+            OIDC_ENABLED: $$cap_OIDC_ENABLED
+            OIDC_ONLY_AUTH: $$cap_OIDC_ONLY_AUTH
+            OIDC_DISCOVERY_URL: $$cap_OIDC_DISCOVERY_URL
+            OIDC_CLIENT_ID: $$cap_OIDC_CLIENT_ID
+            OIDC_CLIENT_SECRET: $$cap_OIDC_CLIENT_SECRET
+            REDIS_HOST: srv-captain--$$cap_appname-redis
+            REDIS_PASSWORD: $$cap_REDIS_PASSWORD
+            CLICKHOUSE_HOST: http://srv-captain--$$cap_appname-clickhouse
+            CLICKHOUSE_PASSWORD: $$cap_CLICKHOUSE_PASSWORD
+        caproverExtra:
+            containerHttpPort: '5005'
+        hostname: $$cap_appname-api.$$cap_root_domain
+
+    $$cap_appname:
+        image: swetrix/swetrix-fe:$$cap_SWETRIX_FE_VERSION
+        depends_on:
+            - $$cap_appname-api
+        environment:
+            API_URL: http://$$cap_appname-api.$$cap_root_domain
+        caproverExtra:
+            containerHttpPort: '3000'
+        hostname: $$cap_appname.$$cap_root_domain
+
+caproverOneClickApp:
+    variables:
+        - id: $$cap_SWETRIX_FE_VERSION
+          label: SWETRIX_FE_VERSION
+          defaultValue: v4.0.2
+          description: Version tag for swetrix/swetrix-fe
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_SWETRIX_API_VERSION
+          label: SWETRIX_API_VERSION
+          defaultValue: v4.0.2
+          description: Version tag for swetrix/swetrix-api
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_CLICKHOUSE_VERSION
+          label: CLICKHOUSE_VERSION
+          defaultValue: 24.10-alpine
+          description: ClickHouse server tag (e.g. 24.10-alpine)
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_REDIS_VERSION
+          label: REDIS_VERSION
+          defaultValue: 8.2-alpine
+          description: Redis tag (e.g. 8.2-alpine)
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_REDIS_PASSWORD
+          label: REDIS_PASSWORD
+          description: Password for Redis
+          defaultValue: $$cap_gen_random_hex(24)
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_CLICKHOUSE_PASSWORD
+          label: CLICKHOUSE_PASSWORD
+          description: Password for ClickHouse (optional)
+          defaultValue:
+        - id: $$cap_DISABLE_REGISTRATION
+          label: DISABLE_REGISTRATION
+          description: Disable user registration (true/false)
+          defaultValue: 'false'
+          validRegex: /^(true|false)$/
+        - id: $$cap_IP_GEOLOCATION_DB_PATH
+          label: IP_GEOLOCATION_DB_PATH
+          description: Absolute path to GeoIP database (container path)
+          defaultValue:
+        - id: $$cap_DEBUG_MODE
+          label: DEBUG_MODE
+          description: Enable debug mode for more logging (true/false)
+          defaultValue: 'false'
+          validRegex: /^(true|false)$/
+        - id: $$cap_CLOUDFLARE_PROXY_ENABLED
+          label: CLOUDFLARE_PROXY_ENABLED
+          description: Enable Cloudflare proxy adjustments (select if you proxy through Cloudflare) (true/false)
+          defaultValue: 'false'
+          validRegex: /^(true|false)$/
+        - id: $$cap_SMTP_HOST
+          label: SMTP_HOST
+          description: SMTP host (optional)
+          defaultValue:
+        - id: $$cap_SMTP_PORT
+          label: SMTP_PORT
+          description: SMTP port (optional)
+          defaultValue:
+        - id: $$cap_SMTP_USER
+          label: SMTP_USER
+          description: SMTP username (optional)
+          defaultValue:
+        - id: $$cap_SMTP_PASSWORD
+          label: SMTP_PASSWORD
+          description: SMTP password (optional)
+          defaultValue:
+        - id: $$cap_FROM_EMAIL
+          label: FROM_EMAIL
+          description: From email for sending (optional)
+          defaultValue:
+        - id: $$cap_SMTP_MOCK
+          label: SMTP_MOCK
+          description: Use mock SMTP (true/false)
+          defaultValue: 'false'
+          validRegex: /^(true|false)$/
+        - id: $$cap_OIDC_ENABLED
+          label: OIDC_ENABLED
+          description: Enable OIDC (true/false)
+          defaultValue: 'false'
+          validRegex: /^(true|false)$/
+        - id: $$cap_OIDC_ONLY_AUTH
+          label: OIDC_ONLY_AUTH
+          description: Only allow OIDC auth (true/false)
+          defaultValue: 'false'
+          validRegex: /^(true|false)$/
+        - id: $$cap_OIDC_DISCOVERY_URL
+          label: OIDC_DISCOVERY_URL
+          description: OIDC discovery URL (optional)
+          defaultValue:
+        - id: $$cap_OIDC_CLIENT_ID
+          label: OIDC_CLIENT_ID
+          description: OIDC client ID (optional)
+          defaultValue:
+        - id: $$cap_OIDC_CLIENT_SECRET
+          label: OIDC_CLIENT_SECRET
+          description: OIDC client secret (optional)
+          defaultValue:
+    instructions:
+        start: >-
+            Swetrix is a privacy-friendly, European, cookieless web analytics platform.
+            This one-click app deploys the UI, API, Redis and ClickHouse services.
+            The UI will use the API at http://$$cap_appname-api.$$cap_root_domain.
+
+            See more details here at https://swetrix.com
+        end: >-
+            Swetrix has been deployed.
+            - UI: http://$$cap_appname.$$cap_root_domain
+            - API: http://$$cap_appname-api.$$cap_root_domain
+            After deployment, enable HTTPS for both domains. Update DNS if needed.
+    displayName: Swetrix v4.0.2
+    isOfficial: true
+    description: Swetrix is a privacy-friendly, European, cookieless web analytics platform.
+    documentation: Taken from https://docs.swetrix.com/selfhosting/how-to. This template was developed using variables from https://github.com/Swetrix/selfhosting/blob/main/compose.yaml
