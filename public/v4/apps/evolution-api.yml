@@ -1,13 +1,23 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: atendai/evolution-api:$$cap_ant_version
+        image: evoapicloud/evolution-api:$$cap_evo_version
         restart: always
         environment:
+            SERVER_NAME: '$$cap_appname'
             SERVER_TYPE: 'http'
             SERVER_PORT: '80'
             SERVER_URL: 'https://$$cap_appname.$$cap_root_domain'
+            SSL_CONF_PRIVKEY: '/path/to/cert.key'
+            SSL_CONF_FULLCHAIN: '/path/to/cert.crt'
             SENTRY_DSN: ''
+            TELEMETRY_ENABLED: 'true'
+            TELEMETRY_URL: ''
+            PROMETHEUS_METRICS: 'false'
+            METRICS_AUTH_REQUIRED: 'true'
+            METRICS_USER: 'prometheus'
+            METRICS_PASSWORD: 'secure_random_password_here'
+            METRICS_ALLOWED_IPS: '127.0.0.1,10.0.0.100,192.168.1.50'
             CORS_ORIGIN: '*'
             CORS_METHODS: 'POST,GET,PUT,DELETE'
             CORS_CREDENTIALS: 'true'
@@ -32,7 +42,9 @@ services:
             RABBITMQ_ENABLED: 'true'
             RABBITMQ_URI: 'amqp://$$cap_rabbitmq_user:$$cap_rabbitmq_password@srv-captain--$$cap_appname-rabbitmq:5672'
             RABBITMQ_EXCHANGE_NAME: 'evolution-api'
+            RABBITMQ_FRAME_MAX: '8192'
             RABBITMQ_GLOBAL_ENABLED: 'true'
+            RABBITMQ_PREFIX_KEY: 'evolution'
             RABBITMQ_EVENTS_APPLICATION_STARTUP: 'true'
             RABBITMQ_EVENTS_INSTANCE_CREATE: 'true'
             RABBITMQ_EVENTS_INSTANCE_DELETE: 'true'
@@ -43,6 +55,7 @@ services:
             RABBITMQ_EVENTS_MESSAGES_UPDATE: 'true'
             RABBITMQ_EVENTS_MESSAGES_DELETE: 'true'
             RABBITMQ_EVENTS_SEND_MESSAGE: 'true'
+            RABBITMQ_EVENTS_SEND_MESSAGE_UPDATE: 'true'
             RABBITMQ_EVENTS_CONTACTS_SET: 'true'
             RABBITMQ_EVENTS_CONTACTS_UPSERT: 'true'
             RABBITMQ_EVENTS_CONTACTS_UPDATE: 'true'
@@ -65,8 +78,38 @@ services:
             SQS_SECRET_ACCESS_KEY: ''
             SQS_ACCOUNT_ID: ''
             SQS_REGION: ''
+            SQS_GLOBAL_ENABLED: 'false'
+            SQS_GLOBAL_FORCE_SINGLE_QUEUE: 'false'
+            SQS_GLOBAL_APPLICATION_STARTUP: 'false'
+            SQS_GLOBAL_CALL: 'false'
+            SQS_GLOBAL_CHATS_DELETE: 'false'
+            SQS_GLOBAL_CHATS_SET: 'false'
+            SQS_GLOBAL_CHATS_UPDATE: 'false'
+            SQS_GLOBAL_CHATS_UPSERT: 'false'
+            SQS_GLOBAL_CONNECTION_UPDATE: 'false'
+            SQS_GLOBAL_CONTACTS_SET: 'false'
+            SQS_GLOBAL_CONTACTS_UPDATE: 'false'
+            SQS_GLOBAL_CONTACTS_UPSERT: 'false'
+            SQS_GLOBAL_GROUP_PARTICIPANTS_UPDATE: 'false'
+            SQS_GLOBAL_GROUPS_UPDATE: 'false'
+            SQS_GLOBAL_GROUPS_UPSERT: 'false'
+            SQS_GLOBAL_LABELS_ASSOCIATION: 'false'
+            SQS_GLOBAL_LABELS_EDIT: 'false'
+            SQS_GLOBAL_LOGOUT_INSTANCE: 'false'
+            SQS_GLOBAL_MESSAGES_DELETE: 'false'
+            SQS_GLOBAL_MESSAGES_EDITED: 'false'
+            SQS_GLOBAL_MESSAGES_SET: 'false'
+            SQS_GLOBAL_MESSAGES_UPDATE: 'false'
+            SQS_GLOBAL_MESSAGES_UPSERT: 'false'
+            SQS_GLOBAL_PRESENCE_UPDATE: 'false'
+            SQS_GLOBAL_QRCODE_UPDATED: 'false'
+            SQS_GLOBAL_REMOVE_INSTANCE: 'false'
+            SQS_GLOBAL_SEND_MESSAGE: 'false'
+            SQS_GLOBAL_TYPEBOT_CHANGE_STATUS: 'false'
+            SQS_GLOBAL_TYPEBOT_START: 'false'
             WEBSOCKET_ENABLED: 'false'
             WEBSOCKET_GLOBAL_EVENTS: 'false'
+            WEBSOCKET_ALLOWED_HOSTS: '127.0.0.1,::1,::ffff:127.0.0.1'
             PUSHER_ENABLED: 'false'
             PUSHER_GLOBAL_ENABLED: 'false'
             PUSHER_GLOBAL_APP_ID: ''
@@ -82,6 +125,7 @@ services:
             PUSHER_EVENTS_MESSAGES_UPDATE: ''
             PUSHER_EVENTS_MESSAGES_DELETE: ''
             PUSHER_EVENTS_SEND_MESSAGE: ''
+            PUSHER_EVENTS_SEND_MESSAGE_UPDATE: ''
             PUSHER_EVENTS_CONTACTS_SET: ''
             PUSHER_EVENTS_CONTACTS_UPSERT: ''
             PUSHER_EVENTS_CONTACTS_UPDATE: ''
@@ -99,6 +143,54 @@ services:
             PUSHER_EVENTS_CALL: ''
             PUSHER_EVENTS_TYPEBOT_START: ''
             PUSHER_EVENTS_TYPEBOT_CHANGE_STATUS: ''
+            KAFKA_ENABLED: 'false'
+            KAFKA_CLIENT_ID: 'evolution-api'
+            KAFKA_BROKERS: 'localhost:9092'
+            KAFKA_CONNECTION_TIMEOUT: '3000'
+            KAFKA_REQUEST_TIMEOUT: '30000'
+            KAFKA_GLOBAL_ENABLED: 'false'
+            KAFKA_CONSUMER_GROUP_ID: 'evolution-api-consumers'
+            KAFKA_TOPIC_PREFIX: 'evolution'
+            KAFKA_NUM_PARTITIONS: '1'
+            KAFKA_REPLICATION_FACTOR: '1'
+            KAFKA_AUTO_CREATE_TOPICS: 'false'
+            KAFKA_EVENTS_APPLICATION_STARTUP: 'false'
+            KAFKA_EVENTS_INSTANCE_CREATE: 'false'
+            KAFKA_EVENTS_INSTANCE_DELETE: 'false'
+            KAFKA_EVENTS_QRCODE_UPDATED: 'false'
+            KAFKA_EVENTS_MESSAGES_SET: 'false'
+            KAFKA_EVENTS_MESSAGES_UPSERT: 'false'
+            KAFKA_EVENTS_MESSAGES_EDITED: 'false'
+            KAFKA_EVENTS_MESSAGES_UPDATE: 'false'
+            KAFKA_EVENTS_MESSAGES_DELETE: 'false'
+            KAFKA_EVENTS_SEND_MESSAGE: 'false'
+            KAFKA_EVENTS_SEND_MESSAGE_UPDATE: 'false'
+            KAFKA_EVENTS_CONTACTS_SET: 'false'
+            KAFKA_EVENTS_CONTACTS_UPSERT: 'false'
+            KAFKA_EVENTS_CONTACTS_UPDATE: 'false'
+            KAFKA_EVENTS_PRESENCE_UPDATE: 'false'
+            KAFKA_EVENTS_CHATS_SET: 'false'
+            KAFKA_EVENTS_CHATS_UPSERT: 'false'
+            KAFKA_EVENTS_CHATS_UPDATE: 'false'
+            KAFKA_EVENTS_CHATS_DELETE: 'false'
+            KAFKA_EVENTS_GROUPS_UPSERT: 'false'
+            KAFKA_EVENTS_GROUPS_UPDATE: 'false'
+            KAFKA_EVENTS_GROUP_PARTICIPANTS_UPDATE: 'false'
+            KAFKA_EVENTS_CONNECTION_UPDATE: 'false'
+            KAFKA_EVENTS_LABELS_EDIT: 'false'
+            KAFKA_EVENTS_LABELS_ASSOCIATION: 'false'
+            KAFKA_EVENTS_CALL: 'false'
+            KAFKA_EVENTS_TYPEBOT_START: 'false'
+            KAFKA_EVENTS_TYPEBOT_CHANGE_STATUS: 'false'
+            KAFKA_SASL_ENABLED: 'false'
+            KAFKA_SASL_MECHANISM: 'plain'
+            KAFKA_SASL_USERNAME: ''
+            KAFKA_SASL_PASSWORD: ''
+            KAFKA_SSL_ENABLED: 'false'
+            KAFKA_SSL_REJECT_UNAUTHORIZED: 'true'
+            KAFKA_SSL_CA: ''
+            KAFKA_SSL_KEY: ''
+            KAFKA_SSL_CERT: ''
             WA_BUSINESS_TOKEN_WEBHOOK: ''
             WA_BUSINESS_URL: ''
             WA_BUSINESS_VERSION: ''
@@ -114,6 +206,7 @@ services:
             WEBHOOK_EVENTS_MESSAGES_UPDATE: 'true'
             WEBHOOK_EVENTS_MESSAGES_DELETE: 'true'
             WEBHOOK_EVENTS_SEND_MESSAGE: 'true'
+            WEBHOOK_EVENTS_SEND_MESSAGE_UPDATE: 'true'
             WEBHOOK_EVENTS_CONTACTS_SET: 'true'
             WEBHOOK_EVENTS_CONTACTS_UPSERT: 'true'
             WEBHOOK_EVENTS_CONTACTS_UPDATE: 'true'
@@ -135,9 +228,15 @@ services:
             WEBHOOK_EVENTS_TYPEBOT_CHANGE_STATUS: 'true'
             WEBHOOK_EVENTS_ERRORS: 'true'
             WEBHOOK_EVENTS_ERRORS_WEBHOOK: 'true'
+            WEBHOOK_REQUEST_TIMEOUT_MS: '60000'
+            WEBHOOK_RETRY_MAX_ATTEMPTS: '10'
+            WEBHOOK_RETRY_INITIAL_DELAY_SECONDS: '5'
+            WEBHOOK_RETRY_USE_EXPONENTIAL_BACKOFF: 'true'
+            WEBHOOK_RETRY_MAX_DELAY_SECONDS: '300'
+            WEBHOOK_RETRY_JITTER_FACTOR: '0.2'
+            WEBHOOK_RETRY_NON_RETRYABLE_STATUS_CODES: '400,401,403,404,422'
             CONFIG_SESSION_PHONE_CLIENT: 'Evolution API'
             CONFIG_SESSION_PHONE_NAME: 'Chrome'
-            CONFIG_SESSION_PHONE_VERSION: '4.0.0'
             QRCODE_LIMIT: '30'
             QRCODE_COLOR: '#198754'
             TYPEBOT_ENABLED: 'false'
@@ -150,6 +249,8 @@ services:
             CHATWOOT_IMPORT_PLACEHOLDER_MEDIA_MESSAGE: ''
             OPENAI_ENABLED: 'false'
             DIFY_ENABLED: 'false'
+            N8N_ENABLED: 'false'
+            EVOAI_ENABLED: 'false'
             CACHE_REDIS_ENABLED: 'true'
             CACHE_REDIS_URI: 'redis://srv-captain--$$cap_appname-redis:6379'
             CACHE_REDIS_TTL: '3600'
@@ -164,25 +265,30 @@ services:
             S3_ENDPOINT: ''
             S3_REGION: 'us-east-1'
             S3_USE_SSL: 'false'
-            AUTHENTICATION_API_KEY: '$$cap_appname_authentication_api_key'
-            AUTHENTICATION_EXPOSE_IN_FETCH_INSTANCES: 'false'
+            AUTHENTICATION_API_KEY: '$$cap_evo_authentication_api_key'
+            AUTHENTICATION_EXPOSE_IN_FETCH_INSTANCES: 'true'
             LANGUAGE: 'en'
             PROXY_HOST: ''
             PROXY_PORT: ''
             PROXY_PROTOCOL: ''
             PROXY_USERNAME: ''
             PROXY_PASSWORD: ''
+            API_AUDIO_CONVERTER: ''
+            API_AUDIO_CONVERTER_KEY: ''
         volumes:
             - $$cap_appname-data:/evolution
         depends_on:
             - $$cap_appname-redis
             - $$cap_appname-postgres
             - $$cap_appname-rabbitmq
+
     $$cap_appname-redis:
         image: redis:latest
         restart: always
         volumes:
             - $$cap_appname-redis-data:/data
+        caproverExtra:
+            notExposeAsWebApp: 'true'
     $$cap_appname-postgres:
         image: postgres:$$cap_postgres_version
         restart: always
@@ -192,6 +298,8 @@ services:
             POSTGRES_DB: $$cap_postgres_db
         volumes:
             - $$cap_appname-postgres-data:/var/lib/postgresql/data
+        caproverExtra:
+            notExposeAsWebApp: 'true'
     $$cap_appname-rabbitmq:
         image: rabbitmq:$$cap_rabbitmq_version
         restart: always
@@ -200,28 +308,34 @@ services:
             RABBITMQ_DEFAULT_PASS: $$cap_rabbitmq_password
         volumes:
             - $$cap_appname-rabbitmq-data:/var/lib/rabbitmq
+        ports:
+            - '$$cap_rabbitmq_amqp_port:$$cap_rabbitmq_amqp_port'
+            - '$$cap_rabbitmq_management_ui_port:$$cap_rabbitmq_management_ui_port'
+        caproverExtra:
+            containerHttpPort: '$$cap_rabbitmq_management_ui_port'
+
 caproverOneClickApp:
     variables:
-        - id: $$cap_ant_version
+        - id: $$cap_evo_version
           label: Evolution API Version
-          description: Choose the latest version of Evolution API from https://hub.docker.com/r/atendai/evolution-api/tags
-          defaultValue: v2.2.1
-        - id: $$cap_postgres_version
-          label: PostgreSQL Version
-          description: Choose the latest version of PostgreSQL from https://hub.docker.com/_/postgres/tags
-          defaultValue: '17'
+          description: Choose the latest version of Evolution API from https://hub.docker.com/r/evoapicloud/evolution-api/tags
+          defaultValue: v2.3.4
+        - id: $$cap_evo_authentication_api_key
+          label: Evolution Authentication API Key
+          description: Set a strong API key for authentication
+          defaultValue: $$cap_gen_random_hex(50)
+        - id: $$cap_evo_http_port
+          label: Evolution HTTP Port
+          description: Set Evolution API HTTP Port
+          defaultValue: '8081'
         - id: $$cap_redis_version
           label: Redis Version
           description: Choose the latest version of Redis from https://hub.docker.com/_/redis/tags
           defaultValue: '6.2'
-        - id: $$cap_rabbitmq_version
-          label: RabbitMQ Version
-          description: Choose the latest version of RabbitMQ from https://hub.docker.com/_/rabbitmq/tags
-          defaultValue: '3.7'
-        - id: $$cap_appname_authentication_api_key
-          label: Authentication API Key
-          description: Set a strong API key for authentication
-          defaultValue: $$cap_gen_random_hex(32)
+        - id: $$cap_postgres_version
+          label: PostgreSQL Version
+          description: Choose the latest version of PostgreSQL from https://hub.docker.com/_/postgres/tags
+          defaultValue: '17'
         - id: $$cap_postgres_user
           label: PostgreSQL Username
           description: Set the username for PostgreSQL
@@ -229,11 +343,15 @@ caproverOneClickApp:
         - id: $$cap_postgres_password
           label: PostgreSQL Password
           description: Set a strong password for PostgreSQL
-          defaultValue: $$cap_gen_random_hex(16)
+          defaultValue: $$cap_gen_random_hex(30)
         - id: $$cap_postgres_db
           label: PostgreSQL Database Name
           description: Set the database name for PostgreSQL
           defaultValue: evolution_db
+        - id: $$cap_rabbitmq_version
+          label: RabbitMQ Version
+          description: Choose the latest version of RabbitMQ from https://hub.docker.com/_/rabbitmq/tags
+          defaultValue: '3.13.7-management'
         - id: $$cap_rabbitmq_user
           label: RabbitMQ Username
           description: Set the username for RabbitMQ
@@ -241,7 +359,15 @@ caproverOneClickApp:
         - id: $$cap_rabbitmq_password
           label: RabbitMQ Password
           description: Set a strong password for RabbitMQ
-          defaultValue: $$cap_gen_random_hex(16)
+          defaultValue: $$cap_gen_random_hex(30)
+        - id: $$cap_rabbitmq_amqp_port
+          label: RabbitMQ AMQP Port (Message Broker)
+          description: Port used by applications to connect to RabbitMQ via the AMQP protocol.
+          defaultValue: '5672'
+        - id: $$cap_rabbitmq_management_ui_port
+          label: RabbitMQ Management UI Port
+          description: Port for accessing the RabbitMQ Web Dashboard (management plugin).
+          defaultValue: '15672'
     instructions:
         start: Deploying Evolution API with required services (PostgreSQL, Redis, RabbitMQ)...
         end: Once finished, you need to activate HTTPS and WebSocket support before being able to use the app.
