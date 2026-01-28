@@ -1,0 +1,64 @@
+captainVersion: 4
+services:
+  $$cap_appname:
+    image: stalwartlabs/stalwart:$$cap_stalwart_version
+    restart: always
+    volumes:
+      - $$cap_appname-data:/opt/stalwart-mail
+    ports:
+      - "25:25"       # SMTP
+      - "587:587"     # Submission (Moodle uses this)
+      - "465:465"     # SMTPS
+      - "993:993"     # IMAPS
+      # Port 8080 is internal for WebAdmin, handled by CapRover
+    caproverExtra:
+      containerHttpPort: '8080'
+
+caproverOneClickApp:
+  displayName: Stalwart Mail Server
+  isOfficial: false
+  description: Modern, All-in-One Mail Server written in Rust (JMAP, IMAP, SMTP). Faster and lighter than Postal/Poste.io.
+  documentation: https://stalw.art/docs/
+
+  variables:
+    - id: '$$cap_stalwart_version'
+      label: Stalwart Version
+      defaultValue: 'v0.15.4'
+      description: 'Check Docker Hub for tags https://hub.docker.com/r/stalwartlabs/stalwart/tags. Default is v0.15.4 .'
+      validRegex: '/.{1,}/'
+
+  instructions:
+    start: |-
+      Stalwart Mail Server is a high-performance, open-source mail server solution.
+      
+      ⚠️ **CRITICAL PREREQUISITES:**
+      1. Ensure ports **25, 587, 465, and 993** are NOT used by other apps on this server.
+      2. If you have Postal or Poste.io running, stop them before deploying.
+      3. Verify if your VPS provider blocks outgoing connections on Port 25.
+
+    end: |-
+      ✅ **Deployment Successful!**
+      
+      Before you start using it, please follow these steps to ensure stability and correct IP detection.
+      
+      **Step 1: Enable Host Networking (Recommended for Real IP detection)**
+      1. Go to **App Configs** for `$$cap_appname`.
+      2. Paste the following into the **Pre-Deploy Script** box:
+         `var preDeployFunction = function (captainAppObj, dockerUpdateObject) {var ports = dockerUpdateObject.EndpointSpec.Ports || [];ports.forEach(function (port) {port.PublishMode = "host";});return Promise.resolve(dockerUpdateObject);};`
+      3. Click **Save & Update**.
+
+      **Step 2: Enable HTTPS**
+      1. Go to **HTTP Settings**.
+      2. Enable **HTTPS** and **Force HTTPS**.
+      3. Ensure "Container Port" is set to `8080`.
+
+      **Step 3: Initial Setup & Password**
+      1. Go to **App Configs** -> **View Logs** (document icon).
+      2. Look for a line saying: `Admin password: XXXXXXXX`. Copy it.
+      3. Access your dashboard at: `https://$$cap_appname.$$cap_root_domain`
+      4. Log in with user `admin` and the password from the logs.
+      
+      **Step 4: Moodle Configuration**
+      - **SMTP Host:** `$$cap_appname.$$cap_root_domain` (or your dedicated mail domain)
+      - **Port:** `587`
+      - **Security:** `STARTTLS`
