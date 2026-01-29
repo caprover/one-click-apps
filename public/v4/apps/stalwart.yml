@@ -15,7 +15,7 @@ services:
 
 caproverOneClickApp:
   displayName: Stalwart Mail Server
-  isOfficial: false
+  isOfficial: true
   description: Modern, All-in-One Mail Server written in Rust (JMAP, IMAP, SMTP). Faster and lighter than Postal/Poste.io.
   documentation: https://stalw.art/docs/
 
