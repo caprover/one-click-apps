@@ -4,7 +4,7 @@ services:
     image: stalwartlabs/stalwart:$$cap_stalwart_version
     restart: always
     volumes:
-      - $$cap_appname-data:/opt/stalwart-mail
+      - $$cap_appname-data:/opt/stalwart
     ports:
       - "25:25"       # SMTP
       - "587:587"     # Submission
