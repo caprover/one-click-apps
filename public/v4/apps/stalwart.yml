@@ -7,10 +7,9 @@ services:
       - $$cap_appname-data:/opt/stalwart-mail
     ports:
       - "25:25"       # SMTP
-      - "587:587"     # Submission (Moodle uses this)
+      - "587:587"     # Submission
       - "465:465"     # SMTPS
       - "993:993"     # IMAPS
-      # Port 8080 is internal for WebAdmin, handled by CapRover
     caproverExtra:
       containerHttpPort: '8080'
 
