@@ -1,0 +1,93 @@
+captainVersion: 4
+services:
+    $$cap_appname-redis:
+        volumes:
+            - $$cap_appname-redis-data:/data
+        restart: always
+        environment:
+            REDIS_PASSWORD: $$cap_redis_password
+        caproverExtra:
+            dockerfileLines:
+                - FROM redis:alpine
+                - CMD exec redis-server --requirepass "$$cap_redis_password"
+            notExposeAsWebApp: 'true'
+    $$cap_appname:
+        image: significantgravitas/auto-gpt:$$cap_app_version
+        environment:
+            # TODO: make all values configurable
+            EXECUTE_LOCAL_COMMANDS: False
+            RESTRICT_TO_WORKSPACE: True
+            USER_AGENT: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"
+            AI_SETTINGS_FILE: ai_settings.yaml
+            PROMPT_SETTINGS_FILE: prompt_settings.yaml
+            AUTHORISE_COMMAND_KEY: y
+            EXIT_KEY: n
+            DISABLED_COMMAND_CATEGORIES: autogpt.commands.analyze_code,autogpt.commands.execute_code,autogpt.commands.git_operations,autogpt.commands.improve_code,autogpt.commands.write_tests
+            DENY_COMMANDS: cd,nano,vim,vi,emacs,rm,sudo,top,ping,ssh,scp
+            ALLOW_COMMANDS: ls,git,cat,grep,find,echo,ps,curl,wget
+            OPENAI_API_KEY: your-openai-api-key
+            TEMPERATURE: 0
+            USE_AZURE: False
+            SMART_LLM_MODEL: gpt-4
+            FAST_LLM_MODEL: gpt-3.5-turbo
+            FAST_TOKEN_LIMIT: 4000
+            SMART_TOKEN_LIMIT: 8000
+            EMBEDDING_MODEL: text-embedding-ada-002
+            MEMORY_BACKEND: json_file
+            MEMORY_INDEX: auto-gpt-memory
+            REDIS_HOST: srv-captain--$$cap_appname-redis
+            REDIS_PORT: 6379
+            REDIS_PASSWORD: $$cap_redis_password
+            WIPE_REDIS_ON_START: True
+            IMAGE_PROVIDER: dalle
+            IMAGE_SIZE: 256
+            HUGGINGFACE_IMAGE_MODEL: CompVis/stable-diffusion-v1-4
+            HUGGINGFACE_API_TOKEN: your-huggingface-api-token
+            SD_WEBUI_AUTH: 
+            SD_WEBUI_URL: http://127.0.0.1:7860
+            HUGGINGFACE_AUDIO_TO_TEXT_MODEL: facebook/wav2vec2-base-960h
+            GITHUB_API_KEY: github_pat_123
+            GITHUB_USERNAME: your-github-username
+            HEADLESS_BROWSER: True
+            USE_WEB_BROWSER: chrome
+            BROWSE_CHUNK_MAX_LENGTH: 3000
+            BROWSE_SPACY_LANGUAGE_MODEL: en_core_web_sm
+            GOOGLE_API_KEY: your-google-api-key
+            CUSTOM_SEARCH_ENGINE_ID: your-custom-search-engine-id
+            USE_MAC_OS_TTS: False
+            USE_BRIAN_TTS: False
+            ELEVENLABS_API_KEY: your-elevenlabs-api-key
+            _ID: your-voice-id-1
+            TW_CONSUMER_KEY: 
+            TW_CONSUMER_SECRET: 
+            TW_ACCESS_TOKEN: 
+            TW_ACCESS_TOKEN_SECRET: 
+            ALLOWLISTED_PLUGINS: 
+            DENYLISTED_PLUGINS: 
+            CHAT_MESSAGES_ENABLED: False
+        volumes:
+            - $$cap_appname-workspace:/app/autogpt/auto_gpt_workspace
+            - $$cap_appname-data:/app/data
+            - $$cap_appname-logs:/app/logs
+        depends_on:
+            - $$cap_appname-redis
+caproverOneClickApp:
+    displayName: AutoGPT
+    description: An experimental open-source attempt to make GPT-4 fully autonomous.
+    documentation: https://docs.agpt.co/
+    isOfficial: true
+    instructions:
+        start: An experimental open-source attempt to make GPT-4 fully autonomous.
+        end: |-
+            AutoGPT has been successfully deployed! It might take few moments before it's fully started.
+            You can access it at `http://$$cap_appname.$$cap_root_domain`.
+    variables:
+        - id: $$cap_app_version
+          label: AutoGPT Version
+          defaultValue: latest
+          validRegex: /.{1,}/
+        - id: $$cap_REDIS_PASSWORD
+          label: Queue | Password
+          description: Password for Redis.
+          defaultValue: $$cap_gen_random_hex(16)
+          validRegex: /.{1,}/
