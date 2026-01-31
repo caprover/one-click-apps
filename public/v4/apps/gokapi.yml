@@ -2,7 +2,7 @@ captainVersion: 4
 caproverOneClickApp:
     displayName: Gokapi
     isOfficial: true
-    description: Lightweight selfhosted Firefox Send alternative without public upload. AWS S3 supported. 
+    description: Lightweight selfhosted Firefox Send alternative without public upload. AWS S3 supported.
     instructions:
         start: Just a plain Docker Compose.
         end: Docker Compose is deployed. Please visit http://[your application]/setup to setup the application
@@ -16,6 +16,6 @@ services:
             - $$cap_appname-gokapi-data:/app/data
             - $$cap_appname-config-data:/app/config
         env_file:
-            - "./.env"
+            - './.env'
         caproverExtra:
             containerHttpPort: '53842'
