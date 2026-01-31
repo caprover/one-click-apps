@@ -1,0 +1,37 @@
+captainVersion: 4
+caproverOneClickApp:
+    variables:
+        - id: $$cap_dagu_version
+          label: Dagu Version
+          defaultValue: '1.24.8'
+          description: Check out their docker page for the valid tags https://github.com/dagu-org/dagu/pkgs/container/dagu
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_dagu_timezone
+          label: Timezone
+          defaultValue: 'UTC'
+          description: The timezone to use for the container. Find your timezone here https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+          validRegex: /^([^\s^\/])+$/
+    instructions:
+        start: >-
+            Dagu is a powerful, portable, local-first workflow engine.
+        end: >-
+            Aaaand you're done! 😄
+
+
+            Your service is available at http://$$cap_appname.$$cap_root_domain
+    displayName: Dagu
+    isOfficial: true
+    description: Dagu is a powerful, portable, local-first workflow engine.
+    documentation: https://github.com/dagu-org/dagu
+services:
+    $$cap_appname:
+        image: ghcr.io/dagu-org/dagu:$$cap_dagu_version
+        restart: always
+        environment:
+            DAGU_TZ: $$cap_dagu_timezone
+        volumes:
+            - $$cap_appname-data:/var/lib/dagu
+            - /var/run/docker.sock:/var/run/docker.sock
+        caproverExtra:
+            containerHttpPort: '8080'
+            websocketSupport: true

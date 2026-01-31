@@ -2,24 +2,17 @@ captainVersion: 4
 services:
     #affine:
     $$cap_appname:
-        image: ghcr.io/toeverything/affine-graphql:$$cap_affine_version
-        command:
-            [
-                'sh',
-                '-c',
-                'node ./scripts/self-host-predeploy && node ./dist/index.js',
-            ]
-        ports:
-            - '5555:5555'
+        image: ghcr.io/toeverything/affine:$$cap_affine_version
+        # No command is needed, uses the image's default CMD
         depends_on:
             $$cap_appname-redis:
                 condition: service_healthy
             $$cap_appname-postgres:
                 condition: service_healthy
+            $$cap_appname-migration:
+                condition: service_completed_successfully
         volumes:
-            # custom configurations
             - $$cap_appname-db-data:/root/.affine/config
-            # blob storage
             - $$cap_appname-db-data:/root/.affine/storage
         logging:
             driver: 'json-file'
@@ -27,27 +20,47 @@ services:
                 max-size: '1000m'
         restart: unless-stopped
         environment:
-            NODE_OPTIONS: '--import=./scripts/register.js'
-            AFFINE_CONFIG_PATH: /root/.affine/config
             REDIS_SERVER_HOST: srv-captain--$$cap_appname-redis
             DATABASE_URL: postgres://affine:$$cap_db_affine_password@srv-captain--$$cap_appname-postgres:5432/affine
             NODE_ENV: production
-            AFFINE_ADMIN_EMAIL: $$cap_affine_admin_email
-            AFFINE_ADMIN_PASSWORD: $$cap_affine_admin_password
+            AFFINE_INDEXER_ENABLED: 'false'
+            # CapRover variables for setup
             AFFINE_SERVER_HOST: $$cap_affine_server_host
             AFFINE_SERVER_HTTPS: $$cap_affine_server_https
             AFFINE_SERVER_EXTERNAL_URL: $$cap_affine_server_external_url
+            # Mailer settings
             MAILER_HOST: $$cap_mailer_host
             MAILER_PORT: $$cap_mailer_port
             MAILER_USER: $$cap_mailer_user
             MAILER_PASSWORD: $$cap_mailer_password
             MAILER_SENDER: $$cap_mailer_sender
-            # Telemetry allows us to collect data on how you use the affine. This data will helps us improve the app and provide better features.
-            # Uncomment next line if you wish to quit telemetry.
-            # - TELEMETRY_ENABLE=false
+            # Telemetry
+            # TELEMETRY_ENABLE: 'false'
         caproverExtra:
             containerHttpPort: '3010'
             websocketSupport: true
+
+    # Affine Database Migration Job
+    $$cap_appname-migration-delete-me-after-install:
+        image: ghcr.io/toeverything/affine:$$cap_affine_version
+        command: ['sh', '-c', 'node ./scripts/self-host-predeploy.js']
+        depends_on:
+            $$cap_appname-redis:
+                condition: service_healthy
+            $$cap_appname-postgres:
+                condition: service_healthy
+        volumes:
+            - $$cap_appname-db-data:/root/.affine/config
+            - $$cap_appname-db-data:/root/.affine/storage
+        restart: on-failure # Run as a one-off job
+        environment:
+            REDIS_SERVER_HOST: srv-captain--$$cap_appname-redis
+            DATABASE_URL: postgres://affine:$$cap_db_affine_password@srv-captain--$$cap_appname-postgres:5432/affine
+            AFFINE_INDEXER_ENABLED: 'false'
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+
+    # Redis Service
     $$cap_appname-redis:
         image: redis
         restart: unless-stopped
@@ -60,13 +73,15 @@ services:
             retries: 5
         caproverExtra:
             notExposeAsWebApp: 'true'
+
+    # PostgreSQL Service (with pgvector)
     $$cap_appname-postgres:
-        image: postgres
+        image: pgvector/pgvector:pg16 # Updated image
         restart: unless-stopped
         volumes:
             - $$cap_appname-db-data:/var/lib/postgresql/data
         healthcheck:
-            test: ['CMD-SHELL', 'pg_isready -U affine']
+            test: ['CMD', 'pg_isready', '-U', 'affine', '-d', 'affine'] # Updated healthcheck
             interval: 10s
             timeout: 5s
             retries: 5
@@ -75,69 +90,77 @@ services:
             POSTGRES_USER: affine
             POSTGRES_PASSWORD: $$cap_db_affine_password
             PGDATA: /var/lib/postgresql/data/pgdata
+            POSTGRES_INITDB_ARGS: '--data-checksums'
+            POSTGRES_HOST_AUTH_METHOD: trust # Kept from new GH file for easier setup
         caproverExtra:
             notExposeAsWebApp: 'true'
+
 caproverOneClickApp:
     variables:
-        - defaultValue: stable-4b9e2ab
-          description: Check out their Docker page for the valid tags https://github.com/toeverything/AFFiNE/pkgs/container/affine-graphql
+        - defaultValue: 0.25.5
+          description: Check out their Docker page for valid tags https://github.com/toeverything/AFFiNE/pkgs/container/affine
           id: $$cap_affine_version
-          label: Affine version
+          label: Affine Version Tag
           validRegex: /^([^\s^\/])+$/
 
-        - description: Default access domain of AFFiNE. Make sure this matches the URL in browser. (eg. yourdomain.com)
+        - description: Default access domain of AFFiNE. Make sure this matches the URL in browser. (e.g., affine.yourdomain.com)
           id: $$cap_affine_server_host
           label: AFFINE_SERVER_HOST
 
         - defaultValue: true
-          description: Use https prefix in url. Make sure this matches the URL in browser.	(eg. true|false)
+          description: Use https prefix in url. Make sure this matches the URL in browser. (e.g., true|false)
           id: $$cap_affine_server_https
           label: AFFINE_SERVER_HTTPS
 
-        - description: Used to factor url to server resources	(eg. https://yourdomain.com)
+        - description: Used to factor url to server resources (e.g., https://affine.yourdomain.com)
           id: $$cap_affine_server_external_url
           label: AFFINE_SERVER_EXTERNAL_URL
 
-        - description: Email server domain
+        - description: Email server domain (optional)
           id: $$cap_mailer_host
-          label: MAILER_HOST
+          label: MAILER_HOST (Optional)
+          optional: true
 
-        - description: Email server port
+        - description: Email server port (optional)
           id: $$cap_mailer_port
-          label: MAILER_PORT
+          label: MAILER_PORT (Optional)
+          optional: true
 
-        - description: Email login user
+        - description: Email login user (optional)
           id: $$cap_mailer_user
-          label: MAILER_USER
+          label: MAILER_USER (Optional)
+          optional: true
 
-        - description: Email password
+        - description: Email password (optional)
           id: $$cap_mailer_password
-          label: MAILER_PASSWORD
+          label: MAILER_PASSWORD (Optional)
+          optional: true
 
-        - description: Email sender (not avaliable for consumer mail service like gmail/outlook)
+        - description: Email sender (optional, not available for consumer mail services)
           id: $$cap_mailer_sender
-          label: MAILER_SENDER
+          label: MAILER_SENDER (Optional)
+          optional: true
 
         - defaultValue: $$cap_gen_random_hex(32)
-          description: Database password of the affine user.
+          description: Database password for the affine user.
           id: $$cap_db_affine_password
-          label: 'Database password'
+          label: Database Password
           validRegex: /^(?=.*\d).{10,}$/
 
     instructions:
-        start: Affine - There can be more than Notion and Miro. AFFiNE(pronounced [ə'fain]) is a next-gen knowledge base that brings planning.
+        start: Affine - A next-gen knowledge base that brings planning, sorting, and creating all together.
         end: >-
-            🎉 It's done! Affine is deployed and available as $$cap_appname. 🎉
+            🎉 It's done! Affine is being deployed as $$cap_appname. 🎉
 
-            1. Go to your caprover Affine settings page and enable HTTPS
+            IMPORTANT: On first deploy, the '$$cap_appname-migration' service will run to set up your database. This may take a minute or two.
+            During this time, the main app (http://$$cap_appname.$$cap_root_domain) might show a 502 error. This is normal.
 
-            2. Enable "Force HTTPS by redirecting all HTTP traffic to HTTPS"
+            Once the migration is complete, the app will start.
 
-            Your service is available at http://$$cap_appname.$$cap_root_domain
-            Go there to create your admin account
-
-            IMPORTANT: It will take up to 2 minutes for Affine to be ready. Before that, you might see 502 error page.
-    displayName: 'Affine'
+            1. Go to your CapRover app settings and enable HTTPS.
+            2. Enable "Force HTTPS by redirecting all HTTP traffic to HTTPS".
+            3. Go to http://$$cap_appname.$$cap_root_domain to create your admin account (using the email/password you provided).
+    displayName: 'Affine (Community)'
     isOfficial: false
-    description: Affine - There can be more than Notion and Miro. AFFiNE(pronounced [ə'fain]) is a next-gen knowledge base that brings planning.
-    documentation: https://docs.affine.pro/docs/code-of-conduct
+    description: Affine is a next-gen knowledge base that brings planning, sorting, and creating all together.
+    documentation: https://docs.affine.pro/docs/self-host
