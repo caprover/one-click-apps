@@ -15,7 +15,7 @@ services:
         volumes:
             - $$cap_appname-gokapi-data:/app/data
             - $$cap_appname-config-data:/app/config
-    env_file:
-        - "./.env"
-    caproverExtra:
-        containerHttpPort: '53842'
+        env_file:
+            - "./.env"
+        caproverExtra:
+            containerHttpPort: '53842'
