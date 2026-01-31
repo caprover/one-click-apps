@@ -3,10 +3,10 @@ caproverOneClickApp:
     displayName: Gokapi
     isOfficial: true
     description: Lightweight selfhosted Firefox Send alternative without public upload. AWS S3 supported. 
-    instructions: from https://github.com/Forceu/Gokapi/blob/master/docker-compose.yaml
-      start: Just a plain Docker Compose.
-      end: Docker Compose is deployed. Please visit http://[your application]/setup to setup the application
-      
+    instructions:
+        start: Just a plain Docker Compose.
+        end: Docker Compose is deployed. Please visit http://[your application]/setup to setup the application
+
 services:
     $$cap_appname:
         image: f0rc3/gokapi:v2.2.1
