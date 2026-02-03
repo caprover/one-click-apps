@@ -56,8 +56,3 @@ caproverOneClickApp:
             2. Look for a line saying: `Admin password: XXXXXXXX`. Copy it.
             3. Access your dashboard at: `https://$$cap_appname.$$cap_root_domain`
             4. Log in with user `admin` and the password from the logs.
-
-            **Step 4: Moodle Configuration**
-            - **SMTP Host:** `$$cap_appname.$$cap_root_domain` (or your dedicated mail domain)
-            - **Port:** `587`
-            - **Security:** `STARTTLS`
