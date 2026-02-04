@@ -15,7 +15,7 @@ caproverOneClickApp:
         - id: $$cap_version
           label: Version Tag
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/amir20/dozzle/tags?page=1&ordering=last_updated
-          defaultValue: 'v3.7.1'
+          defaultValue: 'v9.0'
         - id: $$cap_username
           label: Username
           defaultValue: 'admin'
