@@ -48,7 +48,7 @@ caproverOneClickApp:
         - id: $$cap_orangehrm_version
           label: OrangeHRM Version
           defaultValue: '5.4'
-          description: https://hub.docker.com/r/bitnami/orangehrm/tags
+          description: https://hub.docker.com/r/orangehrm/orangehrm/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_mariadb_version
           label: MariaDB (database) version

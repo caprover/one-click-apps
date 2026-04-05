@@ -21,7 +21,7 @@ caproverOneClickApp:
         - id: $$cap_postgresql_version
           label: Bitnami's Posgresql Version
           defaultValue: '12.12.0'
-          description: Check the tag version on https://hub.docker.com/r/bitnami/postgresql
+          description: Check the tag version on https://hub.docker.com/r/bitnamilegacy/postgresql
         - id: $$cap_postgresql_name
           label: Postresql database name
           defaultValue: airflow_db
@@ -38,7 +38,7 @@ caproverOneClickApp:
         - id: $$cap_redis_version
           label: Bitnami's redis Version
           defaultValue: '7.0.4'
-          description: Check the tag version on https://hub.docker.com/r/bitnami/redis
+          description: Check the tag version on https://hub.docker.com/r/bitnamilegacy/redis
         - id: $$cap_redis_password
           label: Redis password
           defaultValue: $$cap_gen_random_hex(16)
@@ -47,15 +47,15 @@ caproverOneClickApp:
         - id: $$cap_airflow_version
           label: Bitnami's airflow Version
           defaultValue: '2.3.3'
-          description: Check the tag version on https://hub.docker.com/r/bitnami/airflow
+          description: Check the tag version on https://hub.docker.com/r/bitnamilegacy/airflow
         - id: $$cap_airflow_worker_version
           label: Bitnami's airflow worker Version
           defaultValue: '2.3.3'
-          description: Check the tag version on https://hub.docker.com/r/bitnami/airflow-worker
+          description: Check the tag version on https://hub.docker.com/r/bitnamilegacy/airflow-worker
         - id: $$cap_airflow_scheduler_version
           label: Bitnami's airflow scheduler Version
           defaultValue: '2.3.3'
-          description: Check the tag version on https://hub.docker.com/r/bitnami/airflow-scheduler
+          description: Check the tag version on https://hub.docker.com/r/bitnamilegacy/airflow-scheduler
         - id: $$cap_airflow_user
           label: Airflow user
           defaultValue: 'airflow_user'
@@ -97,13 +97,13 @@ caproverOneClickApp:
         - id: $$cap_smtp_ssl
           label: Use SSL?
           defaultValue: 'no'
-          description: Check the tag version on https://hub.docker.com/r/bitnami/airflow-scheduler
+          description: Check the tag version on https://hub.docker.com/r/bitnamilegacy/airflow-scheduler
         - id: $$cap_smtp_user
           label: SMTP User
-          description: Check the tag version on https://hub.docker.com/r/bitnami/airflow-scheduler
+          description: Check the tag version on https://hub.docker.com/r/bitnamilegacy/airflow-scheduler
         - id: $$cap_smtp_password
           label: SMTP Password
-          description: Check the tag version on https://hub.docker.com/r/bitnami/airflow-scheduler
+          description: Check the tag version on https://hub.docker.com/r/bitnamilegacy/airflow-scheduler
         - id: $$cap_smtp_mail_from
           label: Mail from address
           description: Specofy who the email is from
@@ -124,7 +124,7 @@ services:
 
     $$cap_appname-redis:
         restart: always
-        image: 'bitnami/redis:$$cap_redis_version'
+        image: 'bitnamilegacy/redis:$$cap_redis_version'
         user:
         environment:
             REDIS_PASSWORD: $$cap_redis_password
@@ -138,7 +138,7 @@ services:
         depends_on:
             - $$cap_appname-db
             - $$cap_appname-redis
-        image: 'bitnami/airflow:$$cap_airflow_version'
+        image: 'bitnamilegacy/airflow:$$cap_airflow_version'
         user:
         environment:
             AIRFLOW_EXECUTOR: CeleryExecutor
@@ -169,7 +169,7 @@ services:
             containerHttpPort: '8080'
 
     $$cap_appname-worker:
-        image: bitnami/airflow-worker:$$cap_airflow_worker_version
+        image: bitnamilegacy/airflow-worker:$$cap_airflow_worker_version
         depends_on:
             - $$cap_appname
         environment:
@@ -195,7 +195,7 @@ services:
         restart: always
         depends_on:
             - $$cap_appname
-        image: 'bitnami/airflow-scheduler:$$cap_airflow_scheduler_version'
+        image: 'bitnamilegacy/airflow-scheduler:$$cap_airflow_scheduler_version'
         user:
         environment:
             AIRFLOW_EXECUTOR: CeleryExecutor

@@ -1,0 +1,131 @@
+captainVersion: 4
+
+services:
+    $$cap_appname-backend:
+        image: rudderlabs/rudder-server:$$cap_app_version
+        depends_on:
+            - $$cap_appname-db
+            - $$cap_appname-metrics-exporter
+            - $$cap_appname-d-transformer
+        environment:
+            JOBS_DB_HOST: srv-captain--$$cap_appname-db
+            JOBS_DB_USER: $$cap_app_db_username
+            JOBS_DB_PASSWORD: $$cap_app_db_password
+            JOBS_DB_DB_NAME: $$cap_app_db_name
+            JOBS_DB_PORT: '5432'
+            CONFIG_BACKEND_URL: $$cap_app_backend_url
+            WORKSPACE_TOKEN: $$cap_rudder_workspace_token
+            DEST_TRANSFORM_URL: http://srv-captain--$$cap_appname-d-transformer:9090
+            STATSD_SERVER_URL: srv-captain--$$cap_appname-metrics-exporter:9125
+            RSERVER_GATEWAY_WEBHOOK_SOURCE_LIST_FOR_PARSING_PARAMS: Shopify
+        caproverExtra:
+            containerHttpPort: '8080'
+
+    $$cap_appname-db:
+        image: postgres:15-alpine
+        volumes:
+            - $$cap_appname-db-data:/var/lib/postgresql/data
+        restart: always
+        environment:
+            POSTGRES_USER: $$cap_app_db_username
+            POSTGRES_PASSWORD: $$cap_app_db_password
+            POSTGRES_DB: $$cap_app_db_name
+        caproverExtra:
+            notExposeAsWebApp: true # Internal service
+
+    $$cap_appname-d-transformer:
+        image: rudderstack/rudder-transformer:$$cap_rudder_transformer_version
+        depends_on:
+            - $$cap_appname-metrics-exporter
+        environment:
+            STATSD_SERVER_HOST: srv-captain--$$cap_appname-metrics-exporter
+            STATSD_SERVER_PORT: '9125'
+        caproverExtra:
+            notExposeAsWebApp: true # Internal service
+
+    $$cap_appname-metrics-exporter:
+        image: prom/statsd-exporter:$$cap_metrics_exporter_version
+        caproverExtra:
+            notExposeAsWebApp: true # Internal service
+
+caproverOneClickApp:
+    variables:
+        - id: $$cap_rudder_workspace_token
+          label: RudderStack Workspace Token
+          description: See https://app.rudderstack.com/workspace
+
+        - id: $$cap_app_version
+          label: RudderStack Version
+          description: See https://hub.docker.com/r/rudderlabs/rudder-server/tags for supported versions.
+          defaultValue: '1.49.3'
+
+        - id: $$cap_rudder_transformer_version
+          label: RudderStack Transformer Version
+          description: See https://hub.docker.com/r/rudderstack/rudder-transformer/tags for supported versions.
+          defaultValue: '1.100.0'
+
+        - id: $$cap_metrics_exporter_version
+          label: Prometheus Exporter Version
+          description: See https://hub.docker.com/r/prom/statsd-exporter/tags for supported versions.
+          defaultValue: 'v0.22.4'
+          validRegex: /^([^\s^\/])+$/
+
+        - id: $$cap_app_db_username
+          label: Postgres Username
+          defaultValue: postgres
+          validRegex: /^[a-zA-Z0-9_]+$/
+
+        - id: $$cap_app_db_password
+          label: Postgres Password
+          description: Must be at least 8 characters long. Recommended to leave the default generated
+          defaultValue: $$cap_gen_random_hex(24)
+          validRegex: /^[^\@]{8,}$/
+
+        - id: $$cap_app_db_name
+          label: Postgres Database Name
+          defaultValue: rudder
+          validRegex: /^[a-zA-Z0-9_]+$/
+
+        - id: $$cap_app_backend_url
+          label: RudderStack Backend URL
+          description: The URL of the RudderStack backend server. This is used to generate the URLs for the web dashboard and the API endpoints.
+          defaultValue: https://api.rudderstack.com
+          validRegex: /^https?:\/\/.+/
+    instructions:
+        start: |
+            **Deploy your self-hosted RudderStack Open Source instance on CapRover.**
+
+            This template will automatically set up the following services:
+            - RudderStack Server (Backend): The core data processing engine.
+            - PostgreSQL Database: Stores job metadata and other operational data.
+            - RudderStack Transformer: Handles data transformations for selected destinations.
+            - StatsD Metrics Exporter: For exposing application metrics.
+
+            **Configuration Notes:**
+            1.  **Workspace Token (Required):** You MUST provide your RudderStack Workspace Token. You can find this in your RudderStack control plane (e.g., app.rudderstack.com).
+            2.  **PostgreSQL Password:** A strong password for the database will be auto-generated. You can override it if necessary.
+            3.  **Image Versions:** Default versions are set to 'latest'. For production environments, it is highly recommended to specify stable, numerical version tags for both Rudder Server and Rudder Transformer.
+
+            **Important Note on PostgreSQL `shm_size`:**
+            The original Docker Compose for RudderStack specifies `shm_size: 128mb` for the PostgreSQL container. This YAML template for CapRover does not directly set this Docker-specific option as `captainVersion: 4` templates typically focus on higher-level configurations.
+            - For many use cases, the default Docker shared memory size (often 64MB) may be sufficient.
+            - If you encounter performance issues or errors with the PostgreSQL service (`$$cap_appname-db`), especially under heavy load or with numerous connections, you might need to increase the `shm_size` available to Docker containers. This is generally configured at the Docker daemon level on your CapRover worker node(s). Please consult your Docker and OS documentation for instructions on how to adjust this setting.
+
+        end: |
+            **RudderStack Deployment is Initializing...**
+
+            Please allow a few minutes for all services to start and become fully operational.
+
+            **Accessing Your RudderStack Instance:**
+            - Your RudderStack backend (Data Plane) will be accessible at:
+              **http://$$cap_appname.$$cap_root_domain**
+              (This URL will use HTTPS if SSL is automatically enabled by your CapRover main domain configuration).
+
+            **Configuring Data Sources in RudderStack:**
+            - Go to your RudderStack control plane (e.g., app.rudderstack.com).
+            - When configuring your Sources, ensure they are pointed to your new self-hosted Data Plane URL. The specific endpoint path (e.g., `/v1/batch`, `/v1/event`) depends on the source type. Please refer to the official RudderStack documentation for the correct endpoint paths.
+
+    displayName: RudderStack Data Plane
+    isOfficial: false # This is a community-provided template, not an official CapRover one.
+    description: 'Deploy RudderStack Data Plane, the open-source Customer Data Platform. This template includes the backend server, PostgreSQL database, data transformer, and metrics exporter.'
+    documentation: 'https://www.rudderstack.com/docs/' # Link to the official RudderStack documentation

@@ -1,0 +1,40 @@
+captainVersion: 4
+services:
+    '$$cap_appname':
+        image: ghcr.io/ibm/mcp-context-forge:0.2.0
+        environment:
+            HOST: '0.0.0.0'
+            JWT_SECRET_KEY: '$$cap_jwt_secret_key'
+            BASIC_AUTH_USER: '$$cap_basic_auth_user'
+            BASIC_AUTH_PASSWORD: '$$cap_basic_auth_password'
+            AUTH_REQUIRED: 'true'
+            DATABASE_URL: 'sqlite:///./mcp.db'
+        caproverExtra:
+            containerHttpPort: '4444'
+caproverOneClickApp:
+    variables:
+        - id: '$$cap_jwt_secret_key'
+          label: JWT Secret Key
+          defaultValue: '$$cap_gen_random_hex(10)'
+          description: Secret key for JWT authentication.
+          validRegex: '/.{1,}/'
+        - id: '$$cap_basic_auth_user'
+          label: Basic Auth User
+          defaultValue: 'admin'
+          description: Username for basic authentication.
+          validRegex: '/.{1,}/'
+        - id: '$$cap_basic_auth_password'
+          label: Basic Auth Password
+          defaultValue: 'changeme'
+          description: Password for basic authentication.
+          validRegex: '/.{1,}/'
+    instructions:
+        start: |-
+            Deploy the mcp-context-forge application, which provides a gateway for managing context.
+        end: |-
+            mcp-context-forge has been successfully deployed!
+            Access it at [http://$$cap_appname.$$cap_root_domain](http://$$cap_appname.$$cap_root_domain) using the default username 'admin' and default password 'changeme'.
+    displayName: MCP Context Forge
+    isOfficial: false
+    description: A gateway for managing context in applications.
+    documentation: See https://github.com/ibm/mcp-context-forge for more details.

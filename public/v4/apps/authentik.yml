@@ -1,0 +1,194 @@
+captainVersion: 4
+services:
+    $$cap_appname-postgresql:
+        image: docker.io/library/postgres:$$cap_postgres_version-alpine
+        restart: unless-stopped
+        healthcheck:
+            test:
+                [
+                    'CMD-SHELL',
+                    'pg_isready -d $$cap_postgres_db -U $$cap_postgres_user',
+                ]
+            start_period: 20s
+            interval: 30s
+            retries: 5
+            timeout: 5s
+        volumes:
+            - $$cap_appname-postgresql-data:/var/lib/postgresql/data
+        environment:
+            POSTGRES_PASSWORD: $$cap_postgres_password
+            POSTGRES_USER: $$cap_postgres_user
+            POSTGRES_DB: $$cap_postgres_db
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+
+    $$cap_appname-redis:
+        image: docker.io/library/redis:8.0-alpine
+        command: ['redis-server', '--save', '60', '1', '--loglevel', 'warning']
+        restart: unless-stopped
+        healthcheck:
+            test: ['CMD-SHELL', 'redis-cli ping | grep PONG']
+            start_period: 20s
+            interval: 30s
+            retries: 5
+            timeout: 3s
+        volumes:
+            - $$cap_appname-redis-data:/data
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+
+    $$cap_appname-init:
+        image: alpine:3.19
+        restart: 'no'
+        command:
+            - 'sh'
+            - '-c'
+            - |
+                set -e
+                echo "Setting up Authentik volume permissions..."
+                chown -R 1000:1000 /media /templates /certs
+                chmod -R u+rwX,g+rX /media /templates /certs
+                echo "Permissions configured successfully"
+
+                echo "Init container entering sleep mode"
+                sleep 100d
+        user: root
+        volumes:
+            - $$cap_appname-media:/media
+            - $$cap_appname-certs:/certs
+            - $$cap_appname-custom-templates:/templates
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+
+    $$cap_appname:
+        image: ghcr.io/goauthentik/server:$$cap_authentik_version
+        restart: unless-stopped
+        command: ['dumb-init', '--', 'ak', 'server']
+        environment:
+            AUTHENTIK_SECRET_KEY: $$cap_authentik_secret_key
+            AUTHENTIK_REDIS__HOST: srv-captain--$$cap_appname-redis
+            AUTHENTIK_POSTGRESQL__HOST: srv-captain--$$cap_appname-postgresql
+            AUTHENTIK_POSTGRESQL__USER: $$cap_postgres_user
+            AUTHENTIK_POSTGRESQL__NAME: $$cap_postgres_db
+            AUTHENTIK_POSTGRESQL__PASSWORD: $$cap_postgres_password
+            AUTHENTIK_ERROR_REPORTING__ENABLED: $$cap_error_reporting
+            AUTHENTIK_DISABLE_UPDATE_CHECK: $$cap_disable_update_check
+            AUTHENTIK_DISABLE_STARTUP_ANALYTICS: $$cap_disable_analytics
+        volumes:
+            - $$cap_appname-media:/media
+            - $$cap_appname-custom-templates:/templates
+        depends_on:
+            - $$cap_appname-postgresql
+            - $$cap_appname-redis
+            - $$cap_appname-init
+        caproverExtra:
+            containerHttpPort: '9000'
+            websocketSupport: 'true'
+
+    $$cap_appname-worker:
+        image: ghcr.io/goauthentik/server:$$cap_authentik_version
+        restart: unless-stopped
+        command: ['dumb-init', '--', 'ak', 'worker']
+        user: root
+        environment:
+            AUTHENTIK_SECRET_KEY: $$cap_authentik_secret_key
+            AUTHENTIK_REDIS__HOST: srv-captain--$$cap_appname-redis
+            AUTHENTIK_POSTGRESQL__HOST: srv-captain--$$cap_appname-postgresql
+            AUTHENTIK_POSTGRESQL__USER: $$cap_postgres_user
+            AUTHENTIK_POSTGRESQL__NAME: $$cap_postgres_db
+            AUTHENTIK_POSTGRESQL__PASSWORD: $$cap_postgres_password
+            AUTHENTIK_ERROR_REPORTING__ENABLED: $$cap_error_reporting
+            AUTHENTIK_DISABLE_UPDATE_CHECK: $$cap_disable_update_check
+            AUTHENTIK_DISABLE_STARTUP_ANALYTICS: $$cap_disable_analytics
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - $$cap_appname-media:/media
+            - $$cap_appname-certs:/certs
+            - $$cap_appname-custom-templates:/templates
+        depends_on:
+            - $$cap_appname-postgresql
+            - $$cap_appname-redis
+            - $$cap_appname-init
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+
+caproverOneClickApp:
+    variables:
+        - id: $$cap_postgres_user
+          label: PostgreSQL User
+          defaultValue: authentik
+          description: Database username for Authentik
+          validRegex: /^[a-zA-Z0-9_]+$/
+
+        - id: $$cap_postgres_version
+          label: PostgreSQL Version
+          defaultValue: '16'
+          description: PostgreSQL major version (14, 15, 16, 17)
+          validRegex: /^(14|15|16|17)$/
+
+        - id: $$cap_postgres_password
+          label: PostgreSQL Password
+          description: Strong database password
+          defaultValue: $$cap_gen_random_hex(32)
+
+        - id: $$cap_postgres_db
+          label: PostgreSQL Database Name
+          defaultValue: authentik
+          description: Database name for Authentik
+          validRegex: /^[a-zA-Z0-9_]+$/
+
+        - id: $$cap_authentik_secret_key
+          label: Authentik Secret Key
+          description: Secret key for Authentik encryption and signing
+          defaultValue: $$cap_gen_random_hex(64)
+
+        - id: $$cap_authentik_version
+          label: Authentik Version
+          defaultValue: '2025.6.1'
+          description: Authentik version tag. Check https://github.com/goauthentik/authentik/releases for latest versions
+          validRegex: /^[0-9]{4}\.[0-9]{1,2}\.[0-9]{1,2}$/
+
+        - id: $$cap_error_reporting
+          label: Enable Error Reporting
+          defaultValue: 'false'
+          description: Enable anonymous error reporting to help improve Authentik
+          validRegex: /^(true|false)$/
+
+        - id: $$cap_disable_update_check
+          label: Disable Update Check
+          defaultValue: 'true'
+          description: Disable automatic update checking
+          validRegex: /^(true|false)$/
+
+        - id: $$cap_disable_analytics
+          label: Disable Analytics
+          defaultValue: 'true'
+          description: Disable startup analytics collection
+          validRegex: /^(true|false)$/
+
+    instructions:
+        start: >-
+            Authentik is an open-source Identity Provider focused on flexibility and versatility.
+            This deployment includes PostgreSQL, Redis, and the latest Authentik server with worker.
+            The deployment typically takes 2-3 minutes.
+        end: >-
+            Authentik has been successfully deployed!
+
+
+            **Next Steps:**
+
+            1. Wait 2-3 minutes for migrations to complete
+
+            2. Complete initial setup: [http://$$cap_appname.$$cap_root_domain/if/flow/initial-setup/](http://$$cap_appname.$$cap_root_domain/if/flow/initial-setup/)
+
+            3. Access admin interface: [http://$$cap_appname.$$cap_root_domain/if/admin/](http://$$cap_appname.$$cap_root_domain/if/admin/)
+
+
+            **Optional cleanup:** After successful deployment, you may remove the init container: `docker service rm srv-captain--$$cap_appname-init`
+
+    displayName: Authentik
+    isOfficial: true
+    description: >-
+        Authentik is an open-source Identity Provider that unifies your identity needs into a single platform,
+        replacing Okta, Active Directory, and auth0. Supports SAML, OIDC, OAuth2, SCIM and LDAP.
+    documentation: https://docs.goauthentik.io/docs/installation/docker-compose

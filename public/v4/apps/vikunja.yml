@@ -1,0 +1,95 @@
+captainVersion: 4
+caproverOneClickApp:
+    instructions:
+        start: |-
+            Vikunja is an open-source task management application that helps you keep track of your tasks and projects.
+            To get started, follow the instructions below to deploy Vikunja on your CapRover server.
+        end: |-
+            Vikunja has been successfully deployed! You can access it at the URL you provided during setup. The initial application setup (like creating your first user) will occur upon your first visit to this URL. Enjoy managing your tasks with Vikunja!
+    displayName: Vikunja
+    isOfficial: false
+    description: Open Source Task Management
+    documentation: See https://vikunja.io/docs
+    variables:
+        - id: $$cap_VIKUNJA_VERSION
+          label: Vikunja Version
+          description: Check out their valid tags at https://hub.docker.com/r/vikunja/vikunja/tags
+          defaultValue: '0.24'
+          validRegex: /.{1,}/
+        - id: $$cap_MARIADB_VERSION
+          label: MariaDB Version
+          description: Check out their valid tags at https://hub.docker.com/_/mariadb/tags
+          defaultValue: '11.7'
+          validRegex: /.{1,}/
+        - id: $$cap_JWT_SECRET_KEY
+          label: JWT Secret Key
+          description: A random string used for JSON Web Tokens (JWT).
+          defaultValue: $$cap_gen_random_hex(32)
+          validRegex: /.{1,}/
+        - id: $$cap_MARIADB_DATABASE
+          label: Database
+          description: The name of the MariaDB database.
+          defaultValue: vikunja
+          validRegex: /.{1,}/
+        - id: $$cap_MARIADB_USER
+          label: Database User
+          description: The user of the MariaDB database.
+          defaultValue: vikunja
+          validRegex: /.{1,}/
+        - id: $$cap_MARIADB_PASSWORD
+          label: Database Password
+          description: The password of the MariaDB database.
+          defaultValue: $$cap_gen_random_hex(16)
+          validRegex: /.{1,}/
+        - id: $$cap_MARIADB_ROOT_PASSWORD
+          label: Database Root User Password
+          description: The password of the MariaDB database root user.
+          defaultValue: $$cap_gen_random_hex(16)
+          validRegex: /.{1,}/
+        - id: $$cap_APP_URL
+          label: Vikunja URL
+          description: The URL of the Vikunja application.
+          defaultValue: https://vikunja.example.com
+          validRegex: /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(:\d+)?(\/.*)?$/
+        - id: $$cap_TIMEZONE
+          label: Timezone
+          description: The timezone of the Vikunja application (e.g., 'UTC', 'Europe/Berlin'). Use TZ database names.
+          defaultValue: UTC
+          validRegex: /.{1,}/
+        - id: $$cap_WEEK_START
+          label: Week Start
+          description: The first day of the week. 0 = Sunday, 1 = Monday, etc.
+          defaultValue: 1
+          validRegex: /^(0|1|2|3|4|5|6)$/
+
+services:
+    $$cap_appname:
+        caproverExtra:
+            containerHttpPort: '3456'
+        image: vikunja/vikunja:$$cap_VIKUNJA_VERSION
+        environment:
+            VIKUNJA_SERVICE_PUBLICURL: $$cap_APP_URL
+            VIKUNJA_DATABASE_HOST: srv-captain--$$cap_appname-db
+            VIKUNJA_DATABASE_TYPE: mysql
+            VIKUNJA_DATABASE_USER: $$cap_MARIADB_USER
+            VIKUNJA_DATABASE_PASSWORD: $$cap_MARIADB_PASSWORD
+            VIKUNJA_DATABASE_DATABASE: $$cap_MARIADB_DATABASE
+            VIKUNJA_SERVICE_JWTSECRET: $$cap_JWT_SECRET_KEY
+            VIKUNJA_SERVICE_TIMEZONE: $$cap_TIMEZONE
+            VIKUNJA_DEFAULTSETTINGS_WEEK_START: $$cap_WEEK_START
+        volumes:
+            - $$cap_appname-files:/app/vikunja/files
+        depends_on:
+            - $$cap_appname-db
+
+    $$cap_appname-db:
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+        image: mariadb:$$cap_MARIADB_VERSION
+        environment:
+            MYSQL_ROOT_PASSWORD: $$cap_MARIADB_ROOT_PASSWORD
+            MYSQL_USER: $$cap_MARIADB_USER
+            MYSQL_PASSWORD: $$cap_MARIADB_PASSWORD
+            MYSQL_DATABASE: $$cap_MARIADB_DATABASE
+        volumes:
+            - $$cap_appname-db:/var/lib/mysql

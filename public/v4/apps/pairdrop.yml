@@ -1,0 +1,29 @@
+captainVersion: 4
+caproverOneClickApp:
+    instructions:
+        start: |-
+            Start install a docker image for PairDrop
+        end: |-
+            PairDrop installed!
+    displayName: PairDrop
+    isOfficial: true
+    description: PairDrop - Transfer Files Cross-Platform. No Setup, No Signup.
+    documentation: This docker-compose is taken from https://github.com/schlagmichdoch/PairDrop/tree/master
+
+version: '3'
+services:
+    $$cap_appname:
+        image: lscr.io/linuxserver/pairdrop:v1.11.2-ls126
+        restart: unless-stopped
+        caproverExtra:
+            containerHttpPort: '3000'
+            websocketSupport: true
+        environment:
+            - PUID=1000 # UID to run the application as
+            - PGID=1000 # GID to run the application as
+            - WS_FALLBACK=false # Set to true to enable websocket fallback if the peer to peer WebRTC connection is not available to the client.
+            - RATE_LIMIT=false # Set to true to limit clients to 1000 requests per 5 min.
+            - RTC_CONFIG=false # Set to the path of a file that specifies the STUN/TURN servers.
+            - DEBUG_MODE=false # Set to true to debug container and peer connections.
+            - TZ=Etc/UTC # Time Zone
+

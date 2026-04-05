@@ -1,0 +1,81 @@
+captainVersion: 4
+services:
+    '$$cap_appname':
+        image: lloesche/valheim-server:$$cap_version
+        cap_add:
+            - SYS_NICE
+        stop_grace_period: 120s
+        ports:
+            - '2456:2456'
+            - '2457:2457'
+            - '2458:2458'
+        volumes:
+            - '$$cap_appname-config:/config'
+            - '$$cap_appname-data:/opt/valheim'
+        environment:
+            SERVER_NAME: $$cap_server_name
+            SERVER_PORT: 2456
+            WORLD_NAME: $$cap_world_name
+            SERVER_PASS: $$cap_server_pass
+            SERVER_PUBLIC: 'true'
+            TZ: $$cap_timezone
+            UPDATE_CRON: '0 * * * *'
+            UPDATE_IF_IDLE: 'true'
+            BACKUPS_CRON: '0 */6 * * *'
+            BACKUPS_MAX_AGE: 3
+        caproverExtra:
+            notExposeAsWebApp: true
+
+volumes:
+    captain--$$cap_appname-config: {}
+    captain--$$cap_appname-data: {}
+
+caproverOneClickApp:
+    variables:
+        - id: '$$cap_version'
+          label: Valheim Server Version
+          defaultValue: 'sha-951992b'
+          description: 'Docker image version (use "latest" or specific version tag)'
+
+        - id: '$$cap_server_name'
+          label: Server Name
+          defaultValue: 'My Valheim Server'
+          description: 'Public name of your server (visible in server list)'
+
+        - id: '$$cap_world_name'
+          label: World Name
+          defaultValue: 'Midgard'
+          description: 'Name of your world (no spaces or special characters)'
+
+        - id: '$$cap_server_pass'
+          label: Server Password
+          defaultValue: $$cap_gen_random_hex(10)
+          validRegex: /.{5,}/
+          description: 'Password for your server (minimum 5 characters)'
+
+        - id: '$$cap_timezone'
+          label: Time Zone
+          defaultValue: 'UTC'
+          description: 'Server timezone (e.g. Europe/Moscow, America/New_York)'
+
+    instructions:
+        start: |-
+            Valheim Dedicated Server
+
+            A community maintained Valheim dedicated server with automatic updates, 
+            world backups and management features.
+
+            More details: https://github.com/lloesche/valheim-server-docker
+        end: |-
+            Valheim server has been successfully deployed!
+
+            IMPORTANT:
+            1. Make sure ports 2456-2458 UDP are open in your firewall
+            2. To upload existing world files, use SFTP to access:
+               /$$cap_appname-config/worlds/
+            3. Server may take a few minutes to fully start
+
+    displayName: Valheim Dedicated Server
+    isOfficial: false
+    description: A community maintained Valheim dedicated server with automatic updates and world backups
+    documentation: https://github.com/lloesche/valheim-server-docker

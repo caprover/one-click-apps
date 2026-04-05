@@ -12,7 +12,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
 
-    $$cap_appname-server:
+    $$cap_appname:
         image: ghcr.io/windmill-labs/windmill:$$cap_app_version
         expose:
             - 8000
@@ -89,12 +89,12 @@ caproverOneClickApp:
     variables:
         - id: $$cap_app_version
           label: Windmill Version
-          defaultValue: '1.219.1'
+          defaultValue: '1.434.1'
           description: Checkout their github page for the valid tags https://github.com/windmill-labs/windmill/releases
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_postgres_version
           label: Postgres Version
-          defaultValue: '15-alpine'
+          defaultValue: '16-alpine'
           description: Checkout their page for the valid tags https://hub.docker.com/_/postgres
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_postgres_pass

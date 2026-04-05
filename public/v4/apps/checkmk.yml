@@ -13,7 +13,7 @@ caproverOneClickApp:
     variables:
         - id: '$$cap_version'
           label: CheckMK Version
-          defaultValue: '2023.04.07'
+          defaultValue: '2.4.0p22'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/checkmk/check-mk-raw/tags
           validRegex: "/^([^\\s^\\/])+$/"
     instructions:

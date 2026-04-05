@@ -1,0 +1,112 @@
+captainVersion: 4
+
+services:
+    $$cap_appname:
+        image: ossapps/splitpro:$$cap_splitpro_version
+        environment:
+            # App port inside the container
+            PORT: 3000
+
+            # Database connection string for SplitPro
+            DATABASE_URL: postgresql://postgres:$$cap_postgres_password@srv-captain--$$cap_appname-db:5432/splitpro
+
+            # NextAuth configuration
+            NEXTAUTH_URL: https://$$cap_appname.$$cap_root_domain
+            NEXTAUTH_SECRET: $$cap_nextauth_secret
+
+            # Google OAuth credentials (required by the Docker README)
+            GOOGLE_CLIENT_ID: $$cap_google_client_id
+            GOOGLE_CLIENT_SECRET: $$cap_google_client_secret
+
+        depends_on:
+            - $$cap_appname-db
+
+        caproverExtra:
+            containerHttpPort: '3000'
+            websocketSupport: 'true'
+
+    $$cap_appname-db:
+        image: postgres:16
+        environment:
+            POSTGRES_DB: splitpro
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: $$cap_postgres_password
+        volumes:
+            - $$cap_appname-db-data:/var/lib/postgresql/data
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+
+volumes:
+    $$cap_appname-db-data: {}
+
+caproverOneClickApp:
+    variables:
+        - id: '$$cap_splitpro_version'
+          label: SplitPro image tag
+          defaultValue: 'v1.5.8'
+          description: >
+              Docker tag for SplitPro from Docker Hub:
+              https://hub.docker.com/r/ossapps/splitpro/tags
+
+        - id: '$$cap_postgres_password'
+          label: PostgreSQL password
+          defaultValue: '$$cap_gen_random_hex(16)'
+          description: Password for the internal SplitPro PostgreSQL database.
+          validRegex: /.{1,}/
+
+        - id: '$$cap_nextauth_secret'
+          label: NEXTAUTH_SECRET
+          defaultValue: '$$cap_gen_random_hex(32)'
+          description: Secret used by NextAuth. Only change if you know what you’re doing.
+          validRegex: '/.{16,}/'
+
+        - id: '$$cap_google_client_id'
+          label: Google OAuth Client ID
+          defaultValue: ''
+          description: Client ID from your Google Cloud OAuth 2.0 credentials.
+          validRegex: '/.{1,}/'
+
+        - id: '$$cap_google_client_secret'
+          label: Google OAuth Client Secret
+          defaultValue: ''
+          description: Client secret from your Google Cloud OAuth 2.0 credentials.
+          validRegex: '/.{1,}/'
+
+    instructions:
+        start: |-
+            SplitPro is an open source expense sharing app (similar to Splitwise) for sharing costs with friends, roommates, and trips.
+
+            This One-Click app will deploy:
+            - SplitPro web app
+            - PostgreSQL database
+
+            Before continuing, make sure you:
+            - Have Google OAuth credentials (Client ID / Client Secret).
+            - Set the Authorized redirect URI in Google to:
+                https://$$cap_appname.$$cap_root_domain/api/auth/callback/google
+
+            After installation you can open your app at:
+            https://$$cap_appname.$$cap_root_domain
+
+        end: |-
+            SplitPro has been deployed!
+
+            App URL:
+            https://$$cap_appname.$$cap_root_domain
+
+            Next steps:
+            - Enable HTTPS through the Caprover Dashboard
+            - Confirm that Google OAuth is configured with this callback URL:
+                https://$$cap_appname.$$cap_root_domain/api/auth/callback/google
+            - Log in with Google and create your first group.
+
+            To migrate/backup the DB in the future, you can use `pg_dump` /
+            `psql` against the `$$cap_appname-db` container, similar to the commands
+            in the official SplitPro Docker README.
+
+    displayName: SplitPro
+    isOfficial: false
+    description: Open-source expense sharing app (Splitwise alternative) running with PostgreSQL.
+    documentation: >
+        Based on the SplitPro Docker image at https://hub.docker.com/r/ossapps/splitpro
+        and the Docker setup docs in the SplitPro repository.

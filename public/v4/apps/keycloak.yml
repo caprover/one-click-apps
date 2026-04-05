@@ -16,8 +16,8 @@ services:
             - $$cap_appname-db
         restart: always
         environment:
-            KEYCLOAK_ADMIN: $$cap_keycloak_admin
-            KEYCLOAK_ADMIN_PASSWORD: $$cap_keycloak_password
+            KC_BOOTSTRAP_ADMIN_USERNAME: $$cap_keycloak_admin
+            KC_BOOTSTRAP_ADMIN_PASSWORD: $$cap_keycloak_password
             KC_DB_PASSWORD: $$cap_pg_pass
         caproverExtra:
             containerHttpPort: '8080'
@@ -36,19 +36,19 @@ services:
                 - ENV KC_DB_USERNAME=keycloak
                 - ENV KC_DB_PASSWORD=$$cap_pg_pass
                 - ENV KC_HOSTNAME=$$cap_appname.$$cap_root_domain
-                - ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start", "--optimized", "--proxy=edge"]
+                - ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start", "--optimized",  "--proxy-headers=xforwarded", "--http-enabled=true"]
 
 caproverOneClickApp:
     variables:
         - id: $$cap_postgres_version
           label: Postgres Version
-          defaultValue: '15'
+          defaultValue: '16'
           description: Check out Keycloak DB page for any valid major tested https://www.keycloak.org/server/db
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_keycloak_version
           label: Keycloak Version
-          defaultValue: '23.0.1'
-          description: v23.0.1 current as of 2023-12-06.  Check out Keycloak Docker page for the valid tags https://quay.io/repository/keycloak/keycloak?tab=tags
+          defaultValue: '26.0.2'
+          description: v26.0.2 current as of 2024-10-24.  Check out Keycloak Docker page for the valid tags https://quay.io/repository/keycloak/keycloak?tab=tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_pg_pass
           label: Postgres Password

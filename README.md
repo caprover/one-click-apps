@@ -55,10 +55,10 @@ Even though, the format used by One Click apps is Docker Compose, not all parame
 Other parameters are currently being ignored by CapRover. If you need a particular parameter, please file an issue, and we'll add it to the respected list.
 
 Aside the the Docker Compose template, services have a special subsection specific to CapRover called `caproverExtra` which contains service specific parameters that are only available via CapRover and not docker compose. Currently this field can take the following variables:
-    - `dockerfileLines` which is a multiline variable, and can be used instead of `image` property in the service. You must delete the `image` property if you want to use this parameter.
-    - `containerHttpPort` is useful when the underlying service uses a custom port for HTTP. If not provided, the default will be `"80"`
-    - `notExposeAsWebApp` can be set to `"true"` when the underlying service is not an HTTP app. This is useful for databases and other internally used services.
-    - `websocketSupport` can be set to `"true"` to automatically enable Websocket Support. Only supported in versions 1.12+
+- `dockerfileLines` which is a multiline variable, and can be used instead of `image` property in the service. You must delete the `image` property if you want to use this parameter. NOTE: `dockerfileLines` should be used in rare cases where other methods cannot work. Prefer `command` where possible. 
+- `containerHttpPort` is useful when the underlying service uses a custom port for HTTP. If not provided, the default will be `"80"`
+- `notExposeAsWebApp` can be set to `"true"` when the underlying service is not an HTTP app. This is useful for databases and other internally used services.
+- `websocketSupport` can be set to `"true"` to automatically enable Websocket Support. Only supported in versions 1.12+
 
 ### Icon
 - Make sure you add an app icon to the logos directory!

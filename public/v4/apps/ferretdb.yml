@@ -1,0 +1,62 @@
+captainVersion: 4
+services:
+    $$cap_appname-db:
+        image: ghcr.io/ferretdb/postgres-documentdb:$$cap_postgres_version
+        restart: on-failure
+        environment:
+            POSTGRES_USER: $$cap_db_user
+            POSTGRES_PASSWORD: $$cap_db_pass
+            POSTGRES_DB: $$cap_db_name
+        volumes:
+            - $$cap_appname-db-data:/var/lib/postgresql/data
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+
+    $$cap_appname:
+        image: ghcr.io/ferretdb/ferretdb:$$cap_ferretdb_version
+        restart: on-failure
+        environment:
+            FERRETDB_POSTGRESQL_URL: postgres://$$cap_db_user:$$cap_db_pass@srv-captain--$$cap_appname-db:5432/$$cap_db_name
+        depends_on:
+            - $$cap_appname-db
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+
+caproverOneClickApp:
+    variables:
+        - id: $$cap_ferretdb_version
+          label: FerretDB Version
+          defaultValue: '2.2.0'
+          description: Check available tags at https://github.com/FerretDB/FerretDB/pkgs/container/ferretdb
+          validRegex: /^([^\s^\/])+$/
+
+        - id: $$cap_postgres_version
+          label: Postgres DocumentDB Version
+          defaultValue: '17-0.103.0-ferretdb-2.2.0'
+          description: Check available tags at https://github.com/FerretDB/postgres-documentdb/pkgs/container/postgres-documentdb
+          validRegex: /^([^\s^\/])+$/
+
+        - id: $$cap_db_user
+          label: Database User
+          defaultValue: 'username'
+          validRegex: /^([a-zA-Z0-9_]+)$/
+
+        - id: $$cap_db_pass
+          label: Database Password
+          defaultValue: $$cap_gen_random_hex(16)
+
+        - id: $$cap_db_name
+          label: Database Name
+          defaultValue: 'postgres'
+          validRegex: /^([a-zA-Z0-9_]+)$/
+
+    instructions:
+        start: |-
+            This One-Click App deploys FerretDB with a PostgreSQL backend, providing a MongoDB-compatible interface backed by PostgreSQL.
+        end: |-
+            FerretDB is now deployed and available as `srv-captain--$$cap_appname:27017` to other apps.
+
+    displayName: FerretDB
+    isOfficial: false
+    description: MongoDB-compatible database powered by PostgreSQL.
+    documentation: https://docs.ferretdb.io/

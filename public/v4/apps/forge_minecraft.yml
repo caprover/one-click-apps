@@ -16,6 +16,7 @@ services:
             RCON_PASSWORD: '$$cap_rcon_password'
             CF_API_KEY: '$$cap_cf_api_key'
             CF_PAGE_URL: '$$cap_cf_page_url'
+            DISABLE_HEALTHCHECK: '$$cap_disable_healthcheck'
         ports:
             - '$$cap_mc_port:25565'
         volumes:
@@ -99,6 +100,10 @@ caproverOneClickApp:
           label: Max no of players
           defaultValue: 20
           validRegex: /.{1,}/
+        - id: $$cap_disable_healthcheck
+          label: disable healthcheck (set TRUE if minecraft server stopping with rcon-cli)
+          defaultValue: 'FALSE'
+          validRegex: /^(TRUE|FALSE)$/
     instructions:
         start: Minecraft server with dynamic server types and modpack support. This is oneclickapp in the any of itzg's Minecraft server version.
         end: Minecraft is deployed and available as srv-captain--$$cap_appname. Note that the application may take up to ten minutes to become available.

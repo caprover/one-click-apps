@@ -4,21 +4,18 @@ services:
         volumes:
             - $$cap_appname-database:/database
             - $$cap_appname-files:/srv
+            - $$cap_appname-config:/config
         restart: always
-        environment: {}
-        caproverExtra:
-            dockerfileLines:
-                - FROM alpine:latest as helper
-                - '# Similar to the original file, except, /database.db is inside a directory now so that we can assign a volume to it.'
-                - RUN echo "{'port':80,'baseURL':'','address':'','log':'stdout','database':'/database/database.db','root':'/srv'}" | sed "s/\'/\"/g" >/.edited.json
-                - FROM filebrowser/filebrowser:$$cap_filebrowser_version
-                - COPY --from=helper /.edited.json /.filebrowser.json
+        environment:
+            PUID: '0'
+            PGID: '0'
+        image: filebrowser/filebrowser:$$cap_filebrowser_version
 caproverOneClickApp:
     variables:
         - id: $$cap_filebrowser_version
           label: File Browser Version Tag
           description: 'Check out their Docker page for the valid tags: https://hub.docker.com/r/filebrowser/filebrowser/tags'
-          defaultValue: v2.22.4
+          defaultValue: v2.36.1-s6
           validRegex: /^([^\s^\/])+$/
     instructions:
         start: >-
@@ -32,11 +29,9 @@ caproverOneClickApp:
             Important! Read this and take a screenshot so you can refer to it!
 
 
-            username and password are both "admin".
-
+            **READ THIS**: username is `admin` and you should go to app logs to view the randomly generated password.
 
             By default, $$cap_appname-files volume, which is an empty directory, is mapped to your file browser content which is at /srv inside the app. To change this:
-
 
             1- Go to FileBrowser and change password to something else to avoid having your files exposed
 

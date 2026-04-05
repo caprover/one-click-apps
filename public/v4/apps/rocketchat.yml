@@ -25,7 +25,7 @@ services:
             containerHttpPort: 3000
 
     $$cap_appname-db:
-        image: bitnami/mongodb:$$cap_app_db_version
+        image: bitnamilegacy/mongodb:$$cap_app_db_version
         volumes:
             - $$cap_appname-db-data:/bitnami/mongodb
         environment:
@@ -83,7 +83,7 @@ caproverOneClickApp:
           label: MongoDB Version
           description: >-
               See https://docs.rocket.chat/quick-start/installing-and-updating/manual-installation/mongo-versions for supported MongoDB versions.
-              See https://hub.docker.com/r/bitnami/mongodb/tags/ for MongoDB image tags.
+              See https://hub.docker.com/r/bitnamilegacy/mongodb/tags/ for MongoDB image tags.
               Version must be at least `4.0.0`.
           defaultValue: '5.0'
           validRegex: /.{1,}/

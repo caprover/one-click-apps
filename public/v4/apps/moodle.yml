@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: bitnami/moodle:$$cap_md_version
+        image: bitnamilegacy/moodle:$$cap_md_version
         volumes:
             - $$cap_appname-moodle:/bitnami/moodle
             - $$cap_appname-moodledata:/bitnami/moodledata
@@ -56,7 +56,7 @@ caproverOneClickApp:
         - id: $$cap_md_version
           label: Moodle Version
           defaultValue: latest
-          description: Check out their Docker page for the valid tags https://hub.docker.com/r/bitnami/moodle/tags/
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/bitnamilegacy/moodle/tags/
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_md_sitename
           label: Moodle Site Name
@@ -78,7 +78,7 @@ caproverOneClickApp:
             Moodle is deployed and available as $$cap_appname. Username: admin, Password: password
              IMPORTANT: If it is new installation, It will take up to 10 minutes for Moodle to be ready. **Dont update app until it is displayed correctly on frontend** Before that, you might see a 502 error page.
              'Native MYSQL Authentication' should be MYSQL Authentication plugin for the $$cap_db_user db user. Else database wont connect. Check build logs to confirm it is connected properly.
-             Visit https://hub.docker.com/r/bitnami/moodle/ for more details and enviornament variables.
+             Visit https://hub.docker.com/r/bitnamilegacy/moodle/ for more details and enviornament variables.
     displayName: Moodle LMS
     description: Moodle(TM) is a very popular open source learning management solution (LMS) for the delivery of elearning courses and programs.
-    documentation: Taken from https://hub.docker.com/r/bitnami/moodle/. Port mapping removed from Moodle as it is no longer needed
+    documentation: Taken from https://hub.docker.com/r/bitnamilegacy/moodle/. Port mapping removed from Moodle as it is no longer needed
