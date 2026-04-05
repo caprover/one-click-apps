@@ -91,6 +91,11 @@ caproverOneClickApp:
             Why use it over the official postgres image?
             It is an unmodified Postgres image with convenient plugins added.
             It's optimized for replication, and provides popular extensions like PostGIS, pgRouting, pgTAP, and more for enhanced functionality. Ideal for those who prefer an unaltered Postgres experience with added features.
+
+            Supabase is a complex app and requires custom file generation.
+
+            For a more updated and maintained version, please add this repository to your one click apps in CapRover under Apps -> One Click Apps -> 3rd party repositories:
+            https://oneclickapps.sabino.pro
         end: "Supabase (Postgres) is deployed and available as srv-captain--$$cap_appname-db:5432 to other apps. For example with NodeJS: 'const client = new Client({ user: 'cap_pg_user', host: 'srv-captain--$$cap_appname', database: 'cap_pg_db', password: '********', port: 5432})'"
     displayName: Supabase PostgreSQL
     isOfficial: true
