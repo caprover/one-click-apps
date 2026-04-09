@@ -29,6 +29,7 @@ services:
         environment:
             PENPOT_PUBLIC_URI: $$cap_public_uri
             PENPOT_REDIS_URI: redis://srv-captain--$$cap_appname-redis:6379/0
+            PENPOT_SECRET_KEY: $$cap_secret_key
         caproverExtra:
             notExposeAsWebApp: 'true'
 
@@ -56,6 +57,7 @@ services:
             PENPOT_STORAGE_ASSETS_FS_DIRECTORY: /opt/data/assets
             PENPOT_FLAGS: $$cap_flags
             PENPOT_REGISTRATION_DOMAIN_WHITELIST: $$cap_registration_domain_whitelist
+            PENPOT_SECRET_KEY: $$cap_secret_key
             PENPOT_TENANT: pro
         depends_on:
             - $$cap_appname-postgres
@@ -75,6 +77,8 @@ services:
         depends_on:
             - $$cap_appname-backend
             - $$cap_appname-exporter
+        caproverExtra:
+            containerHttpPort: '8080'
 
 caproverOneClickApp:
     variables:
@@ -90,12 +94,16 @@ caproverOneClickApp:
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_penpot_version
           label: Penpot version for frontend, backend and exporter
-          defaultValue: '1.18.4'
+          defaultValue: '2.14.2'
           description: Checkout their docker page for the valid tags https://hub.docker.com/r/penpotapp/frontend/tags
           validRegex: /^([^\s^\/])+$/
+        - id: $$cap_secret_key
+          label: Penpot Secret Key
+          description: Mandatory key introduced in Penpot versions 2.x.
+          defaultValue: $$cap_gen_random_hex(32)
         - id: $$cap_flags
           label: Penpot Flags
-          defaultValue: enable-registration enable-login enable-smtp
+          defaultValue: enable-registration enable-login-with-password disable-email-verification
           description: Add "disable-secure-session-cookies" if you are going to serve it without HTTPS. Checkout option on their documentation https://help.penpot.app/technical-guide/configuration
         - id: $$cap_registration_domain_whitelist
           label: Penpot Registration Domain Whitelist
