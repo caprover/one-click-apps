@@ -93,4 +93,4 @@ services:
             POSTGRES_PASSWORD: $$cap_POSTGRES_PASSWORD
             POSTGRES_DB: $$cap_POSTGRES_DATABASE
         volumes:
-            - $$cap_appname-db:/var/lib/postgresql/data
+            - $$cap_appname-db:/var/lib/postgresql
