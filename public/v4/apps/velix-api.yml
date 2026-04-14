@@ -1,0 +1,67 @@
+captainVersion: 4
+
+caproverOneClickApp:
+  description: Self-hosted WhatsApp API with multi-instance support, webhooks, n8n node, and Chatwoot integration.
+  documentation: https://github.com/paulolinder/velix-api
+  displayName: Velix API
+  isOfficial: true
+  instructions:
+    start: >-
+      Velix API is a self-hosted WhatsApp API built in Go. Connect multiple
+      WhatsApp numbers, send and receive messages via REST, and integrate
+      with n8n and Chatwoot.
+    end: >-
+      Velix API is deployed. Open the admin panel at http://$$cap_appname.$$cap_root_domain
+      to register your first account, create a WhatsApp instance, and scan the QR code.
+  variables:
+    - id: $$cap_postgres_password
+      label: PostgreSQL Password
+      defaultValue: $$cap_gen_random_hex(16)
+      validRegex: /.{1,}/
+    - id: $$cap_jwt_secret
+      label: JWT Secret (min 32 chars)
+      defaultValue: $$cap_gen_random_hex(32)
+      validRegex: /.{32,}/
+
+services:
+  $$cap_appname:
+    image: ghcr.io/paulolinder/velix-api:0.1.0
+    restart: always
+    environment:
+      DATABASE_URL: postgres://postgres:$$cap_postgres_password@srv-captain--$$cap_appname-db:5432/velix?sslmode=disable
+      REDIS_URL: redis://srv-captain--$$cap_appname-redis:6379
+      JWT_SECRET: $$cap_jwt_secret
+      HTTP_PORT: "8080"
+      APP_ENV: production
+      LOG_LEVEL: info
+      MEDIA_STORAGE_PATH: /data/media
+      ENGINE_STORE_PATH: /data/instances
+      ENGINE_AUTO_RECONNECT: "true"
+      ENGINE_MAX_INSTANCES: "200"
+      REGISTRATION_ENABLED: "true"
+    volumes:
+      - $$cap_appname-data:/data
+    caproverExtra:
+      containerHttpPort: "8080"
+    depends_on:
+      - $$cap_appname-db
+      - $$cap_appname-redis
+
+  $$cap_appname-db:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: velix
+      POSTGRES_PASSWORD: $$cap_postgres_password
+    volumes:
+      - $$cap_appname-db-data:/var/lib/postgresql/data
+    caproverExtra:
+      notExposeAsWebApp: "true"
+
+  $$cap_appname-redis:
+    image: redis:7-alpine
+    restart: always
+    volumes:
+      - $$cap_appname-redis-data:/data
+    caproverExtra:
+      notExposeAsWebApp: "true"
