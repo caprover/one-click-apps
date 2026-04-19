@@ -3,7 +3,21 @@ services:
     $$cap_appname:
         image: ghcr.io/dotcoocoo/hermitstash:$$cap_hermitstash_version
         restart: always
+        init: true
+        security_opt:
+            - no-new-privileges:true
+        cap_drop:
+            - ALL
+        cap_add:
+            - CHOWN
+            - SETUID
+            - SETGID
+            - DAC_OVERRIDE
         environment:
+            PUID: '1000'
+            PGID: '1000'
+            UMASK: '022'
+            TZ: Etc/UTC
             NODE_ENV: production
             TRUST_PROXY: 'true'
         volumes:
@@ -15,11 +29,11 @@ caproverOneClickApp:
     variables:
         - id: $$cap_hermitstash_version
           label: HermitStash Version
-          defaultValue: '1.6.1'
+          defaultValue: '1'
           description: >-
-              Docker image tag from ghcr.io/dotcoocoo/hermitstash. Check
-              https://github.com/dotCooCoo/hermitstash/releases for available
-              versions.
+              Docker image tag from ghcr.io/dotcoocoo/hermitstash. Use '1' for the
+              rolling latest in the 1.x major. Check
+              https://github.com/dotCooCoo/hermitstash/releases for pinned versions.
           validRegex: /^([^\s^\/])+$/
     instructions:
         start: >-
