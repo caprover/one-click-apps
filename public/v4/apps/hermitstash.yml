@@ -1,0 +1,79 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: ghcr.io/dotcoocoo/hermitstash:$$cap_hermitstash_version
+        restart: always
+        init: true
+        stop_grace_period: 1m
+        security_opt:
+            - no-new-privileges:true
+        cap_drop:
+            - ALL
+        cap_add:
+            - CHOWN
+            - SETUID
+            - SETGID
+            - DAC_OVERRIDE
+        healthcheck:
+            test:
+                - CMD
+                - node
+                - -e
+                - require('http').get('http://localhost:3000/health',function(r){process.exit(r.statusCode===200?0:1)}).on('error',function(){process.exit(1)})
+            interval: 30s
+            timeout: 5s
+            start_period: 30s
+            retries: 3
+        environment:
+            PUID: '1000'
+            PGID: '1000'
+            UMASK: '022'
+            TZ: Etc/UTC
+            NODE_ENV: production
+            TRUST_PROXY: 'true'
+        volumes:
+            - $$cap_appname-data:/app/data
+            - $$cap_appname-uploads:/app/uploads
+        caproverExtra:
+            containerHttpPort: '3000'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_hermitstash_version
+          label: HermitStash Version
+          defaultValue: '1'
+          description: >-
+              Docker image tag from ghcr.io/dotcoocoo/hermitstash. Use '1' for the
+              rolling latest in the 1.x major. Check
+              https://github.com/dotCooCoo/hermitstash/releases for pinned versions.
+          validRegex: /^([^\s^\/])+$/
+    instructions:
+        start: >-
+            HermitStash is a self-hosted file upload server with post-quantum
+            encryption. Files are sealed with ML-KEM-1024, XChaCha20-Poly1305,
+            and Argon2id before touching disk.
+
+
+            Features include shareable download links with expiry and download
+            limits, WebAuthn passkey authentication, S3-compatible storage
+            backends, and an admin panel.
+
+
+            Note: For optimal performance, increase the container shared memory
+            to 256MB after deployment via the CapRover dashboard (App Configs >
+            Service Update > SHM Size).
+        end: >-
+            HermitStash is deployed and available at
+            http://$$cap_appname.$$cap_root_domain
+
+
+            Complete the setup wizard at the URL above to create your admin
+            account and configure encryption.
+
+
+            IMPORTANT: After setup, back up the vault key file at
+            /app/data/vault.key inside the container. Loss of this file means
+            all encrypted data is unrecoverable.
+    displayName: HermitStash
+    isOfficial: false
+    description: Post-quantum encrypted self-hosted file sharing with ML-KEM-1024 and XChaCha20-Poly1305.
+    documentation: https://github.com/dotCooCoo/hermitstash
