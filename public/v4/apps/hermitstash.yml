@@ -4,6 +4,7 @@ services:
         image: ghcr.io/dotcoocoo/hermitstash:$$cap_hermitstash_version
         restart: always
         init: true
+        stop_grace_period: 1m
         security_opt:
             - no-new-privileges:true
         cap_drop:
@@ -13,6 +14,16 @@ services:
             - SETUID
             - SETGID
             - DAC_OVERRIDE
+        healthcheck:
+            test:
+                - CMD
+                - node
+                - -e
+                - require('http').get('http://localhost:3000/health',function(r){process.exit(r.statusCode===200?0:1)}).on('error',function(){process.exit(1)})
+            interval: 30s
+            timeout: 5s
+            start_period: 30s
+            retries: 3
         environment:
             PUID: '1000'
             PGID: '1000'
