@@ -1,0 +1,49 @@
+captainVersion: 4
+
+services:
+  $$cap_appname:
+    image: qdrant/qdrant:$$cap_qdrant_version
+    ports:
+      - 6333:6333
+    volumes:
+      - $$cap_appname-data:/qdrant/storage
+    restart: always
+    environment:
+      QDRANT__LOG_LEVEL: info
+      QDRANT__STORAGE_PATH: /qdrant/storage
+      QDRANT__SERVICE__API_KEY: $$cap_qdrant_api_key
+    caproverExtra:
+      containerHttpPort: '6333'
+
+caproverOneClickApp:
+  variables:
+    - id: $$cap_qdrant_version
+      label: Qdrant Docker Image tag. Use a specific version.
+      defaultValue: v1.18.0
+      description: Check out the Docker page for valid tags https://hub.docker.com/r/qdrant/qdrant/tags
+    - id: $$cap_qdrant_api_key
+      label: API Key for Qdrant Service
+      defaultValue: $$cap_gen_random_hex(32)
+      description: A long random string used as the API key for Qdrant. You can change this value if needed.
+  instructions:
+    start: |
+      Qdrant is now running. You can access it at http://$$cap_appname.$$cap_root_domain. Dashboard is available at http://$$cap_appname.$$cap_root_domain/dashboard. Internal API is available at srv-captain--$$cap_appname.
+      Use the Qdrant client libraries or REST API to interact with the database.
+      Refer to the documentation at https://qdrant.tech/documentation/ for more details.
+    end: |
+      Qdrant has been successfully deployed and is ready to use.
+      You can access it at http://$$cap_appname.$$cap_root_domain. Dashboard is available at http://$$cap_appname.$$cap_root_domain/dashboard. Internal apps can access it at srv-captain--$$cap_appname.
+      Here are some steps to get started:
+      1. Connect to Qdrant using the REST API or client libraries (e.g., Python, Go, Java).
+      2. Create a collection to store your vectors.
+      3. Insert vectors and perform similarity searches.
+      4. Explore advanced features like filtering, hybrid search, and distributed deployment.
+      For detailed guides, visit https://qdrant.tech/documentation/.
+    data_persistence: |
+      Data is stored in the named volume $$cap_appname-data. Ensure this volume is backed up to avoid data loss.
+    security: |
+      Before deploying to production, review the Qdrant security documentation at https://qdrant.tech/documentation/guides/security/.
+  displayName: Qdrant Vector Database
+  isOfficial: true
+  description: Qdrant - Vector Similarity Search Engine with extended filtering support.
+  documentation: https://qdrant.tech/documentation/
