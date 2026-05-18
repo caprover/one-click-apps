@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: atendai/evolution-api:$$cap_ant_version
+        image: evoapicloud/evolution-api:$$cap_ant_version
         restart: always
         environment:
             SERVER_TYPE: 'http'
