@@ -10,6 +10,7 @@ services:
             AWS_SECRET_ACCESS_KEY: $$cap_env_aws_secret_access_key
             AWS_REGION: $$cap_env_aws_region
 
+            S3_ENDPOINT: $$cap_env_s3_endpoint
             S3_LOADER_BUCKET: $$cap_env_s3_loader_bucket
             S3_LOADER_BASE_DIR: $$cap_env_s3_loader_bucket_dir
 
@@ -24,7 +25,7 @@ caproverOneClickApp:
         - id: $$cap_imagor_version
           label: App Version
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/shumc/imagor/tags
-          defaultValue: '0.8.11'
+          defaultValue: '1.9.1'
           validRegex: /^([^\s^\/])+$/
 
         - id: $$cap_env_imagor_unsafe
@@ -56,6 +57,12 @@ caproverOneClickApp:
           description: AWS region
           defaultValue: ''
           validRegex: /^([^\s^\/])+$/
+
+        - id: $$cap_env_s3_endpoint
+          label: AWS S3 Endpoint
+          description: Here you can override the default S3 endpoint (for S3-compatible storage, leave empty for AWS)
+          defaultValue: ''
+          validRegex: /^(|(http|https):\/\/\S+)$/
 
         - id: $$cap_env_s3_loader_bucket
           label: AWS S3 Loader Bucket
