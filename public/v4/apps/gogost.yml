@@ -47,6 +47,8 @@ caproverOneClickApp:
                     password: $$cap_gost_api_password
             ```
             3. Go to CapRover dashboard and click **Save & Restart** to restart the app
+            4. Now you can start using **GOST API** in either of WebUI (https://ui.gost.run) or GUI (https://github.com/go-gost/gostctl/releases)
+            * Your GOST API would be accessible through http://$$cap_appname.$$cap_root_domain/$$cap_gost_api_path after step 3.
             **Reference**: https://gost.run/en/config/
     displayName: GOST - GO Simple Tunnel
     isOfficial: true
