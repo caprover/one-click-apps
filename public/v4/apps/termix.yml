@@ -1,0 +1,36 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: ghcr.io/lukegus/termix:$$cap_termix_version
+        restart: always
+        environment:
+            PORT: '8080'
+            GUACD_HOST: srv-captain--$$cap_appname-guacd
+        volumes:
+            - $$cap_appname-data:/app/data
+        caproverExtra:
+            containerHttpPort: 8080
+            websocketSupport: true
+
+    $$cap_appname-guacd:
+        image: guacamole/guacd:$$cap_guacd_version
+        restart: always
+        caproverExtra:
+            notExposeAsWebApp: true
+
+caproverOneClickApp:
+    displayName: Termix
+    description: Self-hosted SSH and remote desktop management.
+    isOfficial: false
+    variables:
+        - id: $$cap_termix_version
+          label: Termix Version
+          defaultValue: release-2.3.2
+        - id: $$cap_guacd_version
+          label: Guacd Version
+          defaultValue: 1.6.0
+    instructions:
+        start: |-
+            Termix - begin to deploy....
+        end: |-
+            Termix deployed.
