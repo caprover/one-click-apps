@@ -43,6 +43,7 @@ services:
             NEXTCLOUD_TRUSTED_DOMAINS: $$cap_appname.$$cap_root_domain $$cap_hostnames
             PHP_UPLOAD_LIMIT: $$cap_php_upload
             PHP_MEMORY_LIMIT: $$cap_php_memory
+            PHP_OPCACHE_MEMORY_CONSUMPTION: $$cap_php_opcache
     $$cap_appname-cron:
         depends_on:
             - $$cap_appname-db
@@ -60,7 +61,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_nextcloud_version
           label: Nextcloud Version
-          defaultValue: 29.0.14
+          defaultValue: 31.0.14
           description: >-
               Check out their Docker page for the valid tags https://hub.docker.com/_/nextcloud?tab=tags
 
@@ -69,12 +70,12 @@ caproverOneClickApp:
           validRegex: /^((?!fpm)\S)+$/
         - id: $$cap_redis_version
           label: Redis Version
-          defaultValue: 7.2.7
+          defaultValue: 7.2.12
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/redis?tab=tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_mariadb_version
           label: MariaDB (database) version
-          defaultValue: 10.11.11
+          defaultValue: 10.11.14
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/mariadb?tab=tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_db_user
@@ -114,6 +115,11 @@ caproverOneClickApp:
           label: PHP memory limit
           defaultValue: 512M
           description: Define the memory limit.
+          validRegex: /^([a-zA-Z0-9])+$/
+        - id: $$cap_php_opcache
+          label: PHP Opcache limit
+          defaultValue: 128
+          description: The size of the shared memory storage used by OPcache, in megabytes.
           validRegex: /^([a-zA-Z0-9])+$/
     instructions:
         start: A safe home for all your data. Access & share your files, calendars, contacts, mail & more from any device, on your terms. http://Nextcloud.com

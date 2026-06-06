@@ -1,0 +1,42 @@
+captainVersion: 4
+services:
+    # Beszel Hub
+    $$cap_appname:
+        image: henrygd/beszel:$$cap_beszel_version
+        restart: unless-stopped
+        volumes:
+            - $$cap_appname-data:/beszel_data
+        caproverExtra:
+            containerHttpPort: '8090'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_beszel_version
+          label: Beszel Version
+          defaultValue: 0.18.6
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/henrygd/beszel/tags
+    instructions:
+        start: |-
+            Beszel is a lightweight server monitoring hub with historical data, Docker stats, and alerts.
+
+            Features
+
+            ◉ Lightweight and fast monitoring dashboard
+            ◉ Docker container stats tracking
+            ◉ Historical data with customizable retention
+            ◉ Alerts via email, webhook, and more
+            ◉ Multi-server monitoring with agents
+            ◉ Built on PocketBase
+
+            Note: This deploys the Beszel Hub only. You will need to install the Beszel Agent separately on each server you want to monitor. See https://beszel.dev/guide/agent-installation for details.
+        end: |-
+            Beszel Hub is deployed! 🎉
+
+            Your service is available at http://$$cap_appname.$$cap_root_domain
+
+            Next steps:
+            1. Open the URL above and create your admin account.
+            2. Install the Beszel Agent on servers you want to monitor. See https://beszel.dev/guide/agent-installation
+    displayName: Beszel
+    isOfficial: true
+    description: Lightweight server monitoring hub with historical data, Docker stats, and alerts.
+    documentation: https://beszel.dev
