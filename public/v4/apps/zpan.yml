@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: ghcr.io/saltbo/zpan:2.7.1
+        image: ghcr.io/saltbo/zpan:2.7.2
         volumes:
             - $$cap_appname-data:/data
         restart: always
@@ -14,7 +14,7 @@ services:
     $$cap_appname-downloader:
         depends_on:
             - $$cap_appname
-        image: ghcr.io/saltbo/zpan:2.7.1-cli
+        image: ghcr.io/saltbo/zpan:2.7.2-cli
         command: ['--config', '/data/config.yaml', 'downloader', 'up']
         hostname: $$cap_appname-downloader
         restart: always
