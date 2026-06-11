@@ -2,130 +2,102 @@ captainVersion: 4
 services:
     $$cap_appname:
         environment:
-            GHOST_DATABASE_NAME: ghost
-            GHOST_DATABASE_PASSWORD: $$cap_db_ghost_password
-            GHOST_DATABASE_USER: ghost
-            GHOST_BLOG_TITLE: $$cap_ghost_blog_title
-            GHOST_USERNAME: $$cap_ghost_user
-            GHOST_EMAIL: $$cap_ghost_email
-            GHOST_HOST: $$cap_ghost_host
-            GHOST_PASSWORD: $$cap_ghost_password
-            GHOST_ENABLE_HTTPS: $$cap_ghost_protocol
-            GHOST_PORT_NUMBER: $$cap_ghost_port
-            GHOST_DATABASE_HOST: srv-captain--$$cap_appname-db
-            GHOST_DATABASE_PORT_NUMBER: '3306'
-            GHOST_SMTP_FROM_ADDRESS: $$cap_ghost_smtp_from
-            GHOST_SMTP_HOST: $$cap_ghost_smtp_host
-            GHOST_SMTP_PASSWORD: $$cap_ghost_smtp_password
-            GHOST_SMTP_PORT: $$cap_ghost_smtp_port
-            GHOST_SMTP_USER: $$cap_ghost_smtp_user
-            GHOST_SMTP_PROTOCOL: $$cap_ghost_smtp_protocol
-        image: bitnamilegacy/ghost:$$cap_ghost_version
+            NODE_ENV: production
+            url: https://$$cap_ghost_host
+            database__client: mysql
+            database__connection__host: srv-captain--$$cap_appname-db
+            database__connection__user: ghost
+            database__connection__password: $$cap_db_password
+            database__connection__database: ghost
+            mail__transport: SMTP
+            mail__options__host: $$cap_smtp_host
+            mail__options__port: $$cap_smtp_port
+            mail__options__secure: $$cap_smtp_secure
+            mail__options__auth__user: $$cap_smtp_user
+            mail__options__auth__pass: $$cap_smtp_password
+            mail__from: $$cap_smtp_from
+        image: ghost:$$cap_ghost_version
         restart: always
         volumes:
-            - $$cap_appname-data:/bitnami/ghost
+            - $$cap_appname-data:/var/lib/ghost/content
         depends_on:
             - $$cap_appname-db
         caproverExtra:
             containerHttpPort: '2368'
     $$cap_appname-db:
         environment:
-            MYSQL_DATABASE: ghost
-            MYSQL_PASSWORD: $$cap_db_ghost_password
-            MYSQL_ROOT_PASSWORD: $$cap_db_password
-            MYSQL_ROOT_USER: $$cap_db_user
+            MYSQL_ROOT_PASSWORD: $$cap_db_root_password
             MYSQL_USER: ghost
-        image: bitnamilegacy/mysql:8.0
+            MYSQL_PASSWORD: $$cap_db_password
+            MYSQL_DATABASE: ghost
+        image: mysql:8.0
         restart: always
         volumes:
-            - $$cap_appname-db-data:/bitnami/mysql
+            - $$cap_appname-db-data:/var/lib/mysql
         caproverExtra:
-            notExposeAsWebApp: 'true'
+            notExposeAsWebApp: true
 caproverOneClickApp:
     variables:
-        - defaultValue: 5.2.2
-          description: Check out their Docker page for the valid tags https://hub.docker.com/r/bitnamilegacy/ghost/tags
+        - defaultValue: 6.44.0-alpine
+          description: Check available tags at https://hub.docker.com/_/ghost/tags
           id: $$cap_ghost_version
           label: Ghost Version
           validRegex: /^([^\s^\/])+$/
-        - defaultValue: admin
-          description: Root user that will be created on DB
-          id: $$cap_db_user
-          label: MYSQL root user
-          validRegex: /^([^\s^\/])+$/
-        - description: Root password that will be created on MYSQL
+        - description: Root password for MySQL
+          id: $$cap_db_root_password
+          label: MySQL root password
+          defaultValue: $$cap_gen_random_hex(12)
+          validRegex: /^(?=.*\d).{10,}$/
+        - description: Password for the Ghost database user
           id: $$cap_db_password
-          label: MYSQL root password
-          validRegex: /^(?=.*\d).{10,}$/
-        - description: Password for database user named `ghost`
-          id: $$cap_db_ghost_password
-          label: MYSQL Ghost password
-          validRegex: /^(?=.*\d).{10,}$/
-        - defaultValue: user
-          description: Ghost administrator user
-          id: $$cap_ghost_user
-          label: Ghost administrator username
-          validRegex: /^([^\s^\/])+$/
-        - defaultValue: youremail@example.com
-          description: Ghost administrator email, you will use it to login
-          id: $$cap_ghost_email
-          label: Ghost administrator email
-          validRegex: /^([^\s^\/])+$/
-        - description: The admin password must be at least 10 characters, and at least one number and letter
-          id: $$cap_ghost_password
-          label: Ghost password
+          label: MySQL Ghost password
+          defaultValue: $$cap_gen_random_hex(12)
           validRegex: /^(?=.*\d).{10,}$/
         - defaultValue: blog.example.com
-          description: Enter the URL that is used to access your publication
+          description: Your custom domain (e.g. blog.example.com)
           id: $$cap_ghost_host
           label: Ghost Host
           validRegex: /^([^\s^\/])+$/
-        - defaultValue: 'yes'
-          description: Enable serving Ghost through HTTPS instead of HTTP
-          id: $$cap_ghost_protocol
-          label: Ghost Protocol
-          validRegex: /^([^\s^\/])+$/
-        - defaultValue: '2368'
-          description: Port that you will be using
-          id: $$cap_ghost_port
-          label: Ghost Port
-        - defaultValue: 'User blog'
-          description: Blog name that will be displayed
-          id: $$cap_ghost_blog_title
-          label: Ghost Blog Title
-        - defaultValue: smtp.gmail.com
-          description: The SMTP host you will be using
-          id: $$cap_ghost_smtp_host
+        - defaultValue: smtp.example.com
+          description: SMTP server host
+          id: $$cap_smtp_host
           label: SMTP host
         - defaultValue: '587'
-          description: The SMTP port you will be using
-          id: $$cap_ghost_smtp_port
+          description: SMTP server port
+          id: $$cap_smtp_port
           label: SMTP port
-        - defaultValue: your_email@gmail.com
-          description: Your user on the SMTP service
-          id: $$cap_ghost_smtp_user
+        - defaultValue: 'false'
+          description: Use TLS/SSL (true for port 465, false for port 587)
+          id: $$cap_smtp_secure
+          label: SMTP secure
+        - defaultValue: support@example.com
+          description: SMTP username
+          id: $$cap_smtp_user
           label: SMTP user
-        - description: Your password on the SMTP service
-          id: $$cap_ghost_smtp_password
+        - description: SMTP password
+          id: $$cap_smtp_password
           label: SMTP password
-        - description: The SMTP protocol to use. Allowed values tls, ssl. No default.
-          id: $$cap_ghost_smtp_protocol
-          label: '[OPTIONAL] SMTP protocol'
-        - defaultValue: blog@example.com
-          description: SMTP from address
-          id: $$cap_ghost_smtp_from
+        - defaultValue: "'Ghost' <support@example.com>"
+          description: From address for emails
+          id: $$cap_smtp_from
           label: SMTP from address
     instructions:
         end: >
-            Ghost is deployed and available as $$cap_appname. 
+            Ghost is deployed and available at https://$$cap_ghost_host
 
-            Before starting using Ghost, you'll need to
+            IMPORTANT: Before using Ghost, you MUST:
 
-            - Enable HTTPS
+            1. Point your domain ($$cap_ghost_host) DNS A-Record to your CapRover server IP
 
-            IMPORTANT: It will take up to 2 minutes for Ghost to be ready. Before that, you might see 502 error page.
+            2. In CapRover, go to Apps > $$cap_appname > HTTP Settings and add $$cap_ghost_host
+
+            3. Enable HTTPS for the domain via CapRover's SSL section (Let's Encrypt)
+
+            4. Complete your setup by visiting https://$$cap_ghost_host/ghost
+
+            It may take up to 2 minutes for Ghost to be ready. Before that, you might see a 502 error.
         start: Ghost is a fully open source, adaptable platform for building and running a modern online publication. We power blogs, magazines and journalists from Zappos to Sky News.
     displayName: 'Ghost'
     isOfficial: true
     description: Ghost is a free and open source blogging platform written in JavaScript and distributed under the MIT License
-    documentation: Taken from https://docs.ghost.org/
+    documentation: Taken from https://docs.ghost.org/install/docker/

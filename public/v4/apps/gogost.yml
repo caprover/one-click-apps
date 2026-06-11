@@ -1,0 +1,66 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: gogost/gost:$$cap_gost_version
+        restart: always
+        volumes:
+            - $$cap_appname-data:/etc/gost
+        caproverExtra:
+            notExposeAsWebApp: false
+            websocketSupport: true
+            containerHttpPort: '$$cap_gost_api_port'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_gost_version
+          label: GOST Version
+          description: Check out https://hub.docker.com/r/gogost/gost/tags for versions.
+          defaultValue: 3.2.6
+        - id: $$cap_gost_api_path
+          label: Custom prefix path for GOST WebAPI
+          description: At least 3 letter all lowercase
+          defaultValue: api
+          validRegex: /^[a-z]{3,}$/
+        - id: $$cap_gost_api_alog
+          label: Print accessing API into log
+          description: Boolean
+          defaultValue: true
+          validRegex: /^(true|false)$/
+        - id: $$cap_gost_api_port
+          label: Port for GOST WebAPI
+          description: The API port you configure in gost.yaml
+          defaultValue: 18080
+        - id: $$cap_gost_api_user
+          label: Username for GOST WebAPI
+          description: At least 4 characters
+          defaultValue: gostguru
+        - id: $$cap_gost_api_password
+          label: Password for GOST WebAPI
+          description: At least 8 characters, password should contain both uppercase and lowercase and at least one number and a special character (not at the start of password)
+          defaultValue: Ex@mple777
+          validRegex: /^(?![^\w\s])(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s])[ -~]{8,}$/
+    instructions:
+        start: |-
+            Deploy GOST with a manually created config file
+        end: |-
+            GOST service has been successfully deployed!
+            **IMPORTANT**: The container will keep restarting until you create the config file.
+            **First Steps**:
+            1. SSH into the server
+            2. Create the config file at `/var/lib/docker/volumes/captain--$$cap_appname-data/_data/gost.yaml` with content like:
+             ```yaml
+             api:
+                 addr: ":$$cap_gost_api_port"
+                 pathPrefix: "/$$cap_gost_api_path"
+                 accesslog: $$cap_gost_api_alog
+                 auth:
+                     username: $$cap_gost_api_user
+                     password: $$cap_gost_api_password
+             ```
+             3. Go to CapRover dashboard and click **Save & Restart** to restart the app
+             4. Now you can start using **GOST API** in either of WebUI (https://ui.gost.run) or GUI (https://github.com/go-gost/gostctl/releases)
+             * Your GOST API would be accessible through `http://$$cap_appname.$$cap_root_domain/$$cap_gost_api_path` after step 3.
+            **Reference**: https://gost.run/en/config/
+    displayName: GOST - GO Simple Tunnel
+    isOfficial: true
+    description: A simple security tunnel written in Go lang
+    documentation: Read their official docs at https://gost.run/en/
