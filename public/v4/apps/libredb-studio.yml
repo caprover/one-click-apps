@@ -28,55 +28,64 @@ caproverOneClickApp:
         - id: $$cap_version
           label: LibreDB Studio Version
           defaultValue: '0.9.14'
-          description: Image tag to deploy. Pick a fixed version (not "latest"). Valid tags - https://github.com/libredb/libredb-studio/pkgs/container/libredb-studio
+          description: Image tag to deploy. Always pin a fixed version, never "latest". Example - 0.9.14. Browse all valid tags at https://github.com/libredb/libredb-studio/pkgs/container/libredb-studio
           validRegex: '/^([^\s^\/])+$/'
         - id: $$cap_admin_email
           label: Admin Email
           defaultValue: admin@libredb.org
-          description: Email for the admin account (full access - query execution + maintenance tools).
+          description: Login email for the ADMIN account - full access, including query execution plus maintenance/admin tools. Example - admin@yourcompany.com
           validRegex: '/^.+@.+\..+$/'
         - id: $$cap_admin_password
           label: Admin Password
           defaultValue: $$cap_gen_random_hex(16)
-          description: Password for the admin account. A strong one is generated for you - keep the value shown on the final screen.
+          description: Password for the admin login. A strong random one is pre-filled - keep it or type your own (min 8 chars). Shown only once on the final screen, so save it. Example - MyStr0ng-AdminPass
           validRegex: '/.{8,}/'
         - id: $$cap_user_email
           label: User Email
           defaultValue: user@libredb.org
-          description: Email for the standard read/query account (query execution only).
+          description: Login email for the STANDARD account - query execution only, no admin tools. Example - analyst@yourcompany.com
           validRegex: '/^.+@.+\..+$/'
         - id: $$cap_user_password
           label: User Password
           defaultValue: $$cap_gen_random_hex(16)
-          description: Password for the standard user account. A strong one is generated for you - keep the value shown on the final screen.
+          description: Password for the standard login. A strong random one is pre-filled - keep it or type your own (min 8 chars). Shown only once on the final screen. Example - An0ther-StrongPass
           validRegex: '/.{8,}/'
         - id: $$cap_llm_provider
           label: AI Provider (optional)
           defaultValue: ''
-          description: OPTIONAL. One of - gemini, openai, ollama, custom. Leave blank to disable AI query assistance.
+          description: OPTIONAL - turns on AI query help (natural-language to SQL, explain, fix). One of - gemini | openai | ollama | custom. Leave blank to keep AI off. Example - gemini
         - id: $$cap_llm_api_key
           label: AI API Key (optional)
           defaultValue: ''
-          description: OPTIONAL. API key for gemini/openai. Leave blank if AI is disabled or for local Ollama.
+          description: OPTIONAL - API key for the chosen provider. Needed for gemini/openai, not for a local ollama. Examples - Gemini AIza... , OpenAI sk-... . Leave blank if AI is off.
         - id: $$cap_llm_model
           label: AI Model (optional)
           defaultValue: ''
-          description: OPTIONAL. Model name, e.g. gemini-2.5-flash or gpt-4o-mini. Leave blank to use the provider default.
+          description: OPTIONAL - model name for the provider. Leave blank to use the provider default. Examples - gemini-2.5-flash , gpt-4o-mini , llama3.1
         - id: $$cap_llm_api_url
           label: AI API URL (optional)
           defaultValue: ''
-          description: OPTIONAL. Base URL for ollama/custom providers, e.g. http://srv-captain--ollama:11434/v1. Leave blank for gemini/openai.
+          description: OPTIONAL - base URL for ollama/custom providers only (not for gemini/openai). Example for an Ollama app on this same CapRover - http://srv-captain--ollama:11434/v1
     instructions:
         start: |-
             LibreDB Studio is a modern, open-source, web-based SQL IDE for the cloud era.
-            Query PostgreSQL, MySQL, SQLite, Oracle, SQL Server, MongoDB and Redis from your
-            browser, with AI-powered query assistance, an ERD viewer, schema diff and more.
+            Query PostgreSQL, MySQL, SQLite, Oracle, SQL Server, MongoDB and Redis from
+            your browser - with AI-powered query assistance, an ERD viewer, schema diff
+            and more.
 
-            This template runs the standalone Studio image with SQLite persistence on a
-            CapRover persistent volume. Strong admin/user passwords are generated for you;
-            the AI fields are optional and can be left blank.
+            What you can set below (defaults are sensible - you can usually just click Deploy):
+              - Version: the image tag to deploy (a tested fixed version by default).
+              - Admin login: full access, including maintenance/admin tools.
+              - User login: query execution only.
+                Both passwords are pre-generated; change them if you like. They are
+                shown only once on the final screen - save them then.
+              - AI (optional): fill these to enable query assistance with Gemini,
+                OpenAI, Ollama or a custom provider. Leave blank to keep AI disabled.
 
-            More details: https://github.com/libredb/libredb-studio
+            Your saved connections and settings are persisted with SQLite on a CapRover
+            volume, so they survive restarts and redeploys.
+
+            More details and docs: https://github.com/libredb/libredb-studio
         end: |-
             LibreDB Studio has been deployed! 🚀
 
