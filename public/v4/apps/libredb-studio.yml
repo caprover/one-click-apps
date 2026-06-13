@@ -1,0 +1,105 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: ghcr.io/libredb/libredb-studio:$$cap_version
+        restart: always
+        environment:
+            # --- Authentication (auto-generated, shown after install) ---
+            JWT_SECRET: $$cap_gen_random_hex(48)
+            ADMIN_EMAIL: $$cap_admin_email
+            ADMIN_PASSWORD: $$cap_admin_password
+            USER_EMAIL: $$cap_user_email
+            USER_PASSWORD: $$cap_user_password
+            NEXT_PUBLIC_AUTH_PROVIDER: local
+            # --- Storage: SQLite file on the persistent volume below ---
+            STORAGE_PROVIDER: sqlite
+            STORAGE_SQLITE_PATH: /app/data/libredb-storage.db
+            # --- AI / LLM (optional) — leave blank to disable AI features ---
+            LLM_PROVIDER: $$cap_llm_provider
+            LLM_API_KEY: $$cap_llm_api_key
+            LLM_MODEL: $$cap_llm_model
+            LLM_API_URL: $$cap_llm_api_url
+        volumes:
+            - $$cap_appname-data:/app/data
+        caproverExtra:
+            containerHttpPort: '3000'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_version
+          label: LibreDB Studio Version
+          defaultValue: '0.9.14'
+          description: Image tag to deploy. Pick a fixed version (not "latest"). Valid tags - https://github.com/libredb/libredb-studio/pkgs/container/libredb-studio
+          validRegex: '/^([^\s^\/])+$/'
+        - id: $$cap_admin_email
+          label: Admin Email
+          defaultValue: admin@libredb.org
+          description: Email for the admin account (full access - query execution + maintenance tools).
+          validRegex: '/^.+@.+\..+$/'
+        - id: $$cap_admin_password
+          label: Admin Password
+          defaultValue: $$cap_gen_random_hex(16)
+          description: Password for the admin account. A strong one is generated for you - keep the value shown on the final screen.
+          validRegex: '/.{8,}/'
+        - id: $$cap_user_email
+          label: User Email
+          defaultValue: user@libredb.org
+          description: Email for the standard read/query account (query execution only).
+          validRegex: '/^.+@.+\..+$/'
+        - id: $$cap_user_password
+          label: User Password
+          defaultValue: $$cap_gen_random_hex(16)
+          description: Password for the standard user account. A strong one is generated for you - keep the value shown on the final screen.
+          validRegex: '/.{8,}/'
+        - id: $$cap_llm_provider
+          label: AI Provider (optional)
+          defaultValue: ''
+          description: OPTIONAL. One of - gemini, openai, ollama, custom. Leave blank to disable AI query assistance.
+        - id: $$cap_llm_api_key
+          label: AI API Key (optional)
+          defaultValue: ''
+          description: OPTIONAL. API key for gemini/openai. Leave blank if AI is disabled or for local Ollama.
+        - id: $$cap_llm_model
+          label: AI Model (optional)
+          defaultValue: ''
+          description: OPTIONAL. Model name, e.g. gemini-2.5-flash or gpt-4o-mini. Leave blank to use the provider default.
+        - id: $$cap_llm_api_url
+          label: AI API URL (optional)
+          defaultValue: ''
+          description: OPTIONAL. Base URL for ollama/custom providers, e.g. http://srv-captain--ollama:11434/v1. Leave blank for gemini/openai.
+    instructions:
+        start: |-
+            LibreDB Studio is a modern, open-source, web-based SQL IDE for the cloud era.
+            Query PostgreSQL, MySQL, SQLite, Oracle, SQL Server, MongoDB and Redis from your
+            browser, with AI-powered query assistance, an ERD viewer, schema diff and more.
+
+            This template runs the standalone Studio image with SQLite persistence on a
+            CapRover persistent volume. Strong admin/user passwords are generated for you;
+            the AI fields are optional and can be left blank.
+
+            More details: https://github.com/libredb/libredb-studio
+        end: |-
+            LibreDB Studio has been deployed! 🚀
+
+            Open it at: http://$$cap_appname.$$cap_root_domain
+            (Enable HTTPS from the CapRover dashboard for production use.)
+
+            Log in with the admin account:
+              Email:    $$cap_admin_email
+              Password: $$cap_admin_password
+
+            A standard query-only user was also created:
+              Email:    $$cap_user_email
+              Password: $$cap_user_password
+
+            ⚠️  Save these credentials now — the passwords are not shown again.
+
+            Your data (saved connections & settings) is stored in SQLite on the
+            persistent volume "$$cap_appname-data" and survives restarts and redeploys.
+
+            To enable SSO (Auth0/Keycloak/Okta/Azure AD) or change AI settings later,
+            add the OIDC_* / LLM_* environment variables under the app's
+            "App Configs" tab. See https://github.com/libredb/libredb-studio
+    displayName: LibreDB Studio
+    isOfficial: false
+    description: Open-source web-based SQL IDE. Query PostgreSQL, MySQL, SQLite, Oracle, SQL Server, MongoDB & Redis from your browser, with AI-powered query assistance.
+    documentation: Image and docs - https://github.com/libredb/libredb-studio . Uses ghcr.io/libredb/libredb-studio. Deploys with SQLite persistence; supports OIDC SSO and multiple AI providers via extra env vars.
