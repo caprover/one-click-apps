@@ -1,0 +1,137 @@
+captainVersion: 4
+services:
+    $$cap_appname-postgres:
+        image: pgvector/pgvector:pg17
+        volumes:
+            - $$cap_appname-pgdata:/var/lib/postgresql/data
+        restart: always
+        environment:
+            POSTGRES_USER: tela
+            POSTGRES_PASSWORD: $$cap_pg_password
+            POSTGRES_DB: tela
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname-backend:
+        image: ghcr.io/zcag/tela-backend:$$cap_tela_version
+        depends_on:
+            - $$cap_appname-postgres
+        restart: always
+        environment:
+            TELA_PUBLIC_BASE_URL: $$cap_public_base_url
+            TELA_DATABASE_URL: postgres://tela:$$cap_pg_password@srv-captain--$$cap_appname-postgres:5432/tela?sslmode=disable
+            TELA_SHARE_SECRET: $$cap_share_secret
+            TELA_API_KEY_SECRET: $$cap_api_key_secret
+            TELA_DECK_URL: http://srv-captain--$$cap_appname-deck:3344
+            TELA_GOTENBERG_URL: http://srv-captain--$$cap_appname-gotenberg:3000
+            TELA_PDF_RENDER_BASE_URL: http://srv-captain--$$cap_appname-frontend
+            TELA_ADMIN_USERNAME: $$cap_admin_username
+            TELA_ADMIN_PASSWORD: $$cap_admin_password
+            TELA_ADMIN_EMAIL: $$cap_admin_email
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname-frontend:
+        image: ghcr.io/zcag/tela-frontend:$$cap_tela_version
+        restart: always
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname-deck:
+        image: ghcr.io/zcag/tela-deck:$$cap_tela_version
+        volumes:
+            - $$cap_appname-deckcache:/data
+        restart: always
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname-gotenberg:
+        image: gotenberg/gotenberg:8
+        restart: always
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname:
+        image: ghcr.io/zcag/tela-proxy:$$cap_tela_version
+        depends_on:
+            - $$cap_appname-backend
+            - $$cap_appname-frontend
+        restart: always
+        environment:
+            TELA_SITE_ADDRESS: ':80'
+            TELA_UPSTREAM_BACKEND: srv-captain--$$cap_appname-backend:8080
+            TELA_UPSTREAM_FRONTEND: srv-captain--$$cap_appname-frontend:80
+        caproverExtra:
+            containerHttpPort: '80'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_tela_version
+          label: tela Version
+          defaultValue: 0.7.0
+          description: tela image tag to deploy. Check the valid tags at https://github.com/zcag/tela/pkgs/container/tela-backend
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_public_base_url
+          label: Public Base URL
+          defaultValue: https://$$cap_appname.$$cap_root_domain
+          description: The full public URL (with scheme) where tela will be reached. Enable HTTPS for this app first, then keep the https:// default, or set your own custom domain.
+          validRegex: /^https?:\/\/.{1,}$/
+        - id: $$cap_pg_password
+          label: PostgreSQL Password
+          defaultValue: $$cap_gen_random_hex(20)
+          description: Password for the bundled PostgreSQL database. A random one is generated for you.
+          validRegex: /.{8,}/
+        - id: $$cap_share_secret
+          label: Share Secret
+          defaultValue: $$cap_gen_random_hex(32)
+          description: 'Secret used to sign share links. A random one is generated for you (equivalent to: openssl rand -hex 32). Keep it stable.'
+          validRegex: /^([0-9a-f]){32,}$/
+        - id: $$cap_api_key_secret
+          label: API Key Secret
+          defaultValue: $$cap_gen_random_hex(32)
+          description: 'Secret used to sign API tokens / PATs. A random one is generated for you (equivalent to: openssl rand -hex 32). NEVER rotate this after first boot — it invalidates every existing access token.'
+          validRegex: /^([0-9a-f]){32,}$/
+        - id: $$cap_admin_username
+          label: Admin Username (optional)
+          description: Optional. Leave all three admin fields empty to create your admin account via the in-app /setup wizard after deploy.
+        - id: $$cap_admin_password
+          label: Admin Password (optional)
+          description: Optional. Initial admin password if you want the account created on first boot instead of via /setup.
+        - id: $$cap_admin_email
+          label: Admin Email (optional)
+          description: Optional. Initial admin email address.
+    instructions:
+        start: >
+            tela is a self-hostable, markdown-native team wiki: a Go + PostgreSQL
+            backend, a React editor with live Yjs collaboration, full-text and
+            optional semantic search, WebDAV sync, public/blog spaces, Slidev
+            decks, PDF export, and a built-in MCP server so AI agents are
+            first-class editors.
+
+
+            This template deploys the full stack: a Caddy proxy (the web app),
+            the Go backend, the nginx frontend, a pgvector-enabled PostgreSQL
+            database, and the deck + gotenberg render sidecars.
+
+
+            The Share Secret and API Key Secret are auto-generated and must stay
+            stable — rotating the API Key Secret invalidates every existing
+            access token. Leave the admin fields empty to create your admin
+            account via the in-app /setup wizard after deploy.
+
+
+            More details: https://github.com/zcag/tela
+        end: >
+            tela has been deployed! It may take a minute or two for all services
+            to become healthy — you might briefly see a 502 page.
+
+
+            IMPORTANT: before using tela, enable HTTPS for $$cap_appname and make
+            sure the Public Base URL matches how you reach it (https:// by
+            default).
+
+
+            Then open https://$$cap_appname.$$cap_root_domain and complete the
+            /setup wizard to create your admin account (unless you set the
+            optional admin fields).
+
+
+            Docs: https://telawiki.com — Source: https://github.com/zcag/tela
+    displayName: tela
+    isOfficial: false
+    description: Self-hostable markdown-native team wiki — live collaboration, full-text + semantic search, WebDAV sync, decks, and a built-in MCP server for AI agents.
+    documentation: Taken from https://github.com/zcag/tela (see deploy/docker-compose.yml). Images are published at ghcr.io/zcag/tela-*.
