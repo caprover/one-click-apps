@@ -1,14 +1,15 @@
 captainVersion: 4
 services:
     $$cap_appname:
-        image: frooodle/s-pdf:$$cap_stirling_version
+        image: stirlingtools/stirling-pdf:$$cap_stirling_version
         environment:
-            - DOCKER_ENABLE_SECURITY=false
+            - SECURITY_ENABLELOGIN=false
         volumes:
-            - $$cap_appname-training-data:/usr/share/tesseract-ocr/5/tessdata
-            - $$cap_appname-extra-configs:/extraConfigs
+            - $$cap_appname-tessdata:/usr/share/tessdata
+            - $$cap_appname-configs:/configs
             - $$cap_appname-custom-files:/customFiles
             - $$cap_appname-logs:/logs
+            - $$cap_appname-pipeline:/pipeline
         restart: always
         caproverExtra:
             containerHttpPort: '8080'
@@ -16,13 +17,12 @@ caproverOneClickApp:
     variables:
         - id: $$cap_stirling_version
           label: stirling version tag
-          description: Check out their docker page for the valid tags @ https://hub.docker.com/r/frooodle/s-pdf
-          defaultValue: 0.19.1
+          description: Check out their docker page for the valid tags @ https://hub.docker.com/r/stirlingtools/stirling-pdf
+          defaultValue: 2.14.2
     instructions:
         start: stirling is a locally hosted web application that allows you to perform various operations on PDF files
         end: >-
             stirling is deployed and available as $$cap_appname.
-
             IMPORTANT: It will take up to 2 minutes for stirling to be ready. Before that, you might see 502 error page.
     displayName: 'stirling'
     description: stirling is a locally hosted web application that allows you to perform various operations on PDF files
