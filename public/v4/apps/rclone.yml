@@ -2,7 +2,7 @@ captainVersion: 4
 services:
     '$$cap_appname':
         image: rclone/rclone:$$cap_rclone_version
-        command: rclone rcd --rc-web-gui --rc-web-gui-no-open-browser --rc-addr :5572 -v
+        command: rcd --rc-web-gui --rc-web-gui-no-open-browser --rc-addr :5572 -v
         volumes:
             - '$$cap_appname-config:/config/rclone'
         environment:
