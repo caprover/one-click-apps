@@ -2,7 +2,16 @@ captainVersion: 4
 services:
     '$$cap_appname':
         image: rclone/rclone:$$cap_rclone_version
-        command: rcd --rc-web-gui --rc-web-gui-no-open-browser --rc-addr :5572 -v
+        command:
+            [
+                'rclone',
+                'rcd',
+                '--rc-web-gui',
+                '--rc-web-gui-no-open-browser',
+                '--rc-addr',
+                ':5572',
+                '-v',
+            ]
         volumes:
             - '$$cap_appname-config:/config/rclone'
         environment:
@@ -16,7 +25,7 @@ caproverOneClickApp:
     variables:
         - id: '$$cap_rclone_version'
           label: rclone Version
-          defaultValue: '1.74.4'
+          defaultValue: '1.75.0'
           description: Check the official image tags at https://hub.docker.com/r/rclone/rclone/tags
           validRegex: "/^([^\\s^\\/])+$/"
         - id: '$$cap_gui_user'
