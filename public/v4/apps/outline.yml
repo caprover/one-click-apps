@@ -15,7 +15,7 @@ services:
         image: redis:$$cap_redis_version
         # the redis image entrypoint is a wrapper, so the command has to start
         # with the binary itself, otherwise CapRover replaces the entrypoint
-        command: ['redis-server', '--appendonly', 'yes']
+        command: ['redis-server', '--appendonly', 'yes', '--requirepass', '$$cap_redis_password']
         volumes:
             - $$cap_appname-redis-data:/data
         restart: always
@@ -37,7 +37,7 @@ services:
             UTILS_SECRET: $$cap_utils_secret
             DATABASE_URL: postgres://$$cap_db_user:$$cap_db_pass@srv-captain--$$cap_appname-db:5432/outline
             PGSSLMODE: disable
-            REDIS_URL: redis://srv-captain--$$cap_appname-redis:6379
+            REDIS_URL: redis://:$$cap_redis_password@srv-captain--$$cap_appname-redis:6379
             FILE_STORAGE: $$cap_file_storage
             FILE_STORAGE_LOCAL_ROOT_DIR: /var/lib/outline/data
             FILE_STORAGE_UPLOAD_MAX_SIZE: $$cap_upload_max_size
@@ -108,6 +108,11 @@ caproverOneClickApp:
           label: Database password
           defaultValue: $$cap_gen_random_hex(32)
           description: Letters and digits only, it is used inside the database connection URL.
+          validRegex: /^([a-zA-Z0-9]){16,}$/
+        - id: $$cap_redis_password
+          label: Redis password
+          defaultValue: $$cap_gen_random_hex(32)
+          description: Letters and digits only, it is used inside the Redis connection URL.
           validRegex: /^([a-zA-Z0-9]){16,}$/
         - id: $$cap_default_language
           label: The default interface language
@@ -240,7 +245,11 @@ caproverOneClickApp:
              OIDC:   https://$$cap_appname.$$cap_root_domain/auth/oidc.callback
 
             Uploads live in the $$cap_appname-data volume, the database in $$cap_appname-db-data.
-            Back both of them up. Remaining settings are documented at
+            Back up both volumes, and keep a copy of SECRET_KEY, UTILS_SECRET and the database
+            password from the app configuration. A restore that starts with a fresh SECRET_KEY
+            cannot decrypt the old data and locks every existing user out.
+
+            Remaining settings are documented at
             https://github.com/outline/outline/blob/main/.env.sample
     displayName: Outline
     isOfficial: true
