@@ -15,7 +15,14 @@ services:
         image: redis:$$cap_redis_version
         # the redis image entrypoint is a wrapper, so the command has to start
         # with the binary itself, otherwise CapRover replaces the entrypoint
-        command: ['redis-server', '--appendonly', 'yes', '--requirepass', '$$cap_redis_password']
+        command:
+            [
+                'redis-server',
+                '--appendonly',
+                'yes',
+                '--requirepass',
+                '$$cap_redis_password',
+            ]
         volumes:
             - $$cap_appname-redis-data:/data
         restart: always
