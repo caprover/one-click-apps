@@ -10,6 +10,7 @@ services:
             POSTGRES_PASSWORD: $$cap_pg_pass
             POSTGRES_DB: $$cap_pg_db
             POSTGRES_INITDB_ARGS: $$cap_pg_initdb_args
+            PGDATA: /var/lib/postgresql/data
         caproverExtra:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
