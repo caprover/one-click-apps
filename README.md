@@ -95,7 +95,7 @@ The included workflow validates, builds, and publishes the repository when chang
 - Enable GitHub Actions on your fork.
 - Go to **Settings → Pages**.
 - Under **Build and deployment**, set **Source** to **GitHub Actions**.
-- Leave [public/CNAME](https://github.com/caprover/one-click-apps/blob/master/public/CNAME) empty to use GitHub's default Pages domain. To use a custom domain, replace its contents with your domain and configure the same domain under **Settings → Pages**.
+- To use a custom domain, configure it under **Settings → Pages** and add the [required DNS records](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site) with your domain provider. The GitHub Actions publishing workflow ignores `public/CNAME`.
 - Push your changes to `master`.
 
 The default repository URL is `https://<owner>.github.io/one-click-apps`. No personal access token is required.
