@@ -1,21 +1,23 @@
 name: Validate One Click Apps
 
 on:
-    push:
-        branches:
-            - master
     pull_request:
         branches:
             - master
+
+permissions:
+    contents: read
 
 jobs:
     build:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v1
-            - uses: actions/setup-node@v1
+            - uses: actions/checkout@v7
+            - uses: actions/setup-node@v7
               with:
                   node-version: 20
-            - run: npm ci && npm run validate_apps && npm run formatter
-              env:
-                  GITHUB_PERSONAL_TOKEN: ${{secrets.GITHUB_PERSONAL_TOKEN}}
+                  cache: npm
+            - run: npm ci
+            - run: npm run validate_apps
+            - run: npm run formatter
+            - run: npm run build
