@@ -83,11 +83,22 @@ You may want to build your own private repository. CapRover supports having mult
 To create your own repository:
 - Fork this repository
 - Delete all existing apps (to avoid duplicate apps), and add your own apps.
-- Run `npm i`
+- Run `npm ci`
 - Run `npm run validate_apps`
 - Run `npm run formatter-write`
 - Run `npm run build`
-- Now you can host the static content placed in `./dist` directory anywhere you want, the official repo uses [github pages](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site) to publish the content. Make sure to update [CNAME](https://github.com/caprover/one-click-apps/blob/master/public/CNAME) to your own URL if you decide to do so.
+- Host the static content in `./dist` using any static file server, or use the included GitHub Pages workflow described below.
+
+### Publishing with GitHub Pages
+The included workflow validates, builds, and publishes the repository when changes are pushed to `master`.
+
+- Enable GitHub Actions on your fork.
+- Go to **Settings → Pages**.
+- Under **Build and deployment**, set **Source** to **GitHub Actions**.
+- To use a custom domain, configure it under **Settings → Pages** and add the [required DNS records](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site) with your domain provider. The GitHub Actions publishing workflow ignores `public/CNAME`.
+- Push your changes to `master`.
+
+The default repository URL is `https://<owner>.github.io/one-click-apps`. No personal access token is required.
  
 ### Hosting your own repository on a CapRover instance
 Your own private repository can be hosted on a CapRover instance with the newly-added [captain-definition](/captain-definition) file.
