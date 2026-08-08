@@ -25,7 +25,7 @@ caproverOneClickApp:
           defaultValue: '64738'
           id: $$cap_port
         - label: SuperUser password
-          defaultValue: $$cap_gen_random_hex(32)
+          defaultValue: $$cap_gen_random_hex(8)
           description: Specifies the SuperUser (Admin) password for this server.
           validRegex: /.{1,}/
           id: $$cap_pass
