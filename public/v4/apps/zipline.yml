@@ -1,0 +1,66 @@
+captainVersion: 4
+
+services:
+    $$cap_appname:
+        image: ghcr.io/diced/zipline:$$cap_zipline_version
+        environment:
+            CORE_SECRET: $$cap_core_secret
+            DATABASE_URL: postgresql://$$cap_db_user:$$cap_db_pass@srv-captain--$$cap_appname-db:5432/$$cap_db_name
+            DATASOURCE_TYPE: local
+            DATASOURCE_LOCAL_DIRECTORY: /zipline/uploads
+        volumes:
+            - $$cap_appname-uploads:/zipline/uploads
+            - $$cap_appname-public:/zipline/public
+            - $$cap_appname-themes:/zipline/themes
+        depends_on:
+            - $$cap_appname-db
+        caproverExtra:
+            containerHttpPort: '3000'
+
+    $$cap_appname-db:
+        image: postgres:$$cap_postgres_version
+        environment:
+            POSTGRES_USER: $$cap_db_user
+            POSTGRES_PASSWORD: $$cap_db_pass
+            POSTGRES_DB: $$cap_db_name
+        volumes:
+            - $$cap_appname-db-data:/var/lib/postgresql/data
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+
+caproverOneClickApp:
+    variables:
+        - id: $$cap_zipline_version
+          label: Zipline image tag
+          description: 'Use a valid image tag from GHCR (for example: 4.3.2 or latest)'
+          defaultValue: '4.3.2'
+        - id: $$cap_postgres_version
+          label: PostgreSQL version
+          description: Check valid tags at https://hub.docker.com/_/postgres/tags
+          defaultValue: '16'
+        - id: $$cap_db_user
+          label: Database user
+          defaultValue: zipline
+        - id: $$cap_db_pass
+          label: Database password
+          description: Password for accessing the database. A random one has been generated for you.
+          defaultValue: $$cap_gen_random_hex(32)
+        - id: $$cap_db_name
+          label: Database name
+          defaultValue: zipline
+        - id: $$cap_core_secret
+          label: Zipline core secret
+          description: Secret used to encrypt sensitive data. A random one has been generated for you.
+          defaultValue: $$cap_gen_random_hex(64)
+    instructions:
+        start: |-
+            Zipline is a self-hosted file and image sharing service. This template deploys Zipline with a PostgreSQL database and local storage.
+
+            If you want to use S3-compatible storage or change advanced settings, see the Zipline configuration docs.
+        end: |-
+            Zipline is deployed and available at https://$$cap_appname.$$cap_root_domain
+
+            For configuration (S3, limits, custom domains), see the Zipline docs.
+    displayName: Zipline
+    description: Self-hosted file and image hosting service with shareable links.
+    documentation: https://zipline.diced.sh
