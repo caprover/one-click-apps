@@ -1,7 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname-postgres:
-        image: postgres:15
+        image: pgvector/pgvector:pg17
         volumes:
             - $$cap_appname-postgres-data:/var/lib/postgresql/data
         restart: always
@@ -12,64 +12,76 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname-redis:
+        image: redis:alpine
         volumes:
             - $$cap_appname-redis-data:/data
         restart: always
         environment:
             REDIS_PASSWORD: $$cap_chatwoot_redis_password
+        command: ['sh', '-c', 'redis-server --requirepass $REDIS_PASSWORD']
         caproverExtra:
-            dockerfileLines:
-                - FROM redis:alpine
-                - CMD exec redis-server --requirepass "$$cap_chatwoot_redis_password"
             notExposeAsWebApp: 'true'
     $$cap_appname-web:
+        image: chatwoot/chatwoot:$$cap_chatwoot_version
         restart: always
+        volumes:
+            - $$cap_appname-storage:/data/storage
+            - $$cap_appname-app-storage:/app/storage
         environment:
             RAILS_ENV: production
             RAILS_LOG_TO_STDOUT: 'true'
+            NODE_ENV: production
             SECRET_KEY_BASE: $$cap_chatwoot_secret_key_base
+            FRONTEND_URL: https://$$cap_appname.$$cap_root_domain
+            DEFAULT_LOCALE: en
+            FORCE_SSL: 'false'
+            ENABLE_ACCOUNT_SIGNUP: 'true'
             POSTGRES_HOST: srv-captain--$$cap_appname-postgres
             POSTGRES_DATABASE: chatwoot
             POSTGRES_USERNAME: chatwoot
             POSTGRES_PASSWORD: $$cap_chatwoot_postgres_password
-            REDIS_URL: redis://srv-captain--$$cap_appname-redis:6379
+            REDIS_URL: redis://default:$$cap_chatwoot_redis_password@srv-captain--$$cap_appname-redis:6379
             REDIS_PASSWORD: $$cap_chatwoot_redis_password
-            INSTALLATION_ENV: caprover
+            REDIS_OPENSSL_VERIFY_MODE: none
+            RAILS_MAX_THREADS: '5'
+            TRUSTED_PROXIES: '*'
+            INSTALLATION_ENV: docker
+        command: ['sh', '-c', 'bundle exec rails db:chatwoot_prepare && bundle exec rails s -p 3000 -b 0.0.0.0']
         caproverExtra:
             containerHttpPort: '3000'
-            dockerfileLines:
-                - FROM chatwoot/chatwoot:$$cap_chatwoot_version
-                - RUN chmod +x docker/entrypoints/rails.sh
-                - ENTRYPOINT ["docker/entrypoints/rails.sh"]
-                - EXPOSE 3000
-                - CMD bundle exec rails db:chatwoot_prepare; bundle exec rails s -b 0.0.0.0 -p 3000
     $$cap_appname-worker:
+        image: chatwoot/chatwoot:$$cap_chatwoot_version
         restart: always
+        volumes:
+            - $$cap_appname-app-storage:/app/storage
         environment:
             RAILS_ENV: production
             RAILS_LOG_TO_STDOUT: 'true'
-            FRONTEND_URL: http://$$cap_appname.$$cap_root_domain
+            NODE_ENV: production
             SECRET_KEY_BASE: $$cap_chatwoot_secret_key_base
+            FRONTEND_URL: https://$$cap_appname.$$cap_root_domain
+            DEFAULT_LOCALE: en
+            FORCE_SSL: 'false'
+            ENABLE_ACCOUNT_SIGNUP: 'true'
             POSTGRES_HOST: srv-captain--$$cap_appname-postgres
             POSTGRES_DATABASE: chatwoot
             POSTGRES_USERNAME: chatwoot
             POSTGRES_PASSWORD: $$cap_chatwoot_postgres_password
-            REDIS_URL: redis://srv-captain--$$cap_appname-redis:6379
+            REDIS_URL: redis://default:$$cap_chatwoot_redis_password@srv-captain--$$cap_appname-redis:6379
             REDIS_PASSWORD: $$cap_chatwoot_redis_password
-            INSTALLATION_ENV: caprover
+            REDIS_OPENSSL_VERIFY_MODE: none
+            RAILS_MAX_THREADS: '5'
+            TRUSTED_PROXIES: '*'
+            INSTALLATION_ENV: docker
+        command: ['bundle', 'exec', 'sidekiq', '-C', 'config/sidekiq.yml']
         caproverExtra:
-            dockerfileLines:
-                - FROM chatwoot/chatwoot:$$cap_chatwoot_version
-                - RUN chmod +x docker/entrypoints/rails.sh
-                - ENTRYPOINT ["docker/entrypoints/rails.sh"]
-                - CMD bundle exec sidekiq -C config/sidekiq.yml
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
     variables:
         - id: $$cap_chatwoot_version
           label: Chatwoot Version Tag
           description: Choose the latest version from https://hub.docker.com/r/chatwoot/chatwoot/tags
-          defaultValue: v3.1.1
+          defaultValue: v4.0.1
         - id: $$cap_chatwoot_secret_key_base
           label: Chatwoot Secret Key Base
           description: The randomized string which is used to verify the integrity of signed cookies. Please use a string with more than 26 characters
