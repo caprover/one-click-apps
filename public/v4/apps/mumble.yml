@@ -5,6 +5,8 @@ services:
         container_name: mumble-server
         hostname: mumble-server
         restart: on-failure
+        environment:
+            MUMBLE_SUPERUSER_PASSWORD: $$cap_pass
         volumes:
             - $$cap_appname-data:/data/
         ports:
@@ -15,18 +17,23 @@ caproverOneClickApp:
     variables:
         - label: Mumble Version
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/mumblevoip/mumble-server/tags
-          defaultValue: v1.4.230
+          defaultValue: v1.6.870-4
           validRegex: '/.{1,}/'
           id: $$cap_version
         - label: Voice Port (UDP)
           description: Port for voice
           defaultValue: '64738'
           id: $$cap_port
+        - label: SuperUser password
+          defaultValue: $$cap_gen_random_hex(8)
+          description: Specifies the SuperUser (Admin) password for this server.
+          validRegex: /.{1,}/
+          id: $$cap_pass
     instructions:
         start: |-
             Mumble is a free, open source, low latency, high quality voice chat application. The official Mumble server Docker image.
         end: |-
-            Please write down the SuperUser user password found in the logs. These are needed to administrate the Mumble server.
+            Restart the app once to be sure the SuperUser password is applied.
     displayName: Mumble server
     isOfficial: true ## Only if all images used here are official or from a trusted source.
     description: Mumble is an open-source, low-latency, high quality voice chat software.
