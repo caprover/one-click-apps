@@ -1,0 +1,110 @@
+captainVersion: 4
+services:
+    $$cap_appname-db:
+        image: mysql:8.4
+        restart: always
+        volumes:
+            - $$cap_appname-db-data:/var/lib/mysql
+        environment:
+            MYSQL_DATABASE: louez
+            MYSQL_USER: louez
+            MYSQL_PASSWORD: $$cap_db_password
+            MYSQL_ROOT_PASSWORD: $$cap_db_root_password
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+
+    $$cap_appname-storage:
+        image: minio/minio:$$cap_minio_version
+        restart: always
+        volumes:
+            - $$cap_appname-storage-data:/data
+        environment:
+            MINIO_ROOT_USER: louez
+            MINIO_ROOT_PASSWORD: $$cap_storage_password
+        # A bucket is a top-level directory of the data drive, so it is created
+        # before MinIO starts. The shell has to be explicit: the image's
+        # entrypoint prepends `minio` to whatever arguments it receives.
+        command: sh -c 'mkdir -p /data/louez && exec minio server /data'
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+
+    $$cap_appname:
+        image: synapsr/louez:$$cap_louez_version
+        restart: always
+        volumes:
+            - $$cap_appname-data:/app/data
+        depends_on:
+            - $$cap_appname-db
+            - $$cap_appname-storage
+        environment:
+            LOUEZ_MODE: standalone
+            DATABASE_URL: mysql://louez:$$cap_db_password@srv-captain--$$cap_appname-db:3306/louez
+            AUTH_URL: https://$$cap_appname.$$cap_root_domain
+            AUTH_TRUST_HOST: 'true'
+            NEXT_PUBLIC_APP_URL: https://$$cap_appname.$$cap_root_domain
+            NEXT_PUBLIC_APP_DOMAIN: $$cap_appname.$$cap_root_domain
+            S3_ENDPOINT: http://srv-captain--$$cap_appname-storage:9000
+            S3_REGION: us-east-1
+            S3_BUCKET: louez
+            S3_ACCESS_KEY_ID: louez
+            S3_SECRET_ACCESS_KEY: $$cap_storage_password
+            S3_PUBLIC_URL: /files
+        caproverExtra:
+            containerHttpPort: '3000'
+
+caproverOneClickApp:
+    displayName: Louez
+    isOfficial: true
+    description: Open-source equipment rental platform - booking storefront with live availability plus a back office for reservations, customers, contracts and statistics.
+    documentation: Taken from https://github.com/Synapsr/Louez - see the project README for the full configuration surface.
+    instructions:
+        start: |-
+            Louez is an open-source equipment rental platform. Rent out cameras,
+            tools, bikes, party gear or vehicles from a branded storefront, and
+            manage products, reservations, pickups and returns, customers, PDF
+            contracts and revenue statistics from one dashboard. The interface
+            is available in 8 languages.
+
+            This installs three containers: the app, a MySQL database and a
+            private MinIO store for product images. Louez creates its own
+            database schema on first boot, so there is nothing to import.
+        end: |-
+            Louez is deployed! It might take a minute for the first boot to
+            finish installing the database schema.
+
+            IMPORTANT: enable HTTPS on $$cap_appname before creating your
+            account - sign-in is bound to https://$$cap_appname.$$cap_root_domain.
+            Then open the app: the storefront is served at the root of the site
+            and the dashboard lives under /dashboard. The first account you
+            create becomes the store owner.
+
+            Outgoing email is optional. Without SMTP credentials you sign in
+            with a password and Louez skips sending mail; add SMTP_HOST,
+            SMTP_PORT, SMTP_USER, SMTP_PASSWORD and SMTP_FROM in the app's
+            environment variables to enable confirmations and reminders.
+    variables:
+        - id: $$cap_louez_version
+          label: Louez Version
+          defaultValue: '2.1.0'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/synapsr/louez/tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_minio_version
+          label: MinIO Version
+          defaultValue: RELEASE.2025-09-07T16-13-09Z
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/minio/minio/tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_db_password
+          label: MySQL Password
+          defaultValue: $$cap_gen_random_hex(24)
+          description: Password of the database user Louez connects with.
+          validRegex: /.{6,}/
+        - id: $$cap_db_root_password
+          label: MySQL Root Password
+          defaultValue: $$cap_gen_random_hex(24)
+          description: Password of the MySQL root user.
+          validRegex: /.{6,}/
+        - id: $$cap_storage_password
+          label: Image Store Password
+          defaultValue: $$cap_gen_random_hex(24)
+          description: Credentials Louez uses to read and write product images.
+          validRegex: /.{8,}/
