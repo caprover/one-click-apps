@@ -1,0 +1,105 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: openclaw/openclaw:$$cap_openclaw_version
+        environment:
+            HOME: /home/node
+            OPENCLAW_HOME: /home/node
+            OPENCLAW_STATE_DIR: /home/node/.openclaw
+            OPENCLAW_CONFIG_DIR: /home/node/.openclaw
+            OPENCLAW_CONFIG_PATH: /home/node/.openclaw/openclaw.json
+            OPENCLAW_WORKSPACE_DIR: /home/node/.openclaw/workspace
+            OPENCLAW_GATEWAY_TOKEN: $$cap_openclaw_token
+            TZ: $$cap_openclaw_tz
+        volumes:
+            - $$cap_appname-state:/home/node/.openclaw
+            - $$cap_appname-auth:/home/node/.config/openclaw
+        command: node openclaw.mjs gateway --allow-unconfigured --auth token --bind lan
+        restart: always
+        caproverExtra:
+            containerHttpPort: '18789'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_openclaw_version
+          label: OpenClaw Version
+          defaultValue: '2026.7.1-2'
+          description: >-
+              Image tag to deploy. Append -slim for a smaller image without a bundled browser,
+              or -browser to include Chromium. Tags are listed at
+              https://hub.docker.com/r/openclaw/openclaw/tags
+          validRegex: '/^[a-zA-Z0-9._-]+$/'
+        - id: $$cap_openclaw_token
+          label: Gateway Access Token
+          defaultValue: $$cap_gen_random_hex(32)
+          description: >-
+              Shared secret for the Gateway. OpenClaw requires this whenever it binds to a
+              non-loopback address, which is always the case behind CapRover. Keep the
+              generated value, treat it like a password, and paste it when the Control UI
+              asks for authentication.
+          validRegex: '/^\S{16,}$/'
+        - id: $$cap_openclaw_tz
+          label: Timezone
+          defaultValue: 'UTC'
+          description: IANA timezone for the agent, for example Europe/Athens.
+          validRegex: '/.{1,}/'
+    instructions:
+        start: >-
+            OpenClaw is an open source personal AI assistant that runs on your own server and
+            answers through the messaging apps you already use, including Telegram, WhatsApp,
+            Slack and Discord.
+
+
+            Two things to know before you deploy. The Gateway holds your model API keys and
+            your conversation history, so treat the app URL as sensitive and enable HTTPS.
+            You also supply your own model provider key after installation, since OpenClaw
+            ships without one.
+
+
+            A 2 GB instance is enough for the slim image. Choose the browser tag only if you
+            want the agent to drive a real browser, which needs noticeably more memory.
+        end: >-
+            OpenClaw is deployed at http://$$cap_appname.$$cap_root_domain and your Gateway
+            token is the Gateway Access Token you just set.
+
+
+            Three steps remain, and the second one is required before the web interface will
+            load in a browser.
+
+
+            1. Enable HTTPS for this app in CapRover, under HTTP Settings. The Gateway holds
+            credentials, so plain HTTP is a bad idea on a public host.
+
+
+            2. Tell the Gateway which browser origin to trust, and which proxy sits in front
+            of it. Open a terminal on your CapRover host and run:
+
+
+            docker exec $(docker ps -qf name=srv-captain--$$cap_appname) node openclaw.mjs
+            config set gateway.controlUi.allowedOrigins
+            '["https://$$cap_appname.$$cap_root_domain"]' --strict-json
+
+
+            docker exec $(docker ps -qf name=srv-captain--$$cap_appname) node openclaw.mjs
+            config set gateway.trustedProxies '["127.0.0.1"]' --strict-json
+
+
+            Then restart the app from the CapRover dashboard. Without the first command the
+            Gateway rejects the WebSocket handshake from your browser and the Control UI
+            stays blank.
+
+
+            3. Open https://$$cap_appname.$$cap_root_domain, authenticate with your Gateway
+            token, then add a model provider key and connect a messaging channel. Device
+            pairing requests are approved with openclaw devices approve.
+
+
+            Documentation lives at https://docs.openclaw.ai and the security model is
+            described at https://docs.openclaw.ai/security
+    displayName: OpenClaw
+    isOfficial: true
+    description: Open source personal AI assistant on your own server, reachable from Telegram, WhatsApp, Slack and Discord.
+    documentation: >-
+        Taken from the official compose file at
+        https://github.com/openclaw/openclaw/blob/main/docker-compose.yml and the hosting
+        guides at https://docs.openclaw.ai/vps. Flags follow the pattern the project uses for
+        reverse proxied deployments in https://docs.openclaw.ai/install/fly
