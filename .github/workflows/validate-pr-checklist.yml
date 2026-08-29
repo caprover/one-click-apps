@@ -44,9 +44,10 @@ jobs:
             }
 
             const commentMarker = '<!-- caprover-pr-checklist-reminder -->';
+            const automatedFooter = '_This message was posted automatically by the repository PR checklist workflow._';
             const message = missingChecklist
-              ? `${commentMarker}\n### PR checklist is missing\n\nPlease update the pull request description to include the full checklist from the pull request template and complete each item before merge.`
-              : `${commentMarker}\n### PR checklist is incomplete\n\nPlease complete all items in the pull request checklist before merge.`;
+              ? `${commentMarker}\n### Automated PR checklist check\n\nThe required PR checklist is missing from this pull request description. Please include the full checklist from the pull request template and complete each item before merge.\n\n${automatedFooter}`
+              : `${commentMarker}\n### Automated PR checklist check\n\nSome required PR checklist items are incomplete. Please complete every item before merge.\n\n${automatedFooter}`;
 
             const comments = await github.paginate(github.rest.issues.listComments, {
               owner: context.repo.owner,
