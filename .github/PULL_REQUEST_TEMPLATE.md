@@ -2,6 +2,7 @@ First of all, thank you for your contribution! 😄
 
 
 
+<!-- caprover-pr-checklist -->
 ### ☑️ Self Check before Merge
 
 - [ ] Please note that the official repository is for popular apps with 1k+ of stars or 10k+ downloads. If you'd like to add a less popular app, you can always [create your own 3rd party repo](https://github.com/caprover/one-click-apps#build-your-own-one-click-app-repository) and add your app there.
