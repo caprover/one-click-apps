@@ -1,0 +1,82 @@
+name: Validate PR Checklist
+
+on:
+  pull_request_target:
+    types: [opened, edited, reopened]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate checklist
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const marker = '<!-- caprover-pr-checklist -->';
+            const body = context.payload.pull_request.body || '';
+
+            const { data: template } = await github.rest.repos.getContent({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              path: '.github/PULL_REQUEST_TEMPLATE.md',
+              ref: context.payload.pull_request.base.ref,
+            });
+
+            const templateBody = Buffer.from(template.content, 'base64').toString('utf8');
+            const checklistItems = templateBody
+              .split('\n')
+              .filter(line => /^\s*- \[ \]/i.test(line))
+              .map(line => line.replace(/^\s*- \[ \]\s*/i, '').trim());
+
+            const missingChecklist = !body.includes(marker);
+            const uncheckedItems = checklistItems.filter(item => {
+              const escaped = item.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+              return !new RegExp(`^\\s*- \\[x\\]\\s*${escaped}\\s*$`, 'im').test(body);
+            });
+
+            if (!missingChecklist && uncheckedItems.length === 0) {
+              return;
+            }
+
+            const commentMarker = '<!-- caprover-pr-checklist-reminder -->';
+            const message = missingChecklist
+              ? `${commentMarker}\n### PR checklist is missing\n\nPlease update the pull request description to include the full checklist from the pull request template and complete each item before merge.`
+              : `${commentMarker}\n### PR checklist is incomplete\n\nPlease complete all items in the pull request checklist before merge.`;
+
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              per_page: 100,
+            });
+
+            const existing = comments.find(comment =>
+              comment.user?.type === 'Bot' && comment.body?.includes(commentMarker)
+            );
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body: message,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: message,
+              });
+            }
+
+            core.setFailed(
+              missingChecklist
+                ? 'Required PR checklist is missing.'
+                : `${uncheckedItems.length} checklist item(s) are incomplete.`
+            );
