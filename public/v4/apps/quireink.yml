@@ -13,7 +13,7 @@ caproverOneClickApp:
     variables:
         - id: '$$cap_version'
           label: Quire Ink Version
-          defaultValue: '2.2.1'
+          defaultValue: '2.2.2'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/quireink/quireink/tags
           validRegex: "/^([^\\s^\\/])+$/"
     instructions:
