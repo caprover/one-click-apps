@@ -21,7 +21,7 @@ services:
             containerHttpPort: '3000'
     # Database
     $$cap_appname-db:
-        image: postgres:12-alpine
+        image: postgres:16-alpine
         volumes:
             - $$cap_appname-db:/var/lib/postgresql/data
         restart: always
