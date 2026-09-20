@@ -35,9 +35,9 @@ caproverOneClickApp:
             For more details check out the official github repo: https://github.com/dani-garcia/vaultwarden/
 
         end: >-
-            Vaultwarden is deployed and available as $$cap_appname. Please give it a few minutes to boot, otherwise you will see a 502 error (even if the logs says it is already running).
+            Vaultwarden is deployed and available as $$cap_appname. Please give it a few minutes to boot, otherwise you will see a 502 error (even if the log says it is already running).
 
-            The app depends on activated https and https redirects, as well as activated websockets.
+            The app depends on enabled https and https redirects, as well as enabled websockets.
 
             If you enabled the admin token you can access the admin configuration here: https://$$cap_appname.$$cap_root_domain/admin
     displayName: vaultwarden
