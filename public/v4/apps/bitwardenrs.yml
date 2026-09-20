@@ -7,8 +7,6 @@ services:
             WEBSOCKET_ENABLED: true
             SIGNUPS_ALLOWED: $$cap_register_enabled
             ADMIN_TOKEN: $$cap_admin_token
-        ports:
-            - 3012:3012
         volumes:
             - $$cap_appname-data:/data
         restart: unless-stopped
@@ -16,7 +14,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_bitwardenrs_version
           label: vaultwarden Version
-          defaultValue: 1.30.1
+          defaultValue: 1.37.3
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/vaultwarden/server/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_register_enabled
@@ -34,13 +32,14 @@ caproverOneClickApp:
 
             This project is not associated with the Bitwarden project nor 8bit Solutions LLC.
 
-            if you want more details please go to https://www.reddit.com/r/selfhosted/comments/fvld0n/bitwarden_vs_bitwarden_rs/
+            For more details check out the official github repo: https://github.com/dani-garcia/vaultwarden/
+
         end: >-
-            Bitwarden_rs is deployed and available as $$cap_appname. Please give it a few minutes to boot, otherwise you will see a 502 error (even if the logs say it's working).
+            Vaultwarden is deployed and available as $$cap_appname. Please give it a few minutes to boot, otherwise you will see a 502 error (even if the logs says it is already running).
 
-            Please activate https and https redirect otherwise you will have an error on account creation. You need to enable websocket too.
+            The app depends on activated https and https redirects, as well as activated websockets.
 
-            If you enabled the admin token please go to https://$$cap_appname.$$cap_root_domain/admin to begin
+            If you enabled the admin token you can access the admin configuration here: https://$$cap_appname.$$cap_root_domain/admin
     displayName: vaultwarden
     isOfficial: true
     description: Lightweight fully featured Rust implementation of Bitwarden.
