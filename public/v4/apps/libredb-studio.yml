@@ -4,17 +4,22 @@ services:
         image: ghcr.io/libredb/libredb-studio:$$cap_version
         restart: always
         environment:
-            # --- Authentication (auto-generated, shown after install) ---
+            # Authentication (auto-generated, shown after install)
             JWT_SECRET: $$cap_gen_random_hex(48)
             ADMIN_EMAIL: $$cap_admin_email
             ADMIN_PASSWORD: $$cap_admin_password
             USER_EMAIL: $$cap_user_email
             USER_PASSWORD: $$cap_user_password
             NEXT_PUBLIC_AUTH_PROVIDER: local
-            # --- Storage: SQLite file on the persistent volume below ---
+            # Storage: SQLite file on the persistent volume below
             STORAGE_PROVIDER: sqlite
             STORAGE_SQLITE_PATH: /app/data/libredb-storage.db
-            # --- AI / LLM (optional) — leave blank to disable AI features ---
+            # CapRover serves the app over http until you enable HTTPS in the
+            # dashboard. The app marks its auth cookie Secure on a non-loopback
+            # host, which the browser then drops over http and login loops.
+            # Set this to true once the app is on https.
+            AUTH_COOKIE_SECURE: 'false'
+            # AI / LLM (optional), leave blank to disable AI features
             LLM_PROVIDER: $$cap_llm_provider
             LLM_API_KEY: $$cap_llm_api_key
             LLM_MODEL: $$cap_llm_model
@@ -27,8 +32,8 @@ caproverOneClickApp:
     variables:
         - id: $$cap_version
           label: LibreDB Studio Version
-          defaultValue: '0.16.0'
-          description: Image tag to deploy. Always pin a fixed version, never "latest". Example - 0.16.0. Browse all valid tags at https://github.com/libredb/libredb-studio/pkgs/container/libredb-studio
+          defaultValue: '0.16.1'
+          description: Image tag to deploy. Always pin a fixed version, never "latest". Example - 0.16.1. Browse all valid tags at https://github.com/libredb/libredb-studio/pkgs/container/libredb-studio
           validRegex: '/^([^\s^\/])+$/'
         - id: $$cap_admin_email
           label: Admin Email
@@ -87,7 +92,7 @@ caproverOneClickApp:
 
             More details and docs: https://github.com/libredb/libredb-studio
         end: |-
-            LibreDB Studio has been deployed! 🚀
+            LibreDB Studio has been deployed.
 
             Open it at: http://$$cap_appname.$$cap_root_domain
             (Enable HTTPS from the CapRover dashboard for production use.)
@@ -100,7 +105,7 @@ caproverOneClickApp:
               Email:    $$cap_user_email
               Password: $$cap_user_password
 
-            ⚠️  Save these credentials now — the passwords are not shown again.
+            Save these credentials now. The passwords are not shown again.
 
             Your data (saved connections & settings) is stored in SQLite on the
             persistent volume "$$cap_appname-data" and survives restarts and redeploys.
