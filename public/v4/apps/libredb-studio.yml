@@ -4,17 +4,22 @@ services:
         image: ghcr.io/libredb/libredb-studio:$$cap_version
         restart: always
         environment:
-            # --- Authentication (auto-generated, shown after install) ---
+            # Authentication (auto-generated, shown after install)
             JWT_SECRET: $$cap_gen_random_hex(48)
             ADMIN_EMAIL: $$cap_admin_email
             ADMIN_PASSWORD: $$cap_admin_password
             USER_EMAIL: $$cap_user_email
             USER_PASSWORD: $$cap_user_password
             NEXT_PUBLIC_AUTH_PROVIDER: local
-            # --- Storage: SQLite file on the persistent volume below ---
+            # Storage: SQLite file on the persistent volume below
             STORAGE_PROVIDER: sqlite
             STORAGE_SQLITE_PATH: /app/data/libredb-storage.db
-            # --- AI / LLM (optional) — leave blank to disable AI features ---
+            # CapRover serves the app over http until you enable HTTPS in the
+            # dashboard. The app marks its auth cookie Secure on a non-loopback
+            # host, which the browser then drops over http and login loops.
+            # Set this to true once the app is on https.
+            AUTH_COOKIE_SECURE: 'false'
+            # AI / LLM (optional) - leave blank to disable AI features
             LLM_PROVIDER: $$cap_llm_provider
             LLM_API_KEY: $$cap_llm_api_key
             LLM_MODEL: $$cap_llm_model
@@ -27,8 +32,8 @@ caproverOneClickApp:
     variables:
         - id: $$cap_version
           label: LibreDB Studio Version
-          defaultValue: '0.16.0'
-          description: Image tag to deploy. Always pin a fixed version, never "latest". Example - 0.16.0. Browse all valid tags at https://github.com/libredb/libredb-studio/pkgs/container/libredb-studio
+          defaultValue: '0.16.2'
+          description: Image tag to deploy. Always pin a fixed version, never "latest". Example - 0.16.2. Browse all valid tags at https://github.com/libredb/libredb-studio/pkgs/container/libredb-studio
           validRegex: '/^([^\s^\/])+$/'
         - id: $$cap_admin_email
           label: Admin Email
@@ -53,7 +58,7 @@ caproverOneClickApp:
         - id: $$cap_llm_provider
           label: AI Provider (optional)
           defaultValue: ''
-          description: OPTIONAL - turns on AI query help (natural-language to SQL, explain, fix). One of - gemini | openai | ollama | custom. Leave blank to keep AI off. Example - gemini
+          description: OPTIONAL - turns on the AI rail (schema description, EXPLAIN summaries, query-safety checks). One of - gemini | openai | ollama | custom. Leave blank to keep AI off. Example - gemini
         - id: $$cap_llm_api_key
           label: AI API Key (optional)
           defaultValue: ''
@@ -65,13 +70,15 @@ caproverOneClickApp:
         - id: $$cap_llm_api_url
           label: AI API URL (optional)
           defaultValue: ''
-          description: OPTIONAL - base URL for ollama/custom providers only (not for gemini/openai). Example for an Ollama app on this same CapRover - http://srv-captain--ollama:11434/v1
+          description: OPTIONAL - base URL override, honoured by every provider (required for ollama/custom, optional for gemini/openai). Example for an Ollama app on this same CapRover - http://srv-captain--ollama:11434/v1
     instructions:
         start: |-
             LibreDB Studio is a modern, open-source, web-based SQL IDE for the cloud era.
-            Query PostgreSQL, MySQL, SQLite, Oracle, SQL Server, MongoDB and Redis from
-            your browser - with AI-powered query assistance, an ERD viewer, schema diff
-            and more.
+            Query sixteen engines - PostgreSQL, MySQL, SQLite, libSQL, DuckDB, Oracle,
+            SQL Server, MongoDB, Redis, Couchbase, ClickHouse, Apache Druid,
+            Elasticsearch, OpenSearch, Apache Trino and Apache Cassandra - from your
+            browser, with an ERD viewer, schema diff and optional read-only AI on your
+            own model key.
 
             What you can set below (defaults are sensible - you can usually just click Deploy):
               - Version: the image tag to deploy (a tested fixed version by default).
@@ -87,7 +94,7 @@ caproverOneClickApp:
 
             More details and docs: https://github.com/libredb/libredb-studio
         end: |-
-            LibreDB Studio has been deployed! 🚀
+            LibreDB Studio has been deployed.
 
             Open it at: http://$$cap_appname.$$cap_root_domain
             (Enable HTTPS from the CapRover dashboard for production use.)
@@ -100,15 +107,21 @@ caproverOneClickApp:
               Email:    $$cap_user_email
               Password: $$cap_user_password
 
-            ⚠️  Save these credentials now — the passwords are not shown again.
+              Save these credentials now - the passwords are not shown again.
 
             Your data (saved connections & settings) is stored in SQLite on the
             persistent volume "$$cap_appname-data" and survives restarts and redeploys.
+
+              JWT_SECRET (generated above) also encrypts every saved connection's
+            password. Do not edit it after connections are saved - rotating it makes
+            those passwords unreadable. To rotate JWT_SECRET safely, set a separate
+            STORAGE_ENCRYPTION_KEY env var first (App Configs tab) so the two are
+            independent.
 
             To enable SSO (Auth0/Keycloak/Okta/Azure AD) or change AI settings later,
             add the OIDC_* / LLM_* environment variables under the app's
             "App Configs" tab. See https://github.com/libredb/libredb-studio
     displayName: LibreDB Studio
     isOfficial: false
-    description: Open-source web-based SQL IDE. Query PostgreSQL, MySQL, SQLite, Oracle, SQL Server, MongoDB & Redis from your browser, with AI-powered query assistance.
+    description: Open-source web-based SQL IDE. Query sixteen engines - PostgreSQL, MySQL, Oracle, SQL Server, MongoDB, Redis and more - from your browser, with an ERD viewer, schema diff and optional read-only AI.
     documentation: Image and docs - https://github.com/libredb/libredb-studio . Uses ghcr.io/libredb/libredb-studio. Deploys with SQLite persistence; supports OIDC SSO and multiple AI providers via extra env vars.
