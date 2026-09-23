@@ -1,0 +1,179 @@
+captainVersion: 4
+services:
+    $$cap_appname-postgres:
+        image: postgres:18-alpine@sha256:9a8afca54e7861fd90fab5fdf4c42477a6b1cb7d293595148e674e0a3181de15
+        environment:
+            POSTGRES_USER: orbit
+            POSTGRES_PASSWORD: $$cap_db_password
+            POSTGRES_DB: orbit
+        volumes:
+            - $$cap_appname-postgres:/var/lib/postgresql
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname-redis:
+        image: redis:8-alpine@sha256:978f0e01593e65eed801f2402944efcd936d43b5027e4908a7897baf88ed6241
+        command:
+            - redis-server
+            - --appendonly
+            - 'yes'
+        volumes:
+            - $$cap_appname-redis:/data
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname-storage:
+        image: quay.io/minio/minio@sha256:14cea493d9a34af32f524e538b8346cf79f3321eff8e708c1e2960462bd8936e
+        command:
+            - minio
+            - server
+            - /data
+        environment:
+            MINIO_ROOT_USER: orbit
+            MINIO_ROOT_PASSWORD: $$cap_storage_password
+            MINIO_API_CORS_ALLOW_ORIGIN: https://$$cap_appname.$$cap_root_domain
+        volumes:
+            - $$cap_appname-storage:/data
+        caproverExtra:
+            containerHttpPort: '9000'
+    $$cap_appname-bucket:
+        image: ghcr.io/noveum/orbit-bucket:sha-7da6cdb83550c4e597800b2788c4ce534d1af669
+        environment:
+            MINIO_PASSWORD: $$cap_storage_password
+            ORBIT_APP_URL: https://$$cap_appname.$$cap_root_domain
+            ORBIT_STORAGE_UPSTREAM: srv-captain--$$cap_appname-storage:9000
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname-web:
+        image: ghcr.io/noveum/orbit-runtime:sha-7da6cdb83550c4e597800b2788c4ce534d1af669
+        environment:
+            DATABASE_URL: postgres://orbit:$$cap_db_password@srv-captain--$$cap_appname-postgres:5432/orbit
+            DIRECT_URL: postgres://orbit:$$cap_db_password@srv-captain--$$cap_appname-postgres:5432/orbit
+            DATABASE_PREPARED_STATEMENTS: 'true'
+            REDIS_URL: redis://srv-captain--$$cap_appname-redis:6379
+            BETTER_AUTH_SECRET: $$cap_auth_secret
+            BETTER_AUTH_URL: https://$$cap_appname.$$cap_root_domain
+            NEXT_PUBLIC_APP_URL: https://$$cap_appname.$$cap_root_domain
+            ORBIT_PASSWORD_AUTH: 'true'
+            ALLOWED_EMAIL_DOMAINS: ''
+            RESEND_API_KEY: ''
+            EMAIL_FROM: 'Orbit <auth@orbit.local>'
+            GOOGLE_CLIENT_ID: ''
+            GOOGLE_CLIENT_SECRET: ''
+            GITHUB_CLIENT_ID: ''
+            GITHUB_CLIENT_SECRET: ''
+            GITHUB_APP_SLUG: ''
+            GITHUB_APP_ID: ''
+            GITHUB_APP_PRIVATE_KEY: ''
+            GITHUB_APP_CLIENT_ID: ''
+            GITHUB_APP_CLIENT_SECRET: ''
+            GITHUB_WEBHOOK_SECRET: ''
+            SLACK_ENABLED: 'false'
+            SLACK_CLIENT_ID: ''
+            SLACK_CLIENT_SECRET: ''
+            SLACK_SIGNING_SECRET: ''
+            SLACK_APP_ID: ''
+            CRON_SECRET: $$cap_cron_secret
+            ORBIT_SELF_HOSTED: 'true'
+            S3_ENDPOINT: https://$$cap_appname-storage.$$cap_root_domain
+            S3_REGION: us-east-1
+            S3_BUCKET: orbit-uploads
+            S3_ACCESS_KEY_ID: orbit
+            S3_SECRET_ACCESS_KEY: $$cap_storage_password
+            NEXT_TELEMETRY_DISABLED: '1'
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname-realtime:
+        image: ghcr.io/noveum/orbit-runtime:sha-7da6cdb83550c4e597800b2788c4ce534d1af669
+        command:
+            - node
+            - apps/web/realtime.mjs
+        environment:
+            DATABASE_URL: postgres://orbit:$$cap_db_password@srv-captain--$$cap_appname-postgres:5432/orbit
+            DIRECT_URL: postgres://orbit:$$cap_db_password@srv-captain--$$cap_appname-postgres:5432/orbit
+            DATABASE_PREPARED_STATEMENTS: 'true'
+            REDIS_URL: redis://srv-captain--$$cap_appname-redis:6379
+            BETTER_AUTH_SECRET: $$cap_auth_secret
+            BETTER_AUTH_URL: https://$$cap_appname.$$cap_root_domain
+            NEXT_PUBLIC_APP_URL: https://$$cap_appname.$$cap_root_domain
+            ORBIT_PASSWORD_AUTH: 'true'
+            ALLOWED_EMAIL_DOMAINS: ''
+            RESEND_API_KEY: ''
+            EMAIL_FROM: 'Orbit <auth@orbit.local>'
+            GOOGLE_CLIENT_ID: ''
+            GOOGLE_CLIENT_SECRET: ''
+            GITHUB_CLIENT_ID: ''
+            GITHUB_CLIENT_SECRET: ''
+            GITHUB_APP_SLUG: ''
+            GITHUB_APP_ID: ''
+            GITHUB_APP_PRIVATE_KEY: ''
+            GITHUB_APP_CLIENT_ID: ''
+            GITHUB_APP_CLIENT_SECRET: ''
+            GITHUB_WEBHOOK_SECRET: ''
+            SLACK_ENABLED: 'false'
+            SLACK_CLIENT_ID: ''
+            SLACK_CLIENT_SECRET: ''
+            SLACK_SIGNING_SECRET: ''
+            SLACK_APP_ID: ''
+            CRON_SECRET: $$cap_cron_secret
+            ORBIT_SELF_HOSTED: 'true'
+            S3_ENDPOINT: https://$$cap_appname-storage.$$cap_root_domain
+            S3_REGION: us-east-1
+            S3_BUCKET: orbit-uploads
+            S3_ACCESS_KEY_ID: orbit
+            S3_SECRET_ACCESS_KEY: $$cap_storage_password
+            NEXT_TELEMETRY_DISABLED: '1'
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname-scheduler:
+        image: ghcr.io/noveum/orbit-runtime:sha-7da6cdb83550c4e597800b2788c4ce534d1af669
+        command:
+            - node
+            - apps/web/scheduler.mjs
+        environment:
+            CRON_SECRET: $$cap_cron_secret
+            ORBIT_INTERNAL_URL: http://srv-captain--$$cap_appname-web:3000
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname:
+        image: ghcr.io/noveum/orbit-gateway:sha-7da6cdb83550c4e597800b2788c4ce534d1af669
+        environment:
+            ORBIT_TRUSTED_PROXIES: private_ranges
+            ORBIT_WEB_UPSTREAM: srv-captain--$$cap_appname-web:3000
+            ORBIT_REALTIME_UPSTREAM: srv-captain--$$cap_appname-realtime:3100
+        caproverExtra:
+            containerHttpPort: '3000'
+            websocketSupport: 'true'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_db_password
+          label: Database password
+          defaultValue: $$cap_gen_random_hex(64)
+          validRegex: /^[a-f0-9]{64}$/
+        - id: $$cap_storage_password
+          label: Storage password
+          defaultValue: $$cap_gen_random_hex(64)
+          validRegex: /^[a-f0-9]{64}$/
+        - id: $$cap_auth_secret
+          label: Authentication secret
+          defaultValue: $$cap_gen_random_hex(64)
+          validRegex: /^[a-f0-9]{64}$/
+        - id: $$cap_cron_secret
+          label: Scheduler secret
+          defaultValue: $$cap_gen_random_hex(64)
+          validRegex: /^[a-f0-9]{64}$/
+    instructions:
+        start:
+            Orbit by Noveum deploys the application, realtime, scheduler, gateway,
+            PostgreSQL, Redis and private MinIO storage. Requires Linux amd64 or arm64, persistent
+            storage and HTTPS. Allow time for initial database migrations.
+        end:
+            'Enable HTTPS for $$cap_appname.$$cap_root_domain and $$cap_appname-storage.$$cap_root_domain
+            before signing up. Open the app and create your workspace. Add Resend and EMAIL_FROM
+            to the web service for email invitations and recovery. Back up PostgreSQL and
+            MinIO before upgrades; preserve generated secrets. Hosted MCP: https://orbit.noveum.ai/mcp.
+            Self-hosted MCP: https://$$cap_appname.$$cap_root_domain/mcp.'
+    displayName: Orbit by Noveum
+    isOfficial: true
+    description:
+        Open-source issues, projects, sprints, docs and files with realtime
+        collaboration and an OAuth MCP endpoint.
+    documentation: https://github.com/Noveum/orbit/blob/7da6cdb83550c4e597800b2788c4ce534d1af669/docs/container-catalogs.md
