@@ -16,6 +16,8 @@ services:
             - redis-server
             - --appendonly
             - 'yes'
+            - --requirepass
+            - $$cap_redis_password
         volumes:
             - $$cap_appname-redis:/data
         caproverExtra:
@@ -35,20 +37,20 @@ services:
         caproverExtra:
             containerHttpPort: '9000'
     $$cap_appname-bucket:
-        image: ghcr.io/noveum/orbit-bucket:sha-7da6cdb83550c4e597800b2788c4ce534d1af669
+        image: ghcr.io/noveum/orbit-bucket:sha-e219d286638b9479e7946979b4383ea4e99c5bd6
         environment:
             MINIO_PASSWORD: $$cap_storage_password
             ORBIT_APP_URL: https://$$cap_appname.$$cap_root_domain
-            ORBIT_STORAGE_UPSTREAM: srv-captain--$$cap_appname-storage:9000
+            ORBIT_STORAGE_UPSTREAM: $$cap_appname-storage:9000
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname-web:
         image: ghcr.io/noveum/orbit-runtime:sha-7da6cdb83550c4e597800b2788c4ce534d1af669
         environment:
-            DATABASE_URL: postgres://orbit:$$cap_db_password@srv-captain--$$cap_appname-postgres:5432/orbit
-            DIRECT_URL: postgres://orbit:$$cap_db_password@srv-captain--$$cap_appname-postgres:5432/orbit
+            DATABASE_URL: postgres://orbit:$$cap_db_password@$$cap_appname-postgres:5432/orbit
+            DIRECT_URL: postgres://orbit:$$cap_db_password@$$cap_appname-postgres:5432/orbit
             DATABASE_PREPARED_STATEMENTS: 'true'
-            REDIS_URL: redis://srv-captain--$$cap_appname-redis:6379
+            REDIS_URL: redis://:$$cap_redis_password@$$cap_appname-redis:6379
             BETTER_AUTH_SECRET: $$cap_auth_secret
             BETTER_AUTH_URL: https://$$cap_appname.$$cap_root_domain
             NEXT_PUBLIC_APP_URL: https://$$cap_appname.$$cap_root_domain
@@ -87,10 +89,10 @@ services:
             - node
             - apps/web/realtime.mjs
         environment:
-            DATABASE_URL: postgres://orbit:$$cap_db_password@srv-captain--$$cap_appname-postgres:5432/orbit
-            DIRECT_URL: postgres://orbit:$$cap_db_password@srv-captain--$$cap_appname-postgres:5432/orbit
+            DATABASE_URL: postgres://orbit:$$cap_db_password@$$cap_appname-postgres:5432/orbit
+            DIRECT_URL: postgres://orbit:$$cap_db_password@$$cap_appname-postgres:5432/orbit
             DATABASE_PREPARED_STATEMENTS: 'true'
-            REDIS_URL: redis://srv-captain--$$cap_appname-redis:6379
+            REDIS_URL: redis://:$$cap_redis_password@$$cap_appname-redis:6379
             BETTER_AUTH_SECRET: $$cap_auth_secret
             BETTER_AUTH_URL: https://$$cap_appname.$$cap_root_domain
             NEXT_PUBLIC_APP_URL: https://$$cap_appname.$$cap_root_domain
@@ -130,20 +132,24 @@ services:
             - apps/web/scheduler.mjs
         environment:
             CRON_SECRET: $$cap_cron_secret
-            ORBIT_INTERNAL_URL: http://srv-captain--$$cap_appname-web:3000
+            ORBIT_INTERNAL_URL: http://$$cap_appname-web:3000
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname:
         image: ghcr.io/noveum/orbit-gateway:sha-7da6cdb83550c4e597800b2788c4ce534d1af669
         environment:
             ORBIT_TRUSTED_PROXIES: private_ranges
-            ORBIT_WEB_UPSTREAM: srv-captain--$$cap_appname-web:3000
-            ORBIT_REALTIME_UPSTREAM: srv-captain--$$cap_appname-realtime:3100
+            ORBIT_WEB_UPSTREAM: $$cap_appname-web:3000
+            ORBIT_REALTIME_UPSTREAM: $$cap_appname-realtime:3100
         caproverExtra:
             containerHttpPort: '3000'
             websocketSupport: 'true'
 caproverOneClickApp:
     variables:
+        - id: $$cap_redis_password
+          label: Redis password
+          defaultValue: $$cap_gen_random_hex(64)
+          validRegex: /^[a-f0-9]{64}$/
         - id: $$cap_db_password
           label: Database password
           defaultValue: $$cap_gen_random_hex(64)
