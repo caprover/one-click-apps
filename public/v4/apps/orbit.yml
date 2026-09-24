@@ -37,7 +37,7 @@ services:
         caproverExtra:
             containerHttpPort: '9000'
     $$cap_appname-bucket:
-        image: ghcr.io/noveum/orbit-bucket:sha-e219d286638b9479e7946979b4383ea4e99c5bd6
+        image: ghcr.io/noveum/orbit-bucket:2026.09.24
         environment:
             MINIO_PASSWORD: $$cap_storage_password
             ORBIT_APP_URL: https://$$cap_appname.$$cap_root_domain
@@ -45,7 +45,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname-web:
-        image: ghcr.io/noveum/orbit-runtime:sha-7da6cdb83550c4e597800b2788c4ce534d1af669
+        image: ghcr.io/noveum/orbit-runtime:2026.09.24
         environment:
             DATABASE_URL: postgres://orbit:$$cap_db_password@$$cap_appname-postgres:5432/orbit
             DIRECT_URL: postgres://orbit:$$cap_db_password@$$cap_appname-postgres:5432/orbit
@@ -84,7 +84,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname-realtime:
-        image: ghcr.io/noveum/orbit-runtime:sha-7da6cdb83550c4e597800b2788c4ce534d1af669
+        image: ghcr.io/noveum/orbit-runtime:2026.09.24
         command:
             - node
             - apps/web/realtime.mjs
@@ -126,7 +126,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname-scheduler:
-        image: ghcr.io/noveum/orbit-runtime:sha-7da6cdb83550c4e597800b2788c4ce534d1af669
+        image: ghcr.io/noveum/orbit-runtime:2026.09.24
         command:
             - node
             - apps/web/scheduler.mjs
@@ -136,7 +136,7 @@ services:
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname:
-        image: ghcr.io/noveum/orbit-gateway:sha-7da6cdb83550c4e597800b2788c4ce534d1af669
+        image: ghcr.io/noveum/orbit-gateway:2026.09.24
         environment:
             ORBIT_TRUSTED_PROXIES: private_ranges
             ORBIT_WEB_UPSTREAM: $$cap_appname-web:3000
@@ -182,4 +182,4 @@ caproverOneClickApp:
     description:
         Open-source issues, projects, sprints, docs and files with realtime
         collaboration and an OAuth MCP endpoint.
-    documentation: https://github.com/Noveum/orbit/blob/7da6cdb83550c4e597800b2788c4ce534d1af669/docs/container-catalogs.md
+    documentation: https://github.com/Noveum/orbit/blob/containers-2026.09.24/docs/container-catalogs.md
