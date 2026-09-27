@@ -1,0 +1,64 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: garethgeorge/backrest:$$cap_backrest_version
+        # A stable hostname: restic records it in every snapshot, and a new random
+        # container hostname after each redeploy would look like a different machine.
+        hostname: $$cap_appname
+        environment:
+            BACKREST_DATA: /data
+            BACKREST_CONFIG: /config/config.json
+            XDG_CACHE_HOME: /cache
+            TMPDIR: /tmp
+            TZ: $$cap_tz
+        volumes:
+            - $$cap_appname-data:/data
+            - $$cap_appname-config:/config
+            - $$cap_appname-cache:/cache
+            - $$cap_appname-tmp:/tmp
+            - $$cap_appname-rclone:/root/.config/rclone
+            - $$cap_source_path:/userdata
+        caproverExtra:
+            containerHttpPort: '9898'
+            # Backrest's first visitor creates the admin account, so the app starts
+            # without a public domain. The end instructions explain how to expose it safely.
+            notExposeAsWebApp: 'true'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_backrest_version
+          label: Backrest version
+          description: 'Tags: https://hub.docker.com/r/garethgeorge/backrest/tags'
+          defaultValue: v1.14.1
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_tz
+          label: Timezone
+          description: Used for backup schedules. See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+          defaultValue: Etc/UTC
+          validRegex: /^([^\s])+$/
+        - id: $$cap_source_path
+          label: Host path to back up
+          description: >-
+              Absolute path on the host, mounted read-write at /userdata inside Backrest.
+              The default covers all Docker volumes (CapRover app data). Use / for the whole server.
+          defaultValue: /var/lib/docker/volumes
+          validRegex: /^\/.*$/
+    instructions:
+        start: >-
+            Backrest is a web UI and scheduler for restic: encrypted, deduplicated backups to
+            S3, B2, SFTP, local disks or any rclone remote (Google Drive, OneDrive, ...).
+            The host path you choose is mounted at /userdata; select folders under it in your backup plans.
+        end: |-
+            Backrest is deployed but NOT exposed as a web app yet: its first visitor creates the admin account.
+
+            To open it safely:
+            1. In the app's HTTP Settings, untick "Do not expose as web-app" and save. Right away, enable Password Protection (HTTP Basic Auth) and HTTPS.
+            2. Open https://$$cap_appname.$$cap_root_domain, pass the Basic Auth prompt and create the Backrest admin account.
+            3. Enable "Force HTTPS". Password Protection can stay on as an extra layer, or be removed.
+
+            Then add a repository and a plan with paths under /userdata. For rclone remotes (Google Drive, OneDrive, ...), put rclone.conf in the $$cap_appname-rclone volume.
+
+            Tip: dump databases to files before backing up; copying the raw data files of a running database is not consistent.
+    displayName: Backrest
+    isOfficial: true
+    description: Web UI and scheduler for restic backups, with support for S3, B2, SFTP and all rclone remotes.
+    documentation: https://github.com/garethgeorge/backrest
