@@ -45,7 +45,7 @@ caproverOneClickApp:
           label: S3 region
           description: The region name S3 clients must use.
           defaultValue: garage
-          validRegex: /^([^\s^\/])+$/
+          validRegex: /^[^\s\/'"\\]+$/
         - id: $$cap_web_root_domain
           label: Website root domain
           description: >-
@@ -53,12 +53,12 @@ caproverOneClickApp:
               after a full domain (e.g. images.example.com) is served for that domain too,
               whatever this is set to.
           defaultValue: .web.garage.localhost
-          validRegex: /^([^\s^\/])+$/
+          validRegex: /^[^\s\/'"\\]+$/
         - id: $$cap_rpc_secret
           label: RPC secret (exactly 64 hex characters)
           description: Generated. Save it before deploying.
           defaultValue: $$cap_gen_random_hex(64)
-          validRegex: /^([^\s^\/])+$/
+          validRegex: /^[0-9a-fA-F]{64}$/
         - id: $$cap_admin_token
           label: Admin API token
           description: Generated. Save it before deploying.
@@ -71,15 +71,25 @@ caproverOneClickApp:
             the image. Other apps reach the S3 API at http://srv-captain--$$cap_appname:3900.
             The app's HTTP port is Garage's web endpoint (3902) for website buckets; the S3
             API is not exposed publicly. One node keeps one copy: set up a backup.
-        end: >-
-            Check the logs for "Loading configuration from /etc/garage.toml" and listeners on
-            3900-3903. Then on the server, with
-            C=$(docker ps -q -f name=srv-captain--$$cap_appname | head -1):
-            docker exec $C /garage status (note the node ID);
-            docker exec $C /garage layout assign -z dc1 -c 10G NODE_ID;
-            docker exec $C /garage layout apply --version 1;
-            then create buckets (garage bucket create), keys (garage key create) and grants
-            (garage bucket allow --read --write BUCKET --key KEY).
+        end: |-
+            Check the logs for "Loading configuration from /etc/garage.toml" and listeners on ports 3900-3903.
+
+            Then set up the node on the server (C is the container ID):
+
+            C=$(docker ps -q -f name=srv-captain--$$cap_appname | head -1)
+            docker exec $C /garage status
+            docker exec $C /garage layout assign -z dc1 -c 10G NODE_ID
+            docker exec $C /garage layout apply --version 1
+
+            (NODE_ID is shown by "garage status".) Create a bucket and an access key:
+
+            docker exec $C /garage bucket create BUCKET
+            docker exec $C /garage key create KEY_NAME
+            docker exec $C /garage bucket allow --read --write BUCKET --key KEY_NAME
+
+            To serve a bucket as a website (bucket named after a domain, or BUCKET + the website root domain suffix):
+
+            docker exec $C /garage bucket website --allow BUCKET
     displayName: Garage (single node)
     isOfficial: true
     description: Self-hosted S3-compatible object storage, single node, with optional static website buckets.
