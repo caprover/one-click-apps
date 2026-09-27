@@ -6,8 +6,10 @@ services:
             dockerfileLines:
                 - FROM cloudflare/cloudflared:$$cap_cloudflared_version
                 - ENTRYPOINT ["cloudflared"]
-                - CMD ["tunnel", "--no-autoupdate", "run", "--token", "$$cap_cloudflared_token"]
+                - CMD ["tunnel", "--no-autoupdate", "run"]
         restart: always
+        environment:
+            TUNNEL_TOKEN: $$cap_cloudflared_token
 caproverOneClickApp:
     variables:
         - id: $$cap_cloudflared_token
@@ -16,7 +18,7 @@ caproverOneClickApp:
           description: 'Your Cloudflare tunnel token. This is required to authenticate the tunnel with Cloudflare.'
         - id: $$cap_cloudflared_version
           label: Cloudflare Cloudflared Version
-          defaultValue: '1517-bb29a0e19437'
+          defaultValue: '2026.9.3'
           description: 'The version of Cloudflare Cloudflared to use.'
     instructions:
         start: >-
