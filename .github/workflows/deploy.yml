@@ -4,14 +4,36 @@ on:
     push:
         branches: [master]
 
+permissions:
+    contents: read
+    pages: write
+    id-token: write
+
+concurrency:
+    group: github-pages
+    cancel-in-progress: false
+
 jobs:
-    build:
+    deploy:
         runs-on: ubuntu-latest
+
+        environment:
+            name: github-pages
+            url: ${{ steps.deployment.outputs.page_url }}
+
         steps:
-            - uses: actions/checkout@v1
-            - uses: actions/setup-node@v1
+            - uses: actions/checkout@v7
+            - uses: actions/setup-node@v7
               with:
                   node-version: 20
-            - run: npm ci && npm run publish
-              env:
-                  GITHUB_PERSONAL_TOKEN: ${{secrets.GITHUB_PERSONAL_TOKEN}}
+                  cache: npm
+            - run: npm ci
+            - run: npm run validate_apps
+            - run: npm run formatter
+            - run: npm run build
+            - run: echo "caprover.com" > dist/index.html
+            - uses: actions/upload-pages-artifact@v5
+              with:
+                  path: dist
+            - id: deployment
+              uses: actions/deploy-pages@v5

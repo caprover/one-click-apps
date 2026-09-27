@@ -11,6 +11,7 @@ services:
             MYSQL_DATABASE: nextcloud
             MYSQL_USER: $$cap_db_user
             MYSQL_PASSWORD: $$cap_db_pass
+            MARIADB_AUTO_UPGRADE: 1
         caproverExtra:
             notExposeAsWebApp: 'true'
     $$cap_appname-redis:
@@ -61,7 +62,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_nextcloud_version
           label: Nextcloud Version
-          defaultValue: 31.0.14
+          defaultValue: 33.0.8
           description: >-
               Check out their Docker page for the valid tags https://hub.docker.com/_/nextcloud?tab=tags
 
@@ -70,12 +71,12 @@ caproverOneClickApp:
           validRegex: /^((?!fpm)\S)+$/
         - id: $$cap_redis_version
           label: Redis Version
-          defaultValue: 7.2.12
+          defaultValue: 8.2.9
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/redis?tab=tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_mariadb_version
           label: MariaDB (database) version
-          defaultValue: 10.11.14
+          defaultValue: 11.8.9
           description: Check out their Docker page for the valid tags https://hub.docker.com/_/mariadb?tab=tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_db_user
@@ -148,6 +149,10 @@ caproverOneClickApp:
             You can define the `maintenance_window_start` by executing:
 
             `sudo docker exec -u www-data $(sudo docker ps --filter name='srv-captain--$$cap_appname.1' -q) php occ config:system:set maintenance_window_start --type=integer --value=3`
+
+            You can define the `serverid` by executing:
+
+            `sudo docker exec -u www-data $(sudo docker ps --filter name='srv-captain--$$cap_appname.1' -q) php occ config:system:set serverid --value=1`
 
 
             You can see HSTS parts of the Nextcloud security documentation [https://docs.nextcloud.com/server/21/admin_manual/installation/harden_server.html](https://docs.nextcloud.com/server/21/admin_manual/installation/harden_server.html) for further informations

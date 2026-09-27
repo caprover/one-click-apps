@@ -1,0 +1,69 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: ghcr.io/saltbo/zpan:2.7.2
+        volumes:
+            - $$cap_appname-data:/data
+        restart: always
+        environment:
+            PORT: '8222'
+            BETTER_AUTH_URL: $$cap_public_url
+            DATABASE_URL: /data/zpan.db
+        caproverExtra:
+            containerHttpPort: '8222'
+    $$cap_appname-downloader:
+        depends_on:
+            - $$cap_appname
+        image: ghcr.io/saltbo/zpan:2.7.2-cli
+        command: ['--config', '/data/config.yaml', 'downloader', 'up']
+        hostname: $$cap_appname-downloader
+        restart: always
+        ports:
+            - $$cap_bt_port:6881/tcp
+            - $$cap_bt_port:6881/udp
+        volumes:
+            - $$cap_appname-downloader-data:/data
+        environment:
+            ZPAN_SERVER_URL: http://srv-captain--$$cap_appname:8222
+            ZPAN_DOWNLOADER_ENGINE: auto
+            ZPAN_DOWNLOADER_DOWNLOAD_DIR: /data/downloads
+            ZPAN_DOWNLOADER_STATE_DIR: /data/state
+            ZPAN_DOWNLOADER_BT_LISTEN_PORT: '6881'
+            ZPAN_DOWNLOADER_SEED_CACHE_LIMIT: $$cap_seed_cache_limit
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_public_url
+          label: ZPan public URL
+          defaultValue: https://$$cap_appname.$$cap_root_domain
+          description: Public URL used for auth callbacks and downloader device authorization links.
+          validRegex: /^https?:\/\/.+$/
+        - id: $$cap_bt_port
+          label: Downloader BitTorrent port
+          defaultValue: '46881'
+          description: Host port published for downloader BitTorrent peer connectivity.
+          validRegex: /^\d{2,5}$/
+        - id: $$cap_seed_cache_limit
+          label: Downloader seed cache limit
+          defaultValue: 10GB
+          description: Maximum retained BitTorrent seed cache size.
+          validRegex: /^([0-9]+)(MB|GB|TB)$/
+    instructions:
+        start: >-
+            ZPan is open-source file hosting for S3-compatible storage. This one-click app deploys both the ZPan web service and downloader node.
+        end: >-
+            ZPan has been deployed.
+
+
+            Open the app, create the first user, then go to Admin -> Storage to add your S3-compatible bucket.
+
+
+            The downloader is deployed as $$cap_appname-downloader. Check its logs for the device authorization URL, open it as an admin user, and approve the downloader registration.
+
+
+            The storage endpoint must be reachable from the browser because ZPan uploads files directly to object storage through presigned URLs.
+    displayName: ZPan
+    isOfficial: true
+    description: Open-source file hosting for S3-compatible storage with web drive, sharing, WebDAV, image hosting, and downloader workflows.
+    documentation: https://github.com/saltbo/zpan

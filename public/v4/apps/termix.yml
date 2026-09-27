@@ -25,7 +25,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_termix_version
           label: Termix Version
-          defaultValue: release-2.3.2
+          defaultValue: release-2.5.0
         - id: $$cap_guacd_version
           label: Guacd Version
           defaultValue: 1.6.0

@@ -1,0 +1,45 @@
+captainVersion: 4
+services:
+    '$$cap_appname':
+        image: quireink/quireink:$$cap_version
+        environment:
+            SITE_URL: 'https://$$cap_appname.$$cap_root_domain'
+        volumes:
+            - '$$cap_appname-data:/var/lib/quire/data'
+            - '$$cap_appname-uploads:/var/lib/quire/uploads'
+        caproverExtra:
+            containerHttpPort: '3000'
+caproverOneClickApp:
+    variables:
+        - id: '$$cap_version'
+          label: Quire Ink Version
+          defaultValue: '2.2.2'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/quireink/quireink/tags
+          validRegex: "/^([^\\s^\\/])+$/"
+    instructions:
+        start: |-
+            Quire Ink is a self-hosted blog platform that runs as one process with no database
+            service beside it: two SQLite files and an uploads folder are the whole of it.
+
+            A real editor over Markdown (tables, footnotes, mathematics, video), scheduled
+            publishing, newsletters over your own SMTP, comments with a built-in spam gate,
+            cookie-free analytics, full-text search and a book reading mode. Importers bring a
+            WordPress, Ghost, Substack or Medium blog across with its redirects and images.
+
+            There is no password to invent here. The blog has no owner until you claim it, and
+            it prints a one-time link to its own log to let you do that.
+
+            More details: https://github.com/joiha-steven/quireink
+        end: |-
+            Quire Ink has been deployed. It has no owner yet, and it will not have one until
+            you claim it.
+
+            Open this app's **App Logs** in CapRover and follow the one-time /setup link
+            printed there. That link creates your account, your second factor and your
+            recovery codes, and it stops working the moment the account exists.
+
+            If you missed it, restart the app and it prints a fresh one.
+    displayName: Quire Ink
+    isOfficial: true
+    description: A self-hosted blog in one container - Markdown editor, newsletters over your own SMTP, comments, cookie-free analytics and full-text search, on SQLite with no database service to run.
+    documentation: See https://github.com/joiha-steven/quireink/blob/main/docs/self-host-docker.md
