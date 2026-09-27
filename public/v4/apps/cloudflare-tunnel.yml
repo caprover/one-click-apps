@@ -6,7 +6,7 @@ services:
             dockerfileLines:
                 - FROM cloudflare/cloudflared:$$cap_cloudflared_version
                 - ENTRYPOINT ["cloudflared"]
-                - CMD ["tunnel", "--no-autoupdate", "run", "--token", "$$cap_cloudflared_token"]
+                - CMD ["tunnel", "--no-autoupdate", "run"]
         restart: always
         environment:
             TUNNEL_TOKEN: $$cap_cloudflared_token
