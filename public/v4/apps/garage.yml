@@ -74,9 +74,11 @@ caproverOneClickApp:
         end: |-
             Check the logs for "Loading configuration from /etc/garage.toml" and listeners on ports 3900-3903.
 
-            Then set up the node on the server (C is the container ID):
+            Then set up the node on the server (C is the container ID; the second line covers
+            apps created before CapRover 1.15, whose service is named srv-captain--APPNAME):
 
-            C=$(docker ps -q -f name=srv-captain--$$cap_appname | head -1)
+            C=$(docker ps -q -f "name=^$$cap_appname\." | head -1)
+            [ -n "$C" ] || C=$(docker ps -q -f "name=^srv-captain--$$cap_appname\." | head -1)
             docker exec $C /garage status
             docker exec $C /garage layout assign -z dc1 -c 10G NODE_ID
             docker exec $C /garage layout apply --version 1
