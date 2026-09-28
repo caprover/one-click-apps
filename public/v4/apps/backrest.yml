@@ -51,9 +51,10 @@ caproverOneClickApp:
             Backrest is deployed but NOT exposed as a web app yet: its first visitor creates the admin account.
 
             To open it safely:
-            1. In the app's HTTP Settings, untick "Do not expose as web-app" and save. Right away, enable HTTPS and "Force HTTPS", then enable Password Protection (HTTP Basic Auth).
-            2. Open https://$$cap_appname.$$cap_root_domain, pass the Basic Auth prompt and create the Backrest admin account.
-            3. Password Protection can stay on as an extra layer, or be removed.
+            1. In the app's HTTP Settings, untick "Do not expose as web-app" and save, then immediately enable Password Protection (HTTP Basic Auth), so nobody else can reach the first-run page.
+            2. Enable HTTPS and "Force HTTPS". Don't open the app before this, so the Basic Auth password is never sent over plain HTTP.
+            3. Now open https://$$cap_appname.$$cap_root_domain, pass the Basic Auth prompt and create the Backrest admin account.
+            4. Password Protection can stay on as an extra layer, or be removed.
 
             Then add a repository and a plan with paths under /userdata. For rclone remotes (Google Drive, OneDrive, ...), put rclone.conf in the $$cap_appname-rclone volume.
 
