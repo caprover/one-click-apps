@@ -32,8 +32,8 @@ caproverOneClickApp:
     variables:
         - id: $$cap_version
           label: LibreDB Studio Version
-          defaultValue: '0.16.2'
-          description: Image tag to deploy. Always pin a fixed version, never "latest". Example - 0.16.2. Browse all valid tags at https://github.com/libredb/libredb-studio/pkgs/container/libredb-studio
+          defaultValue: '0.17.0'
+          description: Image tag to deploy. Always pin a fixed version, never "latest". Example - 0.17.0. Browse all valid tags at https://github.com/libredb/libredb-studio/pkgs/container/libredb-studio
           validRegex: '/^([^\s^\/])+$/'
         - id: $$cap_admin_email
           label: Admin Email
@@ -43,17 +43,17 @@ caproverOneClickApp:
         - id: $$cap_admin_password
           label: Admin Password
           defaultValue: $$cap_gen_random_hex(16)
-          description: Password for the admin login. A strong random one is pre-filled - keep it or type your own (min 8 chars). Shown only once on the final screen, so save it. Example - MyStr0ng-AdminPass
+          description: Password for the admin login. A strong random one is pre-filled - keep it or type your own (min 8 chars). The final screen shows it once, and it stays readable under App Configs. Example - MyStr0ng-AdminPass
           validRegex: '/.{8,}/'
         - id: $$cap_user_email
           label: User Email
           defaultValue: user@libredb.org
-          description: Login email for the STANDARD account - query execution only, no admin tools. Example - analyst@yourcompany.com
+          description: Login email for the STANDARD account - no admin or maintenance tools. Example - analyst@yourcompany.com
           validRegex: '/^.+@.+\..+$/'
         - id: $$cap_user_password
           label: User Password
           defaultValue: $$cap_gen_random_hex(16)
-          description: Password for the standard login. A strong random one is pre-filled - keep it or type your own (min 8 chars). Shown only once on the final screen. Example - An0ther-StrongPass
+          description: Password for the standard login. A strong random one is pre-filled - keep it or type your own (min 8 chars). The final screen shows it once, and it stays readable under App Configs. Example - An0ther-StrongPass
           validRegex: '/.{8,}/'
         - id: $$cap_llm_provider
           label: AI Provider (optional)
@@ -74,18 +74,19 @@ caproverOneClickApp:
     instructions:
         start: |-
             LibreDB Studio is a modern, open-source, web-based SQL IDE for the cloud era.
-            Query sixteen engines - PostgreSQL, MySQL, SQLite, libSQL, DuckDB, Oracle,
+            Query eighteen engines - PostgreSQL, MySQL, SQLite, libSQL, DuckDB, Oracle,
             SQL Server, MongoDB, Redis, Couchbase, ClickHouse, Apache Druid,
-            Elasticsearch, OpenSearch, Apache Trino and Apache Cassandra - from your
-            browser, with an ERD viewer, schema diff and optional read-only AI on your
-            own model key.
+            Elasticsearch, OpenSearch, Trino, Apache Cassandra, Prometheus and
+            Apache Kafka - from your browser, with an ERD viewer, schema diff and optional
+            read-only AI on your own model key.
 
             What you can set below (defaults are sensible - you can usually just click Deploy):
               - Version: the image tag to deploy (a tested fixed version by default).
               - Admin login: full access, including maintenance/admin tools.
-              - User login: query execution only.
-                Both passwords are pre-generated; change them if you like. They are
-                shown only once on the final screen - save them then.
+              - User login: no admin or maintenance tools, and not read-only.
+                Both passwords are pre-generated; change them if you like. The
+                final screen shows them once, and they stay readable afterwards
+                under App Configs.
               - AI (optional): fill these to enable query assistance with Gemini,
                 OpenAI, Ollama or a custom provider. Leave blank to keep AI disabled.
 
@@ -97,31 +98,70 @@ caproverOneClickApp:
             LibreDB Studio has been deployed.
 
             Open it at: http://$$cap_appname.$$cap_root_domain
-            (Enable HTTPS from the CapRover dashboard for production use.)
+
+            Enable HTTPS from the CapRover dashboard for production use. This app
+            ships with AUTH_COOKIE_SECURE set to false, because CapRover serves
+            plain http until you do that and a browser discards a Secure session
+            cookie over http, which returns you to the sign-in page with no error.
+            The session cookie therefore travels in cleartext until HTTPS is on,
+            and so does the password on every sign-in, so keep this app on a
+            trusted network until you have switched.
+            When you switch, turn on "Force HTTPS" as well. Enabling HTTPS on its
+            own leaves http answering on the same domain, and AUTH_COOKIE_SECURE
+            set to true then returns that same silent sign-in loop to anyone who
+            arrives over http. Then set AUTH_COOKIE_SECURE to true under the
+            app's "App Configs" tab and restart. It does not switch back on its
+            own.
 
             Log in with the admin account:
               Email:    $$cap_admin_email
               Password: $$cap_admin_password
 
-            A standard query-only user was also created:
+            A standard user was also created:
               Email:    $$cap_user_email
               Password: $$cap_user_password
 
-              Save these credentials now - the passwords are not shown again.
+            That account is refused at the admin and maintenance tools, and it is
+            not a read-only account. It reaches the query path the same way the
+            admin does, so what it can change is decided by the database user in
+            the connection rather than by Studio. Give it a database user with
+            the rights you actually want it to have.
+
+            Save these credentials now. This screen does not show them again,
+            but they stay readable as ADMIN_PASSWORD and USER_PASSWORD under the
+            "App Configs" tab, so whoever reaches your CapRover dashboard reaches
+            this app as well.
 
             Your data (saved connections & settings) is stored in SQLite on the
             persistent volume "$$cap_appname-data" and survives restarts and redeploys.
 
-              JWT_SECRET (generated above) also encrypts every saved connection's
-            password. Do not edit it after connections are saved - rotating it makes
-            those passwords unreadable. To rotate JWT_SECRET safely, set a separate
-            STORAGE_ENCRYPTION_KEY env var first (App Configs tab) so the two are
-            independent.
+            JWT_SECRET (generated above) also derives the key that encrypts every
+            saved connection password. Rotating whichever key is in use makes
+            those passwords unreadable, and nothing says so on screen: the app
+            writes one line to the container log and the password field is simply
+            gone. Setting STORAGE_ENCRYPTION_KEY is itself a key change, because
+            the key comes from that variable once it exists, so it separates the
+            two only if you set it before the first connection is saved. After
+            that, either leave JWT_SECRET alone or retype every saved password.
+            If a key already changed by accident, put the old one back and
+            restart BEFORE saving anything, and the passwords come back: they are
+            only lost once something overwrites them with the new key. The
+            connections themselves survive either way.
 
-            To enable SSO (Auth0/Keycloak/Okta/Azure AD) or change AI settings later,
-            add the OIDC_* / LLM_* environment variables under the app's
-            "App Configs" tab. See https://github.com/libredb/libredb-studio
+            To enable SSO (Auth0/Keycloak/Okta/Azure AD), set
+            NEXT_PUBLIC_AUTH_PROVIDER to oidc and add the OIDC_* environment
+            variables under the app's "App Configs" tab. That variable decides
+            only what the sign-in page offers, and there are two things it does
+            not do. It does not hold the OIDC_* variables back: your provider's
+            sign-in route answers as soon as they are set, and OIDC_ADMIN_ROLES
+            then decides who arrives as an admin, so add them when you mean to
+            accept those logins and not before. And it does not close the
+            password route: setting it to oidc takes the password form off the
+            page while the two logins above keep working.
+            To change AI settings later, add or edit the LLM_* variables in the
+            same tab.
+            See https://github.com/libredb/libredb-studio
     displayName: LibreDB Studio
     isOfficial: false
-    description: Open-source web-based SQL IDE. Query sixteen engines - PostgreSQL, MySQL, Oracle, SQL Server, MongoDB, Redis and more - from your browser, with an ERD viewer, schema diff and optional read-only AI.
+    description: Open-source web-based SQL IDE. Query eighteen engines - PostgreSQL, MySQL, Oracle, SQL Server, MongoDB, Redis and more - from your browser, with an ERD viewer, schema diff and optional read-only AI.
     documentation: Image and docs - https://github.com/libredb/libredb-studio . Uses ghcr.io/libredb/libredb-studio. Deploys with SQLite persistence; supports OIDC SSO and multiple AI providers via extra env vars.
