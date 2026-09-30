@@ -1,0 +1,47 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: docker.io/snapetech/slskdn:$$cap_slskdn_version
+        environment:
+            SLSKD_HTTP_ADDRESS: 0.0.0.0
+            SLSKD_HTTP_PORT: '5030'
+            SLSKD_HTTPS_PORT: '5031'
+            SLSKD_SLSK_LISTEN_PORT: '50300'
+            SLSKD_APP_DIR: /app
+            SLSKD_DOWNLOADS_DIR: /downloads
+            SLSKD_SHARED_DIR: /music
+            SLSKD_UMASK: '0022'
+        ports:
+            - '50300:50300/tcp'
+            - '50300:50300/udp'
+        volumes:
+            - $$cap_appname-app:/app
+            - $$cap_appname-downloads:/downloads
+            - $$cap_appname-music:/music:ro
+        caproverExtra:
+            containerHttpPort: 5030
+
+caproverOneClickApp:
+    variables:
+        - id: $$cap_appname
+          label: App name
+          defaultValue: slskdn
+          description: slskdN service name.
+          validRegex: /^([a-zA-Z0-9]+)$/
+        - id: $$cap_slskdn_version
+          label: slskdN image tag
+          defaultValue: 2026092517-slskdn.325
+          description: Stable Docker Hub image tag.
+          validRegex: /^([a-zA-Z0-9._-]+)$/
+    instructions:
+        start: >-
+            slskdN is a Soulseek client with a web interface, discovery, downloads,
+            library sharing, DHT, and optional mesh networking.
+        end: >-
+            slskdN is now available at $$cap_appname.$$cap_root_domain. Forward TCP
+            port 50300 for incoming Soulseek traffic; UDP 50300 is optional for DHT or mesh.
+    displayName: slskdN
+    isOfficial: false
+    description: >-
+        slskdN is an AGPL-3.0 Soulseek client with discovery, downloads, and mesh features.
+    documentation: https://github.com/snapetech/slskdn#readme
