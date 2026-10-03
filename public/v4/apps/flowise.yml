@@ -1,0 +1,41 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        restart: always
+        environment:
+            PORT: 3000
+            FLOWISE_USERNAME: $$cap_flowise_username
+            FLOWISE_PASSWORD: $$cap_flowise_password
+            DATABASE_PATH: /root/.flowise
+            APIKEY_PATH: /root/.flowise
+            SECRETKEY_PATH: /root/.flowise
+            LOG_PATH: /root/.flowise/logs
+            LOG_LEVEL: info
+        caproverExtra:
+            containerHttpPort: 3000
+            dockerfileLines:
+                - FROM flowiseai/flowise:$$cap_flowise_version
+                - CMD /bin/sh -c "sleep 3; flowise start"
+        volumes:
+            - $$cap_appname-db-data:/root/.flowise
+caproverOneClickApp:
+    variables:
+        - id: $$cap_flowise_version
+          label: Flowise version
+          defaultValue: '1.3.9'
+          description: Checkout their docker page for the valid tags https://hub.docker.com/r/flowiseai/flowise/tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_flowise_username
+          label: Flowise Username
+          description: 'Your Flowise username'
+        - id: $$cap_flowise_password
+          label: Flowise Password
+          description: 'Your Flowise password'
+    instructions:
+        start: >-
+            Flowise is a powerful AI tool. Before you start, make sure you have all your environment variables ready to input.
+        end: >-
+            Your Flowise app is now deployed and running!
+    displayName: 'Flowise'
+    description: 'Flowise AI Tool'
+    documentation: 'https://github.com/FlowiseAI/Flowise'
