@@ -19,6 +19,11 @@ services:
             # host, which the browser then drops over http and login loops.
             # Set this to true once the app is on https.
             AUTH_COOKIE_SECURE: 'false'
+            # CapRover's nginx is one proxy hop in front of the app. The default
+            # 0 makes the login rate limiter key on the leftmost X-Forwarded-For
+            # entry, which the client writes, so a client could choose its own
+            # bucket.
+            TRUSTED_PROXY_HOPS: '1'
             # AI / LLM (optional) - leave blank to disable AI features
             LLM_PROVIDER: $$cap_llm_provider
             LLM_API_KEY: $$cap_llm_api_key
