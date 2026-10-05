@@ -37,8 +37,8 @@ caproverOneClickApp:
     variables:
         - id: $$cap_version
           label: LibreDB Studio Version
-          defaultValue: '0.17.0'
-          description: Image tag to deploy. Always pin a fixed version, never "latest". Example - 0.17.0. Browse all valid tags at https://github.com/libredb/libredb-studio/pkgs/container/libredb-studio
+          defaultValue: '0.18.0'
+          description: Image tag to deploy. Always pin a fixed version, never "latest". Example - 0.18.0. Browse all valid tags at https://github.com/libredb/libredb-studio/pkgs/container/libredb-studio
           validRegex: '/^([^\s^\/])+$/'
         - id: $$cap_admin_email
           label: Admin Email
@@ -79,10 +79,10 @@ caproverOneClickApp:
     instructions:
         start: |-
             LibreDB Studio is a modern, open-source, web-based SQL IDE for the cloud era.
-            Query eighteen engines - PostgreSQL, MySQL, SQLite, libSQL, DuckDB, Oracle,
-            SQL Server, MongoDB, Redis, Couchbase, ClickHouse, Apache Druid,
-            Elasticsearch, OpenSearch, Trino, Apache Cassandra, Prometheus and
-            Apache Kafka - from your browser, with an ERD viewer, schema diff and optional
+            Query twenty-six engines - PostgreSQL, MySQL, SQLite, libSQL, DuckDB, Oracle,
+            Db2 LUW, SQL Server, MongoDB, Redis, Couchbase, ClickHouse, Apache Druid,
+            Elasticsearch, OpenSearch, Trino, Apache Cassandra, Prometheus,
+            InfluxDB (InfluxQL), InfluxDB 3 (SQL), Apache Kafka, etcd, Neo4j, Milvus, Qdrant and Oxia - from your browser, with an ERD viewer, schema diff and optional
             read-only AI on your own model key.
 
             What you can set below (defaults are sensible - you can usually just click Deploy):
@@ -168,5 +168,5 @@ caproverOneClickApp:
             See https://github.com/libredb/libredb-studio
     displayName: LibreDB Studio
     isOfficial: false
-    description: Open-source web-based SQL IDE. Query eighteen engines - PostgreSQL, MySQL, Oracle, SQL Server, MongoDB, Redis and more - from your browser, with an ERD viewer, schema diff and optional read-only AI.
+    description: Open-source SQL IDE. Query twenty-six engines - PostgreSQL, MySQL, Oracle, SQL Server, MongoDB, Redis and more - from your browser, with an ERD viewer, schema diff and optional read-only AI.
     documentation: Image and docs - https://github.com/libredb/libredb-studio . Uses ghcr.io/libredb/libredb-studio. Deploys with SQLite persistence; supports OIDC SSO and multiple AI providers via extra env vars.
