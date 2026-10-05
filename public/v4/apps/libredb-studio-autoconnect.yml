@@ -1,0 +1,250 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: ghcr.io/libredb/libredb-studio:$$cap_version
+        restart: always
+        environment:
+            # Authentication (auto-generated, shown after install)
+            JWT_SECRET: $$cap_gen_random_hex(48)
+            ADMIN_EMAIL: $$cap_admin_email
+            ADMIN_PASSWORD: $$cap_admin_password
+            USER_EMAIL: $$cap_user_email
+            USER_PASSWORD: $$cap_user_password
+            NEXT_PUBLIC_AUTH_PROVIDER: local
+            # Storage: SQLite file on the persistent volume below
+            STORAGE_PROVIDER: sqlite
+            STORAGE_SQLITE_PATH: /app/data/libredb-storage.db
+            # CapRover serves the app over http until you enable HTTPS in the
+            # dashboard. The app marks its auth cookie Secure on a non-loopback
+            # host, which the browser then drops over http and login loops.
+            # Set this to true once the app is on https.
+            AUTH_COOKIE_SECURE: 'false'
+            # CapRover's nginx is one proxy hop in front of the app. The default
+            # 0 makes the login rate limiter key on the leftmost X-Forwarded-For
+            # entry, which the client writes, so a client could choose its own
+            # bucket.
+            TRUSTED_PROXY_HOPS: '1'
+            # Platform discovery: the file the -discovery app below writes, on
+            # the volume both apps mount at /app/discovery. Studio re-reads it
+            # at most every 5 seconds.
+            SEED_DISCOVERY_PATH: /app/discovery/services.json
+            SEED_CACHE_TTL_MS: '5000'
+            # No built-in sample connections: only the databases on this server.
+            LIBREDB_EMBEDDED_SAMPLE: 'false'
+            SQLITE_EMBEDDED_SAMPLE: 'false'
+            # AI / LLM (optional) - leave blank to disable AI features
+            LLM_PROVIDER: $$cap_llm_provider
+            LLM_API_KEY: $$cap_llm_api_key
+            LLM_MODEL: $$cap_llm_model
+            LLM_API_URL: $$cap_llm_api_url
+        volumes:
+            - $$cap_appname-data:/app/data
+            - $$cap_appname-discovered:/app/discovery
+        caproverExtra:
+            containerHttpPort: '3000'
+    $$cap_appname-discovery:
+        # CapRover creates the apps one at a time and removes nothing when a
+        # step fails, so this app, the one that holds the Docker socket, is
+        # created after Studio: an install that stops early never leaves it
+        # running on its own.
+        depends_on:
+            - $$cap_appname
+        image: ghcr.io/libredb/libredb-studio:$$cap_version
+        restart: always
+        # A one-click command replaces the image entrypoint, so the exporter
+        # runs as root, which the Docker socket needs. It sends GET requests
+        # to the Docker API only and has no port.
+        command: ['node', '/usr/local/lib/libredb-studio/discover.mjs']
+        environment:
+            DISCOVERY_OUTPUT: /app/discovery/services.json
+            DISCOVERY_NETWORK: captain-overlay-network
+            DISCOVERY_EXCLUDE: $$cap_skip_apps
+        volumes:
+            # Access to the Docker socket is equivalent to root access on this
+            # server. Only this app mounts it, never the Studio app above.
+            - /var/run/docker.sock:/var/run/docker.sock
+            - $$cap_appname-discovered:/app/discovery
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_version
+          label: LibreDB Studio Version
+          defaultValue: '0.18.0'
+          description: Image tag to deploy. Always pin a fixed version, never "latest". Example - 0.18.0. Browse all valid tags at https://github.com/libredb/libredb-studio/pkgs/container/libredb-studio
+          validRegex: '/^([^\s^\/])+$/'
+        - id: $$cap_admin_email
+          label: Admin Email
+          defaultValue: admin@libredb.org
+          description: Login email for the ADMIN account - full access, including query execution plus maintenance/admin tools. Example - admin@yourcompany.com
+          validRegex: '/^.+@.+\..+$/'
+        - id: $$cap_admin_password
+          label: Admin Password
+          defaultValue: $$cap_gen_random_hex(16)
+          description: Password for the admin login. A strong random one is pre-filled - keep it or type your own (min 8 chars). The final screen shows it once, and it stays readable under App Configs. Example - MyStr0ng-AdminPass
+          validRegex: '/.{8,}/'
+        - id: $$cap_user_email
+          label: User Email
+          defaultValue: user@libredb.org
+          description: Login email for the STANDARD account - no admin or maintenance tools. Example - analyst@yourcompany.com
+          validRegex: '/^.+@.+\..+$/'
+        - id: $$cap_user_password
+          label: User Password
+          defaultValue: $$cap_gen_random_hex(16)
+          description: Password for the standard login. A strong random one is pre-filled - keep it or type your own (min 8 chars). The final screen shows it once, and it stays readable under App Configs. Example - An0ther-StrongPass
+          validRegex: '/.{8,}/'
+        - id: $$cap_skip_apps
+          label: Apps to skip (optional)
+          defaultValue: ''
+          description: Comma-separated CapRover app names whose databases Studio must not connect to. Example - wordpress-db,umami-postgres
+          validRegex: '/^([a-z0-9-]+(,[a-z0-9-]+)*)?$/'
+        - id: $$cap_llm_provider
+          label: AI Provider (optional)
+          defaultValue: ''
+          description: OPTIONAL - turns on the AI rail (schema description, EXPLAIN summaries, query-safety checks). One of - gemini | openai | ollama | custom. Leave blank to keep AI off. Example - gemini
+        - id: $$cap_llm_api_key
+          label: AI API Key (optional)
+          defaultValue: ''
+          description: OPTIONAL - API key for the chosen provider. Needed for gemini/openai, not for a local ollama. Examples - Gemini AIza... , OpenAI sk-... . Leave blank if AI is off.
+        - id: $$cap_llm_model
+          label: AI Model (optional)
+          defaultValue: ''
+          description: OPTIONAL - model name for the provider. Leave blank to use the provider default. Examples - gemini-2.5-flash , gpt-4o-mini , llama3.1
+        - id: $$cap_llm_api_url
+          label: AI API URL (optional)
+          defaultValue: ''
+          description: OPTIONAL - base URL override, honoured by every provider (required for ollama/custom, optional for gemini/openai). Example for an Ollama app on this same CapRover - http://srv-captain--ollama:11434/v1
+    instructions:
+        start: |-
+            This variant adds a second app, named after this one with
+            -discovery appended, that reads the settings of the other apps on
+            this server through the Docker socket so Studio can connect to your
+            databases without you typing their passwords. Access to the Docker
+            socket is equivalent to root access on this server. The discovery
+            app has no port and is not exposed to the internet. It records the
+            name and image of every app on this server and the database
+            password settings of your database apps, in a file that only the
+            Studio app and its admin login can read. Connected databases are
+            listed for the Studio admin login only, and the standard login
+            cannot read that file through a DuckDB connection. Still give the
+            standard login only to someone you trust, because a connection that
+            names a database file on this server is not limited to a directory
+            (https://github.com/libredb/libredb-studio/blob/main/docs/providers/duckdb.md#143-the-file-path-is-a-trust-boundary-for-every-role-and-statement-reach-is-the-admins).
+            Enable HTTPS for Studio before you sign in for the first time. If
+            you do not want the Docker socket on this server, install the plain
+            LibreDB Studio entry instead.
+
+            LibreDB Studio is a modern, open-source, web-based SQL IDE for the cloud era.
+            This variant connects itself to the PostgreSQL, MySQL, MariaDB,
+            Percona, MongoDB, Redis, Valkey, KeyDB and Dragonfly databases this
+            CapRover runs, including databases inside multi-service apps, and
+            follows them as you add or remove them.
+
+            What you can set below (defaults are sensible - you can usually just click Deploy):
+              - App name: at most 39 characters, starting with a letter. The
+                second app is named after it with -discovery appended, and the
+                project CapRover puts both apps in takes the same name.
+              - Version: the image tag to deploy (a tested fixed version by default).
+              - Admin login: full access, including maintenance/admin tools. The
+                connected databases are listed for this login only.
+              - User login: no admin or maintenance tools, and not read-only.
+                Both passwords are pre-generated; change them if you like. The
+                final screen shows them once, and they stay readable afterwards
+                under App Configs.
+              - Apps to skip (optional): CapRover app names, separated by commas,
+                whose databases Studio must not connect to.
+              - AI (optional): fill these to enable query assistance with Gemini,
+                OpenAI, Ollama or a custom provider. Leave blank to keep AI disabled.
+
+            Your saved connections and settings are persisted with SQLite on a CapRover
+            volume, so they survive restarts and redeploys.
+
+            More details and docs: https://github.com/libredb/libredb-studio
+        end: |-
+            LibreDB Studio has been deployed.
+
+            Open it at: http://$$cap_appname.$$cap_root_domain
+
+            Enable HTTPS from the CapRover dashboard for production use. This app
+            ships with AUTH_COOKIE_SECURE set to false, because CapRover serves
+            plain http until you do that and a browser discards a Secure session
+            cookie over http, which returns you to the sign-in page with no error.
+            The session cookie therefore travels in cleartext until HTTPS is on,
+            and so does the password on every sign-in, so keep this app on a
+            trusted network until you have switched.
+            When you switch, turn on "Force HTTPS" as well. Enabling HTTPS on its
+            own leaves http answering on the same domain, and AUTH_COOKIE_SECURE
+            set to true then returns that same silent sign-in loop to anyone who
+            arrives over http. Then set AUTH_COOKIE_SECURE to true under the
+            app's "App Configs" tab and restart. It does not switch back on its
+            own.
+
+            Your CapRover databases appear in Studio for the admin login within
+            about 30 seconds, and databases you add or remove later follow on
+            their own.
+            To stop discovery, delete the $$cap_appname-discovery app. Studio
+            then withdraws the discovered connections within about two minutes.
+            Both apps must run on the same node, and that node must be a swarm
+            manager. On a single-server CapRover this is always the case. On a
+            cluster, pin both apps to the manager in their App Configs.
+
+            Log in with the admin account:
+              Email:    $$cap_admin_email
+              Password: $$cap_admin_password
+
+            A standard user was also created:
+              Email:    $$cap_user_email
+              Password: $$cap_user_password
+
+            That account is refused at the admin and maintenance tools, and it is
+            not a read-only account. It reaches the query path the same way the
+            admin does, so what it can change is decided by the database user in
+            the connection rather than by Studio. Give it a database user with
+            the rights you actually want it to have.
+
+            On this variant the standard login cannot read the passwords of
+            the databases Studio found: a non-admin DuckDB connection cannot read
+            the discovery file. The admin login can, so treat it as holding
+            every database's password. Still give the standard login only to
+            someone you trust, because a connection that names a database file
+            on this server is not limited to a directory:
+            https://github.com/libredb/libredb-studio/blob/main/docs/providers/duckdb.md#143-the-file-path-is-a-trust-boundary-for-every-role-and-statement-reach-is-the-admins
+
+            Save these credentials now. This screen does not show them again,
+            but they stay readable as ADMIN_PASSWORD and USER_PASSWORD under the
+            "App Configs" tab, so whoever reaches your CapRover dashboard reaches
+            this app as well.
+
+            Your data (saved connections & settings) is stored in SQLite on the
+            persistent volume "$$cap_appname-data" and survives restarts and redeploys.
+
+            JWT_SECRET (generated above) also derives the key that encrypts every
+            saved connection password. Rotating whichever key is in use makes
+            those passwords unreadable, and nothing says so on screen: the app
+            writes one line to the container log and the password field is simply
+            gone. Setting STORAGE_ENCRYPTION_KEY is itself a key change, because
+            the key comes from that variable once it exists, so it separates the
+            two only if you set it before the first connection is saved. After
+            that, either leave JWT_SECRET alone or retype every saved password.
+            If a key already changed by accident, put the old one back and
+            restart BEFORE saving anything, and the passwords come back: they are
+            only lost once something overwrites them with the new key. The
+            connections themselves survive either way.
+
+            To enable SSO (Auth0/Keycloak/Okta/Azure AD), set
+            NEXT_PUBLIC_AUTH_PROVIDER to oidc and add the OIDC_* environment
+            variables under the app's "App Configs" tab. That variable decides
+            only what the sign-in page offers, and there are two things it does
+            not do. It does not hold the OIDC_* variables back: your provider's
+            sign-in route answers as soon as they are set, and OIDC_ADMIN_ROLES
+            then decides who arrives as an admin, so add them when you mean to
+            accept those logins and not before. And it does not close the
+            password route: setting it to oidc takes the password form off the
+            page while the two logins above keep working.
+            To change AI settings later, add or edit the LLM_* variables in the
+            same tab.
+            See https://github.com/libredb/libredb-studio
+    displayName: LibreDB Studio (auto-connect)
+    isOfficial: false
+    description: LibreDB Studio that connects itself to the PostgreSQL, MySQL, MariaDB, MongoDB and Redis databases on this server. Adds a discovery app that reads the Docker socket.
+    documentation: Image and docs - https://github.com/libredb/libredb-studio . Uses ghcr.io/libredb/libredb-studio for both apps. The -discovery app mounts the Docker socket; see deploy/caprover/README.md in that repository.
