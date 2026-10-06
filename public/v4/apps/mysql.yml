@@ -27,7 +27,7 @@ caproverOneClickApp:
             After installation on CapRover, it will be available as srv-captain--YOUR_CONTAINER_NAME at port 3306 to other CapRover apps.
 
             Enter your MySQL Configuration parameters and click on next. It will take about a minute for the process to finish.
-        end: "MySQL is deployed and available as srv-captain--$$cap_appname-db:3306 to other apps. For example with NodeJS, you do 'var con = mysql.createConnection({ host: 'srv-captain--$$cap_appname-db', user: 'root', password: '*********' });'"
+        end: "MySQL is deployed and available as srv-captain--$$cap_appname-db:3306 to other apps. For example with NodeJS, you do 'var con = mysql.createConnection({ host: 'srv-captain--$$cap_appname-db', user: 'root', password: '*********' });' To browse this database from your browser, install a database GUI from the one-click list, for example [Adminer](#/apps/oneclick/adminer?baseDomain=https%3A%2F%2Foneclickapps.caprover.com&templateName=OFFICIAL_adminer), [phpMyAdmin](#/apps/oneclick/phpmyadmin?baseDomain=https%3A%2F%2Foneclickapps.caprover.com&templateName=OFFICIAL_phpmyadmin) or [LibreDB Studio (auto-connect)](#/apps/oneclick/libredb-studio-autoconnect?baseDomain=https%3A%2F%2Foneclickapps.caprover.com&templateName=OFFICIAL_libredb-studio-autoconnect)."
     displayName: MySQL
     isOfficial: true
     description: MySQL is a relational database management system based on SQL

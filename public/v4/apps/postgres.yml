@@ -46,6 +46,8 @@ caproverOneClickApp:
         end: |-
             Postgres is deployed and available as `srv-captain--$$cap_appname:5432` to other apps.
             For example with Node.js: `const client = new Client({ user: '$$cap_pg_user', host: 'srv-captain--$$cap_appname', database: '$$cap_pg_db', password: '$$cap_pg_pass', port: 5432})`
+
+            To browse this database from your browser, install a database GUI from the one-click list, for example [Adminer](#/apps/oneclick/adminer?baseDomain=https%3A%2F%2Foneclickapps.caprover.com&templateName=OFFICIAL_adminer), [pgAdmin](#/apps/oneclick/pgadmin4?baseDomain=https%3A%2F%2Foneclickapps.caprover.com&templateName=OFFICIAL_pgadmin4) or [LibreDB Studio (auto-connect)](#/apps/oneclick/libredb-studio-autoconnect?baseDomain=https%3A%2F%2Foneclickapps.caprover.com&templateName=OFFICIAL_libredb-studio-autoconnect).
     displayName: PostgreSQL
     isOfficial: true
     description: The PostgreSQL object-relational database system provides reliability and data integrity
