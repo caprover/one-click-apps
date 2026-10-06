@@ -246,5 +246,5 @@ caproverOneClickApp:
             See https://github.com/libredb/libredb-studio
     displayName: LibreDB Studio (auto-connect)
     isOfficial: false
-    description: LibreDB Studio that connects itself to the PostgreSQL, MySQL, MariaDB, MongoDB and Redis databases on this server. Adds a discovery app that reads the Docker socket.
+    description: LibreDB Studio that connects itself to this server's PostgreSQL, MySQL, MariaDB, Percona, MongoDB, Redis, Valkey, KeyDB and Dragonfly databases. Adds a discovery app that reads the Docker socket.
     documentation: Image and docs - https://github.com/libredb/libredb-studio . Uses ghcr.io/libredb/libredb-studio for both apps. The -discovery app mounts the Docker socket; see deploy/caprover/README.md in that repository.
