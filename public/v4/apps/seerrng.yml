@@ -1,0 +1,37 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: docker.io/snapetech/seerrng:$$cap_seerrng_version
+        environment:
+            LOG_LEVEL: info
+            PORT: '5055'
+        volumes:
+            - $$cap_appname-config:/app/config
+        caproverExtra:
+            containerHttpPort: 5055
+
+caproverOneClickApp:
+    variables:
+        - id: $$cap_appname
+          label: App name
+          defaultValue: seerrng
+          description: SeerrNG service name.
+          validRegex: /^([a-zA-Z0-9]+)$/
+        - id: $$cap_seerrng_version
+          label: SeerrNG image tag
+          defaultValue: v3.27.1
+          description: Stable Docker Hub image tag.
+          validRegex: /^([a-zA-Z0-9._-]+)$/
+    instructions:
+        start: >-
+            SeerrNG is a self-hosted request and discovery application for Plex,
+            Jellyfin, and Emby. It supports movies, TV, music, ebooks, and audiobooks.
+        end: >-
+            SeerrNG is now available at $$cap_appname.$$cap_root_domain. Complete the
+            first-run setup in the browser and configure your media and automation services.
+    displayName: SeerrNG
+    isOfficial: false
+    description: >-
+        SeerrNG is a self-hosted request and discovery application for Plex, Jellyfin,
+        and Emby with movie, TV, music, ebook, and audiobook workflows.
+    documentation: https://github.com/snapetech/seerrng#readme
