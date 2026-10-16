@@ -37,7 +37,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_version
           label: LibreDB Studio Version
-          defaultValue: '0.18.2'
+          defaultValue: '0.18.3'
           description: Image tag to deploy. Always pin a fixed version, never "latest". Example - 0.18.2. Browse all valid tags at https://github.com/libredb/libredb-studio/pkgs/container/libredb-studio
           validRegex: '/^([^\s^\/])+$/'
         - id: $$cap_admin_email
