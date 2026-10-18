@@ -38,7 +38,7 @@ caproverOneClickApp:
         - id: $$cap_version
           label: LibreDB Studio Version
           defaultValue: '1.0.0'
-          description: Image tag to deploy. Always pin a fixed version, never "latest". Example - 0.18.2. Browse all valid tags at https://github.com/libredb/libredb-studio/pkgs/container/libredb-studio
+          description: Image tag to deploy. Always pin a fixed version, never "latest". Example - 1.0.0. Browse all valid tags at https://github.com/libredb/libredb-studio/pkgs/container/libredb-studio
           validRegex: '/^([^\s^\/])+$/'
         - id: $$cap_admin_email
           label: Admin Email
@@ -79,7 +79,7 @@ caproverOneClickApp:
     instructions:
         start: |-
             LibreDB Studio is a modern, open-source, web-based SQL IDE for the cloud era.
-            Query twenty-seven engines - PostgreSQL, MySQL, SQLite, libSQL, DuckDB, Oracle,
+            Query forty-one engines - PostgreSQL, MySQL, SQLite, libSQL, DuckDB, Oracle,
             Db2 LUW, SQL Server, MongoDB, Redis, Couchbase, ClickHouse, Apache Druid,
             Elasticsearch, OpenSearch, Trino, Databend, Apache Cassandra, Prometheus,
             InfluxDB (InfluxQL), InfluxDB 3 (SQL), Apache Kafka, etcd, Neo4j, Milvus, Qdrant and Oxia - from your browser, with an ERD viewer, schema diff and optional
@@ -168,5 +168,5 @@ caproverOneClickApp:
             See https://github.com/libredb/libredb-studio
     displayName: LibreDB Studio
     isOfficial: false
-    description: Open-source SQL IDE. Query twenty-seven engines - PostgreSQL, MySQL, Oracle, SQL Server, MongoDB, Redis and more - from your browser, with an ERD viewer, schema diff and optional read-only AI.
+    description: Open-source SQL IDE. Query forty-one engines - PostgreSQL, MySQL, Oracle, SQL Server, MongoDB, Redis and more - from your browser, with an ERD viewer, schema diff and optional read-only AI.
     documentation: Image and docs - https://github.com/libredb/libredb-studio . Uses ghcr.io/libredb/libredb-studio. Deploys with SQLite persistence; supports OIDC SSO and multiple AI providers via extra env vars.
