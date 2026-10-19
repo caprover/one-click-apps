@@ -1,0 +1,78 @@
+captainVersion: 4
+services:
+    $$cap_appname-db:
+        image: $$cap_db_type:$$cap_database_version
+        volumes:
+            - $$cap_appname-db-data:/var/lib/mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: $$cap_db_pass
+            MYSQL_DATABASE: freescout
+            MYSQL_USER: $$cap_db_user
+            MYSQL_PASSWORD: $$cap_db_pass
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+
+    $$cap_appname:
+        depends_on:
+            - $$cap_appname-db
+        image: tiredofit/freescout:$$cap_freescout_version
+        volumes:
+            - $$cap_appname-data:/www/html
+        restart: always
+        environment:
+            DB_HOST: srv-captain--$$cap_appname-db
+            DB_NAME: freescout
+            DB_USER: $$cap_db_user
+            DB_PASS: $$cap_db_pass
+            SITE_URL: https://$$cap_appname.$$cap_root_domain
+            ADMIN_EMAIL: $$cap_freescout_admin_email
+            ADMIN_PASS: $$cap_freescout_admin_pass
+
+caproverOneClickApp:
+    variables:
+        - id: $$cap_db_user
+          label: Database user
+          defaultValue: freescout
+          validRegex: /^([a-zA-Z0-9])+$/
+        - id: $$cap_db_pass
+          label: Database password
+          description: ''
+          validRegex: /^(\w|[^\s"'\\])+$/
+          defaultValue: $$cap_gen_random_hex(16)
+        - id: $$cap_freescout_version
+          label: FreeScout Version
+          defaultValue: 'php8.3-1.17.55'
+          description:
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_db_type
+          label: Database Type
+          defaultValue: mariadb
+          description: You can either choose mariadb or mysql, you need to change the version according to which DB is selected. It is case sensitive.
+          validRegex: /^(mysql|mariadb)$/
+        - id: $$cap_database_version
+          label: Database Version, default is mariadb
+          defaultValue: '10.4'
+          description: Check out the Docker pages for the valid tags https://hub.docker.com/r/library/mysql/tags/ or https://hub.docker.com/_/mariadb?tab=tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_freescout_admin_email
+          label: admin e-mail
+          defaultValue: admin@domain.com
+          description: admin e-mail address
+        - id: $$cap_freescout_admin_pass
+          label: admin password
+          validRegex: /^(\w|[^\s"'\\])+$/
+          defaultValue: $$cap_gen_random_hex(16)
+          description: admin password
+
+    instructions:
+        start: >-
+            FreeScout is the super lightweight and powerful free open source help desk and shared inbox written in PHP (Laravel framework). It is a self hosted clone of HelpScout. Now you can enjoy free Zendesk & Help Scout without giving up privacy or locking you into a service you don't control.
+        end: >
+            FreeScout is deployed and available as https://$$cap_appname.$$cap_root_domain. Please enable HTTPS.
+
+            IMPORTANT: It will take up to 2 minutes for Freescout to be ready. Before that, you might see a 502 error page.
+    displayName: FreeScout
+    isOfficial: true
+    description: Open Source Helpdesk & Shared Mailbox
+    documentation: https://github.com/tiredofit/docker-freescout
