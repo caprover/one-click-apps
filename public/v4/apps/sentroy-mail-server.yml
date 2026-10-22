@@ -1,0 +1,172 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: ghcr.io/sentroy-co/sentroy-oss-mailserver-api:latest
+        restart: always
+        environment:
+            ADMIN_API_KEY: $$cap_admin_token
+            DATABASE_URL: postgresql://sentroy:$$cap_pg_password@srv-captain--$$cap_appname-postgres:5432/maildb
+            REDIS_URL: redis://srv-captain--$$cap_appname-redis:6379
+            API_PORT: '3000'
+            NODE_ENV: production
+            LOG_LEVEL: info
+            JWT_SECRET: $$cap_jwt_secret
+            API_ALLOWED_ORIGINS: '*'
+            API_BASE_URL: https://$$cap_appname.$$cap_root_domain/api/v1
+            SERVER_IP: $$cap_server_ip
+            MAIL_DOMAIN: $$cap_mail_domain
+            MAIL_HOSTNAME: $$cap_mail_hostname
+            SMTP_HOST: srv-captain--$$cap_appname-postfix
+            SMTP_PORT: '25'
+            SMTP_USER: api@$$cap_mail_hostname
+            SMTP_PASS: $$cap_smtp_pass
+            IMAP_HOST: srv-captain--$$cap_appname-dovecot
+            IMAP_PORT: '143'
+            IMAP_USER: inbox@$$cap_mail_hostname
+            IMAP_PASS: $$cap_imap_pass
+            IMAP_MASTER_USER: sentroy
+            IMAP_MASTER_PASS: $$cap_imap_master_pass
+            DKIM_KEYS_PATH: /etc/rspamd/dkim
+            QUEUE_CONCURRENCY: '5'
+            DOMAIN_VERIFY_INTERVAL: '300000'
+            IMAP_POOL_SIZE: '5'
+            DOVECOT_USERS_FILE: /etc/dovecot/users-data/users
+        volumes:
+            - $$cap_appname-dkim:/etc/rspamd/dkim
+            - $$cap_appname-virtual:/etc/postfix/virtual
+            - $$cap_appname-users:/etc/dovecot/users-data
+        depends_on:
+            - $$cap_appname-postgres
+            - $$cap_appname-redis
+            - $$cap_appname-postfix
+        caproverExtra:
+            containerHttpPort: '3000'
+    $$cap_appname-postgres:
+        image: postgres:16-alpine
+        restart: always
+        environment:
+            POSTGRES_DB: maildb
+            POSTGRES_USER: sentroy
+            POSTGRES_PASSWORD: $$cap_pg_password
+        volumes:
+            - $$cap_appname-pg:/var/lib/postgresql/data
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname-redis:
+        image: redis:7-alpine
+        restart: always
+        command: redis-server --appendonly yes --maxmemory 128mb --maxmemory-policy noeviction
+        volumes:
+            - $$cap_appname-redis:/data
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname-rspamd:
+        image: ghcr.io/sentroy-co/sentroy-oss-mailserver-rspamd:latest
+        restart: always
+        volumes:
+            - $$cap_appname-dkim:/etc/rspamd/dkim
+        depends_on:
+            - $$cap_appname-redis
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname-postfix:
+        image: ghcr.io/sentroy-co/sentroy-oss-mailserver-postfix:latest
+        restart: always
+        environment:
+            MAIL_HOSTNAME: $$cap_mail_hostname
+            MAIL_DOMAIN: $$cap_mail_domain
+        ports:
+            - '25:25'
+            - '587:587'
+            - '465:465'
+        volumes:
+            - $$cap_appname-data:/var/mail
+            - $$cap_appname-dkim:/etc/rspamd/dkim:ro
+            - $$cap_appname-virtual:/etc/postfix/virtual
+        depends_on:
+            - $$cap_appname-rspamd
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname-dovecot:
+        image: ghcr.io/sentroy-co/sentroy-oss-mailserver-dovecot:latest
+        restart: always
+        ports:
+            - '143:143'
+            - '993:993'
+        volumes:
+            - $$cap_appname-data:/var/mail
+            - $$cap_appname-users:/etc/dovecot/users-data
+        depends_on:
+            - $$cap_appname-postfix
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+caproverOneClickApp:
+    displayName: Sentroy Mail Server
+    isOfficial: false
+    description: Self-hosted transactional and inbox mail server (Postfix, Dovecot, Rspamd, Postgres, Redis) with a Fastify REST API. A self-hostable Resend/Postal alternative driven over HTTP.
+    documentation: https://sentroy.com/docs/mail
+    instructions:
+        start: |-
+            SMTP + IMAP mail server with a REST API, driven with the Sentroy SDK/CLI or plain HTTP.
+
+            **Important notes:**
+            - You need to open ports `25`, `587`, `465`, `143` and `993` on your firewall.
+            - Mail ports must be published in `host` mode (see the post-deploy steps below) — ingress mode will not accept inbound SMTP correctly.
+            - Deliverability requires a static IP with PTR/rDNS and correct MX/SPF/DMARC/DKIM DNS records.
+            - The admin API token is generated below and provisioned into the database on first boot — no setup script.
+        end: |-
+            Sentroy Mail Server is deployed. A few one-time steps are required:
+
+            1. In CapRover, open **Apps > $$cap_appname > App Configs** and set this **Pre-Deploy Script**, then redeploy so the mail ports bind on the host:
+               `var preDeployFunction = function (captainAppObj, dockerUpdateObject) {var ports = (dockerUpdateObject.EndpointSpec && dockerUpdateObject.EndpointSpec.Ports) || [];ports.forEach(function (p) {p.PublishMode = "host";});return Promise.resolve(dockerUpdateObject);};`
+               (Apply it on the `$$cap_appname-postfix` and `$$cap_appname-dovecot` apps.)
+            2. DNS for `$$cap_mail_hostname`: an **A** record to your server IP, an **MX** record for `$$cap_mail_domain` pointing to `$$cap_mail_hostname`, **SPF**/**DMARC** TXT records, and **PTR/rDNS** at your provider (DKIM is generated by the API).
+            3. Your admin API token is the value you set for **Admin API token** — keep it safe; it has full access. The REST API is available at `https://$$cap_appname.$$cap_root_domain/api/v1`.
+
+            Docs: https://sentroy.com/docs/mail
+    variables:
+        - id: $$cap_mail_domain
+          label: Mail domain
+          description: Your root mail domain, e.g. example.com
+          defaultValue: example.com
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_mail_hostname
+          label: Mail hostname
+          description: The mail server FQDN, e.g. mail.example.com
+          defaultValue: mail.example.com
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_server_ip
+          label: Server IP
+          description: The public IPv4 address of this server (used for DNS/PTR verification)
+          defaultValue: 203.0.113.10
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_admin_token
+          label: Admin API token
+          description: Full-access admin token provisioned into the DB on first boot. Keep it safe.
+          defaultValue: $$cap_gen_random_hex(24)
+          validRegex: /.{16,}/
+        - id: $$cap_pg_password
+          label: PostgreSQL password
+          description: Internal database password (auto-generated)
+          defaultValue: $$cap_gen_random_hex(16)
+          validRegex: /.{10,}/
+        - id: $$cap_jwt_secret
+          label: JWT secret
+          description: API token signing secret (auto-generated)
+          defaultValue: $$cap_gen_random_hex(32)
+          validRegex: /.{16,}/
+        - id: $$cap_smtp_pass
+          label: Internal SMTP password
+          description: Auto-generated
+          defaultValue: $$cap_gen_random_hex(16)
+          validRegex: /.{10,}/
+        - id: $$cap_imap_pass
+          label: Internal IMAP password
+          description: Auto-generated
+          defaultValue: $$cap_gen_random_hex(16)
+          validRegex: /.{10,}/
+        - id: $$cap_imap_master_pass
+          label: Internal IMAP master password
+          description: Auto-generated
+          defaultValue: $$cap_gen_random_hex(16)
+          validRegex: /.{10,}/
