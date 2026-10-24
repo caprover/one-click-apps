@@ -2,6 +2,16 @@ captainVersion: 4
 services:
     $$cap_appname:
         restart: unless-stopped
+        healthcheck:
+            test:
+                [
+                    'CMD-SHELL',
+                    'curl -fSs http://localhost:8008/health || exit 1',
+                ]
+            interval: 30s
+            timeout: 10s
+            retries: 3
+            start_period: 60s
         environment:
             TZ: $$cap_time_zone
         volumes:
@@ -11,29 +21,38 @@ services:
             dockerfileLines:
                 - FROM matrixdotorg/synapse:$$cap_synapse_version
                 - RUN mkdir /data/
-                - ENV SYNAPSE_SERVER_NAME=$$cap_appname.$$cap_root_domain
+                - ENV SYNAPSE_SERVER_NAME=$$cap_server_name
                 - ENV SYNAPSE_REPORT_STATS=$$cap_synapse_stats
                 - RUN /start.py generate
                 - RUN echo '\nserve_server_wellknown\072 true' >> /data/homeserver.yaml
                 - RUN echo "\nenable_registration\072 $$cap_enable_registration \nenable_registration_without_verification\072 true" >> /data/homeserver.yaml
                 - RUN echo "\nmax_upload_size\072 $$cap_max_upload_sizeM" >> /data/homeserver.yaml
-                - RUN sed -i '/^server_name.*/a public_baseurl\o072 "https://$$cap_appname.$$cap_root_domain"' /data/homeserver.yaml
+                - RUN sed -i '/^server_name.*/a public_baseurl\o072 "https://$$cap_server_name"' /data/homeserver.yaml
                 - RUN sed -i 's/name\o072 sqlite3/name\o072 psycopg2/g' /data/homeserver.yaml
                 - RUN sed -i '/^  name\o072 psycopg2$/a\  allow_unsafe_locale\o072 true' /data/homeserver.yaml
                 - RUN sed -i 's/database\o072 .*homeserver\.db/database\o072 $$cap_db_name\n    user\o072 $$cap_db_user\n    password\o072 $$cap_db_password\n    host\o072 $$cap_db_host\n    port\o072 $$cap_db_port\n/g' /data/homeserver.yaml
 
 caproverOneClickApp:
     variables:
+        - id: '$$cap_server_name'
+          label: Matrix Server Name
+          defaultValue: '$$cap_appname.$$cap_root_domain'
+          description: >-
+              Public server name used in Matrix IDs (e.g. @user:example.com).
+              Defaults to the CapRover app domain. For a custom domain, enter it here,
+              then attach it as a custom domain to this app in CapRover HTTP settings and enable HTTPS.
+              WARNING: server_name is baked at build time and cannot be changed later without breaking all user IDs.
+          validRegex: '/^[a-z0-9]+([\-\.][a-z0-9]+)*(:[0-9]{1,5})?$/i'
         - id: '$$cap_synapse_version'
           label: Synapse Version
-          defaultValue: 'v1.154.0'
+          defaultValue: 'v1.163.2'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/matrixdotorg/synapse/tags
-          validRegex: '/^v[0-9]{1,}|latest$/'
+          validRegex: '/^(v[0-9]+\.[0-9]+\.[0-9]+(rc[0-9]+)?|latest)$/'
         - id: '$$cap_time_zone'
           label: Time zone
           defaultValue: Europe/Berlin
           description: The time zone of your server https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-          validRegex: '/.{1,}/'
+          validRegex: '/^.{1,}$/'
         - id: '$$cap_synapse_stats'
           label: Report stats
           defaultValue: 'no'
@@ -57,27 +76,27 @@ caproverOneClickApp:
         - id: '$$cap_db_host'
           label: Database host
           description: Hostname or IP of your external PostgreSQL server.
-          validRegex: '/.{1,}/'
+          validRegex: '/^.{1,}$/'
         - id: '$$cap_db_port'
           label: Database port
           defaultValue: '5432'
           description: Port of your external PostgreSQL server.
-          validRegex: '/^[0-9]{1,}$/'
+          validRegex: '/^[0-9]+$/'
         - id: '$$cap_db_name'
           label: Database name
           description: >-
               Name of the database on your external PostgreSQL server.
 
               For best results, use a database with LC_COLLATE 'C' and LC_CTYPE 'C'.
-          validRegex: '/.{1,}/'
+          validRegex: '/^.{1,}$/'
         - id: '$$cap_db_user'
           label: Database user
           description: User for your external PostgreSQL database.
-          validRegex: '/.{1,}/'
+          validRegex: '/^.{1,}$/'
         - id: '$$cap_db_password'
           label: Database password
           description: Password for your external PostgreSQL database user.
-          validRegex: '/.{1,}/'
+          validRegex: '/^.{1,}$/'
     instructions:
         start: >-
             Synapse is a Matrix protocol server that lets you host your own messaging service.
@@ -90,11 +109,12 @@ caproverOneClickApp:
         end: >-
             Almost done!
 
-            1. Enable Force HTTPS in the CapRover web UI.
-            2. Wait ~30 seconds, then visit https://$$cap_appname.$$cap_root_domain
+            1. If you entered a custom Matrix Server Name, attach it as a custom domain to this app in CapRover HTTP settings.
+            2. Enable Force HTTPS in the CapRover web UI.
+            3. Wait ~30 seconds, then visit https://$$cap_server_name
                You should see "It works! Synapse is running".
 
-            Your server name is: $$cap_appname.$$cap_root_domain
+            Your server name is: $$cap_server_name
             Use this as your custom homeserver URL in any Matrix client.
 
             You'll also need a client like Element Web: https://app.element.io/
@@ -112,7 +132,7 @@ caproverOneClickApp:
 
             After editing, click "Save & Update" to restart.
 
-            Docs: https://matrix-org.github.io/synapse/latest/usage/configuration/config_documentation.html
+            Docs: https://element-hq.github.io/synapse/latest/usage/configuration/config_documentation.html
 
 
             NOTE: If Synapse fails to start due to a database locale error,
@@ -125,4 +145,4 @@ caproverOneClickApp:
     displayName: Matrix Synapse - No Database
     isOfficial: true
     description: Server for the matrix protocol (external PostgreSQL)
-    documentation: https://github.com/matrix-org/synapse/tree/develop/docker
+    documentation: https://github.com/element-hq/synapse/tree/develop/docker

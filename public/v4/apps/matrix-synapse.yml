@@ -3,6 +3,12 @@ services:
     $$cap_appname-db:
         image: postgres:$$cap_postgres_version
         restart: unless-stopped
+        healthcheck:
+            test: ['CMD-SHELL', 'pg_isready -U synapse_user -d synapse_db']
+            interval: 10s
+            timeout: 5s
+            retries: 5
+            start_period: 20s
         environment:
             POSTGRES_DB: synapse_db
             POSTGRES_PASSWORD: $$cap_db_password
@@ -15,6 +21,18 @@ services:
 
     $$cap_appname:
         restart: unless-stopped
+        healthcheck:
+            test:
+                [
+                    'CMD-SHELL',
+                    'curl -fSs http://localhost:8008/health || exit 1',
+                ]
+            interval: 30s
+            timeout: 10s
+            retries: 3
+            start_period: 60s
+        depends_on:
+            - $$cap_appname-db
         environment:
             TZ: $$cap_time_zone
         volumes:
@@ -24,28 +42,37 @@ services:
             dockerfileLines:
                 - FROM matrixdotorg/synapse:$$cap_synapse_version
                 - RUN mkdir /data/
-                - ENV SYNAPSE_SERVER_NAME=$$cap_appname.$$cap_root_domain
+                - ENV SYNAPSE_SERVER_NAME=$$cap_server_name
                 - ENV SYNAPSE_REPORT_STATS=$$cap_synapse_stats
                 - RUN /start.py generate
                 - RUN echo '\nserve_server_wellknown\072 true' >> /data/homeserver.yaml
                 - RUN echo "\nenable_registration\072 $$cap_enable_registration \nenable_registration_without_verification\072 true" >> /data/homeserver.yaml
                 - RUN echo "\nmax_upload_size\072 $$cap_max_upload_sizeM" >> /data/homeserver.yaml
-                - RUN sed -i '/^server_name.*/a public_baseurl\o072 "https://$$cap_appname.$$cap_root_domain"' /data/homeserver.yaml
+                - RUN sed -i '/^server_name.*/a public_baseurl\o072 "https://$$cap_server_name"' /data/homeserver.yaml
                 - RUN sed -i 's/name\o072 sqlite3/name\o072 psycopg2/g' /data/homeserver.yaml
                 - RUN sed -i 's/database\o072 .*homeserver\.db/database\o072 synapse_db\n    user\o072 synapse_user\n    password\o072 $$cap_db_password\n    host\o072 srv-captain--$$cap_appname-db\n    port\o072 5432\n/g' /data/homeserver.yaml
 
 caproverOneClickApp:
     variables:
+        - id: '$$cap_server_name'
+          label: Matrix Server Name
+          defaultValue: '$$cap_appname.$$cap_root_domain'
+          description: >-
+              Public server name used in Matrix IDs (e.g. @user:example.com).
+              Defaults to the CapRover app domain. For a custom domain, enter it here,
+              then attach it as a custom domain to this app in CapRover HTTP settings and enable HTTPS.
+              WARNING: server_name is baked at build time and cannot be changed later without breaking all user IDs.
+          validRegex: '/^[a-z0-9]+([\-\.][a-z0-9]+)*(:[0-9]{1,5})?$/i'
         - id: '$$cap_synapse_version'
           label: Synapse Version
-          defaultValue: 'v1.63.1'
+          defaultValue: 'v1.163.2'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/matrixdotorg/synapse/tags
-          validRegex: '/^v[0-9]{1,}|latest$/'
+          validRegex: '/^(v[0-9]+\.[0-9]+\.[0-9]+(rc[0-9]+)?|latest)$/'
         - id: '$$cap_time_zone'
           label: Time zone
           defaultValue: Europe/Berlin
           description: The time zone of your server https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-          validRegex: '/.{1,}/'
+          validRegex: '/^.{1,}$/'
         - id: '$$cap_synapse_stats'
           label: Report stats
           defaultValue: 'no'
@@ -72,13 +99,13 @@ caproverOneClickApp:
           description: >-
               The version of postgres that you want to use.
               You can find the valid versions here: https://hub.docker.com/r/postgres/postgres/tags
-          validRegex: '/^[0-9]{1,}|latest$/'
+          validRegex: '/^([0-9]+|latest)$/'
         - id: '$$cap_db_password'
           label: Database password
           defaultValue: $$cap_gen_random_hex(20)
           description: >-
               The password for the Synapse database.
-          validRegex: '/^[0-9a-zA-Z]{1,}$/'
+          validRegex: '/^[A-Za-z0-9]+$/'
     instructions:
         start: >-
             Synapse is a server implementation of the matrix protocol that allows you to host your own messaging server.
@@ -91,9 +118,11 @@ caproverOneClickApp:
 
             Enable and force https in the web interface
 
-            Wait 30 seconds, go to https://$$cap_appname.$$cap_root_domain and should be able to see "It works! Synapse is running"
+            If you entered a custom Matrix Server Name, attach it as a custom domain to this app in CapRover HTTP settings first.
 
-            $$cap_appname.$$cap_root_domain is the domain you enter in the custom homeserver field of your client
+            Wait 30 seconds, go to https://$$cap_server_name and should be able to see "It works! Synapse is running"
+
+            $$cap_server_name is the domain you enter in the custom homeserver field of your client
 
             Remember this is just the server, you also need a client like https://app.element.io/ to use this app.
 
@@ -106,11 +135,11 @@ caproverOneClickApp:
             You can always change the config file located in /var/lib/docker/volumes/srv-captain--$$cap_appname-data/_data/homeserver.yaml
 
 
-            link to the the configuration manual: https://matrix-org.github.io/synapse/latest/usage/configuration/config_documentation.html
+            link to the the configuration manual: https://element-hq.github.io/synapse/latest/usage/configuration/config_documentation.html
 
             after a change restart the container by clicking "Save & Update"
 
     displayName: Matrix Synapse
     isOfficial: true
     description: Server for the matrix protocol
-    documentation: https://github.com/matrix-org/synapse/tree/develop/docker
+    documentation: https://github.com/element-hq/synapse/tree/develop/docker
