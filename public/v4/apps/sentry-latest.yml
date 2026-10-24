@@ -1,0 +1,326 @@
+captainVersion: 4
+services:
+  $$cap_appname-postgres:
+    image: postgres:13
+    volumes:
+      - $$cap_appname-postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: $$cap_postgres_user
+      POSTGRES_PASSWORD: $$cap_postgres_password
+      POSTGRES_DB: $$cap_postgres_db
+    caproverExtra:
+      notExposeAsWebApp: "true"
+    restart: always
+
+  $$cap_appname-redis:
+    image: redis:6-alpine
+    volumes:
+      - $$cap_appname-redis-data:/data
+    caproverExtra:
+      notExposeAsWebApp: "true"
+    restart: always
+
+  $$cap_appname-kafka:
+    image: confluentinc/cp-kafka:latest
+    volumes:
+      - $$cap_appname-kafka-data:/var/lib/kafka/data
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: srv-captain--$$cap_appname-zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://srv-captain--$$cap_appname-kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+    caproverExtra:
+      notExposeAsWebApp: "true"
+    restart: always
+
+  $$cap_appname-zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    volumes:
+      - $$cap_appname-zookeeper-data:/var/lib/zookeeper/data
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    caproverExtra:
+      notExposeAsWebApp: "true"
+    restart: always
+
+  $$cap_appname-clickhouse:
+    image: yandex/clickhouse-server:latest
+    volumes:
+      - $$cap_appname-clickhouse-data:/var/lib/clickhouse
+    caproverExtra:
+      notExposeAsWebApp: "true"
+    restart: always
+
+  $$cap_appname-symbolicator:
+    image: getsentry/symbolicator:latest
+    volumes:
+      - $$cap_appname-symbolicator-data:/data
+    environment:
+      SENTRY_SYMBOLICATOR_REDIS_URL: redis://srv-captain--$$cap_appname-redis:6379
+    caproverExtra:
+      notExposeAsWebApp: "true"
+    restart: always
+
+  $$cap_appname-snuba:
+    image: getsentry/snuba:latest
+    environment:
+      SNUBA_SETTINGS: snuba_settings.Settings
+      SNUBA_POSTGRES_HOST: srv-captain--$$cap_appname-postgres
+      SNUBA_POSTGRES_PORT: 5432
+      SNUBA_POSTGRES_USER: $$cap_postgres_user
+      SNUBA_POSTGRES_PASSWORD: $$cap_postgres_password
+      SNUBA_POSTGRES_DB: $$cap_postgres_db
+      SNUBA_REDIS_HOST: srv-captain--$$cap_appname-redis
+      SNUBA_REDIS_PORT: 6379
+      SNUBA_REDIS_DB: 1
+      SNUBA_CLICKHOUSE_HOST: srv-captain--$$cap_appname-clickhouse
+      SNUBA_CLICKHOUSE_PORT: 9000
+      SNUBA_CLICKHOUSE_DATABASE: default
+      SNUBA_KAFKA_HOSTS: srv-captain--$$cap_appname-kafka:9092
+    caproverExtra:
+      notExposeAsWebApp: "true"
+    restart: always
+
+  $$cap_appname-sentry-web:
+    image: getsentry/sentry:latest
+    depends_on:
+      - $$cap_appname-postgres
+      - $$cap_appname-redis
+      - $$cap_appname-kafka
+      - $$cap_appname-zookeeper
+      - $$cap_appname-clickhouse
+      - $$cap_appname-symbolicator
+      - $$cap_appname-snuba
+    volumes:
+      - $$cap_appname-sentry-data:/var/lib/sentry/files
+    environment:
+      SENTRY_SECRET_KEY: $$cap_sentry_secret_key
+      SENTRY_POSTGRES_HOST: srv-captain--$$cap_appname-postgres
+      SENTRY_POSTGRES_PORT: 5432
+      SENTRY_POSTGRES_USER: $$cap_postgres_user
+      SENTRY_POSTGRES_PASSWORD: $$cap_postgres_password
+      SENTRY_POSTGRES_DB: $$cap_postgres_db
+      SENTRY_REDIS_HOST: srv-captain--$$cap_appname-redis
+      SENTRY_REDIS_PORT: 6379
+      SENTRY_REDIS_DB: 0
+      SENTRY_KAFKA_HOSTS: srv-captain--$$cap_appname-kafka:9092
+      SENTRY_CLICKHOUSE_HOST: srv-captain--$$cap_appname-clickhouse
+      SENTRY_CLICKHOUSE_PORT: 9000
+      SENTRY_CLICKHOUSE_DATABASE: default
+      SENTRY_SYMBOLICATOR_URL: http://srv-captain--$$cap_appname-symbolicator:3021
+      SENTRY_SYMBOLICATOR_REDIS_URL: redis://srv-captain--$$cap_appname-redis:6379
+      SENTRY_SNUBA_URL: http://srv-captain--$$cap_appname-snuba:1218
+      SENTRY_SYSTEM_URL_PREFIX: https://$$cap_appname.$$cap_root_domain
+      SENTRY_SENTRY_OPTIONS: |
+        {
+            "system.url-prefix": "https://$$cap_appname.$$cap_root_domain",
+            "system.admin-email": "$$cap_admin_email",
+            "mail.backend": "django.core.mail.backends.smtp.EmailBackend",
+            "mail.host": "$$cap_smtp_host",
+            "mail.port": $$cap_smtp_port,
+            "mail.username": "$$cap_smtp_username",
+            "mail.password": "$$cap_smtp_password",
+            "mail.use-tls": $$cap_smtp_use_tls,
+            "mail.use-ssl": $$cap_smtp_use_ssl,
+            "mail.from": "$$cap_smtp_from"
+        }
+    caproverExtra:
+      containerHttpPort: "9000"
+    restart: always
+
+  $$cap_appname-sentry-worker:
+    image: getsentry/sentry:latest
+    depends_on:
+      - $$cap_appname-postgres
+      - $$cap_appname-redis
+      - $$cap_appname-kafka
+      - $$cap_appname-zookeeper
+      - $$cap_appname-clickhouse
+      - $$cap_appname-symbolicator
+      - $$cap_appname-snuba
+    volumes:
+      - $$cap_appname-sentry-data:/var/lib/sentry/files
+    environment:
+      SENTRY_SECRET_KEY: $$cap_sentry_secret_key
+      SENTRY_POSTGRES_HOST: srv-captain--$$cap_appname-postgres
+      SENTRY_POSTGRES_PORT: 5432
+      SENTRY_POSTGRES_USER: $$cap_postgres_user
+      SENTRY_POSTGRES_PASSWORD: $$cap_postgres_password
+      SENTRY_POSTGRES_DB: $$cap_postgres_db
+      SENTRY_REDIS_HOST: srv-captain--$$cap_appname-redis
+      SENTRY_REDIS_PORT: 6379
+      SENTRY_REDIS_DB: 0
+      SENTRY_KAFKA_HOSTS: srv-captain--$$cap_appname-kafka:9092
+      SENTRY_CLICKHOUSE_HOST: srv-captain--$$cap_appname-clickhouse
+      SENTRY_CLICKHOUSE_PORT: 9000
+      SENTRY_CLICKHOUSE_DATABASE: default
+      SENTRY_SYMBOLICATOR_URL: http://srv-captain--$$cap_appname-symbolicator:3021
+      SENTRY_SYMBOLICATOR_REDIS_URL: redis://srv-captain--$$cap_appname-redis:6379
+      SENTRY_SNUBA_URL: http://srv-captain--$$cap_appname-snuba:1218
+      SENTRY_SYSTEM_URL_PREFIX: https://$$cap_appname.$$cap_root_domain
+      SENTRY_SENTRY_OPTIONS: |
+        {
+            "system.url-prefix": "https://$$cap_appname.$$cap_root_domain",
+            "system.admin-email": "$$cap_admin_email",
+            "mail.backend": "django.core.mail.backends.smtp.EmailBackend",
+            "mail.host": "$$cap_smtp_host",
+            "mail.port": $$cap_smtp_port,
+            "mail.username": "$$cap_smtp_username",
+            "mail.password": "$$cap_smtp_password",
+            "mail.use-tls": $$cap_smtp_use_tls,
+            "mail.use-ssl": $$cap_smtp_use_ssl,
+            "mail.from": "$$cap_smtp_from"
+        }
+    command: ["run", "worker"]
+    caproverExtra:
+      notExposeAsWebApp: "true"
+    restart: always
+
+  $$cap_appname-sentry-cron:
+    image: getsentry/sentry:latest
+    depends_on:
+      - $$cap_appname-postgres
+      - $$cap_appname-redis
+      - $$cap_appname-kafka
+      - $$cap_appname-zookeeper
+      - $$cap_appname-clickhouse
+      - $$cap_appname-symbolicator
+      - $$cap_appname-snuba
+    volumes:
+      - $$cap_appname-sentry-data:/var/lib/sentry/files
+    environment:
+      SENTRY_SECRET_KEY: $$cap_sentry_secret_key
+      SENTRY_POSTGRES_HOST: srv-captain--$$cap_appname-postgres
+      SENTRY_POSTGRES_PORT: 5432
+      SENTRY_POSTGRES_USER: $$cap_postgres_user
+      SENTRY_POSTGRES_PASSWORD: $$cap_postgres_password
+      SENTRY_POSTGRES_DB: $$cap_postgres_db
+      SENTRY_REDIS_HOST: srv-captain--$$cap_appname-redis
+      SENTRY_REDIS_PORT: 6379
+      SENTRY_REDIS_DB: 0
+      SENTRY_KAFKA_HOSTS: srv-captain--$$cap_appname-kafka:9092
+      SENTRY_CLICKHOUSE_HOST: srv-captain--$$cap_appname-clickhouse
+      SENTRY_CLICKHOUSE_PORT: 9000
+      SENTRY_CLICKHOUSE_DATABASE: default
+      SENTRY_SYMBOLICATOR_URL: http://srv-captain--$$cap_appname-symbolicator:3021
+      SENTRY_SYMBOLICATOR_REDIS_URL: redis://srv-captain--$$cap_appname-redis:6379
+      SENTRY_SNUBA_URL: http://srv-captain--$$cap_appname-snuba:1218
+      SENTRY_SYSTEM_URL_PREFIX: https://$$cap_appname.$$cap_root_domain
+      SENTRY_SENTRY_OPTIONS: |
+        {
+            "system.url-prefix": "https://$$cap_appname.$$cap_root_domain",
+            "system.admin-email": "$$cap_admin_email",
+            "mail.backend": "django.core.mail.backends.smtp.EmailBackend",
+            "mail.host": "$$cap_smtp_host",
+            "mail.port": $$cap_smtp_port,
+            "mail.username": "$$cap_smtp_username",
+            "mail.password": "$$cap_smtp_password",
+            "mail.use-tls": $$cap_smtp_use_tls,
+            "mail.use-ssl": $$cap_smtp_use_ssl,
+            "mail.from": "$$cap_smtp_from"
+        }
+    command: ["run", "cron"]
+    caproverExtra:
+      notExposeAsWebApp: "true"
+    restart: always
+
+caproverOneClickApp:
+  variables:
+    - id: $$cap_sentry_secret_key
+      label: Sentry Secret Key
+      description: "Generate a secure random 32+ character string for Sentry"
+      defaultValue: $$cap_gen_random_hex(32)
+      validRegex: /.{32,}/
+    - id: $$cap_postgres_user
+      label: PostgreSQL Username
+      defaultValue: sentry
+      validRegex: /^[a-zA-Z0-9_]+$/
+    - id: $$cap_postgres_password
+      label: PostgreSQL Password
+      description: "Strong password for PostgreSQL database"
+      defaultValue: $$cap_gen_random_string(16)
+      validRegex: /.{8,}/
+    - id: $$cap_postgres_db
+      label: PostgreSQL Database Name
+      defaultValue: sentry
+      validRegex: /^[a-zA-Z0-9_]+$/
+    - id: $$cap_admin_email
+      label: Admin Email Address
+      description: "Email address for Sentry admin user"
+      defaultValue: admin@$$cap_root_domain
+      validRegex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+    - id: $$cap_smtp_host
+      label: SMTP Host
+      description: "SMTP server hostname for email notifications"
+      defaultValue: localhost
+    - id: $$cap_smtp_port
+      label: SMTP Port
+      description: "SMTP server port"
+      defaultValue: 587
+      validRegex: /^\d+$/
+    - id: $$cap_smtp_username
+      label: SMTP Username
+      description: "SMTP authentication username (optional)"
+      defaultValue: ""
+    - id: $$cap_smtp_password
+      label: SMTP Password
+      description: "SMTP authentication password (optional)"
+      defaultValue: ""
+    - id: $$cap_smtp_use_tls
+      label: SMTP Use TLS
+      description: "Enable TLS for SMTP connection"
+      defaultValue: "true"
+    - id: $$cap_smtp_use_ssl
+      label: SMTP Use SSL
+      description: "Enable SSL for SMTP connection"
+      defaultValue: "false"
+    - id: $$cap_smtp_from
+      label: SMTP From Address
+      description: "From email address for Sentry notifications"
+      defaultValue: sentry@$$cap_root_domain
+      validRegex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+  instructions:
+    start: |
+      This will deploy Sentry self-hosted on your CapRover instance.
+
+      Sentry requires significant resources:
+      - Minimum 4GB RAM
+      - Minimum 2 CPU cores
+      - At least 20GB disk space
+
+      The deployment includes:
+      - PostgreSQL database
+      - Redis cache
+      - Kafka message queue
+      - ClickHouse analytics database
+      - Symbolicator for symbol processing
+      - Snuba for event processing
+      - Sentry web interface
+      - Sentry background workers
+      - Sentry cron jobs
+
+      Please ensure your server has sufficient resources before proceeding.
+    end: |
+      Sentry has been successfully deployed!
+
+      Access your Sentry instance at: https://$$cap_appname.$$cap_root_domain
+
+      Initial setup:
+      1. Wait 2-3 minutes for all services to start
+      2. Visit the URL above to complete the setup wizard
+      3. Create your admin user account
+      4. Configure your first project
+
+      Important notes:
+      - All data is persisted in Docker volumes
+      - Email notifications are configured with your SMTP settings
+      - The system is configured to work behind CapRover's reverse proxy
+      - HTTPS is automatically handled by CapRover
+
+      For troubleshooting, check the logs of individual services in the CapRover dashboard.
+  displayName: Sentry (Latest)
+  isOfficial: false
+  description: Self-hosted Sentry for error tracking and performance monitoring
+  documentation: https://develop.sentry.dev/self-hosted/
