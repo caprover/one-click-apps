@@ -1,6 +1,7 @@
 captainVersion: 4
 services:
     $$cap_appname:
+        image: minio/minio:$$cap_minio_version
         volumes:
             - $$cap_appname-db-data:/data
             - $$cap_appname-config-data:/root/.minio
@@ -11,11 +12,9 @@ services:
             MINIO_REGION_NAME: 'eu-east-1'
             MINIO_BROWSER_REDIRECT_URL: https://$$cap_appname.$$cap_root_domain
             MINIO_SERVER_URL: https://$$cap_appname-api.$$cap_root_domain # MinIO S3 API
+        command: [minio server /data --console-address ":9001"]
         caproverExtra:
             containerHttpPort: '9001'
-            dockerfileLines:
-                - FROM minio/minio:$$cap_minio_version
-                - CMD ["server", "/data", "--console-address", ":9001"]
     $$cap_appname-api:
         image: caprover/nginx-reverse-proxy:1-ef5ffcb
         restart: always
@@ -28,19 +27,19 @@ caproverOneClickApp:
     variables:
         - id: $$cap_minio_version
           label: MinIO Version
-          defaultValue: RELEASE.2023-01-18T04-36-38Z
+          defaultValue: RELEASE.2025-09-07T16-13-09Z
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/minio/minio/tags/
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_access_key
           label: MinIO Root User Access Key
-          defaultValue: $$cap_gen_random_hex(24)
+          defaultValue: admin
           description: Access key for `MINIO_ROOT_USER`. If unset, minio defaults to `minioadmin`. MinIO strongly recommends specifying a unique, long, and random value for all environments.
-          validRegex: /(.{5,})|(^\s{0}$)/m
+          validRegex: /^(.{5,})?$/
         - id: $$cap_secret_key
           label: Minio Secret Key
-          defaultValue: $$cap_gen_random_hex(38)
-          description: Secret key for `MINIO_ROOT_PASSWORD`. If unset, minio defaults to `minioadmin`. MinIO strongly recommends specifying a unique, long, and random value for all environments.
-          validRegex: /(.{8,})|(^\s{0}$)/m
+          defaultValue: password
+          description: Secret key for `MINIO_ROOT_PASSWORD`. If unset, minio defaults to `minioadmin`. MinIO strongly recommends specifying a unique, long, and random value for all environments. Please change this to a secure password.
+          validRegex: /^(.{8,})?$/
     instructions:
         start: >-
             MinIO is a High Performance Object Storage released under GNU Affero General Public License v3.0. 
