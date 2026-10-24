@@ -204,7 +204,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_ant_version
           label: Evolution API Version
-          description: Choose the latest version of Evolution API from https://hub.docker.com/r/atendai/evolution-api/tags
+          description: Choose the latest version of Evolution API from https://hub.docker.com/r/evoapicloud/evolution-api/tags
           defaultValue: v2.2.1
         - id: $$cap_postgres_version
           label: PostgreSQL Version
