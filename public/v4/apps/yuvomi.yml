@@ -43,9 +43,9 @@ caproverOneClickApp:
             Yuvomi is a self-hosted family planner: tasks, shared calendar, shopping, meals, budget, notes, contacts and health in one installable PWA. Data stays in one SQLite database on your server.
             More details: https://yuvomi.cloud/
         end: |-
-            Yuvomi is deployed. Open http://$$cap_appname.$$cap_root_domain and create your admin account.
+            Yuvomi is deployed. Before you sign up, enable HTTPS and Force HTTPS for the app, then set SESSION_SECURE to true under App Configs and save.
 
-            Enable HTTPS for the app, then set SESSION_SECURE to true under App Configs and save.
+            Then open https://$$cap_appname.$$cap_root_domain and create your admin account, so the password never crosses the network unencrypted.
 
             Store your database encryption key somewhere safe: without it the database and its backups cannot be opened.
     displayName: Yuvomi
