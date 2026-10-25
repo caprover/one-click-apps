@@ -1,0 +1,54 @@
+captainVersion: 4
+services:
+    '$$cap_appname':
+        image: ghcr.io/ulsklyc/yuvomi:$$cap_yuvomi_version
+        environment:
+            NODE_ENV: production
+            DB_PATH: /data/yuvomi.db
+            BACKUP_DIR: /backups
+            SESSION_SECRET: $$cap_session_secret
+            DB_ENCRYPTION_KEY: $$cap_db_encryption_key
+            SESSION_SECURE: $$cap_session_secure
+            TRUST_PROXY: '1'
+        volumes:
+            - '$$cap_appname-data:/data'
+            - '$$cap_appname-backups:/backups'
+            - '$$cap_appname-modules:/app/modules'
+        caproverExtra:
+            containerHttpPort: '3000'
+caproverOneClickApp:
+    variables:
+        - id: '$$cap_yuvomi_version'
+          label: Yuvomi Version
+          defaultValue: '2.80.0'
+          description: Check the releases for valid versions https://github.com/ulsklyc/yuvomi/releases
+          validRegex: "/^([^\\s^\\/])+$/"
+        - id: '$$cap_session_secret'
+          label: Session Secret
+          defaultValue: $$cap_gen_random_hex(64)
+          description: Signs the session cookies. Changing it later signs everyone out once.
+          validRegex: /^.{32,}$/
+        - id: '$$cap_db_encryption_key'
+          label: Database Encryption Key
+          defaultValue: $$cap_gen_random_hex(64)
+          description: Encrypts the database at rest. Keep a copy of this value - the database only opens with exactly this key, and it cannot be changed later.
+          validRegex: /^.{32,}$/
+        - id: '$$cap_session_secure'
+          label: Secure Cookies
+          defaultValue: 'false'
+          description: Set to true once HTTPS is enabled for this app.
+          validRegex: /^(true|false)$/
+    instructions:
+        start: |-
+            Yuvomi is a self-hosted family planner: tasks, shared calendar, shopping, meals, budget, notes, contacts and health in one installable PWA. Data stays in one SQLite database on your server.
+            More details: https://yuvomi.cloud/
+        end: |-
+            Yuvomi is deployed. Open http://$$cap_appname.$$cap_root_domain and create your admin account.
+
+            Enable HTTPS for the app, then set SESSION_SECURE to true under App Configs and save.
+
+            Store your database encryption key somewhere safe: without it the database and its backups cannot be opened.
+    displayName: Yuvomi
+    isOfficial: false
+    description: Self-hosted family planner with tasks, shared calendar, shopping, meals, budget and more in one PWA
+    documentation: https://github.com/ulsklyc/yuvomi#readme
