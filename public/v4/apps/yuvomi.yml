@@ -13,6 +13,7 @@ services:
         volumes:
             - '$$cap_appname-data:/data'
             - '$$cap_appname-backups:/backups'
+            - '$$cap_appname-documents:/documents'
             - '$$cap_appname-modules:/app/modules'
         caproverExtra:
             containerHttpPort: '3000'
