@@ -1,0 +1,44 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: slurvdjur/legejo:$$cap_legejo_version
+        environment:
+            LEGEJO_ADMIN_USER: $$cap_admin_user
+            LEGEJO_ADMIN_PASSWORD: $$cap_admin_password
+            LEGEJO_CLIENT_IP_HEADER: X-Forwarded-For
+        volumes:
+            - $$cap_appname-data:/data
+        caproverExtra:
+            containerHttpPort: '3000'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_legejo_version
+          label: Legejo Version
+          defaultValue: 1.35.0
+          description: Check out the Docker page for the valid tags https://hub.docker.com/r/slurvdjur/legejo/tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_admin_user
+          label: Admin Username
+          defaultValue: admin
+          description: The admin account, made on the first start.
+          validRegex: /^.{1,60}$/
+        - id: $$cap_admin_password
+          label: Admin Password
+          defaultValue: $$cap_gen_random_hex(16)
+          description: The admin account's password, used only on the first start. At least 8 characters.
+          validRegex: /^.{8,}$/
+    instructions:
+        start: |-
+            Legejo is a self-hosted library for your EPUB books, with a reader in the browser, Kobo sync, OPDS for reading apps such as KOReader, and shelves you can share or federate over ActivityPub. It runs on SQLite in a single container: no database service is needed.
+
+            More details: https://github.com/jularboolean/legejo
+        end: |-
+            Legejo is deployed and available as $$cap_appname.
+
+            Sign in at http://$$cap_appname.$$cap_root_domain with the admin username and password you chose. The password is used only on the first start; change it on the Account page afterwards.
+
+            Enable HTTPS in the app's HTTP Settings, then set the public address (https://$$cap_appname.$$cap_root_domain) on Legejo's Admin page: Kobo sync, links in mail and federation need it. Mail and searching inside the books are set up there too.
+    displayName: Legejo
+    isOfficial: true
+    description: A self-hosted library for your EPUB books, with a reader in the browser, Kobo sync, OPDS for reading apps and federated shelves.
+    documentation: See https://github.com/jularboolean/legejo#readme
