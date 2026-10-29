@@ -5,7 +5,8 @@ services:
         environment:
             LEGEJO_ADMIN_USER: $$cap_admin_user
             LEGEJO_ADMIN_PASSWORD: $$cap_admin_password
-            LEGEJO_CLIENT_IP_HEADER: X-Forwarded-For
+            LEGEJO_PUBLIC_URL: https://$$cap_appname.$$cap_root_domain
+            LEGEJO_CLIENT_IP_HEADER: X-Real-IP
         volumes:
             - $$cap_appname-data:/data
         caproverExtra:
@@ -14,7 +15,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_legejo_version
           label: Legejo Version
-          defaultValue: 1.35.0
+          defaultValue: 1.35.1
           description: Check out the Docker page for the valid tags https://hub.docker.com/r/slurvdjur/legejo/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_admin_user
@@ -33,11 +34,13 @@ caproverOneClickApp:
 
             More details: https://github.com/jularboolean/legejo
         end: |-
-            Legejo is deployed and available as $$cap_appname.
+            Legejo is deployed as $$cap_appname.
 
-            Sign in at http://$$cap_appname.$$cap_root_domain with the admin username and password you chose. The password is used only on the first start; change it on the Account page afterwards.
+            Before you sign in: open the app's HTTP Settings in CapRover and choose Enable HTTPS, then Force HTTPS by redirecting all HTTP traffic to HTTPS. Legejo is set up for https://$$cap_appname.$$cap_root_domain and marks its session cookies Secure, so signing in over plain HTTP does not work.
 
-            Enable HTTPS in the app's HTTP Settings, then set the public address (https://$$cap_appname.$$cap_root_domain) on Legejo's Admin page: Kobo sync, links in mail and federation need it. Mail and searching inside the books are set up there too.
+            Then sign in at https://$$cap_appname.$$cap_root_domain with the admin username and password you chose. The password is used only on the first start; change it on the Account page afterwards.
+
+            If you give the app another domain, change LEGEJO_PUBLIC_URL in App Configs to match: Kobo sync, links in mail and federation use it. Mail and searching inside the books are set up on Legejo's Admin page.
     displayName: Legejo
     isOfficial: true
     description: A self-hosted library for your EPUB books, with a reader in the browser, Kobo sync, OPDS for reading apps and federated shelves.
