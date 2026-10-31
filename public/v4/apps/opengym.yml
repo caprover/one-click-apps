@@ -1,0 +1,146 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        environment:
+            PORT: '3000'
+            DATA_DIR: /data
+            RP_ID: $$cap_appname.$$cap_root_domain
+            ORIGIN: https://$$cap_appname.$$cap_root_domain
+            RP_NAME: openGym
+            DEFAULT_LANG: en
+            TRUST_PROXY: '1'
+            PASSWORD_LOGIN: '1'
+            FIRST_USER_ADMIN: '0'
+            INVITE_ONLY: $$cap_invite_only
+            ALLOW_GUEST: $$cap_allow_guest
+            OPENGYM_ADMIN_USERNAME: $$cap_admin_username
+            OPENGYM_ADMIN_PASSWORD: $$cap_admin_password
+            NGINX_PORT: '8080'
+            BACKEND: '127.0.0.1'
+            RESOLVER: '127.0.0.11'
+        volumes:
+            - $$cap_appname-data:/data
+        caproverExtra:
+            containerHttpPort: '8080'
+            # A single app owns both processes, so deleting it leaves no API app behind.
+            dockerfileLines:
+                - FROM ghcr.io/duartesantos8/opengym-api:$$cap_opengym_version AS api
+                - FROM ghcr.io/duartesantos8/opengym-web:$$cap_opengym_version
+                - USER root
+                - RUN apk add --no-cache libstdc++ && adduser -D -H -s /sbin/nologin coach && sed -i '1i user nginx;' /etc/nginx/nginx.conf
+                - COPY --from=api /usr/local/bin/node /usr/local/bin/node
+                - COPY --from=api /app/ /app/
+                - WORKDIR /app
+                - ENTRYPOINT []
+                - CMD []
+                - STOPSIGNAL SIGTERM
+                - HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 CMD wget --spider -q "http://127.0.0.1:${NGINX_PORT}/api/health" || exit 1
+        command:
+            - node
+            - --input-type=module
+            - -e
+            - |-
+                import fs from 'node:fs';
+                import path from 'node:path';
+                import crypto from 'node:crypto';
+                import { spawn } from 'node:child_process';
+                import { hashPassword, passwordProblem } from './password.js';
+                import { atomicWrite } from './durable.js';
+
+                const directory = process.env.DATA_DIR;
+                const file = path.join(directory, 'db.json');
+                fs.mkdirSync(directory, { recursive: true });
+                let database;
+                if (fs.existsSync(file)) {
+                    try { database = JSON.parse(fs.readFileSync(file, 'utf8')); }
+                    catch { console.warn('Account setup skipped; the API will attempt database recovery.'); }
+                } else {
+                    if (fs.readdirSync(directory).some(name => name.startsWith('db.json.'))) {
+                        throw new Error('Restore the existing account database before starting openGym.');
+                    }
+                    database = { users: [], creds: [], subs: [], invites: [] };
+                }
+                if (database && Array.isArray(database.users) && database.users.length === 0) {
+                    const name = String(process.env.OPENGYM_ADMIN_USERNAME || '').trim();
+                    const password = process.env.OPENGYM_ADMIN_PASSWORD || '';
+                    if (!/^[A-Za-z0-9][A-Za-z0-9_.-]{2,39}$/.test(name)) {
+                        throw new Error('Admin username must contain 3-40 letters, digits, dots, underscores or hyphens.');
+                    }
+                    if (!/^[a-fA-F0-9]{32,128}$/.test(password) || passwordProblem(password, name)) {
+                        throw new Error('Choose a strong hexadecimal admin password with 32-128 characters.');
+                    }
+                    const created = new Date().toISOString();
+                    database.users.push({
+                        id: crypto.randomBytes(12).toString('base64url'), name, created,
+                        admin: true, owner: true,
+                        pw: { h: await hashPassword(password), set: created }
+                    });
+                    const content = JSON.stringify(database);
+                    atomicWrite(file, content, 0o600);
+                    atomicWrite(file + '.bak', content, 0o600);
+                    console.log('Initial openGym administrator created.');
+                }
+                delete process.env.OPENGYM_ADMIN_USERNAME;
+                delete process.env.OPENGYM_ADMIN_PASSWORD;
+
+                await import('./server.js');
+                // nginx drops its workers to its own user; the API retains privilege-drop support.
+                const web = spawn('/docker-entrypoint.sh', ['nginx', '-g', 'daemon off;'], {
+                    stdio: 'inherit', env: process.env
+                });
+                let stopping = false;
+                const stop = () => {
+                    if (stopping) return;
+                    stopping = true;
+                    web.kill('SIGTERM');
+                    setTimeout(() => process.exit(0), 10000).unref();
+                };
+                process.on('SIGTERM', stop);
+                process.on('SIGINT', stop);
+                web.on('error', error => { console.error('nginx failed:', error.message); process.exit(1); });
+                web.on('exit', () => process.exit(stopping ? 0 : 1));
+caproverOneClickApp:
+    variables:
+        - id: $$cap_opengym_version
+          label: openGym version
+          defaultValue: '1.4.3'
+          description: A fixed release tag shared by both upstream images, without the leading v. See https://github.com/DuarteSantos8/openGym/releases
+          validRegex: '/^[0-9]+\.[0-9]+\.[0-9]+$/'
+        - id: $$cap_admin_username
+          label: Admin username
+          defaultValue: ''
+          description: Required. Creates the initial openGym administrator on an empty instance. Use 3-40 letters, digits, dots, underscores or hyphens, starting with a letter or digit.
+          validRegex: '/^[A-Za-z0-9][A-Za-z0-9_.-]{2,39}$/'
+        - id: $$cap_admin_password
+          label: Admin password
+          defaultValue: $$cap_gen_random_hex(64)
+          description: Save this password before deploying. A random 64-character hexadecimal password is generated. You can replace it with another strong 32-128 character hexadecimal password. Existing accounts keep their current password on redeployment.
+          validRegex: '/^[a-fA-F0-9]{32,128}$/'
+        - id: $$cap_invite_only
+          label: Invite-only signup (1 = yes, 0 = no)
+          defaultValue: '1'
+          description: Keep 1 to require an invitation for new profiles. Your administrator is created automatically and can generate invitations in the admin dashboard.
+          validRegex: '/^[01]$/'
+        - id: $$cap_allow_guest
+          label: Allow guest mode (1 = yes, 0 = no)
+          defaultValue: '0'
+          description: Guest mode stores workouts only in the visitor's browser. Keep 0 to require an account.
+          validRegex: '/^[01]$/'
+    instructions:
+        start: |-
+            openGym is a self-hosted workout and body-weight tracker. This template combines the upstream web and API images in one CapRover app with persistent data at /data. No separate API app or HTTP Basic Auth is needed.
+
+            Choose your administrator username and save the generated password below. The account is created before the server becomes available. Signup and guest-mode settings are applied automatically; existing accounts and passwords are preserved on redeployment. Keep the app at one instance and back up its data volume.
+
+            The hostname is generated from your app name and CapRover root domain. CapRover initially serves HTTP: enable HTTPS and Force HTTPS in HTTP Settings before signing in. The API is already configured for that final HTTPS address.
+
+            Replacing the older two-app template? Stop the old API app before installing this version, because both would otherwise write to the same data volume.
+        end: |-
+            openGym has been deployed at http://$$cap_appname.$$cap_root_domain
+
+            Enable HTTPS and Force HTTPS in this app's HTTP Settings before signing in.
+            Then open https://$$cap_appname.$$cap_root_domain and sign in as $$cap_admin_username with the password you saved during setup.
+    displayName: openGym
+    isOfficial: true
+    description: Self-hosted workout and body-weight tracker with routines, exercise animations, progress charts, passkey sign-in and mobile sync. Your data stays on your server.
+    documentation: https://github.com/DuarteSantos8/openGym
