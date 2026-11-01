@@ -1,0 +1,49 @@
+captainVersion: 4
+services:
+    $$cap_appname-db:
+        image: postgres:16.0-alpine
+        restart: always
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+        volumes:
+            - $$cap_appname-db:/var/lib/postgresql/data
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname:
+        image: maif/izanami:$$cap_app_version
+        depends_on:
+            - $$cap_appname-db
+        environment:
+            IZANAMI_PG_URI: postgresql://postgres:postgres@srv-captain--$$cap_appname-db:5432/postgres
+            IZANAMI_ADMIN_DEFAULT_PASSWORD: $$cap_admin_pass
+            IZANAMI_EXPOSITION_URL: https://$$cap_appname.$$cap_root_domain
+            IZANAMI_SECRET: $$cap_secret
+
+        restart: always
+        caproverExtra:
+            containerHttpPort: '9000'
+
+caproverOneClickApp:
+    variables:
+        - id: '$$cap_app_version'
+          label: Izanami Version
+          defaultValue: '2.4.5'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/maif/izanami/tags
+        - id: '$$cap_admin_pass'
+          label: Izanami password for admin user
+          defaultValue: $$cap_gen_random_hex(16)
+          description: admin password
+        - id: '$$cap_secret'
+          label: Izanami Secret
+          defaultValue: $$cap_gen_random_hex(256)
+          description: Izanami secret
+    instructions:
+        start: |-
+            Izanami is installing
+        end: |-
+            Izanami is installed. You can login with "RESERVED_ADMIN_USER" as admin account.
+    displayName: Izanami
+    isOfficial: true
+    description: Izanami is an open source centralized feature flag solution.
+    documentation: Manage your flags in one place, query them from anywhere.
