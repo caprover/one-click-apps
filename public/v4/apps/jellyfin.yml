@@ -6,7 +6,6 @@ services:
             PUID: $$cap_puid
             PGID: $$cap_pgid
             TZ: $$cap_tz
-            JELLYFIN_PublishedServerUrl: '$$cap_appname.$$cap_root_domain'
         volumes:
             - $$cap_appname-config:/config
         caproverExtra:
@@ -15,7 +14,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_jf_version
           label: Jellyfin Version
-          defaultValue: '10.10.1'
+          defaultValue: '12.4ubu2604-ls57'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/jellyfin/tags
           validRegex: /^([^\s^\/])+$/
         - id: '$$cap_puid'
