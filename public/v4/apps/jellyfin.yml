@@ -6,7 +6,6 @@ services:
             PUID: $$cap_puid
             PGID: $$cap_pgid
             TZ: $$cap_tz
-            JELLYFIN_PublishedServerUrl: '$$cap_appname.$$cap_root_domain'
         volumes:
             - $$cap_appname-config:/config
         caproverExtra:
