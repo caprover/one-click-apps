@@ -27,7 +27,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_plex_version
           label: Plex Version
-          defaultValue: 1.19.2.2737-b69929dab
+          defaultValue: 1.43.5.11079-b3b13e506
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/plexinc/pms-docker/tags
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_plex_token
