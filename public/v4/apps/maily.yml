@@ -1,0 +1,38 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: ghcr.io/stormsia/maily:$$cap_maily_version
+        restart: unless-stopped
+        environment:
+            MAILY_HOST: 0.0.0.0
+            MAILY_PORT: '8477'
+            MAILY_API_KEY: $$cap_maily_api_key
+            MAILY_DATABASE_URL: sqlite+aiosqlite:////data/maily.db
+            MAILY_SECRET_KEY_PATH: /data/maily.key
+        volumes:
+            - $$cap_appname-data:/data
+        caproverExtra:
+            containerHttpPort: '8477'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_maily_version
+          label: Maily Version
+          defaultValue: latest
+          description: Check out GHCR container tags at https://github.com/stormsia/maily/pkgs/container/maily
+        - id: $$cap_maily_api_key
+          label: Maily Master API Key
+          defaultValue: $$cap_gen_random_hex(32)
+          description: Master root API key used to secure Maily REST API and dashboard access.
+    instructions:
+        start: |-
+            Maily is the Universal Temporary Email Gateway & REST API Platform.
+            Aggregates 8+ disposable email providers (Mail.tm, TempMail Plus, Temp-Mail.io, and more) into a single high-performance REST gateway with automatic OTP verification code extraction and a sleek dark-mode web console.
+        end: |-
+            Maily has been successfully deployed!
+            Your service is available at http://$$cap_appname.$$cap_root_domain
+            API documentation is available at http://$$cap_appname.$$cap_root_domain/docs
+            Use your master API key ($$cap_maily_api_key) to authenticate.
+    displayName: Maily
+    isOfficial: true
+    description: Universal Temporary Email Gateway & REST API with dark-mode console and automatic OTP code extraction.
+    documentation: Taken from https://stormsia.github.io/maily/
