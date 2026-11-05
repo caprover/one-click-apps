@@ -11,6 +11,21 @@ caproverOneClickApp:
           defaultValue: 'UTC'
           description: The timezone to use for the container. Find your timezone here https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
           validRegex: /^([^\s^\/])+$/
+        - id: $$cap_dagu_admin_username
+          label: Admin Username
+          defaultValue: 'admin'
+          description: Username of the admin account Dagu creates on first start.
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_dagu_admin_password
+          label: Admin Password
+          defaultValue: $$cap_gen_random_hex(16)
+          description: Password of the admin account Dagu creates on first start. At least 8 characters.
+          validRegex: /^([^\s^\/]){8,}$/
+        - id: $$cap_dagu_docker_gid
+          label: Docker Socket GID
+          defaultValue: '-1'
+          description: Group ID of /var/run/docker.sock on the host, so workflow steps can run containers. Find it with "stat -c %g /var/run/docker.sock". Keep -1 to leave Docker access off.
+          validRegex: /^-?[0-9]+$/
     instructions:
         start: >-
             Dagu is a powerful, portable, local-first workflow engine.
@@ -18,10 +33,10 @@ caproverOneClickApp:
             Aaaand you're done! 😄
 
 
-            Your service is available at http://$$cap_appname.$$cap_root_domain
+            Before signing in, enable HTTPS and "Force HTTPS" in this app's HTTP Settings, so the password is never sent over plain HTTP.
 
 
-            Open it and create the first admin account.
+            Then open https://$$cap_appname.$$cap_root_domain and sign in as $$cap_dagu_admin_username with the admin password you set.
     displayName: Dagu
     isOfficial: true
     description: Dagu is a powerful, portable, local-first workflow engine.
@@ -32,6 +47,10 @@ services:
         restart: always
         environment:
             DAGU_TZ: $$cap_dagu_timezone
+            DAGU_AUTH_MODE: builtin
+            DAGU_AUTH_BUILTIN_INITIAL_ADMIN_USERNAME: $$cap_dagu_admin_username
+            DAGU_AUTH_BUILTIN_INITIAL_ADMIN_PASSWORD: $$cap_dagu_admin_password
+            DOCKER_GID: $$cap_dagu_docker_gid
         volumes:
             - $$cap_appname-data:/var/lib/dagu
             - /var/run/docker.sock:/var/run/docker.sock
