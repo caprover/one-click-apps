@@ -25,7 +25,7 @@ caproverOneClickApp:
           label: Docker Socket GID
           defaultValue: '-1'
           description: Group ID of /var/run/docker.sock on the host, so workflow steps can run containers. Find it with "stat -c %g /var/run/docker.sock". Keep -1 to leave Docker access off.
-          validRegex: /^-?[0-9]+$/
+          validRegex: /^(-1|[0-9]+)$/
     instructions:
         start: >-
             Dagu is a powerful, portable, local-first workflow engine.
