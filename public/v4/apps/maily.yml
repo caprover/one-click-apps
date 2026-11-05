@@ -17,7 +17,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_maily_version
           label: Maily Version
-          defaultValue: latest
+          defaultValue: '0.8.0'
           description: Check out GHCR container tags at https://github.com/stormsia/maily/pkgs/container/maily
         - id: $$cap_maily_api_key
           label: Maily Master API Key
