@@ -452,8 +452,8 @@ caproverOneClickApp:
           validRegex: /^(false|true)$/
         - id: $$cap_smtp_starttls
           label: SMTP_STARTTLS
-          defaultValue: 'false'
-          description: enable StartTLS for SMTP
+          defaultValue: 'true'
+          description: enable StartTLS for SMTP, needed for port `587`; ignored when SMTP_TLS is enabled
           validRegex: /^(false|true)$/
         - id: $$cap_smtp_insecure_skip_verify
           label: SMTP_INSECURE_SKIP_VERIFY
