@@ -24,7 +24,7 @@ services:
             AVATAR_FS_PATH: '$$cap_avatar_fs_path'
             AVATAR_BOLT_FILE: '$$cap_avatar_bolt_file'
             AVATAR_URI: '$$cap_avatar_uri'
-            AVATAR_RSZ_LMT: '$$cap_avatar_rsz_lmt'
+            AVATAR_RESIZE: '$$cap_avatar_resize'
             IMAGE_TYPE: '$$cap_image_type'
             IMAGE_MAX_SIZE: '$$cap_image_max_size'
             IMAGE_FS_PATH: '$$cap_image_fs_path'
@@ -35,7 +35,7 @@ services:
             IMAGE_RESIZE_HEIGHT: '$$cap_image_resize_height'
             AUTH_TTL_JWT: '$$cap_auth_ttl_jwt'
             AUTH_TTL_COOKIE: '$$cap_auth_ttl_cookie'
-            AUTH_SEND_JWT_HEADER: '$$cap_auth_send-jwt_header'
+            AUTH_SEND_JWT_HEADER: '$$cap_auth_send_jwt_header'
             AUTH_SAME_SITE: '$$cap_auth_same_site'
             AUTH_GOOGLE_CID: '$$cap_auth_google_cid'
             AUTH_GOOGLE_CSEC: '$$cap_auth_google_csec'
@@ -43,12 +43,17 @@ services:
             AUTH_FACEBOOK_CSEC: '$$cap_auth_facebook_csec'
             AUTH_MICROSOFT_CID: '$$cap_auth_microsoft_cid'
             AUTH_MICROSOFT_CSEC: '$$cap_auth_microsoft_csec'
+            AUTH_MICROSOFT_TENANT: '$$cap_auth_microsoft_tenant'
             AUTH_GITHUB_CID: '$$cap_auth_github_cid'
             AUTH_GITHUB_CSEC: '$$cap_auth_github_csec'
-            AUTH_TWITTER_CID: '$$cap_auth_twitter_cid'
-            AUTH_TWITTER_CSEC: '$$cap_auth_twitter_csec'
             AUTH_PATREON_CID: '$$cap_auth_patreon_cid'
             AUTH_PATREON_CSEC: '$$cap_auth_patreon_csec'
+            AUTH_DISCORD_CID: '$$cap_auth_discord_cid'
+            AUTH_DISCORD_CSEC: '$$cap_auth_discord_csec'
+            AUTH_APPLE_CID: '$$cap_auth_apple_cid'
+            AUTH_APPLE_TID: '$$cap_auth_apple_tid'
+            AUTH_APPLE_KID: '$$cap_auth_apple_kid'
+            AUTH_APPLE_PRIVATE_KEY_FILEPATH: '$$cap_auth_apple_private_key_filepath'
             AUTH_TELEGRAM: '$$cap_auth_telegram'
             AUTH_YANDEX_CID: '$$cap_auth_yandex_cid'
             AUTH_YANDEX_CSEC: '$$cap_auth_yandex_csec'
@@ -65,17 +70,23 @@ services:
             NOTIFY_SLACK_TOKEN: '$$cap_notify_slack_token'
             NOTIFY_SLACK_CHAN: '$$cap_notify_slack_chan'
             NOTIFY_WEBHOOK_URL: '$$cap_notify_webhook_url'
+            NOTIFY_WEBHOOK_TEMPLATE: '$$cap_notify_webhook_template'
             NOTIFY_WEBHOOK_HEADERS: '$$cap_notify_webhook_headers'
             NOTIFY_WEBHOOK_TIMEOUT: '$$cap_notify_webhook_timeout'
             NOTIFY_EMAIL_FROM: '$$cap_notify_email_fromAddress'
             NOTIFY_EMAIL_VERIFICATION_SUBJ: '$$cap_notify_email_verification_subj'
             TELEGRAM_TOKEN: '$$cap_telegram_token'
             TELEGRAM_TIMEOUT: '$$cap_telegram_timeout'
+            TELEGRAM_API_URL: '$$cap_telegram_api_url'
             SMTP_HOST: '$$cap_smtp_host'
             SMTP_PORT: '$$cap_smtp_port'
             SMTP_USERNAME: '$$cap_smtp_username'
             SMTP_PASSWORD: '$$cap_smtp_password'
             SMTP_TLS: '$$cap_smtp_tls'
+            SMTP_STARTTLS: '$$cap_smtp_starttls'
+            SMTP_INSECURE_SKIP_VERIFY: '$$cap_smtp_insecure_skip_verify'
+            SMTP_LOGIN_AUTH: '$$cap_smtp_login_auth'
+            SMTP_HELO_HOST: '$$cap_smtp_helo_host'
             SMTP_TIMEOUT: '$$cap_smtp_timeout'
             SSL_TYPE: '$$cap_ssl_type'
             SSL_PORT: '$$cap_ssl_port'
@@ -84,10 +95,11 @@ services:
             SSL_ACME_LOCATION: '$$cap_ssl_acme_location'
             SSL_ACME_EMAIL: '$$cap_ssl_acme_email'
             MAX_COMMENT_SIZE: '$$cap_max_comment'
+            MIN_COMMENT_SIZE: '$$cap_min_comment'
             MAX_VOTES: '$$cap_max_votes'
             VOTES_IP: '$$cap_votes_ip'
             ANON_VOTE: '$$cap_anon_vote'
-            VOTES_IP_TIME: '$$cap_votes-ip_time'
+            VOTES_IP_TIME: '$$cap_vote_ip_time'
             LOW_SCORE: '$$cap_low_score'
             CRITICAL_SCORE: '$$cap_critical_score'
             POSITIVE_SCORE: '$$cap_positive_score'
@@ -97,10 +109,13 @@ services:
             ADMIN_EDIT: '$$cap_admin_edit'
             READONLY_AGE: '$$cap_read_age'
             IMAGE_PROXY_HTTP2HTTPS: '$$cap_image_proxy_http2https'
-            IMAGE_PROXY_CACHE_EXTERNAL: '$$cap_image-proxy_cache_external'
+            IMAGE_PROXY_CACHE_EXTERNAL: '$$cap_image_proxy_cache_external'
             EMOJI: '$$cap_emoji'
             SIMPLE_VIEW: '$$cap_simple_view'
             PROXY_CORS: '$$cap_proxy_cors'
+            TRUSTED_PROXY: '$$cap_trusted_proxy'
+            DISABLE_SIGNATURE: '$$cap_disable_signature'
+            DISABLE_FANCY_TEXT_FORMATTING: '$$cap_disable_fancy_text_formatting'
             ALLOWED_HOSTS: '$$cap_appname.$$cap_root_domain,$$cap_allowed_hosts'
             REMARK_ADDRESS: '$$cap_address'
             REMARK_PORT: '$$cap_port'
@@ -117,12 +132,12 @@ caproverOneClickApp:
     variables:
         - id: $$cap_tag_version
           label: Remark42 docker image tag
-          defaultValue: 'v1.9.0'
+          defaultValue: 'v1.18.0'
           description: Valid tag from https://hub.docker.com/r/umputun/remark42/tags
           validRegex: /.+/
         - id: $$cap_secret
           label: SECRET
-          defaultValue: '$$cap_gen_random_hex(10)'
+          defaultValue: '$$cap_gen_random_hex(64)'
           description: the shared secret key used to sign JWT, should be a random, long, hard-to-guess string
           validRegex: /.+/
         - id: $$cap_site
@@ -132,7 +147,7 @@ caproverOneClickApp:
         - id: $$cap_store_type
           label: STORE_TYPE
           defaultValue: 'bolt'
-          description: type of storage, `bolt` or `rpc`
+          description: type of storage, `bolt` or `rpc`; `rpc` also needs `STORE_RPC_API` and the other `STORE_RPC_*` variables added in the app's environment after deploy
         - id: $$cap_store_bolt_path
           label: STORE_BOLT_PATH
           defaultValue: './var'
@@ -171,7 +186,7 @@ caproverOneClickApp:
           description: max number of cached items, `0` - unlimited
         - id: $$cap_cache_max_value
           label: CACHE_MAX_VALUE
-          defaultValue: '65536'
+          defaultValue: '0'
           description: max size of the cached value, `0` - unlimited
         - id: $$cap_cache_max_size
           label: CACHE_MAX_SIZE
@@ -193,10 +208,10 @@ caproverOneClickApp:
           label: AVATAR_URI
           defaultValue: './var/avatars'
           description: avatars store URI
-        - id: $$cap_avatar_rsz_lmt
-          label: AVATAR_RSZ_LMT
-          defaultValue: '0 (disabled)'
-          description: max image size for resizing avatars on save
+        - id: $$cap_avatar_resize
+          label: AVATAR_RESIZE
+          defaultValue: '0'
+          description: max avatar width and height in pixels; larger avatars are scaled down on save, keeping the aspect ratio, `0` - disabled
         - id: $$cap_image_type
           label: IMAGE_TYPE
           defaultValue: 'fs'
@@ -219,7 +234,7 @@ caproverOneClickApp:
           description: number of image partitions
         - id: $$cap_image_bolt_file
           label: IMAGE_BOLT_FILE
-          defaultValue: '/var/pictures.db'
+          defaultValue: './var/pictures.db'
           description: images bolt file location
         - id: $$cap_image_resize_width
           label: IMAGE_RESIZE_WIDTH
@@ -236,16 +251,16 @@ caproverOneClickApp:
         - id: $$cap_auth_ttl_cookie
           label: AUTH_TTL_COOKIE
           defaultValue: '200h'
-          description: cookie TTL
+          description: TTL of the server-set auth cookie; it does not govern the cookie the frontend writes under AUTH_SEND_JWT_HEADER, which is fixed at 200h
         - id: $$cap_auth_send_jwt_header
           label: AUTH_SEND_JWT_HEADER
           defaultValue: 'false'
-          description: send JWT as a header instead of a cookie
+          description: also send JWT as a header, so the frontend can store it in a client-side cookie that survives third-party cookie blocking; the server-set cookies are still sent, and the client-side cookie is readable by JavaScript, see the security considerations in the documentation
           validRegex: /^(false|true)$/
         - id: $$cap_auth_same_site
           label: AUTH_SAME_SITE
           defaultValue: 'default'
-          description: set same site policy for cookies (`default`, `none`, `lax` or `strict`)
+          description: SameSite attribute for the server-set auth cookies (`default`, `none`, `lax` or `strict`). `default` emits no attribute at all and leaves the choice to the browser, which is not the same as `lax`
         - id: $$cap_auth_google_cid
           label: AUTH_GOOGLE_CID
           defaultValue: ''
@@ -270,6 +285,10 @@ caproverOneClickApp:
           label: AUTH_MICROSOFT_CSEC
           defaultValue: ''
           description: Microsoft OAuth client secret
+        - id: $$cap_auth_microsoft_tenant
+          label: AUTH_MICROSOFT_TENANT
+          defaultValue: 'common'
+          description: Azure AD tenant ID, domain, or `common`
         - id: $$cap_auth_github_cid
           label: AUTH_GITHUB_CID
           defaultValue: ''
@@ -278,14 +297,6 @@ caproverOneClickApp:
           label: AUTH_GITHUB_CSEC
           defaultValue: ''
           description: GitHub OAuth client secret
-        - id: $$cap_auth_twitter_cid
-          label: AUTH_TWITTER_CID
-          defaultValue: ''
-          description: Twitter Consumer API Key
-        - id: $$cap_auth_twitter_csec
-          label: AUTH_TWITTER_CSEC
-          defaultValue: ''
-          description: Twitter Consumer API Secret key
         - id: $$cap_auth_patreon_cid
           label: AUTH_PATREON_CID
           defaultValue: ''
@@ -294,6 +305,30 @@ caproverOneClickApp:
           label: AUTH_PATREON_CSEC
           defaultValue: ''
           description: Patreon OAuth Client Secret
+        - id: $$cap_auth_discord_cid
+          label: AUTH_DISCORD_CID
+          defaultValue: ''
+          description: Discord OAuth client ID
+        - id: $$cap_auth_discord_csec
+          label: AUTH_DISCORD_CSEC
+          defaultValue: ''
+          description: Discord OAuth client secret
+        - id: $$cap_auth_apple_cid
+          label: AUTH_APPLE_CID
+          defaultValue: ''
+          description: Apple client ID (App ID or Services ID)
+        - id: $$cap_auth_apple_tid
+          label: AUTH_APPLE_TID
+          defaultValue: ''
+          description: Apple Team ID
+        - id: $$cap_auth_apple_kid
+          label: AUTH_APPLE_KID
+          defaultValue: ''
+          description: Apple private key ID
+        - id: $$cap_auth_apple_private_key_filepath
+          label: AUTH_APPLE_PRIVATE_KEY_FILEPATH
+          defaultValue: '/srv/var/apple.p8'
+          description: Apple private key file location, inside the data volume
         - id: $$cap_auth_telegram
           label: AUTH_TELEGRAM
           defaultValue: 'false'
@@ -325,7 +360,7 @@ caproverOneClickApp:
         - id: $$cap_auth_email_from
           label: AUTH_EMAIL_FROM
           defaultValue: ''
-          description: email from
+          description: 'email from (e.g. `john.doe@example.com` or `"John Doe"<john.doe@example.com>`)'
         - id: $$cap_auth_email_subj
           label: AUTH_EMAIL_SUBJ
           defaultValue: 'remark42 confirmation'
@@ -337,11 +372,11 @@ caproverOneClickApp:
         - id: $$cap_notify_users
           label: NOTIFY_USERS
           defaultValue: 'none'
-          description: type of user notifications (Telegram, email)
+          description: type of user notifications (`telegram`, `email`), _multi_
         - id: $$cap_notify_admins
           label: NOTIFY_ADMINS
           defaultValue: 'none'
-          description: type of admin notifications (Telegram, Slack, webhook and/or email)
+          description: type of admin notifications (`telegram`, `slack`, `webhook` and/or `email`), _multi_
         - id: $$cap_notify_queue
           label: NOTIFY_QUEUE
           defaultValue: '100'
@@ -364,8 +399,8 @@ caproverOneClickApp:
           description: Webhook notification URL for admin notifications
         - id: $$cap_notify_webhook_template
           label: NOTIFY_WEBHOOK_TEMPLATE
-          defaultValue: '{\"text\": \"{{.Text}}\"}'
-          description: Webhook payload template
+          defaultValue: ''
+          description: 'Webhook payload template (Go text/template), the built-in `{"text": ...}` payload when empty. A template containing double quotes breaks the deploy here, so add NOTIFY_WEBHOOK_TEMPLATE in the app''s environment after deploy instead'
         - id: $$cap_notify_webhook_headers
           label: NOTIFY_WEBHOOK_HEADERS
           defaultValue: ''
@@ -377,7 +412,7 @@ caproverOneClickApp:
         - id: $$cap_notify_email_fromAddress
           label: NOTIFY_EMAIL_FROM
           defaultValue: ''
-          description: from email address
+          description: 'from email address (e.g. `john.doe@example.com` or `"John Doe"<john.doe@example.com>`)'
         - id: $$cap_notify_email_verification_subj
           label: NOTIFY_EMAIL_VERIFICATION_SUBJ
           defaultValue: 'Email verification'
@@ -390,14 +425,18 @@ caproverOneClickApp:
           label: TELEGRAM_TIMEOUT
           defaultValue: '5s'
           description: Telegram connection timeout
+        - id: $$cap_telegram_api_url
+          label: TELEGRAM_API_URL
+          defaultValue: ''
+          description: Telegram Bot API origin/base path for auth and notifications, without `/bot`; the bot token is appended to request paths, and the public API is used when empty
         - id: $$cap_smtp_host
           label: SMTP_HOST
           defaultValue: ''
           description: SMTP host
         - id: $$cap_smtp_port
           label: SMTP_PORT
-          defaultValue: ''
-          description: SMTP port
+          defaultValue: '587'
+          description: SMTP port, usually `587` with SMTP_STARTTLS or `465` with SMTP_TLS
         - id: $$cap_smtp_username
           label: SMTP_USERNAME
           defaultValue: ''
@@ -411,6 +450,25 @@ caproverOneClickApp:
           defaultValue: 'false'
           description: enable TLS for SMTP
           validRegex: /^(false|true)$/
+        - id: $$cap_smtp_starttls
+          label: SMTP_STARTTLS
+          defaultValue: 'false'
+          description: enable StartTLS for SMTP
+          validRegex: /^(false|true)$/
+        - id: $$cap_smtp_insecure_skip_verify
+          label: SMTP_INSECURE_SKIP_VERIFY
+          defaultValue: 'false'
+          description: skip certificate verification for SMTP
+          validRegex: /^(false|true)$/
+        - id: $$cap_smtp_login_auth
+          label: SMTP_LOGIN_AUTH
+          defaultValue: 'false'
+          description: enable LOGIN auth instead of PLAIN
+          validRegex: /^(false|true)$/
+        - id: $$cap_smtp_helo_host
+          label: SMTP_HELO_HOST
+          defaultValue: ''
+          description: SMTP HELO/EHLO hostname
         - id: $$cap_smtp_timeout
           label: SMTP_TIMEOUT
           defaultValue: '10s'
@@ -443,6 +501,10 @@ caproverOneClickApp:
           label: MAX_COMMENT_SIZE
           defaultValue: '2048'
           description: comment's size limit
+        - id: $$cap_min_comment
+          label: MIN_COMMENT_SIZE
+          defaultValue: '0'
+          description: comment's minimal size limit, `0` - unlimited
         - id: $$cap_max_votes
           label: MAX_VOTES
           defaultValue: '-1'
@@ -457,7 +519,7 @@ caproverOneClickApp:
           defaultValue: 'false'
           description: allow voting for anonymous users, require VOTES_IP to be enabled as well
           validRegex: /^(false|true)$/
-        - id: $$cap_votes_ip_time
+        - id: $$cap_vote_ip_time
           label: VOTES_IP_TIME
           defaultValue: '5m'
           description: same IP vote restriction time, `0s` - unlimited
@@ -485,7 +547,7 @@ caproverOneClickApp:
         - id: $$cap_edit_time
           label: EDIT_TIME
           defaultValue: '5m'
-          description: edit window
+          description: edit window; `0` hides editing in the widget and disables staged image cleanup, but the API does not limit edit time
         - id: $$cap_admin_edit
           label: ADMIN_EDIT
           defaultValue: 'false'
@@ -493,8 +555,8 @@ caproverOneClickApp:
           validRegex: /^(false|true)$/
         - id: $$cap_read_age
           label: READONLY_AGE
-          defaultValue: ''
-          description: read-only age of comments, days
+          defaultValue: '0'
+          description: read-only age of comments, days, `0` - never read-only
         - id: $$cap_image_proxy_http2https
           label: IMAGE_PROXY_HTTP2HTTPS
           defaultValue: 'false'
@@ -513,17 +575,31 @@ caproverOneClickApp:
         - id: $$cap_simple_view
           label: SIMPLE_VIEW
           defaultValue: 'false'
-          description: minimized UI with basic info only
+          description: simplified comment form, without the formatting toolbar and preview
           validRegex: /^(false|true)$/
         - id: $$cap_proxy_cors
           label: PROXY_CORS
           defaultValue: 'false'
           description: disable internal CORS and delegate it to proxy
           validRegex: /^(false|true)$/
+        - id: $$cap_trusted_proxy
+          label: TRUSTED_PROXY
+          defaultValue: '10.0.0.0/8'
+          description: reverse-proxy networks (CIDR/IP, comma-separated) trusted to set the client IP. `10.0.0.0/8` is the network CapRover's nginx reaches the app from with Docker's default swarm address pool; if your swarm uses another pool, put that network here
+        - id: $$cap_disable_signature
+          label: DISABLE_SIGNATURE
+          defaultValue: 'false'
+          description: disable server signature in headers
+          validRegex: /^(false|true)$/
+        - id: $$cap_disable_fancy_text_formatting
+          label: DISABLE_FANCY_TEXT_FORMATTING
+          defaultValue: 'false'
+          description: disable fancy comments text formatting (replacement of quotes, dashes, fractions, etc)
+          validRegex: /^(false|true)$/
         - id: $$cap_allowed_hosts
           label: ALLOWED_HOSTS
           defaultValue: ''
-          description: limit hosts/sources allowed to embed comments, enable all by default
+          description: domains of the sites that embed the comments, comma-separated; the app's own domain is always allowed, other sites cannot embed the comments until they are listed here
         - id: $$cap_address
           label: REMARK_ADDRESS
           defaultValue: ''
@@ -535,7 +611,7 @@ caproverOneClickApp:
         - id: $$cap_web_root
           label: REMARK_WEB_ROOT
           defaultValue: './web'
-          description: web server root directory
+          description: web server root, supplies the frontend when it exists
         - id: $$cap_update_limit
           label: UPDATE_LIMIT
           defaultValue: '0.5'
@@ -565,6 +641,8 @@ caproverOneClickApp:
             You must **enable HTTPS** for this application as otherwise, it won't work. Then verify that it works by the URL above and then follow [documentation on installation](https://remark42.com/docs/getting-started/installation/) to add comments to your site.
 
             While following the installation guide, set `YOUR_SITE_ID` to `$$cap_site` and `REMARK_URL` to `https://$$cap_appname.$$cap_root_domain`, and then add your site domain name to `ALLOWED_HOSTS`.
+
+            To add a custom OAuth2 provider, set the `AUTH_CUSTOM_*` variables in the app's environment after deploy, as described [in the documentation](https://remark42.com/docs/configuration/authorization/#custom-oauth2-provider). They are not part of this form because Remark42 refuses to start when some of them are set and the required ones are empty.
     displayName: Remark42
     isOfficial: true
     description: Self-hosted, lightweight, and simple (yet functional) comment engine, which doesn't spy on users. It can be embedded into blogs, articles or any other place where readers add comments.
