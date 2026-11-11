@@ -13,7 +13,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_myapp_version
           label: Home Assistant version
-          defaultValue: '2025.2.1'
+          defaultValue: '2026.11.1'
           description: Check out their GitHub page for the valid tags https://github.com/home-assistant/core/pkgs/container/home-assistant
           validRegex: '/.{1,}/'
     instructions:
