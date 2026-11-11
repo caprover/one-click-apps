@@ -1,0 +1,36 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: docker.io/snapetech/bookshelfng:$$cap_bookshelfng_version
+        volumes:
+            - $$cap_appname-config:/config
+            - $$cap_appname-books:/books
+            - $$cap_appname-downloads:/downloads
+        caproverExtra:
+            containerHttpPort: 8787
+
+caproverOneClickApp:
+    variables:
+        - id: $$cap_appname
+          label: App name
+          defaultValue: bookshelfng
+          description: BookshelfNG service name.
+          validRegex: /^([a-zA-Z0-9]+)$/
+        - id: $$cap_bookshelfng_version
+          label: BookshelfNG image tag
+          defaultValue: hardcover-v0.4.21.37
+          description: Stable Hardcover Docker Hub image tag.
+          validRegex: /^([a-zA-Z0-9._-]+)$/
+    instructions:
+        start: >-
+            BookshelfNG is an ebook and audiobook library manager descended from Readarr.
+            The default image uses Hardcover metadata.
+        end: >-
+            BookshelfNG is now available at $$cap_appname.$$cap_root_domain. Configure
+            your library, indexers, and download client in the web interface.
+    displayName: BookshelfNG
+    isOfficial: false
+    description: >-
+        BookshelfNG is a self-hosted ebook and audiobook library manager with
+        Readarr-compatible automation and Hardcover metadata.
+    documentation: https://github.com/snapetech/bookshelfng#readme
