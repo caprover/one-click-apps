@@ -3,7 +3,7 @@ services:
     $$cap_appname:
         image: jsreport/jsreport:$$cap_jsreport_version
         volumes:
-            - $$cap_appname-data:/jsreport
+            - $$cap_appname-data:/app
         restart: always
         environment:
             extensions_authentication_admin_username: $$cap_jsreport_adminusername
