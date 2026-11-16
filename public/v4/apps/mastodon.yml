@@ -213,7 +213,7 @@ caproverOneClickApp:
 
             From your terminal run the following assuming your app name is mastodon
 
-            `chown -R 991:991 /var/lib/docker/volumes/captain--$$cap_appname-system`
+            `chown -R 991:991 /var/lib/docker/volumes/$$cap_appname-system`
 
 
             --------------------------------------------------
