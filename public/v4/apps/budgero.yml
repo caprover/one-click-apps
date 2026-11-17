@@ -1,0 +1,36 @@
+captainVersion: 4
+services:
+    '$$cap_appname':
+        image: budgero/budgero:$$cap_version
+        environment:
+            WEBSOCKET_ALLOWED_ORIGINS: 'https://$$cap_appname.$$cap_root_domain,http://$$cap_appname.$$cap_root_domain'
+            SELF_HOST_JWT_SECRET: $$cap_gen_random_hex(64)
+        volumes:
+            - '$$cap_appname-data:/data'
+        caproverExtra:
+            containerHttpPort: '3001'
+            websocketSupport: 'true'
+caproverOneClickApp:
+    variables:
+        - id: '$$cap_version'
+          label: Budgero Version
+          defaultValue: 'v1.21.5'
+          description: Check out the Docker page for valid tags https://hub.docker.com/r/budgero/budgero/tags
+          validRegex: '/^([^\s^\/])+$/'
+    instructions:
+        start: |-
+            Budgero is a zero-based budgeting app. Budgets are end-to-end encrypted in the browser and work offline.
+
+            Budgero needs HTTPS: enable it for this app after the deploy.
+        end: |-
+            Budgero is deployed. Next steps:
+
+            1. Enable HTTPS for $$cap_appname in its HTTP Settings.
+            2. Open the app's logs (Deployment tab, View App Logs) and copy the admin password. It is shown only once, on the first start.
+            3. Open https://$$cap_appname.$$cap_root_domain and log in as admin.
+
+            If you add a custom domain, add its origin (e.g. https://budget.example.com) to WEBSOCKET_ALLOWED_ORIGINS in App Configs, comma-separated, or sync won't connect.
+    displayName: Budgero
+    isOfficial: true
+    description: Zero-based budgeting app with end-to-end encryption, offline use and shared budgets.
+    documentation: https://budgero.app/docs/self-hosting-guide
