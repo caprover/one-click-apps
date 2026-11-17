@@ -1,0 +1,48 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: pineconeteam/pg_pinecone:pg18
+        volumes:
+            - $$cap_appname-data:/var/lib/postgresql
+        restart: always
+        command:
+            - /bin/sh
+            - -c
+            - |
+                unset PGHOST PGPORT
+                mkdir -p /docker-entrypoint-initdb.d
+                printf '%s\n' 'CREATE EXTENSION IF NOT EXISTS vector;' 'CREATE EXTENSION IF NOT EXISTS pg_pinecone;' > /docker-entrypoint-initdb.d/00-pg-pinecone.sql
+                exec docker-entrypoint.sh postgres -c shared_preload_libraries=pg_pinecone
+        environment:
+            POSTGRES_USER: $$cap_pg_user
+            POSTGRES_PASSWORD: $$cap_pg_pass
+            POSTGRES_DB: $$cap_pg_db
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_pg_user
+          label: Username
+          defaultValue: postgres
+          validRegex: /.{1,}/
+        - id: $$cap_pg_pass
+          label: Password
+          defaultValue: $$cap_gen_random_hex(16)
+          validRegex: /.{1,}/
+        - id: $$cap_pg_db
+          label: Default Database
+          defaultValue: postgres
+          validRegex: /.{1,}/
+    instructions:
+        start: |-
+            PostgreSQL 18 with pg_pinecone. Same SQL as pgvector. Filters run during search, and the rows stay in Postgres.
+            The first boot creates the vector and pg_pinecone extensions.
+        end: |-
+            pg_pinecone is deployed and available as srv-captain--$$cap_appname:5432 to other apps.
+            User: $$cap_pg_user
+            Password: $$cap_pg_pass
+            Database: $$cap_pg_db
+    displayName: pg_pinecone
+    isOfficial: true
+    description: PostgreSQL 18 with pg_pinecone. Same SQL as pgvector, and the rows stay in Postgres.
+    documentation: https://docs.pinecone.io/guides/pg-pinecone/overview
