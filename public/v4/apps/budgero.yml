@@ -30,6 +30,9 @@ caproverOneClickApp:
             3. Open https://$$cap_appname.$$cap_root_domain and log in as admin.
 
             If you add a custom domain, add its origin (e.g. https://budget.example.com) to WEBSOCKET_ALLOWED_ORIGINS in App Configs, comma-separated, or sync won't connect.
+
+            Lost the admin password? Run this on the server, with a new password that has an uppercase letter, a lowercase letter and a digit:
+            docker exec $(docker ps -q -f name=$$cap_appname.1) /app/budgero admin reset-password --username admin --password 'NewPassword1'
     displayName: Budgero
     isOfficial: true
     description: Zero-based budgeting app with end-to-end encryption, offline use and shared budgets.
