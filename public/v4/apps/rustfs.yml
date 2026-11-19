@@ -14,7 +14,7 @@ services:
         caproverExtra:
             containerHttpPort: '9001'
     $$cap_appname-api:
-        image: caprover/nginx-reverse-proxy:1-cc035d1
+        image: caprover/nginx-reverse-proxy:1-b366a70
         restart: always
         depends_on:
             - $$cap_appname
