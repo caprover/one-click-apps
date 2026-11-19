@@ -17,7 +17,7 @@ services:
                 - FROM pgsty/silo:$$cap_silo_version
                 - CMD ["server", "/data", "--console-address", ":9001"]
     $$cap_appname-api:
-        image: caprover/nginx-reverse-proxy:1-b366a70
+        image: caprover/nginx-reverse-proxy:1-d6caaf2
         restart: always
         depends_on:
             - $$cap_appname
