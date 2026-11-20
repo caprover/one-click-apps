@@ -1,0 +1,49 @@
+captainVersion: 4
+services:
+  '$$cap_appname':
+    image: pihole/pihole:$$cap_version
+    restart: unless-stopped
+    ports:
+      - 53:53
+      - 67:67
+    environment:
+      TZ: '$$cap_tz'
+      WEBPASSWORD: '$$cap_password'
+      DNSSEC: '$$cap_dnssec'
+      VIRTUAL_HOST: '$$cap_appname.$$cap_root_domain'
+    volumes:
+      - '$$cap_appname-data:/etc/pihole'
+      - '$$cap_appname-data-dnsmasq:/etc/dnsmasq.d'
+caproverOneClickApp:
+  variables:
+    - id: '$$cap_version'
+      label: pi-hole Version
+      defaultValue: '2022.08.3'
+      description: Check out their Docker page for the valid tags https://hub.docker.com/r/pihole/pihole/tags
+      validRegex: "/^([^\\s^\\/])+$/"
+    - id: '$$cap_tz'
+      label: Time Zone
+      defaultValue: Europe/Paris
+      description: Get yours from https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+      validRegex: '/.{1,}/'
+    - id: '$$cap_password'
+      label: Time Zone
+      defaultValue: $$cap_gen_random_hex(18)
+      description: your password
+      validRegex: '/.{1,}/'
+    - id: '$$cap_dnssec'
+      label: enable dns sec
+      defaultValue: true
+      description: enable dns sec
+      validRegex: '/^(true|false)$/i'
+  instructions:
+    start: |-
+      Pi-hole® is a DNS sinkhole that protects your devices from unwanted content without installing any client-side software.
+      
+      More details: https://pi-hole.net/
+    end: |-
+      Pi-hole has been successfully deployed!
+  displayName: pi-hole
+  isOfficial: true
+  description: A minimalist, open source online pastebin where the server has zero knowledge of pasted data. Data is encrypted/decrypted in the browser using 256 bits AES.
+  documentation: See https://github.com/PrivateBin/docker-nginx-fpm-alpine
