@@ -1,0 +1,112 @@
+captainVersion: 4
+services:
+    $$cap_appname-db:
+        documentation: Taken from https://hub.docker.com/_/mariadb
+        image: mariadb:$$cap_mariadb_version
+        volumes:
+            - $$cap_appname-db-data:/var/lib/mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: $$cap_db_pass
+            MYSQL_DATABASE: nextcloud
+            MYSQL_USER: nextcloud
+            MYSQL_PASSWORD: $$cap_db_pass
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname:
+        depends_on:
+            - $$cap_appname-db
+        documentation: Taken from https://hub.docker.com/r/nextcloud/all-in-one
+        image: nextcloud:$$cap_nextcloud_version
+        restart: always
+        environment:
+            AUTOMATIC_UPDATES: $$cap_nextcloud_autoupdate
+            DAILY_BACKUP: $$cap_nextcloud_autosave
+            START_CONTAINERS: 1
+            STOP_CONTAINERS: 1
+            CHECK_BACKUP: 0
+            SKIP_DOMAIN_VALIDATION: true
+            NEXTCLOUD_UPLOAD_LIMIT: $$cap_nextcloud_maxsize
+            NEXTCLOUD_MEMORY_LIMIT: $$cap_nextcloud_maxram
+            MYSQL_DATABASE: nextcloud
+            MYSQL_USER: nextcloud
+            MYSQL_PASSWORD: $$cap_db_pass
+            MYSQL_HOST: srv-captain--$$cap_appname-db
+        volumes:
+            - $$cap_appname-mastercontainer:/mnt/docker-aio-config
+            - $$cap_appname-data:/mnt/ncdata
+            - $$cap_appname-sock:/var/run/docker.sock:ro \
+caproverOneClickApp:
+    variables:
+        - id: $$cap_nextcloud_version
+          label: NextCloud Version
+          defaultValue: 20231220_153200-latest
+          description: >-
+              Check out their Docker page for the valid tags https://hub.docker.com/r/nextcloud/all-in-one
+
+
+              Do not use fpm versions.
+          validRegex: /^((?!fpm)\S)+$/
+        - id: $$cap_nextcloud_autosave
+          label: autosave
+          defaultValue: 0
+          description: >-
+              1 for daily autosave, 0 for no auto save
+          validRegex: /^(0|1)$/
+
+        - id: $$cap_nextcloud_autoupdate
+          label: autoupdate
+          defaultValue: 0
+          description: >-
+              1 for daily auto update, 0 for no auto update
+          validRegex: /^(0|1)$/
+
+        - id: $$cap_nextcloud_maxsize
+          label: max file size
+          defaultValue: 10G
+          description: >-
+              maximum file size
+          validRegex: /^([1234567890]+(G|M))$/
+
+        - id: $$cap_nextcloud_maxram
+          label: maxram
+          defaultValue: 1024M
+          description: >-
+              nextcloud ram max usage
+          validRegex: /^([1234567890]+(G|M))$/
+        - id: $$cap_db_pass
+          label: database password
+          defaultValue: $$cap_gen_random_hex(32)
+          description: Password for the database user and root using mysql.
+          validRegex: /.{1,}/
+        - id: $$cap_db_version
+          label: database version
+          defaultValue: 11.2.2
+          description: choose your version from https://hub.docker.com/_/mariadb/tags
+          validRegex: /.{1,}/
+
+    instructions:
+        start: A safe home for all your data. Access & share your files, calendars, contacts, mail & more from any device, on your terms. http://Nextcloud.com
+        end: >-
+            NextCloud is deployed and will be available on few minutes as $$cap_appname.
+
+            If you set the cors sections to https, please enable https on your app. If you do not activate it you will have an error.
+
+            For better performances and compliance, click on "edit default nginx configuration" button then
+            below `proxy_set_header X-Forwarded-Proto $scheme;`
+            add `add_header Strict-Transport-Security "max-age=15552000; includeSubDomains" always;`  into the nginx configuration.
+
+            For DAV add after `/.well-known/captain-identifier` section 
+
+            `location /.well-known/carddav {return 301 $scheme://$host/remote.php/dav;}`
+
+            `location /.well-known/caldav {return 301 $scheme://$host/remote.php/dav;}`
+
+            You can see HSTS parts of the nextcloud security documentation [https://docs.nextcloud.com/server/21/admin_manual/installation/harden_server.html](https://docs.nextcloud.com/server/21/admin_manual/installation/harden_server.html) for further informations
+
+
+            You can also scan your nextcloud instance on [https://scan.nextcloud.com/](https://scan.nextcloud.com/)
+    displayName: Nextcloud
+    isOfficial: true
+    description: Nextcloud is a suite of client-server software for creating and using file hosting services
+    documentation: Taken from https://hub.docker.com/r/nextcloud/all-in-one
