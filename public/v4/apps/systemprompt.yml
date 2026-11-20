@@ -1,0 +1,73 @@
+captainVersion: 4
+services:
+    $$cap_appname-db:
+        image: postgres:18-alpine
+        restart: always
+        environment:
+            POSTGRES_USER: systemprompt
+            POSTGRES_PASSWORD: $$cap_pg_password
+            POSTGRES_DB: systemprompt
+        volumes:
+            # postgres:18+ stores data under major-version subdirectories of
+            # /var/lib/postgresql — mounting the old .../data path aborts startup.
+            - $$cap_appname-db-data:/var/lib/postgresql
+        caproverExtra:
+            notExposeAsWebApp: true
+
+    $$cap_appname:
+        image: ghcr.io/systempromptio/systemprompt-template:0
+        restart: always
+        environment:
+            DATABASE_URL: postgres://systemprompt:$$cap_pg_password@srv-captain--$$cap_appname-db:5432/systemprompt
+            ANTHROPIC_API_KEY: $$cap_anthropic_key
+            OPENAI_API_KEY: $$cap_openai_key
+            GEMINI_API_KEY: $$cap_gemini_key
+            # https from the start: the gateway's CORS validation rejects plain-http
+            # non-localhost origins, and EXTERNAL_URL is baked into the profile on
+            # first boot — enable HTTPS on the app right after deploying.
+            EXTERNAL_URL: https://$$cap_appname.$$cap_root_domain
+            HOST: 0.0.0.0
+            PORT: '8080'
+        volumes:
+            - $$cap_appname-web:/app/web
+            - $$cap_appname-storage:/app/storage/data
+            # entrypoint's generated profile + secrets live here (SYSTEMPROMPT_PROFILE_DIR default)
+            - $$cap_appname-profiles:/app/.systemprompt/profiles/docker
+        caproverExtra:
+            containerHttpPort: '8080'
+
+caproverOneClickApp:
+    variables:
+        - id: $$cap_pg_password
+          label: Postgres password
+          defaultValue: $$cap_gen_random_hex(24)
+          description: Database password. The Postgres volume is initialised with it on first boot.
+          validRegex: /^\S{8,}$/
+        - id: $$cap_anthropic_key
+          label: Anthropic API key
+          defaultValue: ''
+          description: At least one AI provider key (Anthropic, OpenAI, or Gemini) is required; the gateway refuses to boot without one. Leave unused providers blank.
+        - id: $$cap_openai_key
+          label: OpenAI API key (optional)
+          defaultValue: ''
+          description: Optional.
+        - id: $$cap_gemini_key
+          label: Gemini API key (optional)
+          defaultValue: ''
+          description: Optional.
+    instructions:
+        start: |-
+            systemprompt is a self-owned AI control plane: a governance gateway for
+            Claude, OpenAI, and Gemini with policy checks, audit, rate limits, and
+            MCP orchestration. This deploys the gateway plus a bundled Postgres
+            database. You need at least one AI provider API key.
+        end: |-
+            Deployed. Now enable HTTPS on the app in the CapRover dashboard; the
+            gateway already advertises https://$$cap_appname.$$cap_root_domain.
+            First boot runs database migrations and a publish pipeline, so allow
+            several minutes before the app responds on
+            https://$$cap_appname.$$cap_root_domain/api/v1/health.
+    displayName: systemprompt
+    isOfficial: false
+    description: Self-owned AI control plane. Governance gateway for Claude, OpenAI, and Gemini with audit, policy, and MCP orchestration (bundled Postgres).
+    documentation: https://github.com/systempromptio/systemprompt-template/blob/main/docs/install/caprover.md
