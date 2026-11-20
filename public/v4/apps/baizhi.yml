@@ -1,0 +1,15 @@
+captainVersion: 4
+services:
+    '$$cap_appname':
+        image: chaitin-registry.cn-hangzhou.cr.aliyuncs.com/monkeycode/monkeyai-frontend:latest
+        caproverExtra:
+            containerHttpPort: '80'
+caproverOneClickApp:
+    instructions:
+        start: |-
+            百智办公是面向团队的开源 AI 办公工作台。官网 https://work.baizhi.cloud/
+            官方镜像目前在私有仓库，匿名拉取可能失败。
+        end: |-
+            百智办公 is deployed.
+    displayName: 百智办公
+    description: Open-source team AI workspace.
