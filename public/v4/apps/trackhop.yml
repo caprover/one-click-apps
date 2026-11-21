@@ -1,0 +1,34 @@
+captainVersion: 4
+services:
+    # Trackhop
+    $$cap_appname:
+        image: ghcr.io/xlollx/trackhop:$$cap_trackhop_version
+        restart: unless-stopped
+        environment:
+            SONGPORT_URL: http://$$cap_appname.$$cap_root_domain
+            SONGPORT_PASSWORD: $$cap_trackhop_password
+        volumes:
+            - $$cap_appname-data:/data
+        caproverExtra:
+            containerHttpPort: '8080'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_trackhop_version
+          label: Trackhop Version
+          defaultValue: 2.1.2
+          description: The image's tags are listed at https://github.com/xlollx/Trackhop/pkgs/container/trackhop
+        - id: $$cap_trackhop_password
+          label: Password
+          defaultValue: $$cap_gen_random_hex(16)
+          description: Asked on every page (any user name will do).
+    instructions:
+        start: |-
+            Trackhop keeps your playlists in sync between music services (Spotify, YouTube Music, TIDAL, Navidrome, Jellyfin, Plex, Last.fm and more), one way or both ways, on a schedule. Beta: keep a copy of the data volume.
+        end: |-
+            Trackhop is at http://$$cap_appname.$$cap_root_domain (any user name, the password you chose).
+            After turning on HTTPS for the app, set SONGPORT_URL to its https address: service sign-ins come back to it.
+            Guide: https://trackhop.org/guide/docker
+    displayName: Trackhop
+    isOfficial: true
+    description: Keeps your playlists in sync between music services
+    documentation: https://trackhop.org/guide/docker
