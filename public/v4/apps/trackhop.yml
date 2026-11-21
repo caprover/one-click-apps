@@ -5,7 +5,7 @@ services:
         image: ghcr.io/xlollx/trackhop:$$cap_trackhop_version
         restart: unless-stopped
         environment:
-            SONGPORT_URL: http://$$cap_appname.$$cap_root_domain
+            SONGPORT_URL: https://$$cap_appname.$$cap_root_domain
             SONGPORT_PASSWORD: $$cap_trackhop_password
         volumes:
             - $$cap_appname-data:/data
@@ -27,8 +27,8 @@ caproverOneClickApp:
         start: |-
             Trackhop keeps your playlists in sync between music services (Spotify, YouTube Music, TIDAL, Navidrome, Jellyfin, Plex, Last.fm and more), one way or both ways, on a schedule. Beta: keep a copy of the data volume.
         end: |-
-            Trackhop is at http://$$cap_appname.$$cap_root_domain (any user name, the password you chose).
-            After turning on HTTPS for the app, set SONGPORT_URL to its https address: service sign-ins come back to it.
+            Before signing in, turn on HTTPS: Apps › $$cap_appname › HTTP Settings › Enable HTTPS, then tick Force HTTPS and save. The password then never travels in clear.
+            Trackhop is at https://$$cap_appname.$$cap_root_domain (any user name, the password you chose). Service sign-ins come back to that address (SONGPORT_URL); change it if you give the app another domain.
             Guide: https://trackhop.org/guide/docker
     displayName: Trackhop
     isOfficial: true
