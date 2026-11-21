@@ -1,46 +1,93 @@
 captainVersion: 4
+
 services:
     $$cap_appname:
         image: gitlab/gitlab-ce:$$cap_gitlab_version
-        hostname: $$cap_appname.$$cap_root_domain
-        volumes:
-            - '$$cap_appname-config: /etc/gitlab'
-            - '$$cap_appname-logs: /var/log/gitlab'
-            - '$$cap_appname-data: /var/opt/gitlab'
-        restart: always
         environment:
-            GITLAB_OMNIBUS_CONFIG: $$cap_gitlab_omnibus_config
+            GITLAB_OMNIBUS_CONFIG: >-
+                external_url 'https://$$cap_appname.$$cap_root_domain';
+                nginx['listen_port'] = 80;
+                nginx['listen_https'] = false;
+                letsencrypt['enable'] = false;
+                gitlab_rails['initial_root_password'] = '$$cap_gitlab_root_password';
+                gitlab_rails['gitlab_shell_ssh_port'] = $$cap_gitlab_ssh_port;
+                gitlab_rails['smtp_enable'] = $$cap_smtp_enable;
+                gitlab_rails['smtp_address'] = '$$cap_smtp_address';
+                gitlab_rails['smtp_port'] = $$cap_smtp_port;
+                gitlab_rails['smtp_user_name'] = '$$cap_smtp_user';
+                gitlab_rails['smtp_password'] = '$$cap_smtp_password';
+                gitlab_rails['smtp_domain'] = '$$cap_smtp_domain';
+                gitlab_rails['smtp_authentication'] = 'login';
+                gitlab_rails['smtp_enable_starttls_auto'] = true;
+        volumes:
+            - $$cap_appname-config:/etc/gitlab
+            - $$cap_appname-logs:/var/log/gitlab
+            - $$cap_appname-data:/var/opt/gitlab
+        ports:
+            - '$$cap_gitlab_ssh_port:22/tcp'
+        caproverExtra:
+            containerHttpPort: '80'
+            websocketSupport: 'true'
+
 caproverOneClickApp:
     variables:
-        - id: $$cap_gitlab_version
-          label: Gitlab-CE Version Tag
-          description: Check out their Docker page for the valid tags https://hub.docker.com/r/gitlab/gitlab-ce/tags
-          defaultValue: 11.9.8-ce.0
-          validRegex: /^([^\s^\/])+$/
-        - id: $$cap_gitlab_omnibus_config
-          label: Omnibus Config (Optional)
-          description: 'More information here: https://docs.gitlab.com/omnibus/docker/#pre-configure-docker-container'
+        - id: '$$cap_gitlab_version'
+          label: GitLab CE Version
+          defaultValue: '19.6.1-ce.0'
+          description: Tag of the gitlab/gitlab-ce image. check tags at https://hub.docker.com/r/gitlab/gitlab-ce/tags
+          validRegex: '/^[0-9]+\.[0-9]+\.[0-9]+-ce\.[0-9]+$/'
+        - id: '$$cap_gitlab_root_password'
+          label: Root Password
+          defaultValue: $$cap_gen_random_hex(16)
+          description: Initial password for the root user (minimum 8 characters). Only applied on first startup.
+          validRegex: '/^(?![\s\S]*[\x27\x5c\r\n;])[\s\S]{8,}$/'
+        - id: '$$cap_gitlab_ssh_port'
+          label: Host SSH Port for Git
+          defaultValue: '2222'
+          description: Server port published to the container's SSH. Do NOT use 22 (used by the server's own SSH), 80, 443 or CapRover's ports. You must open it in the firewall.
+          validRegex: '/^[0-9]{2,5}$/'
+        - id: '$$cap_smtp_enable'
+          label: Enable SMTP (true/false)
+          defaultValue: 'false'
+          description: Set to true and fill in the fields below to send email through an external SMTP server.
+          validRegex: '/^(true|false)$/'
+        - id: '$$cap_smtp_address'
+          label: SMTP Host
+          description: Example smtp.example.com (leave empty if SMTP is disabled).
+          validRegex: '/^(?![\s\S]*[\x27\x5c\r\n])[\s\S]*$/'
+        - id: '$$cap_smtp_port'
+          label: SMTP Port
+          defaultValue: '587'
+          validRegex: '/^[0-9]{2,5}$/'
+        - id: '$$cap_smtp_user'
+          label: SMTP User
+          description: Leave empty if SMTP is disabled.
+          validRegex: '/^(?![\s\S]*[\x27\x5c\r\n])[\s\S]*$/'
+        - id: '$$cap_smtp_password'
+          label: SMTP Password
+          description: Leave empty if SMTP is disabled.
+          validRegex: '/^(?![\s\S]*[\x27\x5c\r\n])[\s\S]*$/'
+        - id: '$$cap_smtp_domain'
+          label: SMTP Domain
+          description: Domain used in the HELO greeting (example example.com). Leave empty if SMTP is disabled.
+          validRegex: '/^(?![\s\S]*[\x27\x5c\r\n])[\s\S]*$/'
     instructions:
-        start: >-
-            GitLab is a single application for the entire software development lifecycle. From project planning and source code management to CI/CD, monitoring, and security. 
+        start: |-
+            GitLab Community Edition in a single container (official Omnibus image).
+            The image does not include a mail server (MTA): configure an external SMTP server if you want notifications.
 
-            More about this container:
-            https://hub.docker.com/r/gitlab/gitlab-ce/ 
-
-            Hardware and Software requeriments can be found here:
-            https://docs.gitlab.com/ce/install/requirements.html
-
-            For security reasons, no port mapping is created, those can be created after deploying the app.
-            More information about Caprover's Firewall & Port Forwarding and configuration can be found here:
-            https://caprover.com/docs/firewall.html 
-
-
-            More information about gitlab's docker configuration can be found here:
-            https://docs.gitlab.com/omnibus/docker/#configure-gitlab
-
-            It can take some time (2-3 minutes) for the service to launch in a new container. Check the "Deployment" tab logs to determine once GitLab is ready.
-        end: Gitlab-CE is deployed and available as srv-captain--$$cap_appname:80 to other apps.
-    displayName: Gitlab (CE)
+            Server requirements: GitLab recommends 8 vCPU and 16 GB of RAM (minimum 8 GB), SSD storage with at least 40 GB free plus the space for your repositories.
+            A root domain with wildcard DNS (*.yourdomain.com) must already be configured in CapRover.
+            The first startup takes several minutes.
+        end: |-
+            GitLab is being deployed at https://$$cap_appname.$$cap_root_domain
+            Required steps to finish:
+            1) Go to the app "$$cap_appname" > HTTP Settings > enable "Enable HTTPS" and then "Force HTTPS". The template configures GitLab with an https URL and CapRover terminates SSL.
+            2) Follow the startup in App Logs (it can take several minutes). Once it responds, sign in with user "root" and the password you set.
+            3) Git over SSH: open port $$cap_gitlab_ssh_port/TCP in the server firewall. Clone URLs will look like ssh://git@$$cap_appname.$$cap_root_domain:$$cap_gitlab_ssh_port/group/project.git
+            4) Recommended: GitLab requires at least 256 MB in /dev/shm (Docker uses 64 MB by default) and CapRover does not support shm_size. If you see "writing value to /dev/shm/gitlab ... failed" errors in the logs, define a 256 MB tmpfs on /dev/shm using "Service Update Override" (app > App Configs), or disable Prometheus metrics from the Admin area.
+            5) Change the root password after your first sign-in: it is stored in plain text in the service's environment variables.
+    displayName: GitLab CE
     isOfficial: true
-    description: CE version of GitLab for CI/CD pipeline
-    documentation: Taken from https://docs.gitlab.com/omnibus/docker/
+    description: GitLab Community Edition (official image). Includes internal PostgreSQL, Redis, Gitaly and NGINX. Git over SSH and optional external SMTP.
+    documentation: Based on https://docs.gitlab.com/install/docker/installation/ and https://docs.gitlab.com/install/docker/configuration/
