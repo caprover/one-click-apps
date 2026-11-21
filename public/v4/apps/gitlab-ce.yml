@@ -33,14 +33,14 @@ caproverOneClickApp:
     variables:
         - id: '$$cap_gitlab_version'
           label: GitLab CE Version
-          defaultValue: '19.5.1-ce.0'
+          defaultValue: '19.6.1-ce.0'
           description: Tag of the gitlab/gitlab-ce image. check tags at https://hub.docker.com/r/gitlab/gitlab-ce/tags
           validRegex: '/^[0-9]+\.[0-9]+\.[0-9]+-ce\.[0-9]+$/'
         - id: '$$cap_gitlab_root_password'
           label: Root Password
           defaultValue: $$cap_gen_random_hex(16)
           description: Initial password for the root user (minimum 8 characters). Only applied on first startup.
-          validRegex: "/^[^;']{8,}$/"
+          validRegex: '/^(?![\s\S]*[\x27\x5c\r\n;])[\s\S]{8,}$/'
         - id: '$$cap_gitlab_ssh_port'
           label: Host SSH Port for Git
           defaultValue: '2222'
@@ -54,6 +54,7 @@ caproverOneClickApp:
         - id: '$$cap_smtp_address'
           label: SMTP Host
           description: Example smtp.example.com (leave empty if SMTP is disabled).
+          validRegex: '/^(?![\s\S]*[\x27\x5c\r\n])[\s\S]*$/'
         - id: '$$cap_smtp_port'
           label: SMTP Port
           defaultValue: '587'
@@ -61,12 +62,15 @@ caproverOneClickApp:
         - id: '$$cap_smtp_user'
           label: SMTP User
           description: Leave empty if SMTP is disabled.
+          validRegex: '/^(?![\s\S]*[\x27\x5c\r\n])[\s\S]*$/'
         - id: '$$cap_smtp_password'
           label: SMTP Password
           description: Leave empty if SMTP is disabled.
+          validRegex: '/^(?![\s\S]*[\x27\x5c\r\n])[\s\S]*$/'
         - id: '$$cap_smtp_domain'
           label: SMTP Domain
           description: Domain used in the HELO greeting (example example.com). Leave empty if SMTP is disabled.
+          validRegex: '/^(?![\s\S]*[\x27\x5c\r\n])[\s\S]*$/'
     instructions:
         start: |-
             GitLab Community Edition in a single container (official Omnibus image).
