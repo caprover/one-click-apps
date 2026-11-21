@@ -17,10 +17,12 @@ caproverOneClickApp:
           label: Trackhop Version
           defaultValue: 2.1.2
           description: The image's tags are listed at https://github.com/xlollx/Trackhop/pkgs/container/trackhop
+          validRegex: /^([^\s^\/])+$/
         - id: $$cap_trackhop_password
           label: Password
           defaultValue: $$cap_gen_random_hex(16)
-          description: Asked on every page (any user name will do).
+          description: Asked on every page (any user name will do). At least 8 characters; never empty, or the page would be open to anyone.
+          validRegex: /.{8,}/
     instructions:
         start: |-
             Trackhop keeps your playlists in sync between music services (Spotify, YouTube Music, TIDAL, Navidrome, Jellyfin, Plex, Last.fm and more), one way or both ways, on a schedule. Beta: keep a copy of the data volume.
