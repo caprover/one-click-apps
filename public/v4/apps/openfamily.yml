@@ -1,0 +1,35 @@
+captainVersion: 4
+services:
+    '$$cap_appname':
+        image: ghcr.io/nexaflowfrance/openfamily:$$cap_openfamily_version
+        environment:
+            REGISTRATION_ENABLED: 'true'
+        volumes:
+            - '$$cap_appname-data:/data'
+        caproverExtra:
+            containerHttpPort: '3000'
+            websocketSupport: 'true'
+caproverOneClickApp:
+    variables:
+        - id: '$$cap_openfamily_version'
+          label: OpenFamily Version
+          defaultValue: '2.2.0'
+          description: Check the available releases at https://github.com/NexaFlowFrance/OpenFamily/releases
+          validRegex: "/^([^\\s^\\/])+$/"
+    instructions:
+        start: |-
+            OpenFamily is an open-source, self-hosted family organizer with a shared calendar, tasks, shopping lists, meal planning and budget tracking.
+
+            The web interface, API and PostgreSQL run in one container. The database, uploads and automatically generated secrets are stored in one persistent volume. Keep this app at one instance and back up its data volume.
+
+            Images are available for Linux amd64 and arm64.
+        end: |-
+            OpenFamily has been deployed. Enable HTTPS in the app's HTTP settings, then open the app and create your first account to start a family.
+
+            After creating your accounts, set REGISTRATION_ENABLED=false in the app's environment variables to close public sign-ups. Invited family members can still register.
+
+            Documentation and support: https://github.com/NexaFlowFrance/OpenFamily
+    displayName: OpenFamily
+    isOfficial: true
+    description: Open-source family organizer with a shared calendar, tasks, shopping lists, meal planning, pantry and budget. Host your family's data on your own server.
+    documentation: https://github.com/NexaFlowFrance/OpenFamily/blob/main/INSTALLATION.md
