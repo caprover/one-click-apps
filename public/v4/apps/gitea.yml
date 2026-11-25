@@ -41,7 +41,7 @@ caproverOneClickApp:
           validRegex: /^([^\s^\/])+$/
         - id: $$cap_mysql_version
           label: MySQL Version
-          defaultValue: '8.0.46'
+          defaultValue: '8.4.13'
           description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/mysql/tags/
           validRegex: /^([^\s^\/])+$/
     instructions:
