@@ -27,7 +27,7 @@ services:
                 - FROM ghcr.io/duartesantos8/opengym-api:$$cap_opengym_version AS api
                 - FROM ghcr.io/duartesantos8/opengym-web:$$cap_opengym_version
                 - USER root
-                - RUN apk add --no-cache libstdc++ && adduser -D -H -s /sbin/nologin coach && sed -i '1i user nginx;' /etc/nginx/nginx.conf
+                - RUN apk add --no-cache libstdc++ libatomic && adduser -D -H -s /sbin/nologin coach && sed -i '1i user nginx;' /etc/nginx/nginx.conf
                 - COPY --from=api /usr/local/bin/node /usr/local/bin/node
                 - COPY --from=api /app/ /app/
                 - WORKDIR /app
@@ -103,7 +103,7 @@ caproverOneClickApp:
     variables:
         - id: $$cap_opengym_version
           label: openGym version
-          defaultValue: '1.4.3'
+          defaultValue: '1.4.5'
           description: A fixed release tag shared by both upstream images, without the leading v. See https://github.com/DuarteSantos8/openGym/releases
           validRegex: '/^[0-9]+\.[0-9]+\.[0-9]+$/'
         - id: $$cap_admin_username
