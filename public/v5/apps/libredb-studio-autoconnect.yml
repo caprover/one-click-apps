@@ -1,4 +1,4 @@
-captainVersion: 4
+captainVersion: 5
 services:
     $$cap_appname:
         image: ghcr.io/libredb/libredb-studio:$$cap_version
@@ -51,10 +51,10 @@ services:
             - $$cap_appname
         image: ghcr.io/libredb/libredb-studio:$$cap_version
         restart: always
-        # A one-click command replaces the image entrypoint, so the exporter
+        # Override the image entrypoint so the exporter
         # runs as root, which the Docker socket needs. It sends GET requests
         # to the Docker API only and has no port.
-        command: ['node', '/usr/local/lib/libredb-studio/discover.mjs']
+        entrypoint: ['node', '/usr/local/lib/libredb-studio/discover.mjs']
         environment:
             DISCOVERY_OUTPUT: /app/discovery/services.json
             DISCOVERY_NETWORK: captain-overlay-network

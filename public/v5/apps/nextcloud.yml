@@ -1,4 +1,4 @@
-captainVersion: 4
+captainVersion: 5
 services:
     $$cap_appname-db:
         documentation: Taken from https://hub.docker.com/_/mariadb
@@ -55,7 +55,7 @@ services:
         volumes:
             - $$cap_appname-data:/var/www/html
         image: nextcloud:$$cap_nextcloud_version
-        command: ['sh', '-c', '/cron.sh']
+        entrypoint: ['/cron.sh']
         caproverExtra:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:

@@ -1,4 +1,4 @@
-captainVersion: 4
+captainVersion: 5
 services:
     # Paperless-ngx
     $$cap_appname:

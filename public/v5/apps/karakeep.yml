@@ -1,4 +1,4 @@
-captainVersion: 4
+captainVersion: 5
 services:
     $$cap_appname:
         image: ghcr.io/karakeep-app/karakeep:$$cap_karakeep_version
@@ -26,9 +26,7 @@ services:
     $$cap_appname-chrome:
         image: ghcr.io/karakeep-app/karakeep-chrome:157.0.8103.38-r1
         restart: unless-stopped
-        # CapRover maps command to the Swarm entrypoint, so include the wrapper.
         command:
-            - /usr/local/bin/chrome-entrypoint.sh
             - --disable-gpu
             - --disable-dev-shm-usage
             - --hide-scrollbars

@@ -1,4 +1,4 @@
-captainVersion: 4
+captainVersion: 5
 services:
     $$cap_appname-db:
         image: postgres:$$cap_postgres_version
@@ -13,8 +13,6 @@ services:
             notExposeAsWebApp: 'true'
     $$cap_appname-redis:
         image: redis:$$cap_redis_version
-        # the redis image entrypoint is a wrapper, so the command has to start
-        # with the binary itself, otherwise CapRover replaces the entrypoint
         command:
             [
                 'redis-server',

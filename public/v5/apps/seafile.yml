@@ -1,4 +1,4 @@
-captainVersion: 4
+captainVersion: 5
 services:
     $$cap_appname-db:
         image: 'mariadb:$$cap_mariadb_version'
@@ -12,7 +12,7 @@ services:
             notExposeAsWebApp: true
     $$cap_appname-memcached:
         image: 'memcached:$$cap_memcached_version'
-        entrypoint: memcached -m 256
+        command: ['memcached', '-m', '256']
         networks:
             - seafile-net
         caproverExtra:

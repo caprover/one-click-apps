@@ -1,4 +1,4 @@
-captainVersion: 4
+captainVersion: 5
 services:
     $$cap_appname-redis:
         image: redis:$$cap_redis_version

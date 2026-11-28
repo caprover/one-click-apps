@@ -1,4 +1,4 @@
-captainVersion: 4
+captainVersion: 5
 services:
     $$cap_appname-editor:
         caproverExtra:
@@ -88,7 +88,7 @@ services:
         depends_on:
             - $$cap_appname-postgres
             - $$cap_appname-redis
-        command: ['n8n', 'worker']
+        command: ['worker']
 
     $$cap_appname-webhooks:
         caproverExtra:
@@ -134,7 +134,7 @@ services:
         depends_on:
             - $$cap_appname-postgres
             - $$cap_appname-redis
-        command: ['n8n', 'webhook']
+        command: ['webhook']
 
     $$cap_appname-postgres:
         caproverExtra:
