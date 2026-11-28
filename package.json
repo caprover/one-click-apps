@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "One Click App Repository for CapRover",
   "scripts": {
-    "formatter": "prettier --check \"./public/**/*.(json|yml)\"",
-    "formatter-write": "prettier --write \"./public/**/*.(json|yml)\"",
-    "build": "rm -rf ./dist/ && mkdir -p dist && node ./scripts/build_one_click_apps.js && node ./scripts/build_one_click_apps_from_v4.js",
+    "formatter": "prettier --check \"./public/**/*.(json|yml)\" \"./scripts/**/*.js\"",
+    "formatter-write": "prettier --write \"./public/**/*.(json|yml)\" \"./scripts/**/*.js\"",
+    "build": "node ./scripts/build_apps.js",
     "validate_apps": "node ./scripts/validate_apps.js"
   },
   "repository": {
