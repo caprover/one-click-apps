@@ -1,0 +1,75 @@
+captainVersion: 4
+services:
+    # Elkar
+    $$cap_appname:
+        image: elkarbackup/elkarbackup:$$cap_elkar_version
+        restart: always
+        environment:
+            TZ: $$cap_tz
+            PHP_TZ: $$cap_tz
+            EB_CRON: 'enabled'
+            SYMFONY__DATABASE__HOST: srv-captain--$$cap_appname-mariadb
+            SYMFONY__DATABASE__USER: $$cap_mariadb-user
+            SYMFONY__DATABASE__PASSWORD: $$cap_mariadb-pass
+            SYMFONY__DATABASE__NAME: $$cap_mariadb-db
+        volumes:
+            - $$cap_appname-backups:/app/backups
+            - $$cap_appname-uploads:/app/uploads
+            - $$cap_appname-ssh-keys:/app/.ssh
+    # MariaDB
+    $$cap_appname-mariadb:
+        image: mariadb:$$cap_mariadb_version
+        environment:
+            MYSQL_RANDOM_ROOT_PASSWORD: '1'
+            MYSQL_DATABASE: $$cap_mariadb-db
+            MYSQL_USER: $$cap_mariadb-user
+            MYSQL_PASSWORD: $$cap_mariadb-pass
+        volumes:
+            - $$cap_appname-mariadb-data:/var/lib/mysql
+        restart: unless-stopped
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_tz
+          label: Timezone
+          description: This is the timezone for the application, find yours at https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+          defaultValue: Europe/Brussels
+        - id: $$cap_elkar_version
+          label: Version Tag
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/elkarbackup/elkarbackup/tags
+          defaultValue: '2'
+        - id: $$cap_mariadb_version
+          label: MariaDB Version
+          defaultValue: '10.6.2'
+          description: Check out their docker page for the valid tags https://hub.docker.com/r/library/mariadb/tags/
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_mariadb-db
+          label: MariaDB Database
+          description: Database name for ElkarBackup
+          defaultValue: 'elkar'
+        - id: $$cap_mariadb-user
+          label: MariaDB User
+          description: Database User for ElkarBackup
+          defaultValue: 'elkar'
+        - id: $$cap_mariadb-pass
+          label: MariaDB database user password
+          description: Super secret database user password
+    instructions:
+        start: |-
+            Open source backup solution for your network.
+
+            Your login credentials are
+            Default user: root
+            Default password: root
+        end: |-
+            Aaaand you're done! 😄
+            Your service is available at http://$$cap_appname.$$cap_root_domain
+
+            Your login credentials are
+            Default user: root
+            Default password: root
+    displayName: Elkarbackup
+    isOfficial: true
+    description: Open source backup solution for your network.
+    documentation: https://docs.elkarbackup.org/docs/introduction.html

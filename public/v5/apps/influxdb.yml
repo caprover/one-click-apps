@@ -1,0 +1,88 @@
+captainVersion: 4
+services:
+    $$cap_appname-db:
+        image: influxdb:$$cap_influx_version
+        volumes:
+            - $$cap_appname-db-data:/var/lib/influxdb
+        restart: always
+        ports:
+            - $$cap_influxdb_port:8086
+            - $$cap_graphite_port:2003
+        environment:
+            INFLUXDB_DB: $$cap_influx_db
+            INFLUXDB_HTTP_AUTH_ENABLED: $$cap_influx_auth_enabled
+            INFLUXDB_ADMIN_USER: $$cap_influx_admin_user
+            INFLUXDB_ADMIN_PASSWORD: $$cap_influx_admin_password
+            INFLUXDB_USER: $$cap_influx_user
+            INFLUXDB_USER_PASSWORD: $$cap_influx_user_password
+            INFLUXDB_READ_USER: $$cap_influx_read_user
+            INFLUXDB_READ_USER_PASSWORD: $$cap_influx_read_user_password
+            INFLUXDB_WRITE_USER: $$cap_influx_write_user
+            INFLUXDB_WRITE_USER_PASSWORD: $$cap_influx_write_password
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_influx_version
+          label: InfluxDb Version
+          defaultValue: '1.8'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/influxdb/tags/
+          validRegex: /^([^\s^\/])+$/
+        - label: Influxdb port
+          description: The port to make queries to influxdb.
+          defaultValue: '8086'
+          id: $$cap_influxdb_port
+        - label: Graphite port
+          description: The port for graphite protocol
+          defaultValue: '2003'
+          id: $$cap_graphite_port
+        - label: Influx DB
+          description: Automatically initializes a database with the name of this environment variable.
+          defaultValue: ''
+          id: $$cap_influx_db
+        - label: Auth enabled (true/false)
+          description: Enables authentication. Either this must be set or auth-enabled = true must be set within the configuration file for any authentication related options below to work.
+          defaultValue: ''
+          id: $$cap_influx_auth_enabled
+        - label: Admin User
+          description: The name of the admin user to be created. If this is unset, no admin user is created.
+          defaultValue: ''
+          id: $$cap_influx_admin_user
+        - label: Admin password
+          description: The password for the admin user configured with INFLUXDB_ADMIN_USER. If this is unset, a random password is generated and printed to standard out.
+          defaultValue: ''
+          id: $$cap_influx_admin_password
+        - label: Inlfux user
+          description: The name of a user to be created with no privileges. If INFLUXDB_DB is set, this user will be granted read and write permissions for that database.
+          defaultValue: ''
+          id: $$cap_influx_user
+        - label: Influx password
+          description: The password for the user configured with INFLUXDB_USER. If this is unset, a random password is generated and printed to standard out.
+          defaultValue: ''
+          id: $$cap_influx_user_password
+        - label: Influx read user
+          description: The name of a user to be created with read privileges on INFLUXDB_DB. If INFLUXDB_DB is not set, this user will have no granted permissions.
+          defaultValue: ''
+          id: $$cap_influx_read_user
+        - label: Influx read user password
+          description: The password for the user configured with INFLUXDB_READ_USER. If this is unset, a random password is generated and printed to standard out
+          defaultValue: ''
+          id: $$cap_influx_read_user_password
+        - label: Influx write user
+          description: The name of a user to be created with write privileges on INFLUXDB_DB. If INFLUXDB_DB is not set, this user will have no granted permissions.
+          defaultValue: ''
+          id: $$cap_influx_write_user
+        - label: Influx write user password
+          description: The password for the user configured with INFLUXDB_WRITE_USER. If this is unset, a random password is generated and printed to standard out.
+          defaultValue: ''
+          id: $$cap_influx_write_password
+    instructions:
+        start: >-
+            Influxdb is a time series database, and part of the tickstack. After installation on CapRover, it will be available as srv-captain--YOUR_CONTAINER_NAME at the port you choose (8086 by default) to other CapRover apps.
+
+            Enter your Influxdb configuration parameters and click on next. The default configuration has no users or authentication and is only accessible to other Caprover apps. It will take about a minute for the process to finish.
+        end: All set. Influx is deployed and available as srv-captain--$$cap_appname-db:$$cap_influxdb_port to other apps. For example with curl 'curl -G http://srv-captain--$$cap_appname-db:$$cap_influxdb_port/query --data-urlencode "q=CREATE DATABASE mydb"'
+    displayName: InfluxDb
+    isOfficial: true
+    description: InfluxDB is a time series database. It stores large amounts of timestamped data, including DevOps monitoring, application metrics, IoT sensor data, and real-time analytics.
+    documentation: Taken from https://hub.docker.com/_/influxdb

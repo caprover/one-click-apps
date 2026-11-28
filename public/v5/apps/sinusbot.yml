@@ -1,0 +1,34 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        environment:
+            UID: $$cap_uid
+            GID: $$cap_gid
+        image: sinusbot/docker:$$cap_version
+        restart: always
+        volumes:
+            - $$cap_appname-data:/opt/sinusbot/data
+            - $$cap_appname-scripts:/opt/sinusbot/scripts
+        caproverExtra:
+            containerHttpPort: '8087'
+caproverOneClickApp:
+    variables:
+        - label: SinusBot Docker Version
+          defaultValue: 1.0.0-beta.10-202ee4d
+          description: It's highly recommended that you don't use the latest tag but instead the major version you need.
+          id: $$cap_version
+        - label: UID
+          description: User ID to run the service as (using root is not recommended), see https://github.com/SinusBot/docker#unprivileged-user
+          defaultValue: '1000'
+          id: $$cap_uid
+        - label: GID
+          description: Group ID to run the service as (using root is not recommended), see https://github.com/SinusBot/docker#unprivileged-user
+          defaultValue: '1000'
+          id: $$cap_gid
+    instructions:
+        end: Your instance of SinusBot is now starting up and should be ready within five minutes. Check the deployment logs for the initial password and open the web interface to set up your media library and bot connection.
+        start: 'You have to read and agree to the terms in the disclaimer: https://github.com/SinusBot/docker#disclaimer'
+    displayName: SinusBot
+    isOfficial: true
+    description: Music bot for TS3 and Discord.
+    documentation: https://hub.docker.com/r/sinusbot/docker

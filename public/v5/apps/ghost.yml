@@ -1,0 +1,103 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        environment:
+            NODE_ENV: production
+            url: https://$$cap_ghost_host
+            database__client: mysql
+            database__connection__host: srv-captain--$$cap_appname-db
+            database__connection__user: ghost
+            database__connection__password: $$cap_db_password
+            database__connection__database: ghost
+            mail__transport: SMTP
+            mail__options__host: $$cap_smtp_host
+            mail__options__port: $$cap_smtp_port
+            mail__options__secure: $$cap_smtp_secure
+            mail__options__auth__user: $$cap_smtp_user
+            mail__options__auth__pass: $$cap_smtp_password
+            mail__from: $$cap_smtp_from
+        image: ghost:$$cap_ghost_version
+        restart: always
+        volumes:
+            - $$cap_appname-data:/var/lib/ghost/content
+        depends_on:
+            - $$cap_appname-db
+        caproverExtra:
+            containerHttpPort: '2368'
+    $$cap_appname-db:
+        environment:
+            MYSQL_ROOT_PASSWORD: $$cap_db_root_password
+            MYSQL_USER: ghost
+            MYSQL_PASSWORD: $$cap_db_password
+            MYSQL_DATABASE: ghost
+        image: mysql:8.0
+        restart: always
+        volumes:
+            - $$cap_appname-db-data:/var/lib/mysql
+        caproverExtra:
+            notExposeAsWebApp: true
+caproverOneClickApp:
+    variables:
+        - defaultValue: 6.44.0-alpine
+          description: Check available tags at https://hub.docker.com/_/ghost/tags
+          id: $$cap_ghost_version
+          label: Ghost Version
+          validRegex: /^([^\s^\/])+$/
+        - description: Root password for MySQL
+          id: $$cap_db_root_password
+          label: MySQL root password
+          defaultValue: $$cap_gen_random_hex(12)
+          validRegex: /^(?=.*\d).{10,}$/
+        - description: Password for the Ghost database user
+          id: $$cap_db_password
+          label: MySQL Ghost password
+          defaultValue: $$cap_gen_random_hex(12)
+          validRegex: /^(?=.*\d).{10,}$/
+        - defaultValue: blog.example.com
+          description: Your custom domain (e.g. blog.example.com)
+          id: $$cap_ghost_host
+          label: Ghost Host
+          validRegex: /^([^\s^\/])+$/
+        - defaultValue: smtp.example.com
+          description: SMTP server host
+          id: $$cap_smtp_host
+          label: SMTP host
+        - defaultValue: '587'
+          description: SMTP server port
+          id: $$cap_smtp_port
+          label: SMTP port
+        - defaultValue: 'false'
+          description: Use TLS/SSL (true for port 465, false for port 587)
+          id: $$cap_smtp_secure
+          label: SMTP secure
+        - defaultValue: support@example.com
+          description: SMTP username
+          id: $$cap_smtp_user
+          label: SMTP user
+        - description: SMTP password
+          id: $$cap_smtp_password
+          label: SMTP password
+        - defaultValue: "'Ghost' <support@example.com>"
+          description: From address for emails
+          id: $$cap_smtp_from
+          label: SMTP from address
+    instructions:
+        end: >
+            Ghost is deployed and available at https://$$cap_ghost_host
+
+            IMPORTANT: Before using Ghost, you MUST:
+
+            1. Point your domain ($$cap_ghost_host) DNS A-Record to your CapRover server IP
+
+            2. In CapRover, go to Apps > $$cap_appname > HTTP Settings and add $$cap_ghost_host
+
+            3. Enable HTTPS for the domain via CapRover's SSL section (Let's Encrypt)
+
+            4. Complete your setup by visiting https://$$cap_ghost_host/ghost
+
+            It may take up to 2 minutes for Ghost to be ready. Before that, you might see a 502 error.
+        start: Ghost is a fully open source, adaptable platform for building and running a modern online publication. We power blogs, magazines and journalists from Zappos to Sky News.
+    displayName: 'Ghost'
+    isOfficial: true
+    description: Ghost is a free and open source blogging platform written in JavaScript and distributed under the MIT License
+    documentation: Taken from https://docs.ghost.org/install/docker/

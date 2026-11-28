@@ -1,0 +1,32 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        ports:
+            - $$cap_port_sync:55555
+        image: resilio/sync:$$cap_version
+        restart: always
+        volumes:
+            - $$cap_appname-data:/mnt/sync
+        caproverExtra:
+            containerHttpPort: '8888'
+caproverOneClickApp:
+    variables:
+        - label: Resilio Sync Docker Version
+          defaultValue: 2.6.4
+          description: It's highly recommended that you don't use the latest tag but instead the major version you need.
+          id: $$cap_version
+        - label: Listening port for Sync traffic
+          description: Port that Sync listens on for data synchronization (TCP & UDP).
+          defaultValue: '55555'
+          id: $$cap_port_sync
+    instructions:
+        end: >-
+            Your instance of Sync is now starting up.
+
+
+            Note that all sync folders will have to be created under /mnt/sync/folders/ from within the app.
+        start: Set up Sync to synchronize or share files without having to store your data in the cloud.
+    displayName: Resilio Sync
+    isOfficial: true
+    description: File synchronization and sharing solution based on BitTorrent technology.
+    documentation: https://hub.docker.com/r/resilio/sync

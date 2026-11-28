@@ -1,0 +1,40 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: microsoft/vsts-agent:$$cap_vsts_version
+        restart: always
+        environment:
+            VSTS_ACCOUNT: $$cap_vsts_account
+            VSTS_TOKEN: $$cap_vsts_token
+            VSTS_AGENT: $$cap_vsts_name
+            VSTS_POOL: $$cap_vsts_pool
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+caproverOneClickApp:
+    variables:
+        - id: $$cap_vsts_version
+          label: VSTS Version Tag
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/microsoft/vsts-agent/tags/
+          defaultValue: ubuntu-16.04-standard
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_vsts_account
+          label: VSTS Account
+          description: The name of the Visual Studio account. Take only the account part from your address, e.g. http://{account}.visualstudio.com
+          validRegex: /.{1,}/
+        - id: $$cap_vsts_token
+          label: VSTS Token
+          description: A personal access token (PAT) for the Visual Studio account that has been given at least the Agent Pools (read, manage) scope.
+          validRegex: /.{1,}/
+        - id: $$cap_vsts_name
+          label: VSTS Agent Name
+          validRegex: /.{1,}/
+        - id: $$cap_vsts_pool
+          label: VSTS Pool
+          validRegex: /.{1,}/
+    instructions:
+        start: Official image for the Visual Studio Team Services (VSTS) agent.
+        end: VSTS Agent is deployed and available as $$cap_appname
+    displayName: VSTS
+    isOfficial: true
+    description: VSTS is an integrated development environment (IDE) developed as a software product by Microsoft Corp
+    documentation: Taken from https://hub.docker.com/r/microsoft/vsts-agent/

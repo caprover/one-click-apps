@@ -1,0 +1,44 @@
+captainVersion: 4
+services:
+    # Commento
+    $$cap_appname:
+        image: registry.gitlab.com/commento/commento@$$cap_commento_version
+        restart: always
+        environment:
+            COMMENTO_ORIGIN: https://$$cap_appname.$$cap_root_domain
+            COMMENTO_POSTGRES: postgres://commento:$$cap_commento_postgres_password@srv-captain--$$cap_appname-postgres:5432/commento?sslmode=disable
+        caproverExtra:
+            containerHttpPort: '8080'
+    # Postgres
+    $$cap_appname-postgres:
+        image: postgres:12
+        volumes:
+            - $$cap_appname-postgres-data:/var/lib/postgresql/data
+        restart: always
+        environment:
+            POSTGRES_USER: commento
+            POSTGRES_PASSWORD: $$cap_commento_postgres_password
+            POSTGRES_DB: commento
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_commento_version
+          label: Commento Manifest digest
+          defaultValue: 'sha256:e792ac5c384ca7d45bfc228ef6ec3084a54af98847ee75a8aac7aa720f4f87a2'
+          description: Starts with 'sha256:'.  Find on https://gitlab.com/commento/commento/container_registry/337942
+        - id: $$cap_commento_postgres_password
+          label: Postgres Password
+          description: Password must be at least 12 characters.  Please use a random string.
+          validRegex: /^[^\@]{12,}$/
+    instructions:
+        start: >-
+            Commento is a fast, privacy-focused commenting platform.
+        end: >-
+            Aaaand you're done! 😄
+            Your service is available at http://$$cap_appname.$$cap_root_domain
+            More environment variables can be found at https://docs.commento.io/configuration/backend/
+    displayName: 'Commento'
+    isOfficial: true
+    description: Commento is a fast, privacy-focused commenting platform.
+    documentation: https://docs.commento.io/

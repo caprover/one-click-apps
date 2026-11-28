@@ -1,0 +1,88 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        environment:
+            AWS_ACCESS_KEY_ID: $$cap_aws_access_key_id
+            AWS_SECRET_ACCESS_KEY: $$cap_aws_secret_access_key
+            BUCKET: $$cap_bucket
+            BACKUP_FOLDER: $$cap_backup_folder
+            MONGODB_HOST: $$cap_mongodb_host
+            MONGODB_PORT: $$cap_mongodb_port
+            MONGODB_USER: $$cap_mongodb_user
+            MONGODB_PASS: $$cap_mongodb_pass
+            MONGODB_DB: $$cap_mongodb_db
+            EXTRA_OPTS: $$cap_extra_opts
+            CRON_TIME: $$cap_cron_time
+            TZ: $$cap_tz
+            CRON_TZ: $$cap_tz
+            INIT_BACKUP: $$cap_init_backup
+            INIT_RESTORE: $$cap_init_restore
+            DISABLE_CRON: $$cap_disable_cron
+        image: halvves/mongodb-backup-s3@sha256:e709db5e0fe5d44873ac5a385af214e951f2a0366a7c02b515ebf7c983658b0c
+        restart: always
+caproverOneClickApp:
+    variables:
+        - description: Your aws access key id (for your s3 bucket)
+          id: $$cap_aws_access_key_id
+          label: AWS ACCESS KEY ID
+          validRegex: /^.+$/
+        - description: Your aws secret access key (for your s3 bucket)
+          id: $$cap_aws_secret_access_key
+          label: AWS SECRET ACCESS KEY
+          validRegex: /^.+$/
+        - description: Your s3 bucket.
+          id: $$cap_bucket
+          label: BUCKET
+          validRegex: /^.+$/
+        - description: Name of folder or path to put backups (eg myapp/db_backups/)
+          id: $$cap_backup_folder
+          defaultValue: mongo_dumps/
+          label: BACKUP_FOLDER
+        - description: The host/ip of your mongodb database. For CapRover hosted database, use srv-captain--your-mongodb-name
+          id: $$cap_mongodb_host
+          label: MONGODB HOST
+          validRegex: /^.+$/
+        - description: The port number of your mongodb database
+          id: $$cap_mongodb_port
+          label: MONGODB PORT
+          defaultValue: '27017'
+        - description: The username of your mongodb database. If MONGODB_USER is empty while MONGODB_PASS is not, the image will use admin as the default username
+          id: $$cap_mongodb_user
+          label: MONGODB USER
+          defaultValue: admin
+        - description: The password of your mongodb database
+          id: $$cap_mongodb_pass
+          label: MONGODB PASS
+          validRegex: /^.+$/
+        - description: The database name to dump. If not specified, it will dump all the databases
+          id: $$cap_mongodb_db
+          label: MONGODB DB
+        - description: Any extra options to pass to mongodump command. If you see *Unrecognized field 'snapshot'* problem add --forceTableScan here
+          id: $$cap_extra_opts
+          label: EXTRA_OPTS
+        - description: The interval of cron job to run mongodump. 0 3 * * * by default, which is every day at 03:00hrs.
+          id: $$cap_cron_time
+          label: CRON TIME
+          defaultValue: 0 3 * * *
+        - description: timezone
+          id: $$cap_tz
+          label: TIMEZONE
+          defaultValue: US/Eastern
+        - description: If set, create a backup when the container launched
+          id: $$cap_init_backup
+          label: INIT BACKUP
+          defaultValue: 'true'
+        - description: If set (any string, eg. true), restore from latest when container is launched.
+          id: $$cap_init_restore
+          label: INIT RESTORE
+          defaultValue: ''
+        - description: if set (any string, eg.true), it will skip setting up automated backups. good for when you want to use this container to seed a dev environment.
+          id: $$cap_disable_cron
+          label: DISABLE CRON
+          defaultValue: ''
+    instructions:
+        start: Runs mongodump to backup data using cronjob to an S3 bucket
+        end: MongoDB Backup S3 is ready
+    displayName: MongoDB Backup Amazon S3
+    description: Runs mongodump to backup data using cronjob to an Amazon S3 bucket
+    documentation: https://github.com/halvves/mongodb-backup-s3

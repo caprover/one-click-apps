@@ -1,0 +1,28 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        ports:
+            - $$cap_port_sync:22000
+        image: syncthing/syncthing:$$cap_version
+        restart: always
+        volumes:
+            - $$cap_appname-data:/var/syncthing
+        caproverExtra:
+            containerHttpPort: '8384'
+caproverOneClickApp:
+    variables:
+        - label: Syncthing Docker Version
+          defaultValue: 1.5.0
+          description: It's highly recommended that you don't use the latest tag but instead the major version you need.
+          id: $$cap_version
+        - label: Sync Protocol Listening Port
+          description: Port that Syncthing listens on for data synchronization (TCP).
+          defaultValue: '22000'
+          id: $$cap_port_sync
+    instructions:
+        end: Your instance of Syncthing is now starting up.
+        start: "Read more about Syncthing's goals: https://github.com/syncthing/syncthing#goals"
+    displayName: Syncthing
+    isOfficial: true
+    description: Open Source Continuous File Synchronization.
+    documentation: https://hub.docker.com/r/syncthing/syncthing

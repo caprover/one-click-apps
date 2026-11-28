@@ -1,0 +1,60 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: jinjinov/openhabittracker:$$cap_APP_VERSION
+        environment:
+            AppSettings__UserName: $$cap_USERNAME
+            AppSettings__Email: $$cap_EMAIL
+            AppSettings__Password: $$cap_PASSWORD
+            AppSettings__JwtSecret: $$cap_JWTSECRET
+        volumes:
+            - $$cap_appname-data:/app/.OpenHabitTracker
+        restart: always
+        caproverExtra:
+            containerHttpPort: '8080'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_APP_VERSION
+          label: OpenHabitTracker Version
+          description: Check out valid tags at https://hub.docker.com/r/jinjinov/openhabittracker/tags
+          defaultValue: '1.2.3'
+          validRegex: /.{1,}/
+        - id: $$cap_USERNAME
+          label: Username
+          description: Login username for the single user.
+          defaultValue: 'admin'
+          validRegex: /.{1,}/
+        - id: $$cap_EMAIL
+          label: Email
+          description: Login email for the single user.
+          defaultValue: 'admin@example.com'
+          validRegex: /.{1,}/
+        - id: $$cap_PASSWORD
+          label: Password
+          description: Login password for the single user.
+          defaultValue: $$cap_gen_random_hex(16)
+          validRegex: /.{1,}/
+        - id: $$cap_JWTSECRET
+          label: JWT Secret
+          description: Secret used to sign login tokens. Keep the generated value.
+          defaultValue: $$cap_gen_random_hex(32)
+          validRegex: /.{1,}/
+    instructions:
+        start: |-
+            OpenHabitTracker - take notes, plan tasks, track habits.
+            Free, ad-free, open source, no account required.
+
+            This deploys the self-hosted sync server: native OpenHabitTracker apps for Windows, Linux, Android, iOS and macOS log into it and keep all devices in sync, with all data on your server.
+
+            Note down the Password and JWT Secret values below (or set your own) - you will log in with the username and password.
+        end: |-
+            OpenHabitTracker has been successfully deployed!
+
+            Log in at the app URL with the username and password you configured.
+            To sync the native apps, enter this server's address and the same credentials under Data - Online sync.
+
+            REST API documentation is available at /scalar/v1 after login.
+    displayName: OpenHabitTracker
+    isOfficial: false
+    description: Habit tracker, to-do list and Markdown notes - free, open source, no account, native apps for all platforms sync to it.
+    documentation: See https://openhabittracker.net and https://github.com/Jinjinov/OpenHabitTracker

@@ -1,0 +1,23 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: grafana/grafana:$$cap_version
+        restart: always
+        volumes:
+            - $$cap_appname-config:/etc/grafana
+            - $$cap_appname-data:/var/lib/grafana
+        caproverExtra:
+            containerHttpPort: '3000'
+caproverOneClickApp:
+    variables:
+        - label: Grafana Docker Hash
+          defaultValue: 7.4.3
+          description: Find versions on DockerHub https://hub.docker.com/r/grafana/grafana/tags
+          id: $$cap_version
+    instructions:
+        end: Grafana is now starting. You can log in with the default login/password of admin/admin.
+        start: 'Read more about Grafana: https://grafana.com/'
+    displayName: Grafana
+    isOfficial: true
+    description: Grafana allows you to query, visualize, alert on and understand your metrics no matter where they are stored.
+    documentation: https://hub.docker.com/r/grafana/grafana

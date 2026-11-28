@@ -1,0 +1,39 @@
+captainVersion: 4
+services:
+    $$cap_appname-db:
+        volumes:
+            - $$cap_appname-db-data:/var/lib/mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: $$cap_db_pass
+        caproverExtra:
+            dockerfileLines:
+                - FROM mariadb:$$cap_mysql_version
+                - CMD ["--character-set-server=$$cap_charset", "--collation-server=$$cap_collation", "--skip-character-set-client-handshake"]
+            notExposeAsWebApp: 'true'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_mysql_version
+          label: MariaDB Version
+          defaultValue: '10.4'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/_/mariadb?tab=tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_db_pass
+          label: MariaDB Root password
+          description: ''
+          validRegex: /.{1,}/
+        - id: $$cap_charset
+          label: Default server character set
+          description: See the MariaDB website for supported character sets (https://mariadb.com/kb/en/library/supported-character-sets-and-collations/#character-sets)
+          defaultValue: utf8mb4
+        - id: $$cap_collation
+          label: Default server collation
+          description: See the MariaDB website for supported collations (https://mariadb.com/kb/en/library/supported-character-sets-and-collations/#collations)
+          defaultValue: utf8mb4_unicode_ci
+    instructions:
+        start: MariaDB is a community-developed fork of the MySQL relational database management system intended to remain free under the GNU GPL. Being a fork of a leading open source software system, it is notable for being led by the original developers of MySQL, who forked it due to concerns over its acquisition by Oracle. Contributors are required to share their copyright with the MariaDB Foundation. The intent is also to maintain high compatibility with MySQL, ensuring a "drop-in" replacement capability with library binary equivalency and exact matching with MySQL APIs and commands. It includes the XtraDB storage engine for replacing InnoDB, as well as a new storage engine, Aria, that intends to be both a transactional and non-transactional engine perhaps even included in future versions of MySQL.
+        end: 'MariaDB has been successfully deployed. The database is accessable on port 3306 inside the container. If you need to access the database externally, you will have to setup port mapping in the App configs tab. For example serverport: 3306, containerport: 3306. You can change the serverport for connection, but the containerport is predefined.'
+    displayName: MariaDB
+    isOfficial: true
+    description: MariaDB Server is one of the most popular open source relational databases. It's made by the original developers of MySQL and guaranteed to stay open source
+    documentation: Taken from https://hub.docker.com/_/mariadb.

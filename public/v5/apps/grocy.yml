@@ -1,0 +1,43 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: linuxserver/grocy:$$cap_grocy_version
+        environment:
+            TZ: $$cap_tz
+            PUID: $$cap_puid
+            PGID: $$cap_guid
+        volumes:
+            - $$cap_appname-config:/config
+caproverOneClickApp:
+    variables:
+        - id: $$cap_grocy_version
+          label: Grocy Version
+          defaultValue: v2.7.1-ls58
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/grocy/tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_puid
+          label: User ID
+          defaultValue: '1000'
+          description: User ID that the process uses
+          validRegex: /.{1,}/
+        - id: $$cap_guid
+          label: Group ID
+          defaultValue: '1000'
+          description: Group ID that the process uses
+          validRegex: /.{1,}/
+        - id: $$cap_tz
+          label: Time Zone
+          defaultValue: America/New_York
+          description: Get yours from https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+          validRegex: /.{1,}/
+    instructions:
+        start: Grocy is an ERP system for your kitchen and groceries! Cut down on food waste, and manage your chores with this brilliant utility. Keep track of your purchaes, how much food you are wasting, what chores need doing and what batteries need charging with this proudly Open Source tool.
+        end: >-
+            Grocy has been successfully deployed. Please wait about 2-5 minutes before accessing Grocy.
+
+
+            Username and password are both admin.
+    displayName: Grocy
+    isOfficial: true
+    description: Grocy is an ERP system for your kitchen and groceries! Cut down on food waste, and manage your chores with this brilliant utility.
+    documentation: Taken from https://hub.docker.com/r/linuxserver/grocy/tags

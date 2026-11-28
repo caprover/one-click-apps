@@ -1,0 +1,23 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: tomsquest/docker-radicale:$$cap_image_tag
+        volumes:
+            - $$cap_appname-data:/data
+        restart: always
+        environment: {}
+        caproverExtra:
+            containerHttpPort: '5232'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_image_tag
+          label: What version/tag do you want?
+          description: Go here to see all versions https://hub.docker.com/r/tomsquest/docker-radicale/tags
+          defaultValue: 2.1.12.1
+          validRegex: /^([^\s^\/])+$/
+    instructions:
+        start: Radicale is a small but powerful CalDAV (calendars, to-do lists) and CardDAV (contacts) server. It is strongly advised to secure your data with user passwords as stated here https://hub.docker.com/r/tomsquest/docker-radicale/
+        end: Radicale is deployed and available as $$cap_appname. To secure your user you can create a config like https://github.com/tomsquest/docker-radicale/blob/master/config and adapt it like stated here https://radicale.org/3.0.html#tutorials/basic-configuration. You need to create an volume pointing to the container path /etc/radicale/config to be picked up by the image.
+    displayName: Radicale
+    description: Radicale lightweight CalDAV and CardDAV Server
+    documentation: Taken from https://hub.docker.com/r/tomsquest/docker-radicale

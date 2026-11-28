@@ -1,0 +1,31 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: linuxserver/heimdall:$$cap_heimdall_version
+        environment:
+            TZ: $$cap_tz
+        hostname: $$cap_appname.$$cap_root_domain
+        volumes:
+            - $$cap_appname-config:/config
+caproverOneClickApp:
+    variables:
+        - id: $$cap_tz
+          label: Timezone
+          description: This is the timezone for the application, find yours at https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+          defaultValue: Europe/Brussels
+        - id: $$cap_heimdall_version
+          label: Version Tag
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/linuxserver/heimdall/tags
+          defaultValue: 'version-2.2.2'
+    instructions:
+        start: |-
+            Heimdall is a way to organise all those links to your most used web sites and web applications in a simple way. 
+
+            Simplicity is the key to Heimdall. Why not use it as your browser start page? It even has the ability to include a search bar using either Google, Bing or DuckDuckGo.
+        end: |-
+            Aaaand you're done! 😄
+            Your service is available at http://$$cap_appname.$$cap_root_domain
+    displayName: Heimdall
+    isOfficial: true
+    description: Heimdall is a way to organise all those links to your most used web sites and web applications in a simple way.
+    documentation: https://docs.linuxserver.io/images/docker-heimdall

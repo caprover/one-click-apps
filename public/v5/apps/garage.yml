@@ -1,0 +1,98 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        environment:
+            GARAGE_RPC_SECRET: $$cap_rpc_secret
+            GARAGE_ADMIN_TOKEN: $$cap_admin_token
+            RUST_LOG: garage=info
+        volumes:
+            - $$cap_appname-meta:/var/lib/garage/meta
+            - $$cap_appname-data:/var/lib/garage/data
+        caproverExtra:
+            containerHttpPort: '3902'
+            # The Garage image has no shell, so a tiny busybox stage writes the
+            # config and it is copied to Garage's default path, /etc/garage.toml.
+            dockerfileLines:
+                - FROM busybox:1.36 AS config
+                - >-
+                    RUN printf '%s\n'
+                    'metadata_dir = "/var/lib/garage/meta"'
+                    'data_dir = "/var/lib/garage/data"'
+                    'db_engine = "sqlite"'
+                    'metadata_auto_snapshot_interval = "6h"'
+                    'replication_factor = 1'
+                    'rpc_bind_addr = "[::]:3901"'
+                    'rpc_public_addr = "127.0.0.1:3901"'
+                    '[s3_api]'
+                    's3_region = "$$cap_s3_region"'
+                    'api_bind_addr = "[::]:3900"'
+                    '[s3_web]'
+                    'bind_addr = "[::]:3902"'
+                    'root_domain = "$$cap_web_root_domain"'
+                    '[admin]'
+                    'api_bind_addr = "[::]:3903"'
+                    > /garage.toml
+                - FROM dxflrs/garage:$$cap_version
+                - COPY --from=config /garage.toml /etc/garage.toml
+caproverOneClickApp:
+    variables:
+        - id: $$cap_version
+          label: Garage version tag
+          description: 'Tags: https://hub.docker.com/r/dxflrs/garage/tags'
+          defaultValue: v2.3.0
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_s3_region
+          label: S3 region
+          description: The region name S3 clients must use.
+          defaultValue: garage
+          validRegex: /^[^\s\/'"\\]+$/
+        - id: $$cap_web_root_domain
+          label: Website root domain
+          description: >-
+              Buckets with website mode are served at the bucket name followed by this suffix. A bucket named
+              after a full domain (e.g. images.example.com) is served for that domain too,
+              whatever this is set to.
+          defaultValue: .web.garage.localhost
+          validRegex: /^[^\s\/'"\\]+$/
+        - id: $$cap_rpc_secret
+          label: RPC secret (exactly 64 hex characters)
+          description: Generated. Save it before deploying.
+          defaultValue: $$cap_gen_random_hex(64)
+          validRegex: /^[0-9a-fA-F]{64}$/
+        - id: $$cap_admin_token
+          label: Admin API token
+          description: Generated. Save it before deploying.
+          defaultValue: $$cap_gen_random_hex(64)
+          validRegex: /^([^\s^\/])+$/
+    instructions:
+        start: >-
+            Garage: a lightweight, self-hosted, S3-compatible object store. This deploys a
+            single node (replication factor 1, SQLite metadata) with the config built into
+            the image. Other apps reach the S3 API at http://srv-captain--$$cap_appname:3900.
+            The app's HTTP port is Garage's web endpoint (3902) for website buckets; the S3
+            API is not exposed publicly. One node keeps one copy: set up a backup.
+        end: |-
+            Check the logs for "Loading configuration from /etc/garage.toml" and listeners on ports 3900-3903.
+
+            Then set up the node on the server (C is the container ID; the second line covers
+            apps created before CapRover 1.15, whose service is named srv-captain--APPNAME):
+
+            C=$(docker ps -q -f "name=^$$cap_appname\." | head -1)
+            [ -n "$C" ] || C=$(docker ps -q -f "name=^srv-captain--$$cap_appname\." | head -1)
+            docker exec $C /garage status
+            docker exec $C /garage layout assign -z dc1 -c 10G NODE_ID
+            docker exec $C /garage layout apply --version 1
+
+            (NODE_ID is shown by "garage status".) Create a bucket and an access key:
+
+            docker exec $C /garage bucket create BUCKET
+            docker exec $C /garage key create KEY_NAME
+            docker exec $C /garage bucket allow --read --write BUCKET --key KEY_NAME
+
+            To serve a bucket as a website (bucket named after a domain, or BUCKET + the website root domain suffix):
+
+            docker exec $C /garage bucket website --allow BUCKET
+    displayName: Garage (single node)
+    isOfficial: true
+    description: Self-hosted S3-compatible object storage, single node, with optional static website buckets.
+    documentation: 'https://garagehq.deuxfleurs.fr/documentation/quick-start/'

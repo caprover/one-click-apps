@@ -1,0 +1,20 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: rethinkdb:2.3.6
+        volumes:
+            - $$cap_appname-data:/data/rethinkdb_data/
+        caproverExtra:
+            containerHttpPort: '8080'
+caproverOneClickApp:
+    variables: []
+    instructions:
+        end: >
+            RethinkDB is deployed and available as http://$$cap_appname.$$cap_root_domain/.
+
+            It may take a few minutes for RethinkDB to initialize.
+        start: RethinkDB is an open-source, distributed database built to store JSON documents and effortlessly scale to multiple machines.
+    displayName: RethinkDB
+    isOfficial: true
+    description: RethinkDB pushes JSON to your apps in realtime
+    documentation: Taken from https://hub.docker.com/_/rethinkdb.

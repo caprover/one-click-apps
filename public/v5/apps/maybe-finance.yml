@@ -1,0 +1,60 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: ghcr.io/maybe-finance/maybe:$$cap_app_version
+        volumes:
+            - $$cap_appname-storage:/rails/storage
+        restart: unless-stopped
+        environment:
+            SELF_HOSTED: 'true'
+            RAILS_FORCE_SSL: 'false'
+            RAILS_ASSUME_SSL: 'false'
+            GOOD_JOB_EXECUTION_MODE: 'async'
+            SECRET_KEY_BASE: $$cap_pass
+            SYNTH_API_KEY: $$cap_api_key
+            DATABASE_URL: postgresql://maybe_user:$$cap_pg_pass@srv-captain--$$cap_appname-db:5432/maybe_production
+        caproverExtra:
+            containerHttpPort: '3000'
+        depends_on:
+            $$cap_appname-db:
+                condition: service_healthy
+    $$cap_appname-db:
+        image: postgres:16
+        restart: always
+        volumes:
+            - $$cap_appname-postgres-data:/var/lib/postgresql/data
+        environment:
+            POSTGRES_USER: maybe_user
+            POSTGRES_DB: maybe_production
+            POSTGRES_PASSWORD: $$cap_pg_pass
+        caproverExtra:
+            notExposeAsWebApp: true
+caproverOneClickApp:
+    variables:
+        - id: $$cap_app_version
+          label: Version
+          defaultValue: '0.4.3'
+          description: Check out their Docker page for the valid tags ghcr.io/maybe-finance/maybe
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_pg_pass
+          label: Postgres password
+          defaultValue: $$cap_gen_random_hex(16)
+          validRegex: /.{1,}/
+        - id: $$cap_api_key
+          label: API Key
+          defaultValue: $$cap_gen_random_hex(16)
+          validRegex: /.{1,}/
+        - id: $$cap_pass
+          label: Secret Key Base
+          defaultValue: $$cap_gen_random_hex(64)
+          validRegex: /.{1,}/
+    instructions:
+        start: |-
+            Maybe Finance is a self-hosted personal finance management tool.
+        end: |-
+            Maybe Finance has been successfully deployed!
+            It is available at http://$$cap_appname.$$cap_root_domain
+    displayName: Maybe Finance
+    isOfficial: true
+    description: Self-hosted personal finance management tool
+    documentation: https://github.com/maybe-finance/maybe

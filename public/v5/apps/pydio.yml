@@ -1,0 +1,81 @@
+captainVersion: 4
+services:
+    # Pydio
+    $$cap_appname:
+        image: pydio/cells:$$cap_pydio_version
+        environment:
+            CELLS_LOG_LEVEL: 'production'
+            CELLS_BIND: ':8811'
+            CELLS_NO_TLS: '1'
+            CELLS_EXTERNAL: https://$$cap_appname.$$cap_root_domain
+        volumes:
+            - $$cap_appname-data:/var/cells/data
+            - $$cap_appname-cellsdir:/var/cells
+        caproverExtra:
+            containerHttpPort: '8811'
+    # MariaDB
+    $$cap_appname-mariadb:
+        image: mariadb:$$cap_mariadb_version
+        environment:
+            MYSQL_RANDOM_ROOT_PASSWORD: '1'
+            MYSQL_DATABASE: $$cap_mariadb-db
+            MYSQL_USER: $$cap_mariadb-user
+            MYSQL_PASSWORD: $$cap_mariadb-pass
+        volumes:
+            - $$cap_appname-mariadb-data:/var/lib/mysql
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_pydio_version
+          label: Pydio Version
+          defaultValue: '2.2.8'
+          description: Checkout their docker page for the valid tags https://hub.docker.com/r/pydio/cells/tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_mariadb_version
+          label: MariaDB Version
+          defaultValue: '10.6.1'
+          description: Checkout their docker page for the valid tags https://hub.docker.com/r/library/mariadb/tags/
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_mariadb-db
+          label: MariaDB Database
+          description: Database name for Pydio
+          defaultValue: 'cells'
+        - id: $$cap_mariadb-user
+          label: MariaDB User
+          description: Database User for Pydio
+          defaultValue: 'pydio'
+        - id: $$cap_mariadb-pass
+          label: MariaDB database user password
+          description: Super secret database user password
+    instructions:
+        start: >-
+            !!! IMPORTANT !!!:
+            After deployment is done follow these steps otherwise your Pydio won't work!
+
+
+            1. Go to your caprover pydio settings page and enable HTTPS
+
+            2. Enable "Force HTTPS by redirecting all HTTP traffic to HTTPS"
+
+            3. Enable Websocket Support.
+        end: >-
+            Deployment of Pydio is finished.
+
+
+            !!! IMPORTANT !!!:
+            Follow these steps otherwise your Pydio won't work!
+
+
+            1. Go to your caprover pydio settings page and enable HTTPS
+
+            2. Enable "Force HTTPS by redirecting all HTTP traffic to HTTPS"
+
+            3. Enable Websocket Support.
+
+            4. after some time go to https://$$cap_appname.$$cap_root_domain and follow the installation steps.
+    displayName: 'Pydio Cells'
+    isOfficial: true
+    baseUrl: https://pydio.com/
+    description: Privacy-conscious file sharing platform that connects all your teams in one place.
+    documentation: Taken from https://hub.docker.com/r/pydio/cells

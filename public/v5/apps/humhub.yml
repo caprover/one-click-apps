@@ -1,0 +1,73 @@
+captainVersion: 4
+services:
+    $$cap_appname-db:
+        image: mysql:5.7
+        volumes:
+            - $$cap_appname-db-data:/var/lib/mysql/
+        environment:
+            MYSQL_DATABASE: $$cap_mysql_database_name
+            MYSQL_ROOT_PASSWORD: $$cap_mysql_root_passwd
+            MYSQL_USER: $$cap_mysql_user
+            MYSQL_PASSWORD: $$cap_mysql_passwd
+        restart: always
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname:
+        environment:
+            # The DB vars are only used if HUMHUB_AUTO_INSTALL is enabled
+            # However this is a shady feature so we choose to disable it by default
+            HUMHUB_AUTO_INSTALL: $$cap_humhub_auto_install
+            HUMHUB_DB_HOST: srv-captain--$$cap_appname-db
+            HUMHUB_DB_NAME: $$cap_mysql_database_name
+            HUMHUB_DB_USER: $$cap_mysql_user
+            HUMHUB_DB_PASSWORD: $$cap_mysql_passwd
+            HUMHUB_HOST: $$cap_appname.$$cap_root_domain
+            HUMHUB_PROTO: https
+        image: mriedmann/humhub:$$cap_humhub_version
+        restart: always
+        volumes:
+            - '$$cap_appname-config:/var/www/localhost/htdocs/protected/config'
+            - '$$cap_appname-uploads:/var/www/localhost/htdocs/uploads'
+            - '$$cap_appname-modules:/var/www/localhost/htdocs/protected/modules'
+caproverOneClickApp:
+    variables:
+        - label: Database Root Password
+          description: Password to manage to the database
+          defaultValue: $$cap_gen_random_hex(16)
+          id: $$cap_mysql_root_passwd
+        - label: Database Name
+          description: The name of humhub db
+          defaultValue: humhub
+          id: $$cap_mysql_database_name
+        - label: Database User
+          description: The username to for humhub to connect to database
+          defaultValue: humhub
+          id: $$cap_mysql_user
+        - label: Database Password
+          description: Password to connect to the database
+          defaultValue: $$cap_gen_random_hex(16)
+          id: $$cap_mysql_passwd
+        - id: $$cap_humhub_version
+          label: Version Tag
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/mriedmann/humhub/tags
+          defaultValue: '1.6.2'
+        - id: $$cap_humhub_protocol
+          label: Server protocol
+          description: Use http if you don't want to enable secure connection
+          defaultValue: 'https'
+        - id: $$cap_humhub_auto_install
+          label: AutoSetup
+          description: If this is set to false (advised) you will have to provide the DB creds on first run.
+          defaultValue: 'false'
+    instructions:
+        start: |-
+            HumHub is an open source social network
+            GitHub: https://github.com/humhub/humhub
+        end: |-
+            All done. The first time you access the instance you will be requested to input the db details.
+            The database host is srv-captain--$$cap_appname-db and the password and user will be the ones you chose
+            IMPORTANT: The default protocol is HTTPS, so please turn on HTTPS!
+    displayName: HumHub
+    isOfficial: false
+    description: A open source social media network
+    documentation: https://github.com/humhub/humhub

@@ -1,0 +1,34 @@
+captainVersion: 4
+services:
+    '$$cap_appname':
+        image: ghcr.io/webdecoy/fcaptcha:1.51.1
+        environment:
+            FCAPTCHA_SECRET: '$$cap_signing_secret'
+            FCAPTCHA_VERIFY_SECRET: '$$cap_verify_secret'
+        caproverExtra:
+            containerHttpPort: '3000'
+caproverOneClickApp:
+    variables:
+        - id: '$$cap_signing_secret'
+          label: Signing Secret
+          description: Generate a 32-byte signing secret with `openssl rand -hex 32`.
+          validRegex: '/^[a-f0-9]{64}$/'
+        - id: '$$cap_verify_secret'
+          label: Verification Secret
+          description: Run `openssl rand -hex 32` again to generate a different verification secret.
+          validRegex: '/^[a-f0-9]{64}$/'
+    instructions:
+        start: |-
+            FCaptcha is a self-hosted CAPTCHA for web apps. This template deploys the upstream image with its JavaScript widget, interactive demo, and server-side verification API.
+
+            It runs one replica with in-memory state. Generate two separate keys before installing by running openssl rand -hex 32 twice.
+        end: |-
+            Open the app's domain from HTTP Settings and append /demo/ to try the widget. Enable HTTPS there before public use.
+
+            When integrating your app, load /fcaptcha.js from the FCaptcha domain and verify tokens from your backend. Copy FCAPTCHA_VERIFY_SECRET from the app's environment settings to your backend. Keep both secrets server-side and retain them when upgrading.
+
+            Before production use, review https://github.com/WebDecoy/FCaptcha/blob/main/HARDENING.md and set TRUSTED_PROXIES to the addresses or CIDRs of your actual ingress so per-client rate limits work behind the proxy.
+    displayName: FCaptcha
+    isOfficial: true
+    description: Self-hosted CAPTCHA with a JavaScript widget, browser signals, and server-side token verification.
+    documentation: https://docs.webdecoy.com/fcaptcha/quickstart/

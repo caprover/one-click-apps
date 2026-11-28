@@ -1,0 +1,26 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: thelounge/thelounge:$$cap_lounge_version
+        restart: always
+        volumes:
+            - $$cap_appname-data:/var/opt/thelounge
+        caproverExtra:
+            containerHttpPort: '9000'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_lounge_version
+          label: The Lounge Version Tag
+          defaultValue: 4.1.0
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/thelounge/thelounge/tags
+          validRegex: /^([^\s^\/])+$/
+    instructions:
+        start: The Lounge, a self-hosted web IRC client.
+        end: >-
+            Your instance is now fully deployed.
+
+            To create your user, run `docker exec --user node -it $(docker ps -f name=srv-captain--$$cap_appname --quiet) thelounge add [user]` on your host.
+    displayName: The Lounge
+    isOfficial: true
+    description: The Lounge is a self-hosted web IRC client with modern features, persistent connections, and multi-user support.
+    documentation: Adapted from https://thelounge.chat/docs/install-and-upgrade#docker.

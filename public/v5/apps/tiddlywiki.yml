@@ -1,0 +1,33 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: nicolaw/tiddlywiki
+        restart: always
+        volumes:
+            - $$cap_appname-data:/var/lib/tiddlywiki
+        environment:
+            TW_USERNAME: $$cap_wikusername
+            TW_PASSWORD: $$cap_wikipassword
+            NODE_MEM: $$cap_nodemem
+        caproverExtra:
+            containerHttpPort: '8080'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_wikusername
+          label: Username
+          defaultValue: anonymous
+          description: Username for authentication (leave blank for a public wiki)
+        - id: $$cap_wikipassword
+          label: Password
+          description: Password for authentication (leave blank for a public wiki)
+        - id: $$cap_nodemem
+          label: Max Memory
+          defaultValue: '400'
+          validRegex: /^[0-9]+$/
+          description: Limit the memory that the server can consume
+    instructions:
+        start: TiddlyWiki is a personal wiki and a non-linear notebook for organising and sharing complex information. It is an open-source single page application wiki in the form of a single HTML file that includes CSS, JavaScript, and the content. It is designed to be easy to customize and re-shape depending on application. It facilitates re-use of content by dividing it into small pieces called Tiddlers.
+        end: You TiddlyWiki is deployed; it might take a minute to be ready. See https://$$cap_appname.$$cap_root_domain/#HelloThere to get started.
+    displayName: TiddlyWiki
+    description: TiddlyWiki is a personal wiki and a non-linear notebook for organising and sharing complex information
+    documentation: Based on https://hub.docker.com/r/nicolaw/tiddlywiki

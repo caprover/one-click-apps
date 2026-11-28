@@ -1,0 +1,53 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        ports:
+            - $$cap_port:25565
+        environment:
+            EULA: $$cap_eula
+            SPIGOT_VER: $$cap_spigot_version
+            MC_MAXMEM: $$cap_maxmem
+            MC_MINMEM: $$cap_minmem
+            SPIGOT_AUTORESTART: $$cap_autorestart
+        image: nimmis/spigot@$$cap_version
+        restart: always
+        volumes:
+            - $$cap_appname-data:/minecraft
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+caproverOneClickApp:
+    variables:
+        - label: EULA
+          description: 'IMPORTANT: Read the EULA at https://account.mojang.com/documents/minecraft_eula and set this field to true if you agree. This is a prerequisite to use this software.'
+          defaultValue: ''
+          id: $$cap_eula
+        - label: Docker Image Version
+          description: The Docker image used does not offer version tags. Since the use of the latest tag is not recommended, refer to the image version by SHA tag.
+          defaultValue: sha256:b968685fadb79e6dacca8efc030ee53f695441b8d6dfde4b86e027ba1f6796db
+          id: $$cap_version
+        - label: Game Server Port (TCP/UDP)
+          description: This is the port the server will expose for players to join.
+          defaultValue: '25565'
+          id: $$cap_port
+        - label: Spigot Version
+          description: Versions as available on https://www.spigotmc.org/wiki/buildtools/#versions (e.g. 1.15.2 or latest)
+          defaultValue: latest
+          id: $$cap_spigot_version
+        - label: Maximum Memory
+          description: Define maximum memory to be used by the server (e.g. 512m or 2g)
+          defaultValue: 1g
+          id: $$cap_maxmem
+        - label: Initial Memory
+          description: Define initial memory reservation to be used by the server (e.g. 512m or 2g)
+          defaultValue: 512m
+          id: $$cap_minmem
+        - label: Autorestart
+          description: Define if container should automatically restart after issuing a stop command within the server (yes or no)
+          defaultValue: yes
+          id: $$cap_autorestart
+    instructions:
+        end: The container will now download and build the Spigot Minecraft server, so you will need a few minutes before you can access it. Check the status in the logs.
+        start: 'This one click app is based on a community created docker image, nimmis/spigot. You have to agree to the Minecraft EULA to be able to use this software: https://account.mojang.com/documents/minecraft_eula'
+    displayName: Spigot
+    description: Spigot is a performance optimized server for Minecraft with plugin support.
+    documentation: https://github.com/nimmis/docker-spigot

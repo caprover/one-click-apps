@@ -1,0 +1,46 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: vaultwarden/server:$$cap_bitwardenrs_version
+        environment:
+            DOMAIN: https://$$cap_appname.$$cap_root_domain
+            WEBSOCKET_ENABLED: true
+            SIGNUPS_ALLOWED: $$cap_register_enabled
+            ADMIN_TOKEN: $$cap_admin_token
+        volumes:
+            - $$cap_appname-data:/data
+        restart: unless-stopped
+caproverOneClickApp:
+    variables:
+        - id: $$cap_bitwardenrs_version
+          label: vaultwarden Version
+          defaultValue: 1.37.3
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/vaultwarden/server/tags
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_register_enabled
+          label: enabled open registration
+          defaultValue: true
+          description: If field is true, all visitors can create an account. If false, only the administrator can invite other users.
+          validRegex: /^(true|false)$/
+        - id: $$cap_admin_token
+          label: admin password
+          defaultValue:
+          description: this password enables the admin zone on /admin. If you let this password empty, the admin interface will be disabled and it will be the best safety option.
+    instructions:
+        start: >-
+            This is a Bitwarden server API implementation written in Rust compatible with upstream Bitwarden clients, perfect for self-hosted deployment where running the official resource-heavy service might not be ideal.
+
+            This project is not associated with the Bitwarden project nor 8bit Solutions LLC.
+
+            For more details check out the official github repo: https://github.com/dani-garcia/vaultwarden/
+
+        end: >-
+            Vaultwarden is deployed and available as $$cap_appname. Please give it a few minutes to boot, otherwise you will see a 502 error (even if the log says it is already running).
+
+            The app depends on enabled https and https redirects, as well as enabled websockets.
+
+            If you enabled the admin token you can access the admin configuration here: https://$$cap_appname.$$cap_root_domain/admin
+    displayName: vaultwarden
+    isOfficial: true
+    description: Lightweight fully featured Rust implementation of Bitwarden.
+    documentation: Taken from https://hub.docker.com/r/vaultwarden/server

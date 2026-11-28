@@ -1,0 +1,83 @@
+captainVersion: 4
+services:
+    $$cap_appname-db:
+        image: mysql:5.7
+        volumes:
+            - $$cap_appname-db-data:/var/lib/mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: $$cap_db_pass
+            MYSQL_DATABASE: shopware
+            MYSQL_USER: $$cap_db_user
+            MYSQL_PASSWORD: $$cap_db_pass
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname-shopware:
+        depends_on:
+            - $$cap_appname-db
+        image: shyim/shopware:$$cap_sw_version
+        restart: always
+        environment:
+            DATABASE_HOST: srv-captain--$$cap_appname-db:3306
+            DATABASE_URL: mysql://$$cap_db_user:$$cap_db_pass@srv-captain--$$cap_appname-db:3306/shopware
+            DB_USER: $$cap_db_user
+            DB_PASSWORD: $$cap_db_pass
+            APP_URL: http://$$cap_appname-shopware.$$cap_root_domain
+            APP_SECRET: $$cap_app_scret
+            INSTANCE_ID: $$cap_instance_id
+            MAILER_URL: $$cap_mailer_url
+            INSTALL_LOCALE: $$cap_sw_locale
+            INSTALL_CURRENCY: $$cap_sw_currency
+            INSTALL_ADMIN_USERNAME: $$cap_sw_admin_username
+            INSTALL_ADMIN_PASSWORD: $$cap_sw_admin_password
+        volumes:
+            - $$cap_appname-state:/state
+            - $$cap_appname-custom-plugins:/var/www/html/custom/plugins
+            - $$cap_appname-files:/var/www/html/files
+            - $$cap_appname-logs:/var/www/html/var/logs
+            - $$cap_appname-theme:/var/www/html/public/theme
+            - $$cap_appname-media:/var/www/html/public/media
+            - $$cap_appname-bundles:/var/www/html/public/bundles
+            - $$cap_appname-sitemap:/var/www/html/public/sitemap
+            - $$cap_appname-thumbnail:/var/www/html/public/thumbnail
+            - $$cap_appname-jwt:/var/www/html/config/jwt
+caproverOneClickApp:
+    variables:
+        - id: $$cap_instance_id
+          label: Instance ID (Can be generated with openssl rand -hex 32)
+          defaultValue: 10612e3916e153dd3447850e944a03fabe89440970295447a30a75b151bd844e
+        - id: $$cap_app_scret
+          label: App Secret (Can be generated with openssl rand -hex 32)
+          defaultValue: 440dec3766de53010c5ccf6231c182acfc90bd25cff82e771245f736fd276518
+        - id: $$cap_db_user
+          label: Database user
+          defaultValue: shopwareuser
+          validRegex: /^([a-zA-Z0-9])+$/
+        - id: $$cap_db_pass
+          label: Database password
+          description: ''
+        - id: $$cap_sw_version
+          label: Shopware Version
+          defaultValue: 6.2.0
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/shyim/shopware/tags/
+        - id: $$cap_mailer_url
+          label: Mailer URL
+          defaultValue: null://localhost
+        - id: $$cap_sw_locale
+          label: Locale
+          defaultValue: en-GB
+        - id: $$cap_sw_currency
+          label: Currency
+          defaultValue: EUR
+        - id: $$cap_sw_admin_username
+          label: Admin Username
+          defaultValue: admin
+        - id: $$cap_sw_admin_password
+          label: Admin Password
+          defaultValue: shopware
+    instructions:
+        start: Shopware is a trendsetting ecommerce platform to power your online business.
+        end: Shopware is successfully deployed. Please wait a minute before accessing the shop. For help and support check out https://github.com/shyim/shopware-image
+    displayName: Shopware
+    description: Shopware is a trendsetting ecommerce platform to power your online business.
+    documentation: See https://hub.docker.com/r/shyim/shopware for tags and other variables

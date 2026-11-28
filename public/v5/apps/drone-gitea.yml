@@ -1,0 +1,109 @@
+captainVersion: 4
+services:
+    $$cap_appname-agent:
+        image: drone/drone-runner-docker:$$cap_drone_runner_version
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        restart: always
+        environment:
+            DRONE_RPC_HOST: srv-captain--$$cap_appname:80
+            DRONE_RPC_SECRET: $$cap_drone_secret
+            DRONE_RPC_PROTO: http
+            DRONE_RUNNER_CAPACITY: $$cap_drone_runner_capacity
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname:
+        depends_on:
+            - $$cap_appname-agent
+        image: drone/drone:$$cap_drone_version
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - $$cap_appname-server:/data
+        restart: always
+        environment:
+            DRONE_GITEA_SERVER: $$cap_drone_gitea_server
+            DRONE_GIT_ALWAYS_AUTH: $$cap_drone_gitea_always_auth
+            DRONE_RUNNER_CAPACITY: $$cap_drone_runner_capacity
+            DRONE_SERVER_PROTO: $$cap_drone_server_proto
+            DRONE_SERVER_HOST: $$cap_drone_server_host
+            DRONE_GITEA_CLIENT_ID: $$cap_drone_gitea_client_id
+            DRONE_GITEA_CLIENT_SECRET: $$cap_drone_gitea_client_secret
+            DRONE_RPC_SECRET: $$cap_drone_secret
+caproverOneClickApp:
+    variables:
+        - id: $$cap_drone_version
+          label: Drone Version
+          defaultValue: 1.9.0
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/drone/drone/tags
+          validRegex: ''
+        - id: $$cap_drone_runner_version
+          label: Drone Docker runner Version
+          defaultValue: 1.5.1
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/drone/drone-runner-docker/tags
+          validRegex: ''
+        - id: $$cap_drone_gitea_server
+          label: DRONE_GITEA_SERVER
+          defaultValue: https://git.your.server
+          description: A string containing your Gitea server address.
+          validRegex: ''
+        - id: $$cap_drone_gitea_always_auth
+          label: DRONE_GIT_ALWAYS_AUTH
+          defaultValue: 'false'
+          description: Boolean value configures Drone to authenticate when cloning public repositories. This is only required when your source code management system (e.g. GitHub Enterprise) has private mode enabled.
+          validRegex: ''
+        - id: $$cap_drone_runner_capacity
+          label: DRONE_RUNNER_CAPACITY
+          defaultValue: '4'
+          description: An integer defining the maximum number of pipelines the agent should execute concurrently. The default value is two pipelines.
+          validRegex: /^[0-9]+$/
+        - id: $$cap_drone_server_proto
+          label: DRONE_SERVER_PROTO
+          defaultValue: https
+          description: A string containing your Drone server protocol scheme. This value should be set to http or https. This field defaults to https if you configure ssl or acme.
+          validRegex: /^([Hh][Tt][Tt][Pp]|[Hh][Tt][Tt][Pp][Ss])$/
+        - id: $$cap_drone_server_host
+          label: DRONE_SERVER_HOST
+          defaultValue: drone.yourhost.com
+          description: A string containing your Drone server hostname or IP address.
+          validRegex: ''
+        - id: $$cap_drone_server_port
+          label: DRONE_RPC_PORT
+          defaultValue: 80
+          description: The port number on which your drone server will be running (for runner communication). As we use internal access, this should be 80
+          validRegex: ''
+        - id: $$cap_drone_tls_autocert
+          label: DRONE_TLS_AUTOCERT
+          defaultValue: 'false'
+          description: An boolean indicating debug level logs should be use for automatic SSL certification generation and configuration. The default value is false..
+          validRegex: /^([Tt][Rr][Uu][Ee]|[Ff][Aa][Ll][Ss][Ee])$/
+        - id: $$cap_drone_secret
+          label: secret for linking drone and agent
+          description: some random secret here (min 10 characters)
+          defaultValue: ''
+          validRegex: /.{10,}/
+        - id: $$cap_drone_gitea_client_id
+          label: client ID created previously in Gitea
+          description: Get from gitea settings -> Applications -> Oauth2 Applications
+          defaultValue: ''
+          validRegex: ''
+        - id: $$cap_drone_gitea_client_secret
+          label: Client Secret created previously in Gitea
+          description: Get from gitea settings -> Applications -> Oauth2 Applications
+          defaultValue: ''
+          validRegex: ''
+    instructions:
+        start: >-
+            Drone is a self-service Continuous Delivery platform for busy development teams. It can be used with different GIT servers like gogs, gitea as well as services like gitlab and github. This installer is gitea focused and requires a running gitea instances (which you can install via one-click-apps in caprover).   
+
+            You must generate an OAuth2 application in Gitea (Settings->Applications->Create a new OAuth2 Application) with the "Redirect URI" https://<your drone server>/login. Make a note of the Client ID and the Client Secret and use them in the appropriate fields below.  
+
+            Enter your Drone for Gitea configuration parameters and click on next. The process will take about a minute to finish.  
+
+            Please make sure that after deployment you add HTTPS to your $$cap_appname application or communication with the runner will fail.
+        end: >
+            Drone is deployed and available as $$cap_appname.
+            IMPORTANT: It will take up to 2 minutes for Drone for Gitea to be ready. Before that, you might see 502 error page.
+    displayName: Drone.io
+    isOfficial: true
+    description: Drone is a self-service Continuous Delivery platform for busy development teams
+    documentation: Taken from https://docs.drone.io/intro/gitea/single-machine/

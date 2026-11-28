@@ -1,0 +1,31 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        restart: always
+        environment:
+            JUPYTER_ENABLE_LAB: yes
+        volumes:
+            - $$cap_appname:/home/jovyan/
+        caproverExtra:
+            containerHttpPort: '8888'
+            dockerfileLines:
+                - FROM jupyter/datascience-notebook:9f9e5ca8fe5a
+                - RUN pip install lxml
+                - RUN jupyter notebook --generate-config
+                - RUN echo 'c.NotebookApp.token = "$$cap_jupyter_default_token"' >> /home/jovyan/.jupyter/jupyter_notebook_config.py
+                - EXPOSE 8888
+caproverOneClickApp:
+    variables:
+        - id: $$cap_jupyter_default_token
+          label: Jupyter default token
+          description: The default login token allows you to set a password within the application. For better experience leave empty and enable basic auth within the CaprRover dashboard.
+    instructions:
+        start: JupyterLab is the next-generation user interface for Project Jupyter.
+        end: >-
+            JupyterLab server is deployed and is available as $$cap_appname.
+
+            IMPORTANT: Make sure to enable websocket capability in the app config on CapRover dashboard!
+    displayName: JupyterLab
+    isOfficial: true
+    description: JupyterLab is the next-generation user interface for Project Jupyter. It offers all the familiar building blocks of the classic Jupyter Notebook in a flexible and powerful user interface.
+    documentation: 'Read more at: https://jupyter-docker-stacks.readthedocs.io/'

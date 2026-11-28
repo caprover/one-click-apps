@@ -1,0 +1,50 @@
+captainVersion: 4
+services:
+    $$cap_appname-mongo:
+        image: mongo:4.2
+        volumes:
+            - $$cap_appname-mongo:/data/db
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname-redis:
+        image: redis:3.2
+        volumes:
+            - $$cap_appname-redis:/data
+        caproverExtra:
+            notExposeAsWebApp: 'true'
+    $$cap_appname-talk:
+        depends_on:
+            - $$cap_appname-mongo
+            - $$cap_appname-redis
+        image: coralproject/talk:$$cap_talk_version
+        restart: always
+        caproverExtra:
+            containerHttpPort: '5000'
+        environment:
+            MONGODB_URI: 'mongodb://srv-captain--$$cap_appname-mongo:27017/coral'
+            REDIS_URI: 'redis://srv-captain--$$cap_appname-redis:6379'
+            SIGNING_SECRET: $$cap_signing_secret
+caproverOneClickApp:
+    variables:
+        - id: $$cap_signing_secret
+          label: Signing Secret
+          defaultValue: $$cap_gen_random_hex(32)
+          description: ''
+          validRegex: /.{1,}/
+        - id: $$cap_talk_version
+          label: Coral Talk Version
+          defaultValue: '6'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/coralproject/talk/tags
+          validRegex: /^([^\s^\/])+$/
+    instructions:
+        start: >-
+            Online comments are broken. Our open-source commenting platform, Coral, rethinks how moderation, comment display, and conversation function, creating the opportunity for safer, smarter discussions around your work.
+
+        end: >
+            Coral is deployed and available as $$cap_appname-talk . 
+
+            IMPORTANT: It will take up to 2 minutes for the application to be ready. Before that, you might see a 502 error page.
+    displayName: Coral Talk
+    isOfficial: true
+    description: Coral is an open-source commenting platform with a full suite of tools helps moderators easily identify disruptive comments.
+    documentation: Taken from https://docs.coralproject.net/coral/installation-from-docker/

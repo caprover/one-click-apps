@@ -1,0 +1,61 @@
+captainVersion: 4
+services:
+    '$$cap_appname':
+        image: rclone/rclone:$$cap_rclone_version
+        command:
+            [
+                'rclone',
+                'rcd',
+                '--rc-web-gui',
+                '--rc-web-gui-no-open-browser',
+                '--rc-addr',
+                ':5572',
+                '-v',
+            ]
+        volumes:
+            - '$$cap_appname-config:/config/rclone'
+        environment:
+            RCLONE_RC_USER: '$$cap_gui_user'
+            RCLONE_RC_PASS: '$$cap_gui_pass'
+            RCLONE_CONFIG: /config/rclone/rclone.conf
+            RCLONE_CACHE_DIR: /config/rclone/cache
+        caproverExtra:
+            containerHttpPort: '5572'
+caproverOneClickApp:
+    variables:
+        - id: '$$cap_rclone_version'
+          label: rclone Version
+          defaultValue: '1.75.0'
+          description: Check the official image tags at https://hub.docker.com/r/rclone/rclone/tags
+          validRegex: "/^([^\\s^\\/])+$/"
+        - id: '$$cap_gui_user'
+          label: Web GUI Username
+          defaultValue: 'rclone-$$cap_gen_random_hex(6)'
+          description: Username used to authenticate to the rclone Web GUI and RC API.
+          validRegex: '/^[A-Za-z0-9._-]{3,64}$/'
+        - id: '$$cap_gui_pass'
+          label: Web GUI Password
+          defaultValue: '$$cap_gen_random_hex(32)'
+          description: Use a unique password. The RC API can access every configured remote.
+          validRegex: '/^.{16,}$/'
+    instructions:
+        start: |-
+            Deploys the official rclone image with its built-in Web GUI on port 5572.
+            The rclone configuration and cache are stored in a persistent named volume.
+
+            The Web GUI is backed by rclone's Remote Control API, which can access every
+            configured remote. Use HTTPS and add a second access-control layer.
+        end: |-
+            rclone has been deployed at https://$$cap_appname.$$cap_root_domain
+
+            Before using it:
+            1. Enable HTTPS and Force HTTPS in CapRover.
+            2. Add CapRover Basic Auth, an IP allowlist, or a private access layer such as a VPN.
+            3. Do not share the Web GUI credentials.
+            4. The first start downloads the Web GUI bundle, so outbound internet access is required.
+
+            Configuration is persisted in the $$cap_appname-config volume.
+    displayName: rclone Web GUI
+    isOfficial: true
+    description: Run rclone's Web GUI on CapRover with persistent configuration for S3, Google Drive, OneDrive, WebDAV, and other storage providers.
+    documentation: Official documentation at https://rclone.org/gui/ and https://rclone.org/commands/rclone_rcd/

@@ -1,0 +1,37 @@
+captainVersion: 4
+services:
+    $$cap_appname:
+        image: adminer:$$cap_adminer_version
+        restart: always
+        environment:
+            ADMINER_PLUGINS: $$cap_adminer_plugins
+            ADMINER_DESIGN: $$cap_adminer_design
+        caproverExtra:
+            containerHttpPort: '8080'
+caproverOneClickApp:
+    variables:
+        - id: $$cap_adminer_version
+          label: Adminer Version Tag
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/library/adminer/tags/
+          defaultValue: '4'
+          validRegex: /^([^\s^\/])+$/
+        - id: $$cap_adminer_design
+          label: 'OPTIONAL: Adminer Design'
+          description: 'List of designs: https://github.com/vrana/adminer/tree/master/designs'
+          validRegex: /^([a-zA-Z0-9-.])*$/
+        - id: $$cap_adminer_plugins
+          label: 'OPTIONAL: Adminer plugins (space separated)'
+          defaultValue: ''
+          validRegex: /^([a-zA-Z0-9-.\s])*$/
+    instructions:
+        start: >-
+            Adminer (formerly phpMinAdmin) is a full-featured database management tool written in PHP. Conversely to phpMyAdmin, it consist of a single file ready to deploy to the target server. Adminer is available for MySQL, PostgreSQL, SQLite, MS SQL, Oracle, Firebird, SimpleDB, Elasticsearch and MongoDB. 
+
+            For more details, see: https://github.com/vrana/adminer
+
+            Enter your Adminer Configuration parameters and click on next. It will take about a minute for the process to finish.
+        end: Adminer is deployed and available as $$cap_appname
+    displayName: Adminer
+    isOfficial: true
+    description: Adminer (formerly phpMinAdmin) is a full-featured database management tool written in PHP
+    documentation: 'Taken from https://hub.docker.com/_/adminer '

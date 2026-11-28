@@ -1,0 +1,68 @@
+captainVersion: 4
+services:
+    '$$cap_appname':
+        image: vitodeploy/vito:$$cap_vito_version
+        environment:
+            APP_KEY: '$$cap_vito_app_key'
+            APP_URL: 'https://$$cap_appname.$$cap_root_domain'
+            NAME: '$$cap_vito_admin_name'
+            EMAIL: '$$cap_vito_admin_email'
+            PASSWORD: '$$cap_vito_admin_password'
+        volumes:
+            - '$$cap_appname-storage:/var/www/html/storage'
+            - '$$cap_appname-plugins:/var/www/html/app/Vito/Plugins'
+        caproverExtra:
+            containerHttpPort: '80'
+            websocketSupport: 'true'
+caproverOneClickApp:
+    variables:
+        - id: '$$cap_vito_version'
+          label: Vito Version
+          defaultValue: '4.x'
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/vitodeploy/vito/tags (use a "-arm64" tag for ARM-based servers)
+          validRegex: '/^([^\s^\/])+$/'
+        - id: '$$cap_vito_app_key'
+          label: App Key
+          defaultValue: 'base64:$$cap_gen_random_hex(43)='
+          description: Laravel encryption key in the form "base64:..." (32 bytes, base64-encoded). The auto-generated value is fine.
+          validRegex: '/^base64:[A-Za-z0-9+\/=]{44}$/'
+        - id: '$$cap_vito_admin_name'
+          label: Admin Name
+          defaultValue: 'admin'
+          description: Name for the initial administrator account.
+          validRegex: '/.{1,}/'
+        - id: '$$cap_vito_admin_email'
+          label: Admin Email
+          description: Email address used to log in to the initial administrator account.
+          validRegex: '/^.+@.+\..+$/'
+        - id: '$$cap_vito_admin_password'
+          label: Admin Password
+          description: Password for the initial administrator account. You can change it after logging in.
+          validRegex: '/.{8,}/'
+    instructions:
+        start: |-
+            Vito is a self-hosted, open source server management and deployment tool.
+            It lets you provision servers, deploy applications, manage databases, SSL
+            certificates, cron jobs, firewalls and more — without an agent.
+
+            More details: https://vitodeploy.com
+        end: |-
+            🎉 Vito has been successfully deployed as $$cap_appname! 🎉
+
+            IMPORTANT: Vito requires HTTPS. In your CapRover dashboard, open the
+            $$cap_appname app, enable HTTPS, and then turn ON "Force HTTPS by
+            redirecting all HTTP traffic to HTTPS". Websocket support is already
+            enabled by this template.
+
+            Then visit https://$$cap_appname.$$cap_root_domain and log in with the
+            admin email and password you provided during installation.
+
+            NOTE: If you later change the app's domain, you must update the APP_URL
+            environment variable to match the new URL. Websocket connections rely on
+            APP_URL to connect and validate, so they will break if it is out of sync.
+
+            Documentation: https://vitodeploy.com/docs
+    displayName: VitoDeploy
+    isOfficial: true
+    description: VitoDeploy is a self-hosted, agentless server management and deployment tool for provisioning servers and deploying custom websites.
+    documentation: See https://vitodeploy.com/docs/getting-started/installation
