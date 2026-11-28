@@ -56,9 +56,7 @@ function build() {
 
     for (const filename of filenames) {
         if (!filename.endsWith('.yml')) {
-            throw new Error(
-                `All files in v4 must end with .yml: ${filename}`
-            )
+            throw new Error(`All files in v4 must end with .yml: ${filename}`)
         }
 
         console.log(`Building dist for ${filename}`)
