@@ -1,10 +1,10 @@
-captainVersion: 4
+captainVersion: 5
 services:
     $$cap_appname:
         image: pineconeteam/pg_pinecone:0.13.0-pg18
         volumes:
             - $$cap_appname-data:/var/lib/postgresql
-        command:
+        entrypoint:
             - /bin/sh
             - -c
             - |

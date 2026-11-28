@@ -1,4 +1,4 @@
-captainVersion: 4
+captainVersion: 5
 services:
     $$cap_appname:
         volumes:
@@ -7,7 +7,7 @@ services:
         environment:
             REDIS_PASSWORD: $$cap_redis_password
         image: redis:$$cap_redis_version
-        command: ['sh', '-c', 'redis-server --requirepass $REDIS_PASSWORD']
+        command: ['redis-server', '--requirepass', '$$cap_redis_password']
         caproverExtra:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:

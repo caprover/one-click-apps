@@ -1,4 +1,4 @@
-captainVersion: 4
+captainVersion: 5
 services:
     $$cap_appname-db:
         image: postgres:12-alpine
@@ -16,14 +16,14 @@ services:
             notExposeAsWebApp: 'true'
         restart: on-failure
         image: redis:6.2.7-alpine
-        command: sh -c "redis-server --maxmemory-policy allkeys-lru --maxmemory 200mb"
+        command: redis-server --maxmemory-policy allkeys-lru --maxmemory 200mb
 
     $$cap_appname-redis7:
         image: redis:7.2-alpine
         restart: on-failure
         caproverExtra:
             notExposeAsWebApp: 'true'
-        command: sh -c "redis-server --maxmemory-policy allkeys-lru --maxmemory 200mb"
+        command: redis-server --maxmemory-policy allkeys-lru --maxmemory 200mb
 
     $$cap_appname-zookeeper:
         image: zookeeper:3.7.0
@@ -105,7 +105,10 @@ services:
         environment:
             MINIO_ROOT_USER: $$cap_object_storage_root_user
             MINIO_ROOT_PASSWORD: $$cap_object_storage_root_password
-        command: sh -c 'mkdir -p /data/posthog && minio server --address ":19000" --console-address ":19001" /data'
+        entrypoint:
+            - sh
+            - -c
+            - 'mkdir -p /data/posthog && exec minio server --address ":19000" --console-address ":19001" /data'
 
     $$cap_appname-plugin:
         image: posthog/posthog:$$cap_posthog_version

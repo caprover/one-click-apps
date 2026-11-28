@@ -1,4 +1,4 @@
-captainVersion: 4
+captainVersion: 5
 services:
     $$cap_appname-db:
         image: mysql:8.4
@@ -24,7 +24,10 @@ services:
         # A bucket is a top-level directory of the data drive, so it is created
         # before MinIO starts. The shell has to be explicit: the image's
         # entrypoint prepends `minio` to whatever arguments it receives.
-        command: sh -c 'mkdir -p /data/louez && exec minio server /data'
+        entrypoint:
+            - sh
+            - -c
+            - 'mkdir -p /data/louez && exec minio server /data'
         caproverExtra:
             notExposeAsWebApp: 'true'
 

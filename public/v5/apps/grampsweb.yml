@@ -1,4 +1,4 @@
-captainVersion: 4
+captainVersion: 5
 services:
     $$cap_appname-redis:
         image: redis:$$cap_redis_version
@@ -31,7 +31,13 @@ services:
     $$cap_appname-celery:
         image: ghcr.io/gramps-project/grampsweb:$$cap_version
         restart: always
-        command: celery -A gramps_webapi.celery worker --loglevel=INFO
+        # The web service runs user database migrations; avoid running them concurrently.
+        entrypoint:
+            - celery
+            - -A
+            - gramps_webapi.celery
+            - worker
+            - --loglevel=INFO
         environment:
             GRAMPSWEB_SECRET_KEY: $$cap_secret_key
             GRAMPSWEB_TREE: 'Gramps Web' # will create a new tree if not exists

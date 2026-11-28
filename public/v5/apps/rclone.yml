@@ -1,10 +1,9 @@
-captainVersion: 4
+captainVersion: 5
 services:
     '$$cap_appname':
         image: rclone/rclone:$$cap_rclone_version
         command:
             [
-                'rclone',
                 'rcd',
                 '--rc-web-gui',
                 '--rc-web-gui-no-open-browser',

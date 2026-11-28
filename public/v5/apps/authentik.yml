@@ -1,4 +1,4 @@
-captainVersion: 4
+captainVersion: 5
 services:
     $$cap_appname-postgresql:
         image: docker.io/library/postgres:$$cap_postgres_version-alpine
@@ -63,7 +63,7 @@ services:
     $$cap_appname:
         image: ghcr.io/goauthentik/server:$$cap_authentik_version
         restart: unless-stopped
-        command: ['dumb-init', '--', 'ak', 'server']
+        command: ['server']
         environment:
             AUTHENTIK_SECRET_KEY: $$cap_authentik_secret_key
             AUTHENTIK_REDIS__HOST: srv-captain--$$cap_appname-redis
@@ -88,7 +88,7 @@ services:
     $$cap_appname-worker:
         image: ghcr.io/goauthentik/server:$$cap_authentik_version
         restart: unless-stopped
-        command: ['dumb-init', '--', 'ak', 'worker']
+        command: ['worker']
         user: root
         environment:
             AUTHENTIK_SECRET_KEY: $$cap_authentik_secret_key
