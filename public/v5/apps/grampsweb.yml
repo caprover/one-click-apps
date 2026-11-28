@@ -32,7 +32,12 @@ services:
         image: ghcr.io/gramps-project/grampsweb:$$cap_version
         restart: always
         # The web service runs user database migrations; avoid running them concurrently.
-        entrypoint: ['celery', '-A', 'gramps_webapi.celery', 'worker', '--loglevel=INFO']
+        entrypoint:
+            - celery
+            - -A
+            - gramps_webapi.celery
+            - worker
+            - --loglevel=INFO
         environment:
             GRAMPSWEB_SECRET_KEY: $$cap_secret_key
             GRAMPSWEB_TREE: 'Gramps Web' # will create a new tree if not exists

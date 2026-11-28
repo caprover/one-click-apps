@@ -30,26 +30,26 @@ services:
                 CONFIG_FILE="/config/config.hjson"
                 CONFIG_CONTENT="
                 {
-                  hostname: \"$cap_appname.$cap_root_domain\",
+                  hostname: \"$$cap_appname.$$cap_root_domain\",
                   bind: \"0.0.0.0\",
                   port: 8536,
                   database: {
                     user: \"lemmy\",
-                    password: \"$cap_db_pass\",
-                    host: \"srv-captain--$cap_appname-db\",
+                    password: \"$$cap_db_pass\",
+                    host: \"srv-captain--$$cap_appname-db\",
                     port: 5432,
                     database: \"lemmy\",
                     pool_size: 5
                   },
                   pictrs: {
-                    url: \"http://srv-captain--$cap_appname-pictrs:8080\"
+                    url: \"http://srv-captain--$$cap_appname-pictrs:8080\"
                   },
                   email: {
-                    smtp_server: \"$cap_smtp_server\",
-                    smtp_login: \"$cap_smtp_login\",
-                    smtp_password: \"$cap_smtp_pass\",
-                    smtp_from_address: \"$cap_smtp_from\",
-                    tls_type: \"$cap_smtp_tls\"
+                    smtp_server: \"$$cap_smtp_server\",
+                    smtp_login: \"$$cap_smtp_login\",
+                    smtp_password: \"$$cap_smtp_pass\",
+                    smtp_from_address: \"$$cap_smtp_from\",
+                    tls_type: \"$$cap_smtp_tls\"
                   }
                 }
                 ";

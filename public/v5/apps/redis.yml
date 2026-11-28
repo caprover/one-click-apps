@@ -7,7 +7,7 @@ services:
         environment:
             REDIS_PASSWORD: $$cap_redis_password
         image: redis:$$cap_redis_version
-        command: ['redis-server', '--requirepass', '$cap_redis_password']
+        command: ['redis-server', '--requirepass', '$$cap_redis_password']
         caproverExtra:
             notExposeAsWebApp: 'true'
 caproverOneClickApp:
